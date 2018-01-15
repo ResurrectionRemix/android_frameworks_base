@@ -17,10 +17,23 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Jou verkopers beeld vergelyk nie met die stelsel nie. Blits asseblief jou toestel met die verkoper se beeld</string>
+  <string name="global_action_screenrecord">Screenrecord</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Verdof</string>
+  <string name="animation_slide_right">Gly in regs</string>
+  <string name="animation_slide_left">Gly in links</string>
+  <string name="animation_slide_up">Gly in onder</string>
+  <string name="animation_slide_down">Gly in bo</string>
+  <string name="animation_translucent">Deurskynend</string>
+  <string name="action_null">Leeg</string>
+  <string name="global_action_torch">Flitslig</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <!-- On-The-Go -->
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB onaktief</string>
+  <string name="adb_active_custom_tile_not_connected">onaktief</string>
+  <string name="singlehandmode_slide_hint_message">Trek jou vinger oor die navigasiebalk om te verwissel tussen die standaard en klein skerms</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

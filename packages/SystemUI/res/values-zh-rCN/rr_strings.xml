@@ -274,10 +274,10 @@
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
-  <string name="pie_state_name">扇形控制</string>
+  <string name="pie_state_name">Pie 控制</string>
   <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
   <string name="pie_battery_level">"电池电量 "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="accessibility_data_sim">当前使用的移动数据 SIM 卡</string>
-  <string name="data_switch_started">正在切换到用于连接数据网络的 SIM 卡，这最多可能需要 1 分钟的时间…</string>
+  <string name="data_switch_started">正在切换到用于连接数据网络的 SIM 卡，这最多可能需要 1 分钟…</string>
 </resources>

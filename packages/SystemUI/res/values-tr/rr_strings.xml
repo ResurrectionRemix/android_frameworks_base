@@ -78,7 +78,7 @@
   <string name="quick_settings_expanded_desktop">Genişletilmiş</string>
   <string name="quick_settings_expanded_desktop_off">Standart</string>
   <string name="quick_settings_reboot_label">Yeniden başlat</string>
-  <string name="quick_settings_reboot_recovery_label">Kurtarma modu (Recovery)</string>
+  <string name="quick_settings_reboot_recovery_label">Kurtarma modu</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB internet paylaşımı kapalı</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB internet paylaşımı açık</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">USB internet paylaşımı kapatıldı</string>

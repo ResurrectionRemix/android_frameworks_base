@@ -107,12 +107,24 @@
   <string name="quick_settings_appcirclebar_title">App sirkel bar</string>
   <string name="quick_settings_appcirclebar_on">App sirkel bar på</string>
   <string name="quick_settings_appcirclebar_off">App sirkel bar av</string>
+  <string name="quick_settings_gesture_anywhere_label">Gest hvor som helst</string>
   <string name="quick_settings_gesture_anywhere_on">Bevegelser</string>
   <string name="quick_settings_gesture_anywhere_off">Bevegelser av</string>
   <string name="quick_settings_appsidebar_title">App sidestolpe</string>
   <string name="quick_settings_appsidebar_on">App side bar på</string>
   <string name="quick_settings_appsidebar_off">App side stolpe av</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Puls aktivert</string>
+  <string name="quick_settings_ambient_display_label">Ambient skjerm</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Ambient skjerm av.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambient skjerm på</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient skjerm skrudd av</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient skjerm skrudd på</string>
+  <string name="quick_settings_heads_up_label">Notifikasjonsforhåndvisning</string>
+  <string name="accessibility_quick_settings_heads_up_off">Notifikasjonsforhåndvisning av</string>
+  <string name="accessibility_quick_settings_heads_up_on">Notifikasjonsforhåndvisning på</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Notifikasjonsforhåndvisning slått av</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Notifikasjonsforhåndvisning slått på</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Posisjonssrapportering: batterisparingsmodus.</string>
   <string name="accessibility_quick_settings_location_gps_only">Posisjonsrapportering: Kun sensorer.</string>
@@ -137,15 +149,36 @@
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_perf">Batterimodus: høy ytelse.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Batterimodus: høy effektivitet.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Batterimodus: rask modus.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Batterimodus endret til strømsparingsmodus.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Batterimodus endret til balansert modus.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Batterimodus endret til ytelsesmodus.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Batterimodus endret til høy effekt.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="quick_settings_performance_profile_detail_title">Batterimodus</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompass</string>
+  <string name="accessibility_quick_settings_compass_off">Kompass av.</string>
+  <string name="accessibility_quick_settings_compass_on">Kompass på.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompass deaktivert.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompass aktivert.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NØ</string>
+  <string name="quick_settings_compass_E">Ø</string>
+  <string name="quick_settings_compass_SE">SØ</string>
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SV</string>
+  <string name="quick_settings_compass_W">V</string>
+  <string name="quick_settings_compass_NW">NV</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Maskinvareknapper på</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Maskinvareknapper av</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Applikasjon tvangsavsluttet</string>
   <!-- Heads up snooze toast -->
@@ -162,13 +195,33 @@
   <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Kill button in notification guts -->
+  <string name="kill">Steng app</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Feil</string>
+  <string name="omnijaws_service_unkown">Ingen værdata</string>
+  <string name="omnijaws_detail_header">Vær</string>
+  <string name="omnijaws_label_default">Vær</string>
+  <string name="omnijaws_current_text">Nå</string>
+  <string name="omnijaws_package_not_available">OmniJaws ikke tilgjengelig</string>
+  <string name="omnijaws_service_error_long">Feil ved lasting av værdata</string>
+  <string name="omnijaws_service_disabled">Tjeneste deaktivert</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="grader">%1$s</xliff:g> <xliff:g id="forhold">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Datasparing</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Alle navigasjonsmetoder deaktivert</string>
+  <string name="no_navigation_warning_text">Trykk for å aktivere</string>
   <!-- Pie controls -->
+  <string name="pie_state_name">Pie-navigasjon</string>
+  <string name="pie_state_summary">Bruk pie-navigasjon når i fullskjermsmodus</string>
+  <string name="pie_battery_level">"BATTERINIVÅ "</string>
+  <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Aktiv datasim</string>
+  <string name="data_switch_started">Bytter aktiv datasim, dette kan ta opp til ett minutt...</string>
 </resources>

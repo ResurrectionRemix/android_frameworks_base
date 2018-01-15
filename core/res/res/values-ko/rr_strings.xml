@@ -24,7 +24,7 @@
   <string name="animation_fade">서서히 사라지기</string>
   <string name="animation_slide_right">오른쪽으로 슬라이드</string>
   <string name="animation_slide_left">왼쪽으로 슬라이드</string>
-  <string name="animation_slide_right_no_fade">오른쪽에서 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_right_no_fade">오른쪽으로 슬라이드 (페이드 없음)</string>
   <string name="animation_slide_left_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
   <string name="animation_slide_up">아래쪽에서 슬라이드</string>
   <string name="animation_slide_down">위쪽에서 슬라이드</string>
