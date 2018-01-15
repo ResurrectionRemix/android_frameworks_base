@@ -158,7 +158,10 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
     private final EmergencyAffordanceManager mEmergencyAffordanceManager;
 
     // Power menu customizations
-    String mActions;
+    private String mActions;
+    private static final String SYSUI_PACKAGE = "com.android.systemui";
+    private static final String SYSUI_SCREENSHOT_SERVICE =
+            "com.android.systemui.screenshot.TakeScreenshotService";
 
     private BitSet mAirplaneModeBits;
     private final List<PhoneStateListener> mPhoneStateListeners = new ArrayList<>();
@@ -421,8 +424,8 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
             mSilentModeAction = new SilentModeTriStateAction(mContext, mAudioManager, mHandler);
         }
         mAirplaneModeOn = new ToggleAction(
-                R.drawable.ic_lock_airplane_mode,
-                R.drawable.ic_lock_airplane_mode_off,
+                R.drawable.ic_lock_airplane_mode_enabled,
+                R.drawable.ic_lock_airplane_mode_disabled,
                 R.string.global_actions_toggle_airplane_mode,
                 R.string.global_actions_airplane_mode_on_status,
                 R.string.global_actions_airplane_mode_off_status) {
@@ -804,7 +807,7 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
     }
 
     private Action getSettingsAction() {
-        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_settings,
+        return new SinglePressAction(com.android.internal.R.drawable.ic_settings,
                 R.string.global_action_settings) {
 
             @Override
@@ -1033,8 +1036,7 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
             if (mScreenshotConnection != null) {
                 return;
             }
-            ComponentName cn = new ComponentName("com.android.systemui",
-                    "com.android.systemui.screenshot.TakeScreenshotService");
+            ComponentName cn = new ComponentName(SYSUI_PACKAGE, SYSUI_SCREENSHOT_SERVICE);
             Intent intent = new Intent();
             intent.setComponent(cn);
             ServiceConnection conn = new ServiceConnection() {
@@ -1062,19 +1064,17 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
                         msg.replyTo = new Messenger(h);
                         msg.arg1 = msg.arg2 = 0;
 
-                        // Needs delay or else we'll be taking a screenshot of the dialog each time
-                        try {
-                            Thread.sleep(mScreenshotDelay);
-                        } catch (InterruptedException ie) {
-                            // Do nothing
-                        }
-
-                        // Take the screenshot
-                        try {
-                            messenger.send(msg);
-                        } catch (RemoteException e) {
-                            // Do nothing here
-                        }
+                        /* wait for the dialog box to close and take screenshot */
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                     messenger.send(msg);
+                                } catch (RemoteException e) {
+                                     //  Do nothing
+                                }
+                            }
+                        }, 1000);
                     }
                 }
                 @Override
