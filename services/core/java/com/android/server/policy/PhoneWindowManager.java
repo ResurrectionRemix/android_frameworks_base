@@ -712,7 +712,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mForcingShowNavBar;
     int mForcingShowNavBarLayer;
 
-
     // User defined bar visibility, regardless of factory configuration
     boolean mNavbarVisible = false;
     // Pie
