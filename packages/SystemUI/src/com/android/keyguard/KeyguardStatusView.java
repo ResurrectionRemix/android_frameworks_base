@@ -50,6 +50,7 @@ import android.widget.TextView;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.ChargingView;
+import com.android.systemui.doze.DozeLog;
 import com.android.systemui.omni.OmniJawsClient;
 import com.android.systemui.statusbar.policy.DateView;
 
@@ -95,6 +96,8 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mShowConditionIcon;
     private boolean mShowLocation;
     private int mIconNameValue = -1;
+
+    private boolean mForcedMediaDoze;
 
     private SettingsObserver mSettingsObserver;
 
@@ -448,7 +451,7 @@ public class KeyguardStatusView extends GridLayout implements
         final int N = mClockContainer.getChildCount();
         for (int i = 0; i < N; i++) {
             View child = mClockContainer.getChildAt(i);
-            if (ArrayUtils.contains(mVisibleInDoze, child)) {
+            if (!mForcedMediaDoze && ArrayUtils.contains(mVisibleInDoze, child)) {
                 continue;
             }
             child.setAlpha(dark ? 0 : 1);
@@ -468,12 +471,21 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void setPulsing(boolean pulsing) {
         mPulsing = pulsing;
+    }
+
+    public void setCleanLayout(int reason) {
+        mForcedMediaDoze =
+                reason == DozeLog.PULSE_REASON_FORCED_MEDIA_NOTIFICATION;
         updateDozeVisibleViews();
     }
 
     private void updateDozeVisibleViews() {
         for (View child : mVisibleInDoze) {
-            child.setAlpha(mDarkAmount == 1 && mPulsing ? 0.8f : 1);
+            if (!mForcedMediaDoze) {
+                child.setAlpha(mDarkAmount == 1 && mPulsing ? 0.8f : 1);
+            } else {
+                child.setAlpha(mDarkAmount == 1 ? 0 : 1);
+            }
         }
     }
 

@@ -33,6 +33,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.ViewInvertHelper;
+import com.android.systemui.doze.DozeLog;
 import com.android.systemui.statusbar.notification.NotificationUtils;
 import com.android.systemui.statusbar.phone.NotificationIconContainer;
 import com.android.systemui.statusbar.phone.NotificationPanelView;
@@ -85,6 +86,8 @@ public class NotificationShelf extends ActivatableNotificationView implements
     private boolean mVibrationOnAnimation;
     private boolean mUserTouchingScreen;
     private boolean mTouchActive;
+
+    private boolean mForcedMediaDoze;
 
     public NotificationShelf(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -159,6 +162,17 @@ public class NotificationShelf extends ActivatableNotificationView implements
         mDark = dark;
         mShelfIcons.setDark(dark, fade, delay);
         updateInteractiveness();
+        updateIconVisibility();
+    }
+
+    public void setCleanLayout(int reason) {
+        mForcedMediaDoze =
+                reason == DozeLog.PULSE_REASON_FORCED_MEDIA_NOTIFICATION;
+        updateIconVisibility();
+    }
+
+    public void updateIconVisibility() {
+        mShelfIcons.setVisibility(mForcedMediaDoze ? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
