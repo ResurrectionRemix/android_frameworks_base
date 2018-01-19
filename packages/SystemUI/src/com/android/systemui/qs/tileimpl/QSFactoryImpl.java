@@ -89,6 +89,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("volume_panel")) return new VolumeTile(mHost);
         else if (tileSpec.equals("reboot")) return new RebootTile(mHost);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(mHost);
+        else if (tileSpec.equals("configurations")) return new ScreenshotTile(mHost);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
