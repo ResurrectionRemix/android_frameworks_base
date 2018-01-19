@@ -94,7 +94,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.android.internal.util.aicp.AwesomeAnimationHelper;
+import com.android.internal.util.rr.AwesomeAnimationHelper;
 import android.widget.Toast;
 
 // State management of app transitions.  When we are preparing for a

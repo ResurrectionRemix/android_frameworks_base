@@ -98,6 +98,11 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    public void handleSetListening(boolean listening) {
+        // Do nothing
+    }
+
+    @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.value = mRecording;
         if (mRecording) {
@@ -180,6 +185,6 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_METRICS;
+        return MetricsEvent.RESURRECTED;
     }
 }

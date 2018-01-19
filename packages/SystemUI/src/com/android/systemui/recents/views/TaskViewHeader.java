@@ -557,9 +557,21 @@ public class TaskViewHeader extends FrameLayout
         // In accessibility, a single click on the focused app info button will show it
         if (touchExplorationEnabled) {
             mIconView.setContentDescription(t.appInfoDescription);
-            mIconView.setOnClickListener(this);
-            mIconView.setClickable(true);
+            mIconView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick (View v) {
+                    EventBus.getDefault().send(new ShowApplicationInfoEvent(mTask));
+                }
+            });
+        } else {
+            mIconView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick (View v) {
+                    showAppOverlay();
+                }
+            });
         }
+        mIconView.setClickable(true);
     }
 
     /**
@@ -670,10 +682,7 @@ public class TaskViewHeader extends FrameLayout
 
     @Override
     public void onClick(View v) {
-        if (v == mIconView) {
-            // In accessibility, a single click on the focused app info button will show it
-            EventBus.getDefault().send(new ShowApplicationInfoEvent(mTask));
-        } else if (v == mDismissButton) {
+        if (v == mDismissButton) {
             TaskView tv = Utilities.findParent(this, TaskView.class);
             if (!Recents.sLockedTasks.contains(tv.getTask())) {
                 tv.dismissTask();

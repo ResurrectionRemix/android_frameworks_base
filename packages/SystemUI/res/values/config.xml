@@ -111,7 +111,7 @@
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
-    <string name="quick_settings_tiles_stock" translatable="false">       wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,work,cast,night,aicp_extras,compass,screenshot,usb_tether,ime,locale,music,sound,ambient_display,pip,caffeine,sync,volume,screenrecord,heads_up,weather
+    <string name="quick_settings_tiles_stock" translatable="false">    wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,compass,music,work,configurations,screenshot,locale,sound,reboot,pip,cast,night,adb_network,ambient_display,caffeine,screenrecord,heads_up,weather,sync,usb_tether,volume_panel
     </string>
 
     <!-- The tiles to display in QuickSettings -->

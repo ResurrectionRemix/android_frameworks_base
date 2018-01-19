@@ -146,7 +146,7 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_METRICS;
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override
@@ -159,6 +159,13 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
     }
 
     @Override
+    public void handleSetListening(boolean listening) {
+        if (!listening) {
+            setListeningSensors(false);
+            mActive = false;
+        }
+    }
+
     public void setListening(boolean listening) {
         if (!listening) {
             setListeningSensors(false);

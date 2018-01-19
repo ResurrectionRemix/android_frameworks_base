@@ -58,7 +58,6 @@ public class SoundTile extends QSTileImpl<State> {
         return new State();
     }
 
-    @Override
     public void setListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
@@ -69,6 +68,11 @@ public class SoundTile extends QSTileImpl<State> {
         } else {
             mContext.unregisterReceiver(mReceiver);
         }
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
+        // Do nothing
     }
 
     @Override
@@ -124,7 +128,7 @@ public class SoundTile extends QSTileImpl<State> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_METRICS;
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override

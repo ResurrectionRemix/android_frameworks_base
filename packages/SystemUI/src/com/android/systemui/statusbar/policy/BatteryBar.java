@@ -36,7 +36,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.internal.util.aicp.AicpUtils;
+import com.android.internal.util.rr.Utils;
 
 public class BatteryBar extends RelativeLayout implements Animatable {
 
@@ -311,7 +311,7 @@ public class BatteryBar extends RelativeLayout implements Animatable {
         if (mBatteryCharging && mUseChargingColor) {
             return mChargingColor;
         } else if (mBlendColors) {
-            return AicpUtils.getBlendColorForPercent(mColor, mBatteryLowColor,
+            return Utils.getBlendColorForPercent(mColor, mBatteryLowColor,
                     mBlendColorsReversed, percentage);
         } else {
             return percentage > BATTERY_LOW_VALUE ? mColor : mBatteryLowColor;

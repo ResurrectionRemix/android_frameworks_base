@@ -15,8 +15,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
     <!-- Floating action button -->
     <dimen name="floating_action_button_height">54dp</dimen>
@@ -29,12 +28,6 @@
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
     <dimen name="net_traffic_txt_img_padding">2dp</dimen>
 
-    <!-- QS Brightness control padding -->
-    <dimen name="qs_brightness_footer_padding">12dp</dimen>
-    <dimen name="qs_footer_padding_top">0dp</dimen>
-    <dimen name="qs_page_indicator_margin_bottom">12dp</dimen>
-    <dimen name="qs_paged_tile_layout_padding_bottom">4dp</dimen>
-
     <!-- Status bar notification ticker -->
     <dimen name="ticker_start_padding">6dp</dimen>
     <dimen name="ticker_icon_end_margin">4dp</dimen>
@@ -45,5 +38,10 @@
 
     <!-- Qs visibility -->
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
+    <dimen name="qs_panel_margin_top">28dp</dimen>
+    <dimen name="qs_panel_margin_top_header">85dp</dimen>
+    <dimen name="qs_scroller_top_margin">40dp</dimen>
+    <dimen name="qs_panel_footer_height">48dp</dimen>
 
 </resources>

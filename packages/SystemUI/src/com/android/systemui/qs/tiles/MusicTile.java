@@ -78,6 +78,11 @@ public class MusicTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    public void handleSetListening(boolean listening) {
+        // Do nothing
+    }
+
+    @Override
     public void handleClick() {
         if (mActive) {
             checkDoubleClick();
@@ -106,7 +111,7 @@ public class MusicTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_METRICS;
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override

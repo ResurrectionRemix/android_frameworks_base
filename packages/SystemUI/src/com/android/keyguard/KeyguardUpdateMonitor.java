@@ -947,6 +947,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
             this.maxChargingCurrent = maxChargingCurrent;
             this.maxChargingVoltage = maxChargingVoltage;
             this.maxChargingWattage = maxChargingWattage;
+            this.dashChargeStatus = dashChargeStatus;
             this.temperature = temperature;
         }
 

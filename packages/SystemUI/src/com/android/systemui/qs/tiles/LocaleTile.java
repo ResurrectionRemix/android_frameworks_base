@@ -114,7 +114,7 @@ public class LocaleTile extends QSTileImpl<State> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.AICP_METRICS;
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override
@@ -136,6 +136,11 @@ public class LocaleTile extends QSTileImpl<State> {
         } else {
             mContext.unregisterReceiver(mReceiver);
         }
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
+        // Do nothing
     }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {

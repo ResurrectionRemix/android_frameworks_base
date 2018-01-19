@@ -1,4 +1,4 @@
-package com.android.internal.util.aicp;
+package com.android.internal.util.rr;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;

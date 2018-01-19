@@ -1882,7 +1882,7 @@
 
     <!-- Ambient display section of the tuner. Non-translatable since it should
         not appear on production builds ever. -->
-    <string name="tuner_doze" translatable="false">Ambient Display</string>
+    <string name="tuner_doze" translatable="false">Ambient display</string>
 
     <!-- Ambient display always-on of the tuner. Non-translatable since it should
         not appear on production builds ever. -->
@@ -1961,7 +1961,7 @@
     <string name="lockscreen_none">None</string>
 
     <!-- SysUI Tuner: Format string for describing launching an app [CHAR LIMIT=60] -->
-    <string name="tuner_launch_app">Launch <xliff:g id="app" example="Settings">%1$s</xliff:g></string>
+<!--     <string name="tuner_launch_app">Launch <xliff:g id="app" example="Settings">%1$s</xliff:g></string> -->
 
     <!-- SysUI Tuner: Label for section of other apps that can be launched [CHAR LIMIT=60] -->
     <string name="tuner_other_apps">Other apps</string>

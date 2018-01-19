@@ -44,7 +44,7 @@ import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.aicp.AicpUtils;
+import com.android.internal.util.rr.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
@@ -84,7 +84,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         mDetailAdapter = (WeatherDetailAdapter) createDetailAdapter();
     }
 
-    @Override
     public boolean isDualTarget() {
         return true;
     }
@@ -104,7 +103,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         return new BooleanState();
     }
 
-    @Override
     public void setListening(boolean listening) {
         if (DEBUG) Log.d(TAG, "setListening " + listening);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
@@ -126,10 +124,12 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     public void weatherError(int errorReason) {
         if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
-        mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_error);
-        refreshState();
-        if (isShowingDetail()) {
-            mDetailedView.weatherError(errorReason);
+        if (errorReason != OmniJawsClient.EXTRA_ERROR_DISABLED) {
+            mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_error);
+            refreshState();
+            if (isShowingDetail()) {
+                mDetailedView.weatherError(errorReason);
+            }
         }
     }
 
@@ -144,10 +144,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     protected void handleSecondaryClick() {
         if (DEBUG) Log.d(TAG, "handleSecondaryClick");
-        if (!mWeatherClient.isOmniJawsServiceInstalled()) {
-            Toast.makeText(mContext, R.string.omnijaws_package_not_available, Toast.LENGTH_SHORT).show();
-            return;
-        }
         // Secondary clicks are also on quickbar tiles
         showDetail(true);
     }
@@ -180,7 +176,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     public Intent getLongClickIntent() {
         if (DEBUG) Log.d(TAG, "getLongClickIntent");
-        if (AicpUtils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
+        if (Utils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("dynact://velour/weather/ProxyActivity"));
             intent.setComponent(new ComponentName("com.google.android.googlequicksearchbox",
@@ -222,6 +218,11 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     public CharSequence getTileLabel() {
         return mContext.getResources().getString(R.string.omnijaws_label_default);
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
+        // Do nothing
     }
 
     private void queryAndUpdateWeather() {

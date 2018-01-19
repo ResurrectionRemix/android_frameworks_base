@@ -171,4 +171,9 @@ public class CarQSFragment extends Fragment implements QS {
     public void setExpandClickListener(OnClickListener onClickListener) {
         // No ability to expand the quick settings.
     }
+
+    @Override
+    public void setSecureExpandDisabled(boolean isQsSecureExDisabled) {
+        // Nothing needed
+    }
 }

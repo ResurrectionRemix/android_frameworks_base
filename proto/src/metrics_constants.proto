@@ -4006,8 +4006,8 @@ message MetricsEvent {
     // OS: O
     FIELD_NOTIFICATION_GROUP_SUMMARY = 947;
 
-    OMNI_QS_WEATHER = 1001;
-    OMNI_QS_WEATHER_DETAILS = 1002;
+    OMNI_QS_WEATHER = 9001;
+    OMNI_QS_WEATHER_DETAILS = 9002;
 
     // ---- End O Constants, all O constants go above this line ----
 
@@ -4574,5 +4574,8 @@ message MetricsEvent {
 
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
+
+    // RR
+    RESURRECTED = 9999;
   }
 }

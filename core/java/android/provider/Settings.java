@@ -2855,6 +2855,21 @@ public final class Settings {
         public static final String MODE_RINGER = Global.MODE_RINGER;
 
         /**
+         * RR Config Setting
+         * @hide
+         */
+
+         public static final String RR_CONFIG_STYLE = "rr_config_style";
+
+        /**
+         * Transition effect in RR tabs
+         *
+         * @hide
+         */
+         public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
+
+
+        /**
          * Whether to use static IP and other static network attributes.
          * <p>
          * Set to 1 for true and 0 for false.
@@ -3927,7 +3942,6 @@ public final class Settings {
 
         /** @hide */
         private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = sBooleanValidator;
-
         /**
          * Custom button brightness value for manual mode
          *
@@ -3949,38 +3963,6 @@ public final class Settings {
          */
         public static final String BUTTON_BACKLIGHT_ENABLE = "button_backlight_enable";
 
-        /**
-         * Timeout value for button lights. 0 = disabled
-         * @hide
-         */
-        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
-
-        /**
-         * @hide
-         */
-        public static final String BUTTON_BACKLIGHT_ON_TOUCH_ONLY = "button_backlight_on_touch_only";
-
-        /**
-         * Volume dialog timeout
-         * @hide
-         */
-        public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
-
-        /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
-         */
-
-        /**
-          * Volume keys control cursor in text fields (default is 0)
-          * 0 - Disabled
-          * 1 - Volume up/down moves cursor left/right
-          * 2 - Volume up/down moves cursor right/left
-          * @hide
-          */
-         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
          * Whether to display the reboot option in the power menu
@@ -4010,6 +3992,7 @@ public final class Settings {
          */
         public static final String POWERMENU_AIRPLANE = "powermenu_airplane";
 
+
         /**
          * Whether to display the power menu dialog while on the lockscreen
          * @hide
@@ -4017,7 +4000,33 @@ public final class Settings {
         public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
 
         /**
-         * Whether to show network traffic indicator in statusbar
+         * Timeout value for button lights. 0 = disabled
+         * @hide
+         */
+        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
+
+        /**
+         * @hide
+         */
+        public static final String BUTTON_BACKLIGHT_ON_TOUCH_ONLY = "button_backlight_on_touch_only";
+
+        /**
+         * Volume dialog timeout
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
+        /**
+          * Volume keys control cursor in text fields (default is 0)
+          * 0 - Disabled
+          * 1 - Volume up/down moves cursor left/right
+          * 2 - Volume up/down moves cursor right/left
+          * @hide
+          */
+         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+
+        /**
+         * Wheter to show network traffic indicator in statusbar
          * @hide
          */
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
@@ -4030,12 +4039,6 @@ public final class Settings {
 
         /**
          * Whether to launch default music player when headset plugged in
-         * 0 = don't do anything (default)
-         * 1 = launch only on wired connection
-         * 2 = launch only on bt connection but no carkit
-         * 3 = launch only on bt connection
-         * 4 = launch on both connection types but no carkit
-         * 5 = launch on both connection types
          * @hide
          */
         public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
@@ -4059,17 +4062,17 @@ public final class Settings {
         public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
         /**
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
+        /**
          * Whether to show the notification ticker on the status bar
          * @hide
          */
         public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
-
-        /**
-         * whether to enable or disable vibration on succesful fingerprint auth
-         *
-         * @hide
-         */
-        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
          * 0 - wallpaper based
@@ -4078,6 +4081,13 @@ public final class Settings {
          * @hide
          */
         public static final String SYSTEM_UI_THEME = "system_ui_theme";
+
+        /**
+         * whether to enable or disable vibration on succesful fingerprint auth
+         *
+         * @hide
+         */
+        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
          * Status bar carrier label
@@ -4092,17 +4102,17 @@ public final class Settings {
         /**
          * custom carrier label. The value is
          * String.
+         * @hide
          */
         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
         /**
-
          * Enable/Disable screenshot sound
          * @hide
          */
         public static final String SCREENSHOT_SOUND = "screenshot_sound";
 
-       /**
+        /**
         * Whether to show media art on lockscreen
         * @hide
         */
@@ -4176,11 +4186,19 @@ public final class Settings {
         */
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
 
+        /**
+
          /**
          * Whether to display qs tile titles in the qs panel
          * @hide
          */
         public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
+
+        /**
+        * Whether to show Qs panel footer warnings like for active VPN
+        * @hide
+        */
+        public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
 
         /**
          * Whether to show the battery bar
@@ -4411,6 +4429,12 @@ public final class Settings {
         public static final String SENSOR_BLOCK = "sensor_block";
 
         /**
+         * enable custom lockscreen max notifications config
+         * @hide
+         */
+        public static final String LOCK_SCREEN_CUSTOM_NOTIF = "lock_screen_custom_notif";
+
+        /**
          * custom lockscreen max notification config
          * @hide
          */
@@ -4463,6 +4487,13 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_CONDITION_ICON = "lock_screen_weather_condition_icon";
+
+        /**
+         * Whether to enable three finger gesture screenshot
+         * @hide
+         */
+
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
         /**
          * Quick Settings Smart Pulldown
@@ -4524,27 +4555,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN_FP = "status_bar_quick_qs_pulldown_fp";
-
-        /**
-         * AOKP Custom System Animations
-         * @hide
-         */
-        public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {
-                "activity_open",
-                "activity_close",
-                "task_open",
-                "task_close",
-                "task_to_front",
-                "task_to_back",
-                "wallpaper_open",
-                "wallpaper_close",
-                "wallpaper_intra_open",
-                "wallpaper_intra_close",
-        };
-        public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
-
-
-        public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
 
         /**
          * Transparent power menu and dialogs
@@ -4757,7 +4767,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
-            PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS);
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ENABLE);
@@ -8675,6 +8684,12 @@ public final class Settings {
          * These values can be OR-ed together.
          */
         public static final String STAY_ON_WHILE_PLUGGED_IN = "stay_on_while_plugged_in";
+
+        /**
+         * Whether to wake when device is connected to a charger.
+         * @hide
+         */
+        public static final String WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
 
         /**
          * When the user has enable the option to have a "bug report" command

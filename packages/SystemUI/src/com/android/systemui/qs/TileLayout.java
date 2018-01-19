@@ -1,6 +1,7 @@
 package com.android.systemui.qs;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -58,6 +59,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         mRecords.add(tile);
         tile.tile.setListening(this, mListening);
         addView(tile.tileView);
+        tile.tileView.textVisibility();
     }
 
     @Override
@@ -92,8 +94,15 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         for (TileRecord record : mRecords) {
             record.tileView.textVisibility();
         }
-
         updateSettings();
+        int columns = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.QS_LAYOUT_COLUMNS, mDefaultColumns,
+                UserHandle.USER_CURRENT);
+        if (mColumns != columns) {
+            mColumns = columns;
+            return true;
+        }
+        requestLayout();
         return false;
     }
 
@@ -156,12 +165,5 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     public void updateSettings() {
         final Resources res = mContext.getResources();
         mDefaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
-        int columns = Settings.Secure.getIntForUser(
-                mContext.getContentResolver(), Settings.Secure.QS_LAYOUT_COLUMNS, mDefaultColumns,
-                UserHandle.USER_CURRENT);
-        if (mColumns != columns) {
-            mColumns = columns;
-            requestLayout();
-        }
     }
 }

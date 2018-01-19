@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (C) 2012-2017 The Dirty Unicorns Project
+  Copyright (C) 2018 RR
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,4 +26,7 @@
 
     <!-- The min animation duration for animating the fab out -->
     <integer name="recents_animate_fab_exit_duration">125</integer>
+
+    <integer name="config_recentDefaultDur">150</integer>
+
 </resources>

@@ -34,7 +34,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.internal.telephony.TelephonyIntents;
-import com.android.internal.util.du.Utils;
+import com.android.internal.util.rr.Utils;
 
 import com.android.systemui.R;
 import com.android.systemui.Dependency;

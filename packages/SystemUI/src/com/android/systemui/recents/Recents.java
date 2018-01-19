@@ -180,7 +180,6 @@ public class Recents extends SystemUI
         }
     };
 
-
     /**
      * Returns the callbacks interface that non-system users can call.
      */
@@ -217,7 +216,6 @@ public class Recents extends SystemUI
         sTaskLoader = new RecentsTaskLoader(mContext);
         mHandler = new Handler();
         mImpl = new RecentsImpl(mContext);
-
         // Check if there is a recents override package
         if (Build.IS_USERDEBUG || Build.IS_ENG) {
             String cnStr = SystemProperties.get(RECENTS_OVERRIDE_SYSPROP_KEY);

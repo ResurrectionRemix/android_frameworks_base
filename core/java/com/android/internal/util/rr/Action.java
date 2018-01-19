@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.aicp;
+package com.android.internal.util.rr;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
