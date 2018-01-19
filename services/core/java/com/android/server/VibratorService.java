@@ -362,20 +362,22 @@ public class VibratorService extends IVibratorService.Stub
             return;
         }
 
-        // If our current vibration is longer than the new vibration and is the same amplitude,
-        // then just let the current one finish.
-        if (effect instanceof VibrationEffect.OneShot
-                && mCurrentVibration != null
-                && mCurrentVibration.mEffect instanceof VibrationEffect.OneShot) {
-            VibrationEffect.OneShot newOneShot = (VibrationEffect.OneShot) effect;
-            VibrationEffect.OneShot currentOneShot =
-                    (VibrationEffect.OneShot) mCurrentVibration.mEffect;
-            if (mCurrentVibration.hasLongerTimeout(newOneShot.getTiming())
-                    && newOneShot.getAmplitude() == currentOneShot.getAmplitude()) {
-                if (DEBUG) {
-                    Slog.d(TAG, "Ignoring incoming vibration in favor of current vibration");
+        synchronized (mLock) {
+            // If our current vibration is longer than the new vibration and is the same amplitude,
+            // then just let the current one finish.
+            if (effect instanceof VibrationEffect.OneShot
+                    && mCurrentVibration != null
+                    && mCurrentVibration.mEffect instanceof VibrationEffect.OneShot) {
+                VibrationEffect.OneShot newOneShot = (VibrationEffect.OneShot) effect;
+                VibrationEffect.OneShot currentOneShot =
+                        (VibrationEffect.OneShot) mCurrentVibration.mEffect;
+                if (mCurrentVibration.hasLongerTimeout(newOneShot.getTiming())
+                        && newOneShot.getAmplitude() == currentOneShot.getAmplitude()) {
+                    if (DEBUG) {
+                        Slog.d(TAG, "Ignoring incoming vibration in favor of current vibration");
+                    }
+                    return;
                 }
-                return;
             }
         }
 
