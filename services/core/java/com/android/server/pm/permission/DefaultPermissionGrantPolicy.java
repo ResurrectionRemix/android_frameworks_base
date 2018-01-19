@@ -786,6 +786,10 @@ public final class DefaultPermissionGrantPolicy {
 
         // OmniJaws
         grantSystemFixedPermissionsToSystemPackage("org.omnirom.omnijaws", userId, ALWAYS_LOCATION_PERMISSIONS);
+
+        // Google dialer
+        grantSystemFixedPermissionsToSystemPackage("com.google.android.dialer", userId, PHONE_PERMISSIONS,
+                CONTACTS_PERMISSIONS, SMS_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(String category, int userId) {
