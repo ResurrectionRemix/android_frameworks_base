@@ -48,9 +48,8 @@
 
         <com.android.systemui.statusbar.phone.MultiUserSwitch
             android:id="@+id/multi_user_switch"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/qs_panel_footer_height"
+            android:layout_height="@dimen/qs_panel_footer_height"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ripple_drawable"
             android:focusable="true">
@@ -65,23 +64,21 @@
 
         <com.android.systemui.statusbar.AlphaOptimizedImageView
             android:id="@android:id/edit"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/qs_panel_footer_height"
+            android:layout_height="@dimen/qs_panel_footer_height"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:clipToPadding="false"
             android:contentDescription="@string/accessibility_quick_settings_edit"
             android:focusable="true"
-            android:padding="10dp"
+            android:padding="12dp"
             android:src="@drawable/ic_mode_edit"
             android:tint="?android:attr/colorForeground"/>
 
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
             android:id="@+id/settings_button_container"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/qs_panel_footer_height"
+            android:layout_height="@dimen/qs_panel_footer_height"
             android:clipChildren="false"
             android:clipToPadding="false">
 
@@ -109,9 +106,8 @@
 
         <com.android.systemui.statusbar.phone.ExpandableIndicator
             android:id="@+id/expand_indicator"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/qs_panel_footer_height"
+            android:layout_height="@dimen/qs_panel_footer_height"
             android:clipToPadding="false"
             android:clickable="true"
             android:focusable="true"
