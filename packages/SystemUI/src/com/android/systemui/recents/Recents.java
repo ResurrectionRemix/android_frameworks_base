@@ -26,11 +26,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -127,9 +125,6 @@ public class Recents extends SystemUI
 
     // The set of runnables to run after binding to the system user's service.
     private final ArrayList<Runnable> mOnConnectRunnables = new ArrayList<>();
-
-    // Alternative recents settings
-    private boolean mUseSlimRecents = false;
 
     // Only for secondary users, this is the death handler for the binder from the system user
     private final IBinder.DeathRecipient mUserToSystemCallbacksDeathRcpt = new IBinder.DeathRecipient() {
@@ -260,10 +255,6 @@ public class Recents extends SystemUI
         if (!isUserSetup()) {
             return;
         }
-        // Don't use if alternative recents are enabled
-        if (isAlternativeRecentsEnabled()) {
-            return;
-        }
 
         if (proxyToOverridePackage(ACTION_SHOW_RECENTS)) {
             return;
@@ -308,10 +299,6 @@ public class Recents extends SystemUI
         if (!isUserSetup()) {
             return;
         }
-        // Don't use if alternative recents are enabled
-        if (isAlternativeRecentsEnabled()) {
-            return;
-        }
 
         if (proxyToOverridePackage(ACTION_HIDE_RECENTS)) {
             return;
@@ -345,10 +332,6 @@ public class Recents extends SystemUI
         // Ensure the device has been provisioned before allowing the user to interact with
         // recents
         if (!isUserSetup()) {
-            return;
-        }
-        // Don't use if alternative recents are enabled
-        if (isAlternativeRecentsEnabled()) {
             return;
         }
 
@@ -388,10 +371,6 @@ public class Recents extends SystemUI
         if (!isUserSetup()) {
             return;
         }
-        // Don't use if alternative recents are enabled
-        if (isAlternativeRecentsEnabled()) {
-            return;
-        }
 
         int currentUser = sSystemServicesProxy.getCurrentUser();
         if (sSystemServicesProxy.isSystemUser(currentUser)) {
@@ -418,10 +397,6 @@ public class Recents extends SystemUI
         // Ensure the device has been provisioned before allowing the user to interact with
         // recents
         if (!isUserSetup()) {
-            return;
-        }
-        // Don't use if alternative recents are enabled
-        if (isAlternativeRecentsEnabled()) {
             return;
         }
 
@@ -839,13 +814,6 @@ public class Recents extends SystemUI
         ContentResolver cr = mContext.getContentResolver();
         return (Settings.Global.getInt(cr, Settings.Global.DEVICE_PROVISIONED, 0) != 0) &&
                 (Settings.Secure.getInt(cr, Settings.Secure.USER_SETUP_COMPLETE, 0) != 0);
-    }
-
-    /**
-     * @return whether a different recent solution is enabled that handles show/hide/toggle actions
-     */
-    private boolean isAlternativeRecentsEnabled() {
-        return mUseSlimRecents;
     }
 
     /**

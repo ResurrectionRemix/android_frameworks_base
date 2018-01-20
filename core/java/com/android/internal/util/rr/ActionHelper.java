@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class ActionHelper {
 
     private static final String SYSTEMUI_METADATA_NAME = "com.android.systemui";
-
+ /*
     public static ArrayList<ActionConfig> getRecentAppSidebarConfig(Context context) {
         return (ConfigSplitHelper.getActionConfigValues(context,
                 getRecentAppSidebarProvider(context), null, null, false));
@@ -71,7 +71,7 @@ public class ActionHelper {
         }
         Settings.System.putString(context.getContentResolver(),
                 Settings.System.RECENT_APP_SIDEBAR_CONTENT, config);
-    }
+    }*/
 
     // General methods to retrieve the correct icon for the respective action.
     public static Drawable getActionIconImage(Context context,
