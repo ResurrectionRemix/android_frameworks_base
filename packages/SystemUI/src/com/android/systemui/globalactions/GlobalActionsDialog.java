@@ -144,6 +144,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private static final String GLOBAL_ACTION_KEY_EMERGENCY = "emergency";
     private static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
     private static final String GLOBAL_ACTION_KEY_ONTHEGO = "onthego";
+    private static final String GLOBAL_ACTION_KEY_SCREENRECORD = "screenrecord";
+
+    private static final String OMNIRECORD_PACKAGE_NAME = "org.omnirom.omnirecord";
 
     private static final int SHOW_TOGGLES_BUTTON = 1;
     private static final int RESTART_BUTTON = 2;
@@ -524,6 +527,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         Settings.Secure.SCREENSHOT_IN_POWER_MENU, 1, getCurrentUser().id) != 0) {
                     mItems.add(new ScreenshotAction());
                 }
+            } else if (GLOBAL_ACTION_KEY_SCREENRECORD.equals(actionKey)) {
+                if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.GLOBAL_ACTIONS_SCREENRECORD, 0, getCurrentUser().id) == 1) {
+                    mItems.add(getScreenRecordAction());
+                }
             } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
                 if (!mEmergencyAffordanceManager.needsEmergencyAffordance()) {
                     mItems.add(new EmergencyDialerAction());
@@ -813,6 +821,26 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         };
     }
 
+    private Action getScreenRecordAction() {
+        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_screenrecord,
+                com.android.systemui.R.string.global_action_screenrecord) {
+            @Override
+            public void onPress() {
+                TakeScreenRecord();
+            }
+
+            @Override
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            @Override
+            public boolean showBeforeProvisioning() {
+                return true;
+            }
+        };
+    }
+
     private class BugReportAction extends SinglePressAction implements LongPressAction {
 
         public BugReportAction() {
@@ -1069,6 +1097,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         startIntent.setComponent(cn);
         startIntent.setAction("start");
         mContext.startService(startIntent);
+    }
+
+    private void TakeScreenRecord() {
+
+        final Intent intent = new Intent(OMNIRECORD_PACKAGE_NAME + ".ACTION_START");
+        intent.setPackage(OMNIRECORD_PACKAGE_NAME);
+        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT);
     }
 
     private void prepareDialog() {

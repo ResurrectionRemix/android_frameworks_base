@@ -4855,6 +4855,17 @@ public final class Settings {
         private static final Validator TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR =
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 100);
 
+        /**
+         * If Screenrecord should be displayed at the power menu.
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_SCREENRECORD = "global_actions_screenrecord";
+
+        /** @hide */
+        private static final Validator GLOBAL_ACTIONS_SCREENRECORD_VALIDATOR =
+              BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -4961,6 +4972,7 @@ public final class Settings {
             ON_THE_GO_CAMERA,
             TRANSPARENT_POWER_MENU,
             TRANSPARENT_POWER_DIALOG_DIM,
+            GLOBAL_ACTIONS_SCREENRECORD,
         };
 
         /**
@@ -5104,6 +5116,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ON_THE_GO_CAMERA);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_MENU);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_DIALOG_DIM);
+            PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
+            // AICP Settings end
         }
 
         /**
@@ -5221,6 +5235,7 @@ public final class Settings {
             VALIDATORS.put(ON_THE_GO_CAMERA,ON_THE_GO_CAMERA_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_MENU,TRANSPARENT_POWER_MENU_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_DIALOG_DIM,TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR);
+            VALIDATORS.put(GLOBAL_ACTIONS_SCREENRECORD,GLOBAL_ACTIONS_SCREENRECORD_VALIDATOR);
         }
 
         /**
