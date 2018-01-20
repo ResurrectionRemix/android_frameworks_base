@@ -46,4 +46,7 @@
     <string name="animation_grow_shrink_right">Grow in (Right)</string>
     <string name="action_null">Blank</string>
 
+    <!-- Label for item that screenrecords in power menu options dialog -->
+    <string name="global_action_screenrecord">Screenrecord</string>
+
 </resources>

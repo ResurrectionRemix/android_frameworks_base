@@ -4004,6 +4004,13 @@ public final class Settings {
         public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
 
         /**
+         * Whether to display the screenrecord action on power menu
+         * @hide
+         */
+        public static final String POWERMENU_SCREENRECORD = "powermenu_screenrecord";
+
+
+        /**
          * Timeout value for button lights. 0 = disabled
          * @hide
          */
