@@ -1931,13 +1931,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     };
 
-    private final Runnable mScreenrecordRunnable = new Runnable() {
-        @Override
-        public void run() {
-            takeScreenrecord();
-        }
-    };
-
     @Override
     public void screenRecordAction(int mode) {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.ACCESS_SURFACE_FLINGER,

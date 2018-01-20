@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.du.carrierlabel;
+package com.android.systemui.rr.carrierlabel;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -38,7 +38,7 @@ import com.android.internal.util.rr.Utils;
 
 import com.android.systemui.R;
 import com.android.systemui.Dependency;
-import com.android.systemui.du.carrierlabel.SpnOverride;
+import com.android.systemui.rr.carrierlabel.SpnOverride;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.du.carrierlabel;
+package com.android.systemui.rr.carrierlabel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
