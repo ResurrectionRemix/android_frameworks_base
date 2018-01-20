@@ -128,6 +128,9 @@ public class Recents extends SystemUI
     // The set of runnables to run after binding to the system user's service.
     private final ArrayList<Runnable> mOnConnectRunnables = new ArrayList<>();
 
+    // Alternative recents settings
+    private boolean mUseSlimRecents = false;
+
     // Only for secondary users, this is the death handler for the binder from the system user
     private final IBinder.DeathRecipient mUserToSystemCallbacksDeathRcpt = new IBinder.DeathRecipient() {
         @Override
@@ -204,10 +207,6 @@ public class Recents extends SystemUI
         return sDebugFlags;
     }
 
-    public void evictAllCaches() {
-        getTaskLoader().evictAllCaches();
-    }
-
     @Override
     public void start() {
         sDebugFlags = new RecentsDebugFlags(mContext);
@@ -236,6 +235,7 @@ public class Recents extends SystemUI
         if (sSystemServicesProxy.isSystemUser(processUser)) {
             // For the system user, initialize an instance of the interface that we can pass to the
             // secondary user
+            getComponent(CommandQueue.class).addCallbacks(this);
             mSystemToUserCallbacks = new RecentsSystemUser(mContext, mImpl);
         } else {
             // For the secondary user, bind to the primary user's service to get a persistent
@@ -258,6 +258,10 @@ public class Recents extends SystemUI
         // Ensure the device has been provisioned before allowing the user to interact with
         // recents
         if (!isUserSetup()) {
+            return;
+        }
+        // Don't use if alternative recents are enabled
+        if (isAlternativeRecentsEnabled()) {
             return;
         }
 
@@ -304,6 +308,10 @@ public class Recents extends SystemUI
         if (!isUserSetup()) {
             return;
         }
+        // Don't use if alternative recents are enabled
+        if (isAlternativeRecentsEnabled()) {
+            return;
+        }
 
         if (proxyToOverridePackage(ACTION_HIDE_RECENTS)) {
             return;
@@ -337,6 +345,10 @@ public class Recents extends SystemUI
         // Ensure the device has been provisioned before allowing the user to interact with
         // recents
         if (!isUserSetup()) {
+            return;
+        }
+        // Don't use if alternative recents are enabled
+        if (isAlternativeRecentsEnabled()) {
             return;
         }
 
@@ -376,6 +388,10 @@ public class Recents extends SystemUI
         if (!isUserSetup()) {
             return;
         }
+        // Don't use if alternative recents are enabled
+        if (isAlternativeRecentsEnabled()) {
+            return;
+        }
 
         int currentUser = sSystemServicesProxy.getCurrentUser();
         if (sSystemServicesProxy.isSystemUser(currentUser)) {
@@ -402,6 +418,10 @@ public class Recents extends SystemUI
         // Ensure the device has been provisioned before allowing the user to interact with
         // recents
         if (!isUserSetup()) {
+            return;
+        }
+        // Don't use if alternative recents are enabled
+        if (isAlternativeRecentsEnabled()) {
             return;
         }
 
@@ -822,6 +842,13 @@ public class Recents extends SystemUI
     }
 
     /**
+     * @return whether a different recent solution is enabled that handles show/hide/toggle actions
+     */
+    private boolean isAlternativeRecentsEnabled() {
+        return mUseSlimRecents;
+    }
+
+    /**
      * Attempts to proxy the following action to the override recents package.
      * @return whether the proxying was successful
      */
@@ -840,18 +867,5 @@ public class Recents extends SystemUI
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("Recents");
         pw.println("  currentUserId=" + SystemServicesProxy.getInstance(mContext).getCurrentUser());
-    }
-
-    public void removeSbCallbacks() {
-        getComponent(CommandQueue.class).removeCallbacks(this);
-        // there are other callbacks registered (like with RecentsImplProxy binder for
-        // non sys users) to be removed but for now let's use the easiest way and just
-        // block main calls in RecentsImpl
-        mImpl.mUseSlimRecents = true;
-    }
-
-    public void addSbCallbacks() {
-        getComponent(CommandQueue.class).addCallbacks(this);
-        mImpl.mUseSlimRecents = false;
     }
 }
