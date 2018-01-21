@@ -4032,6 +4032,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     return -1;
                 }
             }
+            return -1;
         } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
             if (down) {
                 if (repeatCount == 0) {
