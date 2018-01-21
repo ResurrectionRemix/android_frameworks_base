@@ -524,6 +524,13 @@ class GlobalScreenrecord {
                 r.getString(com.android.internal.R.string.share), shareAction)
             .addAction(R.drawable.ic_screenshot_delete,
                 r.getString(com.android.internal.R.string.delete), deleteAction);
+
+        Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+        launchIntent.setDataAndType(uri, "video/mp4");
+        launchIntent.setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        builder.setContentIntent(PendingIntent.getActivity(mContext, 0, launchIntent, 0));
+
         Notification notif = builder.build();
         mNotificationManager.notify(SCREENRECORD_NOTIFICATION_ID, notif);
 
