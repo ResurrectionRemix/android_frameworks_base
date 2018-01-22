@@ -95,6 +95,7 @@ public class MobileSignalController extends SignalController<
     private static final int NETWORK_TYPE_LTE_CA_5GE = TelephonyManager.MAX_NETWORK_TYPE + 1;
 
     private boolean mRoamingIconAllowed;
+    private boolean mShowLteFourGee;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -158,6 +159,9 @@ public class MobileSignalController extends SignalController<
             Uri uri = Settings.System.getUriFor(Settings.System.ROAMING_INDICATOR_ICON);
             resolver.registerContentObserver(uri, false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_LTE_FOURGEE), false,
+                    this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -177,6 +181,11 @@ public class MobileSignalController extends SignalController<
                 Settings.System.ROAMING_INDICATOR_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
 
+        mShowLteFourGee = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_LTE_FOURGEE, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        mapIconSets();
         updateTelephony();
     }
 
@@ -288,7 +297,7 @@ public class MobileSignalController extends SignalController<
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hPlusGroup);
 
-        if (mConfig.show4gForLte) {
+        if (mShowLteFourGee) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
             if (mConfig.hideLtePlus) {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
