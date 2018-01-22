@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.ServiceManager;
 import android.provider.Settings;
 import android.service.gesture.EdgeGestureManager;
 import android.view.Gravity;
@@ -44,6 +45,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.gesture.EdgeGesturePosition;
 import com.android.internal.util.gesture.EdgeServiceConstants;
 
@@ -142,16 +144,31 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
             }
             mPieAttached = false;
         }
-        if (enabled && showPie()) addPieInLocation(gravity);
+        if (enabled) attachPie(gravity);
     }
 
     private boolean showPie() {
         final boolean pieEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
-        final int immersiveMode = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.SYSTEM_DESIGN_FLAGS, 0, UserHandle.USER_CURRENT);
-        return pieEnabled && immersiveMode != 0
-                && immersiveMode != View.SYSTEM_DESIGN_FLAG_IMMERSIVE_STATUS;
+        return pieEnabled;
+    }
+
+    public void attachPie(int gravity) {
+        if(showPie()) {
+            // want some slice?
+            switch (gravity) {
+                // this is just main gravity, the trigger is centered later
+                default:
+                    addPieInLocation(Gravity.LEFT);
+                    break;
+                case 1:
+                    addPieInLocation(Gravity.RIGHT);
+                    break;
+                case 2:
+                    addPieInLocation(Gravity.BOTTOM);
+                    break;
+            }
+        }
     }
 
     private void initOrientation(int orientation) {
@@ -361,6 +378,8 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
     }
 
     private void onNavButtonPressed(String buttonName) {
+            final IStatusBarService barService = IStatusBarService.Stub.asInterface(
+                    ServiceManager.getService(Context.STATUS_BAR_SERVICE));
         switch (buttonName) {
             case PieController.BACK_BUTTON:
                 injectKey(KeyEvent.KEYCODE_BACK);
@@ -369,7 +388,13 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
                 injectKey(KeyEvent.KEYCODE_HOME);
                 break;
             case PieController.RECENT_BUTTON:
-                injectKey(KeyEvent.KEYCODE_APP_SWITCH);
+                 if (isKeyguardLocked()) {
+                    return;
+                }
+                try {
+                    barService.toggleRecentApps();
+                } catch (Exception e) {
+                }
                 break;
         }
     }
