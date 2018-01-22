@@ -34,7 +34,7 @@
         android:includeFontPadding="false"
         android:text="@string/weather_info_not_available"
         android:textSize="15sp"
-        android:textColor="@color/keyguard_default_primary_text_color" />
+        android:textColor="?attr/wallpaperTextColor" />
 
     <LinearLayout
         android:id="@+id/weather_panel"
@@ -59,7 +59,7 @@
         android:textSize="15sp"
         android:textStyle="normal"
         android:fontFamily="sans-serif-condensed"
-        android:textColor="@color/keyguard_default_primary_text_color" />
+        android:textColor="?attr/wallpaperTextColor" />
 
         </LinearLayout>
 
@@ -77,6 +77,7 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:scaleType="centerInside"
+                android:tint="?attr/wallpaperTextColor"
                 android:adjustViewBounds="true" />
 
         </LinearLayout>
@@ -98,7 +99,7 @@
                 android:textSize="15sp"
                 android:textStyle="normal"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/keyguard_default_primary_text_color" />
+                android:textColor="?attr/wallpaperTextColor" />
 
         </LinearLayout>
     </LinearLayout>
@@ -113,6 +114,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:letterSpacing="0.15"
                 android:textSize="16sp"
-                android:textColor="@color/keyguard_default_primary_text_color" />
+                android:textColor="?attr/wallpaperTextColor" />
 
 </LinearLayout>
