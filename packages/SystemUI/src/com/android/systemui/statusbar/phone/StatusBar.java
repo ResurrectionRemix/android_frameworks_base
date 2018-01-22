@@ -6572,7 +6572,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENTS_ICON_PACK),
                     false, this, UserHandle.USER_ALL);
-            update();
         }
 
         @Override
