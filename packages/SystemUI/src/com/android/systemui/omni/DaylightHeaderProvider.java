@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -90,7 +91,7 @@ public class DaylightHeaderProvider implements
     }
 
     @Override
-    public void settingsChanged() {
+    public void settingsChanged(Uri uri) {
         final String settingHeaderPackage = Settings.System.getStringForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK,
                 UserHandle.USER_CURRENT);
@@ -112,7 +113,7 @@ public class DaylightHeaderProvider implements
 
     @Override
     public void enableProvider() {
-        settingsChanged();
+        settingsChanged(null);
     }
 
     @Override

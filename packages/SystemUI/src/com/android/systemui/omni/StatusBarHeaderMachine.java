@@ -51,7 +51,7 @@ public class StatusBarHeaderMachine {
 
         public String getName();
 
-        public void settingsChanged();
+        public void settingsChanged(Uri uri);
 
         public void enableProvider();
 
@@ -121,6 +121,9 @@ public class StatusBarHeaderMachine {
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
                     false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_FILE_HEADER_IMAGE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -132,28 +135,17 @@ public class StatusBarHeaderMachine {
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW))) {
                 doRefreshStatusHeaderObservers();
             } else {
-                onChange(selfChange);
-            }
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
-                    UserHandle.USER_CURRENT) == 1;
-
-            if (customHeader) {
                 IStatusBarHeaderProvider provider = getCurrentProvider();
                 // forward to current active provider
                 if (provider != null) {
                     try {
-                        provider.settingsChanged();
+                        provider.settingsChanged(uri);
                     } catch (Exception e) {
                         // just in case
                     }
                 }
+                updateEnablement();
             }
-            updateEnablement();
         }
     }
 
@@ -166,6 +158,7 @@ public class StatusBarHeaderMachine {
         mDefaultProviderName = defaultProvider.getName();
         mCurrentProviderName = mDefaultProviderName;
         addProvider(new StaticHeaderProvider(context));
+        addProvider(new FileHeaderProvider(context));
         mSettingsObserver.observe();
     }
 
