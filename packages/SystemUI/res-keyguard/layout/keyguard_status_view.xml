@@ -62,6 +62,12 @@
                 android:contentDescription="@string/accessibility_ambient_display_charging"
             />
 
+            <include layout="@layout/keyguard_weather_view"
+                android:id="@+id/keyguard_weather_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/clock_view" />
+
             <include layout="@layout/keyguard_status_area"
                 android:id="@+id/keyguard_status_area"
                 android:layout_width="match_parent"
@@ -83,12 +89,6 @@
             android:letterSpacing="0.05"
             android:ellipsize="marquee"
             android:singleLine="true" />
-
-        <include layout="@layout/keyguard_weather_view"
-            android:id="@+id/keyguard_weather_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/owner_info" />
 
     </LinearLayout>
 </com.android.keyguard.KeyguardStatusView>
