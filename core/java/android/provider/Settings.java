@@ -8331,6 +8331,12 @@ public final class Settings {
                 "system_navigation_keys_enabled";
 
         /**
+         * Wheter to dismiss notifications on fingerprint left and right swipe action
+         * @hide
+         */
+        public static final String FP_SWIPE_TO_DISMISS_NOTIFICATIONS = "fp_swipe_to_dismiss_notifications";
+
+        /**
          * Quick Settings number of columns
          * @hide
          */
