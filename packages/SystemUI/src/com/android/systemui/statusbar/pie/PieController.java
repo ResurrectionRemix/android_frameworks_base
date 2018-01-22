@@ -388,13 +388,7 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
                 injectKey(KeyEvent.KEYCODE_HOME);
                 break;
             case PieController.RECENT_BUTTON:
-                 if (isKeyguardLocked()) {
-                    return;
-                }
-                try {
-                    barService.toggleRecentApps();
-                } catch (Exception e) {
-                }
+                 injectKey(KeyEvent.KEYCODE_APP_SWITCH);
                 break;
         }
     }

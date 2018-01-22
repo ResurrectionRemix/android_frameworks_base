@@ -4468,14 +4468,14 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
-
-        if (mSlimRecents != null) {
-            mSlimRecents.onConfigurationChanged(newConfig);
-        }
        int rotation = mDisplay.getRotation();
         if (rotation != mOrientation) {
             if (mPieController != null) mPieController.detachPie();
             mOrientation = rotation;
+        }
+
+        if (mSlimRecents != null) {
+            mSlimRecents.onConfigurationChanged(newConfig);
         }
     }
 
