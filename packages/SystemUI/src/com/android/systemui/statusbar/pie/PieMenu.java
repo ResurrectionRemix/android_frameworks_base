@@ -73,7 +73,7 @@ import com.android.internal.statusbar.StatusBarIcon;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.AnimatedImageView;
-import com.android.systemui.statusbar.BaseStatusBar;
+import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.policy.NetworkController;
@@ -120,7 +120,7 @@ public class PieMenu extends RelativeLayout {
     private final Paint mToggleShaderPaint;
 
     private final AssistUtils mAssistUtils;
-    private final BaseStatusBar mBar;
+    private final StatusBar mBar;
     private final Context mContext;
     private final List<PieItem> mItems = new ArrayList<>();
     private final PieController mPanel;
@@ -266,7 +266,7 @@ public class PieMenu extends RelativeLayout {
      * @param panel instance of piecontroller
      * @param bar instance of basestatusbar
      */
-    public PieMenu(Context context, PieController panel, BaseStatusBar bar) {
+    public PieMenu(Context context, PieController panel, StatusBar bar) {
         super(context);
 
         mContext = context;
@@ -834,7 +834,7 @@ public class PieMenu extends RelativeLayout {
             getDimensions();
             layoutPie();
             if (!mSignalRegistered) {
-                mNetworkController.addSignalCallback(mSignalCallback);
+                mNetworkController.addCallback(mSignalCallback);
                 mSignalRegistered = true;
             }
             if (isAllowedToDraw()) {
@@ -843,7 +843,7 @@ public class PieMenu extends RelativeLayout {
         } else {
             unregisterReceivers();
             if (mSignalRegistered) {
-                mNetworkController.removeSignalCallback(mSignalCallback);
+                mNetworkController.removeCallback(mSignalCallback);
                 mSignalRegistered = false;
             }
         }
@@ -1514,12 +1514,7 @@ public class PieMenu extends RelativeLayout {
                         performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         if (item.getView().getTag().equals(PieController.RECENT_BUTTON) ||
                                 item.getView().getTag().equals(PieController.HOME_BUTTON)) {
-                            try {
-                                WindowManagerGlobal.getWindowManagerService()
-                                        .dismissKeyguard();
-                            } catch (RemoteException ex) {
-                                // system is dead
-                            }
+                            //dont do shit
                         }
                     }
                 }
@@ -1714,7 +1709,7 @@ public class PieMenu extends RelativeLayout {
     private class PieSignalCallback implements SignalCallback {
         @Override
         public void setWifiIndicators(boolean enabled, IconState statusIcon, IconState qsIcon,
-                boolean activityIn, boolean activityOut, String description) {
+                boolean activityIn, boolean activityOut, String description, boolean isTransient) {
             mWifiIconResId = qsIcon == null ? 0 : qsIcon.icon;
             createSignalIcons();
         }
@@ -1723,14 +1718,14 @@ public class PieMenu extends RelativeLayout {
         public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
                 int qsType, boolean activityIn, boolean activityOut,
                 String typeContentDescription, String description, boolean isWide, int subId,
-                boolean isMobileIms,boolean roaming) {
+                boolean roaming, boolean isMobileIms) {
             mSubId = subId;
             mNetworkIconResId = qsIcon == null ? 0 : qsIcon.icon;
             createSignalIcons();
         }
 
         @Override
-        public void setNoSims(boolean show) {
+        public void setNoSims(boolean show,boolean simDetected) {
         }
 
         @Override

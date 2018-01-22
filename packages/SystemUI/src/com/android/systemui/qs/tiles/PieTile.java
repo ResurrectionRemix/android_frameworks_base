@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2017 Resurrection Remix
+ * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,42 +17,44 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
-import android.database.ContentObserver;
-import android.os.Handler;
-import android.os.UserHandle;
+import android.os.Build;
+import android.os.SystemProperties;
 import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
-import android.widget.ListView;
+import android.provider.Settings.Secure;
+import android.service.quicksettings.Tile;
+import android.text.TextUtils;
 
+import com.android.systemui.plugins.qs.QSTile.BooleanState;
+import com.android.systemui.qs.QSHost;
+import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.qs.SecureSetting;
 import com.android.systemui.R;
-import com.android.systemui.qs.QSTile;
-import com.android.systemui.qs.QSTileView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import com.android.internal.logging.MetricsLogger;
-import com.android.internal.logging.MetricsProto.MetricsEvent;
 
+import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
-public class PieTile extends QSTile<QSTile.BooleanState> {
-    private boolean mListening;
-    private PieObserver mObserver;
+public class PieTile extends QSTileImpl<BooleanState> {
 
- private static final Intent PIE_SETTINGS = new Intent().setComponent(new ComponentName(
+    private static final Intent PIE_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.Settings$PieControlSettingsActivity"));
 
-    public PieTile(Host host) {
+    private final SecureSetting mSetting;
+
+    public PieTile(QSHost host) {
         super(host);
-        mObserver = new PieObserver(mHandler);
+
+        mSetting = new SecureSetting(mContext, mHandler, Secure.PIE_STATE) {
+            @Override
+            protected void handleValueChanged(int value, boolean observedChange) {
+                handleRefreshState(value);
+            }
+        };
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return true;
     }
 
     @Override
@@ -59,32 +62,40 @@ public class PieTile extends QSTile<QSTile.BooleanState> {
         return new BooleanState();
     }
 
-
-    @Override
-    public int getMetricsCategory() {
-        return MetricsEvent.RESURRECTED;
-    }
-
     @Override
     protected void handleClick() {
-        toggleState();
+        setEnabled(!mState.value);
         refreshState();
-    }
-
-     @Override
-    protected void handleSecondaryClick() {
-	mHost.startActivityDismissingKeyguard(PIE_SETTINGS);
-    }
-
-    @Override
-    public void handleLongClick() {
-	mHost.startActivityDismissingKeyguard(PIE_SETTINGS);
     }
 
     @Override
     public Intent getLongClickIntent() {
-        // TODO Auto-generated method stub
-        return null;
+        return PIE_SETTINGS;
+    }
+
+    private void setEnabled(boolean enabled) {
+        Settings.Secure.putInt(mContext.getContentResolver(),
+                Settings.Secure.PIE_STATE,
+                enabled ? 1 : 0);
+    }
+
+    @Override
+    protected void handleUpdateState(BooleanState state, Object arg) {
+        final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
+        final boolean enable = value != 0;
+        state.value = enable;
+        state.label = mContext.getString(R.string.quick_settings_pie);
+        if (enable) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_on);
+            state.contentDescription =  mContext.getString(
+                    R.string.quick_settings_pie);
+            state.state = Tile.STATE_ACTIVE;
+        } else {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_off);
+            state.contentDescription =  mContext.getString(
+                    R.string.quick_settings_pie);
+            state.state = Tile.STATE_INACTIVE;
+        }
     }
 
     @Override
@@ -92,60 +103,24 @@ public class PieTile extends QSTile<QSTile.BooleanState> {
         return mContext.getString(R.string.quick_settings_pie);
     }
 
-
-    protected void toggleState() {
-         Settings.Secure.putInt(mContext.getContentResolver(),
-                        Settings.Secure.PIE_STATE, !isPieEnabled() ? 1 : 0);
+    @Override
+    public int getMetricsCategory() {
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override
-    protected void handleUpdateState(BooleanState state, Object arg) {
-        state.visible = true;
-        if (isPieEnabled()) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_on);
-            state.label = mContext.getString(R.string.quick_settings_pie);
+    protected String composeChangeAnnouncement() {
+        if (mState.value) {
+            return mContext.getString(
+                    R.string.quick_settings_pie);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_off);
-            state.label = mContext.getString(R.string.quick_settings_pie);
+            return mContext.getString(
+                    R.string.quick_settings_pie);
         }
-    }
-
-    private boolean isPieEnabled() {
-        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.PIE_STATE, 0,
-                UserHandle.USER_CURRENT) == 1;
     }
 
     @Override
-    public void setListening(boolean listening) {
-        if (mListening == listening) return;
-            mListening = listening;
-        if (listening) {
-            mObserver.startObserving();
-        } else {
-            mObserver.endObserving();
-        }
-    }
-
-    private class PieObserver extends ContentObserver {
-        public PieObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            refreshState();
-        }
-
-        public void startObserving() {
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.PIE_STATE),
-                    false, this, UserHandle.USER_ALL);
-        }
-
-        public void endObserving() {
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
+    public void handleSetListening(boolean listening) {
+        // Do nothing
     }
 }
-

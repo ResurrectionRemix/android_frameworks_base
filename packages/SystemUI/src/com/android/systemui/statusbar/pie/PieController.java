@@ -50,7 +50,7 @@ import com.android.internal.util.gesture.EdgeGesturePosition;
 import com.android.internal.util.gesture.EdgeServiceConstants;
 
 import com.android.systemui.R;
-import com.android.systemui.statusbar.BaseStatusBar;
+import com.android.systemui.statusbar.phone.StatusBar;
 
 /**
  * Pie Controller
@@ -69,7 +69,7 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
     private static PieController sInstance;
 
     private AudioManager mAudioManager;
-    private BaseStatusBar mBar;
+    private StatusBar mBar;
     private Context mContext;
     private EdgeGestureManager mEdgeGestureManager;
     private Handler mHandler;
@@ -111,7 +111,7 @@ public class PieController extends EdgeGestureManager.EdgeGestureActivationListe
      * @Param wm the current Window Manager
      * @Param bar the current BaseStatusBar
      */
-    public void init(Context context, WindowManager wm, BaseStatusBar bar) {
+    public void init(Context context, WindowManager wm, StatusBar bar) {
         mContext = context;
         mHandler = new Handler();
         mWindowManager = wm;

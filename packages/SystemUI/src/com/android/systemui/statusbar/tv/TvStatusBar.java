@@ -29,7 +29,8 @@ import com.android.systemui.pip.tv.PipManager;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.CommandQueue.Callbacks;
 import com.android.systemui.statusbar.policy.NetworkController;
-import com.android.systemui.tv.pip.PipManager;
+
+import java.util.ArrayList;
 
 /**
  * Status bar implementation for "large screen" products that mostly present no on-screen nav
@@ -58,9 +59,5 @@ public class TvStatusBar extends SystemUI implements Callbacks {
         } catch (RemoteException ex) {
             // If the system process isn't there we're doomed anyway.
         }
-    }
-    @Override
-    public NetworkController getNetworkController() {
-        return null;
     }
 }
