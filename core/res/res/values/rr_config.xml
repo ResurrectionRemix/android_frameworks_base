@@ -47,6 +47,7 @@
         <item>restart</item>
         <item>advanced</item>
         <item>screenshot</item>
+        <item>screenrecord</item>
         <item>airplane</item>
     </string-array>
 
