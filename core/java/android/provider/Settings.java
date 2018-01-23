@@ -4359,6 +4359,12 @@ public final class Settings {
         public static final String SENSOR_BLOCK = "sensor_block";
 
         /**
+         * RR COnfig FAB
+         * @hide
+         */
+        public static final String RR_OTA_FAB = "rr_ota_fab";
+
+        /**
          * enable custom lockscreen max notifications config
          * @hide
          */
