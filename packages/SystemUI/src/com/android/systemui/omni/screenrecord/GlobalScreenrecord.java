@@ -75,6 +75,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 class GlobalScreenrecord {
     private static final String TAG = "GlobalScreenrecord";
@@ -105,6 +106,10 @@ class GlobalScreenrecord {
 
     private String mNotifContent = null;
     private boolean mHintShowing = false;
+
+    private long mRecordingStartTime = 0;
+    private long mRecordingTotalTime = 0;
+    private long mFileSize = 0;
 
     private void setFinisher(Runnable finisher) {
         mFinisher = finisher;
@@ -164,6 +169,7 @@ class GlobalScreenrecord {
 
                         // If the recording is still running, we won't reach here,
                         // but will land in the catch block below.
+                        mRecordingTotalTime = System.currentTimeMillis() - mRecordingStartTime;
                         Message msg = Message.obtain(mHandler, MSG_TASK_ENDED, code, 0, null);
                         mHandler.sendMessage(msg);
 
@@ -177,6 +183,7 @@ class GlobalScreenrecord {
                 // Terminate the recording process
                 // HACK: There is no way to send SIGINT to a process, so we... hack
                 rt.exec(new String[]{"killall", "-2", "screenrecord"});
+                mRecordingTotalTime = System.currentTimeMillis() - mRecordingStartTime;
             } catch (IOException e) {
                 // Notify something went wrong
                 Message msg = Message.obtain(mHandler, MSG_TASK_ERROR);
@@ -242,14 +249,18 @@ class GlobalScreenrecord {
         switch (mode) {
             case WindowManager.SCREEN_RECORD_LOW_QUALITY:
                 mNotifContent = base + " - 480x800 @1.5Mbps";
+                mRecordingStartTime = System.currentTimeMillis();
                 break;
             case WindowManager.SCREEN_RECORD_MID_QUALITY:
                 mNotifContent = base + " - 720x1280 @4Mbps";
+                mRecordingStartTime = System.currentTimeMillis();
                 break;
             case WindowManager.SCREEN_RECORD_HIGH_QUALITY:
                 mNotifContent = base + " - 720x1280 @8Mbps";
+                mRecordingStartTime = System.currentTimeMillis();
                 break;
             case -1:
+                // updating current notification
                 mNotifContent = mNotifContent;
         }
         // Display a notification
@@ -257,8 +268,9 @@ class GlobalScreenrecord {
             .setTicker(r.getString(R.string.screenrecord_notif_ticker))
             .setContentTitle(mNotifContent)
             .setSmallIcon(R.drawable.ic_capture_video)
-            .setWhen(System.currentTimeMillis())
-            .setOngoing(true);
+            .setWhen(mRecordingStartTime)
+            .setOngoing(true)
+            .setUsesChronometer(true);
 
         Intent stopIntent = new Intent(mContext, TakeScreenrecordService.class)
             .setAction(TakeScreenrecordService.ACTION_STOP);
@@ -428,6 +440,8 @@ class GlobalScreenrecord {
                 input.delete();
             }
 
+            mFileSize = output.length();
+
             // Make it appear in gallery, run MediaScanner
             // also make sure to tell media scanner that the tmp file got deleted
             MediaScannerConnectionClient client =
@@ -513,9 +527,18 @@ class GlobalScreenrecord {
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
         final Resources r = mContext.getResources();
+
+        final String totalTime = String.format("%02d:%02dm",
+                TimeUnit.MILLISECONDS.toMinutes(mRecordingTotalTime),
+                TimeUnit.MILLISECONDS.toSeconds(mRecordingTotalTime) -
+                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(mRecordingTotalTime))
+        );
+        final long size = mFileSize / 1000000;
+
         Notification.Builder builder = new Notification.Builder(mContext, NotificationChannels.SCREENRECORDS)
             .setTicker(r.getString(R.string.screenrecord_notif_final_ticker))
-            .setContentTitle(r.getString(R.string.screenrecord_notif_completed))
+            .setContentTitle(r.getString(R.string.screenrecord_notif_completed) + " - "
+                    + r.getString(R.string.screenrecord_notif_duration) + " " + totalTime + ", " + size + "MB")
             .setSmallIcon(R.drawable.ic_capture_video)
             .setWhen(System.currentTimeMillis())
             .setAutoCancel(true);
