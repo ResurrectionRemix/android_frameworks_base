@@ -935,4 +935,10 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
             mNavigationBarView.setNotificationPanelExpanded(expanded);
         }
     }
+
+    public void setPulseColors(boolean colorizedMedia, int[] colors) {
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setPulseColors(colorizedMedia, colors);
+        }
+    }
 }

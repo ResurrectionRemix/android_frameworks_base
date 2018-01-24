@@ -6820,6 +6820,12 @@ public final class Settings {
         public static final String SMARTBAR_DOUBLETAP_SLEEP = "smartbar_doubletap_sleep";
 
         /**
+         * Whether to use automatic color for Pulse
+         * @hide
+         */
+        public static final String PULSE_AUTO_COLOR = "pulse_auto_color";
+
+        /**
          * A flag containing settings used for biometric weak
          * @hide
          */
