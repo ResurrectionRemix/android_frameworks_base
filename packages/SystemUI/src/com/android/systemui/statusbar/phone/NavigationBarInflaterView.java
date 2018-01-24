@@ -75,8 +75,8 @@ public class NavigationBarInflaterView extends FrameLayout
     public static final String KEY_CODE_START = "(";
     public static final String KEY_IMAGE_DELIM = ":";
     public static final String KEY_CODE_END = ")";
-    private static final String WEIGHT_SUFFIX = "W";
-    private static final String WEIGHT_CENTERED_SUFFIX = "WC";
+    public static final String WEIGHT_SUFFIX = "W";
+    public static final String WEIGHT_CENTERED_SUFFIX = "WC";
     private static final String ABSOLUTE_SUFFIX = "A";
     private static final String ABSOLUTE_VERTICAL_CENTERED_SUFFIX = "C";
 
