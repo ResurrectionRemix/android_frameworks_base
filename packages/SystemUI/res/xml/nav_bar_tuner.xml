@@ -26,7 +26,7 @@
         android:entries="@array/nav_bar_layouts"
         android:entryValues="@array/nav_bar_layouts_values" />
 
-    <com.android.systemui.tuner.RadioListPreference
+    <!--<com.android.systemui.tuner.RadioListPreference
         android:key="type_left"
         android:title="@string/left_nav_bar_button_type"
         android:persistent="false"
@@ -62,6 +62,11 @@
         android:key="icon_right"
         android:persistent="false"
         android:summary="%s"
-        android:title="@string/right_icon" />
+        android:title="@string/right_icon" />-->
 
+    <Preference
+        android:key="navbar_editor"
+        android:title="@string/navbar_editor_title"
+        android:summary="@string/navbar_editor_summary"
+        android:fragment="com.android.systemui.tuner.NavBarEditor" />
 </PreferenceScreen>
