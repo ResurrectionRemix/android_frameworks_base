@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.internal.utils.du.UserContentObserver;
@@ -79,10 +80,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mBatteryBar;
     private int mShowCarrierLabel;
 
-    private View mRRLogo;
-    private View mRRLogoRight;
+    private ImageView mRRLogo;
+    private ImageView mRRLogoRight;
     private View mWeatherImageView;
     private View mWeatherTextView;
+
     private int mShowLogo;
     private int mShowWeather;
     private final Handler mHandler = new Handler();
@@ -176,8 +178,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
-        mRRLogo = mStatusBar.findViewById(R.id.status_bar_logo);
-        mRRLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
+        mRRLogo = (ImageView) (ImageView) mStatusBar.findViewById(R.id.status_bar_logo);
+        mRRLogoRight = (ImageView) mStatusBar.findViewById(R.id.status_bar_logo_right);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mRRLogo);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mRRLogoRight);
         mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
         mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
         mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
@@ -213,6 +217,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         super.onDestroyView();
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mSignalClusterView);
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mRRLogo);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mRRLogoRight);
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }

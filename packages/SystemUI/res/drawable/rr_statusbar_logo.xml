@@ -2,7 +2,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="17.000000dp"
     android:height="17.000000dp"
-	android:tint="@color/rr_statusbar_logo_color"
     android:viewportWidth="439.000000"
     android:viewportHeight="439.000000">
 
