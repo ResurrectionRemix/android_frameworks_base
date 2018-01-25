@@ -4114,6 +4114,11 @@ public final class Settings {
                 new SettingsValidators.InclusiveFloatRangeValidator(-7, 7);
 
         /**
+         * @hide
+         */
+        public static final String SCREENRECORD_QUALITY_MODE = "screenrecord_quality_mode";
+
+        /**
          * Whether lock-to-app will be triggered by long-press on recents.
          * @hide
          */
