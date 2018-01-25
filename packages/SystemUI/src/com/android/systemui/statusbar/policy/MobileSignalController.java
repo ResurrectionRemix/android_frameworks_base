@@ -39,6 +39,7 @@ import android.util.SparseArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.cdma.EriInfo;
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.SignalDrawable;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
@@ -130,7 +131,7 @@ public class MobileSignalController extends SignalController<
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
-        TunerService.get(mContext).addTunable(this,
+        Dependency.get(TunerService.class).addTunable(this,
                 ROAMING_INDICATOR_ICON,DATA_DISABLED_ICON);
     }
 
