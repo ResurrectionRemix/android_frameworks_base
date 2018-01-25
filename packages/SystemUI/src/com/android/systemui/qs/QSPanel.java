@@ -62,13 +62,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     public static final String QS_SHOW_BRIGHTNESS_SLIDER =
             "lineagesecure:" + LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
-    public static final String QS_SHOW_AUTO_BRIGHTNESS =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
 
     protected final Context mContext;
     protected final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
     protected final View mBrightnessView;
-    protected final ImageView mAutoBrightnessView;
     protected final ImageView mBrightnessIcon;
     private final H mHandler = new H();
     private final View mPageIndicator;
@@ -124,13 +121,11 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         mFooter = new QSSecurityFooter(this, context);
         addView(mFooter.getView());
-
-        updateResources();
         mBrightnessController = new BrightnessController(getContext(),
                 mBrightnessIcon,
                 findViewById(R.id.brightness_slider));
 
-        mAutoBrightnessView = (ImageView) findViewById(R.id.brightness_icon);
+        updateResources();
 
     }
 
@@ -167,8 +162,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this,
-                QS_SHOW_BRIGHTNESS_SLIDER,
-                QS_SHOW_AUTO_BRIGHTNESS);
+                QS_SHOW_BRIGHTNESS_SLIDER);
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -201,9 +195,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     public void onTuningChanged(String key, String newValue) {
         if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             mBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
-                    ? VISIBLE : GONE);
-        } else if (QS_SHOW_AUTO_BRIGHTNESS.equals(key) && mIsAutomaticBrightnessAvailable) {
-            mAutoBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
                     ? VISIBLE : GONE);
         }
     }
