@@ -29,6 +29,7 @@ import android.content.Context;
 import android.graphics.*;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
@@ -65,7 +66,6 @@ import com.android.systemui.DejankUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.classifier.FalsingManager;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
@@ -88,6 +88,12 @@ import com.android.systemui.statusbar.stack.StackStateAnimator;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerServiceImpl;
 import com.android.systemui.statusbar.*;
+
+import com.android.systemui.qs.QSContainerImpl;
+import com.android.systemui.qs.QSFragment;
+
+import android.provider.Settings;
+import com.android.internal.utils.du.UserContentObserver;
 
 import lineageos.providers.LineageSettings;
 
@@ -288,8 +294,8 @@ public class NotificationPanelView extends PanelView implements
     private static int mBlurLightColorFilter;
     private static int mTranslucencyPercentage;
     private static AlphaAnimation mAlphaAnimation;
-    private static boolean mTranslucentQuickSettings;
     private static FrameLayout mInnerBlurredView;
+    private static QSContainerImpl mContainer;
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
     
@@ -349,7 +355,8 @@ public class NotificationPanelView extends PanelView implements
         mQsNavbarScrim = findViewById(R.id.qs_navbar_scrim);
         mLastOrientation = getResources().getConfiguration().orientation;
         initBottomArea();
-
+        initBlurPrefs();
+        mContainer = QSFragment.mContainer;
         mQsFrame = findViewById(R.id.qs_frame);
     }
 
@@ -1336,11 +1343,6 @@ public class NotificationPanelView extends PanelView implements
         }
         resetVerticalPanelPosition();
         updateQsState();
-        
-        try {
-            handleQuickSettingsBackround();
-        } catch (Exception e){
-        }
     }
 
     private final Runnable mAnimateKeyguardStatusViewInvisibleEndRunnable = new Runnable() {
@@ -2904,15 +2906,82 @@ public class NotificationPanelView extends PanelView implements
                 keyguardOrShadeShowing;
     }
 
-    private static void handleQuickSettingsBackround() {
 
-        if (mQsFrame == null)
+    public static void startBlurTask() {
+
+        if (!mBlurredStatusBarExpandedEnabled)
             return;
-        if (mKeyguardShowing) {
-            mQsFrame.getBackground().setAlpha(255);
-        } else {
-            mQsFrame.getBackground().setAlpha(mTranslucentQuickSettings ? mTranslucencyPercentage : 255);
+        try {
+            if (mBlurredView.getTag().toString().equals("blur_applied"))
+                return;
+        } catch (Exception e){
         }
+        if (mNotificationPanelView == null)
+            return;  
+        if (mKeyguardShowing || mHeadsUpShowing || mHeadsUpAnimatingAway)
+            return;
+       
+        BlurTask.setBlurTaskCallback(new BlurUtils.BlurTaskCallback() {
+
+            @Override
+            public void blurTaskDone(Bitmap blurredBitmap) {
+
+                if (blurredBitmap != null) {
+
+                    if (mBlurredView.getLayoutParams().width != mNotificationPanelView.getWidth()) {
+                        
+                        mBlurredView.getLayoutParams().width = mNotificationPanelView.getWidth();
+                        mBlurredView.requestLayout();
+                    }
+
+                    int[] dimens = BlurTask.getRealScreenDimensions();
+                    if (mNotificationPanelView.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                            mInnerBlurredView.getLayoutParams().width = dimens[0];
+                        mInnerBlurredView.getLayoutParams().height = dimens[1];
+                        mInnerBlurredView.requestLayout();
+
+                    BitmapDrawable drawable = new BitmapDrawable(blurredBitmap);
+                    drawable.setColorFilter(mColorFilter);
+
+                    mInnerBlurredView.setBackground(drawable);
+
+                    mBlurredView.setTag("blur_applied");
+
+                } else {
+
+                    mBlurredView.setBackgroundColor(mBlurLightColorFilter);
+
+                    mBlurredView.setTag("error");
+
+                }
+                mBlurredView.startAnimation(mAlphaAnimation);
+            }
+
+            @Override
+            public void dominantColor(int color) {
+
+                double lightness = DisplayUtils.getColorLightness(color);
+
+                if (lightness >= 0.0 && color <= 1.0) {
+                    if (lightness <= 0.33) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurLightColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.34 && lightness <= 0.66) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.67 && lightness <= 1.0) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurDarkColorFilter, PorterDuff.Mode.MULTIPLY);
+                    }
+
+                } else {
+                    mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+                }
+            }
+        });
+
+        BlurTask.setBlurEngine(BlurUtils.BlurEngine.RenderScriptBlur);
+
+        new BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
      }
 
     class SettingsObserver extends UserContentObserver {
@@ -2929,11 +2998,7 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BLUR_RADIUS_PREFERENCE_KEY), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY), false, this);      
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2967,12 +3032,8 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10);
             mBlurRadius = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 5);
-            mTranslucentQuickSettings =  Settings.System.getIntForUser(resolver,
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
             mBlurredStatusBarExpandedEnabled = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
-            mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
 
             mBlurDarkColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
                     Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY, Color.LTGRAY);
@@ -2981,7 +3042,29 @@ public class NotificationPanelView extends PanelView implements
             mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
                     Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY, Color.DKGRAY);
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
-            handleQuickSettingsBackround();
         }
+    }
+
+    public void initBlurPrefs() {
+            mNotificationPanelView = this;
+
+            mBlurUtils = new BlurUtils(mNotificationPanelView.getContext());
+
+            mAlphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+            mAlphaAnimation.setDuration(75);
+            mAlphaAnimation.setAnimationListener(mAnimationListener);
+
+            mBlurredView = new FrameLayout(mNotificationPanelView.getContext());
+            mInnerBlurredView = new FrameLayout(mNotificationPanelView.getContext());
+
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+            mBlurredView.addView(mInnerBlurredView, lp);
+            mNotificationPanelView.addView(mBlurredView, 0, lp);
+            mNotificationPanelView.requestLayout();
+
+            mBlurredView.setTag("ready_to_blur");
+
+            mBlurredView.setVisibility(View.INVISIBLE);
     }
 }

@@ -33,7 +33,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import com.android.systemui.statusbar.phone.NotificationPanelView;
-import com.android.systemui.cm.UserContentObserver;
+import com.android.internal.utils.du.UserContentObserver;
 
 /**
  * A view that can be used for both the dimmed and normal background of an notification.
