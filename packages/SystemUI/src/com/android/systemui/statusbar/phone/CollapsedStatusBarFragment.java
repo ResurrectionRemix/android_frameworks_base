@@ -418,16 +418,22 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void updateSettings(boolean animate) {
+    try {
         mShowCarrierLabel = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_CARRIER, 1,
                 UserHandle.USER_CURRENT);
-        setCarrierLabel(animate);
         mShowLogo = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
                 UserHandle.USER_CURRENT);
         mShowWeather = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
+     } catch (Exception e) {
+              mShowCarrierLabel = 0;
+              mShowLogo = 0;
+              mShowWeather = 0;
+     }
+        setCarrierLabel(animate);
         if (mNotificationIconAreaInner != null) {
             if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
