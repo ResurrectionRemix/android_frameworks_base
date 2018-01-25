@@ -5028,15 +5028,15 @@ public final class Settings {
         public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
 
         /**
-         * --- AICP System settings end
-         *  Add new system settings above this comment
-         */
-
-        /**
          * Whether to display roaming indicator for roaming signal connection
          * @hide
          */
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
+        /**
+         * @hide
+         */
+        public static final String SCREENRECORD_QUALITY_MODE = "screenrecord_quality_mode";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
