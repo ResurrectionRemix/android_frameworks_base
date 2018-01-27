@@ -1,28 +1,16 @@
-<!--
-    Copyright (C) 2017 The Android Open Source Project
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24.0dp"
-        android:height="24.0dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0"
-        android:tint="?attr/colorControlNormal">
+    android:height="28.0dip" 
+	android:width="28.0dip"
+	android:tint="?attr/colorControlNormal"
+    android:viewportWidth="248.855"
+    android:viewportHeight="248.855">
+
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M12.0,3.0c-0.6,0.0 -1.0,0.4 -1.0,1.0l0.0,8.0c0.0,0.6 0.4,1.0 1.0,1.0s1.0,-0.4 1.0,-1.0L13.0,4.0c0.0,-0.6 -0.4,-1.0 -1.0,-1.0z"/>
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M17.1,5.9c-0.4,0.4 -0.4,1.0 0.0,1.4 1.3,1.4 2.1,3.4 1.8,5.6 -0.4,3.2 -3.0,5.7 -6.2,6.1 -4.0,0.4 -7.7,-2.9 -7.7,-7.0 0.0,-1.0 0.7,-3.5 1.9,-4.0 0.4,-0.4 0.4,-1.0 0.0,-1.4 -0.4,-0.4 -1.0,-0.4 -1.4,0.0C4.0,7.4 3.1,9.5 3.0,11.7c-0.1,4.9 3.8,9.1 8.7,9.3 5.0,0.2 9.3,-3.9 9.3,-9.0 0.0,-2.4 -0.9,-4.5 -2.4,-6.1 -0.4,-0.4 -1.1,-0.4 -1.5,0.0z"/>
+        android:fillColor="#ffffffff"
+        android:pathData="M199.428,174.184 L147.032,174.184 L147.032,191.755 L135.73,191.755
+L135.73,248.855 L113.125,248.855 L113.125,191.755 L101.819,191.755
+L101.819,174.184 L49.428,174.184 L49.428,56.939 L69.665,56.939 L69.665,0
+L104.762,0 L104.762,56.939 L144.092,56.939 L144.092,0 L179.189,0 L179.189,56.939
+L199.428,56.939 L199.428,174.184 Z" />
 </vector>
