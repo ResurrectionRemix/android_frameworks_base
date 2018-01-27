@@ -38,6 +38,8 @@
     <color name="pie_battery_low">#f90028</color>
     <color name="pie_shader_start">#FF4d4d4d</color>
     <color name="pie_shader_end">#FF212121</color>
+    
+    <color name="rr_statusbar_logo_color">@*android:color/accent_material_light</color>
 
     <color name="system_primary_color">@*android:color/primary_material_light</color>
     <color name="system_accent_color">@*android:color/material_deep_teal_700</color>
