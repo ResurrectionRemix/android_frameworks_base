@@ -266,7 +266,6 @@ import com.android.systemui.statusbar.phone.TickerView;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher;
@@ -477,7 +476,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     PhoneStatusBarPolicy mIconPolicy;
 
     VolumeComponent mVolumeComponent;
-    BrightnessMirrorController mBrightnessMirrorController;
     protected FingerprintUnlockController mFingerprintUnlockController;
     LightBarController mLightBarController;
     protected LockscreenWallpaper mLockscreenWallpaper;
@@ -1423,14 +1421,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                             .build());
             final QSTileHost qsh = SystemUIFactory.getInstance().createQSTileHost(mContext, this,
                     mIconController);
-            mBrightnessMirrorController = new BrightnessMirrorController(mContext, mStatusBarWindow,
-                    mScrimController);
             fragmentHostManager.addTagListener(QS.TAG, (tag, f) -> {
                 QS qs = (QS) f;
                 if (qs instanceof QSFragment) {
                     ((QSFragment) qs).setHost(qsh);
                     mQSPanel = ((QSFragment) qs).getQsPanel();
-                    mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                     mQuickStatusBarHeader = ((QSFragment) qs).getQuickStatusBarHeader();
                     mStatusBarHeaderMachine.addObserver(mQuickStatusBarHeader);
@@ -1611,9 +1606,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mScrimController.onDensityOrFontScaleChanged();
         // TODO: Remove this.
         if (mStatusBarView != null) mStatusBarView.onDensityOrFontScaleChanged();
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onDensityOrFontScaleChanged();
-        }
         mStatusBarKeyguardViewManager.onDensityOrFontScaleChanged();
         // TODO: Bring these out of StatusBar.
         ((UserInfoControllerImpl) Dependency.get(UserInfoController.class))
@@ -1648,9 +1640,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 .setStatusBarKeyguardViewManager(mStatusBarKeyguardViewManager);
         mKeyguardIndicationController.setVisible(mState == StatusBarState.KEYGUARD);
         mKeyguardIndicationController.setDozing(mDozing);
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onOverlayChanged();
-        }
         if (mStatusBarKeyguardViewManager != null) {
             mStatusBarKeyguardViewManager.onOverlayChanged();
         }
@@ -4603,9 +4592,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
-        }
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.updateResources();
         }
     }
 
