@@ -89,9 +89,6 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerServiceImpl;
 import com.android.systemui.statusbar.*;
 
-import com.android.systemui.qs.QSContainerImpl;
-import com.android.systemui.qs.QSFragment;
-
 import android.provider.Settings;
 import com.android.internal.utils.du.UserContentObserver;
 
@@ -295,7 +292,6 @@ public class NotificationPanelView extends PanelView implements
     private static int mTranslucencyPercentage;
     private static AlphaAnimation mAlphaAnimation;
     private static FrameLayout mInnerBlurredView;
-    private static QSContainerImpl mContainer;
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
     
@@ -356,7 +352,6 @@ public class NotificationPanelView extends PanelView implements
         mLastOrientation = getResources().getConfiguration().orientation;
         initBottomArea();
         initBlurPrefs();
-        mContainer = QSFragment.mContainer;
         mQsFrame = findViewById(R.id.qs_frame);
     }
 

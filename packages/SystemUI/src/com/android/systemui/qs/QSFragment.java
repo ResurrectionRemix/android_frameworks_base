@@ -63,7 +63,7 @@ public class QSFragment extends Fragment implements QS {
     protected QSPanel mQSPanel;
     private QSDetail mQSDetail;
     private boolean mListening;
-    public static QSContainerImpl mContainer;
+    public QSContainerImpl mContainer;
     private int mLayoutDirection;
     private QSFooter mFooter;
 
