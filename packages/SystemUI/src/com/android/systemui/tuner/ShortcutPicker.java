@@ -21,6 +21,7 @@ import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v14.preference.PreferenceFragment;
@@ -29,6 +30,7 @@ import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.PreferenceViewHolder;
 
+import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.tuner.ShortcutParser.Shortcut;
@@ -65,9 +67,13 @@ public class ShortcutPicker extends PreferenceFragment implements Tunable {
         mDefaultPreference.setTitle(R.string.lockscreen_default);
         screen.addPreference(mDefaultPreference);
         if (LOCKSCREEN_LEFT_BUTTON.equals(mKey)) {
-            mDefaultPreference.setIcon(context.getDrawable(R.drawable.ic_mic_26dp));
+            Drawable d = context.getDrawable(R.drawable.ic_mic_26dp);
+            d.mutate().setTint(Utils.getColorAttr(context, android.R.attr.textColorPrimary));
+            mDefaultPreference.setIcon(d);
         } else {
-            mDefaultPreference.setIcon(context.getDrawable(R.drawable.ic_camera_alt_24dp));
+            Drawable d = context.getDrawable(R.drawable.ic_camera_alt_24dp);
+            d.mutate().setTint(Utils.getColorAttr(context, android.R.attr.textColorPrimary));
+            mDefaultPreference.setIcon(d);
         }
 
         LauncherApps apps = getContext().getSystemService(LauncherApps.class);
