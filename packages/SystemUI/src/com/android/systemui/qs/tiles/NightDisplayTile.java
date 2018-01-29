@@ -25,6 +25,7 @@ import android.widget.Switch;
 import com.android.internal.app.NightDisplayController;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import android.service.quicksettings.Tile;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -32,6 +33,8 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 public class NightDisplayTile extends QSTileImpl<BooleanState>
         implements NightDisplayController.Callback {
+
+    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_night_display_on);
 
     private NightDisplayController mController;
     private boolean mIsListening;
@@ -75,11 +78,15 @@ public class NightDisplayTile extends QSTileImpl<BooleanState>
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (state.slash == null) {
+            state.slash = new SlashState();
+        }
+        state.icon = mIcon;
         final boolean isActivated = mController.isActivated();
         state.value = isActivated;
         state.label = state.contentDescription =
                 mContext.getString(R.string.quick_settings_night_display_label);
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_night_display_on);
+        state.slash.isSlashed = !state.value;
         state.expandedAccessibilityClassName = Switch.class.getName();
         state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
     }

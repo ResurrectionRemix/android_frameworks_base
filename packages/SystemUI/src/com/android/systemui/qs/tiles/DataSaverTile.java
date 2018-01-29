@@ -32,6 +32,8 @@ import com.android.systemui.statusbar.policy.NetworkController;
 public class DataSaverTile extends QSTileImpl<BooleanState> implements
         DataSaverController.Listener{
 
+    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_data_saver);
+
     private final DataSaverController mDataSaverController;
 
     public DataSaverTile(QSHost host) {
@@ -90,13 +92,16 @@ public class DataSaverTile extends QSTileImpl<BooleanState> implements
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (state.slash == null) {
+            state.slash = new SlashState();
+        }
+        state.icon = mIcon;
         state.value = arg instanceof Boolean ? (Boolean) arg
                 : mDataSaverController.isDataSaverEnabled();
         state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
         state.label = mContext.getString(R.string.data_saver);
         state.contentDescription = state.label;
-        state.icon = ResourceIcon.get(state.value ? R.drawable.ic_data_saver
-                : R.drawable.ic_data_saver_off);
+        state.slash.isSlashed = !state.value;
         state.expandedAccessibilityClassName = Switch.class.getName();
     }
 
