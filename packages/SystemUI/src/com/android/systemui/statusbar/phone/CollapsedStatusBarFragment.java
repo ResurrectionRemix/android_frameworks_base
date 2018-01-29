@@ -23,9 +23,7 @@ import android.annotation.Nullable;
 import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
-import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
-import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -73,7 +71,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private SignalClusterView mSignalClusterView;
 
     private int mTickerEnabled;
-    private TickerObserver mTickerObserver;
     private ContentResolver mContentResolver;
     private View mTickerViewFromStub;
 
@@ -94,15 +91,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private ImageView mCLogoRight;
     private int mCustomlogoStyle;
     private int mCustomLogoPos;
+    private RRSettingsObserver mRRSettingsObserver;
 
-    private final Handler mHandler = new Handler();
-
-    private class RRSettingsObserver extends ContentObserver {
+    private class RRSettingsObserver extends UserContentObserver {
         RRSettingsObserver(Handler handler) {
             super(handler);
         }
 
-        void observe() {
+        protected void observe() {
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CARRIER),
                     false, this, UserHandle.USER_ALL);
@@ -118,6 +114,19 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                    Settings.System.CUSTOM_LOGO_POSITION),
                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_SHOW_TICKER), 
+                   false, this, UserHandle.USER_ALL);
+        }
+
+        protected void unobserve() {
+            super.unobserve();
+            getContext().getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        protected void update() {
+            updateSettings(true);
         }
 
         @Override
@@ -125,8 +134,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             updateSettings(true);
         }
     }
-
-    private RRSettingsObserver mRRSettingsObserver = new RRSettingsObserver(mHandler);
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -142,34 +149,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
         mNetworkController = Dependency.get(NetworkController.class);
         mStatusBarComponent = SysUiServiceProvider.getComponent(getContext(), StatusBar.class);
-        mTickerObserver = new TickerObserver(new Handler());
-        mRRSettingsObserver.observe();
-    }
-
-    class TickerObserver extends UserContentObserver {
-
-        TickerObserver(Handler handler) {
-            super(handler);
-        }
-
-        protected void unobserve() {
-            super.unobserve();
-            getContext().getContentResolver().unregisterContentObserver(this);
-        }
-
-        protected void observe() {
-            super.observe();
-            getContext().getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUS_BAR_SHOW_TICKER), false, this,
-                    UserHandle.USER_ALL);
-        }
-
-        @Override
-        protected void update() {
-            mTickerEnabled = Settings.System.getInt(mContentResolver,
-                    Settings.System.STATUS_BAR_SHOW_TICKER, 0);
-            initTickerView();
-        }
+        mRRSettingsObserver = new RRSettingsObserver(new Handler());
     }
 
     @Override
@@ -202,13 +182,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
         mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
         mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
-        updateSettings(false);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
 
-        mTickerObserver.observe();
-        mTickerObserver.update();
+        mRRSettingsObserver.observe();
+        updateSettings(false);
     }
 
     @Override
@@ -241,7 +220,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
-        mTickerObserver.unobserve();
+        mRRSettingsObserver.unobserve();
     }
 
     public void initNotificationIconArea(NotificationIconAreaController
@@ -462,9 +441,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 getContext().getContentResolver(), Settings.System.CUSTOM_LOGO_STYLE, 0);
         mCustomLogoPos = Settings.System.getInt(
                     getContext().getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0);
+        mTickerEnabled = Settings.System.getInt(
+                     getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_TICKER, 0);
 
      } catch (Exception e) {
      }
+        initTickerView();
 	    updateCustomLogo();
         setCarrierLabel(animate);
         if (mNotificationIconAreaInner != null) {
