@@ -129,7 +129,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Pair;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
+import android.view.animation.AlphaAnimation;import android.os.Process;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -299,7 +299,7 @@ import com.android.systemui.volume.VolumeComponent;
 import java.lang.reflect.Field;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.StringWriter;import android.os.Process;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -6791,7 +6791,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     updatePreferences(mContext);
             }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH))) {
-                    trytoinflateclusters();
+                    restartSystemUI(mContext);
              }
         }
 
@@ -8962,10 +8962,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-   public void trytoinflateclusters() {
-        try {
-             inflateSignalClusters();
-        } catch (Exception e) {
-        }
-   }
+    public static void restartSystemUI(Context ctx) {
+        Process.killProcess(Process.myPid());
+    }
 }
