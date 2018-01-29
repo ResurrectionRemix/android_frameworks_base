@@ -136,9 +136,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mVoLTEicon;
 
     private final IconLogger mIconLogger = Dependency.get(IconLogger.class);
-    private static final String DISABLE_NO_SIM =
-            "system:" + Settings.System.DISABLE_NO_SIM;
-    private boolean mShowNoSims;
     private SubscriptionManager mSubscriptionManager;
     private TelephonyManager mTelephony;
 
@@ -208,15 +205,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
         }
-        switch (key) {
-            case DISABLE_NO_SIM:
-                mShowNoSims = 
-                        newValue != null && Integer.parseInt(newValue) != 0;
-                     apply();
-                break;
-            default:
-                break;
-        }
     }
 
     @Override
@@ -276,8 +264,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         int endPadding = mMobileSignalGroup.getChildCount() > 0 ? mMobileSignalGroupEndPadding : 0;
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
-        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST,
-                   DISABLE_NO_SIM);
+        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -530,7 +517,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
     // Run after each indicator change.
     private void apply() {
-        boolean show = simMissing() && !mShowNoSims;
         if (mWifiGroup == null) return;
 
         if (mVpnVisible) {
@@ -636,7 +622,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         }
         if (mNoSimsVisible) {
             mIconLogger.onIconShown(SLOT_MOBILE);
-            mNoSimsCombo.setVisibility(show ? View.VISIBLE : View.GONE);
+            mNoSimsCombo.setVisibility(View.VISIBLE);
             if (!Objects.equals(mSimDetected, mNoSimsCombo.getTag())) {
                 mNoSimsCombo.setTag(mSimDetected);
                 if (mSimDetected) {
