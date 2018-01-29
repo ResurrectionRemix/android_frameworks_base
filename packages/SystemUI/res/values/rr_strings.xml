@@ -32,10 +32,6 @@
 
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
-
-    <!-- Battery saver tile -->
-    <string name="battery_saver_qs_tile_fully_charged">Fully Charged</string>
-
     <!-- App circle sidebar -->
     <string name="app_float_maximize_item_title">Maximize</string>
     <string name="app_float_item_title">Float view</string>
