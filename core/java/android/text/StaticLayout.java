@@ -1303,12 +1303,12 @@ public class StaticLayout extends Layout {
      * @hide
      */
     public int getHeight(boolean cap) {
-        if (cap && mLineCount >= mMaximumVisibleLineCount && mMaxLineHeight == -1 &&
+        /*if (cap && mLineCount >= mMaximumVisibleLineCount && mMaxLineHeight == -1 &&
                 Log.isLoggable(TAG, Log.WARN)) {
             Log.w(TAG, "maxLineHeight should not be -1. "
                     + " maxLines:" + mMaximumVisibleLineCount
                     + " lineCount:" + mLineCount);
-        }
+        }*/
 
         return cap && mLineCount >= mMaximumVisibleLineCount && mMaxLineHeight != -1 ?
                 mMaxLineHeight : super.getHeight();
