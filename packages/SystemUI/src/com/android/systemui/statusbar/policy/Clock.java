@@ -111,6 +111,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     public static final int FONT_NOTOSERIF_ITALIC = 22;
     public static final int FONT_NOTOSERIF_BOLD = 23;
     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
+    public int DEFAULT_CLOCK_SIZE = 14;
 
     private static final String DATE_FORMAT_DEFAULT = "EEE";
 
@@ -508,8 +509,11 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     }
 
     public void setClockSize(int size) {
-        setTextSize(size);
-        updateClock();
+        if (size != DEFAULT_CLOCK_SIZE) {
+            DEFAULT_CLOCK_SIZE = size;
+            setTextSize(size);
+            updateClock();
+        }
     }
 
     public void setClockStyle(int style) {
