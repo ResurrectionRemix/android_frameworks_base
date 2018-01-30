@@ -76,7 +76,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mTickerViewFromStub;
 
     // Custom Carrier
-    private CarrierLabel mCustomCarrierLabel;
+    private View mCustomCarrierLabel;
     private View mBatteryBar;
     private int mShowCarrierLabel;
     private int mCarrierFontSize;
@@ -94,33 +94,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mCustomlogoStyle;
     private int mCustomLogoPos;
     private RRSettingsObserver mRRSettingsObserver;
-
-    private int mCarrierLabelFontStyle = FONT_NORMAL;
-    public static final int FONT_NORMAL = 0;
-    public static final int FONT_ITALIC = 1;
-    public static final int FONT_BOLD = 2;
-    public static final int FONT_BOLD_ITALIC = 3;
-    public static final int FONT_LIGHT = 4;
-    public static final int FONT_LIGHT_ITALIC = 5;
-    public static final int FONT_THIN = 6;
-    public static final int FONT_THIN_ITALIC = 7;
-    public static final int FONT_CONDENSED = 8;
-    public static final int FONT_CONDENSED_ITALIC = 9;
-    public static final int FONT_CONDENSED_LIGHT = 10;
-    public static final int FONT_CONDENSED_LIGHT_ITALIC = 11;
-    public static final int FONT_CONDENSED_BOLD = 12;
-    public static final int FONT_CONDENSED_BOLD_ITALIC = 13;
-    public static final int FONT_MEDIUM = 14;
-    public static final int FONT_MEDIUM_ITALIC = 15;
-    public static final int FONT_BLACK = 16;
-    public static final int FONT_BLACK_ITALIC = 17;
-    public static final int FONT_DANCINGSCRIPT = 18;
-    public static final int FONT_DANCINGSCRIPT_BOLD = 19;
-    public static final int FONT_COMINGSOON = 20;
-    public static final int FONT_NOTOSERIF = 21;
-    public static final int FONT_NOTOSERIF_ITALIC = 22;
-    public static final int FONT_NOTOSERIF_BOLD = 23;
-    public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
 
 
     private class RRSettingsObserver extends UserContentObserver {
@@ -146,12 +119,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                    false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUS_BAR_SHOW_TICKER), 
-                   false, this, UserHandle.USER_ALL);
-            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.STATUS_BAR_CARRIER_FONT_STYLE), 
-                   false, this, UserHandle.USER_ALL);
-            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.STATUS_BAR_CARRIER_FONT_SIZE), 
                    false, this, UserHandle.USER_ALL);
         }
 
@@ -206,7 +173,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
-        mCustomCarrierLabel = (CarrierLabel) mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mRRLogo =  (ImageView) mStatusBar.findViewById(R.id.status_bar_logo);
         mRRLogoRight = (ImageView) mStatusBar.findViewById(R.id.status_bar_logo_right);
         mCLogo = (ImageView) mStatusBar.findViewById(R.id.custom);
@@ -466,7 +433,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void updateSettings(boolean animate) {
-    try {
+        try {
         mShowCarrierLabel = Settings.System.getInt(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_CARRIER, 1);
         mShowLogo = Settings.System.getInt(
@@ -479,16 +446,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     getContext().getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0);
         mTickerEnabled = Settings.System.getInt(
                      getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_TICKER, 0);
-       mCarrierLabelFontStyle = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_FONT_STYLE, FONT_NORMAL);
-        mCarrierFontSize = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 10);
-       setCarrierLabel(animate);
-       getFontStyle(mCarrierLabelFontStyle);
-       mCustomCarrierLabel.setTextSize(mCarrierFontSize);
 
-     } catch (Exception e) {
-     }
+       } catch (Exception e) {
+       }
+        setCarrierLabel(animate);
         initTickerView();
 	    updateCustomLogo();
         if (mNotificationIconAreaInner != null) {
@@ -631,110 +592,4 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mCLogoRight.setImageDrawable(d);
         }
      }
-
-    public void getFontStyle(int font) {
-        switch (font) {
-            case FONT_NORMAL:
-            default:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif",
-                    Typeface.NORMAL));
-                break;
-            case FONT_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif",
-                    Typeface.ITALIC));
-                break;
-            case FONT_BOLD:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif",
-                    Typeface.BOLD));
-                break;
-            case FONT_BOLD_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif",
-                    Typeface.BOLD_ITALIC));
-                break;
-            case FONT_LIGHT:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-light",
-                    Typeface.NORMAL));
-                break;
-            case FONT_LIGHT_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-light",
-                    Typeface.ITALIC));
-                break;
-            case FONT_THIN:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-thin",
-                    Typeface.NORMAL));
-                break;
-            case FONT_THIN_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-thin",
-                    Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed",
-                    Typeface.NORMAL));
-                break;
-            case FONT_CONDENSED_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed",
-                    Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED_LIGHT:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed-light",
-                    Typeface.NORMAL));
-                break;
-            case FONT_CONDENSED_LIGHT_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed-light",
-                    Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED_BOLD:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed",
-                    Typeface.BOLD));
-                break;
-            case FONT_CONDENSED_BOLD_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-condensed",
-                    Typeface.BOLD_ITALIC));
-                break;
-            case FONT_MEDIUM:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-medium",
-                    Typeface.NORMAL));
-                break;
-            case FONT_MEDIUM_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-medium",
-                    Typeface.ITALIC));
-                break;
-            case FONT_BLACK:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-black",
-                    Typeface.NORMAL));
-                break;
-            case FONT_BLACK_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("sans-serif-black",
-                    Typeface.ITALIC));
-                break;
-            case FONT_DANCINGSCRIPT:
-                mCustomCarrierLabel.setTypeface(Typeface.create("cursive",
-                    Typeface.NORMAL));
-                break;
-            case FONT_DANCINGSCRIPT_BOLD:
-                mCustomCarrierLabel.setTypeface(Typeface.create("cursive",
-                    Typeface.BOLD));
-                break;
-            case FONT_COMINGSOON:
-                mCustomCarrierLabel.setTypeface(Typeface.create("casual",
-                    Typeface.NORMAL));
-                break;
-            case FONT_NOTOSERIF:
-                mCustomCarrierLabel.setTypeface(Typeface.create("serif",
-                    Typeface.NORMAL));
-                break;
-            case FONT_NOTOSERIF_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("serif",
-                    Typeface.ITALIC));
-                break;
-            case FONT_NOTOSERIF_BOLD:
-                mCustomCarrierLabel.setTypeface(Typeface.create("serif",
-                    Typeface.BOLD));
-                break;
-            case FONT_NOTOSERIF_BOLD_ITALIC:
-                mCustomCarrierLabel.setTypeface(Typeface.create("serif",
-                    Typeface.BOLD_ITALIC));
-                break;
-        }
-    }
 }

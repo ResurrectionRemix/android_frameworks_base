@@ -208,6 +208,7 @@ public class StatusBarWeather extends TextView implements
                         }
                         if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
                             setVisibility(View.VISIBLE);
+                            setTextSize(mWeatherTempSize);
                             updateattributes();
                         }
                     }
@@ -230,7 +231,6 @@ public class StatusBarWeather extends TextView implements
 
     public void updateattributes() {
         try {
-            setTextSize(mWeatherTempSize);
             switch (mWeatherTempFontStyle) {
                         case FONT_NORMAL:
                         default:
