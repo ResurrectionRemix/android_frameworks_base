@@ -4127,6 +4127,28 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_DATE_POSITION = "status_bar_clock_date_position";
 
         /**
+         * Clock AM/PM style
+         * 0: Normal
+         * 1: Small
+         * 2: Gone
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_AM_PM_STYLE = "status_bar_clock_am_pm_style";
+
+        /**
+         * Clock font size
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_SIZE = "status_bar_clock_size";
+
+        /**
+         * Clock font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_FONT_STYLE = "status_bar_clock_font_style";
+
+        /**
          * Wether to show clock seconds on the status bar
          * 0: Hide
          * 1: Show
@@ -4174,7 +4196,7 @@ public final class Settings {
          * The date style on the status bar
          * 0 - Regular (case insensitive)
          * 1 - Lowercase
-         * 2 - Uppercase
+         * 2 - UppercasesetShowSeconds
          * default: 0
          * @hide
          */

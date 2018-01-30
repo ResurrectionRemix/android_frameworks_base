@@ -151,6 +151,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_DATE_SIZE_SMALL),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_AM_PM_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -173,6 +182,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_DATE_SIZE_SMALL))) {
                 updateClockShowDateSizeSmall();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_AM_PM_STYLE))) {
+                updateClockAmPmStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_SIZE))) {
+                updateClockSize();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_FONT_STYLE))) {
+                updateClockFont();
             }
         }
 
@@ -562,6 +580,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         updateClockDateFormat();
         updateClockDateStyle();
         updateClockShowDateSizeSmall();
+        updateClockAmPmStyle();
+        updateClockFont();
+        updateClockSize();
     }
 
     private void updateClockDatePosition() {
@@ -693,6 +714,31 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mCLogoRight.setImageDrawable(d);
         }
     }
+
+    private void updateClockSize() {
+        int size = Settings.System.getInt(mContentResolver,
+			    Settings.System.STATUS_BAR_CLOCK_SIZE, 14);
+        mClockDefault.setClockSize(size);
+        mClockCentered.setClockSize(size);
+
+    }
+
+    private void updateClockFont() {
+        int size = Settings.System.getInt(mContentResolver,
+			    Settings.System.STATUS_BAR_CLOCK_FONT_STYLE, 0);
+        mClockDefault.setClockStyle(size);
+        mClockCentered.setClockStyle(size);
+
+    }
+
+
+    private void updateClockAmPmStyle() {
+        int style = Settings.System.getInt(mContentResolver,
+			    Settings.System.STATUS_BAR_CLOCK_AM_PM_STYLE, 0);
+        mClockDefault.setAmPmStyle(style);
+        mClockCentered.setAmPmStyle(style);
+    }
+
 
     private void updateClockShowSeconds() {
         boolean show = Settings.System.getInt(mContentResolver,
