@@ -34,4 +34,7 @@
     <bool name="config_relocatePieOnRotation">true</bool> 
     <bool name="config_forcePieCentered">true</bool>   
 
+    <!-- Use wakelock for flashlight -->
+    <bool name="config_useWakeLockForFlashlight">false</bool>
+
 </resources>
