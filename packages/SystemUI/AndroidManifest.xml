@@ -339,7 +339,7 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_navbar_title"
-                  android:parentActivityName="com.dirtyunicorns.tweaks.DirtyTweaks"
+                  android:parentActivityName="com.android.settings.rr"
                   android:process=":tuner"
                   android:exported="true">
         </activity>
