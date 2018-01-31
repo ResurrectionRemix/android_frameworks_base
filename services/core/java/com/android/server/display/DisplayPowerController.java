@@ -645,7 +645,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             @Override
             public void onChange(boolean selfChange, Uri uri) {
                 mScreenOffAnimation = Settings.Global.getInt(cr,
-                        Settings.Global.SCREEN_OFF_ANIMATION, 1);
+                        Settings.Global.SCREEN_OFF_ANIMATION, SCREEN_OFF_SIMPLE_FADE);
                 mScreenOnAnimation = Settings.Global.getInt(cr,
                         Settings.Global.SCREEN_ON_ANIMATION, 0) != 0;
                 if (mPowerState != null) {
@@ -660,7 +660,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 Settings.Global.SCREEN_ON_ANIMATION),
                 false, observer, UserHandle.USER_ALL);
         mScreenOffAnimation = Settings.Global.getInt(cr,
-                Settings.Global.SCREEN_OFF_ANIMATION, 1);
+                Settings.Global.SCREEN_OFF_ANIMATION, SCREEN_OFF_SIMPLE_FADE);
         mScreenOnAnimation = Settings.Global.getInt(cr,
                 Settings.Global.SCREEN_ON_ANIMATION, 0) != 0;
 
