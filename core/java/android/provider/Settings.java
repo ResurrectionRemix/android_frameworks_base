@@ -4751,6 +4751,18 @@ public final class Settings {
         public static final String RR_OTA_FAB = "rr_ota_fab";
 
         /**
+         * RR COnfig Navgiation color
+         * @hide
+         */
+        public static final String RR_CONFIG_NAVIGATION_COLOR= "rr_config_navigation_color";
+
+        /**
+         * RR COnfig Navgiation color
+         * @hide
+         */
+        public static final String RR_CONFIG_NAVIGATION_COLOR_ENABLE = "rr_config_navigation_color_enable";
+
+        /**
          * enable custom lockscreen max notifications config
          * @hide
          */
