@@ -4762,6 +4762,20 @@ public final class Settings {
          */
         public static final String RR_CONFIG_NAVIGATION_COLOR_ENABLE = "rr_config_navigation_color_enable";
 
+
+        /**
+         * Custom RR Summary for configurations in dashboard
+         * @hide
+         */
+        public static final String RR_SETTINGS_SUMMARY = "rr_settings_summary";
+
+        /**
+         * Random RR Summary for configurations in dashboard
+         * @hide
+         */
+        public static final String RR_SETTINGS_RANDOM_SUMMARY = "rr_settings_random_summary";
+
+
         /**
          * enable custom lockscreen max notifications config
          * @hide
