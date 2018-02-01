@@ -162,38 +162,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     false, this, UserHandle.USER_ALL);
         }
 
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_DATE_POSITION))) {
-                updateClockDatePosition();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_SHOW_SECONDS))) {
-                updateClockShowSeconds();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_SHOW_DATE))) {
-                updateClockShowDate();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_DATE_FORMAT))) {
-                updateClockDateFormat();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_DATE_STYLE))) {
-                updateClockDateStyle();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_DATE_SIZE_SMALL))) {
-                updateClockShowDateSizeSmall();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_AM_PM_STYLE))) {
-                updateClockAmPmStyle();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_SIZE))) {
-                updateClockSize();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_FONT_STYLE))) {
-                updateClockFont();
-            }
-        }
-
         protected void unobserve() {
             super.unobserve();
             getContext().getContentResolver().unregisterContentObserver(this);
