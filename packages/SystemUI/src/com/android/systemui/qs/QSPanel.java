@@ -630,11 +630,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         if (mFooter != null) {
             mFooter.updateSettings();
         }
-        if (mTileLayout != null) {
-            for (TileRecord r : mRecords) {
-                configureTile(r.tile, r.tileView);
-            }
-        }
         if (mCustomizePanel != null) {
             mCustomizePanel.updateSettings();
         }

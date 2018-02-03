@@ -6768,7 +6768,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mQuickStatusBarHeader.updateSettings();
                 }
             } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_TILE_TITLE_VISIBILITY)))
+                    Settings.System.QS_TILE_TITLE_VISIBILITY))) {
                 updateQsPanelResources();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||

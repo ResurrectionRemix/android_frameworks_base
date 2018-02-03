@@ -105,7 +105,6 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         for (TileRecord record : mRecords) {
             record.tileView.textVisibility();
         }
-        final int columns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         if (mColumns != columns) {
             mColumns = columns;
             requestLayout();
