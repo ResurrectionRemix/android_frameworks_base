@@ -516,9 +516,6 @@ public class StatusBar extends SystemUI implements DemoMode,
      */
     private boolean mAlwaysExpandNonGroupedNotification;
 
-    // quick settings
-    private int mQsLayoutColumns;
-
     // settings
     private QSPanel mQSPanel;
     private QuickStatusBarHeader mQuickStatusBarHeader;
@@ -6650,9 +6647,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.QS_LAYOUT_COLUMNS),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEM_UI_THEME),
                     false, this, UserHandle.USER_ALL);
@@ -6743,7 +6737,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
+        public void onChange(boolean selfChange, Uri uri) {         
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SYSTEM_UI_THEME))) {
                 updateTheme();
@@ -6805,7 +6799,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         public void update() {
             setStatusBarWindowViewOptions();
-            setQsLayoutColumns();
             setHeadsUpBlacklist();
             setLockscreenMediaMetadata();
             updateQsPanelResources();
@@ -6819,12 +6812,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             setFpToDismissNotifications();
             updateBlurSettings();
         }
-    }
-
-    private void setQsLayoutColumns() {
-        ContentResolver resolver = mContext.getContentResolver();
-        mQsLayoutColumns = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
     }
 
     private void updateFPQuickPulldown() {

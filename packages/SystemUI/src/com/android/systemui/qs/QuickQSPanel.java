@@ -308,10 +308,6 @@ public class QuickQSPanel extends QSPanel {
             }
         }
 
-        @Override
-        public void updateSettings() {
-        }
-
         public void updateTileGaps() {
             int panelWidth = mContext.getResources()
                     .getDimensionPixelSize(R.dimen.notification_panel_width);

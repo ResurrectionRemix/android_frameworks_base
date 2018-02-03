@@ -8969,12 +8969,6 @@ public final class Settings {
         public static final String FP_SWIPE_TO_DISMISS_NOTIFICATIONS = "fp_swipe_to_dismiss_notifications";
 
         /**
-         * Quick Settings number of columns
-         * @hide
-         */
-        public static final String QS_LAYOUT_COLUMNS = "qs_layout_columns";
-
-        /**
          * Holds comma separated list of ordering of QS tiles.
          * @hide
          */
