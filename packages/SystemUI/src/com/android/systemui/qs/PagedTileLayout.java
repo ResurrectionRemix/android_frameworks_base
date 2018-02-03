@@ -176,7 +176,7 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         mPageListener = listener;
     }
 
-    public void postDistributeTiles() {
+    private void postDistributeTiles() {
         removeCallbacks(mDistribute);
         post(mDistribute);
     }
