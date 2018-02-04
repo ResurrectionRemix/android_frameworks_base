@@ -55,4 +55,8 @@
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Long press power button to interact</string>
 
+    <!-- Label for item that flashlight in power menu options dialog -->
+    <string name="global_action_flashlight">Flashlight</string>
+
+
 </resources>

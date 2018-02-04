@@ -4081,6 +4081,13 @@ public final class Settings {
          */
         public static final String POWERMENU_REBOOT = "powermenu_reboot";
 
+        /**
+         * Whether to display the flashlight in the power menu
+         *
+         * @hide
+         */
+        public static final String POWERMENU_FLASHLIGHT = "powermenu_flashlight";
+
 
         /**
          * Statusbar Custom logos

@@ -48,6 +48,7 @@
         <item>advanced</item>
         <item>screenshot</item>
         <item>screenrecord</item>
+        <item>flashlight</item>
         <item>airplane</item>
     </string-array>
 
