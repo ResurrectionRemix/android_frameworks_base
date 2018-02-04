@@ -5300,6 +5300,27 @@ public final class Settings {
         public static final String POWERMENU_LS_REBOOT = "powermenu_ls_reboot";
 
         /**
+         * Whether to display the power menu screenrecord option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_SCREENRECORD = "powermenu_ls_screenrecord";
+
+        /**
+         * Whether to display the power menu on-the-go option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_ONTHEGO = "powermenu_ls_onthego";
+
+        /**
+         * Whether to display the power menu flashlight option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_FLASHLIGHT = "powermenu_ls_flashlight";
+
+        /**
          * Whether to use gesture anywhere feature.
          * @hide
          */
