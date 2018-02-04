@@ -102,11 +102,11 @@
     <color name="material_deep_teal_500">@color/accent_material_light</color>
     <color name="material_deep_teal_700">@color/accent_material_light</color>
 
-    <color name="material_blue_grey_200">#ffb0bec5</color>
-    <color name="material_blue_grey_700">#ff455a64</color>
-    <color name="material_blue_grey_800">#ff37474f</color>
-    <color name="material_blue_grey_900">#ff263238</color>
-    <color name="material_blue_grey_950">#ff21272b</color>
+    <color name="material_blue_grey_200">#ffE0E0E0</color>
+    <color name="material_blue_grey_700">#ff616161</color>
+    <color name="material_blue_grey_800">#ff424242</color>
+    <color name="material_blue_grey_900">#ff212121</color>
+    <color name="material_blue_grey_950">#ff212121</color>
 
     <color name="material_red_A100">#ff8a80</color>
     <color name="material_red_A700">#d50000</color>
