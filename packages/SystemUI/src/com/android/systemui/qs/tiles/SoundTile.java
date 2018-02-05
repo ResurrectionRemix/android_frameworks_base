@@ -58,7 +58,8 @@ public class SoundTile extends QSTileImpl<State> {
         return new State();
     }
 
-    public void setListening(boolean listening) {
+    @Override
+    public void handleSetListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
         if (listening) {
@@ -68,11 +69,6 @@ public class SoundTile extends QSTileImpl<State> {
         } else {
             mContext.unregisterReceiver(mReceiver);
         }
-    }
-
-    @Override
-    public void handleSetListening(boolean listening) {
-        // Do nothing
     }
 
     @Override
