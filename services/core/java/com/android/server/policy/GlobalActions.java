@@ -38,6 +38,7 @@ class GlobalActions implements GlobalActionsListener {
     private boolean mStatusBarConnected;
     private boolean mShowing;
 
+
     public GlobalActions(Context context, WindowManagerFuncs windowManagerFuncs) {
         mContext = context;
         mHandler = new Handler();

@@ -4062,6 +4062,12 @@ public final class Settings {
         public static final String POCKET_JUDGE = "pocket_judge";
 
         /**
+         * Change the delay when a screenshot is taken
+         * @hide
+         */
+        public static final String SCREENSHOT_DELAY = "screenshot_delay";
+
+		/**
          * disable all button brightness (manual and auto mode)
          * @hide
          */
@@ -4080,6 +4086,13 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_REBOOT = "powermenu_reboot";
+
+        /**
+         * Whether to display the flashlight in the power menu
+         *
+         * @hide
+         */
+        public static final String POWERMENU_FLASHLIGHT = "powermenu_flashlight";
 
 
         /**
@@ -5293,6 +5306,27 @@ public final class Settings {
         public static final String POWERMENU_LS_REBOOT = "powermenu_ls_reboot";
 
         /**
+         * Whether to display the power menu screenrecord option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_SCREENRECORD = "powermenu_ls_screenrecord";
+
+        /**
+         * Whether to display the power menu on-the-go option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_ONTHEGO = "powermenu_ls_onthego";
+
+        /**
+         * Whether to display the power menu flashlight option on a secured lockscreen
+         *
+         * @hide
+         */
+        public static final String POWERMENU_LS_FLASHLIGHT = "powermenu_ls_flashlight";
+
+        /**
          * Whether to use gesture anywhere feature.
          * @hide
          */
@@ -5480,6 +5514,12 @@ public final class Settings {
         * @hide
         */
         public static final String NAVBAR_DYNAMIC = "navbar_dynamic";
+
+        /**
+         * Whether to use partial screenshot when using volume keys
+         * @hide
+         */
+        public static final String SCREENSHOT_TYPE = "screenshot_type";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

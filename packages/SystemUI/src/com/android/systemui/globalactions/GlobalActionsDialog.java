@@ -96,11 +96,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.colorextraction.drawable.GradientDrawable;
+import com.android.systemui.statusbar.policy.FlashlightController;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+import com.android.systemui.Dependency;
 import com.android.internal.util.rr.OnTheGoActions;
 
 /**
@@ -133,6 +135,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
     private static final String GLOBAL_ACTION_KEY_SCREENRECORD = "screenrecord";
     private static final String GLOBAL_ACTION_KEY_ON_THE_GO = "on_the_go";
+    private static final String GLOBAL_ACTION_KEY_FLASHLIGHT = "flashlight";
 
     private static final int SHOW_TOGGLES_BUTTON = 1;
     private static final int RESTART_HOT_BUTTON = 2;
@@ -176,6 +179,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             "com.android.systemui.screenshot.TakeScreenshotService";
     private static final String SYSUI_SCREENRECORD_SERVICE =
             "com.android.systemui.omni.screenrecord.TakeScreenrecordService";
+
+    private FlashlightController mFlashlightController;
+    private int mScreenshotDelay;
 
     /**
      * @param context everything needs a context :(
@@ -221,6 +227,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         // Set the initial status of airplane mode toggle
         mAirplaneState = getUpdatedAirplaneToggleState();
+        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
     /**
@@ -310,6 +317,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private void handleShow() {
         awakenIfNecessary();
         mDialog = createDialog();
+        checkSettings();
         prepareDialog();
 
         // If we only have 1 item and it's a simple press action, just do this action.
@@ -496,6 +504,11 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                         Settings.System.POWERMENU_SCREENRECORD, 0) == 1) {
                 mItems.add(new ScreenrecordAction());
                 }
+            } else if (GLOBAL_ACTION_KEY_FLASHLIGHT.equals(actionKey)) {
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_FLASHLIGHT, 0) == 1) {
+                mItems.add(new FlashLightAction());
+                }
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_AIRPLANE, 0) != 0) {
@@ -651,7 +664,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                         Intent intent = new Intent(Intent.ACTION_SCREENSHOT);
                         mContext.sendBroadcast(intent);
                     }
-                }, 500);
+                }, mScreenshotDelay);
             }
 
             @Override
@@ -686,7 +699,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         @Override
         public boolean showDuringKeyguard() {
-            return true;
+            boolean showlocked = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.POWERMENU_LS_SCREENRECORD, 0) == 1;
+            return showlocked;
         }
 
         @Override
@@ -695,6 +710,34 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         }
     }
 
+    private final class FlashLightAction extends SinglePressAction implements LongPressAction {
+
+        private FlashLightAction() {
+            super(R.drawable.ic_lock_flashlight, R.string.global_action_flashlight);
+        }
+
+        @Override
+        public void onPress() {
+            toggleFlashlight();
+        }
+
+        @Override
+        public boolean onLongPress() {
+            return true;
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            boolean showlocked = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.POWERMENU_LS_FLASHLIGHT, 0) == 1;
+            return showlocked;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+    }
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {
 
@@ -1857,7 +1900,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                          }
  
                          public boolean showDuringKeyguard() {
-                             return true;
+                              boolean showlocked = Settings.System.getInt(mContext.getContentResolver(),
+                                      Settings.System.POWERMENU_LS_ONTHEGO, 0) == 1;
+                             return showlocked;
                          }
  
                          public boolean showBeforeProvisioning() {
@@ -1876,6 +1921,20 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         startIntent.setComponent(cn);
         startIntent.setAction("start");
         mContext.startService(startIntent);
+    }
+
+    public void toggleFlashlight() {
+        if (mFlashlightController != null) {
+            mFlashlightController.initFlashLight();
+            if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
+                mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+            }
+        }
+    }
+
+   private void checkSettings() {
+        mScreenshotDelay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_DELAY, 100);
     }
 
 }
