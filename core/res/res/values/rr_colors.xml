@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="sender_text_color">@android:color/black</color>
-
-    <!-- Dynamic Navbar -->
-    <color name="input_method_navigation_guard_dynamic">@android:color/transparent</color>
-
 </resources>
 
