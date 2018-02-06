@@ -713,7 +713,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private final class FlashLightAction extends SinglePressAction implements LongPressAction {
 
         private FlashLightAction() {
-            super(R.drawable.ic_lock_flashlight, R.string.global_action_flashlight);
+            super(R.drawable.ic_lock_torch, R.string.global_action_flashlight);
         }
 
         @Override
