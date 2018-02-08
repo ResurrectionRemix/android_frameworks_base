@@ -16,7 +16,7 @@
 -->
 <resources>
     <color name="system_secondary_color">@android:color/black</color>
-	<color name="system_primary_background">@android:color/black</color>
+    <color name="system_primary_background">@android:color/black</color>
     <color name="system_accent_color">@*android:color/accent_device_default_dark</color>
     <color name="system_primary_color">@android:color/black</color>
 </resources>
