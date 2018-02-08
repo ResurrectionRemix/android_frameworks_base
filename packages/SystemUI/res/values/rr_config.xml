@@ -37,4 +37,7 @@
 
     <!-- config for showing AM/PM in 12hour format -->
     <bool name="config_showAmpm">true</bool>
+
+    <item name="qs_background_opacity" format="float" type="integer">0.87</item>
+
 </resources>
