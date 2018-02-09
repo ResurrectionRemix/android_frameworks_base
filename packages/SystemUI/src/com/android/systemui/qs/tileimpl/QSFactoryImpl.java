@@ -58,6 +58,8 @@ import com.android.systemui.qs.tiles.VpnTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.SoundSearchTIle;
+
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -98,6 +100,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<UsbTetherTile> mUsbTetherTileProvider;
     private final Provider<VolumeTile> mVolumeTileProvider;
     private final Provider<VpnTile> mVpnTileProvider;
+    private final Provider<SoundSearchTIle> mSoundSearchTIleProvider;
 
     private QSTileHost mHost;
 
@@ -131,7 +134,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SyncTile> syncTileProvider,
             Provider<UsbTetherTile> usbTetherTileProvider,
             Provider<VolumeTile> volumeTileProvider,
-            Provider<VpnTile> vpnTileProvider) {
+            Provider<VpnTile> vpnTileProvider),
+            Provider<SoundSearchTIle> soundSearchTIleProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -162,6 +166,7 @@ public class QSFactoryImpl implements QSFactory {
         mUsbTetherTileProvider = usbTetherTileProvider;
         mVolumeTileProvider = volumeTileProvider;
         mVpnTileProvider = vpnTileProvider;
+        mSoundSearchTIleProvider = soundSearchTIleProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -238,6 +243,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mVolumeTileProvider.get();
             case "vpn":
                 return mVpnTileProvider.get();
+            case "soundsearch":
+                return mSoundSearchTIleProvider.get();
         }
 
         // Intent tiles.
