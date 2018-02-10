@@ -98,9 +98,9 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
             = new PathInterpolator(0.6f, 0, 0.5f, 1);
     private static final Interpolator ACTIVATE_INVERSE_ALPHA_INTERPOLATOR
             = new PathInterpolator(0, 0, 0.5f, 1);
-    private final int mTintedRippleColor;
-    private final int mLowPriorityRippleColor;
-    protected final int mNormalRippleColor;
+    private int mTintedRippleColor;
+    private int mLowPriorityRippleColor;
+    protected int mNormalRippleColor;
     private final AccessibilityManager mAccessibilityManager;
     private final DoubleTapHelper mDoubleTapHelper;
 
@@ -133,8 +133,8 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
     private ValueAnimator mBackgroundColorAnimator;
     private float mAppearAnimationFraction = -1.0f;
     private float mAppearAnimationTranslation;
-    private final int mNormalColor;
-    private final int mLowPriorityColor;
+    private int mNormalColor;
+    private int mLowPriorityColor;
     private boolean mIsBelowSpeedBump;
     private FalsingManager mFalsingManager;
 
@@ -228,6 +228,12 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
      * be useful in a configuration change.
      */
     protected void initBackground() {
+        mNormalColor = mContext.getColor(R.color.notification_material_background_color);
+        mLowPriorityColor = mContext.getColor(
+                R.color.notification_material_background_low_priority_color);
+        mTintedRippleColor = mContext.getColor(R.color.notification_ripple_tinted_color);
+        mLowPriorityRippleColor = mContext.getColor(R.color.notification_ripple_color_low_priority);
+        mNormalRippleColor = mContext.getColor(R.color.notification_ripple_untinted_color);
         mBackgroundNormal.setCustomBackground(R.drawable.notification_material_bg);
         mBackgroundDimmed.setCustomBackground(R.drawable.notification_material_bg_dim);
     }
