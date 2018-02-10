@@ -238,7 +238,7 @@ public class EdgeGestureService extends IEdgeGestureService.Stub {
         }
         mInputFilter = new EdgeGestureInputFilter(mContext, mHandler);
         mInputManager.registerSecondaryInputFilter(mInputFilter);
-
+        mInputManager.setInputFilter(mInputFilter);
         mDisplayObserver.observe();
     }
 
