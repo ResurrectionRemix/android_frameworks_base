@@ -563,6 +563,9 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
 
     @VisibleForTesting
     boolean onHomeLongClick(View v) {
+        KeyButtonView keyButtonView = (KeyButtonView) v;
+        keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
+        keyButtonView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
         if (!isUsingStockNav()) {
             return false;
         }
