@@ -5275,7 +5275,6 @@ public final class Settings {
          */
         public static final String SLIM_RECENTS_BLACKLIST_VALUES = "slim_recents_blacklist_values";
 
-        /** End of ABC system settings**/
 
         /**
          * Whether to display the power menu advanced reboot option on a secured lockscreen
