@@ -39,6 +39,12 @@
     <!-- Width of the battery icon in the status bar. -->
     <dimen name="status_bar_battery_icon_width">14.5dp</dimen>
 
+    <!-- Height of the battery circle icon in the status bar. -->
+    <dimen name="status_bar_battery_circle_icon_height">20.5dp</dimen>
+
+    <!-- Width of the battery circle icon in the status bar. -->
+    <dimen name="status_bar_battery_circle_icon_width">20.5dp</dimen>
+
     <!-- The font size for the clock in the status bar. -->
     <dimen name="status_bar_clock_size">14sp</dimen>
 
