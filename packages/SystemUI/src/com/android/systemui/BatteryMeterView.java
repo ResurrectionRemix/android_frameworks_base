@@ -398,7 +398,11 @@ public class BatteryMeterView extends LinearLayout implements
 
     private void setPercentTextAtCurrentLevel() {
         String text = NumberFormat.getPercentInstance().format(mLevel / 100f);
-
+        // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
+        // to load its emoji colored variant with the uFE0E flag
+        String bolt = "\u26A1\uFE0E";
+        CharSequence mChargeIndicator = mCharging && (mBatteryStyle == BATTERY_STYLE_HIDDEN)
+                ? (bolt + " ") : "";
         if (mShowBatteryEstimate != 0 && !mCharging) {
             mBatteryController.getEstimatedTimeRemainingString((String estimate) -> {
                 if (estimate != null) {
@@ -413,7 +417,7 @@ public class BatteryMeterView extends LinearLayout implements
                 }
             });
         } else {
-            mBatteryPercentView.setText(text);
+            mBatteryPercentView.setText(mChargeIndicator + text);
             setContentDescription(
                     getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
                     : R.string.accessibility_battery_level, mLevel));
@@ -462,6 +466,7 @@ public class BatteryMeterView extends LinearLayout implements
         } else {
             removeBatteryPercentView();
         }
+        updatePercentText();
     }
 
     public void updateVisibility() {
