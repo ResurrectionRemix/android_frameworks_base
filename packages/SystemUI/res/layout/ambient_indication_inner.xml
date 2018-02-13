@@ -18,13 +18,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8.0dip"
         android:src="@drawable/ic_music_note_24dp"
-        android:tint="?attr/wallpaperTextColorSecondary"
+        android:tint="#ffffffff"
         android:tintMode="src_in"
         android:forceHasOverlappingRendering="false" />
 
     <TextView
         android:textSize="14.0sp"
-        android:textColor="?attr/wallpaperTextColorSecondary"
+        android:tint="#ffffffff"
         android:id="@+id/ambient_indication_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
