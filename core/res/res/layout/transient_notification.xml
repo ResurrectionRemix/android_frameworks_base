@@ -38,7 +38,7 @@
         android:textAppearance="@style/TextAppearance.Toast"
         android:textColor="@color/toast_text_color"
         android:shadowColor="#BB000000"
-        android:shadowRadius="2.75"
+        android:shadowRadius="0.50"
         android:background="?android:attr/toastFrameBackground"
         />
 
