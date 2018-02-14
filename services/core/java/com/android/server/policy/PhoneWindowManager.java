@@ -2328,7 +2328,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         mSettingsObserver = new SettingsObserver(mHandler);
-        mSettingsObserver.observe();
+        //mSettingsObserver.observe();
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
