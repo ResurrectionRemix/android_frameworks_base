@@ -44,6 +44,9 @@
 
   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 
+  <!-- Config.xml entries -->
+  <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
+
   <!-- AOKP custom system animations -->
   <java-symbol type="string" name="action_null"/>
   <java-symbol type="string" name="animation_fade"/>
