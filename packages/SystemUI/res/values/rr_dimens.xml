@@ -91,4 +91,8 @@
     <dimen name="pie_status_text_top_margin">13dp</dimen>
     <dimen name="pie_status_text_top_margin_land">9dp</dimen>
 
+    <dimen name="signal_cluster_no_battery_padding">0dp</dimen>
+    <dimen name="battery_level_padding_start_no_icon">0dp</dimen>
+
+
 </resources>
