@@ -210,6 +210,10 @@ public class QSFragment extends Fragment implements QS {
         return mQSPanel;
     }
 
+    public QuickStatusBarHeader getQsHeader() {
+        return mHeader;
+    }
+
     public QSCustomizer getCustomizer() {
         return mQSCustomizer;
     }
