@@ -584,7 +584,9 @@ public class BatteryMeterDrawableBase extends Drawable {
         if (!mCharging) {
             mTextPaint.setColor(getColorForLevel(level));
             final float full = 0.30f;
-            final float nofull =  0.48f;
+            final float nofull =  mMeterStyle == BATTERY_STYLE_BIG_CIRCLE
+                    || mMeterStyle == BATTERY_STYLE_BIG_DOTTED_CIRCLE ? 0.48f
+                    : 0.52f;
             final float single =  0.86f;
             mTextPaint.setTextSize(height * (mLevel == 100 ? full : nofull));
             mTextHeight = -mTextPaint.getFontMetrics().ascent;
