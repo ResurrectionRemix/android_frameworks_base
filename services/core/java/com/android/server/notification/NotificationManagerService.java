@@ -5116,8 +5116,7 @@ public class NotificationManagerService extends SystemService {
 
         NotificationRecord.Light light = ledNotification != null ?
                 ledNotification.getLight() : null;
-        if (ledNotification == null || mLineageNotificationLights == null ||
-                light == null || !mNotificationPulseEnabled) {
+        if (ledNotification == null || mLineageNotificationLights == null || light == null) {
             mNotificationLight.turnOff();
             return;
         }
