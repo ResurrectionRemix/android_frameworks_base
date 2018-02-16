@@ -94,5 +94,7 @@
     <dimen name="signal_cluster_no_battery_padding">0dp</dimen>
     <dimen name="battery_level_padding_start_no_icon">0dp</dimen>
 
+    <!-- Screenrecord hint -->
+    <dimen name="screenrecord_hint_size">48dp</dimen>
 
 </resources>

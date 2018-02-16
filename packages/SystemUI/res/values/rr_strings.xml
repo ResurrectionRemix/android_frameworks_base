@@ -211,8 +211,6 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
 
-  <dimen name="screenrecord_hint_size">48dp</dimen>
-
     <!-- Pie controls -->
     <string name="pie_date_format" translatable="false">EEEE, dd MMMM yyyy</string>
     <string name="pie_hour_format_12" translatable="false">hh:mm</string>
