@@ -46,5 +46,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">Faites un appui long sur le bouton Marche/Arrêt pour interagir</string>
   <!-- Label for item that flashlight in power menu options dialog -->
-  <string name="global_action_flashlight">Lampe torche</string>
+  <string name="global_action_flashlight">Lampe de poche</string>
 </resources>

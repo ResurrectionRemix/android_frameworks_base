@@ -116,7 +116,7 @@
   <string name="accessibility_quick_settings_caffeine_on">Čas na kávu zapnut</string>
   <!-- Sync QS Tile -->
   <string name="quick_settings_sync_label">Synchronizovat</string>
-  <string name="accessibility_quick_settings_sync_off">Synch. vyp</string>
+  <string name="accessibility_quick_settings_sync_off">Synch. vypnuta</string>
   <string name="accessibility_quick_settings_sync_on">Synch. zapnuta</string>
   <string name="accessibility_quick_settings_sync_changed_off">Synchronizace vypnuta</string>
   <string name="accessibility_quick_settings_sync_changed_on">Synchronizace zapnuta</string>
@@ -127,7 +127,7 @@
   <string name="quick_settings_pip_label">PiP</string>
   <string name="quick_settings_pip_tile_app_na">Aplikace nepodporuje PiP</string>
   <!-- Screenrecord tile -->
-  <string name="quick_settings_screenrecord">Záznam obrazovky</string>
+  <string name="quick_settings_screenrecord">Videozáznam obrazovky</string>
   <string name="quick_settings_screenrecord_on">Nahrávání ...</string>
   <!-- Advance location quick setting tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Hlášení polohy: úspora baterie.</string>
@@ -156,7 +156,7 @@
   <string name="quick_settings_screenrecord_mq_label">Záznam obrazovky MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Záznam obrazovky HQ</string>
   <string name="omnijaws_service_error">Chyba</string>
-  <string name="omnijaws_service_unkown">Žádné data o počasí</string>
+  <string name="omnijaws_service_unkown">Žádné údaje o počasí</string>
   <string name="omnijaws_service_error_long">Chyba při načítání údajů o počasí</string>
   <string name="omnijaws_service_disabled">Služba je zakázána</string>
   <string name="omnijaws_detail_header">Počasí</string>

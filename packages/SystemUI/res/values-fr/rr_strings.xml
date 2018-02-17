@@ -21,10 +21,10 @@
   <!-- Power menu -->
   <string name="global_action_restart_system">Redémarrer</string>
   <string name="global_action_restart_advanced">Avancé(e)(s)</string>
-  <string name="global_action_restart_recovery">Récupération</string>
+  <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">Interface utilisateur</string>
-  <string name="global_action_restart_hot">Populaire</string>
+  <string name="global_action_restart_hot">Redémarrer à chaud</string>
   <string name="global_action_screenshot">Capture d\'écran</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Capture d\'écran supprimée</string>
@@ -51,7 +51,7 @@
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">Gestionnaire d\'icônes</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Raccourcis inférieurs</string>
-  <string name="lockscreen_default">Par Défaut</string>
+  <string name="lockscreen_default">Par défaut</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">Économiseur de données</string>
   <string name="lockscreen_hidden">Aucun</string>
@@ -163,7 +163,7 @@
   <string name="omnijaws_label_default">Météo</string>
   <string name="omnijaws_current_text">Actuellement</string>
   <string name="omnijaws_package_not_available">OmniJaws indisponible</string>
-  <string name="omnijaws_service_last_update">Dernière mise à jour : </string>
+  <string name="omnijaws_service_last_update">Dernière actualisation :</string>
   <!-- Battery saver tile -->
   <string name="battery_saver_qs_tile_fully_charged">Complètement chargé</string>
   <!-- Expanded desktop QS Tile -->

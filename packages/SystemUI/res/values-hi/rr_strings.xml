@@ -22,7 +22,7 @@
   <string name="global_action_restart_system">रीबूट करें</string>
   <string name="global_action_restart_advanced">उन्नत</string>
   <string name="global_action_restart_recovery">आरोग्य प्राप्ति</string>
-  <string name="global_action_restart_bootloader">बूटलोडेर</string>
+  <string name="global_action_restart_bootloader">बूटलोडर</string>
   <string name="global_action_restart_ui">सिस्टम यूआई</string>
   <string name="global_action_restart_hot">गरम</string>
   <string name="global_action_screenshot">स्क्रीन की तस्वीर</string>
@@ -44,18 +44,18 @@
   <string name="onthego_notif_restart">On-The-Go पुनरारंभ करें</string>
   <string name="onthego_notif_camera_changed">कैमरा मोड बदल गया</string>
   <string name="onthego_transparency">पारदर्शिता</string>
-  <string name="onthego_front_camera">फ्रंट कैमरा उपयोग</string>
+  <string name="onthego_front_camera">फ्रंट कैमरा का उपयोग करें</string>
   <string name="onthego_service_toggle">स्वचालित रूप से सेवा को पुनरारंभ करें</string>
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA+ (इंटरनेट)</string>
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">आइकन प्रबंधक</string>
-  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">नीचे शॉर्टकट</string>
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">नीचे के शॉर्टकट</string>
   <string name="lockscreen_default">पूर्व निर्धारित</string>
   <string name="status_bar_vpn">वीपीएन</string>
   <string name="status_bar_data_saver">डेटा सेवर</string>
   <string name="lockscreen_hidden">कुछ नहीं</string>
-  <string name="custom_hint">लॉन्च करने के लिएचिह्न से स्वाइप करें</string>
+  <string name="custom_hint">लॉन्च करने के लिए चिह्न से स्वाइप करें</string>
   <string name="systemui_tuner_navbar_title">स्टॉक सेटिंग</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">रीबूट करें</string>
@@ -69,7 +69,7 @@
   <string name="quick_settings_compass_init">आवाक्षरित हो रही है\u2026</string>
   <string name="accessibility_quick_settings_compass_off">कम्पास बंद</string>
   <string name="accessibility_quick_settings_compass_on">दिशा सूचक चालू</string>
-  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया</string>
+  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया गया है</string>
   <string name="accessibility_quick_settings_compass_changed_on">कम्पास चालू कर दिया</string>
   <string name="quick_settings_compass_N">उ</string>
   <string name="quick_settings_compass_NE">उ-पू</string>

@@ -24,7 +24,7 @@
   <string name="global_action_restart_recovery">Pemulihan</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">UI Sistem</string>
-  <string name="global_action_restart_hot">Panas</string>
+  <string name="global_action_restart_hot">Terbaru</string>
   <string name="global_action_screenshot">Tangkapan Layar</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>

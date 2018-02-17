@@ -24,7 +24,7 @@
   <string name="global_action_restart_recovery">Recuperação</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">Interface do sistema</string>
-  <string name="global_action_restart_hot">Rápido</string>
+  <string name="global_action_restart_hot">Reinício rápido</string>
   <string name="global_action_screenshot">Captura de tela</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">A captura de tela foi apagada</string>
@@ -33,8 +33,8 @@
   <string name="app_float_item_title">Ver em modo flutuante</string>
   <string name="app_stop_item_title">Encerrar Aplicativo</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Carregamento Rápido (<xliff:g id="charging_time_left">%s</xliff:g> até concluir)</string>
-  <string name="keyguard_plugged_in_dash_charging">Carregamento Rápido</string>
+  <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left">%s</xliff:g> até concluir)</string>
+  <string name="keyguard_plugged_in_dash_charging">Carregamento Dash</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go ativado</string>
   <string name="onthego_notif_title">On-The-Go está ativo</string>
