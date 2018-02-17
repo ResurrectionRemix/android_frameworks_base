@@ -179,6 +179,7 @@
   <!-- Power menu -->
   <java-symbol type="drawable" name="ic_lock_torch" />
   <java-symbol type="string" name="global_action_flashlight" />
+  <java-symbol type="string" name="global_action_restart" />
 
   <!-- EdgeGesture service -->
   <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
