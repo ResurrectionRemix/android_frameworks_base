@@ -938,6 +938,8 @@ public class RecentsView extends FrameLayout {
         mMemText.setVisibility(View.VISIBLE);
         mMemBar.setVisibility(View.VISIBLE);
 
+        mMemBar.getProgressDrawable().setColorFilter(mContext.getResources().getColor(R.color.system_accent_color), Mode.MULTIPLY);
+
         updateMemoryStatus();
         return true;
     }
