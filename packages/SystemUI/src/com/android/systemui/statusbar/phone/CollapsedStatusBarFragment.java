@@ -67,6 +67,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private static final int CLOCK_DATE_POSITION_DEFAULT  = 0;
     private static final int CLOCK_DATE_POSITION_CENTERED = 1;
     private static final int CLOCK_DATE_POSITION_HIDDEN   = 2;
+    private static final int CLOCK_DATE_POSITION_LEFT   = 3;
 
     private PhoneStatusBarView mStatusBar;
     private KeyguardMonitor mKeyguardMonitor;
@@ -79,6 +80,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private SignalClusterView mSignalClusterView;
     private Clock mClockDefault;
     private Clock mClockCentered;
+    private Clock mLeftClock;
     private View mCenterClockLayout;
 
     private int mClockPosition = CLOCK_DATE_POSITION_DEFAULT;
@@ -213,6 +215,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         mClockDefault = (Clock) mStatusBar.findViewById(R.id.clock);
+        mLeftClock = (Clock) mStatusBar.findViewById(R.id.left_clock);
         mClockCentered = (Clock) mStatusBar.findViewById(R.id.center_clock);
         mCenterClockLayout = mStatusBar.findViewById(R.id.center_clock_layout);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
@@ -300,9 +303,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if ((state1 & DISABLE_NOTIFICATION_ICONS) != 0) {
                 hideNotificationIconArea(animate);
                 hideCarrierName(animate);
+                hideLeftClock(animate);
             } else {
                 showNotificationIconArea(animate);
                 showCarrierName(animate);
+                showLeftClock(animate);
             }
         }
     }
@@ -741,5 +746,23 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 			    Settings.System.STATUS_BAR_CLOCK_DATE_SIZE_SMALL, 0) == 1;
         mClockDefault.setShowDateSizeSmall(small);
         mClockCentered.setShowDateSizeSmall(small);
+    }
+
+    public void hideLeftClock(boolean animate) {
+        if (mLeftClock != null) {
+            animateHide(mLeftClock, animate, false);
+        }
+    }
+
+    public void showLeftClock(boolean animate) {
+        updateClockStyle(animate);
+    }
+
+    private void updateClockStyle(boolean animate) {
+        if (mClockPosition == 0 || mClockPosition == 1 || mClockPosition == 2) {
+            animateHide(mLeftClock, animate, false);
+        } else {
+            animateShow(mLeftClock, animate);
+        }
     }
 }
