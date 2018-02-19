@@ -51,16 +51,14 @@ import java.util.Arrays;
 
 public class NavigationBarTile extends QSTileImpl<BooleanState> {
 
-    private static final String RR_EXTRA_FRAGMENT_CLASS = "com.android.settings.preference_fragment";
-    private static final String RR_SETTINGSACTIVITY = "com.android.settings.rr.MainSettingsActivity";
-    private static final String LINEAGEPART_PACKAGE_NAME = "org.lineageos.lineageparts";
-    private static final String SETTINGS_PACKAGE_NAME = "com.android.settings.rr";
-    private static final String NAVBAR_SETTINGS = "com.android.settings.rr.fragments.NavigationBar";
-    private static final String AOSP_SETTINGS = "com.android.settings.rr.fragments.NavigationBar";
-    private static final String SMARTBAR_SETTINGS = "com.android.settings.rr.fragments.SmartbarSettings";
-    private static final String FLING_SETTINGS = "com.android.settings.rr.fragments.FlingSettings";
     private static final String NAVBAR_MODE_ENTRIES_NAME = "systemui_navbar_mode_entries";
     private static final String NAVBAR_MODE_VALUES_NAME = "systemui_navbar_mode_values";
+    private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
+    private static final String SYSTEMUI_PACKAGE_NAME = "com.android.systemui";
+    private static final String NAVBAR_SETTINGS = "com.android.settings.Settings$NavigationSettingsActivity";
+    private static final String AOSP_SETTINGS = "com.android.systemui.tuner.NavBarActivity";
+    private static final String SMARTBAR_SETTINGS = "com.android.settings.Settings$SmartbarSettingsActivity";
+    private static final String FLING_SETTINGS = "com.android.settings.Settings$FlingSettingsActivity";
 
     private static final int NAVIGATION_MODE_DEFAULT = 0;
     private static final int NAVIGATION_MODE_SMARTBAR = 1;
@@ -104,18 +102,16 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
         int mode = getNavigationBar();
         switch (mode) {
             case NAVIGATION_MODE_DEFAULT:
-                intent.setClassName(LINEAGEPART_PACKAGE_NAME, AOSP_SETTINGS);
+                intent.setClassName(SYSTEMUI_PACKAGE_NAME, AOSP_SETTINGS);
                 break;
             case NAVIGATION_MODE_SMARTBAR:
-                intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
-                intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, SMARTBAR_SETTINGS);
+                intent.setClassName(SETTINGS_PACKAGE_NAME, SMARTBAR_SETTINGS);
                 break;
             case NAVIGATION_MODE_FLING:
-                intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
-                intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, FLING_SETTINGS);
+                intent.setClassName(SETTINGS_PACKAGE_NAME, FLING_SETTINGS);
                 break;
             default:
-                intent.setClassName(LINEAGEPART_PACKAGE_NAME, AOSP_SETTINGS);
+                intent.setClassName(SYSTEMUI_PACKAGE_NAME, AOSP_SETTINGS);
         }
         return intent;
     }
@@ -179,7 +175,7 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
     @Override
     protected void handleSecondaryClick() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName(LINEAGEPART_PACKAGE_NAME, AOSP_SETTINGS);
+        intent.setClassName(SETTINGS_PACKAGE_NAME, NAVBAR_SETTINGS);
         Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(
                 intent, 0);
     }
@@ -266,7 +262,7 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
         @Override
         public int getMetricsCategory() {
             return MetricsEvent.RESURRECTED;
-        }
+        }   
 
         @Override
         public CharSequence getTitle() {
@@ -281,8 +277,7 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
         @Override
         public Intent getSettingsIntent() {
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
-            intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, NAVBAR_SETTINGS);
+            intent.setClassName(SETTINGS_PACKAGE_NAME, NAVBAR_SETTINGS);
             return intent;
         }
 
@@ -331,3 +326,4 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
         }
     }
 }
+
