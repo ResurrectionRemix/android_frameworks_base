@@ -343,6 +343,8 @@ public class NotificationManagerService extends SystemService {
     private HashMap<String, Long> mAnnoyingNotifications = new HashMap<String, Long>();
     private long mAnnoyingNotificationThreshold = -1;
 
+    private boolean mInCallNotificationsVibrate;
+
     private AppOpsManager mAppOps;
     private UsageStatsManagerInternal mAppUsageStats;
 
@@ -1045,6 +1047,8 @@ public class NotificationManagerService extends SystemService {
                 = Settings.System.getUriFor(Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON);
         private final Uri MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI
                 = Settings.System.getUriFor(Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);
+        private final Uri INCALL_NOTIFICATIONS_VIBRATE_URI
+                = Settings.System.getUriFor(Settings.System.INCALL_NOTIFICATIONS_VIBRATE);
 
         SettingsObserver(Handler handler) {
             super(handler);
@@ -1061,6 +1065,8 @@ public class NotificationManagerService extends SystemService {
             resolver.registerContentObserver(NOTIFICATION_SOUND_VIB_SCREEN_ON,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI,
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(INCALL_NOTIFICATIONS_VIBRATE_URI,
                     false, this, UserHandle.USER_ALL);
             update(null);
         }
@@ -1095,6 +1101,11 @@ public class NotificationManagerService extends SystemService {
                 mAnnoyingNotificationThreshold = Settings.System.getLongForUser(resolver,
                        Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, 0,
                        UserHandle.USER_CURRENT);
+            }
+            if (uri == null || INCALL_NOTIFICATIONS_VIBRATE_URI.equals(uri)) {
+                mInCallNotificationsVibrate = Settings.System.getIntForUser(resolver,
+                       Settings.System.INCALL_NOTIFICATIONS_VIBRATE, 0,
+                       UserHandle.USER_CURRENT) == 1;
             }
         }
     }
@@ -4140,7 +4151,11 @@ public class NotificationManagerService extends SystemService {
                         mSoundNotificationKey = key;
                         if (mInCall) {
                             playInCallNotification();
-                            beep = true;
+                            if (mInCallNotificationsVibrate) {
+                                buzz = true;
+                            } else {
+                                beep = true;
+                            }
                         } else {
                             beep = playSound(record, soundUri);
                         }
@@ -4309,11 +4324,16 @@ public class NotificationManagerService extends SystemService {
             public void run() {
                 final long identity = Binder.clearCallingIdentity();
                 try {
-                    final IRingtonePlayer player = mAudioManager.getRingtonePlayer();
-                    if (player != null) {
-                        player.play(new Binder(), mInCallNotificationUri,
-                                mInCallNotificationAudioAttributes,
-                                mInCallNotificationVolume, false);
+                    if (!mInCallNotificationsVibrate) {
+                        final IRingtonePlayer player = mAudioManager.getRingtonePlayer();
+                        if (player != null) {
+                            player.play(new Binder(), mInCallNotificationUri,
+                                    mInCallNotificationAudioAttributes,
+                                    mInCallNotificationVolume, false);
+                        }
+                    } else {
+                        mVibrator.vibrate(
+                                VibrationEffect.createOneShot(30, 30));
                     }
                 } catch (RemoteException e) {
                 } finally {
