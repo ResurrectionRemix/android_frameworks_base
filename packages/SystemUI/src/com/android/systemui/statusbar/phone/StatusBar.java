@@ -851,6 +851,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mWereIconsJustHidden;
     private boolean mBouncerWasShowingWhenHidden;
 
+    private static final int CLOCK_DATE_POSITION_DEFAULT  = 0;
+    private static final int CLOCK_DATE_POSITION_CENTERED = 1;
+    private static final int CLOCK_DATE_POSITION_HIDDEN   = 2;
+    private static final int CLOCK_DATE_POSITION_LEFT   = 3;
+    private int mClockPos;
+
     public boolean isStartedGoingToSleep() {
         return mStartedGoingToSleep;
     }
@@ -1074,6 +1080,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mLockscreenSettingsObserver,
                 UserHandle.USER_ALL);
 
+
+        mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.NAVIGATION_BAR_VISIBLE), 
+                false, 
+                mNavbarObserver, 
+                UserHandle.USER_ALL);
+ 
 
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -4117,8 +4130,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             mTicking = true;
             mStatusBarContent.setVisibility(View.GONE);
             mStatusBarContent.startAnimation(loadAnim(true, null));
-            mCenterClockLayout.setVisibility(View.GONE);
-            mCenterClockLayout.startAnimation(loadAnim(true, null));
+            if(mClockPos == CLOCK_DATE_POSITION_CENTERED) {
+               mCenterClockLayout.setVisibility(View.GONE);
+               mCenterClockLayout.startAnimation(loadAnim(true, null));
+            }
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.VISIBLE);
                 mTickerView.startAnimation(loadAnim(false, null));
@@ -4129,8 +4144,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void tickerDone() {
             mStatusBarContent.setVisibility(View.VISIBLE);
             mStatusBarContent.startAnimation(loadAnim(false, null));
-            mCenterClockLayout.setVisibility(View.VISIBLE);
-            mCenterClockLayout.startAnimation(loadAnim(false, null));
+            if(mClockPos == CLOCK_DATE_POSITION_CENTERED) {
+               mCenterClockLayout.setVisibility(View.VISIBLE);
+               mCenterClockLayout.startAnimation(loadAnim(false, null));
+            }
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.GONE);
                 mTickerView.startAnimation(loadAnim(true, mTickingDoneListener));
@@ -4142,8 +4159,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mStatusBarContent.getVisibility() != View.VISIBLE) {
                 mStatusBarContent.setVisibility(View.VISIBLE);
                 mStatusBarContent.startAnimation(loadAnim(false, null));
-                mCenterClockLayout.setVisibility(View.VISIBLE);
-                mCenterClockLayout.startAnimation(loadAnim(false, null));
+                if(mClockPos == CLOCK_DATE_POSITION_CENTERED) {
+                   mCenterClockLayout.setVisibility(View.VISIBLE);
+                   mCenterClockLayout.startAnimation(loadAnim(false, null));
+                }
             }
             if (mTickerView != null) {
                 mTickerView.setVisibility(View.GONE);
@@ -6678,6 +6697,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_DATE_POSITION),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(LineageSettings.System.getUriFor(
                     LineageSettings.System.BERRY_GLOBAL_STYLE),
                     true,this, UserHandle.USER_ALL);
@@ -6884,6 +6906,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setFpToDismissNotifications();
             updateBlurSettings();
             updateBatterySettings();
+            updateClockStyle();
         }
     }
 
@@ -6920,6 +6943,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void updateBatterySaverColor() {
         mBatterySaverColor = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.STATUS_BAR_BATTERY_SAVER_COLOR, 0xfff4511e, UserHandle.USER_CURRENT);
+    }
+
+    private void updateClockStyle() {
+       mClockPos = Settings.System.getInt(mContext.getContentResolver(),
+			    Settings.System.STATUS_BAR_CLOCK_DATE_POSITION, CLOCK_DATE_POSITION_DEFAULT);
     }
 
     private void setForceAmbient() {

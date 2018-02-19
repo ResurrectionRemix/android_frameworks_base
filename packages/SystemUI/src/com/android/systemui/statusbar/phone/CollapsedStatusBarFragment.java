@@ -377,6 +377,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateHide(mCLogo, animate, false);
         }
         animateHide(mBatteryBar, animate, true);
+        if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
+            animateHide(mCenterClockLayout, animate ,false);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
@@ -388,6 +391,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mCLogo, animate);
         }
         animateShow(mBatteryBar, animate);
+        if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
+            animateShow(mCenterClockLayout, animate);
+        }
     }
 
     public void hideCarrierName(boolean animate) {

@@ -57,7 +57,6 @@
             android:gravity="center"
             android:paddingStart="@dimen/status_bar_clock_end_padding"
             android:paddingEnd="@dimen/status_bar_clock_starting_padding"
-            android:visibility="gone"
             android:singleLine="true" />
 
         <com.android.systemui.rr.carrierlabel.CarrierLabel
