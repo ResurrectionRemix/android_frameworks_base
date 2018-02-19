@@ -5460,6 +5460,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                         useDarkTheme, mCurrentUserId);
                 mOverlayManager.setEnabled("org.lineageos.overlay.sysuidark",
                         useDarkTheme, mCurrentUserId);
+                mOverlayManager.setEnabled("org.lineageos.overlay.settingsdark",
+                        useDarkTheme, mCurrentUserId);
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
