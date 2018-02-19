@@ -49,6 +49,17 @@
         android:orientation="horizontal"
         >
 
+        <com.android.systemui.statusbar.policy.Clock
+            android:id="@+id/left_clock"
+            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/status_bar_clock_end_padding"
+            android:paddingEnd="@dimen/status_bar_clock_starting_padding"
+            android:visibility="gone"
+            android:singleLine="true" />
+
         <com.android.systemui.rr.carrierlabel.CarrierLabel
             android:id="@+id/statusbar_carrier_text"
             android:layout_width="wrap_content"
@@ -130,17 +141,6 @@
                 android:paddingEnd="@dimen/status_bar_clock_end_padding"
                 android:gravity="center_vertical|start"
                 />
-
-        <com.android.systemui.statusbar.policy.Clock
-            android:id="@+id/left_clock"
-            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingStart="@dimen/status_bar_clock_end_padding"
-            android:paddingEnd="@dimen/status_bar_clock_starting_padding"
-            android:visibility="gone"
-            android:singleLine="true" />
 
             <ImageView
                 android:id="@+id/status_bar_logo_right"
