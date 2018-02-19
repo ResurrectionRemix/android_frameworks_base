@@ -303,11 +303,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if ((state1 & DISABLE_NOTIFICATION_ICONS) != 0) {
                 hideNotificationIconArea(animate);
                 hideCarrierName(animate);
-                hideLeftClock(animate);
             } else {
                 showNotificationIconArea(animate);
                 showCarrierName(animate);
-                showLeftClock(animate);
             }
         }
     }
@@ -352,6 +350,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
             animateHide(mCenterClockLayout, animate ,false);
         }
+        if (mClockPosition == CLOCK_DATE_POSITION_LEFT) {
+            animateHide(mLeftClock, animate,false);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -365,6 +366,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mBatteryBar, animate);
         if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
             animateShow(mCenterClockLayout, animate);
+        }
+        if (mClockPosition == CLOCK_DATE_POSITION_LEFT) {
+            animateShow(mLeftClock, animate);
         }
     }
 
@@ -380,6 +384,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
             animateHide(mCenterClockLayout, animate ,false);
         }
+        if (mClockPosition == CLOCK_DATE_POSITION_LEFT) {
+            animateHide(mLeftClock, animate,false);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
@@ -393,6 +400,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mBatteryBar, animate);
         if (mClockPosition == CLOCK_DATE_POSITION_CENTERED) {
             animateShow(mCenterClockLayout, animate);
+        }
+        if (mClockPosition == CLOCK_DATE_POSITION_LEFT) {
+            animateShow(mLeftClock, animate);
         }
     }
 
@@ -770,23 +780,5 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mClockDefault.setShowDateSizeSmall(small);
         mClockCentered.setShowDateSizeSmall(small);
         mLeftClock.setShowDateSizeSmall(small);
-    }
-
-    public void hideLeftClock(boolean animate) {
-        if (mLeftClock != null) {
-            animateHide(mLeftClock, animate, false);
-        }
-    }
-
-    public void showLeftClock(boolean animate) {
-        updateClockStyle(animate);
-    }
-
-    private void updateClockStyle(boolean animate) {
-        if (mClockPosition == 0 || mClockPosition == 1 || mClockPosition == 2) {
-            animateHide(mLeftClock, animate, false);
-        } else {
-            animateShow(mLeftClock, animate);
-        }
     }
 }
