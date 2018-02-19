@@ -638,3 +638,4 @@ public class BatteryMeterDrawableBase extends Drawable {
         return RADIUS_RATIO;
     }
 }
+

@@ -6790,7 +6790,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {         
-            if (uri.equals(Settings.System.getUriFor(
+            if (uri.equals (LineageSettings.System.getUriFor(
                     LineageSettings.System.BERRY_GLOBAL_STYLE))) {
                 updateTheme();
             } else if (uri.equals(Settings.System.getUriFor(
@@ -6887,7 +6887,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    private void updateBatterySettings() {
+    public void updateBatterySettings() {
         if (mStatusBarView != null) {
             mStatusBarView.updateBatterySettings();
         }
