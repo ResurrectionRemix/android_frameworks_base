@@ -51,14 +51,14 @@ import java.util.Arrays;
 
 public class NavigationBarTile extends QSTileImpl<BooleanState> {
 
-    private static final String AE_EXTRA_FRAGMENT_CLASS = "com.aicp.extras.extra.preference_fragment";
-    private static final String AE_SETTINGSACTIVITY = "com.aicp.extras.SettingsActivity";
+    private static final String RR_EXTRA_FRAGMENT_CLASS = "com.android.settings.preference_fragment";
+    private static final String RR_SETTINGSACTIVITY = "com.android.settings.rr.MainSettingsActivity";
     private static final String LINEAGEPART_PACKAGE_NAME = "org.lineageos.lineageparts";
-    private static final String SETTINGS_PACKAGE_NAME = "com.aicp.extras";
-    private static final String NAVBAR_SETTINGS = "com.aicp.extras.fragments.NavigationBar";
-    private static final String AOSP_SETTINGS = "org.lineageos.lineageparts.input.ButtonSettings";
-    private static final String SMARTBAR_SETTINGS = "com.aicp.extras.fragments.SmartbarSettings";
-    private static final String FLING_SETTINGS = "com.aicp.extras.fragments.FlingSettings";
+    private static final String SETTINGS_PACKAGE_NAME = "com.android.settings.rr";
+    private static final String NAVBAR_SETTINGS = "com.android.settings.rr.fragments.NavigationBar";
+    private static final String AOSP_SETTINGS = "com.android.settings.rr.fragments.NavigationBar";
+    private static final String SMARTBAR_SETTINGS = "com.android.settings.rr.fragments.SmartbarSettings";
+    private static final String FLING_SETTINGS = "com.android.settings.rr.fragments.FlingSettings";
     private static final String NAVBAR_MODE_ENTRIES_NAME = "systemui_navbar_mode_entries";
     private static final String NAVBAR_MODE_VALUES_NAME = "systemui_navbar_mode_values";
 
@@ -107,12 +107,12 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
                 intent.setClassName(LINEAGEPART_PACKAGE_NAME, AOSP_SETTINGS);
                 break;
             case NAVIGATION_MODE_SMARTBAR:
-                intent.setClassName(SETTINGS_PACKAGE_NAME, AE_SETTINGSACTIVITY);
-                intent.putExtra(AE_EXTRA_FRAGMENT_CLASS, SMARTBAR_SETTINGS);
+                intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
+                intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, SMARTBAR_SETTINGS);
                 break;
             case NAVIGATION_MODE_FLING:
-                intent.setClassName(SETTINGS_PACKAGE_NAME, AE_SETTINGSACTIVITY);
-                intent.putExtra(AE_EXTRA_FRAGMENT_CLASS, FLING_SETTINGS);
+                intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
+                intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, FLING_SETTINGS);
                 break;
             default:
                 intent.setClassName(LINEAGEPART_PACKAGE_NAME, AOSP_SETTINGS);
@@ -281,8 +281,8 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
         @Override
         public Intent getSettingsIntent() {
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setClassName(SETTINGS_PACKAGE_NAME, AE_SETTINGSACTIVITY);
-            intent.putExtra(AE_EXTRA_FRAGMENT_CLASS, NAVBAR_SETTINGS);
+            intent.setClassName(SETTINGS_PACKAGE_NAME, RR_SETTINGSACTIVITY);
+            intent.putExtra(RR_EXTRA_FRAGMENT_CLASS, NAVBAR_SETTINGS);
             return intent;
         }
 
