@@ -55,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:visibility="gone"
             android:paddingStart="@dimen/status_bar_clock_end_padding"
             android:paddingEnd="@dimen/status_bar_clock_starting_padding"
             android:singleLine="true" />
