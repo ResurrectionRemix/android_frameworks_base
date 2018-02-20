@@ -48,6 +48,7 @@ import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.phone.StatusBarIconController.DarkIconManager;
 import com.android.systemui.statusbar.phone.TickerView;
 import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.policy.ClockLeft;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
@@ -80,7 +81,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private SignalClusterView mSignalClusterView;
     private Clock mClockDefault;
     private Clock mClockCentered;
-    private Clock mLeftClock;
+    private ClockLeft mLeftClock;
     private View mCenterClockLayout;
 
     private int mClockPosition = CLOCK_DATE_POSITION_DEFAULT;
@@ -215,7 +216,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         mClockDefault = (Clock) mStatusBar.findViewById(R.id.clock);
-        mLeftClock = (Clock) mStatusBar.findViewById(R.id.left_clock);
+        mLeftClock = mStatusBar.findViewById(R.id.left_clock);
         mClockCentered = (Clock) mStatusBar.findViewById(R.id.center_clock);
         mCenterClockLayout = mStatusBar.findViewById(R.id.center_clock_layout);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
@@ -514,7 +515,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initTickerView();
         mStatusBarComponent.updateBatterySettings();
 	    updateCustomLogo();
-        setUpClock(animate);
+        setUpClock();
         if (mNotificationIconAreaInner != null) {
             if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
@@ -553,9 +554,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
-    private void setUpClock(boolean animate) {
+    private void setUpClock() {
         updateClockDatePosition();
-        updateClockStyle(animate);
         updateClockShowSeconds();
         updateClockShowDate();
         updateClockDateFormat();
@@ -773,14 +773,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mLeftClock.setShowDateSizeSmall(small);
     }
 
-     private void updateClockStyle(boolean animate) {
-         if (mClockPosition == 0 || mClockPosition == 1 || mClockPosition == 2) {
-             animateHide(mLeftClock, animate, false);
-         } else {
-             animateShow(mLeftClock, animate);
-         }
-     }
-
      public void hideLeftClock(boolean animate) {
          if (mLeftClock != null) {
              animateHide(mLeftClock, animate, false);
@@ -788,7 +780,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
      }
  
      public void showLeftClock(boolean animate) {
-         updateClockStyle(animate);
+         updateClockDatePosition();
      }
  
 }

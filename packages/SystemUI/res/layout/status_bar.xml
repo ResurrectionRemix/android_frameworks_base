@@ -49,15 +49,16 @@
         android:orientation="horizontal"
         >
 
-        <com.android.systemui.statusbar.policy.Clock
+ 
+        <com.android.systemui.statusbar.policy.ClockLeft
             android:id="@+id/left_clock"
             android:textAppearance="@style/TextAppearance.StatusBar.Clock"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:visibility="gone"
             android:paddingStart="@dimen/status_bar_clock_end_padding"
             android:paddingEnd="@dimen/status_bar_clock_starting_padding"
+            android:visibility="gone"
             android:singleLine="true" />
 
         <com.android.systemui.rr.carrierlabel.CarrierLabel
