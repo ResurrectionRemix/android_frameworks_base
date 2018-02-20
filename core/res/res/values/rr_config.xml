@@ -16,4 +16,7 @@
     <bool name="config_haveHigherAspectRatioScreen">false</bool>
     <item name="config_screenAspectRatio" format="float" type="dimen">2.1</item>
 
+    <!-- In call notification vibration strength -->
+    <integer name="config_in_call_notification_vibration_strength">30</integer>
+
 </resources>
