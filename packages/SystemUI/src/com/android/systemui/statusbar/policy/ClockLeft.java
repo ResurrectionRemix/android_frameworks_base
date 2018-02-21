@@ -60,10 +60,10 @@ public class ClockLeft extends Clock {
     }
 
     protected void updateClockVisibility() {
-       mClockStyle =  Settings.System.getInt(mContext.getContentResolver(),
+        mClockStyle =  Settings.System.getInt(mContext.getContentResolver(),
 			    Settings.System.STATUS_BAR_CLOCK_DATE_POSITION, CLOCK_DATE_POSITION_DEFAULT);
         boolean visible = mClockStyle == CLOCK_DATE_POSITION_LEFT
-                && mClockVisibleByPolicy && mClockVisibleByUser;
+                && mClockVisibleByPolicy;
         Dependency.get(IconLogger.class).onIconVisibility("left_clock", visible);
         int visibility = visible ? View.VISIBLE : View.GONE;
         setVisibility(visibility);

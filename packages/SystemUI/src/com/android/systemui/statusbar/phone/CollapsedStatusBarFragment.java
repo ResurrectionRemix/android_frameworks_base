@@ -516,6 +516,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mStatusBarComponent.updateBatterySettings();
 	    updateCustomLogo();
         setUpClock();
+        updateClockStyle(animate);
         if (mNotificationIconAreaInner != null) {
             if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
@@ -578,25 +579,24 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     mClockDefault.setClockVisibleByUser(true);
                     mCenterClockLayout.setVisibility(View.GONE);
                     mClockCentered.setClockVisibleByUser(false);
-                    mLeftClock.setClockVisibleByUser(false);
+                   // mLeftClock.setClockVisibleByUser(false);
                     break;
                 case CLOCK_DATE_POSITION_CENTERED:
                     mClockDefault.setClockVisibleByUser(false);
                     mCenterClockLayout.setVisibility(View.VISIBLE);
                     mClockCentered.setClockVisibleByUser(true);
-                    mLeftClock.setClockVisibleByUser(false);
+                    //mLeftClock.setClockVisibleByUser(false);
                     break;
                 case CLOCK_DATE_POSITION_HIDDEN:
                     mClockDefault.setClockVisibleByUser(false);
                     mCenterClockLayout.setVisibility(View.GONE);
                     mClockCentered.setClockVisibleByUser(false);
-                    mLeftClock.setClockVisibleByUser(false);
+                    //mLeftClock.setClockVisibleByUser(false);
                     break;
                 case CLOCK_DATE_POSITION_LEFT:
                     mClockDefault.setClockVisibleByUser(false);
                     mCenterClockLayout.setVisibility(View.GONE);
                     mClockCentered.setClockVisibleByUser(false);
-                    mLeftClock.setClockVisibleByUser(true);
                     break;
             }
         }
@@ -780,7 +780,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
      }
  
      public void showLeftClock(boolean animate) {
-         updateClockDatePosition();
+         updateClockStyle(animate);
      }
+
+ 
+     private void updateClockStyle(boolean animate) {
+        if (mClockPosition == 0 || mClockPosition == 1 || mClockPosition == 2) {
+            animateHide(mLeftClock, animate, false);
+        } else {
+            animateShow(mLeftClock, animate);
+        }
+    }
  
 }
