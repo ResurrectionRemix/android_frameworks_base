@@ -17,6 +17,6 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android">
     <shape android:shape="rectangle">
         <corners android:radius="2dp" />
-        <solid android:color="?attr/colorBackground" />
+        <solid android:color="@color/chooser_service_row_background_color" />
     </shape>
 </inset>
