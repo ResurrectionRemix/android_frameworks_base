@@ -154,6 +154,10 @@ public final class BatteryService extends SystemService {
     private boolean mHasDashCharger;
     private boolean mLastDashCharger;
 
+    private boolean mTurboPower;
+    private boolean mHasTurboPower;
+    private boolean mLastTurboPower;
+
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
 
@@ -178,6 +182,8 @@ public final class BatteryService extends SystemService {
 
         mHasDashCharger = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasDashCharger);
+        mHasTurboPower = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_hasTurboPowerCharger);
         mCriticalBatteryLevel = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_criticalBatteryWarningLevel);
         mLowBatteryWarningLevel = mContext.getResources().getInteger(
@@ -403,6 +409,8 @@ public final class BatteryService extends SystemService {
 
         mDashCharger = mHasDashCharger && isDashCharger();
 
+        mTurboPower = mHasTurboPower && isTurboPower();
+
         if (force || (mBatteryProps.batteryStatus != mLastBatteryStatus ||
                 mBatteryProps.batteryHealth != mLastBatteryHealth ||
                 mBatteryProps.batteryPresent != mLastBatteryPresent ||
@@ -414,7 +422,8 @@ public final class BatteryService extends SystemService {
                 mBatteryProps.maxChargingVoltage != mLastMaxChargingVoltage ||
                 mBatteryProps.batteryChargeCounter != mLastChargeCounter ||
                 mInvalidCharger != mLastInvalidCharger ||
-                mDashCharger != mLastDashCharger)) {
+                mDashCharger != mLastDashCharger ||
+                mTurboPower != mLastTurboPower)) {
 
             if (mPlugType != mLastPlugType) {
                 if (mLastPlugType == BATTERY_PLUGGED_NONE) {
@@ -556,6 +565,7 @@ public final class BatteryService extends SystemService {
             mLastBatteryLevelCritical = mBatteryLevelCritical;
             mLastInvalidCharger = mInvalidCharger;
             mLastDashCharger = mDashCharger;
+            mLastTurboPower = mTurboPower;
         }
     }
 
@@ -583,6 +593,7 @@ public final class BatteryService extends SystemService {
         intent.putExtra(BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE, mBatteryProps.maxChargingVoltage);
         intent.putExtra(BatteryManager.EXTRA_CHARGE_COUNTER, mBatteryProps.batteryChargeCounter);
         intent.putExtra(BatteryManager.EXTRA_DASH_CHARGER, mDashCharger);
+        intent.putExtra(BatteryManager.EXTRA_TURBO_POWER, mTurboPower);
 
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED.  level:" + mBatteryProps.batteryLevel +
@@ -599,7 +610,8 @@ public final class BatteryService extends SystemService {
                     ", maxChargingCurrent:" + mBatteryProps.maxChargingCurrent +
                     ", maxChargingVoltage:" + mBatteryProps.maxChargingVoltage +
                     ", chargeCounter:" + mBatteryProps.batteryChargeCounter +
-                    ", dashCharger:" + mDashCharger);
+                    ", dashCharger:" + mDashCharger +
+                    ", turboPower:" + mTurboPower);
         }
 
         mHandler.post(new Runnable() {
@@ -618,6 +630,20 @@ public final class BatteryService extends SystemService {
             br.close();
             file.close();
             return "1".equals(state);
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return false;
+    }
+
+    private boolean isTurboPower() {
+        try {
+            FileReader file = new FileReader("/sys/class/power_supply/battery/charge_rate");
+            BufferedReader br = new BufferedReader(file);
+            String state = br.readLine();
+            br.close();
+            file.close();
+            return "Turbo".equals(state);
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
