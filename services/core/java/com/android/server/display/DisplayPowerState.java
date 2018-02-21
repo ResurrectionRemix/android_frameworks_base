@@ -123,7 +123,8 @@ final class DisplayPowerState {
         if (mColorFade != null) {
             mColorFade.dismiss();
         }
-        if (mode == DisplayPowerController.SCREEN_OFF_SIMPLE_FADE) {
+        if (mode == DisplayPowerController.SCREEN_OFF_SIMPLE_FADE
+                || mode == DisplayPowerController.SCREEN_OFF_COLOR_FADE) {
             mColorFade = new ColorFade(Display.DEFAULT_DISPLAY);
         } else {
             mColorFade = new ElectronBeam(Display.DEFAULT_DISPLAY);
