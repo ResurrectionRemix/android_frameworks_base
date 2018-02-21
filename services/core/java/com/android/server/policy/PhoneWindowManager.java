@@ -4571,7 +4571,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && event.getRepeatCount() == 0
                 // Trigger haptic feedback only for "real" events.
                 && source != InputDevice.SOURCE_CUSTOM
-                && !isHwKeysDisabled();
+                && !isHwKeysDisabled()
+                && !keyguardOn();
 
         // Specific device key handling
         if (mDeviceKeyHandler != null) {
