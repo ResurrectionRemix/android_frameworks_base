@@ -176,7 +176,6 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
-  <string name="pie_date_format">EEEE, yyyy MMMM dd</string>
   <string name="pie_state_name">Pie vezérlő</string>
   <string name="pie_state_summary">Pie vezérlő használata teljes képernyős üzemmódban</string>
   <string name="pie_battery_level">"AKKUMULÁTOR SZINTJE "</string>

@@ -176,10 +176,6 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
-  <string name="pie_date_format">EEE, dd MMMM yyyy</string>
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <string name="pie_state_name">Pie 按鈕</string>
   <string name="pie_state_summary">在全螢幕模式中使用扇形控制</string>
   <string name="pie_battery_level">"電池計量水準 "</string>

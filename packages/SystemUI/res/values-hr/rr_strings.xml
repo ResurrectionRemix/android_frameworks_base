@@ -176,7 +176,6 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
-  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_state_name">Kontrola pitom</string>
   <string name="pie_state_summary">Upotreba kontrola pitom u cjelozaslonskom načinu</string>
   <string name="pie_battery_level">"RAZINA BATERIJE "</string>
