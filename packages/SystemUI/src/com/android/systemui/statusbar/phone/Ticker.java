@@ -29,6 +29,7 @@ import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.View;
@@ -73,8 +74,8 @@ public abstract class Ticker implements DarkReceiver {
                 && gc != Character.SPACE_SEPARATOR;
     }
 
-    private AlphaAnimation mAnimationIn;
-    private AlphaAnimation mAnimationOut;
+    private Animation mAnimationIn;
+    private Animation mAnimationOut;
 
     private final class Segment {
         StatusBarNotification notification;
@@ -177,28 +178,42 @@ public abstract class Ticker implements DarkReceiver {
         }
     };
 
-    public Ticker(Context context, View tickerLayout) {
+    public Ticker(Context context, View tickerLayout, int animationMode) {
         mContext = context;
         final Resources res = context.getResources();
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         mIconScale = (float)imageBounds / (float)outerBounds;
 
-        mAnimationIn = new AlphaAnimation(0.0f, 1.0f);
-        Interpolator interpolatorIn = AnimationUtils.loadInterpolator(context,
-                android.R.interpolator.decelerate_quad);
-        mAnimationIn.setInterpolator(interpolatorIn);
-        mAnimationIn.setDuration(350);
-
-        mAnimationOut = new AlphaAnimation(1.0f, 0.0f);
-        Interpolator interpolatorOut = AnimationUtils.loadInterpolator(context,
-                android.R.interpolator.accelerate_quad);
-        mAnimationOut.setInterpolator(interpolatorOut);
-        mAnimationOut.setDuration(350);
+        updateAnimation(animationMode);
 
         mNotificationColorUtil = NotificationColorUtil.getInstance(mContext);
 
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
+    }
+
+    public void updateAnimation(int animationMode) {
+        if (animationMode == 1) {
+            mAnimationIn = AnimationUtils.loadAnimation(mContext,
+                    com.android.internal.R.anim.push_up_in);
+            mAnimationOut = AnimationUtils.loadAnimation(mContext,
+                    com.android.internal.R.anim.push_up_out);
+        } else {
+            mAnimationIn = new AlphaAnimation(0.0f, 1.0f);
+            Interpolator interpolatorIn = AnimationUtils.loadInterpolator(mContext,
+                    android.R.interpolator.decelerate_quad);
+            mAnimationIn.setInterpolator(interpolatorIn);
+            mAnimationIn.setDuration(350);
+
+            mAnimationOut = new AlphaAnimation(1.0f, 0.0f);
+            Interpolator interpolatorOut = AnimationUtils.loadInterpolator(mContext,
+                    android.R.interpolator.accelerate_quad);
+            mAnimationOut.setInterpolator(interpolatorOut);
+            mAnimationOut.setDuration(350);
+        }
+        if (mTextSwitcher != null && mIconSwitcher != null) {
+            setViewAnimations();
+        }
     }
 
 
@@ -312,17 +327,22 @@ public abstract class Ticker implements DarkReceiver {
 
     public void setViews(TextSwitcher ts, ImageSwitcher is) {
         mTextSwitcher = ts;
-        mTextSwitcher.setInAnimation(mAnimationIn);
-        mTextSwitcher.setOutAnimation(mAnimationOut);
         // Copy the paint style of one of the TextSwitchers children to use later for measuring
         TextView text = (TextView) mTextSwitcher.getChildAt(0);
         mPaint = text.getPaint();
 
         mIconSwitcher = is;
-        mIconSwitcher.setInAnimation(mAnimationIn);
-        mIconSwitcher.setOutAnimation(mAnimationOut);
         mIconSwitcher.setScaleX(mIconScale);
         mIconSwitcher.setScaleY(mIconScale);
+
+        setViewAnimations();
+    }
+
+    private void setViewAnimations() {
+        mTextSwitcher.setInAnimation(mAnimationIn);
+        mTextSwitcher.setOutAnimation(mAnimationOut);
+        mIconSwitcher.setInAnimation(mAnimationIn);
+        mIconSwitcher.setOutAnimation(mAnimationOut);
     }
 
     public void reflowText() {
