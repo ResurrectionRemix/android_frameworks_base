@@ -37,8 +37,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.ChaosLab;
 import android.annotation.ChaosLab.Classification;
-import android.app.Activity;
-import android.animation.TimeInterpolator;
+
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -92,7 +91,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
-import android.hardware.display.DisplayManager;
 import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
@@ -158,7 +156,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.FrameLayout;
 import android.widget.DateTimeView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
@@ -234,7 +231,6 @@ import com.android.systemui.recents.events.activity.AppTransitionFinishedEvent;
 import com.android.systemui.recents.events.activity.UndockingTaskEvent;
 import com.android.systemui.recents.misc.IconPackHelper;
 import com.android.systemui.recents.misc.SystemServicesProxy;
-import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.slimrecent.RecentController;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.stackdivider.WindowManagerProxy;
@@ -264,8 +260,6 @@ import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.statusbar.notification.InflationException;
 import com.android.systemui.statusbar.notification.RowInflaterTask;
 import com.android.systemui.statusbar.notification.VisualStabilityManager;
-import com.android.systemui.statusbar.phone.Ticker;
-import com.android.systemui.statusbar.phone.TickerView;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
@@ -288,6 +282,7 @@ import com.android.systemui.statusbar.policy.RemoteInputView;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
+import com.android.systemui.statusbar.screen_gestures.ScreenGesturesController;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout
         .OnChildLocationsChangedListener;
@@ -588,6 +583,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     private OrientationEventListener mOrientationListener;
 
     private int mAmbientMediaPlaying;
+
+    // Full Screen Gestures
+    protected ScreenGesturesController gesturesController;
 
     // Tracking finger for opening/closing.
     boolean mTracking;
@@ -1212,6 +1210,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
                 Settings.Secure.PIE_GRAVITY), false, mPieSettingsObserver);
 
+        mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.EDGE_GESTURES_ENABLED), false,
+                mEdgeGesturesSettingsObserver);
+
         mMediaSessionManager
                 = (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
@@ -1662,6 +1664,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean pieEnabled = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
         updatePieControls(!pieEnabled);
+
+        boolean edgeGesturesEnabled = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.EDGE_GESTURES_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+        updateEdgeGestures(edgeGesturesEnabled);
     }
 
     @Override
@@ -6754,6 +6760,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
+    private final ContentObserver mEdgeGesturesSettingsObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            ContentResolver resolver = mContext.getContentResolver();
+            boolean edgeGesturesEnabled = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.EDGE_GESTURES_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+
+            updateEdgeGestures(edgeGesturesEnabled);
+        }
+    };
+
     @Override  // NotificationData.Environment
     public boolean isDeviceProvisioned() {
         return mDeviceProvisionedController.isDeviceProvisioned();
@@ -9103,6 +9120,19 @@ public class StatusBar extends SystemUI implements DemoMode,
                  Settings.Secure.PIE_GRAVITY, 0);
          mPieController.resetPie(!reset, gravity);
      }
+
+    public void updateEdgeGestures(boolean enabled) {
+        Log.d(TAG, "updateEdgeGestures: Updating edge gestures");
+        if (enabled) {
+            if (gesturesController == null) {
+                gesturesController = new ScreenGesturesController(mContext, mWindowManager, this);
+            }
+            gesturesController.reorient();
+        } else if (!enabled && gesturesController != null) {
+            gesturesController.stop();
+            gesturesController = null;
+        }
+    }
  
      public void toggleOrientationListener(boolean enable) {
          if (mOrientationListener == null) {

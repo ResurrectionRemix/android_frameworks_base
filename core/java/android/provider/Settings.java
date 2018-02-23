@@ -9153,6 +9153,42 @@ public final class Settings {
         public static final String PIE_STATUS_INDICATOR = "pie_status_indicator";
 
         /**
+         * Whether to use edge gestures to navigate.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_ENABLED = "edge_gestures_enabled";
+
+        /**
+         * Haptic feedback duration on edge gesture navigation.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_FEEDBACK_DURATION = "edge_gestures_feedback_duration";
+
+        /**
+         * Long press duration on edge gesture navigation.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_LONG_PRESS_DURATION = "edge_gestures_long_press_duration";
+
+        /**
+         * Back gesture active on this edges.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_BACK_EDGES = "edge_gestures_back_edges";
+
+        /**
+         * Back gesture active on this edges when on landscape.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_LANDSCAPE_BACK_EDGES = "edge_gestures_landscape_back_edges";
+
+        /**
+         * Activate back gestures only when Y position > than this % of screen.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_BACK_SCREEN_PERCENT = "edge_gestures_back_screen_percent";
+
+        /**
          * Used to store the last used system ui flags to make qs settings stick after reboot
          * @hide
          */
