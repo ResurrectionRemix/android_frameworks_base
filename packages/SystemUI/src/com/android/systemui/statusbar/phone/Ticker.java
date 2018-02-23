@@ -59,6 +59,8 @@ public abstract class Ticker implements DarkReceiver {
     private int mIconTint =  0xffffffff;
     private int mTextColor = 0xffffffff;
 
+    private MediaMetadata mShowingMediaMetadata;
+
     private NotificationColorUtil mNotificationColorUtil;
 
     public static boolean isGraphicOrEmoji(char c) {
@@ -209,6 +211,17 @@ public abstract class Ticker implements DarkReceiver {
             CharSequence album = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ALBUM);
             CharSequence title = mediaMetaData.getText(MediaMetadata.METADATA_KEY_TITLE);
             if (artist != null && album != null && title != null) {
+                if (mShowingMediaMetadata != null &&
+                        artist.equals(mShowingMediaMetadata.getText(
+                                MediaMetadata.METADATA_KEY_ARTIST)) &&
+                        album.equals(mShowingMediaMetadata.getText(
+                                MediaMetadata.METADATA_KEY_ALBUM)) &&
+                        title.equals(mShowingMediaMetadata.getText(
+                                MediaMetadata.METADATA_KEY_TITLE))) {
+                    // Already shown
+                    return;
+                }
+                mShowingMediaMetadata = mediaMetaData;
                 n.getNotification().tickerText = artist.toString() + " - " + album.toString() + " - " + title.toString();
             } else {
                 return;
@@ -291,6 +304,10 @@ public abstract class Ticker implements DarkReceiver {
         mHandler.removeCallbacks(mAdvanceTicker);
         mSegments.clear();
         tickerHalting();
+    }
+
+    public void resetShownMediaMetadata() {
+        mShowingMediaMetadata = null;
     }
 
     public void setViews(TextSwitcher ts, ImageSwitcher is) {
