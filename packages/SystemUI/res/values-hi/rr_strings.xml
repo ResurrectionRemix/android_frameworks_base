@@ -176,10 +176,6 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
-  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-  <string name="pie_hour_format_12">घंटे:मिनट</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <string name="pie_state_name">पाइ नियंत्रण</string>
   <string name="pie_state_summary">इमर्सिव मोड मे होने पर पाई कंट्रोल्स का उपयोग करें</string>
   <string name="pie_battery_level">"बैटरी स्तर "</string>
