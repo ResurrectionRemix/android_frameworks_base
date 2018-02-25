@@ -20,5 +20,8 @@
 
     <string name="sysui_overlay_dark">Dark</string>
 
+    <!-- Notification info -->
+    <color name="notification_info_button_text">@color/accent_device_default_light</color>
+
 </resources>
 
