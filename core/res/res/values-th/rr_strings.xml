@@ -18,6 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu -->
   <string name="reboot_title">รีบูต</string>
+  <string name="reboot_message">รีบูตระบบ</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- AOKP custom system animations -->
@@ -43,4 +44,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">กดปุ่ม power ค้างไว้เพื่อทำงาน</string>
   <!-- Label for item that flashlight in power menu options dialog -->
+  <string name="global_action_flashlight">ไฟฉาย</string>
 </resources>

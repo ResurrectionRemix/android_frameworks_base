@@ -55,14 +55,14 @@
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">Risparmio dati</string>
   <string name="lockscreen_hidden">Nessuno</string>
-  <string name="custom_hint">Scorri dall\'icona per avviare</string>
+  <string name="custom_hint">Scorri l\'icona per avviare</string>
   <string name="systemui_tuner_navbar_title">Impostazioni predefinite</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">Riavvia</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">Nessuna schermata catturata</string>
-  <string name="screenshot_abort_text">Operazione fallita.</string>
+  <string name="screenshot_abort_text">Operazione annullata.</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Bussola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Registratore schermo LQ</string>
   <string name="quick_settings_screenrecord_mq_label">Registratore schermo MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Registratore schermo HQ</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Errore</string>
   <string name="omnijaws_service_unkown">Nessuna informazione meteo</string>
   <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
@@ -177,8 +178,9 @@
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Controlli Pie</string>
-  <string name="pie_state_summary">In modalità immersiva, usa controlli a scomparsa</string>
+  <string name="pie_state_summary">In modalità immersiva, usa controlli Pie</string>
   <string name="pie_battery_level">"LIVELLO BATTERIA "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">Cancella tutto</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

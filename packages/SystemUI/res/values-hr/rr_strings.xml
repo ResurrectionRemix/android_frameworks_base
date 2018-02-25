@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">LQ snimanje zaslona</string>
   <string name="quick_settings_screenrecord_mq_label">MQ snimanje zaslona</string>
   <string name="quick_settings_screenrecord_hq_label">HQ snimanje zaslona</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Greška</string>
   <string name="omnijaws_service_unkown">Nema podataka o vremenu</string>
   <string name="omnijaws_service_error_long">Greška pri učitavanju podataka o vremenu</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"RAZINA BATERIJE "</string>
   <string name="quick_settings_pie">Pita</string>
   <string name="recents_custom_android_n">IZBRIŠI SVE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

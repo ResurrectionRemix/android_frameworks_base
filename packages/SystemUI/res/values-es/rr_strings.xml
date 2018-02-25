@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Grabación de pantalla LQ</string>
   <string name="quick_settings_screenrecord_mq_label">Grabación de pantalla MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Grabación de pantalla HQ</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Error</string>
   <string name="omnijaws_service_unkown">No hay datos de tiempo</string>
   <string name="omnijaws_service_error_long">Error al cargar datos del clima</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"NIVEL DE BATERÍA "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">LIMPIAR TODO</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

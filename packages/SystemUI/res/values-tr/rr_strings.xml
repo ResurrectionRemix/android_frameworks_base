@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Ekran Kaydı Düşük Kalite</string>
   <string name="quick_settings_screenrecord_mq_label">Ekran Kaydı Orta Kalite</string>
   <string name="quick_settings_screenrecord_hq_label">Ekran Kaydı Yüksek Kalite</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Hata</string>
   <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
   <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"PİL SEVİYESİ "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">TÜMÜNÜ TEMİZLE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

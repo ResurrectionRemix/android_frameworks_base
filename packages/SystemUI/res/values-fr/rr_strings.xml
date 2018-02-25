@@ -20,7 +20,7 @@
   <string name="quick_settings_rr_label">Paramètres</string>
   <!-- Power menu -->
   <string name="global_action_restart_system">Redémarrer</string>
-  <string name="global_action_restart_advanced">Avancé(e)(s)</string>
+  <string name="global_action_restart_advanced">Avancé</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">Interface utilisateur</string>
@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Enregistrement de l\'écran en basse résolution</string>
   <string name="quick_settings_screenrecord_mq_label">Enregistrement de l\'écran en moyenne résolution</string>
   <string name="quick_settings_screenrecord_hq_label">Enregistrement de l\'écran en haute résolution</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Erreur</string>
   <string name="omnijaws_service_unkown">Donnée météo indisponible</string>
   <string name="omnijaws_service_error_long">Erreur de chargement des données</string>
@@ -178,7 +179,8 @@
   <!-- Pie controls -->
   <string name="pie_state_name">Contrôles des raccourcis de l\'arc</string>
   <string name="pie_state_summary">Utiliser l\'arc en mode immersif</string>
-  <string name="pie_battery_level">"BATTERIE "</string>
+  <string name="pie_battery_level">"NIVEAU DE BATTERIE "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

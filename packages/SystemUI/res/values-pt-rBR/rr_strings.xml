@@ -33,7 +33,7 @@
   <string name="app_float_item_title">Ver em modo flutuante</string>
   <string name="app_stop_item_title">Encerrar Aplicativo</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left">%s</xliff:g> até concluir)</string>
+  <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left">%s</xliff:g> para conclusão)</string>
   <string name="keyguard_plugged_in_dash_charging">Carregamento Dash</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go ativado</string>
@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Gravação de tela em qualidade baixa</string>
   <string name="quick_settings_screenrecord_mq_label">Gravação de tela em qualidade média</string>
   <string name="quick_settings_screenrecord_hq_label">Gravação de tela em qualidade alta</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Erro</string>
   <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
   <string name="omnijaws_service_error_long">Erro ao carregar as informações meteorológicas</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"NÍVEL DE BATERIA "</string>
   <string name="quick_settings_pie">Modo Pie</string>
   <string name="recents_custom_android_n">LIMPAR TUDO</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

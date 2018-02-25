@@ -22,7 +22,7 @@
   <string name="global_action_restart_system">重启</string>
   <string name="global_action_restart_advanced">高级重启</string>
   <string name="global_action_restart_recovery">恢复模式</string>
-  <string name="global_action_restart_bootloader">引导模式</string>
+  <string name="global_action_restart_bootloader">引导程序</string>
   <string name="global_action_restart_ui">系统界面</string>
   <string name="global_action_restart_hot">软重启</string>
   <string name="global_action_screenshot">屏幕截图</string>
@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">低质量屏幕录制</string>
   <string name="quick_settings_screenrecord_mq_label">中等质量屏幕录制</string>
   <string name="quick_settings_screenrecord_hq_label">高质量屏幕录制</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">错误</string>
   <string name="omnijaws_service_unkown">没有天气数据</string>
   <string name="omnijaws_service_error_long">加载天气数据时出错</string>
@@ -177,8 +178,9 @@
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie 控制</string>
-  <string name="pie_state_summary">在沉浸模式下启用 Pie 控制</string>
+  <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
   <string name="pie_battery_level">"电池电量 "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">全部清除</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

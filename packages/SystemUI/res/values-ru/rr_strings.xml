@@ -105,11 +105,11 @@
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_off">Ambient Display выкл.</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">\"Ambient display\" включен.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambient Display включен</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_off">\"Ambient display\" отключен.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient Display отключен</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">\"Ambient display\" включен.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient Display включен</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">Запрет сна</string>
   <string name="accessibility_quick_settings_caffeine_off">Запрет сна выкл.</string>
@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Запись экрана в низком качестве</string>
   <string name="quick_settings_screenrecord_mq_label">Запись экрана в среднем качестве</string>
   <string name="quick_settings_screenrecord_hq_label">Запись экрана в высоком качестве</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Ошибка</string>
   <string name="omnijaws_service_unkown">Нет данных о погоде</string>
   <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"Заряд батареи"</string>
   <string name="quick_settings_pie">PIE</string>
   <string name="recents_custom_android_n">ОЧИСТИТЬ ВСЁ</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

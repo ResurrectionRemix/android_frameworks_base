@@ -49,9 +49,11 @@
   <!-- Screenrecord notification action: show/hide pointer -->
   <!-- Screen record notification error title -->
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <!-- Battery saver tile -->
   <!-- Expanded desktop QS Tile -->
   <!-- Weather string format in expanded statusbar header -->
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

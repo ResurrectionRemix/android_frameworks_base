@@ -121,6 +121,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Ekran görüntüsü qeyd oluna bilmir</string>
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Xəta</string>
   <string name="omnijaws_service_unkown">Hava vəziyyəti məlumatı yox</string>
   <string name="omnijaws_service_error_long">Hava durumu məlumatları yüklənərkən xəta baş verdi</string>
@@ -140,4 +141,5 @@
   <!-- Pie controls -->
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">HAMISINI TƏMİZLƏ</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">螢幕錄製低畫質</string>
   <string name="quick_settings_screenrecord_mq_label">螢幕錄製中等畫質</string>
   <string name="quick_settings_screenrecord_hq_label">螢幕錄製高畫質</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">錯誤</string>
   <string name="omnijaws_service_unkown">沒有天氣資料</string>
   <string name="omnijaws_service_error_long">載入天氣資料錯誤</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"電池電量 "</string>
   <string name="quick_settings_pie">扇形</string>
   <string name="recents_custom_android_n">全部清除</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

@@ -106,6 +106,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Kan ikke optage skærmindhold</string>
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <!-- Battery saver tile -->
   <!-- Expanded desktop QS Tile -->
   <string name="quick_settings_expanded_desktop_label">Udvidet skrivebord</string>
@@ -116,4 +117,5 @@
   <!-- Pie controls -->
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">RYD ALLE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

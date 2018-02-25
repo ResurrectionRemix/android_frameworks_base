@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Καταγραφή οθόνης (χαμηλή ανάλυση)</string>
   <string name="quick_settings_screenrecord_mq_label">Καταγραφή οθόνης (μέτρια ανάλυση)</string>
   <string name="quick_settings_screenrecord_hq_label">Καταγραφή οθόνης (υψηλή ανάλυση)</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Σφάλμα</string>
   <string name="omnijaws_service_unkown">Δεν υπάρχουν δεδομένα καιρού</string>
   <string name="omnijaws_service_error_long">Σφάλμα κατά τη φόρτωση δεδομένων καιρού</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"ΕΠΙΠΕΔΟ ΜΠΑΤΑΡΙΑΣ "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

@@ -119,6 +119,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">לא ניתן להקליט מסך</string>
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">שגיאה</string>
   <string name="omnijaws_service_unkown">אין מידע מזג אוויר</string>
   <string name="omnijaws_service_error_long">שגיאה בטעינת נתוני מזג האויר</string>
@@ -136,4 +137,5 @@
   <!-- Pie controls -->
   <string name="quick_settings_pie">פאי</string>
   <string name="recents_custom_android_n">נקה הכל</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

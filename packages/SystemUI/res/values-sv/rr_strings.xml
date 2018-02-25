@@ -49,6 +49,7 @@
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
+  <string name="systemui_tuner_icon_manager_title">Ikonhanterare</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Genvägar i botten</string>
   <string name="lockscreen_default">Standard</string>
   <string name="status_bar_vpn">VPN</string>
@@ -134,10 +135,12 @@
   <string name="accessibility_quick_settings_location_high_accuracy">Platsrapportering: hög precision.</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Skärmen spelas in</string>
+  <string name="screenrecord_notif_final_ticker">Skärminspelning lyckades</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Spelar in skärmen</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Stoppa</string>
+  <string name="screenrecord_notif_completed">Skärminspelning lyckades</string>
   <string name="screenrecord_notif_duration">Totalt:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Visa pekaren</string>
@@ -152,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Skärminspelning LQ</string>
   <string name="quick_settings_screenrecord_mq_label">Skärminspelning MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Skärminspelning HQ</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Error</string>
   <string name="omnijaws_service_unkown">Ingen väderinfo</string>
   <string name="omnijaws_service_error_long">Fel vid inläsning av väderdata.</string>
@@ -178,4 +182,5 @@
   <string name="pie_battery_level">"BATTERINIVÅ "</string>
   <string name="quick_settings_pie">Paj</string>
   <string name="recents_custom_android_n">RENSA ALLA</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

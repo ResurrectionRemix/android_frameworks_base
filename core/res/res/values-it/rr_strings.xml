@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu -->
   <string name="reboot_title">Riavvia</string>
-  <string name="reboot_message">Riavvia il sistema</string>
+  <string name="reboot_message">Sto riavviando il sistema</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_toggleNavigationEditor">controllo editor di navigazione</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

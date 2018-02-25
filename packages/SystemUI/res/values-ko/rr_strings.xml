@@ -131,6 +131,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">화면을 녹화할 수 없음</string>
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">오류</string>
   <string name="omnijaws_service_unkown">날씨 데이터 없음</string>
   <string name="omnijaws_service_error_long">날씨 정보 불러오기 오류</string>
@@ -152,4 +153,5 @@
   <string name="pie_battery_level">"배터리 잔량 "</string>
   <string name="quick_settings_pie">Pie 컨트롤</string>
   <string name="recents_custom_android_n">모두 지우기</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

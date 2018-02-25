@@ -121,6 +121,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">画面の録画に失敗しました</string>
   <!-- Screenshot QS tile -->
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">エラー</string>
   <string name="omnijaws_service_unkown">気象情報がありません</string>
   <string name="omnijaws_service_error_long">気象データ読み込みエラー</string>
@@ -142,4 +143,5 @@
   <string name="pie_battery_level">"バッテリーレベル "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">全てクリア</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

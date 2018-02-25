@@ -17,6 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
+  <string name="quick_settings_rr_label">การตั้งค่า</string>
   <!-- Power menu -->
   <string name="global_action_restart_system">รีบูต</string>
   <string name="global_action_restart_advanced">ขั้นสูง</string>
@@ -136,6 +137,7 @@
   <string name="quick_settings_screenrecord_lq_label">บันทึกวิดิโอหน้าจอ LQ</string>
   <string name="quick_settings_screenrecord_mq_label">บันทึกวิดิโอหน้าจอ MQ</string>
   <string name="quick_settings_screenrecord_hq_label">บันทึกวิดิโอหน้าจอ HQ</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">ผิดพลาด</string>
   <string name="omnijaws_service_unkown">ไม่มีข้อมูลสภาพอากาศ</string>
   <string name="omnijaws_service_error_long">ข้อผิดพลาดในการรับข้อมูลสภาพอากาศ</string>
@@ -160,4 +162,5 @@
   <string name="pie_battery_level">"ระดับแบตเตอรี่ "</string>
   <string name="quick_settings_pie">พาย</string>
   <string name="recents_custom_android_n">ล้างทั้งหมด</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>

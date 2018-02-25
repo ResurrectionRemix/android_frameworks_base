@@ -155,6 +155,7 @@
   <string name="quick_settings_screenrecord_lq_label">Quay màn hình LQ</string>
   <string name="quick_settings_screenrecord_mq_label">Quay màn hình MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Quay màn hình HQ</string>
+  <!-- Navigation bar Tile -->
   <string name="omnijaws_service_error">Lỗi</string>
   <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
   <string name="omnijaws_service_error_long">Lỗi khi tải dữ liệu thời tiết</string>
@@ -181,4 +182,5 @@
   <string name="pie_battery_level">"MỨC PIN "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
 </resources>
