@@ -484,7 +484,7 @@
     <style name="TextAppearance.NotificationInfo.Button">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:attr/colorAccent</item>
+        <item name="android:textColor">@*android:color/notification_info_button_text</item>
         <item name="android:background">@drawable/btn_borderless_rect</item>
         <item name="android:gravity">center</item>
         <item name="android:focusable">true</item>

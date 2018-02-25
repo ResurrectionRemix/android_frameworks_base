@@ -16,11 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Resolver -->
-    <color name="resolver_list_bg">@android:color/white</color>
-
-    <!-- Notification info -->
-    <color name="notification_info_button_text">@color/accent_device_default_light</color>
-
+  <!-- Notification info -->
+  <java-symbol type="color" name="notification_info_button_text" />
 </resources>
-
