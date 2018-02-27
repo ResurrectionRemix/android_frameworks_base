@@ -1034,10 +1034,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 case MSG_DISPOSE_INPUT_CONSUMER:
                     disposeInputConsumer((InputConsumer) msg.obj);
                     break;
-                case MSG_BACK_DELAYED_PRESS:
+               /* case MSG_BACK_DELAYED_PRESS:
                     backMultiPressAction((Long) msg.obj, msg.arg1);
                     finishBackKeyPress();
-                    break;
+                    break;*/
                 case MSG_ACCESSIBILITY_SHORTCUT:
                     accessibilityShortcutActivated();
                     break;
