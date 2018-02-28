@@ -20,7 +20,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:drawableTop="@drawable/recents_empty"
+    android:drawableTop="@drawable/no_recents_rr"
     android:drawablePadding="25dp"
     android:textSize="16sp"
     android:drawableTint="?attr/wallpaperTextColor"
