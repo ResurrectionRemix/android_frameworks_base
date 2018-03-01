@@ -131,6 +131,13 @@
             <!-- Optional link to app. Only appears if the channel is not disabled and the app
             asked for it -->
             <TextView
+                android:id="@+id/notification_inspect_kill"
+                android:text="@string/kill"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                style="@style/TextAppearance.NotificationInfo.Button"/>
+            <TextView
                 android:id="@+id/app_settings"
                 android:text="@string/notification_app_settings"
                 android:layout_width="wrap_content"
@@ -189,3 +196,4 @@
             style="@style/TextAppearance.NotificationInfo.Button"/>
     </RelativeLayout>
 </com.android.systemui.statusbar.NotificationInfo>
+
