@@ -699,7 +699,7 @@ public class RecentsView extends FrameLayout {
 	    mDate.setTextColor(mDatecolor);
 	    }
    } else {
-        mMemBar.getProgressDrawable().setColorFilter(mContext.getResources().getColor(R.color.system_accent_color), Mode.MULTIPLY);
+        mMemBar.getProgressDrawable().setColorFilter(mContext.getResources().getColor(R.color.accent_membar_color), Mode.MULTIPLY);
 	    mMemText.setTextColor(mDefaultcolor);
 	    mClock.setTextColor(mDefaultcolor);
 	    mDate.setTextColor(mDefaultcolor);
