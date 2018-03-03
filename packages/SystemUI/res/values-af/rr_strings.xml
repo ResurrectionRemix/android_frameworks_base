@@ -56,4 +56,5 @@
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <!-- Kill button in notification guts -->
 </resources>

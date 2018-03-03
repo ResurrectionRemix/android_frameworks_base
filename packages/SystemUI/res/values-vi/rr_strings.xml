@@ -21,7 +21,7 @@
   <!-- Power menu -->
   <string name="global_action_restart_system">Khởi động lại</string>
   <string name="global_action_restart_advanced">Nâng cao</string>
-  <string name="global_action_restart_recovery">Phục hồi</string>
+  <string name="global_action_restart_recovery">Chế độ phục hồi</string>
   <string name="global_action_restart_bootloader">Trình nạp khởi động</string>
   <string name="global_action_restart_ui">Giao diện người dùng hệ thống</string>
   <string name="global_action_restart_hot">Nóng</string>
@@ -50,7 +50,7 @@
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">Quản lý biểu tượng</string>
-  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Phím tắt phía dưới</string>
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Các phím tắt phía dưới</string>
   <string name="lockscreen_default">Mặc định</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">Tiết kiệm dữ liệu</string>
@@ -152,10 +152,15 @@
   <string name="screenrecord_show_hint">Hiện gợi ý</string>
   <!-- Screenshot QS tile -->
   <string name="quick_settings_screenrecord_label">Quay màn hình</string>
-  <string name="quick_settings_screenrecord_lq_label">Quay màn hình LQ</string>
-  <string name="quick_settings_screenrecord_mq_label">Quay màn hình MQ</string>
-  <string name="quick_settings_screenrecord_hq_label">Quay màn hình HQ</string>
+  <string name="quick_settings_screenrecord_lq_label">Quay màn hình chất lượng thấp</string>
+  <string name="quick_settings_screenrecord_mq_label">Quay màn hình chất lượng trung bình</string>
+  <string name="quick_settings_screenrecord_hq_label">Quay màn hình chất lượng cao</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Thanh điều hướng</string>
+  <string name="quick_settings_smartbar">Thanh thông minh</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Gốc</string>
+  <string name="quick_settings_navigation_disabled">Đã tắt</string>
   <string name="omnijaws_service_error">Lỗi</string>
   <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
   <string name="omnijaws_service_error_long">Lỗi khi tải dữ liệu thời tiết</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower đã kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower đã kết nối</string>
+  <!-- Kill button in notification guts -->
 </resources>

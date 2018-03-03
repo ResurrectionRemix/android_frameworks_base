@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">Запис екрану MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Запис екрану HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Панель навігації</string>
+  <string name="quick_settings_smartbar">Розумна панель навігації</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Запаси</string>
+  <string name="quick_settings_navigation_disabled">Вимкнено</string>
   <string name="omnijaws_service_error">Помилка</string>
   <string name="omnijaws_service_unkown">Немає даних про погоду</string>
   <string name="omnijaws_service_error_long">Помилка завантаження даних про погоду</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">Очистити всі</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower підключено (<xliff:g id="charging_time_left">%s</xliff:g> до повного)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower підключено</string>
+  <!-- Kill button in notification guts -->
 </resources>

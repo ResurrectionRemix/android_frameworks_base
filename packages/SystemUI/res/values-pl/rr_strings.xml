@@ -156,6 +156,10 @@
   <string name="quick_settings_screenrecord_mq_label">Nagrywanie ekranu MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Nagrywanie ekranu HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_navigation_default">Standardowy</string>
+  <string name="quick_settings_navigation_disabled">Wyłączony</string>
   <string name="omnijaws_service_error">Błąd</string>
   <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
   <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
@@ -183,4 +187,6 @@
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
   <string name="recents_custom_android_n">WYCZYŚĆ WSZYSTKO</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower podłączony</string>
+  <!-- Kill button in notification guts -->
 </resources>

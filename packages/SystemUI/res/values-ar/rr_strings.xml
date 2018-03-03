@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">تسجيل الشاشة بجودة متوسطة</string>
   <string name="quick_settings_screenrecord_hq_label">تسجيل الشاشة بجودة عالية</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">شريط التنقل</string>
+  <string name="quick_settings_smartbar">الشريط الذكي</string>
+  <string name="quick_settings_fling">فلنغ</string>
+  <string name="quick_settings_navigation_default">إلافتراضي</string>
+  <string name="quick_settings_navigation_disabled">معطّل</string>
   <string name="omnijaws_service_error">خطأ</string>
   <string name="omnijaws_service_unkown">لا يوجد بيانات طقس</string>
   <string name="omnijaws_service_error_long">خطأ في تحميل بيانات الطقس</string>
@@ -183,4 +188,6 @@
   <string name="quick_settings_pie">الفطيرة</string>
   <string name="recents_custom_android_n">مسح الكل</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_turbo_power_charging">متصل بشاحن توربيني</string>
+  <!-- Kill button in notification guts -->
 </resources>

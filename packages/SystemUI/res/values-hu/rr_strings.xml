@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">Képernyőfelvétel MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Képernyőfelvétel HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Navigációs sáv</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Gyári</string>
+  <string name="quick_settings_navigation_disabled">Letiltva</string>
   <string name="omnijaws_service_error">Hiba</string>
   <string name="omnijaws_service_unkown">Nincsenek időjárási adatok</string>
   <string name="omnijaws_service_error_long">Hiba az időjárási adatok betöltésekor</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">ÖSSZES TÖRLÉSE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower csatlakoztatva (<xliff:g id="charging_time_left">%s</xliff:g> a teljes töltöttségig)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower csatlakoztatva</string>
+  <!-- Kill button in notification guts -->
 </resources>

@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">Ekran Kaydı Orta Kalite</string>
   <string name="quick_settings_screenrecord_hq_label">Ekran Kaydı Yüksek Kalite</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Gezinme çubuğu</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Varsayılan</string>
+  <string name="quick_settings_navigation_disabled">Devre dışı</string>
   <string name="omnijaws_service_error">Hata</string>
   <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
   <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">TÜMÜNÜ TEMİZLE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower bağlandı (tam dolmasına <xliff:g id="charging_time_left">%s</xliff:g> kaldı)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower bağlandı</string>
+  <!-- Kill button in notification guts -->
 </resources>

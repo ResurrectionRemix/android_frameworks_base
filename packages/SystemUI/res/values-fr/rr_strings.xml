@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">Enregistrement de l\'écran en moyenne résolution</string>
   <string name="quick_settings_screenrecord_hq_label">Enregistrement de l\'écran en haute résolution</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Barre de navigation</string>
+  <string name="quick_settings_smartbar">Barre intelligente</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Navigation par défaut</string>
+  <string name="quick_settings_navigation_disabled">Désactivé</string>
   <string name="omnijaws_service_error">Erreur</string>
   <string name="omnijaws_service_unkown">Donnée météo indisponible</string>
   <string name="omnijaws_service_error_long">Erreur de chargement des données</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">Charge rapide (temps restant : <xliff:g id="charging_time_left">%s</xliff:g> )</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">Charge rapide en cours</string>
+  <!-- Kill button in notification guts -->
 </resources>

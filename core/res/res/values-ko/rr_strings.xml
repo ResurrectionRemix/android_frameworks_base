@@ -20,7 +20,9 @@
   <string name="reboot_title">다시 시작</string>
   <string name="reboot_message">시스템 다시 시작 중</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">네비게이션 바 편집</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">응용 프로그램이 네비게이션 바 편집기를 제어 할 수있게합니다.</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">서서히 사라지기</string>
   <string name="animation_slide_right">오른쪽으로 슬라이드</string>

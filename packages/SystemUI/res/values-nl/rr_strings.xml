@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">Schermopname MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Schermopname HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Navigatiebalk</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Standaard</string>
+  <string name="quick_settings_navigation_disabled">Uitgeschakeld</string>
   <string name="omnijaws_service_error">Fout</string>
   <string name="omnijaws_service_unkown">Geen weergegevens</string>
   <string name="omnijaws_service_error_long">Probleem met het laden van weergegevens</string>
@@ -183,4 +188,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">ALLES WISSEN</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower aangesloten (<xliff:g id="charging_time_left">%s</xliff:g> tot vol)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower aangesloten</string>
+  <!-- Kill button in notification guts -->
 </resources>

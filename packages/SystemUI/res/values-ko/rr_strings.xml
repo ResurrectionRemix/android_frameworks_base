@@ -23,6 +23,9 @@
   <string name="global_action_restart_advanced">고급 설정</string>
   <string name="global_action_restart_recovery">복구 모드</string>
   <string name="global_action_restart_bootloader">부트로더</string>
+  <string name="global_action_restart_ui">시스템UI</string>
+  <string name="global_action_restart_hot">인기 있는 글</string>
+  <string name="global_action_screenshot">스크린샷</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">스크린샷이 삭제됨</string>
   <!-- App circle sidebar -->
@@ -44,12 +47,16 @@
   <string name="onthego_front_camera">전면 카메라 사용</string>
   <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
+  <string name="systemui_tuner_icon_manager_title">아이콘 관리자</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">하단 바로가기</string>
   <string name="lockscreen_default">기본</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">데이터 절약 모드</string>
   <string name="lockscreen_hidden">없음</string>
+  <string name="custom_hint">실행하려면 아이콘에서 스와이프하세요.</string>
+  <string name="systemui_tuner_navbar_title">기본 설정</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">다시 시작</string>
   <string name="quick_settings_reboot_recovery_label">복구 모드</string>
@@ -92,13 +99,17 @@
   <string name="quick_settings_sound_label">소리</string>
   <string name="quick_settings_sound_ring">벨소리</string>
   <string name="quick_settings_sound_vibrate">진동</string>
+  <string name="quick_settings_sound_silent">조용히</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">절전 모드 자동 해제</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_off">절전 모드 자동 해제 꺼짐</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_on">절전 모드 자동 해제가 켜졌습니다</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_off">절전 모드 자동 해제가 꺼졌습니다.</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_on">절전 모드 자동 해제가 켜졌습니다.</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">카페인</string>
   <string name="accessibility_quick_settings_caffeine_off">카페인 꺼짐</string>
@@ -113,7 +124,10 @@
   <string name="accessibility_quick_settings_volume_panel">음량</string>
   <string name="quick_settings_volume_panel_label">음량</string>
   <!-- PiP Tile -->
+  <string name="quick_settings_pip_label">PiP</string>
+  <string name="quick_settings_pip_tile_app_na">앱이 PiP를 지원하지 않습니다</string>
   <!-- Screenrecord tile -->
+  <string name="quick_settings_screenrecord">화면녹화</string>
   <string name="quick_settings_screenrecord_on">녹화 중...</string>
   <!-- Advance location quick setting tile -->
   <string name="accessibility_quick_settings_location_battery_saving">위치 모드: 배터리 절약 모드</string>
@@ -121,29 +135,49 @@
   <string name="accessibility_quick_settings_location_high_accuracy">위치 모드: 높은 정확도 모드</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">화면이 녹화되고 있습니다.</string>
+  <string name="screenrecord_notif_final_ticker">화면이 성공적으로 녹화되었습니다</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">화면 녹화 중</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">정지</string>
+  <string name="screenrecord_notif_completed">화면이 성공적으로 녹화되었습니다</string>
+  <string name="screenrecord_notif_duration">합계:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">포인터 표시</string>
   <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">화면을 녹화할 수 없음</string>
+  <string name="notification_channel_screenrecord">화면 녹화</string>
+  <string name="screenrecord_hide_hint">힌트 숨기기</string>
+  <string name="screenrecord_show_hint">힌트 보기</string>
   <!-- Screenshot QS tile -->
+  <string name="quick_settings_screenrecord_label">화면녹화</string>
+  <string name="quick_settings_screenrecord_lq_label">화면녹화 LQ</string>
+  <string name="quick_settings_screenrecord_mq_label">화면녹화 MQ</string>
+  <string name="quick_settings_screenrecord_hq_label">화면녹화 HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">네비게이션 바</string>
+  <string name="quick_settings_smartbar">스마트바</string>
+  <string name="quick_settings_fling">Fling 제스처 인터페이스</string>
+  <string name="quick_settings_navigation_default">기본</string>
+  <string name="quick_settings_navigation_disabled">비활성화됨</string>
   <string name="omnijaws_service_error">오류</string>
   <string name="omnijaws_service_unkown">날씨 데이터 없음</string>
   <string name="omnijaws_service_error_long">날씨 정보 불러오기 오류</string>
+  <string name="omnijaws_service_disabled">서비스 사용 중지됨</string>
   <string name="omnijaws_detail_header">날씨</string>
   <string name="omnijaws_label_default">날씨</string>
   <string name="omnijaws_current_text">현재</string>
   <string name="omnijaws_package_not_available">OmniJaws를 사용할 수 없음</string>
+  <string name="omnijaws_service_last_update">- 마지막 업데이트:</string>
   <!-- Battery saver tile -->
+  <string name="battery_saver_qs_tile_fully_charged">충전 완료</string>
   <!-- Expanded desktop QS Tile -->
   <string name="quick_settings_expanded_desktop_label">확장 데스크탑</string>
   <string name="quick_settings_expanded_desktop">확장됨</string>
   <string name="quick_settings_expanded_desktop_off">일반 모드</string>
+  <string name="quick_settings_expanded_navigation_off">네비게이션바 숨기기</string>
+  <string name="quick_settings_expanded_statusbar_off">상태 표시줄 숨기기</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <dimen name="screenrecord_hint_size">48dp</dimen>
@@ -154,4 +188,6 @@
   <string name="quick_settings_pie">Pie 컨트롤</string>
   <string name="recents_custom_android_n">모두 지우기</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 연결</string>
+  <!-- Kill button in notification guts -->
 </resources>

@@ -183,4 +183,5 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">Rydd alt</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <!-- Kill button in notification guts -->
 </resources>

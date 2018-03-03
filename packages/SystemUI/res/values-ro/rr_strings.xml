@@ -156,6 +156,8 @@
   <string name="quick_settings_screenrecord_mq_label">Inregistrare la calitate medie</string>
   <string name="quick_settings_screenrecord_hq_label">Inregistrare la calitate mare</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Bară de navigare</string>
+  <string name="quick_settings_smartbar">Bara inteligentă</string>
   <string name="omnijaws_service_error">Eroare</string>
   <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
   <string name="omnijaws_service_error_long">Eroare la încărcarea datelor despre vreme</string>
@@ -183,4 +185,5 @@
   <string name="quick_settings_pie">Plăcintă</string>
   <string name="recents_custom_android_n">Șterge tot</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <!-- Kill button in notification guts -->
 </resources>

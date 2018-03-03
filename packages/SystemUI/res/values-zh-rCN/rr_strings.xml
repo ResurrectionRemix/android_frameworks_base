@@ -20,11 +20,11 @@
   <string name="quick_settings_rr_label">配置</string>
   <!-- Power menu -->
   <string name="global_action_restart_system">重启</string>
-  <string name="global_action_restart_advanced">高级重启</string>
+  <string name="global_action_restart_advanced">高级选项</string>
   <string name="global_action_restart_recovery">恢复模式</string>
-  <string name="global_action_restart_bootloader">引导程序</string>
-  <string name="global_action_restart_ui">系统界面</string>
-  <string name="global_action_restart_hot">软重启</string>
+  <string name="global_action_restart_bootloader">引导模式</string>
+  <string name="global_action_restart_ui">重启系统界面</string>
+  <string name="global_action_restart_hot">快速重启</string>
   <string name="global_action_screenshot">屏幕截图</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">屏幕截图已删除</string>
@@ -56,7 +56,7 @@
   <string name="status_bar_data_saver">流量节省程序</string>
   <string name="lockscreen_hidden">无</string>
   <string name="custom_hint">滑动图标以启动</string>
-  <string name="systemui_tuner_navbar_title">原生导航栏设置</string>
+  <string name="systemui_tuner_navbar_title">导航栏设置</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">重新启动</string>
   <string name="quick_settings_reboot_recovery_label">恢复模式</string>
@@ -156,6 +156,11 @@
   <string name="quick_settings_screenrecord_mq_label">中等质量屏幕录制</string>
   <string name="quick_settings_screenrecord_hq_label">高质量屏幕录制</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">导航栏</string>
+  <string name="quick_settings_smartbar">智能导航栏</string>
+  <string name="quick_settings_fling">手势</string>
+  <string name="quick_settings_navigation_default">原生</string>
+  <string name="quick_settings_navigation_disabled">已禁用</string>
   <string name="omnijaws_service_error">错误</string>
   <string name="omnijaws_service_unkown">没有天气数据</string>
   <string name="omnijaws_service_error_long">加载天气数据时出错</string>
@@ -164,7 +169,7 @@
   <string name="omnijaws_label_default">天气</string>
   <string name="omnijaws_current_text">当前</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
-  <string name="omnijaws_service_last_update">最后更新：</string>
+  <string name="omnijaws_service_last_update">上次更新：</string>
   <!-- Battery saver tile -->
   <string name="battery_saver_qs_tile_fully_charged">已充满</string>
   <!-- Expanded desktop QS Tile -->
@@ -178,9 +183,12 @@
   <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie 控制</string>
-  <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
+  <string name="pie_state_summary">在沉浸模式下启用 Pie 控制</string>
   <string name="pie_battery_level">"电池电量 "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">全部清除</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower 已连接 (还剩 <xliff:g id="charging_time_left">%s</xliff:g> 充满)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已连接</string>
+  <!-- Kill button in notification guts -->
 </resources>
