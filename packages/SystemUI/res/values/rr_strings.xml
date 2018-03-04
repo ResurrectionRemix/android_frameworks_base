@@ -22,7 +22,6 @@
 
 
     <!-- Power menu -->
-    <string name="global_action_restart_system">Reboot</string>
     <string name="global_action_restart_advanced">Advanced</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string>
@@ -234,4 +233,8 @@
     <string name="dlg_ok" translatable="false">@android:string/ok</string>
     <string name="dlg_cancel" translatable="false">@android:string/cancel</string>
     <string name="kill">Kill App</string>
+    
+   <!-- Recents free RAM -->
+   <string name="recents_free_ram">Free RAM: %1$d MB</string>
+
 </resources>

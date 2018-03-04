@@ -339,7 +339,7 @@ public final class ShutdownThread extends Thread {
                 pd.setMessage(context.getText(
                             com.android.internal.R.string.reboot_to_update_reboot));
             }
-        } else if (mReason != null && mReason.equals(PowerManager.REBOOT_RECOVERY)) {
+        } else if (mReason != null && (mReason.equals(PowerManager.REBOOT_RECOVERY) || mReason.equals(PowerManager.REBOOT_BOOTLOADER))) {
             if (RescueParty.isAttemptingFactoryReset()) {
                 // We're not actually doing a factory reset yet; we're rebooting
                 // to ask the user if they'd like to reset, so give them a less
@@ -352,25 +352,17 @@ public final class ShutdownThread extends Thread {
                     return null;
                 }
                 // Factory reset path. Set the dialog message accordingly.
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_recovery_title));
+                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
                 pd.setMessage(context.getText(
-                            com.android.internal.R.string.reboot_to_recovery_message));
+                            com.android.internal.R.string.reboot_to_reset_message));
                 pd.setIndeterminate(true);
             }
-        } else if (mReason != null && mReason.equals(PowerManager.REBOOT_BOOTLOADER)) {
-            if (showSysuiReboot()) {
-                return null;
-            }
-            pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_bootloader_title));
-            pd.setMessage(context.getText(
-                        com.android.internal.R.string.reboot_to_bootloader_message));
-            pd.setIndeterminate(true);
         } else if (mReboot) {
              if (showSysuiReboot()) {
                   return null;
              }
-            pd.setTitle(context.getText(com.android.internal.R.string.reboot_title));
-            pd.setMessage(context.getText(com.android.internal.R.string.reboot_message));
+            pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
+            pd.setMessage(context.getText(com.android.internal.R.string.reboot_to_reset_message));
             pd.setIndeterminate(true);
         } else {
             if (showSysuiReboot()) {
