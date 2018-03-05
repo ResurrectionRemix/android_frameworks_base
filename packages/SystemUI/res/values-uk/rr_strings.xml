@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Конфігурація</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Перезавантажити</string>
   <string name="global_action_restart_advanced">Розширені налаштування</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Загрузчик</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Приховувати рядок стану</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Управління PIE</string>
   <string name="pie_state_summary">Використовувати керування PIE в повноекранному режимі</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower підключено (<xliff:g id="charging_time_left">%s</xliff:g> до повного)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower підключено</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Примусово зупинити?</string>
+  <string name="force_stop_dlg_text">Примусове вимкнення додатка може призвести до збою в його роботі.</string>
+  <string name="kill">Завершити додаток</string>
+  <!-- Recents free RAM -->
 </resources>

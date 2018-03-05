@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Configuratie</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Herstarten</string>
   <string name="global_action_restart_advanced">Geavanceerd</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Statusbalk verbergen</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie besturing</string>
   <string name="pie_state_summary">Gebruik pie besturing in immersieve modus</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower aangesloten (<xliff:g id="charging_time_left">%s</xliff:g> tot vol)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower aangesloten</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Gedwongen stoppen?</string>
+  <string name="force_stop_dlg_text">Als je een app gedwongen stopt, kan deze onverwacht gedrag vertonen.</string>
+  <string name="kill">App Beëindigen</string>
+  <!-- Recents free RAM -->
 </resources>

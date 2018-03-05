@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">配置</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">重新啟動</string>
   <string name="global_action_restart_advanced">高級</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader模式</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">隱藏狀態列</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">扇形控制項</string>
   <string name="pie_state_summary">在全螢幕模式中使用扇形控制項</string>
@@ -191,4 +189,5 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower 已連接 (還剩 <xliff:g id="charging_time_left">%s</xliff:g> 充滿)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已連接</string>
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>

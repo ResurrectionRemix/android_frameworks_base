@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Gelişmiş ayarlar</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Yeniden başlat</string>
   <string name="global_action_restart_advanced">Gelişmiş</string>
   <string name="global_action_restart_recovery">Kurtarma modu</string>
   <string name="global_action_restart_bootloader">Ön yükleyici</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Durum çubuğunu gizle</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie kontrolleri</string>
   <string name="pie_state_summary">Tam ekran modundayken pie kontrollerini kullanın</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower bağlandı (tam dolmasına <xliff:g id="charging_time_left">%s</xliff:g> kaldı)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower bağlandı</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Zorla durdurulsun mu?</string>
+  <string name="force_stop_dlg_text">Bir uygulamayı zorla durdurursanız, bir hata ile karşılaşabilirsiniz.</string>
+  <string name="kill">Uygulamayı Sonlandır</string>
+  <!-- Recents free RAM -->
 </resources>

@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Configurazioni</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Riavvia</string>
   <string name="global_action_restart_advanced">Avanzate</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Nascondi barra di stato</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Controlli Pie</string>
   <string name="pie_state_summary">In modalità immersiva, usa controlli Pie</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower collegato (<xliff:g id="charging_time_left">%s</xliff:g> fino al completamento)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower collegato</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Forzare la chiusura?</string>
+  <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'app, tale app potrebbe funzionare in modo anomalo.</string>
+  <string name="kill">Termina app</string>
+  <!-- Recents free RAM -->
 </resources>

@@ -16,11 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Power menu -->
+  <!-- Power menu (legacy) -->
   <string name="reboot_title">Uruchom ponownie</string>
-  <string name="reboot_message">Ponowne uruchamianie systemu</string>
+  <string name="reboot_message">Restart systemu</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_toggleNavigationEditor">kontrola edytora paska nawigacji</string>
+  <string name="permlab_toggleNavigationEditor">edytor paska nawigacji</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_toggleNavigationEditor">Zezwól aplikacjom na używanie edytora paska nawigacji.</string>
   <!-- AOKP custom system animations -->

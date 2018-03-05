@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Podešavanja</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Ponovno pokretanje</string>
   <string name="global_action_restart_advanced">Napredno</string>
   <string name="global_action_restart_recovery">Oporavak</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Sakrij statusnu traku</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Kontrola pitom</string>
   <string name="pie_state_summary">Upotreba kontrola pitom u cjelozaslonskom načinu</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower je povezan (<xliff:g id="charging_time_left">%s</xliff:g> do napunjenosti)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower povezan</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Prisilno zaustaviti?</string>
+  <string name="force_stop_dlg_text">Prisilno zaustavljanje aplikacije može rezultirati čudnim ponašanjem aplikacije.</string>
+  <string name="kill">Zatvori aplikaciju</string>
+  <!-- Recents free RAM -->
 </resources>
