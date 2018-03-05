@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Cấu hình</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Khởi động lại</string>
   <string name="global_action_restart_advanced">Nâng cao</string>
   <string name="global_action_restart_recovery">Chế độ phục hồi</string>
   <string name="global_action_restart_bootloader">Trình nạp khởi động</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Ẩn thanh trạng thái</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Điều hướng Pie</string>
   <string name="pie_state_summary">Sử dụng điều khiển pie khi ở chế độ nhập vai</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower đã kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower đã kết nối</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Buộc dừng?</string>
+  <string name="force_stop_dlg_text">Nếu bạn bắt buộc đóng một ứng dụng, nó có thể hoạt động sai.</string>
+  <string name="kill">Đóng Ứng Dụng</string>
+  <!-- Recents free RAM -->
 </resources>

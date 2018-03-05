@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Configurari</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Repornire</string>
   <string name="global_action_restart_advanced">Avansat</string>
   <string name="global_action_restart_recovery">Recuperare</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -158,6 +157,9 @@
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Bară de navigare</string>
   <string name="quick_settings_smartbar">Bara inteligentă</string>
+  <string name="quick_settings_fling">Lansare</string>
+  <string name="quick_settings_navigation_default">Stoc</string>
+  <string name="quick_settings_navigation_disabled">Dezactivat</string>
   <string name="omnijaws_service_error">Eroare</string>
   <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
   <string name="omnijaws_service_error_long">Eroare la încărcarea datelor despre vreme</string>
@@ -177,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Ascunde bara de stare</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Control Evantai</string>
   <string name="pie_state_summary">Utilizaţi controale evantai în modul imersiv</string>
@@ -185,5 +186,11 @@
   <string name="quick_settings_pie">Plăcintă</string>
   <string name="recents_custom_android_n">Șterge tot</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">Conectat TurboPower (<xliff:g id="incarcare timp ramas">%s</xliff:g> pana la maxim)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">Conectat TurboPower</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Opriți forţat?</string>
+  <string name="force_stop_dlg_text">Dacă forţaţi oprirea unei aplicații, aceasta se poate comporta necorespunzător.</string>
+  <string name="kill">Opriți aplicația</string>
+  <!-- Recents free RAM -->
 </resources>

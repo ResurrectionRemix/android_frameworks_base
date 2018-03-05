@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Расширенные настройки</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Перезагрузка</string>
   <string name="global_action_restart_advanced">Дополнительно</string>
   <string name="global_action_restart_recovery">Режим восстановления</string>
   <string name="global_action_restart_bootloader">Загрузчик</string>
@@ -157,10 +156,10 @@
   <string name="quick_settings_screenrecord_hq_label">Запись экрана в высоком качестве</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Панель навигации</string>
-  <string name="quick_settings_smartbar">Умная панель</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Fling</string>
-  <string name="quick_settings_navigation_default">Обычная</string>
-  <string name="quick_settings_navigation_disabled">Выключен</string>
+  <string name="quick_settings_navigation_default">По умолчанию</string>
+  <string name="quick_settings_navigation_disabled">Выключено</string>
   <string name="omnijaws_service_error">Ошибка</string>
   <string name="omnijaws_service_unkown">Нет данных о погоде</string>
   <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Скрыть строку состояния</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">PIE-управление</string>
   <string name="pie_state_summary">Использовать PIE-управление в полноэкранном режиме</string>
@@ -188,7 +186,11 @@
   <string name="quick_settings_pie">PIE</string>
   <string name="recents_custom_android_n">ОЧИСТИТЬ ВСЁ</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_turbo_power_time">TurboPower подключено (<xliff:g id="charging_time_left">%s</xliff:g> до полной зарядки)</string>
-  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower подключено</string>
+  <string name="keyguard_indication_turbo_power_time">TurboPower подключен (<xliff:g id="charging_time_left">%s</xliff:g> до полной зарядки)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower подключен</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Остановить принудительно?</string>
+  <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
+  <string name="kill">Закрыть приложение</string>
+  <!-- Recents free RAM -->
 </resources>

@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Konfigurasjon</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Start på nytt</string>
   <string name="global_action_restart_advanced">Avansert</string>
   <string name="global_action_restart_recovery">Gjenoppretting</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -175,7 +174,6 @@
   <string name="quick_settings_expanded_statusbar_off">Skjul statuslinje</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie-navigasjon</string>
   <string name="pie_state_summary">Bruk pie-navigasjon når i fullskjermsmodus</string>
@@ -184,4 +182,5 @@
   <string name="recents_custom_android_n">Rydd alt</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>
