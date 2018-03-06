@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">การตั้งค่า</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">รีบูต</string>
   <string name="global_action_restart_advanced">ขั้นสูง</string>
   <string name="global_action_restart_recovery">กู้คืน</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -155,7 +154,6 @@
   <string name="quick_settings_expanded_statusbar_off">ซ่อนแถบสถานะ</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">ควบคุมแบบวงกลม</string>
   <string name="pie_state_summary">ใช้พายควบคุมขณะอยู่ในโหมดใหญ่พิเศษ</string>
@@ -164,4 +162,5 @@
   <string name="recents_custom_android_n">ล้างทั้งหมด</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>

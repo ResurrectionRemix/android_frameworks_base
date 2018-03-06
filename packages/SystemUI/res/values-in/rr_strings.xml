@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">Konfigurasi</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">Mulai Ulang</string>
   <string name="global_action_restart_advanced">Lanjutan</string>
   <string name="global_action_restart_recovery">Pemulihan</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">Sembunyikan bilah status</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Kontrol navigasi PIE</string>
   <string name="pie_state_summary">Gunakan kontrol pie ketika dalam mode layar penuh</string>
@@ -191,4 +189,5 @@
   <string name="keyguard_indication_turbo_power_time">Tersabung dengan mode TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> Sampai penuh)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower terhubung</string>
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>

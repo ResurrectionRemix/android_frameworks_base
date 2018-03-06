@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">تهانينا</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">إعادة التشغيل</string>
   <string name="global_action_restart_advanced">متقدم</string>
   <string name="global_action_restart_recovery">وضع الإستعادة</string>
   <string name="global_action_restart_bootloader">محمل الإقلاع</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">إخفاء شريط الحالة</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">تحكم Pie</string>
   <string name="pie_state_summary">استخدام عناصر تحكم Pie اثناء وضع سطح المكتب</string>
@@ -190,4 +188,5 @@
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <string name="keyguard_plugged_in_turbo_power_charging">متصل بشاحن توربيني</string>
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>

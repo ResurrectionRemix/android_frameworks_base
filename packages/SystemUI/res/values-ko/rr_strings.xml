@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">환경 설정</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">다시 시작</string>
   <string name="global_action_restart_advanced">고급 설정</string>
   <string name="global_action_restart_recovery">복구 모드</string>
   <string name="global_action_restart_bootloader">부트로더</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">상태 표시줄 숨기기</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">파이 컨트롤</string>
   <string name="pie_state_summary">전체 화면 모드에서 파이 컨트롤 사용</string>
@@ -190,4 +188,5 @@
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 연결</string>
   <!-- Kill button in notification guts -->
+  <!-- Recents free RAM -->
 </resources>

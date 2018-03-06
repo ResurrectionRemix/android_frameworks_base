@@ -19,7 +19,6 @@
   <!-- RR Tile -->
   <string name="quick_settings_rr_label">配置</string>
   <!-- Power menu -->
-  <string name="global_action_restart_system">重启</string>
   <string name="global_action_restart_advanced">高级选项</string>
   <string name="global_action_restart_recovery">恢复模式</string>
   <string name="global_action_restart_bootloader">引导模式</string>
@@ -180,7 +179,6 @@
   <string name="quick_settings_expanded_statusbar_off">隐藏状态栏</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
-  <dimen name="screenrecord_hint_size">48dp</dimen>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie 控制</string>
   <string name="pie_state_summary">在沉浸模式下启用 Pie 控制</string>
@@ -191,4 +189,8 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower 已连接 (还剩 <xliff:g id="charging_time_left">%s</xliff:g> 充满)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已连接</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">是否强制停止？</string>
+  <string name="force_stop_dlg_text">强行停止某个应用可能导致其出现异常。</string>
+  <string name="kill">终止应用程序</string>
+  <!-- Recents free RAM -->
 </resources>
