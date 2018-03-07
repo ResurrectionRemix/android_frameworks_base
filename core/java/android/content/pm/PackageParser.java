@@ -698,15 +698,7 @@ public class PackageParser {
         pi.requiredAccountType = p.mRequiredAccountType;
         pi.overlayTarget = p.mOverlayTarget;
         pi.overlayPriority = p.mOverlayPriority;
-
-        if (p.mIsStaticOverlay) {
-            pi.overlayFlags |= PackageInfo.FLAG_OVERLAY_STATIC;
-        }
-
-        if (p.mTrustedOverlay) {
-            pi.overlayFlags |= PackageInfo.FLAG_OVERLAY_TRUSTED;
-        }
-
+        pi.isStaticOverlay = p.mIsStaticOverlay;
         pi.firstInstallTime = firstInstallTime;
         pi.lastUpdateTime = lastUpdateTime;
         if ((flags&PackageManager.GET_GIDS) != 0) {
