@@ -50,7 +50,7 @@
                 android:format12Hour="@string/keyguard_widget_12_hours_format"
                 android:format24Hour="@string/keyguard_widget_24_hours_format"
                 android:layout_marginBottom="@dimen/bottom_text_spacing_digital" />
-            <com.android.systemui.ChargingView
+            <!--<com.android.systemui.ChargingView
                 android:id="@+id/battery_doze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:visibility="invisible"
                 android:src="@drawable/ic_aod_charging_24dp"
                 android:contentDescription="@string/accessibility_ambient_display_charging"
-            />
+            />-->
 
             <include layout="@layout/keyguard_weather_view"
                 android:id="@+id/keyguard_weather_view"
