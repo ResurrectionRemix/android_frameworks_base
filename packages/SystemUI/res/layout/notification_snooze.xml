@@ -36,7 +36,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:paddingStart="@*android:dimen/notification_content_margin_start"
-            android:textColor="#DD000000"
+            android:textColor="@*android:color/notification_snooze_text"
             android:paddingEnd="4dp"/>
 
         <ImageView

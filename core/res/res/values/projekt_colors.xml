@@ -29,5 +29,31 @@
     <!-- Toast text and bg colors -->
     <color name="toast_bg_color">#E6EEEEEE</color>
     <color name="toast_text_color">@color/primary_text_default_material_light</color>
+
+    <!-- Misc colors -->
+    <color name="theme_color1">@color/black</color>
+    <color name="theme_color2">@color/black</color>
+    <color name="theme_color3">@color/black</color>
+    <color name="theme_color4">@color/black</color>
+    <color name="theme_color5">@color/black</color>
+    <color name="theme_color6">@color/black</color>
+    <color name="theme_color7">@color/black</color>
+    <color name="theme_color8">@color/black</color>
+    <color name="theme_color9">@color/black</color>
+    <color name="theme_text1">@color/black</color>
+    <color name="theme_text2">@color/black</color>
+    <color name="theme_text3">@color/black</color>
+
+    <!-- NOTIFICATIONS moved here from SystemUI -->
+    <color name="notification_legacy_background_color">#ff1a1a1a</color>
+    <color name="notification_material_background_dimmed_color">#ccffffff</color>
+    <color name="notification_material_background_dark_color">#ff333333</color>
+    <color name="notification_divider_color">#FF616161</color>
+    <color name="notification_shade_background_color">#ffeeeeee</color>
+    <color name="notification_ripple_untinted_color">#28000000</color>
+    <color name="notification_ripple_tinted_color">#30ffffff</color>
+    <color name="notification_gear_color">#ff757575</color>
+    <color name="notification_guts_bg_color">#f8f9fa</color>
+    <color name="notification_snooze_text">#dd000000</color>
 </resources>
 
