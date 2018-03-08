@@ -15,15 +15,16 @@
         android:scrollbars="none"
         android:layout_gravity="top|right">
 
-        <!-- Global actions is right-aligned to be physically near power button -->
-        <LinearLayout
-            android:id="@android:id/list"
-            android:layout_width="@dimen/global_actions_panel_width"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:translationZ="8dp" />
+    <!-- Global actions is right-aligned to be physically near power button -->
+    <LinearLayout
+        android:id="@android:id/list"
+        android:layout_width="@dimen/global_actions_panel_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="@integer/hardware_ui_align"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:translationZ="8dp" />
 
     </ScrollView>
 
