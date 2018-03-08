@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="top|right"
     android:layout_marginBottom="@dimen/global_actions_top_padding"
+    android:orientation="vertical"
     android:paddingTop="@dimen/global_actions_top_padding"
     android:clipToPadding="false"
     android:theme="@style/qs_theme"
@@ -13,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:layout_gravity="top|right">
+        android:layout_gravity="@integer/hardware_ui_align">
 
         <!-- Global actions is right-aligned to be physically near power button -->
         <LinearLayout
