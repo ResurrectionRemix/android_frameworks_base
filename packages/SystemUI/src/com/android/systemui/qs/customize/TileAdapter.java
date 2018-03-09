@@ -271,6 +271,7 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         holder.mTileView.onStateChanged(info.state);
         holder.mTileView.setAppLabel(info.appLabel);
         holder.mTileView.setShowAppLabel(position > mEditIndex && !info.isSystem);
+<<<<<<< HEAD
         final boolean selectable = !mAccessibilityMoving || position < mEditIndex;
         if (isSingleTapEnabled()) {
            if (!(mAccessibilityManager.isTouchExplorationEnabled() && selectable)) {
@@ -282,6 +283,15 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                });
             }
         }
+=======
+
+        final boolean selectable = !mAccessibilityMoving || position < mEditIndex;
+        if (!(mAccessibilityManager.isTouchExplorationEnabled() && selectable)) {
+            holder.mTileView.setOnClickListener(v -> move(holder.getAdapterPosition(),
+                    mEditIndex, holder.mTileView));
+        }
+
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         if (mAccessibilityManager.isTouchExplorationEnabled()) {
             holder.mTileView.setClickable(selectable);
             holder.mTileView.setFocusable(selectable);

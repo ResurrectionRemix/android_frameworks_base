@@ -54,6 +54,7 @@ interface IPowerManager
 
     void reboot(boolean confirm, String reason, boolean wait);
     void rebootSafeMode(boolean confirm, boolean wait);
+    void rebootCustom(boolean confirm, String reason, boolean wait);
     void shutdown(boolean confirm, String reason, boolean wait);
     void crash(String message);
     int getLastShutdownReason();
@@ -73,8 +74,11 @@ interface IPowerManager
     void setAttentionLight(boolean on, int color);
     // update the uids being synchronized by network socket request manager
     void updateBlockedUids(int uid, boolean isBlocked);
+<<<<<<< HEAD
 
     // temporarily overrides the button brightness settings to allow the user to
     // see the effect of a settings change without applying it immediately
     void setTemporaryButtonBrightnessSettingOverride(int brightness);
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 }

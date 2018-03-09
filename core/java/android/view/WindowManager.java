@@ -1451,6 +1451,7 @@ public interface WindowManager extends ViewManager {
         public static final int PRIVATE_FLAG_ACQUIRES_SLEEP_TOKEN = 0x00200000;
 
         /**
+<<<<<<< HEAD
          * Window flag: Overrides default power key behavior
          * @hide
          */
@@ -1463,17 +1464,38 @@ public interface WindowManager extends ViewManager {
 
         /**
          * {@hide}
+=======
+         * @hide
+         */
+        public static final int PRIVATE_FLAG_STATUS_HIDE_FORCED = 0x00800000;
+
+        /**
+         * @hide
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
          */
         public static final int PRIVATE_FLAG_NAV_HIDE_FORCED = 0x01000000;
 
         /**
          * The window had not set FULLSCREEN flag so don't handle it as fullscreen in layoutWindowLw
+<<<<<<< HEAD
          *
          * {@hide}
+=======
+         * @hide
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
          */
         public static final int PRIVATE_FLAG_WAS_NOT_FULLSCREEN = 0x02000000;
 
         /**
+<<<<<<< HEAD
+=======
+         * Window flag: Overrides default power key behavior
+         * @hide
+         */
+        public static final int PRIVATE_FLAG_PREVENT_POWER_KEY = 0x20000000;
+
+        /**
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
          * Control flags that are private to the platform.
          * @hide
          */

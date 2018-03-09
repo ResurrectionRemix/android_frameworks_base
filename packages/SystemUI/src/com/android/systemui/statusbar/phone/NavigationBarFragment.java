@@ -507,10 +507,16 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
         }
 
         ButtonDispatcher homeButton = mNavigationBarView.getHomeButton();
+<<<<<<< HEAD
         if (homeButton != null) {
             homeButton.setOnTouchListener(this::onHomeTouch);
             homeButton.setOnLongClickListener(this::onHomeLongClick);
         }
+=======
+        homeButton.setOnTouchListener(this::onHomeTouch);
+        homeButton.setLongClickable(true);
+        homeButton.setOnLongClickListener(this::onHomeLongClick);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
         ButtonDispatcher accessibilityButton = mNavigationBarView.getAccessibilityButton();
         if (accessibilityButton != null) {
@@ -566,6 +572,7 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
         KeyButtonView keyButtonView = (KeyButtonView) v;
         keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
         keyButtonView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+<<<<<<< HEAD
         if (!isUsingStockNav()) {
             return false;
         }
@@ -578,6 +585,8 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
         if (mNavigationBarView != null) {
             mNavigationBarView.abortCurrentGesture();
         }
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         return true;
     }
 
@@ -659,7 +668,13 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Naviga
                     mNavigationBarView.setDisabledFlags(mDisabledFlags1, true);
                     return true;
                 } else if (v.getId() == R.id.recent_apps) {
-                    return onLongPressRecents();
+                    // Send long press key event so that Lineage button handling can intercept
+                    KeyButtonView keyButtonView = (KeyButtonView) v;
+                    keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
+                    keyButtonView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+                    return true;
+                    // Original AOSP handling:
+                    //return onLongPressRecents();
                 }
             }
             if (sendBackLongPress) {

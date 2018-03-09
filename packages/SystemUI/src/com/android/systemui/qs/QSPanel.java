@@ -62,11 +62,20 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     public static final String QS_SHOW_BRIGHTNESS_SLIDER =
             "lineagesecure:" + LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
+<<<<<<< HEAD
+=======
+    public static final String QS_SHOW_AUTO_BRIGHTNESS =
+            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
     protected final Context mContext;
     protected final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
     protected final View mBrightnessView;
+<<<<<<< HEAD
     protected final ImageView mBrightnessIcon;
+=======
+    protected final ImageView mAutoBrightnessView;
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     private final H mHandler = new H();
     private final View mPageIndicator;
     private final MetricsLogger mMetricsLogger = Dependency.get(MetricsLogger.class);
@@ -127,6 +136,14 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         updateResources();
 
+<<<<<<< HEAD
+=======
+        mBrightnessController = new BrightnessController(getContext(),
+                findViewById(R.id.brightness_icon),
+                findViewById(R.id.brightness_slider));
+
+        mAutoBrightnessView = (ImageView) findViewById(R.id.brightness_icon);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     }
 
     protected void addDivider() {
@@ -162,7 +179,12 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this,
+<<<<<<< HEAD
                 QS_SHOW_BRIGHTNESS_SLIDER);
+=======
+                QS_SHOW_BRIGHTNESS_SLIDER,
+                QS_SHOW_AUTO_BRIGHTNESS);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -195,6 +217,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     public void onTuningChanged(String key, String newValue) {
         if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             mBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
+                    ? VISIBLE : GONE);
+        } else if (QS_SHOW_AUTO_BRIGHTNESS.equals(key) && mIsAutomaticBrightnessAvailable) {
+            mAutoBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
                     ? VISIBLE : GONE);
         }
     }

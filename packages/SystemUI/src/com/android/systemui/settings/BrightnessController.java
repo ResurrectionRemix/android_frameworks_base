@@ -33,7 +33,10 @@ import android.provider.Settings;
 import android.service.vr.IVrManager;
 import android.service.vr.IVrStateCallbacks;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.MotionEvent;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import android.view.View;
 import android.widget.ImageView;
 
@@ -302,6 +305,7 @@ public class BrightnessController implements ToggleSlider.Listener {
         mVrManager = IVrManager.Stub.asInterface(ServiceManager.getService(
                 Context.VR_SERVICE));
 
+<<<<<<< HEAD
 
        if (mIcon != null) {
             if (mAutomaticAvailable) {
@@ -316,6 +320,19 @@ public class BrightnessController implements ToggleSlider.Listener {
             }
         }
    }
+=======
+        mIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS_MODE, mAutomatic ?
+                            Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL :
+                            Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC,
+                        UserHandle.USER_CURRENT);
+            }
+        });
+    }
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
     public void addStateChangedCallback(BrightnessStateChangeCallback cb) {
         mChangeCallbacks.add(cb);
@@ -446,7 +463,11 @@ public class BrightnessController implements ToggleSlider.Listener {
 
     private void updateIcon(boolean automatic) {
         if (mIcon != null) {
+<<<<<<< HEAD
             mIcon.setImageResource(automatic ?
+=======
+            mIcon.setImageResource(mAutomatic ?
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
                     com.android.systemui.R.drawable.ic_qs_brightness_auto_on :
                     com.android.systemui.R.drawable.ic_qs_brightness_auto_off);
         }
