@@ -88,10 +88,13 @@ import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerServiceImpl;
+<<<<<<< HEAD
 import com.android.systemui.statusbar.*;
 
 import android.provider.Settings;
 import com.android.internal.utils.du.UserContentObserver;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
 import lineageos.providers.LineageSettings;
 
@@ -278,6 +281,7 @@ public class NotificationPanelView extends PanelView implements
     private boolean mDoubleTapToSleepEnabled;
     private int mStatusBarHeaderHeight;
     private GestureDetector mDoubleTapGesture;
+<<<<<<< HEAD
     
     public static boolean mBlurredStatusBarExpandedEnabled;
     public static NotificationPanelView mNotificationPanelView;
@@ -310,6 +314,8 @@ public class NotificationPanelView extends PanelView implements
         public void onAnimationRepeat(Animation anim) {}
 
     };
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -360,7 +366,10 @@ public class NotificationPanelView extends PanelView implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         FragmentHostManager.get(this).addTagListener(QS.TAG, mFragmentListener);
+<<<<<<< HEAD
         mSettingsObserver.observe();
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         Dependency.get(TunerService.class).addTunable(this,
                 STATUS_BAR_QUICK_QS_PULLDOWN,
                 DOUBLE_TAP_SLEEP_GESTURE);
@@ -1126,6 +1135,7 @@ public class NotificationPanelView extends PanelView implements
         }
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
+<<<<<<< HEAD
         if (mQsSmartPullDown == 1 && !mStatusBar.hasActiveClearableNotificationsQS()
                 || mQsSmartPullDown == 2 && !mStatusBar.hasActiveOngoingNotifications()
                 || mQsSmartPullDown == 3 && !mStatusBar.hasActiveVisibleNotifications()) {
@@ -1133,6 +1143,9 @@ public class NotificationPanelView extends PanelView implements
         }
 
         return !isQsSecureExpandDisabled() && (showQsOverride || twoFingerDrag || stylusButtonClickDrag || mouseButtonClickDrag);
+=======
+        return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     }
 
     private void handleQsDown(MotionEvent event) {
@@ -2894,6 +2907,7 @@ public class NotificationPanelView extends PanelView implements
                 break;
         }
     }
+<<<<<<< HEAD
 
     public void setQsSmartPulldown(int qsSmartPulldown) {
         mQsSmartPullDown = qsSmartPulldown;
@@ -3071,4 +3085,6 @@ public class NotificationPanelView extends PanelView implements
 
             mBlurredView.setVisibility(View.INVISIBLE);
     }
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 }

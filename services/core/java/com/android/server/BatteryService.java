@@ -57,7 +57,11 @@ import android.util.proto.ProtoOutputStream;
 
 import org.lineageos.internal.notification.LedValues;
 import org.lineageos.internal.notification.LineageBatteryLights;
+<<<<<<< HEAD
 import java.io.BufferedReader;
+=======
+
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -988,7 +992,14 @@ public final class BatteryService extends SystemService {
             // mLineageBatteryLights is initialized during PHASE_BOOT_COMPLETED
             // This means we don't have Lineage battery settings yet so skip.
             if (mLineageBatteryLights == null) {
+<<<<<<< HEAD
                 Slog.w(TAG, "updateLightsLocked: mLineageBatteryLights is not yet ready; skipping");
+=======
+                if (DEBUG) {
+                    Slog.w(TAG, "updateLightsLocked: mLineageBatteryLights is not yet ready; "
+                            + "skipping");
+                }
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
                 return;
             }
             if (!mLineageBatteryLights.isSupported()) {

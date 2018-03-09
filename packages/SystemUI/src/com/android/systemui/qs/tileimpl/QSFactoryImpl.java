@@ -24,7 +24,10 @@ import com.android.systemui.plugins.qs.*;
 import com.android.systemui.plugins.qs.QSTileView;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
+<<<<<<< HEAD
 import com.android.systemui.qs.tiles.RRTile;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AmbientDisplayTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
@@ -41,7 +44,10 @@ import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
+<<<<<<< HEAD
 import com.android.systemui.qs.tiles.LocaleTile;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
@@ -52,6 +58,7 @@ import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.PictureInPictureTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+<<<<<<< HEAD
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundTile;
@@ -60,6 +67,12 @@ import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.WeatherTile;
+=======
+import com.android.systemui.qs.tiles.SyncTile;
+import com.android.systemui.qs.tiles.UsbTetherTile;
+import com.android.systemui.qs.tiles.UserTile;
+import com.android.systemui.qs.tiles.VolumeTile;
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.QSTileHost;
@@ -100,6 +113,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("sync")) return new SyncTile(mHost);
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(mHost);
         else if (tileSpec.equals("volume_panel")) return new VolumeTile(mHost);
+<<<<<<< HEAD
         else if (tileSpec.equals("reboot")) return new RebootTile(mHost);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(mHost);
         else if (tileSpec.equals("configurations")) return new RRTile(mHost);
@@ -113,6 +127,8 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("pie")) return new PieTile(mHost);
         else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(mHost);
         else if (tileSpec.equals("navigation")) return new NavigationBarTile(mHost);
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);

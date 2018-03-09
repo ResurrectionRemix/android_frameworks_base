@@ -49,13 +49,19 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
 LOCAL_STATIC_JAVA_LIBRARIES := \
     SystemUI-tags \
     SystemUI-proto \
+<<<<<<< HEAD
     trail-drawing \
     rebound \
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     org.lineageos.platform.internal
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 LOCAL_JAVA_LIBRARIES += android.car
+<<<<<<< HEAD
 LOCAL_JAVA_LIBRARIES += org.dirtyunicorns.utils
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 LOCAL_FULL_LIBS_MANIFEST_FILES := $(LOCAL_PATH)/LineageManifest.xml
 
 LOCAL_PACKAGE_NAME := SystemUI

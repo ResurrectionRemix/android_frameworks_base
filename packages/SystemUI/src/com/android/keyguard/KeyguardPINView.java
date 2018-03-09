@@ -33,12 +33,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+<<<<<<< HEAD
 import android.provider.Settings;
 
  
 import com.android.internal.widget.LockPatternUtils.RequestThrottledException;
 import com.android.keyguard.PasswordTextView.QuickUnlockListener;
 
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 /**
  * Displays a PIN pad for unlocking.
  */
@@ -58,7 +61,10 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
 
     private static List<Integer> sNumbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
+<<<<<<< HEAD
     private final int userId = KeyguardUpdateMonitor.getCurrentUser();
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
     public KeyguardPINView(Context context) {
         this(context, null);
@@ -151,6 +157,7 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                 view.setDigit(sNumbers.get(i));
             }
         }
+<<<<<<< HEAD
 
         boolean quickUnlock = (Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0) == 1);
@@ -164,6 +171,8 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
         } else {
             mPasswordEntry.setQuickUnlockListener(null);
         }
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     }
 
     @Override

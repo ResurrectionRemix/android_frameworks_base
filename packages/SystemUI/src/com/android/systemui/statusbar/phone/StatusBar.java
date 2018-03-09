@@ -62,6 +62,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -234,7 +235,10 @@ import com.android.systemui.recents.events.activity.UndockingTaskEvent;
 import com.android.systemui.recents.misc.IconPackHelper;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.settings.CurrentUserTracker;
+<<<<<<< HEAD
 import com.android.systemui.slimrecent.RecentController;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.ActivatableNotificationView;
@@ -322,7 +326,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         ActivatableNotificationView.OnActivatedListener,
         ExpandableNotificationRow.ExpansionLogger, NotificationData.Environment,
         ExpandableNotificationRow.OnExpandClickListener, InflationCallback,
+<<<<<<< HEAD
         ColorExtractor.OnColorsChangedListener, ConfigurationListener, Tunable, PackageChangedListener  {
+=======
+        ColorExtractor.OnColorsChangedListener, ConfigurationListener, Tunable {
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     public static final boolean MULTIUSER_DEBUG = false;
 
     public static final boolean ENABLE_REMOTE_INPUT =
@@ -520,7 +528,11 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
+<<<<<<< HEAD
     private QuickStatusBarHeader mQuickStatusBarHeader;
+=======
+    private DevForceNavbarObserver mDevForceNavbarObserver;
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
     // top bar
     protected KeyguardStatusBarView mKeyguardStatusBar;
@@ -569,6 +581,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mFingerprintQuickPulldown;
 
     private boolean mFpDismissNotifications;
+
+    private int mStatusBarHeaderHeight;
 
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
@@ -640,6 +654,48 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
+<<<<<<< HEAD
+=======
+    class DevForceNavbarObserver extends ContentObserver {
+        DevForceNavbarObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(LineageSettings.Global.getUriFor(
+                    LineageSettings.Global.DEV_FORCE_SHOW_NAVBAR), false, this,
+                    UserHandle.USER_ALL);
+
+            CurrentUserTracker userTracker = new CurrentUserTracker(mContext) {
+                @Override
+                public void onUserSwitched(int newUserId) {
+                    update();
+                }
+            };
+            userTracker.startTracking();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            update();
+        }
+
+        private void update() {
+            boolean visible = LineageSettings.Global.getIntForUser(mContext.getContentResolver(),
+                    LineageSettings.Global.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) == 1;
+
+            if (visible && mNavigationBarView == null) {
+                createNavigationBar();
+            } else if (mNavigationBarView != null) {
+                mWindowManager.removeViewImmediate(mNavigationBarView);
+                mNavigationBarView = null;
+            }
+        }
+    }
+
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
     private DeviceProvisionedListener mUserSetupObserver = new DeviceProvisionedListener() {
@@ -714,9 +770,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected PorterDuffXfermode mSrcOverXferMode =
             new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
 
+<<<<<<< HEAD
     private Entry mEntryToRefresh;
     private NotificationManager mNoMan;
     private String[] mNavMediaArrowsExcludeList;
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     private VisualizerView mVisualizerView;
     private boolean mScreenOn;
     private boolean mKeyguardShowingMedia;
@@ -738,7 +797,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                     updateMediaMetaData(true, true);
                 }
                 mVisualizerView.setPlaying(state.getState() == PlaybackState.STATE_PLAYING);
+<<<<<<< HEAD
                 setMediaPlaying();
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
             }
         }
 
@@ -1086,6 +1148,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mLockscreenSettingsObserver,
                 UserHandle.USER_ALL);
 
+<<<<<<< HEAD
 
         mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
                 Settings.Secure.NAVIGATION_BAR_VISIBLE), 
@@ -1093,6 +1156,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mNavbarObserver, 
                 UserHandle.USER_ALL);
  
+=======
+        mContext.getContentResolver().registerContentObserver(
+                LineageSettings.System.getUriFor(LineageSettings.System.BERRY_GLOBAL_STYLE),
+                true,
+                mThemeSettingsObserver,
+                UserHandle.USER_ALL);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -1210,6 +1280,20 @@ public class StatusBar extends SystemUI implements DemoMode,
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
 
+<<<<<<< HEAD
+=======
+        // Developer options - Force Navigation bar
+        try {
+            boolean needsNav = mWindowManagerService.needsNavigationBar();
+            if (!needsNav) {
+                final DevForceNavbarObserver observer = new DevForceNavbarObserver(mHandler);
+                observer.observe();
+            }
+        } catch (RemoteException ex) {
+            // no window manager? good luck with that
+        }
+
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         Dependency.get(TunerService.class).addTunable(this,
                 SCREEN_BRIGHTNESS_MODE,
                 STATUS_BAR_BRIGHTNESS_CONTROL,
@@ -2835,7 +2919,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         Drawable artworkDrawable = null;
+<<<<<<< HEAD
         if (mMediaMetadata != null && mLockscreenMediaMetadata) {
+=======
+        if (mMediaMetadata != null && mShowMediaMetadata) {
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
             Bitmap artworkBitmap = null;
             artworkBitmap = mMediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
@@ -3304,6 +3392,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateTheme();
     }
 
+<<<<<<< HEAD
     public boolean isUsingDarkOrBlackTheme() {
         OverlayInfo systemuiThemeInfoDark = null;
         OverlayInfo systemuiThemeInfoBlack = null;
@@ -3315,12 +3404,22 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         try {
             systemuiThemeInfoBlack = mOverlayManager.getOverlayInfo("org.lineageos.overlay.black",
+=======
+    public boolean isUsingDarkTheme() {
+        OverlayInfo systemuiThemeInfo = null;
+        try {
+            systemuiThemeInfo = mOverlayManager.getOverlayInfo("org.lineageos.overlay.dark",
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
                     mCurrentUserId);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         return (systemuiThemeInfoDark != null && systemuiThemeInfoDark.isEnabled()) || 
         (systemuiThemeInfoBlack != null && systemuiThemeInfoBlack.isEnabled());
+=======
+        return systemuiThemeInfo != null && systemuiThemeInfo.isEnabled();
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     }
 
     private boolean isLiveDisplayNightModeOn() {
@@ -3652,6 +3751,96 @@ public class StatusBar extends SystemUI implements DemoMode,
             WindowManagerGlobal.getInstance().trimMemory(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN);
         }
         NotificationPanelView.recycle();
+    }
+
+    private void adjustBrightness(int x) {
+        mBrightnessChanged = true;
+        float raw = ((float) x) / mScreenWidth;
+
+        // Add a padding to the brightness control on both sides to
+        // make it easier to reach min/max brightness
+        float padded = Math.min(1.0f - BRIGHTNESS_CONTROL_PADDING,
+                Math.max(BRIGHTNESS_CONTROL_PADDING, raw));
+        float value = (padded - BRIGHTNESS_CONTROL_PADDING) /
+                (1 - (2.0f * BRIGHTNESS_CONTROL_PADDING));
+        try {
+            IPowerManager power = IPowerManager.Stub.asInterface(
+                    ServiceManager.getService("power"));
+            if (power != null) {
+                if (mAutomaticBrightness) {
+                    float adj = (2 * value) - 1;
+                    adj = Math.max(adj, -1);
+                    adj = Math.min(adj, 1);
+                    final float val = adj;
+                    power.setTemporaryScreenAutoBrightnessAdjustmentSettingOverride(val);
+                    AsyncTask.execute(new Runnable() {
+                        public void run() {
+                            Settings.System.putFloatForUser(mContext.getContentResolver(),
+                                    Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, val,
+                                    UserHandle.USER_CURRENT);
+                        }
+                    });
+                } else {
+                    int newBrightness = mMinBrightness + (int) Math.round(value *
+                            (android.os.PowerManager.BRIGHTNESS_ON - mMinBrightness));
+                    newBrightness = Math.min(newBrightness, android.os.PowerManager.BRIGHTNESS_ON);
+                    newBrightness = Math.max(newBrightness, mMinBrightness);
+                    final int val = newBrightness;
+                    power.setTemporaryScreenBrightnessSettingOverride(val);
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Settings.System.putIntForUser(mContext.getContentResolver(),
+                                    Settings.System.SCREEN_BRIGHTNESS, val,
+                                    UserHandle.USER_CURRENT);
+                        }
+                    });
+                }
+            }
+        } catch (RemoteException e) {
+            Log.w(TAG, "Setting Brightness failed: " + e);
+        }
+    }
+
+    private void brightnessControl(MotionEvent event) {
+        final int action = event.getAction();
+        final int x = (int) event.getRawX();
+        final int y = (int) event.getRawY();
+        if (action == MotionEvent.ACTION_DOWN) {
+            if (y < mStatusBarHeaderHeight) {
+                mLinger = 0;
+                mInitialTouchX = x;
+                mInitialTouchY = y;
+                mJustPeeked = true;
+                mHandler.removeCallbacks(mLongPressBrightnessChange);
+                mHandler.postDelayed(mLongPressBrightnessChange,
+                        BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT);
+            }
+        } else if (action == MotionEvent.ACTION_MOVE) {
+            if (y < mStatusBarHeaderHeight && mJustPeeked) {
+                if (mLinger > BRIGHTNESS_CONTROL_LINGER_THRESHOLD) {
+                    adjustBrightness(x);
+                } else {
+                    final int xDiff = Math.abs(x - mInitialTouchX);
+                    final int yDiff = Math.abs(y - mInitialTouchY);
+                    final int touchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
+                    if (xDiff > yDiff) {
+                        mLinger++;
+                    }
+                    if (xDiff > touchSlop || yDiff > touchSlop) {
+                        mHandler.removeCallbacks(mLongPressBrightnessChange);
+                    }
+                }
+            } else {
+                if (y > mStatusBarHeaderHeight) {
+                    mJustPeeked = false;
+                }
+                mHandler.removeCallbacks(mLongPressBrightnessChange);
+            }
+        } else if (action == MotionEvent.ACTION_UP
+                || action == MotionEvent.ACTION_CANCEL) {
+            mHandler.removeCallbacks(mLongPressBrightnessChange);
+        }
     }
 
     private void adjustBrightness(int x) {
@@ -4528,6 +4717,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 NotificationPanelView.recycle();
+            }
+            else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                mScreenOn = true;
             }
             else if (DevicePolicyManager.ACTION_SHOW_DEVICE_MONITORING_DIALOG.equals(action)) {
                 mQSPanel.showDeviceMonitoringDialog();
@@ -5453,10 +5645,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                 .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
         final boolean useDarkTheme;
 
+<<<<<<< HEAD
         // force black theme
         boolean forceBlackTheme = LineageSettings.System.getInt(mContext.getContentResolver(),
                 LineageSettings.System.BERRY_FORCE_BLACK, 0) == 1;
 
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         switch (globalStyleSetting) {
             case 1:
                 useDarkTheme = isLiveDisplayNightModeOn();
@@ -5473,6 +5668,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 break;
         }
 
+<<<<<<< HEAD
         if (isUsingDarkOrBlackTheme() != useDarkTheme || mForceBlackTheme != forceBlackTheme) {
             mForceBlackTheme = forceBlackTheme;
             boolean darkThemeEnabled = useDarkTheme;
@@ -5496,6 +5692,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                         blackThemeEnabled, mCurrentUserId);
                 mOverlayManager.setEnabled("org.lineageos.overlay.settingsblack",
                         blackThemeEnabled, mCurrentUserId);
+=======
+        if (isUsingDarkTheme() != useDarkTheme) {
+            try {
+                mOverlayManager.setEnabled("org.lineageos.overlay.dark",
+                        useDarkTheme, mCurrentUserId);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
@@ -6711,6 +6913,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             setZenMode(mode);
 
             updateLockscreenNotificationSetting();
+        }
+    };
+
+    protected final ContentObserver mThemeSettingsObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            updateTheme();
         }
     };
 
@@ -8730,10 +8939,13 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     protected boolean shouldPeek(Entry entry, StatusBarNotification sbn) {
+<<<<<<< HEAD
         if(isPackageInBlacklist(sbn.getPackageName())) {
             return false;
         }
 
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         if ((!mUseHeadsUp || isDeviceInVrMode()) && !isDozing()) {
             if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode");
             return false;

@@ -792,6 +792,7 @@ public class StatusBarWindowView extends FrameLayout implements TunerService.Tun
         }
     };
 
+<<<<<<< HEAD
     public void setStatusBarWindowViewOptions() {
         ContentResolver resolver = mContext.getContentResolver();
         int qsSmartPullDown = Settings.System.getIntForUser(resolver,
@@ -805,6 +806,8 @@ public class StatusBarWindowView extends FrameLayout implements TunerService.Tun
         }
     }
 
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (!DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {

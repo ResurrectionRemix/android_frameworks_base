@@ -149,6 +149,7 @@ public class CommandQueue extends IStatusBar.Stub {
 
         default void handleSystemKey(int arg1) { }
         default void handleShowGlobalActionsMenu() { }
+<<<<<<< HEAD
         default void handleShowShutdownUi(boolean isReboot, String reason) { }
         default void screenPinningStateChanged(boolean enabled) {}
         default void leftInLandscapeChanged(boolean isLeft) {}
@@ -157,6 +158,9 @@ public class CommandQueue extends IStatusBar.Stub {
         default void dispatchNavigationEditorResults(Intent intent) {}
         default void toggleOrientationListener(boolean enable) {}
         default void setAutoRotate(boolean enabled) { }
+=======
+        default void handleShowShutdownUi(boolean isReboot, String reason, boolean rebootCustom) { }
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     }
 
     @VisibleForTesting
@@ -511,10 +515,10 @@ public class CommandQueue extends IStatusBar.Stub {
     }
 
     @Override
-    public void showShutdownUi(boolean isReboot, String reason) {
+    public void showShutdownUi(boolean isReboot, String reason, boolean rebootCustom) {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_SHOW_SHUTDOWN_UI);
-            mHandler.obtainMessage(MSG_SHOW_SHUTDOWN_UI, isReboot ? 1 : 0, 0, reason)
+            mHandler.obtainMessage(MSG_SHOW_SHUTDOWN_UI, isReboot ? 1 : 0, rebootCustom ? 1 : 0, reason)
                     .sendToTarget();
         }
     }
@@ -716,7 +720,7 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_SHOW_SHUTDOWN_UI:
                     for (int i = 0; i < mCallbacks.size(); i++) {
-                        mCallbacks.get(i).handleShowShutdownUi(msg.arg1 != 0, (String) msg.obj);
+                        mCallbacks.get(i).handleShowShutdownUi(msg.arg1 != 0, (String) msg.obj, msg.arg2 != 0);
                     }
                     break;
                 case MSG_SET_TOP_APP_HIDES_STATUS_BAR:

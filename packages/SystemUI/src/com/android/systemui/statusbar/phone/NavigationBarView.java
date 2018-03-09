@@ -66,7 +66,11 @@ import java.io.PrintWriter;
 import java.util.function.Consumer;
 
 public class NavigationBarView extends FrameLayout implements PluginListener<NavGesture>,
+<<<<<<< HEAD
         Navigator, TunerService.Tunable {
+=======
+        TunerService.Tunable {
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
     final static boolean DEBUG = false;
     final static String TAG = "StatusBar/NavBarView";
 
@@ -853,6 +857,15 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     @Override
     public View getBaseView() {
         return this;
+    }
+
+    public void updateDpadKeys() {
+        if (mShowDpadArrowKeys) { // overrides IME button
+            final boolean showingIme = ((mNavigationIconHints
+                    & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0);
+
+            getDpadView().setVisibility(showingIme ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     public void updateDpadKeys() {

@@ -577,6 +577,12 @@ public interface WindowManagerPolicy {
         public void rebootSafeMode(boolean confirm);
 
         /**
+         * Reboot with a custom reason.
+         * @hide
+         */
+        public void reboot(boolean confirm, String reason);
+
+        /**
          * Return the window manager lock needed to correctly call "Lw" methods.
          */
         public Object getWindowManagerLock();
@@ -1595,6 +1601,11 @@ public interface WindowManagerPolicy {
      * Send some ActionHandler commands to WindowManager.
      */
     public void sendCustomAction(Intent intent);
+
+    /**
+     * Specifies whether the device needs a navigation bar (because it has no hardware buttons)
+     */
+    public boolean needsNavigationBar();
 
     /**
      * Lock the device now.

@@ -29,7 +29,18 @@
     <!-- Whether to persist the notification for when a usb drive device is plugged in -->
     <bool name="config_persistUsbDriveNotification">false</bool>
 
+<<<<<<< HEAD
     <!-- Setting to false will disable CM's IME switcher implementation for tablets -->
     <bool name="config_show_cmIMESwitcher">true</bool>
 
+=======
+    <!-- Certain sensor firmwares break with having a batch
+         size set. By setting this to false, devices can opt
+         out of setting a batch size, which fixes rotation. -->
+    <bool name="config_useDefaultBatchingForAccel">true</bool>
+
+    <!-- Button backlight -->
+    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 </resources>

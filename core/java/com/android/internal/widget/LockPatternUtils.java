@@ -392,6 +392,10 @@ public class LockPatternUtils {
      */
     public byte[] verifyPattern(List<LockPatternView.Cell> pattern, long challenge, int userId)
             throws RequestThrottledException {
+<<<<<<< HEAD
+=======
+        throwIfCalledOnMainThread();
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         return verifyCredential(patternToString(pattern, userId), CREDENTIAL_TYPE_PATTERN, challenge,
                 userId);
     }
@@ -416,6 +420,10 @@ public class LockPatternUtils {
     public boolean checkPattern(List<LockPatternView.Cell> pattern, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
+<<<<<<< HEAD
+=======
+        throwIfCalledOnMainThread();
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
         return checkCredential(patternToString(pattern, userId), CREDENTIAL_TYPE_PATTERN, userId,
                 progressCallback);
     }

@@ -4065,6 +4065,7 @@ public final class Settings {
         public static final String POCKET_JUDGE = "pocket_judge";
 
         /**
+<<<<<<< HEAD
          * Change the delay when a screenshot is taken
          * @hide
          */
@@ -4078,6 +4079,19 @@ public final class Settings {
 
         /**
          * Toast animations
+=======
+          * Volume keys control cursor in text fields (default is 0)
+          * 0 - Disabled
+          * 1 - Volume up/down moves cursor left/right
+          * 2 - Volume up/down moves cursor right/left
+          * @hide
+          */
+         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+
+        /**
+         * Settings to backup. This is here so that it's in the same place as the settings
+         * keys and easy to update.
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
          *
          * @hide
          */
@@ -4453,12 +4467,26 @@ public final class Settings {
          */
         public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
+<<<<<<< HEAD
         /**
          * Which applications to disable heads up notifications for
          *
          * @hide
          */
         public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+=======
+        private static boolean sIsSystemProcess;
+        private static final HashSet<String> MOVED_TO_LOCK_SETTINGS;
+        private static final HashSet<String> MOVED_TO_GLOBAL;
+        static {
+            MOVED_TO_LOCK_SETTINGS = new HashSet<>(3);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_ENABLED);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_VISIBLE);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_PATTERN_SIZE);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_DOTS_VISIBLE);
+            MOVED_TO_LOCK_SETTINGS.add(Secure.LOCK_SHOW_ERROR_PATH);
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
 
         /**
          * Whether to show the notification ticker on the status bar
@@ -9227,6 +9255,12 @@ public final class Settings {
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
+         * Boolean value whether to link ringtone and notification volume
+         * @hide
+         */
+        public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
@@ -12070,11 +12104,14 @@ public final class Settings {
         public static final String POLICY_CONTROL = "policy_control";
 
         /**
+<<<<<<< HEAD
          * @hide
          */
         public static final String POLICY_CONTROL_SELECTED = "policy_control_selected";
 
         /**
+=======
+>>>>>>> 1891b064a40582e1dad5c1a9eb0e7ed9c5e20017
          * Defines global runtime overrides to window policy style.
          *
          * See {@link android.view.WindowManagerPolicyControl} for value definitions.
