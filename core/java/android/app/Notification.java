@@ -3254,6 +3254,8 @@ public class Notification implements Parcelable
                 mInNightMode = (currentConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK)
                         == Configuration.UI_MODE_NIGHT_YES;
             }
+            // UI_MODE_NIGHT doesnt seem to be ready, so just listen to config
+            mInNightMode = getColorUtil().getNightModeNotification(mContext);
 
             if (toAdopt == null) {
                 mN = new Notification();
@@ -5381,8 +5383,7 @@ public class Notification implements Parcelable
 
         private CharSequence processLegacyText(CharSequence charSequence, boolean ambient) {
             boolean isAlreadyLightText = isLegacy() || textColorsNeedInversion();
-            boolean wantLightText = ambient || mContext.getResources().getBoolean(
-                    R.bool.config_useDarkBgNotificationIconTextTinting);
+            boolean wantLightText = ambient || getColorUtil().getDarkNotificationTinting(mContext);
             if (isAlreadyLightText != wantLightText) {
                 return getColorUtil().invertCharSequenceColors(charSequence);
             } else {
