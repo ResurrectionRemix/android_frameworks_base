@@ -56,6 +56,7 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
     private ArrayList<LocationChangeCallback> mSettingsChangeCallbacks =
             new ArrayList<LocationChangeCallback>();
     private final H mHandler = new H();
+    private final Object mLock = new Object();
 
     public LocationControllerImpl(Context context, Looper bgLooper) {
         mContext = context;
@@ -78,12 +79,16 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
      * Add a callback to listen for changes in location settings.
      */
     public void addCallback(LocationChangeCallback cb) {
-        mSettingsChangeCallbacks.add(cb);
+        synchronized(mLock) {
+            mSettingsChangeCallbacks.add(cb);
+        }
         mHandler.sendEmptyMessage(H.MSG_LOCATION_SETTINGS_CHANGED);
     }
 
     public void removeCallback(LocationChangeCallback cb) {
-        mSettingsChangeCallbacks.remove(cb);
+        synchronized(mLock) {
+            mSettingsChangeCallbacks.remove(cb);
+        }
     }
 
     /**
@@ -205,14 +210,18 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
         }
 
         private void locationActiveChanged() {
-            Utils.safeForeach(mSettingsChangeCallbacks,
-                    cb -> cb.onLocationActiveChanged(mAreActiveLocationRequests));
+            synchronized(mLock) {
+                Utils.safeForeach(mSettingsChangeCallbacks,
+                        cb -> cb.onLocationActiveChanged(mAreActiveLocationRequests));
+            }
         }
 
         private void locationSettingsChanged() {
-            boolean isEnabled = isLocationEnabled();
-            Utils.safeForeach(mSettingsChangeCallbacks,
-                    cb -> cb.onLocationSettingsChanged(isEnabled));
+            synchronized(mLock) {
+                boolean isEnabled = isLocationEnabled();
+                Utils.safeForeach(mSettingsChangeCallbacks,
+                        cb -> cb.onLocationSettingsChanged(isEnabled));
+            }
         }
     }
 }
