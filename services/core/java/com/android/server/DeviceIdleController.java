@@ -361,6 +361,34 @@ public class DeviceIdleController extends SystemService
                         }
                     }
                 } break;
+                case Intent.ACTION_PACKAGE_ADDED: {
+                    Uri data = intent.getData();
+                    String ssp;
+                    if (data != null && (ssp = data.getSchemeSpecificPart()) != null
+                         && mPowerSaveWhitelistApps.containsKey(ssp)) {
+                        final PackageManager pm = getContext().getPackageManager();
+                        try {
+                            ApplicationInfo ai = pm.getApplicationInfo(ssp,
+                                      PackageManager.MATCH_SYSTEM_ONLY);
+                            int appid = UserHandle.getAppId(ai.uid);
+
+                            if (mPowerSaveWhitelistApps.get(ssp) != appid ) {
+                                if (DEBUG) Slog.d(TAG,"  appid is changed! current:" + mPowerSaveWhitelistApps.get(ssp)
+                                      + " new:" + appid + "  update whitelist.");
+
+                                // These apps are on both the whitelist-except-idle as well
+                                // as the full whitelist, so they apply in all cases.
+                                mPowerSaveWhitelistAppsExceptIdle.put(ai.packageName, appid);
+                                mPowerSaveWhitelistSystemAppIdsExceptIdle.put(appid, true);
+                                mPowerSaveWhitelistApps.put(ai.packageName, appid);
+                                mPowerSaveWhitelistSystemAppIds.put(appid, true);
+
+                                updateWhitelistAppIdsLocked();
+                            }
+                        } catch (PackageManager.NameNotFoundException e) {
+                        }
+                    }
+                } break;
             }
         }
     };
@@ -1535,6 +1563,11 @@ public class DeviceIdleController extends SystemService
 
                 filter = new IntentFilter();
                 filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+                filter.addDataScheme("package");
+                getContext().registerReceiver(mReceiver, filter);
+
+                filter = new IntentFilter();
+                filter.addAction(Intent.ACTION_PACKAGE_ADDED);
                 filter.addDataScheme("package");
                 getContext().registerReceiver(mReceiver, filter);
 
