@@ -5589,6 +5589,12 @@ public final class Settings {
         public static final String STATUS_BAR_TICKER_ANIMATION_MODE =
                 "status_bar_ticker_animation_mode";
 
+       /**
+        * Whether to show battery percent on ambient bottom
+        * @hide
+        */
+        public static final String AMBIENT_BATTERY_PERCENT = "ambient_battery_percent";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
