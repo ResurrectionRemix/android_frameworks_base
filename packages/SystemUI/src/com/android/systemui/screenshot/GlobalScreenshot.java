@@ -54,6 +54,7 @@ import android.media.MediaActionSound;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.provider.Settings;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -332,15 +333,18 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
                     r.getString(com.android.internal.R.string.share), shareAction);
             mNotificationBuilder.addAction(shareActionBuilder.build());
 
-            // Create an edit intent (if Google's Markup App is available)
+            // Create an edit intent (if the editor app is available)
             PackageManager pm = context.getPackageManager();
+            final String editor = Settings.System.getString(context.getContentResolver(),
+                    Settings.System.SCREENSHOT_EDIT_USER_APP);
             try {
-                PackageInfo info = pm.getPackageInfo("com.google.android.markup",
+                PackageInfo info = pm.getPackageInfo(editor,
                         PackageManager.GET_META_DATA);
 
                 // Create a edit action for the notification
                 PendingIntent editAction = PendingIntent.getBroadcast(context,  0,
                         new Intent(context, GlobalScreenshot.EditScreenshotReceiver.class)
+                                .putExtra(GlobalScreenshot.SCREENSHOT_EDITOR_APP_PACKAGENAME, editor)
                                 .putExtra(GlobalScreenshot.SCREENSHOT_URI_ID, uri.toString()),
                         PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
                 Notification.Action.Builder editActionBuilder = new Notification.Action.Builder(
@@ -462,6 +466,7 @@ class DeleteImageInBackgroundTask extends AsyncTask<Uri, Void, Void> {
 class GlobalScreenshot {
     static final String SCREENSHOT_URI_ID = "android:screenshot_uri_id";
     static final String SHARING_INTENT = "android:screenshot_sharing_intent";
+    static final String SCREENSHOT_EDITOR_APP_PACKAGENAME = "android:screenshot_editor_app_packagename";
 
     private static final int SCREENSHOT_FLASH_TO_PEAK_DURATION = 130;
     private static final int SCREENSHOT_DROP_IN_DURATION = 430;
@@ -1028,24 +1033,28 @@ class GlobalScreenshot {
     public static class EditScreenshotReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!intent.hasExtra(SCREENSHOT_URI_ID)) {
+            if (!intent.hasExtra(SCREENSHOT_URI_ID) || !intent.hasExtra(SCREENSHOT_EDITOR_APP_PACKAGENAME)) {
                 return;
             }
 
+            // Collapse the notification panel
+            try {
+                ActivityManager.getService().closeSystemDialogs(SYSTEM_DIALOG_REASON_SCREENSHOT);
+            } catch (RemoteException e) {
+            }
             // Clear the notification
             final NotificationManager nm =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             final Uri uri = Uri.parse(intent.getStringExtra(SCREENSHOT_URI_ID));
             nm.cancel(SystemMessage.NOTE_GLOBAL_SCREENSHOT);
-
-            // Launch markup activity
+            // Launch the wanted screenshot editor
+            final String editor = intent.getStringExtra(SCREENSHOT_EDITOR_APP_PACKAGENAME);
             Intent editingIntent = new Intent(Intent.ACTION_EDIT);
-            editingIntent.setType("image/png");
-            editingIntent.setComponent(new ComponentName(
-                    "com.google.android.markup",
-                    "com.google.android.markup.AnnotateActivity"));
-            editingIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            context.startActivity(editingIntent);
+            editingIntent.setDataAndType(uri, "image/png");
+            editingIntent.setPackage(editor);
+            ActivityOptions opts = ActivityOptions.makeBasic();
+            opts.setDisallowEnterPictureInPictureWhileLaunching(true);
+            context.startActivityAsUser(editingIntent, opts.toBundle(), UserHandle.CURRENT);
         }
     }
 
