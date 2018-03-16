@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Άμα σταματήσετε ξαφνικά μια εφαρμογή, ενδέχεται να μην λειτουργεί σωστά.</string>
   <string name="kill">Τερματισμός Εφαρμογής</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
 </resources>

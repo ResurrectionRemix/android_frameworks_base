@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Prisilno zaustavljanje aplikacije može rezultirati čudnim ponašanjem aplikacije.</string>
   <string name="kill">Zatvori aplikaciju</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Slobodan RAM: %1$d MB</string>
 </resources>

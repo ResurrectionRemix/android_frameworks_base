@@ -17,8 +17,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu (legacy) -->
+  <string name="reboot_title">再起動</string>
+  <string name="reboot_message">システムを再起動</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">ナビゲーションバーエディターの制御</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">ナビゲーションバーエディターの制御を許可する</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">フェード</string>
   <string name="animation_slide_right">右からスライド</string>
@@ -42,4 +46,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">電源ボタンを長押しでライト点灯</string>
   <!-- Label for item that flashlight in power menu options dialog -->
+  <string name="global_action_flashlight">ライト</string>
 </resources>

@@ -188,5 +188,10 @@
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <string name="keyguard_plugged_in_turbo_power_charging">متصل بشاحن توربيني</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">توقف إجباري؟</string>
+  <string name="force_stop_dlg_text">إذا فرضت إيقاف أحد التطبيقات ،
+فقد يسيء التصرف.</string>
+  <string name="kill">إذا فرضت إيقاف أحد التطبيقات ، فقد يسيء التصرف</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">ذاكرة الوصول العشوائي الحرة:٪ 1 $ d ميغابايت</string>
 </resources>

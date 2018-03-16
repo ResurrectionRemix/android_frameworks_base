@@ -46,9 +46,11 @@
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">ทางลัดด้านล่าง</string>
   <string name="lockscreen_default">ค่าเริ่มต้น</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">ประหยัดข้อมูล</string>
+  <string name="lockscreen_hidden">ไม่มี</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">เริ่มระบบใหม่</string>
   <string name="quick_settings_reboot_recovery_label">กู้คืน</string>
@@ -131,15 +133,21 @@
   <string name="screenrecord_notif_pointer_off">ซ่อนจุด</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">ไม่สามารถบันทึกวิดิโอหน้าจอ</string>
+  <string name="screenrecord_hide_hint">ซ่อนคำแนะนำ</string>
+  <string name="screenrecord_show_hint">แสดงคำแนะนำ</string>
   <!-- Screenshot QS tile -->
   <string name="quick_settings_screenrecord_label">บันทึกวิดิโอหน้าจอ</string>
   <string name="quick_settings_screenrecord_lq_label">บันทึกวิดิโอหน้าจอ LQ</string>
   <string name="quick_settings_screenrecord_mq_label">บันทึกวิดิโอหน้าจอ MQ</string>
   <string name="quick_settings_screenrecord_hq_label">บันทึกวิดิโอหน้าจอ HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">แถบนำทาง</string>
+  <string name="quick_settings_navigation_default">สต็อก</string>
+  <string name="quick_settings_navigation_disabled">ปิดการใช้งาน</string>
   <string name="omnijaws_service_error">ผิดพลาด</string>
   <string name="omnijaws_service_unkown">ไม่มีข้อมูลสภาพอากาศ</string>
   <string name="omnijaws_service_error_long">ข้อผิดพลาดในการรับข้อมูลสภาพอากาศ</string>
+  <string name="omnijaws_service_disabled">ปิดใช้งาน Service</string>
   <string name="omnijaws_detail_header">สภาพอากาศ</string>
   <string name="omnijaws_label_default">สภาพอากาศ</string>
   <string name="omnijaws_current_text">ตอนนี้</string>
@@ -162,5 +170,9 @@
   <string name="recents_custom_android_n">ล้างทั้งหมด</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">บังคับให้หยุด</string>
+  <string name="force_stop_dlg_text">หากคุณบังคับปิดแอปพลิเคชัน อาจทำให้การทำงานผิดพลาดได้.</string>
+  <string name="kill">ปิดแอป</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">แรมเหลือน้อย: %1$d MB</string>
 </resources>

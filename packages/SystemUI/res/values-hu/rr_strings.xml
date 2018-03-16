@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Ha egy alkalmazást leállásra kényszerít, instabilan viselkedhet.</string>
   <string name="kill">Alkalmazás leállítása</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Szabad RAM: %1$d MB</string>
 </resources>

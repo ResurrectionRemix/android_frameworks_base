@@ -189,5 +189,9 @@
   <string name="keyguard_indication_turbo_power_time">Tersabung dengan mode TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> Sampai penuh)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower terhubung</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Force stop?</string>
+  <string name="force_stop_dlg_text">Jika Anda memaksa menghentikan aplikasi, itu mungkin akan mengganggunya.</string>
+  <string name="kill">Kill App</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Free RAM: %1$d MB</string>
 </resources>

@@ -155,6 +155,11 @@
   <string name="quick_settings_screenrecord_mq_label">Näytön tallennus normaali laatu</string>
   <string name="quick_settings_screenrecord_hq_label">Näytön tallennus korkea laatu</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Navigointipalkki</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Alkuperäinen</string>
+  <string name="quick_settings_navigation_disabled">Pois käytöstä</string>
   <string name="omnijaws_service_error">Virhe</string>
   <string name="omnijaws_service_unkown">Ei säätietoja</string>
   <string name="omnijaws_service_error_long">Virhe ladattaessa säätietoja</string>
@@ -181,6 +186,12 @@
   <string name="quick_settings_pie">Piirakka</string>
   <string name="recents_custom_android_n">TYHJENNÄ KAIKKI</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower lataus (<xliff:g id="charging_time_left">%s</xliff:g> kunnes täynnä)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower yhdistetty</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Pakota lopetus?</string>
+  <string name="force_stop_dlg_text">Jos pakotat sovelluksen pysähtymään, se saattaa alkaa toimia virheellisesti.</string>
+  <string name="kill">Sulje sovellus</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Vapaata RAM-muistia: %1$d MB</string>
 </resources>

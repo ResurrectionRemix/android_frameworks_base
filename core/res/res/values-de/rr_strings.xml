@@ -44,7 +44,7 @@
   <!-- On-The-Go -->
   <string name="global_action_onthego">On-The-Go Modus</string>
   <!-- Pocket Lock -->
-  <string name="pocket_lock_message_long_press">Power Taste gedrückt halten, um mit dem Gerät zu interagieren</string>
+  <string name="pocket_lock_message_long_press">An-/Aus Taste gedrückt halten um zu interagieren</string>
   <!-- Label for item that flashlight in power menu options dialog -->
   <string name="global_action_flashlight">Taschenlampe</string>
 </resources>

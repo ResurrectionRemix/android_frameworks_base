@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Jeśli wymusisz zatrzymanie aplikacji, może działać nieprawidłowo.</string>
   <string name="kill">Zabij aplikację</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Wolna pamięć RAM: %1$d MB</string>
 </resources>

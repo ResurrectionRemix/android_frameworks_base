@@ -80,13 +80,13 @@
   <string name="quick_settings_compass_NW">ПнЗх</string>
   <!-- Screenshoot tile -->
   <string name="quick_settings_screenshot_label">Знімок екрану</string>
-  <string name="quick_settings_region_screenshot_label">Частковий скріншот</string>
+  <string name="quick_settings_region_screenshot_label">Частковий знімок екрану</string>
   <!-- USB Tethering tile -->
   <string name="accessibility_quick_settings_usb_tether_off">USB-модем вимкнено</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB-модем увімкнено</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">USB-модем вимкнено</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">USB-модем увімкнуто</string>
-  <string name="quick_settings_usb_tether_label">USB-модем</string>
+  <string name="quick_settings_usb_tether_label">USB модем</string>
   <!-- Language toggle tile -->
   <string name="quick_settings_locale_label">Мова</string>
   <string name="quick_settings_locale_more_locales_toast">Будь ласка, налаштуйте декілька мов для конфігурації</string>
@@ -102,7 +102,7 @@
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Активний дисплей</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_off">Активний дисплей вимкнений.</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Активний дисплей вимкнено.</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_on">Активний дисплей увімкнено.</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -126,7 +126,7 @@
   <string name="quick_settings_pip_label">Картинка в картинці (PiP)</string>
   <string name="quick_settings_pip_tile_app_na">Додаток не підтримує PiP</string>
   <!-- Screenrecord tile -->
-  <string name="quick_settings_screenrecord">Відеозйомка</string>
+  <string name="quick_settings_screenrecord">Запис екрану</string>
   <string name="quick_settings_screenrecord_on">Запис...</string>
   <!-- Advance location quick setting tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Визначення місцезнаходження: режим економії енергії.</string>
@@ -134,13 +134,13 @@
   <string name="accessibility_quick_settings_location_high_accuracy">Визначення місцезнаходження: режим високої точності.</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Екран записується</string>
-  <string name="screenrecord_notif_final_ticker">Екран успішно записано</string>
+  <string name="screenrecord_notif_final_ticker">Запис екрану успішний</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Запис екрану</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Зупинити</string>
-  <string name="screenrecord_notif_completed">Екран успішно записано</string>
-  <string name="screenrecord_notif_duration">Загально:</string>
+  <string name="screenrecord_notif_completed">Запис екрану успішний</string>
+  <string name="screenrecord_notif_duration">Всього:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Показувати вказівник</string>
   <string name="screenrecord_notif_pointer_off">Приховувати вказівник</string>
@@ -151,9 +151,9 @@
   <string name="screenrecord_show_hint">Відображати підказки</string>
   <!-- Screenshot QS tile -->
   <string name="quick_settings_screenrecord_label">Запис екрану</string>
-  <string name="quick_settings_screenrecord_lq_label">Запис екрану LQ</string>
-  <string name="quick_settings_screenrecord_mq_label">Запис екрану MQ</string>
-  <string name="quick_settings_screenrecord_hq_label">Запис екрану HQ</string>
+  <string name="quick_settings_screenrecord_lq_label">Запис екрану низька якість</string>
+  <string name="quick_settings_screenrecord_mq_label">Запис екрану середня якість</string>
+  <string name="quick_settings_screenrecord_hq_label">Запис екрану висока якість</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Панель навігації</string>
   <string name="quick_settings_smartbar">Розумна панель навігації</string>
@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Примусове вимкнення додатка може призвести до збою в його роботі.</string>
   <string name="kill">Завершити додаток</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Вільно ОЗП: %1$d Мб</string>
 </resources>

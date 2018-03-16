@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Bir uygulamayı zorla durdurursanız, bir hata ile karşılaşabilirsiniz.</string>
   <string name="kill">Uygulamayı Sonlandır</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Boş RAM: %1$d MB</string>
 </resources>

@@ -155,6 +155,10 @@
   <string name="quick_settings_screenrecord_mq_label">Skärminspelning MQ</string>
   <string name="quick_settings_screenrecord_hq_label">Skärminspelning HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Navigeringsfält</string>
+  <string name="quick_settings_smartbar">Smartfält</string>
+  <string name="quick_settings_navigation_default">Aktie</string>
+  <string name="quick_settings_navigation_disabled">Inaktiverad</string>
   <string name="omnijaws_service_error">Error</string>
   <string name="omnijaws_service_unkown">Ingen väderinfo</string>
   <string name="omnijaws_service_error_long">Fel vid inläsning av väderdata.</string>
@@ -181,6 +185,12 @@
   <string name="quick_settings_pie">Paj</string>
   <string name="recents_custom_android_n">RENSA ALLA</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower ansluten (<xliff:g id="charging_time_left">%s</xliff:g> innan fullt)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower ansluten</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Tvinga avslut?</string>
+  <string name="force_stop_dlg_text">Om du tvingar appen att avslutas så kan den missköta sig.</string>
+  <string name="kill">Döda appen</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Ledigt RAM: %1$d MB</string>
 </resources>

@@ -33,11 +33,11 @@
   <string name="animation_slide_down">Glisează în sus</string>
   <string name="animation_default">Implicit</string>
   <string name="animation_translucent">Translucid</string>
-  <string name="animation_grow_shrink">Mărește (spre sus)</string>
+  <string name="animation_grow_shrink">Mărește (în sus)</string>
   <string name="animation_grow_shrink_center">Mărește (spre centru)</string>
-  <string name="animation_grow_shrink_bottom">Mărește (spre jos)</string>
-  <string name="animation_grow_shrink_left">Mărește (spre stânga)</string>
-  <string name="animation_grow_shrink_right">Mărește (spre dreapta)</string>
+  <string name="animation_grow_shrink_bottom">Mărește (în jos)</string>
+  <string name="animation_grow_shrink_left">Mărește (la stânga)</string>
+  <string name="animation_grow_shrink_right">Mărește (la dreapta)</string>
   <string name="action_null">Gol</string>
   <!-- Label for item that screenrecords in power menu options dialog -->
   <string name="global_action_screenrecord">Înregistrare Ecran</string>

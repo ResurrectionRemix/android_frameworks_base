@@ -32,7 +32,7 @@
   <string name="app_float_item_title">Plovoucí zobrazení</string>
   <string name="app_stop_item_title">Ukončit aplikaci</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">DASH nabíjení (plně nabito za <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g>)</string>
+  <string name="keyguard_indication_dash_charging_time">DASH nabíjení (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> do plného nabití)</string>
   <string name="keyguard_plugged_in_dash_charging">DASH nabíjení</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go aktivováno</string>
@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Vynucené zastavení může způsobit nepředvídatelné chování aplikace.</string>
   <string name="kill">Ukončit aplikaci</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">Volná paměť RAM: %1$d MB</string>
 </resources>

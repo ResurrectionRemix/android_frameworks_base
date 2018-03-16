@@ -11,4 +11,6 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"></resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="weather_info_not_available">ไม่มีข้อมูลของสภาพอากาศในขณะนี้</string>
+</resources>

@@ -26,17 +26,17 @@
   <string name="global_action_restart_hot">快速重啟</string>
   <string name="global_action_screenshot">螢幕截圖</string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">已刪除螢幕截圖</string>
+  <string name="delete_screenshot_toast">螢幕擷取畫面已刪除</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">最大化</string>
   <string name="app_float_item_title">懸浮視窗</string>
   <string name="app_stop_item_title">終止應用程式</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_dash_charging_time">快速充電中 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 後充滿)</string>
-  <string name="keyguard_plugged_in_dash_charging">快速充電中</string>
+  <string name="keyguard_plugged_in_dash_charging">Dash 閃充</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go 已啟動</string>
-  <string name="onthego_notif_title">On-The-Go 處於活動狀態</string>
+  <string name="onthego_notif_title">正在使用 On-The-Go</string>
   <string name="onthego_notif_stop">停止</string>
   <string name="onthego_notif_options">選項</string>
   <string name="onthego_notif_error">無法啟動 On-The-Go</string>
@@ -61,7 +61,7 @@
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">未擷取螢幕截圖</string>
-  <string name="screenshot_abort_text">操作中止。</string>
+  <string name="screenshot_abort_text">操作中止</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">指南針</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -145,15 +145,15 @@
   <string name="screenrecord_notif_pointer_on">顯示觸控指標</string>
   <string name="screenrecord_notif_pointer_off">隱藏觸控指標</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">螢幕無法錄製</string>
+  <string name="screenrecord_notif_error">無法錄製螢幕</string>
   <string name="notification_channel_screenrecord">螢幕錄製</string>
   <string name="screenrecord_hide_hint">隱藏提示</string>
   <string name="screenrecord_show_hint">顯示提示</string>
   <!-- Screenshot QS tile -->
   <string name="quick_settings_screenrecord_label">螢幕錄製</string>
-  <string name="quick_settings_screenrecord_lq_label">螢幕錄製低畫質</string>
-  <string name="quick_settings_screenrecord_mq_label">螢幕錄製中等畫質</string>
-  <string name="quick_settings_screenrecord_hq_label">螢幕錄製高畫質</string>
+  <string name="quick_settings_screenrecord_lq_label">螢幕錄製 低畫質</string>
+  <string name="quick_settings_screenrecord_mq_label">螢幕錄製 中等畫質</string>
+  <string name="quick_settings_screenrecord_hq_label">螢幕錄製 高畫質</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">導航列</string>
   <string name="quick_settings_smartbar">SmartBar</string>
@@ -189,5 +189,9 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower 已連接 (還剩 <xliff:g id="charging_time_left">%s</xliff:g> 充滿)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已連接</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">強制停止嗎？</string>
+  <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
+  <string name="kill">終止應用程式</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">可用記憶體：%1$d MB</string>
 </resources>

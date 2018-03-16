@@ -82,8 +82,8 @@
   <string name="quick_settings_screenshot_label">Captură de ecran</string>
   <string name="quick_settings_region_screenshot_label">Captură parțială de ecran</string>
   <!-- USB Tethering tile -->
-  <string name="accessibility_quick_settings_usb_tether_off">Tetheringul USB este oprit</string>
-  <string name="accessibility_quick_settings_usb_tether_on">Tetheringul USB este pornit</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB tethering oprit</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB tethering pornit</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Tetheringul USB este oprit</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">TetheringulUSB este activat</string>
   <string name="quick_settings_usb_tether_label">Tethering prin USB</string>
@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Dacă forţaţi oprirea unei aplicații, aceasta se poate comporta necorespunzător.</string>
   <string name="kill">Opriți aplicația</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">RAM neutilizat: %1$d MB</string>
 </resources>

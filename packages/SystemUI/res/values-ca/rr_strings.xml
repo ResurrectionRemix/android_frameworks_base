@@ -17,7 +17,14 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
+  <string name="quick_settings_rr_label">Configuracions ràpides</string>
   <!-- Power menu -->
+  <string name="global_action_restart_advanced">Avançat</string>
+  <string name="global_action_restart_recovery">Recovery</string>
+  <string name="global_action_restart_bootloader">Mode Bootloader</string>
+  <string name="global_action_restart_ui">SystemUI</string>
+  <string name="global_action_restart_hot">Calent</string>
+  <string name="global_action_screenshot">Captura de pantalla</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Captura de pantalla eliminada</string>
   <!-- App circle sidebar -->
@@ -39,13 +46,22 @@
   <string name="onthego_front_camera">Utilitzar la càmera frontal</string>
   <string name="onthego_service_toggle">Reinicia automàticament el servei</string>
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
+  <string name="systemui_tuner_icon_manager_title">Administrador d\'icones</string>
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Dreceres inferiors</string>
+  <string name="lockscreen_default">Predeterminat</string>
   <string name="status_bar_vpn">VPN</string>
+  <string name="status_bar_data_saver">Economitzador de dades</string>
+  <string name="lockscreen_hidden">Cap</string>
+  <string name="custom_hint">Llisqueu des de la icona per obrir</string>
+  <string name="systemui_tuner_navbar_title">Configuració de fàbrica</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">Reinicia</string>
   <string name="quick_settings_reboot_recovery_label">Mode Recovery</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">No s\'ha fet cap captura de pantalla</string>
+  <string name="screenshot_abort_text">Operació cancel·lada.</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Brúixola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -82,13 +98,17 @@
   <string name="quick_settings_sound_label">So</string>
   <string name="quick_settings_sound_ring">Timbre</string>
   <string name="quick_settings_sound_vibrate">Vibració</string>
+  <string name="quick_settings_sound_silent">Silenci</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_off">Ambient Display desactivada.</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_on">Pantalla ambient activada.</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_off">S\'ha desactivat la pantalla ambient.</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_on">S\'ha activat la pantalla ambient.</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">Mode Cafeïna</string>
   <string name="accessibility_quick_settings_caffeine_off">Cafeïna desactivada</string>
@@ -103,7 +123,10 @@
   <string name="accessibility_quick_settings_volume_panel">Volum</string>
   <string name="quick_settings_volume_panel_label">Volum</string>
   <!-- PiP Tile -->
+  <string name="quick_settings_pip_label">PiP</string>
+  <string name="quick_settings_pip_tile_app_na">L\'aplicació no admet PiP</string>
   <!-- Screenrecord tile -->
+  <string name="quick_settings_screenrecord">Gravació de pantalla</string>
   <string name="quick_settings_screenrecord_on">Enregistrant ...</string>
   <!-- Advance location quick setting tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Informes d\'ubicació: Mode d\'estalvi de bateria.</string>
@@ -111,36 +134,63 @@
   <string name="accessibility_quick_settings_location_high_accuracy">Informes d\'ubicació: Mode d\'alta precisió.</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">La pantalla està sent gravada</string>
+  <string name="screenrecord_notif_final_ticker">Pantalla registrat amb èxit</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Gravant pantalla</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Aturar</string>
+  <string name="screenrecord_notif_completed">Pantalla registrada amb èxit</string>
+  <string name="screenrecord_notif_duration">Total:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Mostra el punter</string>
   <string name="screenrecord_notif_pointer_off">Amaga el punter</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">No es pot gravar la pantalla</string>
+  <string name="notification_channel_screenrecord">Gravació de pantalla</string>
+  <string name="screenrecord_hide_hint">Amaga les pistes</string>
+  <string name="screenrecord_show_hint">Mostra les pistes</string>
   <!-- Screenshot QS tile -->
+  <string name="quick_settings_screenrecord_label">Gravació de pantalla</string>
+  <string name="quick_settings_screenrecord_lq_label">Gravació de pantalla LQ</string>
+  <string name="quick_settings_screenrecord_mq_label">Gravació de pantalla MQ</string>
+  <string name="quick_settings_screenrecord_hq_label">Gravació de pantalla HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">Barra de navegació</string>
+  <string name="quick_settings_smartbar">Barra intel·ligent</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_navigation_default">Per defecte</string>
+  <string name="quick_settings_navigation_disabled">Deshabilitat</string>
   <string name="omnijaws_service_error">Error</string>
   <string name="omnijaws_service_unkown">Sense informació sobre el temps</string>
   <string name="omnijaws_service_error_long">Error carregant l\'informació del temps</string>
+  <string name="omnijaws_service_disabled">Servei deshabilitat</string>
   <string name="omnijaws_detail_header">Temps</string>
   <string name="omnijaws_label_default">Temps</string>
   <string name="omnijaws_current_text">Ara</string>
   <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
+  <string name="omnijaws_service_last_update">Darrera actualització:</string>
   <!-- Battery saver tile -->
+  <string name="battery_saver_qs_tile_fully_charged">Carregat completament</string>
   <!-- Expanded desktop QS Tile -->
   <string name="quick_settings_expanded_desktop_label">Escriptori Extès</string>
   <string name="quick_settings_expanded_desktop">Ampliat</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_expanded_navigation_off">Amagar la barra de navegació</string>
+  <string name="quick_settings_expanded_statusbar_off">Amaga la barra d\'estat</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
+  <string name="pie_state_name">Controls de Pie</string>
+  <string name="pie_state_summary">Utilitzeu els controls Pie en mode immersiu</string>
   <string name="pie_battery_level">"NIVELL DE BATERIA "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">ESBORRA-HO TOT</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower connectat (<xliff:g id="charging_time_left"></xliff:g> %sfins que estigui plena)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower connectat</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Vols forçar l\'aturada?</string>
+  <string name="force_stop_dlg_text">Si forçes l\'aturada d\'una aplicació, pot no comportar-se correctament.</string>
+  <string name="kill">Atura l\'aplicació</string>
   <!-- Recents free RAM -->
 </resources>

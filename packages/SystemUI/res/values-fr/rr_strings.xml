@@ -23,13 +23,13 @@
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">Interface utilisateur</string>
-  <string name="global_action_restart_hot">Redémarrer à chaud</string>
+  <string name="global_action_restart_hot">Redémarrage rapide</string>
   <string name="global_action_screenshot">Capture d\'écran</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Capture d\'écran supprimée</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Agrandir</string>
-  <string name="app_float_item_title">Vue détachée</string>
+  <string name="app_float_item_title">Vue flottante</string>
   <string name="app_stop_item_title">Fermer l\'application</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_dash_charging_time">Charge rapide\nCharge complète dans <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g></string>
@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Forcer l\'arrêt d\'une application peut provoquer un dysfonctionnement.</string>
   <string name="kill">Arrêter l’application</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">RAM disponible: %1$d MB</string>
 </resources>

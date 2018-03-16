@@ -17,10 +17,10 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
-  <string name="quick_settings_rr_label">विन्यास</string>
+  <string name="quick_settings_rr_label">कॉंफ़िगरेशन</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">उन्नत</string>
-  <string name="global_action_restart_recovery">आरोग्य प्राप्ति</string>
+  <string name="global_action_restart_recovery">रिकवरी</string>
   <string name="global_action_restart_bootloader">बूटलोडर</string>
   <string name="global_action_restart_ui">सिस्टम यूआई</string>
   <string name="global_action_restart_hot">गरम</string>
@@ -46,7 +46,7 @@
   <string name="onthego_front_camera">फ्रंट कैमरा का उपयोग करें</string>
   <string name="onthego_service_toggle">स्वचालित रूप से सेवा को पुनरारंभ करें</string>
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_data_connection_hspap">HSPA+ (इंटरनेट)</string>
+  <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">आइकन प्रबंधक</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">नीचे के शॉर्टकट</string>
@@ -108,7 +108,7 @@
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_changed_off">परिवेश प्रदर्शन को बंद किया गया है।</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">परिवेश प्रदर्शन को चालू किया गया है।</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">एम्बिएंट डिस्प्ले चालु कर दिया</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">कैफीन</string>
   <string name="accessibility_quick_settings_caffeine_off">कैफीन बंद</string>
@@ -123,8 +123,8 @@
   <string name="accessibility_quick_settings_volume_panel">वॉल्यूम</string>
   <string name="quick_settings_volume_panel_label">वॉल्यूम</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">PiP</string>
-  <string name="quick_settings_pip_tile_app_na">ये एप्पलीकेशन पी आई पी मोड में नही चल सकता</string>
+  <string name="quick_settings_pip_label">चित्र में चित्र मोड</string>
+  <string name="quick_settings_pip_tile_app_na">अनुप्रयोग PiP का समर्थन नहीं करता</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">स्क्रीन रिकॉर्ड</string>
   <string name="quick_settings_screenrecord_on">रिकॉर्डिंग चालू...</string>
@@ -155,6 +155,11 @@
   <string name="quick_settings_screenrecord_mq_label">स्क्रीन रिकॉर्ड MQ</string>
   <string name="quick_settings_screenrecord_hq_label">स्क्रीन रिकॉर्ड HQ</string>
   <!-- Navigation bar Tile -->
+  <string name="quick_settings_navigation_bar">नेविगेशन पट्टी</string>
+  <string name="quick_settings_smartbar">स्मार्ट पट्टी</string>
+  <string name="quick_settings_fling">फ्लिंग</string>
+  <string name="quick_settings_navigation_default">मूल</string>
+  <string name="quick_settings_navigation_disabled">अक्षम बना दे</string>
   <string name="omnijaws_service_error">त्रुटि</string>
   <string name="omnijaws_service_unkown">मौसम के बारे में जानकारी उपलब्ध नहीं|</string>
   <string name="omnijaws_service_error_long">मौसम डेटा लोड करने में त्रुटि</string>
@@ -163,9 +168,9 @@
   <string name="omnijaws_label_default">मौसम</string>
   <string name="omnijaws_current_text">अभी</string>
   <string name="omnijaws_package_not_available">OmniJaws उपलब्ध नहीं है</string>
-  <string name="omnijaws_service_last_update">Last Update</string>
+  <string name="omnijaws_service_last_update">अंतिम अद्यतन</string>
   <!-- Battery saver tile -->
-  <string name="battery_saver_qs_tile_fully_charged">पूरी तरह चार्ज</string>
+  <string name="battery_saver_qs_tile_fully_charged">पूरी तरह से चार्ज किया गया</string>
   <!-- Expanded desktop QS Tile -->
   <string name="quick_settings_expanded_desktop_label">विस्तारित डेस्कटॉप</string>
   <string name="quick_settings_expanded_desktop">विस्तारित</string>
@@ -173,7 +178,7 @@
   <string name="quick_settings_expanded_navigation_off">नेविगेशन बार छुपाएँ</string>
   <string name="quick_settings_expanded_statusbar_off">स्टेटस बार छुपाएँ</string>
   <!-- Weather string format in expanded statusbar header -->
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+  <string name="status_bar_weather_format"><xliff:g id="तापमान">%1$s</xliff:g></string>
   <!-- Pie controls -->
   <string name="pie_state_name">पाइ नियंत्रण</string>
   <string name="pie_state_summary">इमर्सिव मोड मे होने पर पाई कंट्रोल्स का उपयोग करें</string>
@@ -181,6 +186,12 @@
   <string name="quick_settings_pie">पाई</string>
   <string name="recents_custom_android_n">क्लियर करें</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">जल्द चार्ज हो रहा है(<xliff:g id="पूरा चार्ज होने में">%s</xliff:g>बाकी है)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">जल्द चार्जर जोड़ा गया</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">बलपूर्वक रोके</string>
+  <string name="force_stop_dlg_text">यदि आप कोई ऍप जबरदस्ती बंद करते हे, तो वो दुर्व्यवहार कर सकता हे|</string>
+  <string name="kill">ऐप रुकाए</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">बची हुई RAM: %1$d MB</string>
 </resources>

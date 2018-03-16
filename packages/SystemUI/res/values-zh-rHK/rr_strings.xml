@@ -189,5 +189,9 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower 已連接 (還剩 <xliff:g id="charging_time_left">%s</xliff:g> 充滿)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已連接</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">強制停止嗎？</string>
+  <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
+  <string name="kill">終止應用程式</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">可用記憶體：%1$d MB</string>
 </resources>
