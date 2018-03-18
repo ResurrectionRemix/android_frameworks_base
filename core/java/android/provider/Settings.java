@@ -4496,6 +4496,18 @@ public final class Settings {
          */
         public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
 
+	/**
+         * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
+
+	/**
+         * Defines the global heads up notification snooze
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
+
         /**
          * Whether to show the notification ticker on the status bar
          * @hide
