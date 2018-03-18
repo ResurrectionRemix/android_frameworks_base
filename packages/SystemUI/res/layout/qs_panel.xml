@@ -18,7 +18,6 @@
     android:id="@+id/quick_settings_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/qs_background_primary"
     android:elevation="4dp"
     android:clipToPadding="false"
     android:clipChildren="false">

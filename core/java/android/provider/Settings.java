@@ -5608,6 +5608,12 @@ public final class Settings {
         public static final String TOAST_TEXT_COLOR = "toast_text_color";
 
         /**
+         * Whether to change the transparency of the qs panel
+         * @hide
+         */
+        public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
