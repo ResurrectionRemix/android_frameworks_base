@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
@@ -46,8 +47,10 @@ import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
+import com.android.systemui.tuner.TunerService;
 
-public class QSFragment extends Fragment implements QS, CommandQueue.Callbacks {
+public class QSFragment extends Fragment implements QS, CommandQueue.Callbacks,
+        TunerService.Tunable {
     private static final String TAG = "QS";
     private static final boolean DEBUG = false;
     private static final String EXTRA_EXPANDED = "expanded";
@@ -73,6 +76,14 @@ public class QSFragment extends Fragment implements QS, CommandQueue.Callbacks {
     private QSFooter mFooter;
     private float mLastQSExpansion = -1;
     private boolean mQsDisabled;
+
+    private static boolean mTranslucentQuickSettings;
+    private static int mQSTranslucencyPercentage;
+
+    private static final String BLUR_QUICKSETTINGS_ENABLED =
+            "system:" + Settings.System.BLUR_QUICKSETTINGS_ENABLED;
+    private static final String BLUR_QUICKSETTINGS_PERCENTAGE =
+            "system:" + Settings.System.BLUR_QUICKSETTINGS_PERCENTAGE;
 
     private RemoteInputQuickSettingsDisabler mRemoteInputQuickSettingsDisabler =
             Dependency.get(RemoteInputQuickSettingsDisabler.class);
@@ -111,10 +122,15 @@ public class QSFragment extends Fragment implements QS, CommandQueue.Callbacks {
             mQSCustomizer.restoreInstanceState(savedInstanceState);
         }
         SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).addCallbacks(this);
+
+        Dependency.get(TunerService.class).addTunable(this,
+                BLUR_QUICKSETTINGS_ENABLED,
+                BLUR_QUICKSETTINGS_PERCENTAGE);
     }
 
     @Override
     public void onDestroyView() {
+        Dependency.get(TunerService.class).removeTunable(this);
         SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).removeCallbacks(this);
         super.onDestroyView();
     }
@@ -224,6 +240,35 @@ public class QSFragment extends Fragment implements QS, CommandQueue.Callbacks {
         mFooter.setExpanded((mKeyguardShowing && !mHeaderAnimating)
                 || (mQsExpanded && !mStackScrollerOverscrolling));
         mQSPanel.setVisibility(!mQsDisabled && expandVisually ? View.VISIBLE : View.INVISIBLE);
+        handleQuickSettingsBackround();
+    }
+
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case BLUR_QUICKSETTINGS_ENABLED:
+                mTranslucentQuickSettings =
+                        newValue != null && Integer.parseInt(newValue) == 1;
+                handleQuickSettingsBackround();
+                break;
+            case BLUR_QUICKSETTINGS_PERCENTAGE:
+                int value =
+                        newValue == null ? 60 : Integer.parseInt(newValue);
+                mQSTranslucencyPercentage = 255 - ((value * 255) / 100);
+                handleQuickSettingsBackround();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleQuickSettingsBackround() {
+        if (mKeyguardShowing) {
+            mContainer.setBackgroundAlpha(255);
+        } else {
+            mContainer.setBackgroundAlpha(mTranslucentQuickSettings ? mQSTranslucencyPercentage : 255);
+        }
     }
 
     public QSPanel getQsPanel() {

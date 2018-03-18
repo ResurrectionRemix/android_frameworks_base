@@ -21,6 +21,7 @@ import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -52,6 +53,8 @@ public class QSContainerImpl extends FrameLayout {
     private int mSideMargins;
     private boolean mQsDisabled;
 
+    private Drawable mQsBackGround;
+
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -65,6 +68,7 @@ public class QSContainerImpl extends FrameLayout {
         mQSCustomizer = findViewById(R.id.qs_customize);
         mQSFooter = findViewById(R.id.qs_footer);
         mBackground = findViewById(R.id.quick_settings_background);
+        mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         mSideMargins = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
@@ -192,5 +196,12 @@ public class QSContainerImpl extends FrameLayout {
             getDisplay().getRealSize(mSizePoint);
         }
         return mSizePoint.y;
+    }
+
+    public void setBackgroundAlpha(int alpha) {
+        if (mQsBackGround != null) {
+            mQsBackGround.setAlpha(alpha);
+            mBackground.setBackground(mQsBackGround);
+        }
     }
 }

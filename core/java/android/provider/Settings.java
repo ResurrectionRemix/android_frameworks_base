@@ -5173,6 +5173,27 @@ public final class Settings {
          */
         public static final String GLOBAL_ACTIONS_USERS = "global_actions_users";
 
+       /**
+         * Blur personalization settings
+         * Enable QS background blur
+         * @hide
+         */
+        public static final String BLUR_QUICKSETTINGS_ENABLED = "blur_quicksettings_enabled";
+
+        /** @hide */
+        private static final Validator BLUR_QUICKSETTINGS_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+       /**
+         * Blur personalization settings
+         * QS background blur percentage
+         * @hide
+         */
+        public static final String BLUR_QUICKSETTINGS_PERCENTAGE = "blur_quicksettings_percentage";
+
+        /** @hide */
+        private static final Validator BLUR_QUICKSETTINGS_PERCENTAGE_VALIDATOR =
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 100);
+
         /**
          * Whether to display the flashlight option in the power menu
          *
@@ -5270,6 +5291,8 @@ public final class Settings {
             OMNIJAWS_WEATHER_ICON_PACK,
             OMNI_LOCKSCREEN_WEATHER_ENABLED,
             VOLUME_DIALOG_TIMEOUT,
+            BLUR_QUICKSETTINGS_ENABLED,
+            BLUR_QUICKSETTINGS_PERCENTAGE,
         };
 
         /**
@@ -5423,6 +5446,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
+            PRIVATE_SETTINGS.add(BLUR_QUICKSETTINGS_ENABLED);
+            PRIVATE_SETTINGS.add(BLUR_QUICKSETTINGS_PERCENTAGE);
         }
 
         /**
@@ -5564,6 +5589,8 @@ public final class Settings {
             VALIDATORS.put(OMNI_LOCKSCREEN_WEATHER_ENABLED,
                     OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
             VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(BLUR_QUICKSETTINGS_ENABLED,BLUR_QUICKSETTINGS_ENABLED_VALIDATOR);
+            VALIDATORS.put(BLUR_QUICKSETTINGS_PERCENTAGE,BLUR_QUICKSETTINGS_PERCENTAGE_VALIDATOR);
         }
 
         /**
