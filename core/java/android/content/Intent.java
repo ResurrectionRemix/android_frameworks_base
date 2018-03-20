@@ -10123,7 +10123,12 @@ public class Intent implements Parcelable, Cloneable {
             if (ATTR_ACTION.equals(attrName)) {
                 intent.setAction(attrValue);
             } else if (ATTR_DATA.equals(attrName)) {
-                intent.setData(Uri.parse(attrValue));
+                //Ensure Intent Type can be restored if it is not empty
+                if (intent.getType() != null) {
+                    intent.setDataAndType(Uri.parse(attrValue), intent.getType());
+                } else {
+                    intent.setData(Uri.parse(attrValue));
+                }
             } else if (ATTR_TYPE.equals(attrName)) {
                 intent.setType(attrValue);
             } else if (ATTR_COMPONENT.equals(attrName)) {
