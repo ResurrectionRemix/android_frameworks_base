@@ -17,10 +17,10 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
-  <string name="quick_settings_rr_label">Cấu hình</string>
+  <string name="quick_settings_rr_label">Tuỳ chỉnh</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">Nâng cao</string>
-  <string name="global_action_restart_recovery">Chế độ phục hồi</string>
+  <string name="global_action_restart_recovery">Phục hồi</string>
   <string name="global_action_restart_bootloader">Trình nạp khởi động</string>
   <string name="global_action_restart_ui">Giao diện người dùng hệ thống</string>
   <string name="global_action_restart_hot">Nóng</string>
@@ -49,11 +49,11 @@
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">Quản lý biểu tượng</string>
-  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Các phím tắt phía dưới</string>
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">Phím tắt phía dưới</string>
   <string name="lockscreen_default">Mặc định</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">Tiết kiệm dữ liệu</string>
-  <string name="lockscreen_hidden">Không có</string>
+  <string name="lockscreen_hidden">Không</string>
   <string name="custom_hint">Trượt từ biểu tượng để mở ứng dụng</string>
   <string name="systemui_tuner_navbar_title">Cài đặt gốc</string>
   <!-- QS Tiles -->
@@ -104,11 +104,11 @@
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">Bật hiển thị môi trường xung quanh.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambient display bật.</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị môi trường xung quanh đã tắt.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display đã tắt.</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thị môi trường xung quanh đã bật.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display đã bật.</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">Caffeine</string>
   <string name="accessibility_quick_settings_caffeine_off">Caffeine tắt</string>

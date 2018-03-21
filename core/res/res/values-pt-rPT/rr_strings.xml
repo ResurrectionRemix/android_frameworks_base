@@ -25,20 +25,20 @@
   <string name="permdesc_toggleNavigationEditor">Permite que uma aplicação controle o editor da barra de navegação.</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Desvanecer</string>
-  <string name="animation_slide_right">Deslizar para a direita</string>
-  <string name="animation_slide_left">Deslizar para a esquerda</string>
-  <string name="animation_slide_right_no_fade">Deslizar para a direita (Sem desvanecimento)</string>
-  <string name="animation_slide_left_no_fade">Deslizar para a esquerda (Sem desvanecimento)</string>
-  <string name="animation_slide_up">Deslizar para baixo</string>
-  <string name="animation_slide_down">Deslizar para cima</string>
+  <string name="animation_slide_right">Deslizar da direita</string>
+  <string name="animation_slide_left">Deslizar da esquerda</string>
+  <string name="animation_slide_right_no_fade">Deslizar da direita (sem desvanecimento)</string>
+  <string name="animation_slide_left_no_fade">Deslizar da esquerda (sem desvanecimento)</string>
+  <string name="animation_slide_up">Deslizar de baixo</string>
+  <string name="animation_slide_down">Deslizar de cima</string>
   <string name="animation_default">Predefinida</string>
   <string name="animation_translucent">Translúcida</string>
-  <string name="animation_grow_shrink">Crescer (Cima)</string>
-  <string name="animation_grow_shrink_center">Crescer (Centro)</string>
-  <string name="animation_grow_shrink_bottom">Crescer (Baixo)</string>
-  <string name="animation_grow_shrink_left">Crescer (Esquerda)</string>
-  <string name="animation_grow_shrink_right">Crescer (Direita)</string>
-  <string name="action_null">Vazia</string>
+  <string name="animation_grow_shrink">Crescer (de cima)</string>
+  <string name="animation_grow_shrink_center">Crescer (centro)</string>
+  <string name="animation_grow_shrink_bottom">Crescer (de baixo)</string>
+  <string name="animation_grow_shrink_left">Crescer (da esquerda)</string>
+  <string name="animation_grow_shrink_right">Crescer (da direita)</string>
+  <string name="action_null">Nada</string>
   <!-- Label for item that screenrecords in power menu options dialog -->
   <string name="global_action_screenrecord">Gravação de ecrã</string>
   <!-- On-The-Go -->

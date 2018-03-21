@@ -46,6 +46,7 @@
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
+  <string name="systemui_tuner_icon_manager_title">จัดการ่ไอคอน</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">ทางลัดด้านล่าง</string>
   <string name="lockscreen_default">ค่าเริ่มต้น</string>
   <string name="status_bar_vpn">VPN</string>
@@ -113,6 +114,7 @@
   <string name="accessibility_quick_settings_volume_panel">ระดับเสียง</string>
   <string name="quick_settings_volume_panel_label">ระดับเสียง</string>
   <!-- PiP Tile -->
+  <string name="quick_settings_pip_label">PiP</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">บันทึกวิดิโอหน้าจอ</string>
   <string name="quick_settings_screenrecord_on">บันทึก...</string>
@@ -128,11 +130,13 @@
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">หยุด</string>
   <string name="screenrecord_notif_completed">บันทึกหน้าจอสำเร็จ</string>
+  <string name="screenrecord_notif_duration">ทั้งหมด:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">แสดงจุด</string>
   <string name="screenrecord_notif_pointer_off">ซ่อนจุด</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">ไม่สามารถบันทึกวิดิโอหน้าจอ</string>
+  <string name="notification_channel_screenrecord">บันทึกวิดิโอหน้าจอ</string>
   <string name="screenrecord_hide_hint">ซ่อนคำแนะนำ</string>
   <string name="screenrecord_show_hint">แสดงคำแนะนำ</string>
   <!-- Screenshot QS tile -->

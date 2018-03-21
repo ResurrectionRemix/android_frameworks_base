@@ -20,7 +20,7 @@
   <string name="reboot_title">Khởi động lại</string>
   <string name="reboot_message">Đang khởi động lại hệ thống</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_toggleNavigationEditor">Biên tập điều khiển điều hướng</string>
+  <string name="permlab_toggleNavigationEditor">trình chỉnh sửa thanh điều hướng</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_toggleNavigationEditor">Cho phép ứng dụng kiểm soát chỉnh sửa thanh điều hướng.</string>
   <!-- AOKP custom system animations -->

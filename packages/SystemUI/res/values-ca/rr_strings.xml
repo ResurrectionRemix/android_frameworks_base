@@ -22,7 +22,7 @@
   <string name="global_action_restart_advanced">Avançat</string>
   <string name="global_action_restart_recovery">Recovery</string>
   <string name="global_action_restart_bootloader">Mode Bootloader</string>
-  <string name="global_action_restart_ui">SystemUI</string>
+  <string name="global_action_restart_ui">Interficie d\'usuari</string>
   <string name="global_action_restart_hot">Calent</string>
   <string name="global_action_screenshot">Captura de pantalla</string>
   <!-- Screenshot Delete Toast -->
@@ -30,10 +30,10 @@
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximitza</string>
   <string name="app_float_item_title">Vista flotant</string>
-  <string name="app_stop_item_title">Matar l\'aplicació</string>
+  <string name="app_stop_item_title">Mata l\'aplicació</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Càrrega Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> fins a completar)</string>
-  <string name="keyguard_plugged_in_dash_charging">Càrrega Dash</string>
+  <string name="keyguard_indication_dash_charging_time">Càrrega ràpida (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> fins a completar)</string>
+  <string name="keyguard_plugged_in_dash_charging">Càrrega ràpida</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go activat</string>
   <string name="onthego_notif_title">On-The-Go està actiu</string>
@@ -134,9 +134,9 @@
   <string name="accessibility_quick_settings_location_high_accuracy">Informes d\'ubicació: Mode d\'alta precisió.</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">La pantalla està sent gravada</string>
-  <string name="screenrecord_notif_final_ticker">Pantalla registrat amb èxit</string>
+  <string name="screenrecord_notif_final_ticker">Pantalla registrada amb èxit</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Gravant pantalla</string>
+  <string name="screenrecord_notif_title">Gravant la pantalla</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Aturar</string>
   <string name="screenrecord_notif_completed">Pantalla registrada amb èxit</string>
@@ -193,4 +193,5 @@
   <string name="force_stop_dlg_text">Si forçes l\'aturada d\'una aplicació, pot no comportar-se correctament.</string>
   <string name="kill">Atura l\'aplicació</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">RAM lliure: %1$d MB</string>
 </resources>

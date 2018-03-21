@@ -20,6 +20,7 @@
   <string name="reboot_title">รีบูต</string>
   <string name="reboot_message">รีบูตระบบ</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">control navigation editor</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- AOKP custom system animations -->
   <string name="animation_fade">ค่อยๆเข้า</string>

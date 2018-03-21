@@ -23,6 +23,7 @@
   <string name="global_action_restart_recovery">リカバリー</string>
   <string name="global_action_restart_bootloader">ブートローダー</string>
   <string name="global_action_restart_ui">SystemUI</string>
+  <string name="global_action_restart_hot">ホット</string>
   <string name="global_action_screenshot">スクリーンショット</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>

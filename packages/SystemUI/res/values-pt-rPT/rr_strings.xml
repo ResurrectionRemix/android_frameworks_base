@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
-  <string name="quick_settings_rr_label">Personalizações</string>
+  <string name="quick_settings_rr_label">Configurações</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">Avançadas</string>
   <string name="global_action_restart_recovery">Recuperação</string>
@@ -32,14 +32,14 @@
   <string name="app_float_item_title">Vista flutuante</string>
   <string name="app_stop_item_title">Fechar aplicação</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> até à carga máxima)</string>
+  <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left" example="4 horas e 2 minutos">%s</xliff:g> até à carga máxima)</string>
   <string name="keyguard_plugged_in_dash_charging">Carregamento Dash</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go ativado</string>
-  <string name="onthego_notif_title">On-The-Go está ativo</string>
+  <string name="onthego_notif_title">On-The-Go está ativado</string>
   <string name="onthego_notif_stop">Parar</string>
   <string name="onthego_notif_options">Opções</string>
-  <string name="onthego_notif_error">Impossível iniciar On-The-Go</string>
+  <string name="onthego_notif_error">Impossível iniciar o On-The-Go</string>
   <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
   <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
   <string name="onthego_transparency">Transparência</string>
@@ -54,22 +54,22 @@
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">Poupança de dados</string>
   <string name="lockscreen_hidden">Nenhum</string>
-  <string name="custom_hint">Deslize do ícone para iniciar</string>
+  <string name="custom_hint">Deslize a partir do ícone para iniciar</string>
   <string name="systemui_tuner_navbar_title">Definições predefinidas</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">Reiniciar</string>
   <string name="quick_settings_reboot_recovery_label">Recuperação</string>
   <!-- Partial Screenshot -->
-  <string name="screenshot_abort_title">Nenhuma captura de ecrã</string>
+  <string name="screenshot_abort_title">Captura de ecrã cancelada</string>
   <string name="screenshot_abort_text">Operação cancelada.</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Bússola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">A iniciar\u2026</string>
-  <string name="accessibility_quick_settings_compass_off">Bússola desligada</string>
-  <string name="accessibility_quick_settings_compass_on">Bússola ligada</string>
-  <string name="accessibility_quick_settings_compass_changed_off">A bússola foi desligada</string>
-  <string name="accessibility_quick_settings_compass_changed_on">A bússola foi ligada</string>
+  <string name="accessibility_quick_settings_compass_off">Bússola desligada.</string>
+  <string name="accessibility_quick_settings_compass_on">Bússola ligada.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">A bússola foi desligada.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">A bússola foi ligada.</string>
   <string name="quick_settings_compass_N">N</string>
   <string name="quick_settings_compass_NE">NE</string>
   <string name="quick_settings_compass_E">E</string>
@@ -93,22 +93,22 @@
   <!-- Music tile -->
   <string name="quick_settings_music_label">Música</string>
   <string name="quick_settings_music_play">Reproduzir</string>
-  <string name="quick_settings_music_pause">Pausa</string>
+  <string name="quick_settings_music_pause">Pausar</string>
   <!-- Sound tile -->
   <string name="quick_settings_sound_label">Som</string>
   <string name="quick_settings_sound_ring">Toque</string>
-  <string name="quick_settings_sound_vibrate">Vibração</string>
+  <string name="quick_settings_sound_vibrate">Vibrar</string>
   <string name="quick_settings_sound_silent">Silêncio</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Visualização de ambiente</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_off">Visualização de ambiente desativada.</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Visualização de ambiente desligada.</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">Visualização de ambiente ativada.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Visualização de ambiente ligada.</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desativada.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desligada.</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">A visualização de ambiente foi ativada.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">A visualização de ambiente foi ligada.</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">Cafeína</string>
   <string name="accessibility_quick_settings_caffeine_off">Cafeína desligada</string>
@@ -117,8 +117,8 @@
   <string name="quick_settings_sync_label">Sincronizar</string>
   <string name="accessibility_quick_settings_sync_off">Sincronização desativada</string>
   <string name="accessibility_quick_settings_sync_on">Sincronização ativada</string>
-  <string name="accessibility_quick_settings_sync_changed_off">A sincronização foi desativada</string>
-  <string name="accessibility_quick_settings_sync_changed_on">A sincronização foi ativada</string>
+  <string name="accessibility_quick_settings_sync_changed_off">A sincronização foi desligada</string>
+  <string name="accessibility_quick_settings_sync_changed_on">A sincronização foi ligada</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">Volume</string>
   <string name="quick_settings_volume_panel_label">Volume</string>
@@ -130,7 +130,7 @@
   <string name="quick_settings_screenrecord_on">A gravar...</string>
   <!-- Advance location quick setting tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas sensores.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas no dispositivo.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">O ecrã está a ser gravado</string>
@@ -143,14 +143,14 @@
   <string name="screenrecord_notif_duration">Total:</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Mostrar ponteiro</string>
-  <string name="screenrecord_notif_pointer_off">Ocultar o ponteiro</string>
+  <string name="screenrecord_notif_pointer_off">Ocultar ponteiro</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Não é possível gravar o ecrã</string>
   <string name="notification_channel_screenrecord">Gravações de ecrã</string>
   <string name="screenrecord_hide_hint">Esconder dica</string>
   <string name="screenrecord_show_hint">Mostrar dica</string>
   <!-- Screenshot QS tile -->
-  <string name="quick_settings_screenrecord_label">Gravador de ecrã</string>
+  <string name="quick_settings_screenrecord_label">Gravação de ecrã</string>
   <string name="quick_settings_screenrecord_lq_label">Gravação de ecrã em Baixa Qualidade</string>
   <string name="quick_settings_screenrecord_mq_label">Gravação de ecrã em Qualidade Média</string>
   <string name="quick_settings_screenrecord_hq_label">Gravação de ecrã em Alta Qualidade</string>
@@ -158,11 +158,11 @@
   <string name="quick_settings_navigation_bar">Barra de navegação</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Fling</string>
-  <string name="quick_settings_navigation_default">Padrão</string>
+  <string name="quick_settings_navigation_default">Predefinida</string>
   <string name="quick_settings_navigation_disabled">Desativada</string>
   <string name="omnijaws_service_error">Erro</string>
   <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
-  <string name="omnijaws_service_error_long">Erro ao carregar os dados meteorológicos</string>
+  <string name="omnijaws_service_error_long">Erro ao carregar as informações meteorológicas</string>
   <string name="omnijaws_service_disabled">O serviço está desativado</string>
   <string name="omnijaws_detail_header">Meteorologia</string>
   <string name="omnijaws_label_default">Meteorologia</string>
@@ -181,16 +181,16 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
   <string name="pie_state_name">Controlos Pie</string>
-  <string name="pie_state_summary">Use os controlos Pie durante o modo imersivo</string>
-  <string name="pie_battery_level">"Nível de bateria "</string>
+  <string name="pie_state_summary">Usar os controlos Pie durante o modo imersivo</string>
+  <string name="pie_battery_level">"NÍVEL DA BATERIA "</string>
   <string name="quick_settings_pie">Pie</string>
-  <string name="recents_custom_android_n">Limpar tudo</string>
+  <string name="recents_custom_android_n">LIMPAR TUDO</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_turbo_power_time">TurboPower ligado (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> até à carga máxima)</string>
+  <string name="keyguard_indication_turbo_power_time">TurboPower ligado (<xliff:g id="charging_time_left" example="4 horas e 2 minutos">%s</xliff:g> até à carga máxima)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower ligado</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forçar paragem?</string>
-  <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação, esta pode ficar a funcionar incorretamente.</string>
+  <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação esta pode ficar a funcionar incorretamente.</string>
   <string name="kill">Terminar aplicação</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">RAM livre: %1$d MB</string>
