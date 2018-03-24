@@ -22,6 +22,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemProperties;
 import android.os.Trace;
 import android.provider.Settings;
 import android.util.Slog;
@@ -52,6 +53,12 @@ public class LightsService extends SystemService {
                             ": brightness=0x" + Integer.toHexString(brightness));
                     return;
                 }
+
+		String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+		if(fp.contains("starlte") || fp.contains("star2lte")) {
+			setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+			return;
+		}
 
                 int color = brightness & 0x000000ff;
                 color = 0xff000000 | (color << 16) | (color << 8) | color;
