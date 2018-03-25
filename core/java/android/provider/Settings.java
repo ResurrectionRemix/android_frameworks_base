@@ -8218,6 +8218,18 @@ public final class Settings {
                 "managed_profile_contact_remote_search";
 
         /**
+         * Show UI feedback when using back gesture.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_BACK_SHOW_UI_FEEDBACK = "edge_gestures_back_show_ui_feedback";
+
+        /**
+         * Use black arrow theme instead of the white version.
+         * @hide
+         */
+        public static final String EDGE_GESTURES_BACK_USE_BLACK_ARROW = "edge_gestures_back_use_black_arrow";
+
+        /**
          * Whether to use edge gestures to navigate.
          * @hide
          */

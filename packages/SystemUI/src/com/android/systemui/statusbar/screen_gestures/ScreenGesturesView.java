@@ -2,6 +2,8 @@ package com.android.systemui.statusbar.screen_gestures;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
@@ -9,8 +11,11 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.android.internal.util.gesture.EdgeGesturePosition;
 
@@ -18,7 +23,7 @@ import com.android.internal.util.gesture.EdgeGesturePosition;
  * Created by arasthel on 15/02/18.
  */
 
-public class ScreenGesturesView extends View {
+public class ScreenGesturesView extends FrameLayout {
 
     public static final boolean DEBUG = false;
 
@@ -47,20 +52,64 @@ public class ScreenGesturesView extends View {
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
+    private BackArrowView leftArrowView;
+    private BackArrowView rightArrowView;
+
+    private ContentObserver blackThemeContentObserver = new ContentObserver(handler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+
+            boolean useBlackTheme = uiFeedbackUsesBlackTheme();
+            leftArrowView.setUseBlackArrow(useBlackTheme);
+            rightArrowView.setUseBlackArrow(useBlackTheme);
+        }
+
+        @Override
+        public boolean deliverSelfNotifications() {
+            return true;
+        }
+    };
+
     public ScreenGesturesView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public ScreenGesturesView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public ScreenGesturesView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public ScreenGesturesView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+
+        boolean useBlackThemeForUI = uiFeedbackUsesBlackTheme();
+
+        leftArrowView = new BackArrowView(context);
+        leftArrowView.setReversed(true);
+        leftArrowView.setUseBlackArrow(useBlackThemeForUI);
+        leftArrowView.name = "LEFT";
+
+        rightArrowView = new BackArrowView(context);
+        rightArrowView.setUseBlackArrow(useBlackThemeForUI);
+        rightArrowView.name = "RIGHT";
+
+        addView(leftArrowView);
+        addView(rightArrowView);
+
+        final float density = getResources().getDisplayMetrics().density;
+        FrameLayout.LayoutParams leftParams = new FrameLayout.LayoutParams((int) (48 * density), ViewGroup.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams rightParams = new FrameLayout.LayoutParams((int) (48 * density), ViewGroup.LayoutParams.MATCH_PARENT);
+        rightParams.gravity = Gravity.RIGHT;
+        rightParams.rightMargin = 0;
+        leftArrowView.setLayoutParams(leftParams);
+        rightArrowView.setLayoutParams(rightParams);
+
+        Uri blackThemeUri = Settings.Secure.getUriFor(Settings.Secure.EDGE_GESTURES_BACK_USE_BLACK_ARROW);
+        context.getContentResolver().registerContentObserver(blackThemeUri, false, blackThemeContentObserver);
     }
 
     @Override
@@ -86,10 +135,20 @@ public class ScreenGesturesView extends View {
         int backGestureEdgesFlag = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                 backSettingsId,
                 0,
-                UserHandle.USER_CURRENT);;
+                UserHandle.USER_CURRENT);
+
+        setVisibility(View.VISIBLE);
 
         if ((position.FLAG & backGestureEdgesFlag) != 0) {
             possibleGestures = GestureType.BACK;
+
+            if (shouldShowUIFeedback()) {
+                if (initialX < getWidth() / 2) {
+                    leftArrowView.onTouchStarted(initialX - leftArrowView.getLeft(), initialY - leftArrowView.getTop());
+                } else {
+                    rightArrowView.onTouchStarted(initialX - rightArrowView.getLeft(), initialY - rightArrowView.getTop());
+                }
+            }
         } else if ((position.FLAG & EdgeGesturePosition.BOTTOM.FLAG) != 0) {
             possibleGestures = GestureType.HOME | GestureType.RECENTS;
         } else {
@@ -98,8 +157,6 @@ public class ScreenGesturesView extends View {
             }
             return;
         }
-
-        setVisibility(View.VISIBLE);
     }
 
     private int getFeedbackStrength() {
@@ -115,6 +172,22 @@ public class ScreenGesturesView extends View {
             return Settings.Secure.getInt(getContext().getContentResolver(), Settings.Secure.EDGE_GESTURES_LONG_PRESS_DURATION);
         } catch (Settings.SettingNotFoundException exception) {
             return 500;
+        }
+    }
+
+    private boolean shouldShowUIFeedback() {
+        try {
+            return Settings.Secure.getInt(getContext().getContentResolver(), Settings.Secure.EDGE_GESTURES_BACK_SHOW_UI_FEEDBACK) == 1;
+        } catch (Settings.SettingNotFoundException exception) {
+            return true;
+        }
+    }
+
+    private boolean uiFeedbackUsesBlackTheme() {
+        try {
+            return Settings.Secure.getInt(getContext().getContentResolver(), Settings.Secure.EDGE_GESTURES_BACK_USE_BLACK_ARROW) == 1;
+        } catch (Settings.SettingNotFoundException exception) {
+            return true;
         }
     }
 
@@ -166,18 +239,37 @@ public class ScreenGesturesView extends View {
 
                 lastX = x;
                 lastY = y;
-                return true;
+
+                if ((possibleGestures & GestureType.BACK) != 0) {
+                    leftArrowView.onTouchMoved(x - leftArrowView.getLeft(), y - leftArrowView.getTop());
+                    rightArrowView.onTouchMoved(x - rightArrowView.getLeft(), y - rightArrowView.getTop());
+                }
+
+                return false;
             case MotionEvent.ACTION_UP:
                 if (DEBUG) Log.d(TAG, "onTouchEvent: UP");
+
+                if (shouldShowUIFeedback()) {
+                    leftArrowView.onTouchEnded();
+                    rightArrowView.onTouchEnded();
+                }
+
                 if (possibleGestures != GestureType.NONE) {
                     stopGesture((int) event.getX(), (int) event.getY());
-                    setVisibility(View.GONE);
+                    handler.postDelayed(() -> setVisibility(View.GONE), 10);
                 }
                 return true;
             case MotionEvent.ACTION_CANCEL:
-                if (DEBUG) Log.d(TAG, "onTouchEvent: DOWN");
+                if (DEBUG) Log.d(TAG, "onTouchEvent: CANCEL");
+
+                if (shouldShowUIFeedback()) {
+                    leftArrowView.onTouchEnded();
+                    rightArrowView.onTouchEnded();
+                }
+
                 stopGesture((int) event.getX(), (int) event.getY());
-                setVisibility(View.GONE);
+                handler.postDelayed(() -> setVisibility(View.GONE), 10);
+
                 return true;
         }
         return false;
@@ -199,6 +291,10 @@ public class ScreenGesturesView extends View {
             boolean canSendRecents = (possibleGestures & GestureType.RECENTS) != 0;
             if (canSendRecents) {
                 possibleGestures = GestureType.NONE;
+
+                leftArrowView.onTouchEnded();
+                rightArrowView.onTouchEnded();
+
                 setVisibility(View.GONE);
                 if (onGestureCompletedListener != null) {
                     onGestureCompletedListener.onGestureCompleted(GestureType.RECENTS);
