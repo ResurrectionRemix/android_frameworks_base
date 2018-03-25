@@ -17,6 +17,7 @@
 package android.view.animation;
 
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 /**
  * An animation that controls the clip of an object. See the
@@ -26,8 +27,12 @@ import android.graphics.Rect;
  * @hide
  */
 public class ClipRectAnimation extends Animation {
+    protected RectF mFromRectF = new RectF();
+    protected RectF mToRectF = new RectF();
     protected Rect mFromRect = new Rect();
     protected Rect mToRect = new Rect();
+    protected Rect mResolvedFrom = new Rect();
+    protected Rect mResolvedTo = new Rect();
 
     /**
      * Constructor to use when building a ClipRectAnimation from code
@@ -50,14 +55,35 @@ public class ClipRectAnimation extends Animation {
             int toL, int toT, int toR, int toB) {
         mFromRect.set(fromL, fromT, fromR, fromB);
         mToRect.set(toL, toT, toR, toB);
+        mFromRectF.set(1.0f, 1.0f, 1.0f, 1.0f);
+        mToRectF.set(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public ClipRectAnimation(float fromL, float fromT, float fromR, float fromB,
+                             float toL, float toT, float toR, float toB) {
+        mFromRectF.set(fromL, fromT, fromR, fromB);
+        mToRectF.set(toL, toT, toR, toB);
+    }
+
+    @Override
+    public void initialize(int width, int height, int parentWidth, int parentHeight) {
+        super.initialize(width, height, parentWidth, parentHeight);
+        mResolvedFrom.left = (int) resolveSize(RELATIVE_TO_SELF, mFromRectF.left, width, parentWidth);
+        mResolvedFrom.top = (int) resolveSize(RELATIVE_TO_SELF, mFromRectF.top, height, parentHeight);
+        mResolvedFrom.right = (int) resolveSize(RELATIVE_TO_SELF, mFromRectF.right, width, parentWidth);
+        mResolvedFrom.bottom = (int) resolveSize(RELATIVE_TO_SELF, mFromRectF.bottom, height, parentHeight);
+        mResolvedTo.left = (int) resolveSize(RELATIVE_TO_SELF, mToRectF.left, width, parentWidth);
+        mResolvedTo.top = (int) resolveSize(RELATIVE_TO_SELF, mToRectF.top, height, parentHeight);
+        mResolvedTo.right = (int) resolveSize(RELATIVE_TO_SELF, mToRectF.right, width, parentWidth);
+        mResolvedTo.bottom = (int) resolveSize(RELATIVE_TO_SELF, mToRectF.bottom, height, parentHeight);
     }
 
     @Override
     protected void applyTransformation(float it, Transformation tr) {
-        int l = mFromRect.left + (int) ((mToRect.left - mFromRect.left) * it);
-        int t = mFromRect.top + (int) ((mToRect.top - mFromRect.top) * it);
-        int r = mFromRect.right + (int) ((mToRect.right - mFromRect.right) * it);
-        int b = mFromRect.bottom + (int) ((mToRect.bottom - mFromRect.bottom) * it);
+        int l = mResolvedFrom.left + (int) ((mResolvedTo.left - mResolvedFrom.left) * it);
+        int t = mResolvedFrom.top + (int) ((mResolvedTo.top - mResolvedFrom.top) * it);
+        int r = mResolvedFrom.right + (int) ((mResolvedTo.right - mResolvedFrom.right) * it);
+        int b = mResolvedFrom.bottom + (int) ((mResolvedTo.bottom - mResolvedFrom.bottom) * it);
         tr.setClipRect(l, t, r, b);
     }
 
