@@ -71,7 +71,7 @@
             android:id="@+id/mobile_roaming"
             android:layout_width="wrap_content"
             android:layout_height="17dp"
-            android:paddingStart="22dp"
+            android:paddingStart="20dp"
             android:paddingTop="1.5dp"
             android:paddingBottom="3dp"
             android:scaleType="fitCenter"
