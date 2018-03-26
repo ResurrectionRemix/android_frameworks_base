@@ -21073,6 +21073,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                         continue;
                     }
                 }
+                if (r.state == ActivityState.STOPPING && r.finishing)
+                    continue;
                 if (r.visible) {
                     // App has a visible activity; only upgrade adjustment.
                     if (adj > ProcessList.VISIBLE_APP_ADJ) {
@@ -21125,12 +21127,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                     // memory trimming (determing current memory level, trim command to
                     // send to process) since there can be an arbitrary number of stopping
                     // processes and they should soon all go into the cached state.
-                    if (!r.finishing) {
-                        if (procState > ActivityManager.PROCESS_STATE_LAST_ACTIVITY) {
-                            procState = ActivityManager.PROCESS_STATE_LAST_ACTIVITY;
-                            app.adjType = "stop-activity";
-                            if (DEBUG_OOM_ADJ_REASON) Slog.d(TAG, "Raise to stop-activity: " + app);
-                        }
+                    if (procState > ActivityManager.PROCESS_STATE_LAST_ACTIVITY) {
+                        procState = ActivityManager.PROCESS_STATE_LAST_ACTIVITY;
+                        app.adjType = "stop-activity";
+                        if (DEBUG_OOM_ADJ_REASON) Slog.d(TAG, "Raise to stop-activity: " + app);
                     }
                     app.cached = false;
                     app.empty = false;
