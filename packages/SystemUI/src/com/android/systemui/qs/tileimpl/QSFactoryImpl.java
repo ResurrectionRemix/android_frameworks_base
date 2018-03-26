@@ -55,7 +55,6 @@ import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundTile;
-import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.UserTile;
@@ -108,7 +107,6 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("compass")) return new CompassTile(mHost);
         else if (tileSpec.equals("music")) return new MusicTile(mHost);
         else if (tileSpec.equals("sound")) return new SoundTile(mHost);
-        else if (tileSpec.equals("soundsearch")) return new SoundSearchTIle(mHost);
         else if (tileSpec.equals("pip")) return new PictureInPictureTile(mHost);
         else if (tileSpec.equals("screenrecord")) return new ScreenrecordTile(mHost);
         else if (tileSpec.equals("weather")) return new WeatherTile(mHost);
