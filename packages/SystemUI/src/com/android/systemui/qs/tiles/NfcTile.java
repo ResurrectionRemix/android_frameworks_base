@@ -85,11 +85,6 @@ public class NfcTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    protected void handleSecondaryClick() {
-        handleClick();
-    }
-
-    @Override
     public CharSequence getTileLabel() {
         return mContext.getString(R.string.quick_settings_nfc_label);
     }

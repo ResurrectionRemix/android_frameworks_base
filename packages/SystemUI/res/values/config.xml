@@ -107,11 +107,11 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast
+        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast,assist,voiceassist,google
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
-    <string name="quick_settings_tiles_stock" translatable="false">    wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,compass,music,work,configurations,screenshot,locale,navigation,sound,reboot,pip,livedisplay,cast,pie,night,adb_network,ambient_display,expanded_desktop,caffeine,screenrecord,heads_up,weather,sync,usb_tether,volume_panel,soundsearch
+    <string name="quick_settings_tiles_stock" translatable="false">    wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,compass,music,work,configurations,screenshot,locale,navigation,sound,reboot,pip,livedisplay,cast,pie,night,adb_network,ambient_display,expanded_desktop,caffeine,screenrecord,heads_up,weather,sync,usb_tether,volume_panel,soundsearch,assist,voiceassist,google
     </string>
 
     <!-- The tiles to display in QuickSettings -->
