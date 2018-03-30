@@ -22,6 +22,7 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_toggleNavigationEditor">control navigation editor</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">อนุญาตให้แอปพลิเคชันควบคุมตัวแก้ไขแถบนำทาง</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">ค่อยๆเข้า</string>
   <string name="animation_slide_right">เลื่อนเข้าขวา</string>

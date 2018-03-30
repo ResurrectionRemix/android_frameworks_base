@@ -99,6 +99,8 @@
   <string name="quick_settings_sound_ring">Dzwonek</string>
   <string name="quick_settings_sound_vibrate">Wibracje</string>
   <string name="quick_settings_sound_silent">Wyciszenie</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Ekran dostosowany do otoczenia</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->

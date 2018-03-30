@@ -99,6 +99,8 @@
   <string name="quick_settings_sound_ring">Chuông</string>
   <string name="quick_settings_sound_vibrate">Rung</string>
   <string name="quick_settings_sound_silent">Im lặng</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -123,7 +125,7 @@
   <string name="accessibility_quick_settings_volume_panel">Âm lượng</string>
   <string name="quick_settings_volume_panel_label">Âm lượng</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">PiP</string>
+  <string name="quick_settings_pip_label">Picture in Picture</string>
   <string name="quick_settings_pip_tile_app_na">Ứng dụng không hỗ trợ PiP</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">Quay màn hình</string>
@@ -187,7 +189,7 @@
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_turbo_power_time">TurboPower đã kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
-  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower đã kết nối</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">Đã kết nối TurboPower</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Buộc dừng?</string>
   <string name="force_stop_dlg_text">Nếu bạn bắt buộc đóng một ứng dụng, nó có thể hoạt động sai.</string>

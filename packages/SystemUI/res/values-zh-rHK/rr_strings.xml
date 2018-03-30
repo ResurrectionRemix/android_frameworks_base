@@ -99,6 +99,8 @@
   <string name="quick_settings_sound_ring">鈴聲</string>
   <string name="quick_settings_sound_vibrate">振動</string>
   <string name="quick_settings_sound_silent">靜音</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">環境顯示</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -156,9 +158,9 @@
   <string name="quick_settings_screenrecord_hq_label">高畫質螢幕錄製</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">導航列</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">滑動手勢</string>
-  <string name="quick_settings_navigation_default">原始</string>
+  <string name="quick_settings_smartbar">智能導航列</string>
+  <string name="quick_settings_fling">滑動手勢導航列</string>
+  <string name="quick_settings_navigation_default">原生導航列</string>
   <string name="quick_settings_navigation_disabled">已停用</string>
   <string name="omnijaws_service_error">錯誤</string>
   <string name="omnijaws_service_unkown">沒有天氣資料</string>
@@ -189,7 +191,7 @@
   <string name="keyguard_indication_turbo_power_time">TurboPower 已連接 (還剩 <xliff:g id="charging_time_left">%s</xliff:g> 充滿)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已連接</string>
   <!-- Kill button in notification guts -->
-  <string name="force_stop_dlg_title">強制停止嗎？</string>
+  <string name="force_stop_dlg_title">強制停止？</string>
   <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
   <string name="kill">終止應用程式</string>
   <!-- Recents free RAM -->

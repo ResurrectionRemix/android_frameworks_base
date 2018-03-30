@@ -99,6 +99,8 @@
   <string name="quick_settings_sound_ring">Ring</string>
   <string name="quick_settings_sound_vibrate">Vibrera</string>
   <string name="quick_settings_sound_silent">Ljudlös</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Omgivande Display</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -157,6 +159,7 @@
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigeringsfält</string>
   <string name="quick_settings_smartbar">Smartfält</string>
+  <string name="quick_settings_fling">Flinga</string>
   <string name="quick_settings_navigation_default">Aktie</string>
   <string name="quick_settings_navigation_disabled">Inaktiverad</string>
   <string name="omnijaws_service_error">Error</string>

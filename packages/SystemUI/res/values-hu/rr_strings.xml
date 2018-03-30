@@ -99,6 +99,8 @@
   <string name="quick_settings_sound_ring">Csengés</string>
   <string name="quick_settings_sound_vibrate">Rezgés</string>
   <string name="quick_settings_sound_silent">Néma</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Környezeti kijelző</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->

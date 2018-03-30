@@ -52,6 +52,8 @@
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">ประหยัดข้อมูล</string>
   <string name="lockscreen_hidden">ไม่มี</string>
+  <string name="custom_hint">ปัดนิ้วจากไอคอนเพื่อเปิด</string>
+  <string name="systemui_tuner_navbar_title">การตั้งค่าเดิม</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">เริ่มระบบใหม่</string>
   <string name="quick_settings_reboot_recovery_label">กู้คืน</string>
@@ -93,13 +95,19 @@
   <string name="quick_settings_sound_label">เสียง</string>
   <string name="quick_settings_sound_ring">มีเสียง</string>
   <string name="quick_settings_sound_vibrate">สั่น</string>
+  <string name="quick_settings_sound_silent">เงียบ</string>
+  <!-- Sound Search TIle -->
+  <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">หน้าจอแวดล้อม</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_off">ปิดหน้าจอแวดล้อม</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_on">เปิด Ambient display</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_off">ปิด Ambient display</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_ambient_display_changed_on">เปิด Ambient display</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">คาเฟอีน</string>
   <string name="accessibility_quick_settings_caffeine_off">ปิดโหมดคาเฟอีน</string>
@@ -115,6 +123,7 @@
   <string name="quick_settings_volume_panel_label">ระดับเสียง</string>
   <!-- PiP Tile -->
   <string name="quick_settings_pip_label">PiP</string>
+  <string name="quick_settings_pip_tile_app_na">แอปไม่สนับสนุน PiP</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">บันทึกวิดิโอหน้าจอ</string>
   <string name="quick_settings_screenrecord_on">บันทึก...</string>
@@ -158,6 +167,7 @@
   <string name="omnijaws_package_not_available">OmniJaws ยังไม่เปิดใช้งาน</string>
   <string name="omnijaws_service_last_update">อัพเดทล่าสุด</string>
   <!-- Battery saver tile -->
+  <string name="battery_saver_qs_tile_fully_charged">ชาร์จเต็มแล้ว</string>
   <!-- Expanded desktop QS Tile -->
   <string name="quick_settings_expanded_desktop_label">เต็มจอ</string>
   <string name="quick_settings_expanded_desktop">ขยายเต็มจอ</string>
@@ -173,6 +183,7 @@
   <string name="quick_settings_pie">พาย</string>
   <string name="recents_custom_android_n">ล้างทั้งหมด</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower ทำงาน</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">บังคับให้หยุด</string>
   <string name="force_stop_dlg_text">หากคุณบังคับปิดแอปพลิเคชัน อาจทำให้การทำงานผิดพลาดได้.</string>
