@@ -558,6 +558,14 @@ public class CarrierConfigManager {
     public static final String KEY_VILTE_DATA_IS_METERED_BOOL = "vilte_data_is_metered_bool";
 
     /**
+     * Flag indicating whether we should reset UT capability or not for IMS deregistration
+     * and for IMS feature state not ready
+     * @hide
+     */
+    public static final String KEY_IGNORE_RESET_UT_CAPABILITY_BOOL =
+            "ignore_reset_ut_capability_bool";
+
+    /**
      * Flag specifying whether WFC over IMS should be available for carrier: independent of
      * carrier provisioning. If false: hard disabled. If true: then depends on carrier
      * provisioning, availability etc.
@@ -3292,6 +3300,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CONFIG_TELEPHONY_USE_OWN_NUMBER_FOR_VOICEMAIL_BOOL, false);
         sDefaults.putBoolean(KEY_IGNORE_DATA_ENABLED_CHANGED_FOR_VIDEO_CALLS, true);
         sDefaults.putBoolean(KEY_VILTE_DATA_IS_METERED_BOOL, true);
+        sDefaults.putBoolean(KEY_IGNORE_RESET_UT_CAPABILITY_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_WFC_SUPPORTS_WIFI_ONLY_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_WFC_IMS_ENABLED_BOOL, false);
