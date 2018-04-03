@@ -152,4 +152,6 @@
     <string name="tuner_keyguard_transition_animations_title">Show transition animations</string>
     <string name="tuner_keyguard_transition_animations_summary">Show useless animations</string>
 
+    <string name="tuner_brightness_position_bottom">Brightness slider on bottom</string>
+
 </resources>
