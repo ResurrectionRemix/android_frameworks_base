@@ -1402,6 +1402,7 @@ public class PackageManagerService extends IPackageManager.Stub
             | FLAG_PERMISSION_REVOKE_ON_UPGRADE;
 
     final @Nullable String mRequiredVerifierPackage;
+    final @Nullable String mOptionalVerifierPackage;
     final @NonNull String mRequiredInstallerPackage;
     final @NonNull String mRequiredUninstallerPackage;
     final @NonNull String mRequiredPermissionControllerPackage;
@@ -3348,6 +3349,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
             if (!mOnlyCore) {
                 mRequiredVerifierPackage = getRequiredButNotReallyRequiredVerifierLPr();
+                mOptionalVerifierPackage = getOptionalVerifierLPr();
                 mRequiredInstallerPackage = getRequiredInstallerLPr();
                 mRequiredUninstallerPackage = getRequiredUninstallerLPr();
                 mIntentFilterVerifierComponent = getIntentFilterVerifierComponentNameLPr();
@@ -3365,6 +3367,7 @@ public class PackageManagerService extends IPackageManager.Stub
                         SharedLibraryInfo.VERSION_UNDEFINED);
             } else {
                 mRequiredVerifierPackage = null;
+                mOptionalVerifierPackage = null;
                 mRequiredInstallerPackage = null;
                 mRequiredUninstallerPackage = null;
                 mIntentFilterVerifierComponent = null;
@@ -3795,11 +3798,38 @@ public class PackageManagerService extends IPackageManager.Stub
                 UserHandle.USER_SYSTEM, false /*allowDynamicSplits*/);
         if (matches.size() == 1) {
             return matches.get(0).getComponentInfo().packageName;
+        } else if (matches.size() > 1) {
+                String optionalVerifierName = mContext.getResources().getString(R.string.config_optionalPackageVerifierName);
+                if (TextUtils.isEmpty(optionalVerifierName))
+                    return matches.get(0).getComponentInfo().packageName;
+            for (int i = 0; i < matches.size(); i++) {
+                if (!matches.get(i).getComponentInfo().packageName.contains(optionalVerifierName))
+                    return matches.get(i).getComponentInfo().packageName;
+            }
         } else if (matches.size() == 0) {
             Log.e(TAG, "There should probably be a verifier, but, none were found");
             return null;
         }
         throw new RuntimeException("There must be exactly one verifier; found " + matches);
+    }
+
+    private @Nullable String getOptionalVerifierLPr() {
+        final Intent intent = new Intent("com.qualcomm.qti.intent.action.PACKAGE_NEEDS_OPTIONAL_VERIFICATION");
+
+        final List<ResolveInfo> matches = queryIntentReceiversInternal(intent, PACKAGE_MIME_TYPE,
+                MATCH_SYSTEM_ONLY | MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE,
+                UserHandle.USER_SYSTEM, false /*allowDynamicSplits*/);
+        if (matches.size() >= 1) {
+            String optionalVerifierName = mContext.getResources().getString(R.string.config_optionalPackageVerifierName);
+            if (TextUtils.isEmpty(optionalVerifierName))
+                return null;
+            for (int i = 0; i < matches.size(); i++) {
+                if (matches.get(i).getComponentInfo().packageName.contains(optionalVerifierName)) {
+                    return matches.get(i).getComponentInfo().packageName;
+                }
+            }
+        }
+        return null;
     }
 
     private @NonNull String getRequiredSharedLibraryLPr(String name, int version) {
@@ -15418,9 +15448,14 @@ public class PackageManagerService extends IPackageManager.Stub
                 final int requiredUid = mRequiredVerifierPackage == null ? -1
                         : getPackageUid(mRequiredVerifierPackage, MATCH_DEBUG_TRIAGED_MISSING,
                                 verifierUser.getIdentifier());
+
+                final int optionalUid = mOptionalVerifierPackage == null ? -1
+                        : getPackageUid(mOptionalVerifierPackage, MATCH_DEBUG_TRIAGED_MISSING,
+                                verifierUser.getIdentifier());
+
                 final int installerUid =
                         verificationInfo == null ? -1 : verificationInfo.installerUid;
-                if (!origin.existing && requiredUid != -1
+                if (!origin.existing && (requiredUid != -1 || optionalUid != -1)
                         && isVerificationEnabled(
                                 verifierUser.getIdentifier(), installFlags, installerUid)) {
                     final Intent verification = new Intent(
@@ -15513,6 +15548,30 @@ public class PackageManagerService extends IPackageManager.Stub
                         }
                     }
 
+                    if (mOptionalVerifierPackage != null) {
+                        final Intent optionalIntent = new Intent(verification);
+                        optionalIntent.setAction("com.qualcomm.qti.intent.action.PACKAGE_NEEDS_OPTIONAL_VERIFICATION");
+                        final List<ResolveInfo> optional_receivers = queryIntentReceiversInternal(optionalIntent,
+                            PACKAGE_MIME_TYPE, 0, verifierUser.getIdentifier(), false /*allowDynamicSplits*/);
+                        final ComponentName optionalVerifierComponent = matchComponentForVerifier(
+                            mOptionalVerifierPackage, optional_receivers);
+                        optionalIntent.setComponent(optionalVerifierComponent);
+                        verificationState.addOptionalVerifier(optionalUid);
+                        if (mRequiredVerifierPackage != null) {
+                            mContext.sendBroadcastAsUser(optionalIntent, verifierUser, android.Manifest.permission.PACKAGE_VERIFICATION_AGENT);
+                        } else {
+                            mContext.sendOrderedBroadcastAsUser(optionalIntent, verifierUser, android.Manifest.permission.PACKAGE_VERIFICATION_AGENT,
+                            new BroadcastReceiver() {
+                                @Override
+                                public void onReceive(Context context, Intent intent) {
+                                    final Message msg = mHandler.obtainMessage(CHECK_PENDING_VERIFICATION);
+                                    msg.arg1 = verificationId;
+                                    mHandler.sendMessageDelayed(msg, getVerificationTimeout());
+                                }
+                            }, null, 0, null, null);
+                            mArgs = null;
+                        }
+                    }
                     final ComponentName requiredVerifierComponent = matchComponentForVerifier(
                             mRequiredVerifierPackage, receivers);
                     if (ret == PackageManager.INSTALL_SUCCEEDED

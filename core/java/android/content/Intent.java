@@ -2697,6 +2697,18 @@ public class Intent implements Parcelable, Cloneable {
     public static final String ACTION_PACKAGE_NEEDS_VERIFICATION = "android.intent.action.PACKAGE_NEEDS_VERIFICATION";
 
     /**
+     * Broadcast Action: Sent to the optional package verifier when a package
+     * needs to be verified. The data contains the package URI.
+     * <p class="note">
+     * This is a protected intent.
+     * </p>
+     *
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PACKAGE_NEEDS_OPTIONAL_VERIFICATION = "com.qualcomm.qti.intent.action.PACKAGE_NEEDS_OPTIONAL_VERIFICATION";
+
+    /**
      * Broadcast Action: Sent to the system package verifier when a package is
      * verified. The data contains the package URI.
      * <p class="note">
@@ -10801,6 +10813,7 @@ public class Intent implements Parcelable, Cloneable {
                 case ACTION_MEDIA_SCANNER_FINISHED:
                 case ACTION_MEDIA_SCANNER_SCAN_FILE:
                 case ACTION_PACKAGE_NEEDS_VERIFICATION:
+                case ACTION_PACKAGE_NEEDS_OPTIONAL_VERIFICATION:
                 case ACTION_PACKAGE_VERIFIED:
                 case ACTION_PACKAGE_ENABLE_ROLLBACK:
                     // Ignore legacy actions

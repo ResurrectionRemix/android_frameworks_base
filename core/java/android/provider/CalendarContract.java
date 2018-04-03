@@ -983,6 +983,7 @@ public final class CalendarContract {
          * @return A Cursor containing all attendees for the event
          */
         public static final Cursor query(ContentResolver cr, long eventId, String[] projection) {
+            android.util.SeempLog.record(54);
             String[] attArgs = {Long.toString(eventId)};
             return cr.query(CONTENT_URI, projection, ATTENDEES_WHERE, attArgs /* selection args */,
                     null /* sort order */);
@@ -1915,6 +1916,7 @@ public final class CalendarContract {
          */
         public static final Cursor query(ContentResolver cr, String[] projection,
                                          long begin, long end) {
+            android.util.SeempLog.record(54);
             Uri.Builder builder = CONTENT_URI.buildUpon();
             ContentUris.appendId(builder, begin);
             ContentUris.appendId(builder, end);
@@ -1944,6 +1946,7 @@ public final class CalendarContract {
          */
         public static final Cursor query(ContentResolver cr, String[] projection,
                                          long begin, long end, String searchQuery) {
+            android.util.SeempLog.record(54);
             Uri.Builder builder = CONTENT_SEARCH_URI.buildUpon();
             ContentUris.appendId(builder, begin);
             ContentUris.appendId(builder, end);
@@ -2255,6 +2258,7 @@ public final class CalendarContract {
          */
         public static final Cursor query(ContentResolver cr, int startDay, int numDays,
                 String[] projection) {
+            android.util.SeempLog.record(54);
             if (numDays < 1) {
                 return null;
             }
@@ -2338,6 +2342,7 @@ public final class CalendarContract {
          * @return A Cursor containing all reminders for the event
          */
         public static final Cursor query(ContentResolver cr, long eventId, String[] projection) {
+            android.util.SeempLog.record(54);
             String[] remArgs = {Long.toString(eventId)};
             return cr.query(CONTENT_URI, projection, REMINDERS_WHERE, remArgs /*selection args*/,
                     null /* sort order */);
@@ -2488,6 +2493,7 @@ public final class CalendarContract {
          */
         public static final Uri insert(ContentResolver cr, long eventId,
                 long begin, long end, long alarmTime, int minutes) {
+            android.util.SeempLog.record(51);
             ContentValues values = new ContentValues();
             values.put(CalendarAlerts.EVENT_ID, eventId);
             values.put(CalendarAlerts.BEGIN, begin);
@@ -2516,6 +2522,7 @@ public final class CalendarContract {
          */
         @UnsupportedAppUsage
         public static final long findNextAlarmTime(ContentResolver cr, long millis) {
+            android.util.SeempLog.record(53);
             String selection = ALARM_TIME + ">=" + millis;
             // TODO: construct an explicit SQL query so that we can add
             // "LIMIT 1" to the end and get just one result.
@@ -2642,6 +2649,7 @@ public final class CalendarContract {
          */
         public static final boolean alarmExists(ContentResolver cr, long eventId,
                 long begin, long alarmTime) {
+            android.util.SeempLog.record(52);
             // TODO: construct an explicit SQL query so that we can add
             // "LIMIT 1" to the end and get just one result.
             String[] projection = new String[] { ALARM_TIME };

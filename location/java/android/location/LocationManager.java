@@ -550,6 +550,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(@NonNull String provider, long minTime, float minDistance,
             @NonNull LocationListener listener) {
+        android.util.SeempLog.record(47);
         checkProvider(provider);
         checkListener(listener);
 
@@ -582,6 +583,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(@NonNull String provider, long minTime, float minDistance,
             @NonNull LocationListener listener, @Nullable Looper looper) {
+        android.util.SeempLog.record(47);
         checkProvider(provider);
         checkListener(listener);
 
@@ -615,6 +617,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(long minTime, float minDistance, @NonNull Criteria criteria,
             @NonNull LocationListener listener, @Nullable Looper looper) {
+        android.util.SeempLog.record(47);
         checkCriteria(criteria);
         checkListener(listener);
 
@@ -643,6 +646,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(@NonNull String provider, long minTime, float minDistance,
             @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(47);
         checkProvider(provider);
         checkPendingIntent(intent);
 
@@ -750,6 +754,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(long minTime, float minDistance, @NonNull Criteria criteria,
             @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(47);
         checkCriteria(criteria);
         checkPendingIntent(intent);
 
@@ -780,6 +785,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestSingleUpdate(
             @NonNull String provider, @NonNull LocationListener listener, @Nullable Looper looper) {
+        android.util.SeempLog.record(64);
         checkProvider(provider);
         checkListener(listener);
 
@@ -813,6 +819,7 @@ public class LocationManager {
             @NonNull Criteria criteria,
             @NonNull LocationListener listener,
             @Nullable Looper looper) {
+        android.util.SeempLog.record(64);
         checkCriteria(criteria);
         checkListener(listener);
 
@@ -836,6 +843,7 @@ public class LocationManager {
      */
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestSingleUpdate(@NonNull String provider, @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(64);
         checkProvider(provider);
         checkPendingIntent(intent);
 
@@ -860,6 +868,7 @@ public class LocationManager {
      */
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestSingleUpdate(@NonNull Criteria criteria, @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(64);
         checkCriteria(criteria);
         checkPendingIntent(intent);
 
@@ -932,6 +941,7 @@ public class LocationManager {
             @NonNull LocationRequest request,
             @NonNull LocationListener listener,
             @Nullable Looper looper) {
+        android.util.SeempLog.record(47);
         checkListener(listener);
         requestLocationUpdates(request, listener, looper, null);
     }
@@ -962,6 +972,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void requestLocationUpdates(
             @NonNull LocationRequest request, @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(47);
         checkPendingIntent(intent);
         requestLocationUpdates(request, null, null, intent);
     }
@@ -1009,6 +1020,7 @@ public class LocationManager {
     @UnsupportedAppUsage
     private void requestLocationUpdates(LocationRequest request, LocationListener listener,
             Looper looper, PendingIntent intent) {
+        android.util.SeempLog.record(47);
 
         String packageName = mContext.getPackageName();
 
@@ -1117,6 +1129,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void addProximityAlert(double latitude, double longitude, float radius, long expiration,
             @NonNull PendingIntent intent) {
+        android.util.SeempLog.record(45);
         checkPendingIntent(intent);
         if (expiration < 0) expiration = Long.MAX_VALUE;
 
@@ -1424,6 +1437,7 @@ public class LocationManager {
     @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     @Nullable
     public Location getLastKnownLocation(@NonNull String provider) {
+        android.util.SeempLog.record(46);
         checkProvider(provider);
         String packageName = mContext.getPackageName();
         LocationRequest request = LocationRequest.createFromDeprecatedProvider(
@@ -1792,6 +1806,7 @@ public class LocationManager {
     @Deprecated
     @RequiresPermission(ACCESS_FINE_LOCATION)
     public boolean addGpsStatusListener(GpsStatus.Listener listener) {
+        android.util.SeempLog.record(43);
         boolean result;
 
         if (mGpsStatusListeners.get(listener) != null) {
@@ -1907,6 +1922,7 @@ public class LocationManager {
     @Deprecated
     @RequiresPermission(ACCESS_FINE_LOCATION)
     public boolean addNmeaListener(GpsStatus.NmeaListener listener) {
+        android.util.SeempLog.record(44);
         return false;
     }
 
@@ -2310,6 +2326,7 @@ public class LocationManager {
      */
     public boolean sendExtraCommand(
             @NonNull String provider, @NonNull String command, @Nullable Bundle extras) {
+        android.util.SeempLog.record(48);
         try {
             return mService.sendExtraCommand(provider, command, extras);
         } catch (RemoteException e) {
