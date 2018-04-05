@@ -104,11 +104,15 @@ public class FontService extends IFontService.Stub {
         @Override
         public void onBootPhase(int phase) {
             if (phase == PHASE_SYSTEM_SERVICES_READY) {
-                if (makeDir(SYSTEM_THEME_DIR)) {
-                    makeDir(SYSTEM_THEME_PREVIEW_CACHE_DIR);
-                    restoreconThemeDir();
+                String cryptState = SystemProperties.get("vold.decrypt");
+                // wait until decrypted if we use FDE or just go one if not (cryptState will be empty then)
+                if (TextUtils.isEmpty(cryptState) || cryptState.equals("trigger_restart_framework")) {
+                    if (makeDir(SYSTEM_THEME_DIR)) {
+                        makeDir(SYSTEM_THEME_PREVIEW_CACHE_DIR);
+                        restoreconThemeDir();
+                    }
+                    mService.sendInitializeFontMapMessage();
                 }
-                mService.sendInitializeFontMapMessage();
             }
         }
     }
