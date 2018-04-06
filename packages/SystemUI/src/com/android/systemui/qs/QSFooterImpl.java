@@ -91,6 +91,8 @@ public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
 
     private boolean mExpanded;
     private boolean mAlarmShowing;
+    private boolean mServicesButtonVisible;
+    private boolean mSettingsButtonVisible;
 
     protected ExpandableIndicator mExpandIndicator;
 
@@ -176,6 +178,13 @@ public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
         mAnimator = new Builder()
                 .addFloat(mSettingsContainer, "translationX", -(remaining - defSpace), 0)
                 .addFloat(mSettingsButton, "rotation", -120, 0)
+                .addFloat(mRunningServicesButton, "translationX", (mSettingsButtonVisible
+                          ? - 2 : - 1) * (remaining - defSpace), 0)
+                .addFloat(mRunningServicesButton, "rotation", -120, 0)
+                .addFloat(mEdit, "translationX", (mServicesButtonVisible && mSettingsButtonVisible
+                          ? - 3 : (mServicesButtonVisible || mSettingsButtonVisible
+                          ? - 2 : -1)) * (remaining - defSpace), 0)
+                .addFloat(mEdit, "rotation", -120, 0)
                 .build();
         if (mAlarmShowing) {
             int translate = isLayoutRtl() ? mDate.getWidth() : -mDate.getWidth();            
@@ -331,11 +340,11 @@ public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
         mSettingsContainer.findViewById(R.id.tuner_icon).setVisibility(View.INVISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
 
-        boolean servicesButtonVisible = Settings.System.getInt(
+        mServicesButtonVisible = Settings.System.getInt(
                 mContext.getContentResolver(), Settings.System.QSFOOTER_SHOW_SERVICES,
                 0) != 0;
 
-        boolean settingsButtonVisible = Settings.System.getInt(
+        mSettingsButtonVisible = Settings.System.getInt(
                 mContext.getContentResolver(), Settings.System.QSFOOTER_SHOW_SETTINGS,
                 1) != 0;
 
@@ -344,9 +353,10 @@ public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
 
         mEdit.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
 
-        mRunningServicesButton.setVisibility(servicesButtonVisible ? (!isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE) : View.GONE);
+        mRunningServicesButton.setVisibility(mServicesButtonVisible ? (!isDemo && mExpanded
+                ? View.VISIBLE : View.INVISIBLE) : View.GONE);
 
-        mSettingsButton.setVisibility(settingsButtonVisible ? View.VISIBLE : View.GONE);
+        mSettingsButton.setVisibility(mSettingsButtonVisible ? View.VISIBLE : View.GONE);
     }
 
     private void updateListeners() {
