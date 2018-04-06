@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.UserManager;
 import android.provider.AlarmClock;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.AttributeSet;
@@ -66,11 +67,15 @@ import com.android.systemui.statusbar.policy.NextAlarmController.NextAlarmChange
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.tuner.TunerService.Tunable;
 
-public class QSFooterImpl extends FrameLayout implements QSFooter,
+public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
         NextAlarmChangeCallback, OnClickListener, OnUserInfoChangedListener, EmergencyListener,
         SignalCallback {
     private static final float EXPAND_INDICATOR_THRESHOLD = .93f;
+   
+    private static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
+    private static final String QS_FOOTER_SHOW_SERVICES = "qs_footer_show_services";
 
     private ActivityStarter mActivityStarter;
     private NextAlarmController mNextAlarmController;
@@ -134,6 +139,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch = findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
+        updateVisibilities();
+
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
@@ -146,6 +153,17 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActivityStarter = Dependency.get(ActivityStarter.class);
         addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight,
                 oldBottom) -> updateAnimator(right - left));
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Dependency.get(TunerService.class).addTunable(this, QS_FOOTER_SHOW_SETTINGS);
+        Dependency.get(TunerService.class).addTunable(this, QS_FOOTER_SHOW_SERVICES);
+    }
+
+    public void onTuningChanged(String key, String newValue) {
+        updateVisibilities();
     }
 
     private void updateAnimator(int width) {
@@ -279,6 +297,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @VisibleForTesting
     public void onDetachedFromWindow() {
         setListening(false);
+        Dependency.get(TunerService.class).removeTunable(this);
         super.onDetachedFromWindow();
     }
 
@@ -312,10 +331,22 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer.findViewById(R.id.tuner_icon).setVisibility(View.INVISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
 
+        boolean servicesButtonVisible = Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.QSFOOTER_SHOW_SERVICES,
+                0) != 0;
+
+        boolean settingsButtonVisible = Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.QSFOOTER_SHOW_SETTINGS,
+                1) != 0;
+
         mMultiUserSwitch.setVisibility(mExpanded && mMultiUserSwitch.hasMultipleUsers() && !isDemo
                 ? View.VISIBLE : View.INVISIBLE);
 
         mEdit.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
+
+        mRunningServicesButton.setVisibility(servicesButtonVisible ? (!isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE) : View.GONE);
+
+        mSettingsButton.setVisibility(settingsButtonVisible ? View.VISIBLE : View.GONE);
     }
 
     private void updateListeners() {
