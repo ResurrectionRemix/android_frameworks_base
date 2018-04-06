@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright 2017 Ethan Levy.  All rights reserved. -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:detachWallpaper="true"
+    android:shareInterpolator="false"
+    android:zAdjustment="normal">
+    <alpha
+        android:duration="280"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fillEnabled="true"
+        android:fromAlpha="0.0"
+        android:interpolator="@*android:interpolator/accelerate_cubic"
+        android:toAlpha="1.0"/>
+</set>

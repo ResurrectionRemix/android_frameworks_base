@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright 2017 Ethan Levy.  All rights reserved. -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false"
+    android:zAdjustment="top">
+    <translate
+        android:duration="225"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fillEnabled="true"
+        android:fromYDelta="11.111111%"
+        android:interpolator="@*android:anim/decelerate_interpolator"
+        android:toYDelta="0.0"/>
+    <scale
+        android:duration="250"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fillEnabled="true"
+        android:fromXScale="0.8"
+        android:fromYScale="0.8"
+        android:interpolator="@*android:interpolator/decelerate_quad"
+        android:pivotX="50.0%p"
+        android:pivotY="50.0%p"
+        android:toXScale="1.0"
+        android:toYScale="1.0"/>
+    <alpha
+        android:duration="225"
+        android:fromAlpha="0.0"
+        android:interpolator="@*android:anim/decelerate_interpolator"
+        android:toAlpha="1.0"/>
+</set>

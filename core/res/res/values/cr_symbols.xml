@@ -65,4 +65,23 @@
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
+  <java-symbol type="string" name="animation_ethans"/>
+  <java-symbol type="anim" name="ethans_activity_open_enter" />
+  <java-symbol type="anim" name="ethans_activity_open_exit" />
+  <java-symbol type="anim" name="ethans_activity_close_enter" />
+  <java-symbol type="anim" name="ethans_activity_close_exit" />
+  <java-symbol type="anim" name="ethans_task_open_enter" />
+  <java-symbol type="anim" name="ethans_task_open_exit" />
+  <java-symbol type="anim" name="ethans_task_close_enter" />
+  <java-symbol type="anim" name="ethans_task_close_exit" />
+  <java-symbol type="anim" name="ethans_wallpaper_open_enter" />
+  <java-symbol type="anim" name="ethans_wallpaper_open_exit" />
+  <java-symbol type="anim" name="ethans_wallpaper_close_enter" />
+  <java-symbol type="anim" name="ethans_wallpaper_close_exit" />
+  <java-symbol type="anim" name="ethans_wallpaper_intra_open_enter" />
+  <java-symbol type="anim" name="ethans_wallpaper_intra_open_exit" />
+  <java-symbol type="anim" name="ethans_wallpaper_intra_close_enter" />
+  <java-symbol type="anim" name="ethans_wallpaper_intra_close_exit" />
+  <java-symbol type="anim" name="ethans_launch_task_behind_source" />
+  <java-symbol type="anim" name="ethans_launch_task_behind_target" />
 </resources>

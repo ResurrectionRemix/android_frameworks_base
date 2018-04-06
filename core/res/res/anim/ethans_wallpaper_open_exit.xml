@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright 2017 Ethan Levy.  All rights reserved. -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false"
+    android:zAdjustment="top">
+    <translate
+        android:duration="250"
+        android:fillAfter="true"
+        android:fillBefore="true"
+        android:fillEnabled="true"
+        android:fromYDelta="0"
+        android:interpolator="@*android:interpolator/fast_out_linear_in"
+        android:toYDelta="11.111111%"/>
+    <alpha
+        android:duration="225"
+        android:fromAlpha="1.0"
+        android:interpolator="@*android:anim/decelerate_interpolator"
+        android:toAlpha="0.0"/>
+</set>
