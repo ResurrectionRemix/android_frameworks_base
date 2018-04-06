@@ -371,12 +371,15 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         mAutoBrightnessContainer.setVisibility(mShowAutoBrightnessButton ? View.GONE : View.VISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
-        mMultiUserSwitch.setVisibility(showUserSwitcher() ? View.VISIBLE : View.INVISIBLE);
+        mSettingsContainer.setVisibility(!isSettingsEnabled() || mQsDisabled ? View.GONE : View.VISIBLE);
+        mSettingsButton.setVisibility(isSettingsEnabled() ? (isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE) : View.GONE);
+        mRunningServicesButton.setVisibility(isServicesEnabled() ? (isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE) : View.GONE);
+        mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
-        mSettingsButton.setVisibility(isSettingButtonEnabled() ? isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE : View.GONE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
+        mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
@@ -401,6 +404,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
     }
 
+
     public boolean isSettingButtonEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
@@ -409,6 +413,26 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     public boolean isRunningServicesEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
+    }
+
+    public boolean isSettingsEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
+    }
+
+    public boolean isServicesEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_SHOW_SERVICES, 0) == 1;
+    }
+
+    public boolean isEditEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_SHOW_EDIT, 1) == 1;
+    }
+
+    public boolean isUserEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_SHOW_USER, 1) == 1;
     }
 
     @Override
