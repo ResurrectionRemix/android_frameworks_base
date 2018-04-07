@@ -100,7 +100,11 @@
   <string name="quick_settings_sound_vibrate">Titreşim</string>
   <string name="quick_settings_sound_silent">Sessiz</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">Sesli arama</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">Asistan</string>
+  <string name="quick_settings_google_voice_assist_label">Sesli asistan</string>
+  <string name="quick_settings_google_now_label">Google beslemesi</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Ortam ekranı</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->

@@ -61,14 +61,14 @@
   <string name="quick_settings_reboot_recovery_label">रिकवरी</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">स्क्रीनशॉट नहीं लिया</string>
-  <string name="screenshot_abort_text">करवाई निलंबित</string>
+  <string name="screenshot_abort_text">करवाई रद्द</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">दिशा-सूचक</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">आवाक्षरित हो रही है\u2026</string>
   <string name="accessibility_quick_settings_compass_off">कम्पास बंद</string>
   <string name="accessibility_quick_settings_compass_on">दिशा सूचक चालू</string>
-  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया गया है</string>
+  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया।</string>
   <string name="accessibility_quick_settings_compass_changed_on">कम्पास चालू कर दिया</string>
   <string name="quick_settings_compass_N">उ</string>
   <string name="quick_settings_compass_NE">उ-पू</string>
@@ -98,7 +98,7 @@
   <string name="quick_settings_sound_label">ध्वनि</string>
   <string name="quick_settings_sound_ring">रिंग</string>
   <string name="quick_settings_sound_vibrate">कंपन</string>
-  <string name="quick_settings_sound_silent">शांत</string>
+  <string name="quick_settings_sound_silent">मौन</string>
   <!-- Sound Search TIle -->
   <!-- Google Assist Tiles -->
   <!-- Ambient Display Tile -->
@@ -125,7 +125,7 @@
   <string name="accessibility_quick_settings_volume_panel">वॉल्यूम</string>
   <string name="quick_settings_volume_panel_label">वॉल्यूम</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">चित्र में चित्र मोड</string>
+  <string name="quick_settings_pip_label">पी आई पी</string>
   <string name="quick_settings_pip_tile_app_na">अनुप्रयोग PiP का समर्थन नहीं करता</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">स्क्रीन रिकॉर्ड</string>
@@ -160,8 +160,8 @@
   <string name="quick_settings_navigation_bar">नेविगेशन पट्टी</string>
   <string name="quick_settings_smartbar">स्मार्ट पट्टी</string>
   <string name="quick_settings_fling">फ्लिंग</string>
-  <string name="quick_settings_navigation_default">मूल</string>
-  <string name="quick_settings_navigation_disabled">अक्षम बना दे</string>
+  <string name="quick_settings_navigation_default">स्टॉक</string>
+  <string name="quick_settings_navigation_disabled">अक्षम</string>
   <string name="omnijaws_service_error">त्रुटि</string>
   <string name="omnijaws_service_unkown">मौसम के बारे में जानकारी उपलब्ध नहीं|</string>
   <string name="omnijaws_service_error_long">मौसम डेटा लोड करने में त्रुटि</string>
@@ -180,7 +180,7 @@
   <string name="quick_settings_expanded_navigation_off">नेविगेशन बार छुपाएँ</string>
   <string name="quick_settings_expanded_statusbar_off">स्टेटस बार छुपाएँ</string>
   <!-- Weather string format in expanded statusbar header -->
-  <string name="status_bar_weather_format"><xliff:g id="तापमान">%1$s</xliff:g></string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
   <string name="pie_state_name">पाइ नियंत्रण</string>
   <string name="pie_state_summary">इमर्सिव मोड मे होने पर पाई कंट्रोल्स का उपयोग करें</string>
@@ -191,7 +191,7 @@
   <string name="keyguard_indication_turbo_power_time">जल्द चार्ज हो रहा है(<xliff:g id="पूरा चार्ज होने में">%s</xliff:g>बाकी है)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">जल्द चार्जर जोड़ा गया</string>
   <!-- Kill button in notification guts -->
-  <string name="force_stop_dlg_title">बलपूर्वक रोके</string>
+  <string name="force_stop_dlg_title">बलपूर्वक रोके ?</string>
   <string name="force_stop_dlg_text">यदि आप कोई ऍप जबरदस्ती बंद करते हे, तो वो दुर्व्यवहार कर सकता हे|</string>
   <string name="kill">ऐप रुकाए</string>
   <!-- Recents free RAM -->

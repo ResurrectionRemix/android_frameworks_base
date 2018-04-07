@@ -100,7 +100,11 @@
   <string name="quick_settings_sound_vibrate">Rezgés</string>
   <string name="quick_settings_sound_silent">Néma</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">Hangalapú keresés</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">Segéd</string>
+  <string name="quick_settings_google_voice_assist_label">Hangsegéd</string>
+  <string name="quick_settings_google_now_label">Google hírfolyam</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Környezeti kijelző</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->

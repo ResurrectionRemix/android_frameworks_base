@@ -100,7 +100,11 @@
   <string name="quick_settings_sound_vibrate">震动</string>
   <string name="quick_settings_sound_silent">静音</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">语音搜索</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">助手</string>
+  <string name="quick_settings_google_voice_assist_label">语音助手</string>
+  <string name="quick_settings_google_now_label">Google feed</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">主动显示</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
