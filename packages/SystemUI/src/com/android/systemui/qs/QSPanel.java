@@ -29,6 +29,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,8 +61,10 @@ import lineageos.providers.LineageSettings;
 /** View that represents the quick settings tile panel. **/
 public class QSPanel extends LinearLayout implements Tunable, Callback, BrightnessMirrorListener {
 
-    public static final String QS_SHOW_BRIGHTNESS_SLIDER =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
+
+    private static final String TAG = "QSPanel";
+
+    public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
 
     protected final Context mContext;
     protected final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
@@ -104,9 +107,12 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         mBrightnessView = LayoutInflater.from(context).inflate(
                 R.layout.quick_settings_brightness_dialog, this, false);
-        addView(mBrightnessView);
 
         mBrightnessIcon = (ImageView) mBrightnessView.findViewById(R.id.brightness_icon);
+
+        mBrightnessController = new BrightnessController(getContext(),
+                mBrightnessIcon,
+                mBrightnessView.findViewById(R.id.brightness_slider));
 
         setupTileLayout();
 
@@ -117,13 +123,15 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             ((PagedTileLayout) mTileLayout).setPageIndicator((PageIndicator) mPageIndicator);
         }
 
+        mBrightnessView.setPadding(mBrightnessView.getPaddingLeft(),
+                    mBrightnessView.getPaddingTop(), mBrightnessView.getPaddingRight(),
+                    mContext.getResources().getDimensionPixelSize(R.dimen.qs_brightness_footer_padding));
+        addView(mBrightnessView);
+
         addDivider();
 
         mFooter = new QSSecurityFooter(this, context);
         addView(mFooter.getView());
-        mBrightnessController = new BrightnessController(getContext(),
-                mBrightnessIcon,
-                findViewById(R.id.brightness_slider));
 
         updateResources();
 
@@ -162,7 +170,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this,
-                QS_SHOW_BRIGHTNESS_SLIDER);
+                QS_SHOW_BRIGHTNESS);
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -193,9 +201,13 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
-            mBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
-                    ? VISIBLE : GONE);
+        try {
+            if (QS_SHOW_BRIGHTNESS.equals(key)) {
+                mBrightnessView.setVisibility(newValue == null || Integer.parseInt(newValue) != 0
+                        ? VISIBLE : GONE);
+            }
+        } catch (Exception e){
+            Log.d(TAG, "Caught exception from Tuner", e);
         }
     }
 

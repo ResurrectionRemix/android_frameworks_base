@@ -81,6 +81,12 @@ public class Ringtone {
             .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build();
+
+    private AudioAttributes mAudioAttributesWiredHeadset = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build();
+
     // playback properties, use synchronized with mPlaybackSettingsLock
     private boolean mIsLooping = false;
     private float mVolume = 1.0f;
@@ -295,7 +301,11 @@ public class Ringtone {
         mLocalPlayer = new MediaPlayer();
         try {
             mLocalPlayer.setDataSource(mContext, mUri);
-            mLocalPlayer.setAudioAttributes(mAudioAttributes);
+            if (!mAudioManager.isWiredHeadsetOn() || !mAudioManager.isMusicActive() || mAudioManager.isSpeakerphoneOn()) {
+                mLocalPlayer.setAudioAttributes(mAudioAttributes);
+            } else {
+                mLocalPlayer.setAudioAttributes(mAudioAttributesWiredHeadset);
+            }
             synchronized (mPlaybackSettingsLock) {
                 applyPlaybackProperties_sync();
             }

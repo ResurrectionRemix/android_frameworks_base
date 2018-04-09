@@ -106,11 +106,26 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private SystemUIDialog mHighTempDialog;
     private SystemUIDialog mThermalShutdownDialog;
 
+    private int mAlertOnChargedLevel = -1;
+    private final static int ALERT_SCREEN_OFF_TIME = 60000; // 1 minute
+    private boolean mIsPlugged = false;
+    private static final String CHARGE_NOTIF_CHANNEL = "CHARGELEV";
+    private long mLastTimeTriggered = 0;
+
     public PowerNotificationWarnings(Context context) {
         mContext = context;
         mNoMan = mContext.getSystemService(NotificationManager.class);
         mPowerMan = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mReceiver.init();
+
+        final NotificationChannel chargeChannel = new NotificationChannel(
+                CHARGE_NOTIF_CHANNEL,
+                mContext.getString(R.string.notification_channel_charge_alert),
+                NotificationManager.IMPORTANCE_LOW);
+        chargeChannel.setBlockableSystem(true);
+        chargeChannel.enableLights(false);
+        chargeChannel.enableVibration(false);
+        mNoMan.createNotificationChannel(chargeChannel);
     }
 
     @Override
@@ -127,7 +142,18 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     }
 
     @Override
+    public void setChargedLevel(int level) {
+        mAlertOnChargedLevel = level;
+    }
+
+    @Override
+    public void setPluggedState(boolean plugged) {
+        mIsPlugged = plugged;
+    }
+
+    @Override
     public void update(int batteryLevel, int bucket, long screenOffTime) {
+        final int prevLevel = mBatteryLevel;
         mBatteryLevel = batteryLevel;
         if (bucket >= 0) {
             mBucketDroppedNegativeTimeMs = 0;
@@ -136,6 +162,34 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         }
         mBucket = bucket;
         mScreenOffTime = screenOffTime;
+
+        // don't push the notification if battery is not charging, if we switched off the screen
+        // just a while ago, if screen is on or if an alert has already pushed a while ago
+        final long now = SystemClock.elapsedRealtime();
+        if (mIsPlugged && mBatteryLevel != prevLevel
+                && mBatteryLevel == mAlertOnChargedLevel
+                && mScreenOffTime > 0 && now - mScreenOffTime > ALERT_SCREEN_OFF_TIME
+                && now - mLastTimeTriggered > ALERT_SCREEN_OFF_TIME) {
+            mLastTimeTriggered = now;
+            showChargedNotification();
+            final int mode = mAudioMan.getRingerModeInternal();
+            if (mode == AudioManager.RINGER_MODE_NORMAL) {
+                final String soundPath = mContext.getString(R.string.battery_level_good_sound);
+                if (soundPath != null) {
+                    final Uri soundUri = Uri.parse("file://" + soundPath);
+                    if (soundUri != null) {
+                        try {
+                            final IRingtonePlayer player  = mAudioMan.getRingtonePlayer();
+                            if (player != null) {
+                                player.playAsync(soundUri, UserHandle.SYSTEM, false, AUDIO_ATTRIBUTES);
+                            }
+                        } catch (RemoteException e) {}
+                    }
+                }
+            } else if (mode == AudioManager.RINGER_MODE_VIBRATE) {
+                mVibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+            }
+        }
     }
 
     private void updateNotification() {
@@ -204,6 +258,28 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private PendingIntent pendingBroadcast(String action) {
         return PendingIntent.getBroadcastAsUser(mContext,
                 0, new Intent(action), 0, UserHandle.CURRENT);
+    }
+
+    private void showChargedNotification() {
+        final int textRes = R.string.alert_on_charged_level;
+        final String percentage = NumberFormat.getPercentInstance()
+                .format((double) mAlertOnChargedLevel / 100.0);
+        final Notification.Builder nb =
+                new Notification.Builder(mContext, CHARGE_NOTIF_CHANNEL)
+                        .setSmallIcon(R.drawable.ic_power_good)
+                        .setShowWhen(false)
+                        .setContentTitle(mContext.getString(R.string.battery_level_good_title))
+                        .setContentText(mContext.getString(textRes, percentage))
+                        .setOnlyAlertOnce(true)
+                        .setVisibility(Notification.VISIBILITY_PUBLIC)
+                        .setAutoCancel(true)
+                        .setColor(mContext.getColor(R.color.battery_level_good_color));
+        if (hasBatterySettings()) {
+            nb.setContentIntent(pendingBroadcast(ACTION_SHOW_BATTERY_SETTINGS));
+        }
+        SystemUI.overrideNotificationAppName(mContext, nb);
+        final Notification n = nb.build();
+        mNoMan.notifyAsUser(TAG_BATTERY, 5, n, UserHandle.ALL);
     }
 
     private static Intent settings(String action) {
