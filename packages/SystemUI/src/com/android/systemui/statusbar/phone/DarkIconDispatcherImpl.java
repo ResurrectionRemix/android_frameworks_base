@@ -103,4 +103,12 @@ public class DarkIconDispatcherImpl implements DarkIconDispatcher {
             mReceivers.valueAt(i).onDarkChanged(mTintArea, mDarkIntensity, mIconTint);
         }
     }
+
+    public void onOverlayChanged(Context context) {
+        mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
+        mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
+        mIconTint = (int) ArgbEvaluator.getInstance().evaluate(mDarkIntensity,
+                mLightModeIconColorSingleTone, mDarkModeIconColorSingleTone);
+        applyIconTint();
+    }
 }

@@ -20,7 +20,7 @@
   <string name="reboot_title">Repornire</string>
   <string name="reboot_message">Repornire sistem</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_toggleNavigationEditor">controleaza editarea barii de navigare</string>
+  <string name="permlab_toggleNavigationEditor">controlează editarea bării de navigare</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_toggleNavigationEditor">Ofera permisiunea unei aplicatii ca sa controleze editorul barei de navigare.</string>
   <!-- AOKP custom system animations -->
@@ -46,5 +46,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">Apăsați lung butonul de alimentare pentru interacţiune</string>
   <!-- Label for item that flashlight in power menu options dialog -->
-  <string name="global_action_flashlight">Lanterna</string>
+  <string name="global_action_flashlight">Lanternă</string>
 </resources>

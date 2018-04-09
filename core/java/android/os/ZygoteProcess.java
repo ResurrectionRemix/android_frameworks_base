@@ -203,11 +203,12 @@ public class ZygoteProcess {
                                                   String instructionSet,
                                                   String appDataDir,
                                                   String invokeWith,
-                                                  String[] zygoteArgs) {
+                                                  String[] zygoteArgs,
+                                                  boolean refreshFont) {
         try {
             return startViaZygote(processClass, niceName, uid, gid, gids,
                     debugFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs, refreshFont);
         } catch (ZygoteStartFailedEx ex) {
             Log.e(LOG_TAG,
                     "Starting VM process through Zygote failed");
@@ -338,7 +339,8 @@ public class ZygoteProcess {
                                                       String instructionSet,
                                                       String appDataDir,
                                                       String invokeWith,
-                                                      String[] extraArgs)
+                                                      String[] extraArgs,
+                                                      boolean refreshFont)
                                                       throws ZygoteStartFailedEx {
         ArrayList<String> argsForZygote = new ArrayList<String>();
 
@@ -382,6 +384,9 @@ public class ZygoteProcess {
             argsForZygote.add("--mount-external-write");
         }
         argsForZygote.add("--target-sdk-version=" + targetSdkVersion);
+        if (refreshFont) {
+            argsForZygote.add("--refresh-font");
+        }
 
         // --setgroups is a comma-separated list
         if (gids != null && gids.length > 0) {
