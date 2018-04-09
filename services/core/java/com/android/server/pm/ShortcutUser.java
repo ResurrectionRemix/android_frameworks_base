@@ -286,6 +286,10 @@ class ShortcutUser {
         return mKnownLocales;
     }
 
+    public void initKnownLocales(){
+        getKnownLocales();
+    }
+
     /**
      * Check to see if the system locale has changed, and if so, reset throttling
      * and update resource strings.
@@ -296,9 +300,10 @@ class ShortcutUser {
             return;
         }
         if (ShortcutService.DEBUG) {
-            Slog.d(TAG, "Locale changed from " + currentLocales + " to " + mKnownLocales
+            Slog.d(TAG, "Locale changed from " + mKnownLocales + " to " + currentLocales
                     + " for user " + mUserId);
         }
+
         mKnownLocales = currentLocales;
 
         forAllPackages(pkg -> {

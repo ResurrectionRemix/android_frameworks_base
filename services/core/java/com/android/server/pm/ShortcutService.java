@@ -1181,6 +1181,8 @@ public class ShortcutService extends IShortcutService.Stub {
             if (userPackages == null) {
                 userPackages = new ShortcutUser(this, userId);
             }
+
+            userPackages.initKnownLocales();
             mUsers.put(userId, userPackages);
 
             // Also when a user's data is first accessed, scan all packages.
