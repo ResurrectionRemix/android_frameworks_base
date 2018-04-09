@@ -211,6 +211,8 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
             mAttached = true;
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
+            filter.addAction(Intent.ACTION_SCREEN_ON);
             mContext.registerReceiver(mIntentReceiver, filter, null, getHandler());
         }
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
@@ -231,8 +233,11 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action != null && action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+            if (action != null && action.equals(ConnectivityManager.CONNECTIVITY_ACTION)
+                    || action.equals(Intent.ACTION_SCREEN_ON)) {
                 updateSettings();
+            } else if (action != null && action.equals(Intent.ACTION_SCREEN_OFF)) {
+                clearHandlerCallbacks();
             }
         }
     };
