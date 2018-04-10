@@ -110,4 +110,43 @@
     <string name="config_sysGPULoad"></string>
     <integer name="config_sysCPUTempMultiplier">1</integer>
     <integer name="config_sysBatteryTempMultiplier">1</integer>
+
+    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+         This integer should equal the sum of the corresponding value for each
+         of the following keys present:
+          1 - Home
+          2 - Back
+          4 - Menu
+          8 - Assistant (search)
+          16 - App switch
+          32 - Camera
+       For example, a device with Back, Home and AppSwitch keys would set this
+       config to 19. -->
+    <integer name="config_deviceHardwareKeys">0</integer>
+
+    <!-- Control the behavior when the user long presses or double taps one of the below keys.
+          0 - Nothing
+          1 - Menu key
+          2 - Recent apps view in SystemUI
+          3 - Launch assist intent
+          4 - Voice search
+          5 - In-app search
+          6 - Launch camera
+          7 - Launch last app
+          8 - Split screen
+       This needs to match the constants in
+       services/core/java/com/android/server/policy/PhoneWindowManager.java -->
+    <integer name="config_longPressOnHomeKeyBehavior">3</integer>
+    <integer name="config_doubleTapOnHomeKeyBehavior">6</integer>
+    <integer name="config_longPressOnMenuKeyBehavior">0</integer>
+    <integer name="config_doubleTapOnMenuKeyBehavior">0</integer>
+    <integer name="config_longPressOnBackKeyBehavior">0</integer>
+    <integer name="config_doubleTapOnBackKeyBehavior">0</integer>
+    <integer name="config_longPressOnAssistKeyBehavior">0</integer>
+    <integer name="config_doubleTapOnAssistKeyBehavior">0</integer>
+    <integer name="config_longPressOnAppSwitchKeyBehavior">8</integer>
+    <integer name="config_doubleTapOnAppSwitchKeyBehavior">7</integer>
+    <integer name="config_longPressOnCameraKeyBehavior">0</integer>
+    <integer name="config_doubleTapOnCameraKeyBehavior">0</integer>
+
 </resources>

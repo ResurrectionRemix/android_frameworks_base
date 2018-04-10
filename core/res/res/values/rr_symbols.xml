@@ -214,4 +214,20 @@
   <java-symbol type="string" name="config_sysGPULoad" />
   <java-symbol type="integer" name="config_sysCPUTempMultiplier" />
   <java-symbol type="integer" name="config_sysBatteryTempMultiplier" />
+
+    <!-- Input policy constants  -->
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
+    <java-symbol type="integer" name="config_doubleTapOnHomeKeyBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnMenuKeyBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnBackKeyBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnAssistKeyBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnAppSwitchKeyBehavior" />
+    <java-symbol type="integer" name="config_doubleTapOnCameraKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnHomeKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnMenuKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnBackKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAssistKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnAppSwitchKeyBehavior" />
+    <java-symbol type="integer" name="config_longPressOnCameraKeyBehavior" />
+
 </resources>
