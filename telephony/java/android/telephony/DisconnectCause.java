@@ -359,6 +359,124 @@ public final class DisconnectCause {
     // 2) Update android.telecom.DisconnectCauseUtil with any mappings to a telecom.DisconnectCause.
     //*********************************************************************************************
 
+    /** @hide */
+    public static final int QOS_UNAVAILABLE = 80;
+    /** @hide */
+    public static final int REQUESTED_FACILITY_NOT_SUBSCRIBED = 81;
+    /** @hide */
+    public static final int INCOMING_CALLS_BARRED_WITHIN_CUG = 82;
+    /** @hide */
+    public static final int BEARER_CAPABILITY_UNAVAILABLE = 83;
+    /** @hide */
+    public static final int SERVICE_OPTION_NOT_AVAILABLE = 84;
+    /** @hide */
+    public static final int BEARER_SERVICE_NOT_IMPLEMENTED = 85;
+    /** @hide */
+    public static final int REQUESTED_FACILITY_NOT_IMPLEMENTED = 86;
+    /** @hide */
+    public static final int ONLY_DIGITAL_INFORMATION_BEARER_AVAILABLE = 87;
+    /** @hide */
+    public static final int SERVICE_OR_OPTION_NOT_IMPLEMENTED = 88;
+    /** @hide */
+    public static final int INVALID_TRANSACTION_IDENTIFIER = 89;
+    /** @hide */
+    public static final int USER_NOT_MEMBER_OF_CUG = 90;
+    /** @hide */
+    public static final int INCOMPATIBLE_DESTINATION = 91;
+    /** @hide */
+    public static final int INVALID_TRANSIT_NW_SELECTION = 92;
+    /** @hide */
+    public static final int SEMANTICALLY_INCORRECT_MESSAGE = 93;
+    /** @hide */
+    public static final int INVALID_MANDATORY_INFORMATION = 94;
+    /** @hide */
+    public static final int MESSAGE_TYPE_NON_IMPLEMENTED = 95;
+    /** @hide */
+    public static final int MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE = 96;
+    /** @hide */
+    public static final int INFORMATION_ELEMENT_NON_EXISTENT = 97;
+    /** @hide */
+    public static final int CONDITIONAL_IE_ERROR = 98;
+    /** @hide */
+    public static final int MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE = 99;
+    /** @hide */
+    public static final int RECOVERY_ON_TIMER_EXPIRED = 100;
+    /** @hide */
+    public static final int PROTOCOL_ERROR_UNSPECIFIED = 101;
+    /** @hide */
+    public static final int INTERWORKING_UNSPECIFIED = 102;
+    /** @hide */
+    public static final int LOCAL_LOW_BATTERY = 103;
+    /** @hide */
+    public static final int NO_CIRCUIT_AVAIL = 104;
+    /** @hide */
+    public static final int NO_ROUTE_TO_DESTINATION = 105;
+    /** @hide */
+    public static final int OPERATOR_DETERMINED_BARRING = 106;
+    /** @hide */
+    public static final int CALL_FAIL_NO_USER_RESPONDING = 107;
+    /** @hide */
+    public static final int CALL_FAIL_NO_ANSWER_FROM_USER = 108;
+    /** @hide */
+    public static final int CALL_FAIL_DESTINATION_OUT_OF_ORDER = 109;
+    /** @hide */
+    public static final int BEARER_CAPABILITY_NOT_AUTHORIZED = 110;
+    /** @hide */
+    public static final int CHANNEL_UNACCEPTABLE = 111;
+    /** @hide */
+    public static final int CALL_REJECTED = 112;
+    /** @hide */
+    public static final int NUMBER_CHANGED = 113;
+    /** @hide */
+    public static final int PREEMPTION = 114;
+    /** @hide */
+    public static final int FACILITY_REJECTED = 115;
+    /** @hide */
+    public static final int RESP_TO_STATUS_ENQUIRY = 116;
+    /** @hide */
+    public static final int NETWORK_OUT_OF_ORDER = 117;
+    /** @hide */
+    public static final int TEMPORARY_FAILURE = 118;
+    /** @hide */
+    public static final int SWITCHING_EQUIPMENT_CONGESTION = 119;
+    /** @hide */
+    public static final int ACCESS_INFORMATION_DISCARDED = 120;
+    /** @hide */
+    public static final int REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE = 121;
+    /** @hide */
+    public static final int RESOURCES_UNAVAILABLE_OR_UNSPECIFIED = 122;
+
+    /**
+     * call failed due to LTE to 3G/2G handover not feasible
+     * @hide
+     */
+    public static final int HO_NOT_FEASIBLE = 123;
+    /** @hide */
+    public static final int NON_SELECTED_USER_CLEARING = 124;
+
+    //*********************************************************************************************
+    // When adding a disconnect type:
+    // 1) Please assign the new type the next id value below.
+    // 2) Increment the next id value below to a new value.
+    // 3) Update MAXIMUM_VALID_VALUE to the new disconnect type.
+    // 4) Update toString() with the newly added disconnect type.
+    // 5) Update android.telecom.DisconnectCauseUtil with any mappings to a telecom.DisconnectCause.
+    //
+    // NextId: 124
+    //*********************************************************************************************
+
+    /**
+     * Smallest valid value for call disconnect codes.
+     * @hide
+     */
+    public static final int MINIMUM_VALID_VALUE = NOT_DISCONNECTED;
+
+    /**
+     * Largest valid value for call disconnect codes.
+     * @hide
+     */
+    public static final int MAXIMUM_VALID_VALUE = NON_SELECTED_USER_CLEARING;
+
     /** Private constructor to avoid class instantiation. */
     private DisconnectCause() {
         // Do nothing.
@@ -507,6 +625,32 @@ public final class DisconnectCause {
             return "EMERGENCY_TEMP_FAILURE";
         case EMERGENCY_PERM_FAILURE:
             return "EMERGENCY_PERM_FAILURE";
+        case NO_CIRCUIT_AVAIL:
+            return "NO_CIRCUIT_AVAIL";
+        case NO_ROUTE_TO_DESTINATION:
+            return "NO_ROUTE_TO_DESTINATION";
+        case OPERATOR_DETERMINED_BARRING:
+            return "OPERATOR_DETERMINED_BARRING";
+        case CALL_FAIL_NO_USER_RESPONDING:
+            return "CALL_FAIL_NO_USER_RESPONDING";
+        case CALL_FAIL_NO_ANSWER_FROM_USER:
+            return "CALL_FAIL_NO_ANSWER_FROM_USER";
+        case CALL_FAIL_DESTINATION_OUT_OF_ORDER:
+            return "CALL_FAIL_DESTINATION_OUT_OF_ORDER";
+        case BEARER_CAPABILITY_NOT_AUTHORIZED:
+            return "BEARER_CAPABILITY_NOT_AUTHORIZED";
+        case CHANNEL_UNACCEPTABLE:
+            return "CHANNEL_UNACCEPTABLE";
+        case CALL_REJECTED:
+            return "CALL_REJECTED";
+        case NUMBER_CHANGED:
+            return "NUMBER_CHANGED";
+        case PREEMPTION:
+            return "PREEMPTION";
+        case FACILITY_REJECTED:
+            return "FACILITY_REJECTED";
+        case RESP_TO_STATUS_ENQUIRY:
+            return "RESP_TO_STATUS_ENQUIRY";
         case NORMAL_UNSPECIFIED:
             return "NORMAL_UNSPECIFIED";
         case IMS_SIP_ALTERNATE_EMERGENCY_CALL:
@@ -527,6 +671,70 @@ public final class DisconnectCause {
             return "EMERGENCY_CALL_OVER_WFC_NOT_AVAILABLE";
         case WFC_SERVICE_NOT_AVAILABLE_IN_THIS_LOCATION:
             return "WFC_SERVICE_NOT_AVAILABLE_IN_THIS_LOCATION";
+        case NETWORK_OUT_OF_ORDER:
+            return "NETWORK_OUT_OF_ORDER";
+        case TEMPORARY_FAILURE:
+            return "TEMPORARY_FAILURE";
+        case SWITCHING_EQUIPMENT_CONGESTION:
+            return "SWITCHING_EQUIPMENT_CONGESTION";
+        case ACCESS_INFORMATION_DISCARDED:
+            return "ACCESS_INFORMATION_DISCARDED";
+        case REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE:
+            return "REQUESTED_CIRCUIT_OR_CHANNEL_NOT_AVAILABLE";
+        case RESOURCES_UNAVAILABLE_OR_UNSPECIFIED:
+            return "RESOURCES_UNAVAILABLE_OR_UNSPECIFIED";
+        case QOS_UNAVAILABLE:
+            return "QOS_UNAVAILABLE";
+        case REQUESTED_FACILITY_NOT_SUBSCRIBED:
+            return "REQUESTED_FACILITY_NOT_SUBSCRIBED";
+        case INCOMING_CALLS_BARRED_WITHIN_CUG:
+            return "INCOMING_CALLS_BARRED_WITHIN_CUG";
+        case BEARER_CAPABILITY_UNAVAILABLE:
+            return "BEARER_CAPABILITY_UNAVAILABLE";
+        case SERVICE_OPTION_NOT_AVAILABLE:
+            return "SERVICE_OPTION_NOT_AVAILABLE";
+        case BEARER_SERVICE_NOT_IMPLEMENTED:
+            return "BEARER_SERVICE_NOT_IMPLEMENTED";
+        case REQUESTED_FACILITY_NOT_IMPLEMENTED:
+            return "REQUESTED_FACILITY_NOT_IMPLEMENTED";
+        case ONLY_DIGITAL_INFORMATION_BEARER_AVAILABLE:
+            return "ONLY_DIGITAL_INFORMATION_BEARER_AVAILABLE";
+        case SERVICE_OR_OPTION_NOT_IMPLEMENTED:
+            return "SERVICE_OR_OPTION_NOT_IMPLEMENTED";
+        case INVALID_TRANSACTION_IDENTIFIER:
+            return "INVALID_TRANSACTION_IDENTIFIER";
+        case USER_NOT_MEMBER_OF_CUG:
+            return "USER_NOT_MEMBER_OF_CUG";
+        case INCOMPATIBLE_DESTINATION:
+            return "INCOMPATIBLE_DESTINATION";
+        case INVALID_TRANSIT_NW_SELECTION:
+            return "INVALID_TRANSIT_NW_SELECTION";
+        case SEMANTICALLY_INCORRECT_MESSAGE:
+            return "SEMANTICALLY_INCORRECT_MESSAGE";
+        case INVALID_MANDATORY_INFORMATION:
+            return "INVALID_MANDATORY_INFORMATION";
+        case MESSAGE_TYPE_NON_IMPLEMENTED:
+            return "MESSAGE_TYPE_NON_IMPLEMENTED";
+        case MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE:
+            return "MESSAGE_TYPE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE";
+        case INFORMATION_ELEMENT_NON_EXISTENT:
+            return "INFORMATION_ELEMENT_NON_EXISTENT";
+        case CONDITIONAL_IE_ERROR:
+            return "CONDITIONAL_IE_ERROR";
+        case MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE:
+            return "MESSAGE_NOT_COMPATIBLE_WITH_PROTOCOL_STATE";
+        case RECOVERY_ON_TIMER_EXPIRED:
+            return "RECOVERY_ON_TIMER_EXPIRED";
+        case PROTOCOL_ERROR_UNSPECIFIED:
+            return "PROTOCOL_ERROR_UNSPECIFIED";
+        case INTERWORKING_UNSPECIFIED:
+            return "INTERWORKING_UNSPECIFIED";
+        case LOCAL_LOW_BATTERY:
+            return "LOCAL_LOW_BATTERY";
+        case HO_NOT_FEASIBLE:
+            return "HO_NOT_FEASIBLE";
+        case NON_SELECTED_USER_CLEARING:
+            return "NON_SELECTED_USER_CLEARING";
         default:
             return "INVALID: " + cause;
         }
