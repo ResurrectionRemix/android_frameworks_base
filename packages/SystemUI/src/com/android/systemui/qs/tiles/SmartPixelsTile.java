@@ -17,29 +17,32 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.PowerManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.systemui.Dependency;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.GlobalSetting;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.BatteryController;
 
-public class SmartPixelsTile extends QSTileImpl<BooleanState> {
+public class SmartPixelsTile extends QSTileImpl<BooleanState> implements
+        BatteryController.BatteryStateChangeCallback {
     private static final ComponentName SMART_PIXELS_SETTING_COMPONENT = new ComponentName(
             "com.android.settings", "com.android.settings.Settings$SmartPixelsActivity");
 
     private static final Intent SMART_PIXELS_SETTINGS =
             new Intent().setComponent(SMART_PIXELS_SETTING_COMPONENT);
+
+    private final BatteryController mBatteryController;
 
     private boolean mSmartPixelsEnable;
     private boolean mSmartPixelsOnPowerSave;
@@ -48,6 +51,7 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
 
     public SmartPixelsTile(QSHost host) {
         super(host);
+        mBatteryController = Dependency.get(BatteryController.class);
     }
 
     @Override
@@ -57,12 +61,10 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleSetListening(boolean listening) {
-        mListening = listening;
-        if (mListening) {
-            mContext.registerReceiver(mSmartPixelsReceiver,
-                    new IntentFilter(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED));
+        if (listening) {
+            mBatteryController.addCallback(this);
         } else {
-            mContext.unregisterReceiver(mSmartPixelsReceiver);
+            mBatteryController.removeCallback(this);
         }
     }
 
@@ -80,18 +82,21 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
         mSmartPixelsOnPowerSave = (Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.SMART_PIXELS_ON_POWER_SAVE,
                 0, UserHandle.USER_CURRENT) == 1);
-        mLowPowerMode = (Settings.Global.getInt(
-                mContext.getContentResolver(), Settings.Global.LOW_POWER_MODE, 0) == 1);
-        if (!mLowPowerMode || !mSmartPixelsOnPowerSave) {
-            if (!mSmartPixelsEnable) {
-                Settings.System.putIntForUser(mContext.getContentResolver(),
-                        Settings.System.SMART_PIXELS_ENABLE,
-                        1, UserHandle.USER_CURRENT);
-            } else {
-                Settings.System.putIntForUser(mContext.getContentResolver(),
-                        Settings.System.SMART_PIXELS_ENABLE,
-                        0, UserHandle.USER_CURRENT);
-            }
+        if (mLowPowerMode && mSmartPixelsOnPowerSave) {
+            Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.SMART_PIXELS_ON_POWER_SAVE,
+                    0, UserHandle.USER_CURRENT);
+            Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.SMART_PIXELS_ENABLE,
+                    0, UserHandle.USER_CURRENT);
+        } else if (!mSmartPixelsEnable) {
+            Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.SMART_PIXELS_ENABLE,
+                    1, UserHandle.USER_CURRENT);
+        } else {
+            Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.SMART_PIXELS_ENABLE,
+                    0, UserHandle.USER_CURRENT);
         }
         refreshState();
     }
@@ -109,8 +114,6 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
         mSmartPixelsOnPowerSave = (Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.SMART_PIXELS_ON_POWER_SAVE,
                 0, UserHandle.USER_CURRENT) == 1);
-        mLowPowerMode = (Settings.Global.getInt(
-                mContext.getContentResolver(), Settings.Global.LOW_POWER_MODE, 0) == 1);
         state.icon  = ResourceIcon.get(R.drawable.ic_qs_smart_pixels);
         if (state.slash == null) {
             state.slash = new SlashState();
@@ -139,10 +142,14 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
         return MetricsEvent.RESURRECTED;
     }
 
-    private BroadcastReceiver mSmartPixelsReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            refreshState();
-        }
-    };
+    @Override
+    public void onBatteryLevelChanged(int level, boolean plugged, boolean charging) {
+        // yurt
+    }
+
+    @Override
+    public void onPowerSaveChanged(boolean active) {
+        mLowPowerMode = active;
+        refreshState();
+    }
 }
