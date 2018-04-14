@@ -89,7 +89,7 @@
   <string name="quick_settings_usb_tether_label">Penambatan USB</string>
   <!-- Language toggle tile -->
   <string name="quick_settings_locale_label">Bahasa</string>
-  <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>
+  <string name="quick_settings_locale_more_locales_toast">Harap tambahkan bahasa lain untuk mengaktifkan fungsi toggle</string>
   <!-- Music tile -->
   <string name="quick_settings_music_label">Musik</string>
   <string name="quick_settings_music_play">Putar</string>
@@ -100,11 +100,11 @@
   <string name="quick_settings_sound_vibrate">Getar</string>
   <string name="quick_settings_sound_silent">Hening</string>
   <!-- Sound Search TIle -->
-  <string name="quick_settings_sound_search">Translate Folder</string>
+  <string name="quick_settings_sound_search">Pencarian Suara</string>
   <!-- Google Assist Tiles -->
   <string name="quick_settings_google_assist_label">pembantu</string>
-  <string name="quick_settings_google_voice_assist_label">bantuan suara</string>
-  <string name="quick_settings_google_now_label">umpan google</string>
+  <string name="quick_settings_google_voice_assist_label">Asisten suara</string>
+  <string name="quick_settings_google_now_label">Umpan Google</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">Tampilan Ambient</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -195,9 +195,9 @@
   <string name="keyguard_indication_turbo_power_time">Tersabung dengan mode TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> Sampai penuh)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower terhubung</string>
   <!-- Kill button in notification guts -->
-  <string name="force_stop_dlg_title">Force stop?</string>
+  <string name="force_stop_dlg_title">Hentikan Paksa?</string>
   <string name="force_stop_dlg_text">Jika Anda memaksa menghentikan aplikasi, itu mungkin akan mengganggunya.</string>
-  <string name="kill">Kill App</string>
+  <string name="kill">Tutup Apl.</string>
   <!-- Recents free RAM -->
-  <string name="recents_free_ram">Free RAM: %1$d MB</string>
+  <string name="recents_free_ram">Memori Bebas: %1$d MB</string>
 </resources>

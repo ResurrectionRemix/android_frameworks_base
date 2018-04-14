@@ -22,8 +22,8 @@
   <string name="global_action_restart_advanced">高级选项</string>
   <string name="global_action_restart_recovery">恢复模式</string>
   <string name="global_action_restart_bootloader">引导模式</string>
-  <string name="global_action_restart_ui">重启系统界面</string>
-  <string name="global_action_restart_hot">快速重启</string>
+  <string name="global_action_restart_ui">系统界面</string>
+  <string name="global_action_restart_hot">软重启</string>
   <string name="global_action_screenshot">屏幕截图</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">屏幕截图已删除</string>
@@ -55,7 +55,7 @@
   <string name="status_bar_data_saver">流量节省程序</string>
   <string name="lockscreen_hidden">无</string>
   <string name="custom_hint">滑动图标以启动</string>
-  <string name="systemui_tuner_navbar_title">导航栏设置</string>
+  <string name="systemui_tuner_navbar_title">原生导航栏设置</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">重新启动</string>
   <string name="quick_settings_reboot_recovery_label">恢复模式</string>
@@ -104,7 +104,7 @@
   <!-- Google Assist Tiles -->
   <string name="quick_settings_google_assist_label">助手</string>
   <string name="quick_settings_google_voice_assist_label">语音助手</string>
-  <string name="quick_settings_google_now_label">Google feed</string>
+  <string name="quick_settings_google_now_label">谷歌 feed</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">主动显示</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -187,7 +187,7 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
   <string name="pie_state_name">Pie 控制</string>
-  <string name="pie_state_summary">在沉浸模式下启用 Pie 控制</string>
+  <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
   <string name="pie_battery_level">"电池电量 "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">全部清除</string>

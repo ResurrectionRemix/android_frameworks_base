@@ -100,7 +100,10 @@
   <string name="quick_settings_sound_vibrate">कंपन</string>
   <string name="quick_settings_sound_silent">मौन</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">Recursion rom
+</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">Assistant</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">एम्बिएंट डिस्प्ले</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
