@@ -1219,6 +1219,8 @@ public class RecentsView extends FrameLayout {
              ContentResolver resolver = mContext.getContentResolver();
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.SHOW_CLEAR_ALL_RECENTS), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.RECENTS_LAYOUT_STYLE), false, this, UserHandle.USER_ALL);
              update();
          }
 
@@ -1229,6 +1231,12 @@ public class RecentsView extends FrameLayout {
 
          @Override
          public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.RECENTS_LAYOUT_STYLE))) {
+                try {
+                mTaskStackView.reloadOnConfigurationChange();
+                } catch (Exception e) {}
+             }
              update();
          }
 

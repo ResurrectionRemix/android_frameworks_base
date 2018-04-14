@@ -91,7 +91,7 @@ class FakeShadowDrawable extends Drawable {
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mCornerShadowPaint.setStyle(Paint.Style.FILL);
         mCornerShadowPaint.setDither(true);
-        mCornerRadius = Recents.getConfiguration().isGridEnabled ?
+        mCornerRadius = Recents.getConfiguration().isGridEnabled() ?
                 resources.getDimensionPixelSize(
                     R.dimen.recents_grid_task_view_rounded_corners_radius) :
                 resources.getDimensionPixelSize(R.dimen.recents_task_view_rounded_corners_radius);

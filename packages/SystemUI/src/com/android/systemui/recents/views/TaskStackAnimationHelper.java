@@ -115,7 +115,7 @@ public class TaskStackAnimationHelper {
 
     public TaskStackAnimationHelper(Context context, TaskStackView stackView) {
         mStackView = stackView;
-        mEnterAndExitFromHomeTranslationOffset = Recents.getConfiguration().isGridEnabled
+        mEnterAndExitFromHomeTranslationOffset = Recents.getConfiguration().isGridEnabled()
                 ? 0 : DOUBLE_FRAME_OFFSET_MS;
     }
 
