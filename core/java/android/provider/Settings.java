@@ -4471,6 +4471,12 @@ public final class Settings {
          */
         public static final String RECENTS_GRID = "recents_grid";
 
+        /**
+         * Recents lock icon
+         * @hide
+         */
+        public static final String RECENTS_LOCK_ICON = "recents_lock_icon";
+
  	/**
          * show clear all recents button
          * @hide
