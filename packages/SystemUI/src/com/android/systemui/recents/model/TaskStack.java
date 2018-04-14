@@ -323,7 +323,7 @@ public class TaskStack {
             private ViewState(int areaAlpha, int hintAlpha, @TextOrientation int hintOrientation,
                     int hintTextResId) {
                 dockAreaAlpha = areaAlpha;
-                dockAreaOverlay = new ColorDrawable(Recents.getConfiguration().isGridEnabled
+                dockAreaOverlay = new ColorDrawable(Recents.getConfiguration().isGridEnabled()
                         ? DOCK_AREA_GRID_BG_COLOR : DOCK_AREA_BG_COLOR);
                 dockAreaOverlay.setAlpha(0);
                 hintTextAlpha = hintAlpha;

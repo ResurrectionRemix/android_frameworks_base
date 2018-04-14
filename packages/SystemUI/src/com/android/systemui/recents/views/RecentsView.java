@@ -1540,6 +1540,8 @@ public class RecentsView extends FrameLayout {
                      Settings.System.RECENTS_DATE_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.RECENTS_GRID), false, this, UserHandle.USER_ALL);
              update();
          }
 
@@ -1581,6 +1583,11 @@ public class RecentsView extends FrameLayout {
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.MEM_TEXT_COLOR))) {
                  checkcolors();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.RECENTS_GRID))) {
+                try {
+                mTaskStackView.reloadOnConfigurationChange();
+                } catch (Exception e) {}
              }
              update();
          }

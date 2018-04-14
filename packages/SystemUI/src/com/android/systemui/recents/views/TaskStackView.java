@@ -281,7 +281,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         mStackScroller = new TaskStackViewScroller(context, this, mLayoutAlgorithm);
         mTouchHandler = new TaskStackViewTouchHandler(context, this, mStackScroller);
         mAnimationHelper = new TaskStackAnimationHelper(context, this);
-        mTaskCornerRadiusPx = Recents.getConfiguration().isGridEnabled ?
+        mTaskCornerRadiusPx = Recents.getConfiguration().isGridEnabled() ?
                 res.getDimensionPixelSize(R.dimen.recents_grid_task_view_rounded_corners_radius) :
                 res.getDimensionPixelSize(R.dimen.recents_task_view_rounded_corners_radius);
         mFastFlingVelocity = res.getDimensionPixelSize(R.dimen.recents_fast_fling_velocity);
@@ -291,7 +291,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         mStackActionButtonVisible = false;
 
         // Create a frame to draw around the focused task view
-        if (Recents.getConfiguration().isGridEnabled) {
+        if (Recents.getConfiguration().isGridEnabled()) {
             mTaskViewFocusFrame = new TaskViewFocusFrame(mContext, this,
                 mLayoutAlgorithm.mTaskGridLayoutAlgorithm);
             addView(mTaskViewFocusFrame);
@@ -823,7 +823,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
      */
     private void clipTaskViews() {
         // We never clip task views in grid layout
-        if (Recents.getConfiguration().isGridEnabled) {
+        if (Recents.getConfiguration().isGridEnabled()) {
             return;
         }
 
@@ -1597,7 +1597,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
 
     @Override
     public TaskView createView(Context context) {
-        if (Recents.getConfiguration().isGridEnabled) {
+        if (Recents.getConfiguration().isGridEnabled()) {
             return (GridTaskView) mInflater.inflate(R.layout.recents_grid_task_view, this, false);
         } else {
             return (TaskView) mInflater.inflate(R.layout.recents_task_view, this, false);
