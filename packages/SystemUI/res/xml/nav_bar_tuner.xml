@@ -69,4 +69,8 @@
         android:title="@string/navbar_editor_title"
         android:summary="@string/navbar_editor_summary"
         android:fragment="com.android.systemui.tuner.NavBarEditor" />
+
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="sysui_nav_bar_inverse"
+        android:title="@string/nav_bar_layout_inverse" />
 </PreferenceScreen>
