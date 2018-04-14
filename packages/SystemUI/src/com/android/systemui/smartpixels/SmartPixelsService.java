@@ -156,17 +156,22 @@ public class SmartPixelsService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (Intent.ACTION_DELETE.equals(intent.getAction()) ||
-                (intentProcessed && Intent.ACTION_INSERT.equals(intent.getAction()))) {
-            Log.d(LOG, "Service got shutdown intent");
-            stopSelf();
-            intentProcessed = true;
-            return START_NOT_STICKY;
+        if(intent != null && intent.getAction() != null) {
+            return START_STICKY;
         }
+        else {
+            if (Intent.ACTION_DELETE.equals(intent.getAction()) ||
+                    (intentProcessed && Intent.ACTION_INSERT.equals(intent.getAction()))) {
+                Log.d(LOG, "Service got shutdown intent");
+                stopSelf();
+                intentProcessed = true;
+                return START_NOT_STICKY;
+            }
 
         intentProcessed = true;
         Log.d(LOG, "Service got intent " + intent.getAction());
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
+        }
     }
 
     @Override
