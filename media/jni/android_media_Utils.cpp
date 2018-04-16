@@ -432,6 +432,8 @@ status_t ConvertKeyValueArraysToMessage(
     CHECK(floatClass.get() != NULL);
     ScopedLocalRef<jclass> byteBufClass(env, env->FindClass("java/nio/ByteBuffer"));
     CHECK(byteBufClass.get() != NULL);
+    ScopedLocalRef<jclass> byteArrayClass(env, env->FindClass("[B"));
+    CHECK(byteArrayClass.get() != NULL);
 
     sp<AMessage> msg = new AMessage;
 
@@ -550,9 +552,16 @@ status_t ConvertKeyValueArraysToMessage(
             }
 
             msg->setBuffer(key.c_str(), buffer);
+        } else if (env->IsInstanceOf(valueObj, byteArrayClass.get())) {
+            jbyteArray* bArray = reinterpret_cast<jbyteArray*>(&valueObj);
+            jsize len = env->GetArrayLength(*bArray);
+            jbyte *body = env->GetByteArrayElements(*bArray, 0);
+            sp<ABuffer> buffer = new ABuffer(len*sizeof(jbyte));
+            memcpy(buffer->data(), body, buffer->size());
+            msg->setBuffer(key.c_str(), buffer);
+            env->ReleaseByteArrayElements(*bArray, body, 0);
         }
     }
-
     *out = msg;
 
     return OK;

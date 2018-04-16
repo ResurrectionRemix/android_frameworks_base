@@ -63,12 +63,13 @@ public abstract class PlayerBase {
     private IAppOpsCallback mAppOpsCallback;
     private boolean mHasAppOpsPlayAudio = true; // sync'd on mLock
     private final Object mLock = new Object();
+    private final Object mStateLock = new Object();
 
     private final int mImplType;
     // uniquely identifies the Player Interface throughout the system (P I Id)
     private int mPlayerIId;
 
-    private int mState; // sync'd on mLock
+    private int mState; // sync'd on mStateLock
     private int mStartDelayMs = 0; // sync'd on mLock
     private float mPanMultiplierL = 1.0f; // sync'd on mLock
     private float mPanMultiplierR = 1.0f; // sync'd on mLock
@@ -136,7 +137,7 @@ public abstract class PlayerBase {
     void baseStart() {
         if (DEBUG) { Log.v(TAG, "baseStart() piid=" + mPlayerIId); }
         try {
-            synchronized (mLock) {
+            synchronized (mStateLock) {
                 mState = AudioPlaybackConfiguration.PLAYER_STATE_STARTED;
                 getService().playerEvent(mPlayerIId, mState);
             }
@@ -165,7 +166,7 @@ public abstract class PlayerBase {
     void basePause() {
         if (DEBUG) { Log.v(TAG, "basePause() piid=" + mPlayerIId); }
         try {
-            synchronized (mLock) {
+            synchronized (mStateLock) {
                 mState = AudioPlaybackConfiguration.PLAYER_STATE_PAUSED;
                 getService().playerEvent(mPlayerIId, mState);
             }
@@ -177,7 +178,7 @@ public abstract class PlayerBase {
     void baseStop() {
         if (DEBUG) { Log.v(TAG, "baseStop() piid=" + mPlayerIId); }
         try {
-            synchronized (mLock) {
+            synchronized (mStateLock) {
                 mState = AudioPlaybackConfiguration.PLAYER_STATE_STOPPED;
                 getService().playerEvent(mPlayerIId, mState);
             }
@@ -228,7 +229,7 @@ public abstract class PlayerBase {
     void baseRelease() {
         if (DEBUG) { Log.v(TAG, "baseRelease() piid=" + mPlayerIId + " state=" + mState); }
         try {
-            synchronized (mLock) {
+            synchronized (mStateLock) {
                 if (mState != AudioPlaybackConfiguration.PLAYER_STATE_RELEASED) {
                     getService().releasePlayer(mPlayerIId);
                     mState = AudioPlaybackConfiguration.PLAYER_STATE_RELEASED;

@@ -2216,10 +2216,21 @@ public class Notification implements Parcelable
             PendingIntent.setOnMarshaledListener(
                     (PendingIntent intent, Parcel out, int outFlags) -> {
                 if (parcel == out) {
-                    if (allPendingIntents == null) {
-                        allPendingIntents = new ArraySet<>();
+                    //In some cases such as removing or posting a StatusbarNotification,
+                    //the notification will be deliverd to serveral relative listeners.
+                    //In this procedure the  its field "allPendingIntents" which implemented
+                    //as ArraySet will be used to collect the pendingIntents in the
+                    //notification.However ArraySet is not thread-safe.Data race in ArraySet
+                    //will cause the its actual size inconsistent with its recorded size mSzie,
+                    //whick whill lead to an ArrayIndexOutOfBoundsException.Add this lock to
+                    //avoid data race problem when sending the same notification to multiple
+                    //processes via binder call.
+                    synchronized (this){
+                        if (allPendingIntents == null) {
+                            allPendingIntents = new ArraySet<>();
+                        }
+                        allPendingIntents.add(intent);
                     }
-                    allPendingIntents.add(intent);
                 }
             });
         }
@@ -2227,8 +2238,10 @@ public class Notification implements Parcelable
             // IMPORTANT: Add marshaling code in writeToParcelImpl as we
             // want to intercept all pending events written to the parcel.
             writeToParcelImpl(parcel, flags);
-            // Must be written last!
-            parcel.writeArraySet(allPendingIntents);
+            synchronized (this) {
+                // Must be written last!
+                parcel.writeArraySet(allPendingIntents);
+            }
         } finally {
             if (collectPendingIntents) {
                 PendingIntent.setOnMarshaledListener(null);

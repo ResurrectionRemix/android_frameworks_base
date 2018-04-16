@@ -1428,7 +1428,7 @@ public class AudioService extends IAudioService.Stub
                 direction/*val1*/, flags/*val2*/, new StringBuilder(callingPackage)
                         .append("/").append(caller).append(" uid:").append(uid).toString()));
         final int streamType;
-        if (mUserSelectedVolumeControlStream) { // implies mVolumeControlStream != -1
+        if (mUserSelectedVolumeControlStream && (mVolumeControlStream != -1)) { // implies mVolumeControlStream != -1
             streamType = mVolumeControlStream;
         } else {
             final int maybeActiveStreamType = getActiveStreamType(suggestedStreamType);

@@ -20,6 +20,10 @@ import android.database.CursorWindow;
 import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
 import android.util.Log;
+import android.util.MutableBoolean;
+import android.util.MutableInt;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Represents a query that reads the resulting rows into a {@link SQLiteQuery}.
@@ -32,6 +36,9 @@ public final class SQLiteQuery extends SQLiteProgram {
     private static final String TAG = "SQLiteQuery";
 
     private final CancellationSignal mCancellationSignal;
+    private final MutableInt mNumRowsFound = new MutableInt(0);
+    private final WeakReference<SQLiteQuery> mWeak = new WeakReference(this);
+    private WeakReference<SQLiteConnection.PreparedStatement> mLastStmt = null;
 
     SQLiteQuery(SQLiteDatabase db, String query, CancellationSignal cancellationSignal) {
         super(db, query, null, cancellationSignal);
@@ -48,21 +55,25 @@ public final class SQLiteQuery extends SQLiteProgram {
      * If it won't fit, then the query should discard part of what it filled.
      * @param countAllRows True to count all rows that the query would
      * return regardless of whether they fit in the window.
-     * @return Number of rows that were enumerated.  Might not be all rows
-     * unless countAllRows is true.
+     * @param exhausted will be set to true if the full result set was consumed - never set to false
+     * @return Number of rows that have been consumed from this result set so far. Might not be all
+     * rows unless countAllRows is true.
      *
      * @throws SQLiteException if an error occurs.
      * @throws OperationCanceledException if the operation was canceled.
      */
-    int fillWindow(CursorWindow window, int startPos, int requiredPos, boolean countAllRows) {
+    int traverse(CursorWindow window, int startPos, int requiredPos,
+                 boolean countAllRows, MutableBoolean exhausted) {
         acquireReference();
         try {
-            window.acquireReference();
+            if (window != null) window.acquireReference();
             try {
-                int numRows = getSession().executeForCursorWindow(getSql(), getBindArgs(),
+                WeakReference<SQLiteConnection.PreparedStatement> stmt;
+                stmt = getSession().executeForCursorWindow(getSql(), getBindArgs(),
                         window, startPos, requiredPos, countAllRows, getConnectionFlags(),
-                        mCancellationSignal);
-                return numRows;
+                        mCancellationSignal, exhausted, mNumRowsFound, this.mWeak);
+                setLastStmt(stmt);
+                return mNumRowsFound.value;
             } catch (SQLiteDatabaseCorruptException ex) {
                 onCorruption();
                 throw ex;
@@ -70,11 +81,35 @@ public final class SQLiteQuery extends SQLiteProgram {
                 Log.e(TAG, "exception: " + ex.getMessage() + "; query: " + getSql());
                 throw ex;
             } finally {
-                window.releaseReference();
+                if (window != null) window.releaseReference();
             }
         } finally {
             releaseReference();
         }
+    }
+
+    private final void setLastStmt(WeakReference<SQLiteConnection.PreparedStatement> stmt) {
+        if (mLastStmt == stmt) {
+            return;
+        }
+        if (mLastStmt != null) {
+            getSession().releaseStmtRef(mLastStmt, this.mWeak);
+        }
+        mLastStmt = stmt;
+    }
+
+    void onRequery() {
+        setLastStmt(null);
+    }
+
+    void deactivate() {
+        setLastStmt(null);
+    }
+
+    @Override
+    public void close() {
+        setLastStmt(null);
+        super.close();
     }
 
     @Override

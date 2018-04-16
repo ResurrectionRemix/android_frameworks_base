@@ -536,8 +536,11 @@ public class GnssLocationProvider implements LocationProviderInterface {
             if (DEBUG) Log.d(TAG, "SIM MCC/MNC is available: " + mccMnc);
             synchronized (mLock) {
                 if (configManager != null) {
-                    PersistableBundle b = configManager.getConfig();
-                    isKeepLppProfile = b.getBoolean(CarrierConfigManager.KEY_PERSIST_LPP_MODE_BOOL);
+                    PersistableBundle bundle = configManager.getConfig();
+                    if (bundle != null) {
+                        isKeepLppProfile = bundle.getBoolean(
+                              CarrierConfigManager.KEY_PERSIST_LPP_MODE_BOOL);
+                    }
                 }
                 if (isKeepLppProfile) {
                     // load current properties for the carrier

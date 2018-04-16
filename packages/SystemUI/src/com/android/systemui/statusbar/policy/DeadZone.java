@@ -92,6 +92,7 @@ public class DeadZone extends View {
 
         setFlashOnTouchCapture(context.getResources().getBoolean(R.bool.config_dead_zone_flash));
         mStatusBar = SysUiServiceProvider.getComponent(context, StatusBar.class);
+        a.recycle();
     }
 
     static float lerp(float a, float b, float f) {

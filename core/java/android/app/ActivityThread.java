@@ -125,6 +125,7 @@ import com.android.internal.content.ReferrerIntent;
 import com.android.internal.os.BinderInternal;
 import com.android.internal.os.RuntimeInit;
 import com.android.internal.os.SomeArgs;
+import com.android.internal.policy.DecorView;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.IndentingPrintWriter;
@@ -416,6 +417,21 @@ public final class ActivityThread {
 
         public boolean isPersistable() {
             return activityInfo.persistableMode == ActivityInfo.PERSIST_ACROSS_REBOOTS;
+        }
+
+        public boolean isInStack() {
+            try {
+                int stackId = ActivityManagerNative.getDefault().getActivityStackId(token);
+                int taskId = ActivityManagerNative.getDefault().getTaskForActivity(token, false);
+                // INVALID_STACK_ID = -1 and INVALID_TASK_ID = -1
+                if (stackId != -1 && taskId != -1) {
+                    return true;
+                }
+            } catch (RemoteException e) {
+                Log.w(TAG, "remote exception occur while check the task and stack of activity:"
+                        + this.toString(), e);
+            }
+            return false;
         }
 
         public String toString() {
@@ -2832,6 +2848,12 @@ public final class ActivityThread {
     }
 
     private void handleLaunchActivity(ActivityClientRecord r, Intent customIntent, String reason) {
+        // can not launch the activity that its taskId or stackId is invalid.
+        if (!r.isInStack()) {
+            Log.w(TAG,"handleLaunchActivity stack or task is invalid, can not launch it, r:" + r);
+            return;
+        }
+
         // If we are getting ready to gc after going to the background, well
         // we are back active so skip it.
         unscheduleGcIdler();
@@ -3654,7 +3676,10 @@ public final class ActivityThread {
                 l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
                 l.softInputMode |= forwardBit;
                 if (r.mPreserveWindow) {
-                    a.mWindowAdded = true;
+                    // if the preserve decor view is not attached to window, we
+                    // should make sure that it will been attached in the following
+                    // workflow.
+                    if(DecorView.isAddedToWindow(decor)) a.mWindowAdded = true;
                     r.mPreserveWindow = false;
                     // Normally the ViewRoot sets up callbacks with the Activity
                     // in addView->ViewRootImpl#setView. If we are instead reusing
@@ -3669,6 +3694,7 @@ public final class ActivityThread {
                     if (!a.mWindowAdded) {
                         a.mWindowAdded = true;
                         wm.addView(decor, l);
+                        DecorView.setAddedToWindow(a.mDecor);
                     } else {
                         // The activity will get a callback for this {@link LayoutParams} change
                         // earlier. However, at that time the decor will not be set (this is set

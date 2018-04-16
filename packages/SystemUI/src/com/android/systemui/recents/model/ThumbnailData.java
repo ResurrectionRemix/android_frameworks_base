@@ -35,7 +35,10 @@ public class ThumbnailData {
     public static ThumbnailData createFromTaskSnapshot(TaskSnapshot snapshot) {
         ThumbnailData out = new ThumbnailData();
         out.thumbnail = Bitmap.createHardwareBitmap(snapshot.getSnapshot());
-        out.insets.set(snapshot.getContentInsets());
+        Rect rect = snapshot.getContentInsets();
+        if (rect != null) {
+            out.insets.set(rect);
+        }
         out.orientation = snapshot.getOrientation();
         out.reducedResolution = snapshot.isReducedResolution();
         out.scale = snapshot.getScale();

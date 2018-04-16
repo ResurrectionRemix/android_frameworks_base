@@ -254,7 +254,7 @@ static jint nativeCloseHal(JNIEnv* env, jobject clazz) {
 
 // TODO: clean up void methods
 static const JNINativeMethod g_methods[] = {
-    { "nativeAuthenticate", "(JI)I", (void*)nativeAuthenticate },
+    { "nativeAuthenticate", "!(JI)I", (void*)nativeAuthenticate },
     { "nativeStopAuthentication", "()I", (void*)nativeStopAuthentication },
     { "nativeEnroll", "([BII)I", (void*)nativeEnroll },
     { "nativeSetActiveGroup", "(I[B)I", (void*)nativeSetActiveGroup },
