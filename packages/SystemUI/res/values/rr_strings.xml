@@ -207,4 +207,7 @@
     <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Kill App</string>
 
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+
 </resources>
