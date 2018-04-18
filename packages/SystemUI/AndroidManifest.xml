@@ -312,15 +312,6 @@
             </intent-filter>
         </service>
 
-        <!-- Smart Pixels -->
-        <service android:name=".smartpixels.SmartPixelsService"
-            android:enabled="true" />
-        <receiver android:name=".smartpixels.SmartPixelsReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <service android:name=".ImageWallpaper"
                 android:permission="android.permission.BIND_WALLPAPER"
                 android:exported="true" />

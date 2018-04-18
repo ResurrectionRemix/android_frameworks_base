@@ -3856,6 +3856,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name="com.android.server.smartpixels.SmartPixelsReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service android:name="android.hardware.location.GeofenceHardwareService"
             android:permission="android.permission.LOCATION_HARDWARE"
             android:exported="false" />
@@ -3910,6 +3916,9 @@
         <service android:name="com.android.server.timezone.TimeZoneUpdateIdler"
                  android:permission="android.permission.BIND_JOB_SERVICE" >
         </service>
+
+        <service android:name="com.android.server.smartpixels.SmartPixelsService"
+                 android:exported="true" />
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@
  *
  */
 
-package com.android.systemui.smartpixels;
+package com.android.server.smartpixels;
 
 import android.Manifest;
 import android.app.Service;
@@ -58,8 +58,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
-import com.android.systemui.R;
 
 public class SmartPixelsService extends Service {
     public static final String LOG = "SmartPixelsService";
@@ -198,7 +196,7 @@ public class SmartPixelsService extends Service {
         Point windowSize = new Point();
         windowManager.getDefaultDisplay().getRealSize(windowSize);
         Resources res = getResources();
-        int mStatusBarHeight = res.getDimensionPixelOffset(R.dimen.status_bar_height);
+        int mStatusBarHeight = res.getDimensionPixelOffset(com.android.internal.R.dimen.status_bar_height);
         displaySize.x += displaySize.x - windowSize.x + (mStatusBarHeight * 2);
         displaySize.y += displaySize.y - windowSize.y + (mStatusBarHeight * 2);
 

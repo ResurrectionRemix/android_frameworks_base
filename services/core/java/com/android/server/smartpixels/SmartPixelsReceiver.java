@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.smartpixels;
+package com.android.server.smartpixels;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -70,7 +70,7 @@ public class SmartPixelsReceiver extends BroadcastReceiver {
 
         public void update() {
             final PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            Intent smartPixels = new Intent(mContext, com.android.systemui.smartpixels.SmartPixelsService.class);
+            Intent smartPixels = new Intent(mContext, com.android.server.smartpixels.SmartPixelsService.class);
             ContentResolver resolver = mContext.getContentResolver();
 
             mSmartPixelsEnable = Settings.System.getIntForUser(
