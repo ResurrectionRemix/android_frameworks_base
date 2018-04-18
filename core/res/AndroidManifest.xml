@@ -3856,12 +3856,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.android.server.smartpixels.SmartPixelsReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <service android:name="android.hardware.location.GeofenceHardwareService"
             android:permission="android.permission.LOCATION_HARDWARE"
             android:exported="false" />
