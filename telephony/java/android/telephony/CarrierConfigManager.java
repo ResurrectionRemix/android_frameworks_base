@@ -199,6 +199,13 @@ public class CarrierConfigManager {
     public static final String
             KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL = "support_emergency_sms_over_ims_bool";
 
+    /**
+     * Indicates if carrier supports emergency sms.
+     * @hide
+     */
+    public static final String
+            KEY_EMERGENCY_SMS_SUPPORT_BOOL = "emergency_sms_support_bool";
+
     /** Flag indicating if the phone is a world phone */
     public static final String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
 
