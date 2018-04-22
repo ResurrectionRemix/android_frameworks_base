@@ -20,7 +20,7 @@
   <string name="quick_settings_rr_label">Gelişmiş ayarlar</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">Gelişmiş</string>
-  <string name="global_action_restart_recovery">Kurtarma modu</string>
+  <string name="global_action_restart_recovery">Kurtarma</string>
   <string name="global_action_restart_bootloader">Ön yükleyici</string>
   <string name="global_action_restart_ui">Sistem arayüzü</string>
   <string name="global_action_restart_hot">Hızlı</string>
@@ -58,7 +58,7 @@
   <string name="systemui_tuner_navbar_title">Varsayılan ayarlar</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">Yeniden başlat</string>
-  <string name="quick_settings_reboot_recovery_label">Kurtarma modu</string>
+  <string name="quick_settings_reboot_recovery_label">Kurtarma</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">Ekran görüntüsü alınamadı</string>
   <string name="screenshot_abort_text">İşlem iptal edildi.</string>

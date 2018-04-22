@@ -100,7 +100,11 @@
   <string name="quick_settings_sound_vibrate">진동</string>
   <string name="quick_settings_sound_silent">조용히</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">사운드 검색</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">어시스턴트</string>
+  <string name="quick_settings_google_voice_assist_label">음성 어시스턴트</string>
+  <string name="quick_settings_google_now_label">구글 피드</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">절전 모드 자동 해제</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -188,7 +192,12 @@
   <string name="quick_settings_pie">Pie 컨트롤</string>
   <string name="recents_custom_android_n">모두 지우기</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_turbo_power_time">TurboPower 연결됨 (<xliff:g id="charging_time_left">%s</xliff:g> 풀 충전까지 남음)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 연결</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">강제로 중지하시겠습니까?</string>
+  <string name="force_stop_dlg_text">강제로 앱을 종료하면 예기치 않은 오류가 발생할 수 있습니다.</string>
+  <string name="kill">앱 종료</string>
   <!-- Recents free RAM -->
+  <string name="recents_free_ram">사용 가능한 RAM: %1$dMB</string>
 </resources>
