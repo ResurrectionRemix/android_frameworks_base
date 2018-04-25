@@ -197,6 +197,9 @@ public class CustomTile extends QSTileImpl<State> implements TileChangeListener 
     public void handleSetListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
+        if (mServiceManager == null) {
+            return;
+        }
         try {
             if (listening) {
                 setTileIcon();

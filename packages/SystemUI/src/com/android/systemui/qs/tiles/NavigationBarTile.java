@@ -135,6 +135,9 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleSetListening(boolean listening) {
+        if (mObserver == null) {
+            return;
+        }
         if (listening) {
             mContext.getContentResolver().registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.NAVIGATION_BAR_MODE),

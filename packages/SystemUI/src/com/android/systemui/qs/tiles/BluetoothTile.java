@@ -121,6 +121,9 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (mController == null) {
+            return;
+        }
         final boolean enabled = mController.isBluetoothEnabled();
         final boolean connected = mController.isBluetoothConnected();
         state.isTransient = mController.isBluetoothConnecting()
