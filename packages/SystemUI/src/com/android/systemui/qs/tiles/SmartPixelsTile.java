@@ -61,6 +61,9 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> implements
 
     @Override
     public void handleSetListening(boolean listening) {
+        if (mSmartPixelsReceiver == null) {
+            return;
+        }
         if (listening) {
             mBatteryController.addCallback(this);
         } else {

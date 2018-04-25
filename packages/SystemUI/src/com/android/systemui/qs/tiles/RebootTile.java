@@ -88,5 +88,8 @@ public class RebootTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleSetListening(boolean listening) {
+        if (mSmartPixelsReceiver == null) {
+            return;
+        }
     }
 }
