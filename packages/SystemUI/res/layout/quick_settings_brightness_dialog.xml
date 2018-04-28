@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_qs_brightness_auto_off"
+        android:src="@drawable/ic_qs_brightness_auto_off_new"
         android:contentDescription="@null"
         android:layout_marginStart="25.0dip" />
 
