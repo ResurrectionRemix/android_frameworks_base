@@ -436,7 +436,6 @@ public class QSFooterImpl extends FrameLayout implements Tunable, QSFooter,
          }
      }
  
-
     private void startRunningServicesActivity() {
         Intent intent = new Intent();
         intent.setClassName("com.android.settings",
