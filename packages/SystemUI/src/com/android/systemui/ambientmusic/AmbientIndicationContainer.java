@@ -17,12 +17,14 @@ import com.android.systemui.R;
 import com.android.systemui.ambientmusic.AmbientIndicationInflateListener;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.doze.DozeLog;
+import com.android.systemui.doze.DozeReceiver;
 import com.android.systemui.statusbar.phone.StatusBar;
 
 import java.util.concurrent.TimeUnit;
 
-public class AmbientIndicationContainer extends AutoReinflateContainer {
+public class AmbientIndicationContainer extends AutoReinflateContainer implements DozeReceiver {
     private View mAmbientIndication;
+    private boolean mDozing;
     private ImageView mIcon;
     private CharSequence mIndication;
     private StatusBar mStatusBar;
@@ -32,11 +34,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
     private MediaMetadata mMediaMetaData;
     private boolean mForcedMediaDoze;
     private Handler mHandler;
-    private boolean mInfoAvailable;
-    private String mInfoToSet;
-    private String mLengthInfo;
-    private boolean mPulsing;
-    private String mLastInfo;
+    private boolean mScrollingInfo;
 
     public AmbientIndicationContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -61,23 +59,14 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
         setIndication(mMediaMetaData);
     }
 
-    public void setPulsing(boolean pulsing) {
-        mPulsing = pulsing;
-        setTickerMarquee(pulsing);
-        if (pulsing && mInfoAvailable) {
-            mText.setText(mInfoToSet);
-            mLastInfo = mInfoToSet;
-            mTrackLenght.setText(mLengthInfo);
-            mAmbientIndication.setVisibility(View.VISIBLE);
-        } else {
-            mAmbientIndication.setVisibility(View.INVISIBLE);
-            mText.setText(null);
-            mTrackLenght.setText(null);
-        }
+    @Override
+    public void setDozing(boolean dozing) {
+        mDozing = dozing;
+        setVisibility(dozing ? View.VISIBLE : View.INVISIBLE);
         updatePosition();
     }
 
-    private void setTickerMarquee(boolean enable) {
+    public void setTickerMarquee(boolean enable) {
         if (enable) {
             setTickerMarquee(false);
             mHandler.postDelayed(new Runnable() {
@@ -86,11 +75,13 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
                     mText.setEllipsize(TruncateAt.MARQUEE);
                     mText.setMarqueeRepeatLimit(2);
                     mText.setSelected(true);
+                    mScrollingInfo = true;
                 }
             }, 1600);
         } else {
             mText.setEllipsize(null);
             mText.setSelected(false);
+            mScrollingInfo = false;
         }
     }
 
@@ -108,6 +99,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
 
     public void setIndication(MediaMetadata mediaMetaData) {
         CharSequence charSequence = null;
+        CharSequence lenghtInfo = null;
         if (mediaMetaData != null) {
             CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
             CharSequence album = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ALBUM);
@@ -118,40 +110,30 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
                     too many infos, so let's skip album name to keep a smaller text */
                 charSequence = artist.toString() /*+ " - " + album.toString()*/ + " - " + title.toString();
                 if (duration != 0) {
-                    mLenghtInfo = String.format("%02d:%02d",
+                    lenghtInfo = String.format("%02d:%02d",
                             TimeUnit.MILLISECONDS.toMinutes(duration),
                             TimeUnit.MILLISECONDS.toSeconds(duration) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))).toString();
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
+                    );
                 }
             }
         }
-        if (mPulsing) {
+        if (mScrollingInfo) {
             // if we are already showing an Ambient Notification with track info,
             // stop the current scrolling and start it delayed again for the next song
             setTickerMarquee(true);
         }
-        
-        mInfoToSet = null;
-        if (!TextUtils.isEmpty(charSequence)) {
-            mInfoToSet = charSequence.toString();
+        mText.setText(charSequence);
+        mTrackLenght.setText(lenghtInfo);
+        mMediaMetaData = mediaMetaData;
+        boolean infoAvaillable = TextUtils.isEmpty(charSequence);
+        if (infoAvaillable) {
+            mAmbientIndication.setVisibility(View.INVISIBLE);
+        } else {
+            mAmbientIndication.setVisibility(View.VISIBLE);
         }
-
-        mInfoAvailable = mInfoToSet != null;
-        if (mInfoAvailable) {
-            mText.setText(mInfoToSet);
-            mTrackLenght.setText(mLengthInfo);
-            mMediaMetaData = mediaMetaData;
-            if (mPulsing) {
-                mAmbientIndication.setVisibility(View.VISIBLE);
-            }
-            boolean isAnotherTrack = mInfoAvailable
-                    && (TextUtils.isEmpty(mLastInfo) || (!TextUtils.isEmpty(mLastInfo) && !mLastInfo.equals(mInfoToSet)));
-            if (mStatusBar != null && isAnotherTrack) {
-                 mStatusBar.triggerAmbientForMedia();
-             }
-            if (mPulsing) {
-                mLastInfo = mInfoToSet;
-            }
+        if (mStatusBar != null) {
+            mStatusBar.triggerAmbientForMedia();
         }
     }
 }
