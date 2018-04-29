@@ -29,7 +29,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
     private CharSequence mIndication;
     private StatusBar mStatusBar;
     private TextView mText;
-    private TextView mTrackLenght;
+    private TextView mTrackLength;
     private Context mContext;
     private MediaMetadata mMediaMetaData;
     private boolean mForcedMediaDoze;
@@ -54,7 +54,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
     public void updateAmbientIndicationView(View view) {
         mAmbientIndication = findViewById(R.id.ambient_indication);
         mText = (TextView)findViewById(R.id.ambient_indication_text);
-        mTrackLenght = (TextView)findViewById(R.id.ambient_indication_track_lenght);
+        mTrackLength = (TextView)findViewById(R.id.ambient_indication_track_length);
         mIcon = (ImageView)findViewById(R.id.ambient_indication_icon);
         setIndication(mMediaMetaData);
     }
@@ -99,7 +99,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
 
     public void setIndication(MediaMetadata mediaMetaData) {
         CharSequence charSequence = null;
-        CharSequence lenghtInfo = null;
+        CharSequence lengthInfo = null;
         if (mediaMetaData != null) {
             CharSequence artist = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ARTIST);
             CharSequence album = mediaMetaData.getText(MediaMetadata.METADATA_KEY_ALBUM);
@@ -110,7 +110,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
                     too many infos, so let's skip album name to keep a smaller text */
                 charSequence = artist.toString() /*+ " - " + album.toString()*/ + " - " + title.toString();
                 if (duration != 0) {
-                    lenghtInfo = String.format("%02d:%02d",
+                    lengthInfo = String.format("%02d:%02d",
                             TimeUnit.MILLISECONDS.toMinutes(duration),
                             TimeUnit.MILLISECONDS.toSeconds(duration) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
@@ -124,7 +124,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
             setTickerMarquee(true);
         }
         mText.setText(charSequence);
-        mTrackLenght.setText(lenghtInfo);
+        mTrackLength.setText(lengthInfo);
         mMediaMetaData = mediaMetaData;
         boolean infoAvaillable = TextUtils.isEmpty(charSequence);
         if (infoAvaillable) {
