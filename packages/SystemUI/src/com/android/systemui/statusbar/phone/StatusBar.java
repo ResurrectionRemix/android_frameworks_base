@@ -2130,7 +2130,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mNavigationBar != null) {
                 Notification n = entry.notification.getNotification();
                 int[] colors = {n.backgroundColor, n.foregroundColor,
-                        n.primaryTextColor, n.secondaryTextColor};
                 mNavigationBar.setPulseColors(n.isColorizedMedia(), colors);
             }
         }

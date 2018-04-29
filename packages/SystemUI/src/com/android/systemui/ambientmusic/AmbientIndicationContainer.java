@@ -56,7 +56,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
     public void updateAmbientIndicationView(View view) {
         mAmbientIndication = findViewById(R.id.ambient_indication);
         mText = (TextView)findViewById(R.id.ambient_indication_text);
-        mTrackLenght = (TextView)findViewById(R.id.ambient_indication_track_lenght);
+        mTrackLength = (TextView)findViewById(R.id.ambient_indication_track_length);
         mIcon = (ImageView)findViewById(R.id.ambient_indication_icon);
         setIndication(mMediaMetaData);
     }
@@ -67,7 +67,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
         if (pulsing && mInfoAvailable) {
             mText.setText(mInfoToSet);
             mLastInfo = mInfoToSet;
-            mTrackLenght.setText(mLengthInfo);
+            mTrackLength.setText(mLengthInfo);
             mAmbientIndication.setVisibility(View.VISIBLE);
         } else {
             mAmbientIndication.setVisibility(View.INVISIBLE);
@@ -118,7 +118,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer {
                     too many infos, so let's skip album name to keep a smaller text */
                 charSequence = artist.toString() /*+ " - " + album.toString()*/ + " - " + title.toString();
                 if (duration != 0) {
-                    mLenghtInfo = String.format("%02d:%02d",
+                    mLengthInfo = String.format("%02d:%02d",
                             TimeUnit.MILLISECONDS.toMinutes(duration),
                             TimeUnit.MILLISECONDS.toSeconds(duration) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))).toString();
