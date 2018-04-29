@@ -416,6 +416,11 @@
             android:process=":screenshot"
             android:exported="false" />
 
+        <!-- Callback for editing screenshot notification -->
+        <receiver android:name=".screenshot.GlobalScreenshot$EditScreenshotReceiver"
+                  android:process=":screenshot"
+                  android:exported="false" />
+
         <!-- Callback for deleting screenshot notification -->
         <receiver android:name=".screenshot.GlobalScreenshot$DeleteScreenshotReceiver"
             android:process=":screenshot"
