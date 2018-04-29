@@ -2118,6 +2118,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         entry.row.setLowPriorityStateUpdated(false);
 
         if (mEntryToRefresh == entry) {
+<<<<<<< HEAD
+=======
             final Notification n = entry.notification.getNotification();
             if (mTickerEnabled == 2) {
                 tick(entry.notification, true, true, mMediaMetadata);
@@ -2127,6 +2129,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
             final int[] colors = {n.backgroundColor, n.foregroundColor,
                     n.primaryTextColor, n.secondaryTextColor};
+>>>>>>> 2dd5e9f... Ambient and statusbar media tickers: code fixes and improvements
             if (mNavigationBar != null) {
                 Notification n = entry.notification.getNotification();
                 int[] colors = {n.backgroundColor, n.foregroundColor,
