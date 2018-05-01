@@ -18,11 +18,14 @@ package com.android.keyguard;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.media.AudioManager;
+import android.provider.Settings;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.service.trust.TrustAgentService;
 import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
@@ -101,7 +104,10 @@ public class KeyguardHostView extends FrameLayout implements SecurityCallback {
         @Override
         public void onTrustChanged(int userId) {
             if (userId != KeyguardUpdateMonitor.getCurrentUser()) return;
-            if (mKeyguardUpdateMonitor.getUserCanSkipBouncer(userId) && mKeyguardUpdateMonitor.getUserHasTrust(userId)){
+            int mFaceAuto = Settings.Secure.getIntForUser(getContext().getContentResolver(),
+                                  Settings.Secure.FACE_AUTO_UNLOCK, 0, UserHandle.USER_CURRENT);
+            if (mKeyguardUpdateMonitor.getUserCanSkipBouncer(userId)
+                            && mKeyguardUpdateMonitor.getUserHasTrust(userId) && mFaceAuto == 1) {
                 dismiss(false, userId);
             }
         }
