@@ -200,4 +200,6 @@
   <string name="kill">ऐप रुकाए</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">बची हुई RAM: %1$d MB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

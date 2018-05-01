@@ -200,4 +200,6 @@
   <string name="kill">Τερματισμός Εφαρμογής</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

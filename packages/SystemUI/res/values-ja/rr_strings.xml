@@ -196,4 +196,6 @@
   <string name="kill">アプリを終了</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">空きメモリ: %1$d MB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

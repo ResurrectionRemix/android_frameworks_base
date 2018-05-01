@@ -36,7 +36,7 @@
   <string name="keyguard_plugged_in_dash_charging">الشحن السريع</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">وضع الخروج مفعل</string>
-  <string name="onthego_notif_title">تم تفعيل وضع On-The-Go</string>
+  <string name="onthego_notif_title">وضع الخروج مفعل</string>
   <string name="onthego_notif_stop">إيقاف</string>
   <string name="onthego_notif_options">خيارات</string>
   <string name="onthego_notif_error">فشل تشغيل وضع الخروج</string>
@@ -201,4 +201,6 @@
   <string name="kill">إذا فرضت إيقاف أحد التطبيقات ، فقد يسيء التصرف</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">ذاكرة الوصول العشوائي الحرة:٪ 1 $ d ميغابايت</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

@@ -200,4 +200,6 @@
   <string name="kill">앱 종료</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">사용 가능한 RAM: %1$dMB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

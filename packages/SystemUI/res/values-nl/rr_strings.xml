@@ -200,4 +200,6 @@
   <string name="kill">App Beëindigen</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">Vrij RAM-geheugen: %1$d MB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

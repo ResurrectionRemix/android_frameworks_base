@@ -200,4 +200,6 @@
   <string name="kill">Đóng Ứng Dụng</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">RAM trống: %1$d MB</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

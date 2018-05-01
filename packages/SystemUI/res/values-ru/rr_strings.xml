@@ -200,4 +200,6 @@
   <string name="kill">Закрыть приложение</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">Свободно ОЗУ: %1$d Мб</string>
+  <!-- SmartPixels QS Tile -->
+  <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>
