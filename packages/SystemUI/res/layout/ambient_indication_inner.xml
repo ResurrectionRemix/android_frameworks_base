@@ -38,7 +38,7 @@
     <TextView
         android:textSize="14.0sp"
         android:textColor="?attr/wallpaperTextColorSecondary"
-        android:id="@+id/ambient_indication_track_lenght"
+        android:id="@+id/ambient_indication_track_length"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
