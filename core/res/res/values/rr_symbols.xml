@@ -202,4 +202,19 @@
   <!-- Whether device has turbo power charging support -->
   <java-symbol type="bool" name="config_hasTurboPowerCharger" />
 
+  <!-- Whether the device supports Smart Pixels -->
+  <java-symbol type="bool" name="config_enableSmartPixels" />
+
+  <!-- From SignalStrength -->
+  <java-symbol type="integer" name="config_LTE_antenna_bar_quantity_metric" />
+  <java-symbol type="integer" name="config_LTE_RSRP_threshold_type" />
+
+  <!-- cpu boost on boot -->
+  <java-symbol type="integer" name="onbootboost_duration" />
+  <java-symbol type="array" name="onbootboost_param_value" />
+
+  <!-- Common boost params -->
+  <java-symbol type="array" name="qboost_strong_param_value" />
+  <java-symbol type="array" name="qboost_weak_param_value" />
+
 </resources>

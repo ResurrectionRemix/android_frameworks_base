@@ -353,6 +353,8 @@ import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.util.TimeUtils;
 import android.util.Xml;
+import android.util.BoostFramework;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -607,6 +609,23 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     // System prop for refreshing font
     private static final String PROP_REFRESH_FONT = "sys.refresh_font";
+
+    /* Freq Aggr boost objects */
+    public static BoostFramework sFreqAggr_init = null;
+    public static BoostFramework sFreqAggr = null;
+    public static boolean sIsFreqAggrBoostSet = false;
+    private boolean mIsFreqAggrEnabled = false;
+    private int lFreqAggr_TimeOut = 0;
+    private int lFreqAggr_Init_ParamVal[];
+    private int lFreqAggr_ParamVal[];
+
+    /* Launch boost v2 objects */
+    public static BoostFramework sPerfBoost_v2 = null;
+    public static boolean sIsLaunchBoostv2_set = false;
+    private boolean mIsLaunchBoostv2_enabled = false;
+    private int lBoost_v2_TimeOut = 0;
+    private int lBoost_v2_ParamVal[];
+
 
     /** All system services */
     SystemServiceManager mSystemServiceManager;
@@ -2900,6 +2919,28 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         Watchdog.getInstance().addMonitor(this);
         Watchdog.getInstance().addThread(mHandler);
+
+        mIsFreqAggrEnabled = mContext.getResources().getBoolean(
+                   com.android.internal.R.bool.config_enableFreqAggr);
+
+        if(mIsFreqAggrEnabled) {
+           lFreqAggr_TimeOut = mContext.getResources().getInteger(
+                   com.android.internal.R.integer.freqaggr_timeout_param);
+           lFreqAggr_Init_ParamVal = mContext.getResources().getIntArray(
+                   com.android.internal.R.array.freqaggr_init_param_value);
+           lFreqAggr_ParamVal = mContext.getResources().getIntArray(
+                   com.android.internal.R.array.freqaggr_param_value);
+        }
+
+        mIsLaunchBoostv2_enabled = mContext.getResources().getBoolean(
+                   com.android.internal.R.bool.config_enableLaunchBoostv2);
+
+        if(mIsLaunchBoostv2_enabled) {
+           lBoost_v2_TimeOut = mContext.getResources().getInteger(
+                   com.android.internal.R.integer.lboostv2_timeout_param);
+           lBoost_v2_ParamVal = mContext.getResources().getIntArray(
+                   com.android.internal.R.array.lboostv2_param_value);
+        }
     }
 
     protected ActivityStackSupervisor createStackSupervisor() {
@@ -4057,6 +4098,45 @@ public class ActivityManagerService extends IActivityManager.Stub
                 buf.append(hostingNameStr);
             }
             Slog.i(TAG, buf.toString());
+
+            if(hostingType.equals("activity")) {
+                BoostFramework perf = new BoostFramework();
+
+                if (perf != null) {
+                    perf.perfIOPrefetchStart(startResult.pid,app.processName);
+                }
+
+                // Start Freq Aggregation boost
+                if (mIsFreqAggrEnabled == true && sFreqAggr_init == null
+                    && sFreqAggr == null) {
+                   sFreqAggr_init = new BoostFramework();
+                   sFreqAggr = new BoostFramework();
+                }
+                if (sFreqAggr_init != null && sFreqAggr != null) {
+                   sFreqAggr_init.perfLockAcquire(lFreqAggr_TimeOut, lFreqAggr_Init_ParamVal);
+                   sIsFreqAggrBoostSet = true;
+                   // Frequency Aggr perflock can only be passed one opcode-pair
+                   if (lFreqAggr_ParamVal.length == 2) {
+                       lFreqAggr_ParamVal[1] = startResult.pid;
+                       sFreqAggr.perfLockAcquire(lFreqAggr_TimeOut, lFreqAggr_ParamVal);
+                   } else {
+                       //Opcodes improperly defined. Disable Perflock FA support.
+                       sFreqAggr = null;
+                       sFreqAggr_init.perfLockRelease();
+                       sIsFreqAggrBoostSet = false;
+                   }
+                }
+
+                // Start launch boost v2
+                if (mIsLaunchBoostv2_enabled == true && sPerfBoost_v2 == null) {
+                    sPerfBoost_v2 = new BoostFramework();
+                }
+                if (sPerfBoost_v2 != null) {
+                   sPerfBoost_v2.perfLockAcquire(lBoost_v2_TimeOut, lBoost_v2_ParamVal);
+                   sIsLaunchBoostv2_set = true;
+                }
+            }
+
             app.setPid(startResult.pid);
             app.usingWrapper = startResult.usingWrapper;
             app.removed = false;
@@ -12552,7 +12632,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     boolean isSleepingLocked() {
-        return mSleeping;
+        return mSleeping && mWakefulness == PowerManagerInternal.WAKEFULNESS_ASLEEP;
     }
 
     void onWakefulnessChanged(int wakefulness) {
@@ -21073,6 +21153,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                         continue;
                     }
                 }
+                if (r.state == ActivityState.STOPPING && r.finishing)
+                    continue;
                 if (r.visible) {
                     // App has a visible activity; only upgrade adjustment.
                     if (adj > ProcessList.VISIBLE_APP_ADJ) {
@@ -21125,12 +21207,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                     // memory trimming (determing current memory level, trim command to
                     // send to process) since there can be an arbitrary number of stopping
                     // processes and they should soon all go into the cached state.
-                    if (!r.finishing) {
-                        if (procState > ActivityManager.PROCESS_STATE_LAST_ACTIVITY) {
-                            procState = ActivityManager.PROCESS_STATE_LAST_ACTIVITY;
-                            app.adjType = "stop-activity";
-                            if (DEBUG_OOM_ADJ_REASON) Slog.d(TAG, "Raise to stop-activity: " + app);
-                        }
+                    if (procState > ActivityManager.PROCESS_STATE_LAST_ACTIVITY) {
+                        procState = ActivityManager.PROCESS_STATE_LAST_ACTIVITY;
+                        app.adjType = "stop-activity";
+                        if (DEBUG_OOM_ADJ_REASON) Slog.d(TAG, "Raise to stop-activity: " + app);
                     }
                     app.cached = false;
                     app.empty = false;

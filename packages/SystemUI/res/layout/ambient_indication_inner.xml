@@ -26,9 +26,21 @@
         android:textSize="14.0sp"
         android:tint="#ffffffff"
         android:id="@+id/ambient_indication_text"
+        android:layout_marginBottom="6.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:forceHasOverlappingRendering="false" />
+
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="?attr/wallpaperTextColorSecondary"
+        android:id="@+id/ambient_indication_track_lenght"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:forceHasOverlappingRendering="false" />
-
 </LinearLayout>

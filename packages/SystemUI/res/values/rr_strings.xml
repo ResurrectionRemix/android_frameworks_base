@@ -240,7 +240,15 @@
     <string name="dlg_cancel" translatable="false">@android:string/cancel</string>
     <string name="kill">Kill App</string>
     
-   <!-- Recents free RAM -->
-   <string name="recents_free_ram">Free RAM: %1$d MB</string>
+    <!-- Recents free RAM -->
+    <string name="recents_free_ram">Free RAM: %1$d MB</string>
+
+    <!-- SmartPixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled Smart Pixels</string>
+
+    <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">Open Running Services screen.</string>
+
 
 </resources>

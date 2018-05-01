@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -33,7 +34,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.provider.Settings;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -196,6 +200,12 @@ public class TaskViewHeader extends FrameLayout
 
     private CountDownTimer mFocusTimerCountDown;
 
+    private Context mContext;
+    private boolean mShowLockIcon;
+    private int mRecentsType;
+    private Handler mHandler;
+    private SettingsObserver mSettingsObserver;
+
     public TaskViewHeader(Context context) {
         this(context, null);
     }
@@ -211,12 +221,13 @@ public class TaskViewHeader extends FrameLayout
     public TaskViewHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setWillNotDraw(false);
+        mContext = context;
 
         // Load the dismiss resources
         Resources res = context.getResources();
         mLightDismissDrawable = context.getDrawable(R.drawable.recents_dismiss_light);
         mDarkDismissDrawable = context.getDrawable(R.drawable.recents_dismiss_dark);
-        mCornerRadius = Recents.getConfiguration().isGridEnabled ?
+        mCornerRadius = Recents.getConfiguration().isGridEnabled() ?
                 res.getDimensionPixelSize(R.dimen.recents_grid_task_view_rounded_corners_radius) :
                 res.getDimensionPixelSize(R.dimen.recents_task_view_rounded_corners_radius);
         mHighlightHeight = res.getDimensionPixelSize(R.dimen.recents_task_view_highlight);
@@ -242,6 +253,9 @@ public class TaskViewHeader extends FrameLayout
         mOverlayBackground = new HighlightColorDrawable();
         mDimLayerPaint.setColor(Color.argb(255, 0, 0, 0));
         mDimLayerPaint.setAntiAlias(true);
+        mHandler = new Handler();
+        mSettingsObserver = new SettingsObserver(mHandler);
+        mSettingsObserver.observe();
     }
 
     /**
@@ -385,7 +399,11 @@ public class TaskViewHeader extends FrameLayout
         }
         mDismissButton.setVisibility(showDismissIcon ? View.VISIBLE : View.INVISIBLE);
         mDismissButton.setTranslationX(rightInset);
-        mLockTaskButton.setVisibility(showDismissIcon ? View.VISIBLE : View.INVISIBLE);
+        boolean show = mRecentsType != 1 && mShowLockIcon;
+        if (mLockTaskButton != null) {
+            mLockTaskButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+            mLockTaskButton.setTranslationX(rightInset);
+        }
 
         setLeftTopRightBottom(0, 0, width, getMeasuredHeight());
     }
@@ -608,17 +626,6 @@ public class TaskViewHeader extends FrameLayout
         } else {
             mDismissButton.setAlpha(1f);
         }
-        mLockTaskButton.setVisibility(View.VISIBLE);
-        mLockTaskButton.setClickable(true);
-        if (mLockTaskButton.getVisibility() == VISIBLE) {
-            mLockTaskButton.animate()
-                    .alpha(1f)
-                    .setInterpolator(Interpolators.FAST_OUT_LINEAR_IN)
-                    .setDuration(duration)
-                    .start();
-        } else {
-            mLockTaskButton.setAlpha(1f);
-        }
         if (mMoveTaskButton != null) {
             if (mMoveTaskButton.getVisibility() == VISIBLE) {
                 mMoveTaskButton.setVisibility(View.VISIBLE);
@@ -632,6 +639,19 @@ public class TaskViewHeader extends FrameLayout
                 mMoveTaskButton.setAlpha(1f);
             }
         }
+        if (mLockTaskButton != null && mShowLockIcon) {
+            if (mLockTaskButton.getVisibility() == VISIBLE) {
+                mLockTaskButton.setVisibility(View.VISIBLE);
+                mLockTaskButton.setClickable(true);
+                mLockTaskButton.animate()
+                        .alpha(1f)
+                        .setInterpolator(Interpolators.FAST_OUT_LINEAR_IN)
+                        .setDuration(duration)
+                        .start();
+            } else {
+                mLockTaskButton.setAlpha(1f);
+            }
+        }
     }
 
     /**
@@ -643,10 +663,12 @@ public class TaskViewHeader extends FrameLayout
         mDismissButton.animate().cancel();
         mDismissButton.setAlpha(1f);
         mDismissButton.setClickable(true);
-        mLockTaskButton.setVisibility(View.VISIBLE);
-        mLockTaskButton.animate().cancel();
-        mLockTaskButton.setAlpha(1f);
-        mLockTaskButton.setClickable(true);
+        if (mLockTaskButton != null && mShowLockIcon) {
+            mLockTaskButton.setVisibility(View.VISIBLE);
+            mLockTaskButton.animate().cancel();
+            mLockTaskButton.setAlpha(1f);
+            mLockTaskButton.setClickable(true);
+        }
         if (mMoveTaskButton != null) {
             mMoveTaskButton.setVisibility(View.VISIBLE);
             mMoveTaskButton.animate().cancel();
@@ -663,9 +685,11 @@ public class TaskViewHeader extends FrameLayout
         mDismissButton.setVisibility(View.INVISIBLE);
         mDismissButton.setAlpha(0f);
         mDismissButton.setClickable(false);
-        mLockTaskButton.setVisibility(View.INVISIBLE);
-        mLockTaskButton.setAlpha(0f);
-        mLockTaskButton.setClickable(false);
+        if (mLockTaskButton != null && mShowLockIcon) {
+            mLockTaskButton.setVisibility(View.INVISIBLE);
+            mLockTaskButton.setAlpha(0f);
+            mLockTaskButton.setClickable(false);
+        }
         if (mMoveTaskButton != null) {
             mMoveTaskButton.setVisibility(View.INVISIBLE);
             mMoveTaskButton.setAlpha(0f);
@@ -803,6 +827,34 @@ public class TaskViewHeader extends FrameLayout
                 }
             });
             revealAnim.start();
+        }
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RECENTS_LOCK_ICON),
+                    false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RECENTS_GRID),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+            mShowLockIcon = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.RECENTS_LOCK_ICON, 0, UserHandle.USER_CURRENT) == 1;
+            mRecentsType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.RECENTS_GRID, 0, UserHandle.USER_CURRENT);
         }
     }
 }

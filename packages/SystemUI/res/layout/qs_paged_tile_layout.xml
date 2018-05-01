@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="24dp"
+    android:paddingBottom="@dimen/qs_paged_tile_layout_padding_bottom"
     android:clipChildren="false"
     android:clipToPadding="false">
 
