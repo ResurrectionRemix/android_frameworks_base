@@ -22,6 +22,8 @@ import android.content.Context;
 import android.os.storage.VolumeInfo;
 import android.util.Log;
 
+import com.android.settingslib.Utils;
+
 import java.io.IOException;
 
 /**
@@ -47,7 +49,7 @@ public class PrivateStorageInfo {
         for (VolumeInfo info : sm.getVolumes()) {
             if (info.getType() == VolumeInfo.TYPE_PRIVATE && info.isMountedReadable()) {
                 try {
-                    privateTotalBytes += sm.getTotalBytes(stats, info);
+                    privateTotalBytes += Utils.getTotalRomSize();
                     privateFreeBytes += sm.getFreeBytes(stats, info);
                 } catch (IOException e) {
                     Log.w(TAG, e);

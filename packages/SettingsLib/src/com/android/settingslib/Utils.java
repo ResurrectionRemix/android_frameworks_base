@@ -20,6 +20,8 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkBadging;
 import android.os.BatteryManager;
+import android.os.Environment;
+import android.os.FileUtils;
 import android.os.UserManager;
 import android.print.PrintManager;
 import android.provider.Settings;
@@ -324,5 +326,11 @@ public class Utils {
             // We are likely in a test environment.
         }
         return defaultDays;
+    }
+
+
+    public static long getTotalRomSize() {
+        return FileUtils.roundStorageSize(Environment.getDataDirectory().getTotalSpace() +
+            Environment.getRootDirectory().getTotalSpace());
     }
 }
