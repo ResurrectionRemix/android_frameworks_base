@@ -7284,6 +7284,13 @@ public final class Settings {
         public static final String FLING_TRAILS_COLOR = "fling_trails_color";
 
         /**
+         * Fling pulse bars smoothing
+         *
+         * @hide
+         */
+        public static final String FLING_PULSE_SMOOTHING_ENABLED = "fling_pulse_smoothing_enabled";
+
+        /**
          * Fling pulse lavalamp psychedelic colors
          *
          * @hide
