@@ -201,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">RAM LIBERA: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">Smart Pixel</string>
+  <string name="quick_settings_smart_pixels_on_power_save">Abilita automaticamente Smart Pixel</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">Apri la schermata dei servizi in esecuzione.</string>
 </resources>
