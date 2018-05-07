@@ -189,7 +189,7 @@
   <string name="pie_state_name">Controlos Pie</string>
   <string name="pie_state_summary">Usar os controlos Pie durante o modo imersivo</string>
   <string name="pie_battery_level">"NÍVEL DA BATERIA "</string>
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">Controlos Pie</string>
   <string name="recents_custom_android_n">LIMPAR TUDO</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_turbo_power_time">TurboPower ligado (<xliff:g id="charging_time_left" example="4 horas e 2 minutos">%s</xliff:g> até à carga máxima)</string>
@@ -201,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">RAM livre: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">Píxeis Inteligentes</string>
+  <string name="quick_settings_smart_pixels_on_power_save">Auto-ativação dos Píxeis Inteligentes</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">Abrir o ecrã dos serviços em execução.</string>
 </resources>

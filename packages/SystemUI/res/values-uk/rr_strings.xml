@@ -201,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">Вільно ОЗП: %1$d Мб</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">Розумні пікселі</string>
+  <string name="quick_settings_smart_pixels_on_power_save">Автоматичне увімкнення розумних пікселів</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">Відкрити список запущених сервісів.</string>
 </resources>

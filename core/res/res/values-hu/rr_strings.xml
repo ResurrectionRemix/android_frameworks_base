@@ -20,7 +20,7 @@
   <string name="reboot_title">Újraindítás</string>
   <string name="reboot_message">Rendszer újraindítása</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_toggleNavigationEditor">navigációs sáv szerkesztő kezelése</string>
+  <string name="permlab_toggleNavigationEditor">navigációssáv-szerkesztő kezelése</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_toggleNavigationEditor">Lehetővé teszi egy alkalmazás számára, hogy a navigációs sáv szerkesztőt kezelje.</string>
   <!-- AOKP custom system animations -->
