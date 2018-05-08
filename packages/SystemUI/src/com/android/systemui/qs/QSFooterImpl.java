@@ -364,7 +364,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsButton.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
-        mRunningServicesButton.setVisibility(!isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE);
+        mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
@@ -386,6 +386,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mMultiUserSwitch.setQsPanel(qsPanel);
             mQsPanel.setFooterPageIndicator(mPageIndicator);
         }
+    }
+
+    public boolean isRunningServicesEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
     }
 
     @Override
@@ -444,14 +449,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
-    private void startXtensionsActivity() {
-        Intent nIntent = new Intent(Intent.ACTION_MAIN);
-        nIntent.setClassName("com.android.settings",
-            "com.android.settings.Settings$XtensionsSettingsActivity");
-        mActivityStarter.startActivity(nIntent, true /* dismissShade */);
-    }
-
->>>>>>> 10b2d305431... Allow to quickly open Running Services from QS panel [1/2]
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
