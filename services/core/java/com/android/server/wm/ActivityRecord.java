@@ -187,6 +187,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.IBinder;
 import android.os.Message;
+import android.content.res.Resources;
 import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
@@ -416,7 +417,6 @@ public final class ActivityRecord extends ConfigurationContainer {
     private boolean mShowWhenLocked;
     private boolean mInheritShownWhenLocked;
     private boolean mTurnScreenOn;
-
     /**
      * Current sequencing integer of the configuration, for skipping old activity configurations.
      */
@@ -3110,7 +3110,6 @@ public final class ActivityRecord extends ConfigurationContainer {
         float maxAspectRatio = info.maxAspectRatio;
         final ActivityStack stack = getActivityStack();
         final float minAspectRatio = info.minAspectRatio;
-
         if (maxAspectRatio != 0.0f && mHigherAspectRatio && mAtmService.getAspectRatioApps() != null) {
             if (mAtmService.getAspectRatioApps().contains(packageName)) {
                 if (ActivityTaskManagerService.DEBUG_ASPECT_RATIO) {

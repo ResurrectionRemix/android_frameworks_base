@@ -230,6 +230,10 @@
   <java-symbol type="anim" name="custom_app_out" />
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
+    <!-- Full screen aspect ratio -->
+    <java-symbol type="bool" name="config_haveHigherAspectRatioScreen" />
+    <java-symbol type="dimen" name="config_screenAspectRatio" />
+
   <!-- System info -->
   <java-symbol type="string" name="config_sysCPUTemp" />
   <java-symbol type="string" name="config_sysBatteryTemp" />

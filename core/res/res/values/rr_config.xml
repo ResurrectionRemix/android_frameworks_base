@@ -32,6 +32,10 @@
          backgrounds -->
     <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
 
+    <!-- Full screen aspect ratio -->
+    <bool name="config_haveHigherAspectRatioScreen">true</bool>
+    <item name="config_screenAspectRatio" format="float" type="dimen">2.1</item>
+
     <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
     <string name="config_pocketBridgeSysfsInpocket"></string>
