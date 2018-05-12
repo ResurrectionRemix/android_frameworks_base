@@ -728,6 +728,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         // LineageActivityManager depends on settings so we can initialize only
         // after providers are available.
         mLineageActivityManager = new LineageActivityManager(mContext);
+        mScreenRatioSettingsObserver = new ScreenRatioSettingsObserver();
     }
 
     public void retrieveSettings(ContentResolver resolver) {
@@ -7514,5 +7515,68 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
     public boolean shouldForceLongScreen(String packageName) {
         return mLineageActivityManager.shouldForceLongScreen(packageName);
+    }
+
+    // omni additions start
+    public static final boolean DEBUG_ASPECT_RATIO = DEBUG_ALL || false;
+    public static final String TAG_DEBUG_ASPECT_RATIO = TAG + "_MaxAspectRatio";
+
+    private Set<String> mAspectRatioApps = new HashSet<String>();
+    private boolean mAspectRatioEnabled;
+    private ScreenRatioSettingsObserver mScreenRatioSettingsObserver;
+
+        private final class ScreenRatioSettingsObserver extends ContentObserver {
+        private final Uri mScreenRatioAppsUri = Settings.System.getUriFor(Settings.System.OMNI_ASPECT_RATIO_APPS_LIST);
+        private final Uri mScreenRatioEnabledUri = Settings.System.getUriFor(Settings.System.OMNI_ASPECT_RATIO_APPS_ENABLED);
+
+        public ScreenRatioSettingsObserver() {
+            super(mH);
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(mScreenRatioAppsUri, false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(mScreenRatioEnabledUri, false, this, UserHandle.USER_ALL);
+            updateAppList();
+            mAspectRatioEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.OMNI_ASPECT_RATIO_APPS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri, @UserIdInt int userId) {
+            if (mScreenRatioAppsUri.equals(uri)) {
+                updateAppList();
+            }
+            if (mScreenRatioEnabledUri.equals(uri)) {
+                mAspectRatioEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_ASPECT_RATIO_APPS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+            }
+        }
+
+        public void updateAppList() {
+            String apps = Settings.System.getStringForUser(mContext.getContentResolver(),
+                    Settings.System.OMNI_ASPECT_RATIO_APPS_LIST, UserHandle.USER_CURRENT);
+            mAspectRatioApps.clear();
+            if (!TextUtils.isEmpty(apps)) {
+                // we only want package names here
+                for (String componentNameString : Arrays.asList(apps.split(":"))) {
+                    ComponentName componentName = ComponentName.unflattenFromString(componentNameString);
+                    if (componentName != null) {
+                        // filter out those that have been uninstalled
+                        String packageName = componentName.getPackageName();
+                        try {
+                            mContext.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+                            mAspectRatioApps.add(packageName);
+                        } catch (PackageManager.NameNotFoundException e) {
+                        }
+                    }
+                }
+                if (DEBUG_ASPECT_RATIO) Log.d(TAG_DEBUG_ASPECT_RATIO, "Set aspect ratio list " + mAspectRatioApps);
+            }
+        }
+    }
+
+    public Set<String> getAspectRatioApps() {
+        if (mAspectRatioEnabled) {
+            return mAspectRatioApps;
+        }
+        return null;
     }
 }

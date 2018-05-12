@@ -4674,6 +4674,30 @@ public final class Settings {
 
         /** @hide */
         private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = BOOLEAN_VALIDATOR;
+        /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_LIST = "aspect_ratio_apps_list";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_ENABLED = "aspect_ratio_apps_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
+         */
 
         /**
          * Whether the user has already accepted MediaProjection permission for the built-in screenrecorder
@@ -7923,6 +7947,8 @@ public final class Settings {
             BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
             POWERMENU_TORCH,
             NAVIGATION_HANDLE_HEIGHT,
+            OMNI_ASPECT_RATIO_APPS_ENABLED,
+            OMNI_ASPECT_RATIO_APPS_LIST,
         };
 
         /**
@@ -8205,6 +8231,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ON_TOUCH_ONLY);
             PRIVATE_SETTINGS.add(POWERMENU_TORCH);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_HEIGHT);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_ENABLED);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
         }
 
         /**
@@ -8471,6 +8499,8 @@ public final class Settings {
                     BUTTON_BACKLIGHT_ON_TOUCH_ONLY_VALIDATOR);
             VALIDATORS.put(POWERMENU_TORCH, POWERMENU_TORCH_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_ENABLED, OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST, OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
         }
 
         /**
