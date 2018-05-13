@@ -698,6 +698,10 @@ public class AudioService extends IAudioService.Stub
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mHasVibrator = vibrator == null ? false : vibrator.hasVibrator();
 
+        mVolumeKeysControlRingStream = LineageSettings.System.getIntForUser(mContentResolver,
+                        LineageSettings.System.VOLUME_KEYS_CONTROL_RING_STREAM, 1,
+                        UserHandle.USER_CURRENT) == 1;
+
         // Initialize volume
         int maxCallVolume = SystemProperties.getInt("ro.config.vc_call_vol_steps", -1);
         if (maxCallVolume != -1) {
