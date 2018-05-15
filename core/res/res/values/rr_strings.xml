@@ -56,6 +56,10 @@
     <string name="action_null">Blank</string>
     <string name="animation_ethans">Ethans</string>
 
+    <!-- Alert slider proc nodes paths -->
+    <string name="alert_slider_state_path"></string>
+    <string name="alert_slider_uevent_match_path"></string>
+
     <!-- MicroG -->
     <string name="permlab_fakePackageSignature">Spoof package signature</string>
     <!-- Description of an application permission, listed so the user can choose whether

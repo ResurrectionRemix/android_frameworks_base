@@ -179,8 +179,11 @@
   <java-symbol type="bool" name="config_supportSmartPixels" />
 
 
-  <!-- Whether device has physical tri state switch -->
-  <java-symbol type="bool" name="config_hasAlertSlider" />
+    <!-- Alert slider -->
+    <java-symbol type="string" name="alert_slider_state_path" />
+    <java-symbol type="string" name="alert_slider_uevent_match_path" />
+    <java-symbol type="bool" name="config_hasAlertSlider" />
+
 
   <!-- The location of the devices physical tri state switch -->
   <java-symbol type="integer" name="config_alertSliderLocation" />
