@@ -163,6 +163,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final ReentrantReadWriteLock mBluetoothLock = new ReentrantReadWriteLock();
     private boolean mBinding;
     private boolean mUnbinding;
+    private boolean mTryBindOnBindTimeout = false;
 
     private BluetoothAirplaneModeListener mBluetoothAirplaneModeListener;
 
@@ -427,6 +428,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         mBluetoothBinder = null;
         mBluetoothGatt = null;
         mBinding = false;
+        mTryBindOnBindTimeout = false;
         mUnbinding = false;
         mEnable = false;
         mState = BluetoothAdapter.STATE_OFF;
@@ -1135,6 +1137,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 mContext.unbindService(mConnection);
                 mUnbinding = false;
                 mBinding = false;
+                mTryBindOnBindTimeout = false;
             } else {
                 mUnbinding = false;
             }
@@ -1813,6 +1816,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         mHandler.removeMessages(MESSAGE_TIMEOUT_BIND);
 
                         mBinding = false;
+                        mTryBindOnBindTimeout = false;
                         mBluetoothBinder = service;
                         mBluetooth = IBluetooth.Stub.asInterface(Binder.allowBlocking(service));
 
@@ -1983,6 +1987,15 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     mBluetoothLock.writeLock().lock();
                     mBinding = false;
                     mBluetoothLock.writeLock().unlock();
+                    // Ensure try BIND for one more time
+                    if(!mTryBindOnBindTimeout) {
+                        Slog.e(TAG, " Trying to Bind again");
+                        mTryBindOnBindTimeout = true;
+                        handleEnable(mQuietEnable);
+                    } else {
+                        Slog.e(TAG, "Bind trails excedded");
+                        mTryBindOnBindTimeout = false;
+                    }
                     break;
                 }
                 case MESSAGE_TIMEOUT_UNBIND: {
