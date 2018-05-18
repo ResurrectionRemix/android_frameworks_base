@@ -112,6 +112,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     private static final String TAG = "AbsListView";
 
     /**
+     * Property to enable/disable pre-obtain view
+     */
+    private final boolean PREOBTAIN_ENABLE = true;
+
+    /**
      * Disables the transcript mode.
      *
      * @see #setTranscriptMode(int)
@@ -239,6 +244,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * The thread that created this view.
      */
     private final Thread mOwnerThread;
+
+    /**
+     * Absolute incremental delta Y value from the previous choreographer action
+     */
+    int mOldIncrementalDeltaY;
 
     /**
      * Controls if/how the user may choose/check items in the list
@@ -5250,6 +5260,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             fillGap(down);
         }
 
+        if(PREOBTAIN_ENABLE) {
+            mOldIncrementalDeltaY = absIncrementalDeltaY;
+            findNextGap(down);
+        }
         mRecycler.fullyDetachScrapViews();
         boolean selectorOnScreen = false;
         if (!inTouchMode && mSelectedPosition != INVALID_POSITION) {
@@ -5305,6 +5319,15 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * @param down true if the scroll is going down, false if it is going up
      */
     abstract void fillGap(boolean down);
+
+    /**
+     * Find if the next choreographer frame would have an obtain view call.
+     *
+     * @param down true if the scroll is going down, false if it is going up
+     */
+    void findNextGap(boolean down) {
+
+    }
 
     void hideSelector() {
         if (mSelectedPosition != INVALID_POSITION) {
