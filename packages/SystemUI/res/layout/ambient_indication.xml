@@ -14,6 +14,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<!-- empty stub -->
-<merge />
+<com.android.systemui.ambient.AmbientIndicationContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="bottom"
+    android:id="@id/ambient_indication_container"
+    android:layout="@layout/ambient_indication_inner"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:forceHasOverlappingRendering="false" />

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/ambient_indication"
+    android:paddingTop="16.0dip"
+    android:visibility="invisible"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="88.0dip"
+    android:layout_marginStart="64.0dip"
+    android:layout_marginEnd="64.0dip"
+    android:forceHasOverlappingRendering="false">
+
+    <ImageView
+        android:id="@+id/ambient_indication_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8.0dip"
+        android:src="@drawable/ic_music_note_24dp"
+        android:tint="?attr/wallpaperTextColorSecondary"
+        android:tintMode="src_in"
+        android:forceHasOverlappingRendering="false" />
+
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="?attr/wallpaperTextColorSecondary"
+        android:id="@+id/ambient_indication_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:forceHasOverlappingRendering="false" />
+
+</LinearLayout>
