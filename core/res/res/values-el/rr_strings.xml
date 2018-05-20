@@ -44,7 +44,7 @@
   <!-- On-The-Go -->
   <string name="global_action_onthego">Λειτουργία On-The-Go</string>
   <!-- Pocket Lock -->
-  <string name="pocket_lock_message_long_press">Πιέστε παρατεταμένα το κουμπί τροφοδοσίας για να επιδράσει</string>
+  <string name="pocket_lock_message_long_press">Πιέστε παρατεταμένα το κουμπί τροφοδοσίας για να αλληλεπιδράσει</string>
   <!-- Label for item that flashlight in power menu options dialog -->
   <string name="global_action_flashlight">Φακός</string>
 </resources>

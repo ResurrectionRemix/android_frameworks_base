@@ -202,5 +202,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">ذاكرة الوصول العشوائي الحرة:٪ 1 $ d ميغابايت</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">الدقة الذكية</string>
+  <string name="quick_settings_smart_pixels_on_power_save">تمكين الدقة الذكية تلقائياً</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">فتح شاشة الخدمات المشغلة في الخلفية.</string>
 </resources>

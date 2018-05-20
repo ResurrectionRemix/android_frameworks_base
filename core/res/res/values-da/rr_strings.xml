@@ -18,10 +18,13 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu (legacy) -->
   <string name="reboot_title">Genstart</string>
+  <string name="reboot_message">Genstarter system</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">kontroller navigations redigeringsværktøj</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">Tillader en applikation at kontrollere navigationsbarens redigeringsværktøj.</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Animationsfade</string>
+  <string name="animation_fade">Overgang</string>
   <string name="animation_slide_right">Glid ind højre</string>
   <string name="animation_slide_left">Glid ind venstre</string>
   <string name="animation_slide_right_no_fade">Glid ind fra højre (Uden overgang)</string>
@@ -43,4 +46,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">Hold power-knappen inde for at interagere</string>
   <!-- Label for item that flashlight in power menu options dialog -->
+  <string name="global_action_flashlight">Lommelygte</string>
 </resources>

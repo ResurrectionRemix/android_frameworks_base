@@ -100,7 +100,11 @@
   <string name="quick_settings_sound_vibrate">マナーモード</string>
   <string name="quick_settings_sound_silent">サイレント</string>
   <!-- Sound Search TIle -->
+  <string name="quick_settings_sound_search">音声検索</string>
   <!-- Google Assist Tiles -->
+  <string name="quick_settings_google_assist_label">アシスタント</string>
+  <string name="quick_settings_google_voice_assist_label">音声アシスト</string>
+  <string name="quick_settings_google_now_label">Googleフィード</string>
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">常に画面表示ディスプレイ</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -197,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">空きメモリ: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">スマートピクセル</string>
+  <string name="quick_settings_smart_pixels_on_power_save">スパートピクセルを自動的に有効にする</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">実行中のサービス画面を開きます。</string>
 </resources>

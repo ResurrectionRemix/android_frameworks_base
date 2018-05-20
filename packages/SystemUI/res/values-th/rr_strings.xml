@@ -20,7 +20,7 @@
   <string name="quick_settings_rr_label">การตั้งค่า</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">ขั้นสูง</string>
-  <string name="global_action_restart_recovery">กู้คืน</string>
+  <string name="global_action_restart_recovery">ตัวกู้คืน</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">SystemUI</string>
   <string name="global_action_screenshot">ถ่ายภาพหน้าจอ</string>
@@ -31,8 +31,8 @@
   <string name="app_float_item_title">มุมมองแบบลอย</string>
   <string name="app_stop_item_title">ปิดแอป</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">การชาร์จเร็ว (<xliff:g id="charging_time_left" ตัวอย่าง="4 ชั่วโมง กับ 2 นาที">%s</xliff:g> จนกระทั่งเต็ม)</string>
-  <string name="keyguard_plugged_in_dash_charging">การชาร์จเร็ว</string>
+  <string name="keyguard_indication_dash_charging_time">Dash Charge (<xliff:g id="charging_time_left" ตัวอย่าง="4 ชั่วโมง กับ 2 นาที">%s</xliff:g> จนกระทั่งเต็ม)</string>
+  <string name="keyguard_plugged_in_dash_charging">การชาร์จเร็ว (Dash Charging)</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">โหมด On-The-Go ถูกเปิดใช้งาน</string>
   <string name="onthego_notif_title">โหมด On-The-Go ไม่ถูกใช้งาน</string>
@@ -59,7 +59,7 @@
   <string name="quick_settings_reboot_label">เริ่มระบบใหม่</string>
   <string name="quick_settings_reboot_recovery_label">กู้คืน</string>
   <!-- Partial Screenshot -->
-  <string name="screenshot_abort_title">ไม่มีภาพถ่าย</string>
+  <string name="screenshot_abort_title">ไม่มีภาพถ่ายหน้าจอ</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">เข็มทิศ</string>
   <string name="quick_settings_compass_value"><xliff:g id="องศา">%1$.0f</xliff:g>\u00b0 <xliff:g id="ทิศ">%2$s</xliff:g></string>
@@ -123,8 +123,8 @@
   <string name="accessibility_quick_settings_volume_panel">ระดับเสียง</string>
   <string name="quick_settings_volume_panel_label">ระดับเสียง</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">PiP</string>
-  <string name="quick_settings_pip_tile_app_na">แอปไม่สนับสนุน PiP</string>
+  <string name="quick_settings_pip_label">ภาพซ้อนภาพ</string>
+  <string name="quick_settings_pip_tile_app_na">แอปไม่สนับสนุนการทำภาพซ้อนภาพ</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">บันทึกวิดิโอหน้าจอ</string>
   <string name="quick_settings_screenrecord_on">บันทึก...</string>
@@ -151,21 +151,21 @@
   <string name="screenrecord_show_hint">แสดงคำแนะนำ</string>
   <!-- Screenshot QS tile -->
   <string name="quick_settings_screenrecord_label">บันทึกวิดิโอหน้าจอ</string>
-  <string name="quick_settings_screenrecord_lq_label">บันทึกวิดิโอหน้าจอ LQ</string>
-  <string name="quick_settings_screenrecord_mq_label">บันทึกวิดิโอหน้าจอ MQ</string>
-  <string name="quick_settings_screenrecord_hq_label">บันทึกวิดิโอหน้าจอ HQ</string>
+  <string name="quick_settings_screenrecord_lq_label">บันทึกวิดิโอหน้าจอคุณภาพต่ำ</string>
+  <string name="quick_settings_screenrecord_mq_label">บันทึกวิดิโอหน้าจอคุณภาพปานกลาง</string>
+  <string name="quick_settings_screenrecord_hq_label">บันทึกวิดิโอหน้าจอคุณภาพสูง</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">แถบนำทาง</string>
-  <string name="quick_settings_navigation_default">สต็อก</string>
+  <string name="quick_settings_navigation_default">ดั้งเดิม</string>
   <string name="quick_settings_navigation_disabled">ปิดการใช้งาน</string>
   <string name="omnijaws_service_error">ผิดพลาด</string>
   <string name="omnijaws_service_unkown">ไม่มีข้อมูลสภาพอากาศ</string>
   <string name="omnijaws_service_error_long">ข้อผิดพลาดในการรับข้อมูลสภาพอากาศ</string>
-  <string name="omnijaws_service_disabled">ปิดใช้งาน Service</string>
+  <string name="omnijaws_service_disabled">ปิดใช้งานบริการ</string>
   <string name="omnijaws_detail_header">สภาพอากาศ</string>
   <string name="omnijaws_label_default">สภาพอากาศ</string>
   <string name="omnijaws_current_text">ตอนนี้</string>
-  <string name="omnijaws_package_not_available">OmniJaws ยังไม่เปิดใช้งาน</string>
+  <string name="omnijaws_package_not_available">ไม่พบแอปพลิเคชัน OmniJaws</string>
   <string name="omnijaws_service_last_update">อัพเดทล่าสุด</string>
   <!-- Battery saver tile -->
   <string name="battery_saver_qs_tile_fully_charged">ชาร์จเต็มแล้ว</string>
@@ -178,13 +178,14 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
-  <string name="pie_state_name">ควบคุมแบบวงกลม</string>
+  <string name="pie_state_name">ควบคุมแบบ Pie</string>
   <string name="pie_state_summary">ใช้พายควบคุมขณะอยู่ในโหมดใหญ่พิเศษ</string>
   <string name="pie_battery_level">"ระดับแบตเตอรี่ "</string>
   <string name="quick_settings_pie">พาย</string>
   <string name="recents_custom_android_n">ล้างทั้งหมด</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_plugged_in_turbo_power_charging">TurboPower ทำงาน</string>
+  <string name="keyguard_indication_turbo_power_time">TurboPower ได้ทำการเชื่อมต่อแล้ว (<xliff:g id="charging_time_left">%s</xliff:g> จะเต็ม)</string>
+  <string name="keyguard_plugged_in_turbo_power_charging">เชื่อมต่อ TurboPower แล้ว</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">บังคับให้หยุด</string>
   <string name="force_stop_dlg_text">หากคุณบังคับปิดแอปพลิเคชัน อาจทำให้การทำงานผิดพลาดได้.</string>
@@ -192,5 +193,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">แรมเหลือน้อย: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">พิกเซลอัจฉริยะ</string>
+  <string name="quick_settings_smart_pixels_on_power_save">เปิดพิกเซลอัจฉริยะโดยอัตโนมัติ</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">เปิดบริการสำหรับจอภาพ</string>
 </resources>
