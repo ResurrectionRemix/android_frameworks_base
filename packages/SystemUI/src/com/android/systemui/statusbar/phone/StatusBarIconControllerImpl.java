@@ -43,6 +43,7 @@ import com.android.systemui.tuner.TunerService.Tunable;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.android.systemui.statusbar.phone.StatusBarIconController.TAG_PRIMARY;
@@ -199,6 +200,10 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
     public void setMobileIcons(String slot, List<MobileIconState> iconStates) {
         Slot mobileSlot = getSlot(slot);
         int slotIndex = getSlotIndex(slot);
+
+        // Reverse the sort order to show icons with left to right([Slot1][Slot2]..).
+        // StatusBarIconList has UI design that first items go to the right of second items.
+        Collections.reverse(iconStates);
 
         for (MobileIconState state : iconStates) {
             StatusBarIconHolder holder = mobileSlot.getHolderForTag(state.subId);
