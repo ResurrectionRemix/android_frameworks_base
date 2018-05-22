@@ -149,6 +149,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private boolean mShowAutoBrightnessButton = false;
     private boolean mShowBrightnessSideButtons = false;
 
+    private int mBrightnessSlider = 1;
+
     public QSPanel(Context context) {
         this(context, null);
     }
@@ -169,29 +171,22 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         mBrightnessView = LayoutInflater.from(mContext).inflate(
             R.layout.quick_settings_brightness_dialog, this, false);
+        addView(mBrightnessView);
+
         mBrightnessPlaceholder = LayoutInflater.from(mContext).inflate(
             R.layout.quick_settings_brightness_placeholder, this, false);
-        addView(mBrightnessPlaceholder);
 
         mTileLayout = (QSTileLayout) LayoutInflater.from(mContext).inflate(
                 R.layout.qs_paged_tile_layout, this, false);
         mTileLayout.setListening(mListening);
-        addView((View) mTileLayout);
         updateSettings();
 
         mQsTileRevealController = new QSTileRevealController(mContext, this,
                 (PagedTileLayout) mTileLayout);
 
-        mBrightnessView.setPadding(mBrightnessView.getPaddingLeft(),
-                mBrightnessView.getPaddingTop(), mBrightnessView.getPaddingRight(),
-                mBrightnessView.getPaddingBottom());
-        addView(mBrightnessView);
-        addDivider();
-
         mFooter = new QSSecurityFooter(this, context);
-        addView(mFooter.getView());
 
-        updateResources();
+        addQSPanel();
 
         mBrightnessController = new BrightnessController(getContext(),
                 findViewById(R.id.brightness_icon_left),
@@ -249,6 +244,29 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         mIsAutomaticBrightnessAvailable = getResources().getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
+    }
+
+    private void addQSPanel() {
+        if (mBrightnessSlider == 1) {
+            addView(mBrightnessView);
+            addView((View) mTileLayout);
+        } else {
+            addView((View) mTileLayout);
+            addView(mBrightnessView);
+        }
+
+        addDivider();
+        addView(mFooter.getView());
+        updateResources();
+    }
+
+    private void restartQSPanel() {
+        if (mFooter.getView() != null) removeView(mFooter.getView());
+        if (mDivider != null) removeView(mDivider);
+        if ((View) mTileLayout != null) removeView((View) mTileLayout);
+        if (mBrightnessView != null) removeView(mBrightnessView);
+
+        addQSPanel();
     }
 
     protected void addDivider() {
@@ -352,8 +370,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             mPosition = TunerService.parseInteger(newValue, 0);
             updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mLeftAutoBrightnessView, mPosition);
         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
-            updateViewVisibilityForTuningValue(newValue);
-            updateViewVisibilityForBrightnessMirrorIcon(newValue);
+            mBrightnessSlider = TunerService.parseInteger(newValue, 1);
+            mBrightnessView.setVisibility(mBrightnessSlider != 0 ? VISIBLE : GONE);
+            restartQSPanel();
         } else if (ANIM_TILE_STYLE.equals(key)) {
             animStyle = TunerService.parseInteger(newValue, 0);
             if (mHost != null) {
@@ -369,30 +388,14 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             if (mHost != null) {
                 setTiles(mHost.getTiles());
             }
-        }
-        if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
-            if (newValue == null || Integer.parseInt(newValue) == 0) {
-                removeView(mBrightnessView);
-                mBrightnessPlaceholder.setVisibility(View.GONE);
-                addView(mBrightnessView, 0);
-                mBrightnessBottom = false;
-            } else {
-                removeView(mBrightnessView);
-                mBrightnessPlaceholder.setVisibility(View.VISIBLE);
-                addView(mBrightnessView, getBrightnessViewPositionBottom());
-                mBrightnessBottom = true;
-            }
-        }
-        if (QS_SHOW_BRIGHTNESS_SIDE_BUTTONS.equals(key)) {
+        } else  if (QS_SHOW_BRIGHTNESS_SIDE_BUTTONS.equals(key)) {
             mShowBrightnessSideButtons = (newValue == null || Integer.parseInt(newValue) == 0)
                     ? false : true;
             mMaxBrightness.setVisibility(mShowBrightnessSideButtons ? View.VISIBLE : View.GONE);
             mMinBrightness.setVisibility(mShowBrightnessSideButtons ? View.VISIBLE : View.GONE);
-        }
-        if (QS_SHOW_SECURITY.equals(key)) {
+        } else if (QS_SHOW_SECURITY.equals(key)) {
             mFooter.setForceHide(newValue != null && Integer.parseInt(newValue) == 0);
-        }
-        if (QS_LONG_PRESS_ACTION.equals(key)) {
+        } else if (QS_LONG_PRESS_ACTION.equals(key)) {
             mDualTargetSecondary = newValue != null && Integer.parseInt(newValue) == 1;
             updateSettings();
         }
