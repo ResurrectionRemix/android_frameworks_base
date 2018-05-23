@@ -547,6 +547,9 @@ public class NotificationPanelView extends PanelView implements
                 if (mPowerManager != null) {
                     mPowerManager.goToSleep(e.getEventTime());
                 }
+                mQsExpandImmediate = false;
+                requestPanelHeightUpdate();
+                setListening(false);
                 return true;
             }
         });
