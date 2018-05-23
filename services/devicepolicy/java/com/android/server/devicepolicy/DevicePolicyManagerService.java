@@ -4883,7 +4883,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         try {
             if (token == null) {
                 if (!TextUtils.isEmpty(password)) {
-                    mLockPatternUtils.saveLockPassword(password, null, quality, userHandle);
+                    mLockPatternUtils.saveLockPassword(
+                            password, null, Math.max(quality, getPasswordQuality(password)), userHandle);
                 } else {
                     mLockPatternUtils.clearLock(null, userHandle);
                 }
@@ -4892,7 +4893,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 result = mLockPatternUtils.setLockCredentialWithToken(password,
                         TextUtils.isEmpty(password) ? LockPatternUtils.CREDENTIAL_TYPE_NONE
                                 : LockPatternUtils.CREDENTIAL_TYPE_PASSWORD,
-                                quality, tokenHandle, token, userHandle);
+                                Math.max(quality, getPasswordQuality(password)),
+                                tokenHandle, token, userHandle);
             }
             boolean requireEntry = (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
             if (requireEntry) {
@@ -4910,6 +4912,16 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             mInjector.binderRestoreCallingIdentity(ident);
         }
         return result;
+    }
+
+    private int getPasswordQuality(@NonNull String password) {
+        for (int i = 0; i < password.length(); i++) {
+            if (java.lang.Character.isDigit(password.charAt(i)) == false) {
+                return DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC;
+            }
+        }
+
+        return DevicePolicyManager.PASSWORD_QUALITY_NUMERIC;
     }
 
     private boolean isLockScreenSecureUnchecked(int userId) {
