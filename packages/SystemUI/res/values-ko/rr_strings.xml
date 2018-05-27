@@ -201,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">사용 가능한 RAM: %1$dMB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">스마트 픽셀</string>
+  <string name="quick_settings_smart_pixels_on_power_save">스마트 픽셀 자동으로 켜기</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">실행중인 서비스 보기</string>
 </resources>

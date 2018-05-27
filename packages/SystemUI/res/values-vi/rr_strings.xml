@@ -201,5 +201,8 @@
   <!-- Recents free RAM -->
   <string name="recents_free_ram">RAM trống: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
+  <string name="quick_settings_smart_pixels">Điểm ảnh thông minh</string>
+  <string name="quick_settings_smart_pixels_on_power_save">Tự động cho phép Điểm ảnh thông minh</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_running_services">Mở màn hình Dịch vụ đang chạy.</string>
 </resources>
