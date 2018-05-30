@@ -3400,8 +3400,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // 2. Unvalidated WiFi will not be reaped when validated cellular
                     //    is currently satisfying the request.  This is desirable when
                     //    WiFi ends up validating and out scoring cellular.
-                    getNetworkForRequest(nri.request.requestId).getCurrentScore() <
-                            nai.getCurrentScoreAsValidated())) {
+                    ((getNetworkForRequest(nri.request.requestId) != null)
+                    && (getNetworkForRequest(nri.request.requestId).getCurrentScore() <
+                            nai.getCurrentScoreAsValidated())))) {
                 return false;
             }
         }
