@@ -521,6 +521,14 @@ public abstract class Connection extends Conferenceable {
             "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
 
     /**
+     * Integer connection extra key on a {@link Connection} to indicate that there is an updated
+     * call property
+     * @hide
+     */
+    public static final String EXTRA_CALL_PROPERTY =
+            "android.telecom.extra.EXTRA_CALL_PROPERTY";
+
+    /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
      * to play a tone when the peer puts the current call on hold.  Sent to Telecom via
      * {@link #sendConnectionEvent(String, Bundle)}.
@@ -651,8 +659,24 @@ public abstract class Connection extends Conferenceable {
     public static final String EVENT_RTT_AUDIO_INDICATION_CHANGED =
             "android.telecom.event.RTT_AUDIO_INDICATION_CHANGED";
 
+    /**
+     * Connection event used to inform an {@link InCallService} that the call session property
+     * has changed
+     * @hide
+     */
+    public static final String EVENT_CALL_PROPERTY_CHANGED =
+            "android.telecom.event.EVENT_CALL_PROPERTY_CHANGED";
+
     // Flag controlling whether PII is emitted into the logs
     private static final boolean PII_DEBUG = Log.isLoggable(android.util.Log.DEBUG);
+
+    /**
+     * Indicates that the connection has speech from remote user for a RTT call when set.
+     * If the property is unset, that indicates silence from remote user
+     *
+     * @hide
+     */
+    public static final int PROPERTY_RTT_AUDIO_SPEECH = 0x1;
 
     /**
      * Whether the given capabilities support the specified capability.

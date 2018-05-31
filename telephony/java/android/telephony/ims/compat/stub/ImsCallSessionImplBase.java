@@ -601,5 +601,10 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
         public void callQualityChanged(CallQuality callQuality) throws RemoteException {
             mNewListener.callQualityChanged(callQuality);
         }
+
+        @Override
+        public void callSessionPropertyChanged(int property) throws RemoteException {
+            mNewListener.callSessionPropertyChanged(property);
+        }
     }
 }

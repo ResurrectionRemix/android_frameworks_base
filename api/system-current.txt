@@ -8520,6 +8520,7 @@ package android.telephony.ims {
     method public void callSessionMergeStarted(android.telephony.ims.stub.ImsCallSessionImplBase, android.telephony.ims.ImsCallProfile);
     method public void callSessionMultipartyStateChanged(boolean);
     method public void callSessionProgressing(android.telephony.ims.ImsStreamMediaProfile);
+    method public void callSessionPropertyChanged(int);
     method public void callSessionRemoveParticipantsRequestDelivered();
     method public void callSessionRemoveParticipantsRequestFailed(android.telephony.ims.ImsReasonInfo);
     method public void callSessionResumeFailed(android.telephony.ims.ImsReasonInfo);
