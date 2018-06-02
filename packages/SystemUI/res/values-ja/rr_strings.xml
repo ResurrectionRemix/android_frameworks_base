@@ -22,8 +22,8 @@
   <string name="global_action_restart_advanced">高度な再起動</string>
   <string name="global_action_restart_recovery">リカバリー</string>
   <string name="global_action_restart_bootloader">ブートローダー</string>
-  <string name="global_action_restart_ui">SystemUI</string>
-  <string name="global_action_restart_hot">ホット</string>
+  <string name="global_action_restart_ui">システムUI</string>
+  <string name="global_action_restart_hot">ソフトリブート</string>
   <string name="global_action_screenshot">スクリーンショット</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
@@ -32,7 +32,7 @@
   <string name="app_float_item_title">フロートビュー</string>
   <string name="app_stop_item_title">アプリを強制終了</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">急速充電中（充電完了まで<xliff:g id="Charging_TIME_LEFT">%s</xliff:g>）</string>
+  <string name="keyguard_indication_dash_charging_time">急速充電中 (充電完了まで<xliff:g id="Charging_TIME_LEFT">%s</xliff:g>)</string>
   <string name="keyguard_plugged_in_dash_charging">急速充電</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go が有効化されました</string>
@@ -54,13 +54,13 @@
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">データセーバー</string>
   <string name="lockscreen_hidden">無し</string>
-  <string name="custom_hint">アイコンをスワイプして起動します</string>
+  <string name="custom_hint">アイコンをスワイプして起動</string>
   <string name="systemui_tuner_navbar_title">ストック設定</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">再起動</string>
-  <string name="quick_settings_reboot_recovery_label">リカバリ</string>
+  <string name="quick_settings_reboot_recovery_label">リカバリー</string>
   <!-- Partial Screenshot -->
-  <string name="screenshot_abort_title">スクリーンショットを撮影しない</string>
+  <string name="screenshot_abort_title">スクリーンショットは撮影されていません</string>
   <string name="screenshot_abort_text">操作は中断されました</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">コンパス</string>
@@ -89,7 +89,7 @@
   <string name="quick_settings_usb_tether_label">USBテザリング</string>
   <!-- Language toggle tile -->
   <string name="quick_settings_locale_label">言語</string>
-  <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするので複数の言語を設定してください。</string>
+  <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするために複数の言語を設定してください</string>
   <!-- Music tile -->
   <string name="quick_settings_music_label">ミュージック</string>
   <string name="quick_settings_music_play">再生</string>
@@ -106,19 +106,19 @@
   <string name="quick_settings_google_voice_assist_label">音声アシスト</string>
   <string name="quick_settings_google_now_label">Googleフィード</string>
   <!-- Ambient Display Tile -->
-  <string name="quick_settings_ambient_display_label">常に画面表示ディスプレイ</string>
+  <string name="quick_settings_ambient_display_label">アンビエントディスプレイ</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_off">常に画面表示ディスプレイはオフです</string>
+  <string name="accessibility_quick_settings_ambient_display_off">アンビエントディスプレイはオフです</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">アンビエイト表示オン</string>
+  <string name="accessibility_quick_settings_ambient_display_on">アンビエントディスプレイはオンです</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_off">アンビエント表示が無効になりました。</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">アンビエントディスプレイをオフにしました</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">アンビエント表示が有効になりました。</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">アンビエントディスプレイをオンにしました</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">カフェイン</string>
-  <string name="accessibility_quick_settings_caffeine_off">カフェインをOFF</string>
-  <string name="accessibility_quick_settings_caffeine_on">カフェインをON</string>
+  <string name="accessibility_quick_settings_caffeine_off">カフェインOFF</string>
+  <string name="accessibility_quick_settings_caffeine_on">カフェインON</string>
   <!-- Sync QS Tile -->
   <string name="quick_settings_sync_label">同期</string>
   <string name="accessibility_quick_settings_sync_off">同期OFF</string>
@@ -135,11 +135,11 @@
   <string name="quick_settings_screenrecord">画面録画</string>
   <string name="quick_settings_screenrecord_on">録画中...</string>
   <!-- Advance location quick setting tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">位置情報レポート: バッテリー節約モードです</string>
+  <string name="accessibility_quick_settings_location_battery_saving">位置情報レポート: バッテリー節約モード</string>
   <string name="accessibility_quick_settings_location_gps_only">位置情報レポート: センサーのみ</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート: 高精度モードです。</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート : 高精度モード</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">画面の録画中</string>
+  <string name="screenrecord_notif_ticker">画面は録画されています</string>
   <string name="screenrecord_notif_final_ticker">画面の録画は成功しました</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">画面を録画中</string>
@@ -173,7 +173,7 @@
   <string name="omnijaws_detail_header">天気</string>
   <string name="omnijaws_label_default">天気</string>
   <string name="omnijaws_current_text">今</string>
-  <string name="omnijaws_package_not_available">OmniJaws は使用できません。</string>
+  <string name="omnijaws_package_not_available">OmniJawsは使用できません</string>
   <string name="omnijaws_service_last_update">最終更新:</string>
   <!-- Battery saver tile -->
   <string name="battery_saver_qs_tile_fully_charged">充電完了</string>
@@ -196,7 +196,7 @@
   <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">強制停止しますか？</string>
-  <string name="force_stop_dlg_text">アプリを強制停止すると、アプリが正常に機能しないことがあります。</string>
+  <string name="force_stop_dlg_text">アプリを強制停止するとアプリが正常に機能しないことがあります</string>
   <string name="kill">アプリを終了</string>
   <!-- Recents free RAM -->
   <string name="recents_free_ram">空きメモリ: %1$d MB</string>
@@ -204,5 +204,5 @@
   <string name="quick_settings_smart_pixels">スマートピクセル</string>
   <string name="quick_settings_smart_pixels_on_power_save">スパートピクセルを自動的に有効にする</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_running_services">実行中のサービス画面を開きます。</string>
+  <string name="accessibility_quick_settings_running_services">実行中のサービスを開く</string>
 </resources>

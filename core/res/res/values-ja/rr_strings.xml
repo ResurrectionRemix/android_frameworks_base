@@ -27,17 +27,17 @@
   <string name="animation_fade">フェード</string>
   <string name="animation_slide_right">右からスライド</string>
   <string name="animation_slide_left">左からスライド</string>
-  <string name="animation_slide_right_no_fade">右からスライド(フェードなし)</string>
-  <string name="animation_slide_left_no_fade">左からスライド(フェードなし)</string>
+  <string name="animation_slide_right_no_fade">右からスライド (フェードなし)</string>
+  <string name="animation_slide_left_no_fade">左からスライド (フェードなし)</string>
   <string name="animation_slide_up">下からスライド</string>
   <string name="animation_slide_down">上からスライド</string>
   <string name="animation_default">デフォルト</string>
   <string name="animation_translucent">半透明</string>
-  <string name="animation_grow_shrink">拡大(上)</string>
-  <string name="animation_grow_shrink_center">拡大(中央)</string>
-  <string name="animation_grow_shrink_bottom">拡大(下)</string>
-  <string name="animation_grow_shrink_left">拡大(左)</string>
-  <string name="animation_grow_shrink_right">拡大(右)</string>
+  <string name="animation_grow_shrink">拡大 (上)</string>
+  <string name="animation_grow_shrink_center">拡大 (中央)</string>
+  <string name="animation_grow_shrink_bottom">拡大 (下)</string>
+  <string name="animation_grow_shrink_left">拡大 (左)</string>
+  <string name="animation_grow_shrink_right">拡大 (右)</string>
   <string name="action_null">なし</string>
   <!-- Label for item that screenrecords in power menu options dialog -->
   <string name="global_action_screenrecord">画面の録画</string>
