@@ -137,6 +137,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private Record mDetailRecord;
 
     private BrightnessMirrorController mBrightnessMirrorController;
+    private ImageView mMirrorAutoBrightnessView;
     private View mDivider;
     private int animStyle, animDuration, interpolatorType, mPosition;
     private boolean mDualTargetSecondary;
@@ -352,6 +353,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mLeftAutoBrightnessView, mPosition);
         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             updateViewVisibilityForTuningValue(newValue);
+            updateViewVisibilityForBrightnessMirrorIcon(newValue);
         } else if (ANIM_TILE_STYLE.equals(key)) {
             animStyle = TunerService.parseInteger(newValue, 0);
             if (mHost != null) {
@@ -423,6 +425,18 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         }
     }
 
+    private void updateViewVisibilityForBrightnessMirrorIcon(@Nullable String newValue) {
+        if (mMirrorAutoBrightnessView != null) {
+            mMirrorAutoBrightnessView.setVisibility(
+                    TunerService.parseIntegerSwitch(newValue, true) ? INVISIBLE : GONE);
+        } else if (mBrightnessMirrorController != null) {
+            mMirrorAutoBrightnessView = mBrightnessMirrorController.getMirror()
+                    .findViewById(R.id.brightness_icon);
+            mMirrorAutoBrightnessView.setVisibility(mAutoBrightnessView.getVisibility()
+                    == VISIBLE ? INVISIBLE : GONE);
+        }
+    }
+
     public void openDetails(String subPanel) {
         QSTile tile = getTile(subPanel);
         // If there's no tile with that name (as defined in QSFactoryImpl or other QSFactory),
@@ -450,6 +464,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             mBrightnessMirrorController.addCallback(this);
         }
         updateBrightnessMirror();
+        updateViewVisibilityForBrightnessMirrorIcon(null);
     }
 
     @Override
