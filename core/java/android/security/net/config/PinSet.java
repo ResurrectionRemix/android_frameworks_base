@@ -22,6 +22,7 @@ import java.util.Set;
 
 /** @hide */
 public final class PinSet {
+    private static Set<String> algorithms;
     public static final PinSet EMPTY_PINSET =
             new PinSet(Collections.<Pin>emptySet(), Long.MAX_VALUE);
     public final long expirationTime;
@@ -36,10 +37,11 @@ public final class PinSet {
     }
 
     Set<String> getPinAlgorithms() {
-        // TODO: Cache this.
-        Set<String> algorithms = new ArraySet<String>();
-        for (Pin pin : pins) {
-            algorithms.add(pin.digestAlgorithm);
+        if(algorithms == null){
+            algorithms = new ArraySet<String>();
+            for (Pin pin : pins) {
+                algorithms.add(pin.digestAlgorithm);
+            }
         }
         return algorithms;
     }
