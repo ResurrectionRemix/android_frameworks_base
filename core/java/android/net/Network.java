@@ -105,6 +105,8 @@ public class Network implements Parcelable {
     // code search audits are possible.
     private final transient boolean mPrivateDnsBypass;
 
+    private java.net.Proxy mProxy = null;
+
     /**
      * @hide
      */
@@ -315,6 +317,22 @@ public class Network implements Parcelable {
         }
     }
 
+    private java.net.Proxy getProxy() throws IOException {
+        if (mProxy == null) {
+            final ConnectivityManager cm = ConnectivityManager.getInstanceOrNull();
+            if (cm == null) {
+                throw new IOException("No ConnectivityManager yet constructed, please construct one");
+            }
+            final ProxyInfo proxyInfo = cm.getProxyForNetwork(this);
+            if (proxyInfo != null) {
+                mProxy = proxyInfo.makeProxy();
+            } else {
+                mProxy = java.net.Proxy.NO_PROXY;
+            }
+        }
+        return mProxy;
+    }
+
     /**
      * Opens the specified {@link URL} on this {@code Network}, such that all traffic will be sent
      * on this Network. The URL protocol must be {@code HTTP} or {@code HTTPS}.
@@ -325,19 +343,7 @@ public class Network implements Parcelable {
      * @see java.net.URL#openConnection()
      */
     public URLConnection openConnection(URL url) throws IOException {
-        final ConnectivityManager cm = ConnectivityManager.getInstanceOrNull();
-        if (cm == null) {
-            throw new IOException("No ConnectivityManager yet constructed, please construct one");
-        }
-        // TODO: Should this be optimized to avoid fetching the global proxy for every request?
-        final ProxyInfo proxyInfo = cm.getProxyForNetwork(this);
-        final java.net.Proxy proxy;
-        if (proxyInfo != null) {
-            proxy = proxyInfo.makeProxy();
-        } else {
-            proxy = java.net.Proxy.NO_PROXY;
-        }
-        return openConnection(url, proxy);
+        return openConnection(url, getProxy());
     }
 
     /**
