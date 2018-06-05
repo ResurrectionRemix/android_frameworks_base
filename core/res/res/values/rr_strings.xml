@@ -19,5 +19,9 @@
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_fakePackageSignature">Allows the app to pretend to be a different app. Malicious applications might be able to use this to access private application data. Grant this permission with caution only!</string>
 
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">Copy crash log URL</string>
+    <string name="url_copy_success">URL copied successfully</string>
+    <string name="url_copy_failed">An error occured while uploading the log to dogbin</string>
 
 </resources>
