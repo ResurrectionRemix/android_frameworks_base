@@ -60,6 +60,18 @@ public class LightsService extends SystemService {
                         setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
                         return;
                     }
+
+                    boolean qcomExtendBrightness = SystemProperties.getBoolean("persist.extend.brightness", false);
+                    int scale = SystemProperties.getInt("persist.display.max_brightness", 1023);
+                    if(fp.contains("OnePlus6")) {
+                        qcomExtendBrightness = true;
+                        scale = 1023;
+                    }
+
+                    if(qcomExtendBrightness) {
+                        setLightLocked(brightness * scale / 255, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+                        return;
+                    }
                 }
 
                 int color = brightness & 0x000000ff;
