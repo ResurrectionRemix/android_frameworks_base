@@ -63,9 +63,11 @@ public class LightsService extends SystemService {
 
                     boolean qcomExtendBrightness = SystemProperties.getBoolean("persist.extend.brightness", false);
                     int scale = SystemProperties.getInt("persist.display.max_brightness", 1023);
-                    if(fp.contains("OnePlus6")) {
+                    //This is set by vndk-detect
+                    int qcomScale = SystemProperties.getInt("persist.sys.qcom-brightness", -1);
+                    if(qcomScale != -1) {
                         qcomExtendBrightness = true;
-                        scale = 1023;
+                        scale = qcomScale;
                     }
 
                     if(qcomExtendBrightness) {
