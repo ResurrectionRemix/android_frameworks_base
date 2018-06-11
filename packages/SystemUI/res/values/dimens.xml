@@ -849,8 +849,8 @@
 
     <!-- The radius of the rounded corners on a task view and its shadow (which can be larger
          to create a softer corner effect. -->
-    <dimen name="recents_task_view_rounded_corners_radius">2dp</dimen>
-    <dimen name="recents_task_view_shadow_rounded_corners_radius">6dp</dimen>
+    <dimen name="recents_task_view_rounded_corners_radius">6dp</dimen>
+    <dimen name="recents_task_view_shadow_rounded_corners_radius">10dp</dimen>
 
     <!-- The amount of highlight to make on each task view. -->
     <dimen name="recents_task_view_highlight">1dp</dimen>
