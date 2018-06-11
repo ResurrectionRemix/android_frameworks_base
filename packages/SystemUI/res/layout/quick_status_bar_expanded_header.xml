@@ -37,8 +37,7 @@
         android:layout_height="match_parent"
         android:clipChildren="true"
         android:clipToPadding="true"
-        android:layout_gravity="center"
-        android:paddingBottom="@dimen/qs_panel_footer_height" >
+        android:layout_gravity="center" >
 
         <ImageView android:id="@+id/qs_header_image"
             android:layout_width="match_parent"
