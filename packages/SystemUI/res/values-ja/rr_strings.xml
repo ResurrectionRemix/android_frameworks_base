@@ -49,7 +49,7 @@
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">アイコンマネージャー</string>
-  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">ボトムショートカット</string>
+  <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">下部のショートカット</string>
   <string name="lockscreen_default">デフォルト</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">データセーバー</string>
@@ -106,15 +106,15 @@
   <string name="quick_settings_google_voice_assist_label">音声アシスト</string>
   <string name="quick_settings_google_now_label">Googleフィード</string>
   <!-- Ambient Display Tile -->
-  <string name="quick_settings_ambient_display_label">アンビエントディスプレイ</string>
+  <string name="quick_settings_ambient_display_label">アンビエント表示</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_off">アンビエントディスプレイはオフです</string>
+  <string name="accessibility_quick_settings_ambient_display_off">アンビエント表示はオフです</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">アンビエントディスプレイはオンです</string>
+  <string name="accessibility_quick_settings_ambient_display_on">アンビエント表示はオンです</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_off">アンビエントディスプレイをオフにしました</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">アンビエント表示をオフにしました</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_changed_on">アンビエントディスプレイをオンにしました</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">アンビエント表示をオンにしました</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">カフェイン</string>
   <string name="accessibility_quick_settings_caffeine_off">カフェインOFF</string>
@@ -129,8 +129,8 @@
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">PiP</string>
-  <string name="quick_settings_pip_tile_app_na">このアプリはPiPに対応していません</string>
+  <string name="quick_settings_pip_label">ピクチャーインピクチャー</string>
+  <string name="quick_settings_pip_tile_app_na">このアプリはピクチャーインピクチャーに対応していません</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">画面録画</string>
   <string name="quick_settings_screenrecord_on">録画中...</string>

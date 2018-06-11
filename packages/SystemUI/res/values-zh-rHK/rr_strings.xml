@@ -17,20 +17,20 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- RR Tile -->
-  <string name="quick_settings_rr_label">設置</string>
+  <string name="quick_settings_rr_label">格局</string>
   <!-- Power menu -->
   <string name="global_action_restart_advanced">進階</string>
-  <string name="global_action_restart_recovery">恢復模式</string>
-  <string name="global_action_restart_bootloader">載入器</string>
+  <string name="global_action_restart_recovery">恢復模式 (Recovery)</string>
+  <string name="global_action_restart_bootloader">BootLoader 模式</string>
   <string name="global_action_restart_ui">系統UI</string>
-  <string name="global_action_restart_hot">熱</string>
+  <string name="global_action_restart_hot">快速重啟</string>
   <string name="global_action_screenshot">螢幕截圖</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">已刪除螢幕截圖</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">最大化</string>
   <string name="app_float_item_title">懸浮視窗</string>
-  <string name="app_stop_item_title">終止應用程式</string>
+  <string name="app_stop_item_title">立刻終止應用程式</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_dash_charging_time">快速充電 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 後充滿)</string>
   <string name="keyguard_plugged_in_dash_charging">快速充電</string>
@@ -40,7 +40,7 @@
   <string name="onthego_notif_stop">停止</string>
   <string name="onthego_notif_options">選項</string>
   <string name="onthego_notif_error">無法啟動 On-The-Go</string>
-  <string name="onthego_notif_restart">重新啟動On-The-Go</string>
+  <string name="onthego_notif_restart">重新啟動 On-The-Go</string>
   <string name="onthego_notif_camera_changed">已變更相機模式</string>
   <string name="onthego_transparency">透明度</string>
   <string name="onthego_front_camera">使用前置鏡頭</string>
@@ -48,17 +48,17 @@
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA +</string>
   <!-- SystemUI Tuner Parts -->
-  <string name="systemui_tuner_icon_manager_title">圖示管理器</string>
+  <string name="systemui_tuner_icon_manager_title">圖標管理器</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">底部快捷鍵</string>
   <string name="lockscreen_default">預設</string>
-  <string name="status_bar_vpn">VPN</string>
+  <string name="status_bar_vpn">虛擬私人網絡 (VPN)</string>
   <string name="status_bar_data_saver">數據節省模式</string>
   <string name="lockscreen_hidden">無</string>
-  <string name="custom_hint">滑動圖示以啟動</string>
+  <string name="custom_hint">滑動圖標以啟動</string>
   <string name="systemui_tuner_navbar_title">原始設定</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">重新啟動</string>
-  <string name="quick_settings_reboot_recovery_label">恢復模式</string>
+  <string name="quick_settings_reboot_recovery_label">恢復模式 (Recovery)</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">沒有截圖</string>
   <string name="screenshot_abort_text">操作已被中止</string>
@@ -97,7 +97,7 @@
   <!-- Sound tile -->
   <string name="quick_settings_sound_label">音效</string>
   <string name="quick_settings_sound_ring">鈴聲</string>
-  <string name="quick_settings_sound_vibrate">振動</string>
+  <string name="quick_settings_sound_vibrate">震動</string>
   <string name="quick_settings_sound_silent">靜音</string>
   <!-- Sound Search TIle -->
   <string name="quick_settings_sound_search">語音搜尋</string>
@@ -202,7 +202,7 @@
   <string name="recents_free_ram">可用記憶體：%1$d MB</string>
   <!-- SmartPixels QS Tile -->
   <string name="quick_settings_smart_pixels">智慧 Pixels</string>
-  <string name="quick_settings_smart_pixels_on_power_save">自動啟用智慧 Pixels</string>
+  <string name="quick_settings_smart_pixels_on_power_save">自行啟動 Smart Pixels</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_running_services">開啟正在執行服務。</string>
+  <string name="accessibility_quick_settings_running_services">開啟運行程式的畫面</string>
 </resources>
