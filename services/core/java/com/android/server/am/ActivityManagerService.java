@@ -12597,7 +12597,14 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             }
         }
-        return cpr != null ? cpr.newHolder(conn) : null;
+
+        synchronized (cpr) {
+            if (cpr != null && cpr.provider == null) {
+                Slog.wtf(TAG, "The content provider " + cpr.name + " ceased to exist right when someone needed it.");
+                return null;
+            }
+            return cpr != null ? cpr.newHolder(conn) : null;
+        }
     }
 
     private boolean requestTargetProviderPermissionsReviewIfNeededLocked(ProviderInfo cpi,
