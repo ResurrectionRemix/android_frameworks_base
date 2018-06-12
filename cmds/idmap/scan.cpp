@@ -1,5 +1,6 @@
 #include <dirent.h>
 #include <inttypes.h>
+#include <fnmatch.h>
 #include <sys/file.h>
 #include <sys/stat.h>
 
@@ -91,6 +92,10 @@ namespace {
         char propBuf[PROPERTY_VALUE_MAX];
         property_get(prop, propBuf, NULL);
         val = strndup16to8(value.string(), value.size());
+
+	if(val[0]=='+') {
+            return fnmatch(val+1, propBuf, 0) != 0;
+	}
 
         return (strcmp(propBuf, val) == 0);
     }
