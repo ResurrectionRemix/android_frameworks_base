@@ -993,7 +993,7 @@ class StorageManagerService extends IStorageManager.Stub
         config.setLocale(locale);
         try {
             ActivityManager.getService().updatePersistentConfiguration(config);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             Slog.e(TAG, "Error setting system locale from mount service", e);
         }
 
