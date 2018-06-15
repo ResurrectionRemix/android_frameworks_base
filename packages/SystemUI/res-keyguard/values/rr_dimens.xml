@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     <!-- Our custom clock values -->
+     <dimen name="widget_sammy_accent_font_size">62dp</dimen>
+</resources>
