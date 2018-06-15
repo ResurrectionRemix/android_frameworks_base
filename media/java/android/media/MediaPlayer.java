@@ -1108,7 +1108,7 @@ public class MediaPlayer extends PlayerBase
             setDataSource(afd);
             return true;
         } catch (NullPointerException | SecurityException | IOException ex) {
-            Log.w(TAG, "Couldn't open " + uri + ": " + ex);
+            Log.w(TAG, "Couldn't open uri");
             return false;
         }
     }
