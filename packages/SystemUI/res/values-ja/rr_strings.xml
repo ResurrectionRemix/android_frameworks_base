@@ -40,11 +40,11 @@
   <string name="onthego_notif_stop">停止</string>
   <string name="onthego_notif_options">オプション</string>
   <string name="onthego_notif_error">On-The-Go を開始できません</string>
-  <string name="onthego_notif_restart">On-The-Go を再始動します</string>
+  <string name="onthego_notif_restart">On-The-Go を再起動する</string>
   <string name="onthego_notif_camera_changed">カメラモードが変更されました</string>
   <string name="onthego_transparency">透明度</string>
   <string name="onthego_front_camera">フロントカメラを使用</string>
-  <string name="onthego_service_toggle">自動でサービスを再始動する</string>
+  <string name="onthego_service_toggle">自動でサービスを再起動する</string>
   <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_data_connection_hspap">HSPA+</string>
   <!-- SystemUI Tuner Parts -->
@@ -53,9 +53,9 @@
   <string name="lockscreen_default">デフォルト</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">データセーバー</string>
-  <string name="lockscreen_hidden">無し</string>
+  <string name="lockscreen_hidden">なし</string>
   <string name="custom_hint">アイコンをスワイプして起動</string>
-  <string name="systemui_tuner_navbar_title">ストック設定</string>
+  <string name="systemui_tuner_navbar_title">標準の設定</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">再起動</string>
   <string name="quick_settings_reboot_recovery_label">リカバリー</string>
@@ -68,8 +68,8 @@
   <string name="quick_settings_compass_init">初期化中\u2026</string>
   <string name="accessibility_quick_settings_compass_off">コンパス オフ</string>
   <string name="accessibility_quick_settings_compass_on">コンパス オン</string>
-  <string name="accessibility_quick_settings_compass_changed_off">コンパスがオフになりました</string>
-  <string name="accessibility_quick_settings_compass_changed_on">コンパスがオンになりました</string>
+  <string name="accessibility_quick_settings_compass_changed_off">コンパスをオフにしました</string>
+  <string name="accessibility_quick_settings_compass_changed_on">コンパスをオンにしました</string>
   <string name="quick_settings_compass_N">北</string>
   <string name="quick_settings_compass_NE">北東</string>
   <string name="quick_settings_compass_E">東</string>
@@ -82,10 +82,10 @@
   <string name="quick_settings_screenshot_label">スクリーンショット</string>
   <string name="quick_settings_region_screenshot_label">範囲選択してスクリーンショット</string>
   <!-- USB Tethering tile -->
-  <string name="accessibility_quick_settings_usb_tether_off">USBテザリングOFF</string>
-  <string name="accessibility_quick_settings_usb_tether_on">USBテザリングON</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">USBテザリングをOFFにしました</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">USBテザリングをONにしました</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USBテザリング オフ</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USBテザリング オン</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USBテザリングをオフにしました</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USBテザリングをオンにしました</string>
   <string name="quick_settings_usb_tether_label">USBテザリング</string>
   <!-- Language toggle tile -->
   <string name="quick_settings_locale_label">言語</string>
@@ -108,23 +108,23 @@
   <!-- Ambient Display Tile -->
   <string name="quick_settings_ambient_display_label">アンビエント表示</string>
   <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_off">アンビエント表示はオフです</string>
+  <string name="accessibility_quick_settings_ambient_display_off">アンビエント表示 オフ</string>
   <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_ambient_display_on">アンビエント表示はオンです</string>
+  <string name="accessibility_quick_settings_ambient_display_on">アンビエント表示 オン</string>
   <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_changed_off">アンビエント表示をオフにしました</string>
   <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_ambient_display_changed_on">アンビエント表示をオンにしました</string>
   <!-- Caffeine QS Tile -->
   <string name="quick_settings_caffeine_label">カフェイン</string>
-  <string name="accessibility_quick_settings_caffeine_off">カフェインOFF</string>
-  <string name="accessibility_quick_settings_caffeine_on">カフェインON</string>
+  <string name="accessibility_quick_settings_caffeine_off">カフェイン オフ</string>
+  <string name="accessibility_quick_settings_caffeine_on">カフェイン オン</string>
   <!-- Sync QS Tile -->
   <string name="quick_settings_sync_label">同期</string>
-  <string name="accessibility_quick_settings_sync_off">同期OFF</string>
-  <string name="accessibility_quick_settings_sync_on">同期ON</string>
-  <string name="accessibility_quick_settings_sync_changed_off">同期をオフにします</string>
-  <string name="accessibility_quick_settings_sync_changed_on">同期をオンにします</string>
+  <string name="accessibility_quick_settings_sync_off">同期 オフ</string>
+  <string name="accessibility_quick_settings_sync_on">同期 オン</string>
+  <string name="accessibility_quick_settings_sync_changed_off">同期をオフにしました</string>
+  <string name="accessibility_quick_settings_sync_changed_on">同期をオンにしました</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
@@ -164,7 +164,7 @@
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
   <string name="quick_settings_smartbar">スマートバー</string>
   <string name="quick_settings_fling">Flingジェスチャー</string>
-  <string name="quick_settings_navigation_default">ストック</string>
+  <string name="quick_settings_navigation_default">標準</string>
   <string name="quick_settings_navigation_disabled">無効</string>
   <string name="omnijaws_service_error">エラー</string>
   <string name="omnijaws_service_unkown">気象情報がありません</string>
@@ -202,7 +202,7 @@
   <string name="recents_free_ram">空きメモリ: %1$d MB</string>
   <!-- SmartPixels QS Tile -->
   <string name="quick_settings_smart_pixels">スマートピクセル</string>
-  <string name="quick_settings_smart_pixels_on_power_save">スパートピクセルを自動的に有効にする</string>
+  <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効にする</string>
   <!-- Accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_running_services">実行中のサービスを開く</string>
 </resources>
