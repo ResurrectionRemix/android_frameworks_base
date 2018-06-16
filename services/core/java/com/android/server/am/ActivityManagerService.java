@@ -2442,7 +2442,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
                     Notification.Builder builder = new Notification.Builder(mContext,
                             SystemNotificationChannels.SECURITY);
-                    builder.setSmallIcon(com.android.internal.R.drawable.stat_notify_privacy_guard)
+                    builder.setSmallIcon(com.android.internal.R.drawable.stat_notify_trust)
                             .setOngoing(true)
                             .setPriority(Notification.PRIORITY_LOW)
                             .setContentTitle(title)
@@ -24431,6 +24431,26 @@ public class ActivityManagerService extends IActivityManager.Stub
                     mStackSupervisor.resumeFocusedStackTopActivityLocked();
                 }
             }
+        }
+
+        @Override
+        public boolean hasRunningActivity(int uid, @Nullable String packageName) {
+            if (packageName == null) return false;
+
+            synchronized (ActivityManagerService.this) {
+                for (int i = 0; i < mLruProcesses.size(); i++) {
+                    final ProcessRecord processRecord = mLruProcesses.get(i);
+                    if (processRecord.uid == uid) {
+                        for (int j = 0; j < processRecord.activities.size(); j++) {
+                            final ActivityRecord activityRecord = processRecord.activities.get(j);
+                            if (packageName.equals(activityRecord.packageName)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 

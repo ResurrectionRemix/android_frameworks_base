@@ -58,7 +58,7 @@
   <string name="systemui_tuner_navbar_title">Varsayılan ayarlar</string>
   <!-- QS Tiles -->
   <string name="quick_settings_reboot_label">Yeniden başlat</string>
-  <string name="quick_settings_reboot_recovery_label">Kurtarma</string>
+  <string name="quick_settings_reboot_recovery_label">Kurtarma modu</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">Ekran görüntüsü alınamadı</string>
   <string name="screenshot_abort_text">İşlem iptal edildi.</string>

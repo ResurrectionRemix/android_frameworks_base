@@ -40,11 +40,11 @@
   <string name="animation_grow_shrink_right">縮放 (右側)</string>
   <string name="action_null">空白</string>
   <!-- Label for item that screenrecords in power menu options dialog -->
-  <string name="global_action_screenrecord">錄製螢幕</string>
+  <string name="global_action_screenrecord">螢幕錄製</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- Pocket Lock -->
-  <string name="pocket_lock_message_long_press">長按電源鍵進行交互</string>
+  <string name="pocket_lock_message_long_press">長按電源鍵進行互動</string>
   <!-- Label for item that flashlight in power menu options dialog -->
   <string name="global_action_flashlight">手電筒</string>
 </resources>
