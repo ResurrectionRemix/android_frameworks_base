@@ -94,7 +94,7 @@ namespace {
         val = strndup16to8(value.string(), value.size());
 
 	if(val[0]=='+') {
-            return fnmatch(val+1, propBuf, 0) != 0;
+            return fnmatch(val+1, propBuf, 0) == 0;
 	}
 
         return (strcmp(propBuf, val) == 0);
