@@ -17,6 +17,7 @@
 package com.android.server;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageManager;
@@ -31,6 +32,7 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.storage.StorageManager;
 import android.provider.Downloads;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AtomicFile;
 import android.util.Slog;
@@ -135,7 +137,17 @@ public class BootReceiver extends BroadcastReceiver {
                 } catch (Exception e) {
                     Slog.e(TAG, "Can't remove old update packages", e);
                 }
-
+                try {
+                    // start the screen state service if activated
+                    ContentResolver res = context.getContentResolver();
+                    if (Settings.System.getInt(res, Settings.System.START_SCREEN_STATE_SERVICE, 0) != 0) {
+                        Intent service = (new Intent()).setClassName("com.android.systemui",
+                                "com.android.systemui.screenstate.ScreenStateService");
+                        context.startService(service);
+                    }
+                } catch (Exception e) {
+                    Slog.e(TAG, "Can't start the screen state service", e);
+                }
             }
         }.start();
     }
