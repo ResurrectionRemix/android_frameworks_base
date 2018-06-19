@@ -786,7 +786,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                     setAnimationTile(v);
             });
             if (t.isDualTarget()) {
-                if (!mTileLayout.isShowTitles()) {
+                if (mTileLayout.isShowTitles()) {
                     v.setOnLongClickListener(view -> {
                         t.secondaryClick();
                         return true;
