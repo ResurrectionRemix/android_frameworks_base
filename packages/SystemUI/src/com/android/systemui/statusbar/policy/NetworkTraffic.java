@@ -273,7 +273,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         }
         if (intTrafficDrawable != 0) {
             Drawable d = getContext().getDrawable(intTrafficDrawable);
-            d.setColorFilter(mTintColor, Mode.SRC_ATOP);
+            d.setColorFilter(mTintColor, Mode.MULTIPLY);
             setCompoundDrawablePadding(txtImgPadding);
             setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
         } else {
