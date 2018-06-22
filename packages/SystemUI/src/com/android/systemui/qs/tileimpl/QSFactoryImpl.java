@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
+import com.android.systemui.qs.tiles.ImmersiveTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
@@ -147,6 +148,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<GestureAnyWhereTile> mGestureAnyWhereTileProvider;
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
     private final Provider<LteTile> mLteTileProvider;
+    private final Provider<ImmersiveTile> mImmersiveTileProvider;
 
     private QSTileHost mHost;
 
@@ -204,7 +206,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<GestureAnyWhereTile> gesturenywhereTileProvider,
             Provider<CPUInfoTile> cpuInfoTileProvider,
-            Provider<LteTile> lteTileProvider) {
+            Provider<LteTile> lteTileProvider,
+            Provider<ImmersiveTile> immersiveTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -259,6 +262,7 @@ public class QSFactoryImpl implements QSFactory {
         mGestureAnyWhereTileProvider = gesturenywhereTileProvider;
         mCPUInfoTileProvider = cpuInfoTileProvider;
         mLteTileProvider = lteTileProvider;
+        mImmersiveTileProvider = immersiveTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -383,6 +387,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCPUInfoTileProvider.get();
             case "lte":
                 return mLteTileProvider.get();
+            case "immersive":
+                return mImmersiveTileProvider.get();
         }
 
         // Intent tiles.
