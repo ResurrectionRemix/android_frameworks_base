@@ -56,7 +56,9 @@ public class LightsService extends SystemService {
 
                 if(mId == 0) {
                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
-                    if(fp.contains("starlte") || fp.contains("star2lte")) {
+                    if(
+                           fp.contains("starlte") || fp.contains("star2lte") ||
+                           fp.contains("starqlte") || fp.contains("star2qlte")) {
                         setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
                         return;
                     }
