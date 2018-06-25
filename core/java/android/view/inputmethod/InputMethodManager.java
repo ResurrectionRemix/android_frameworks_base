@@ -1768,6 +1768,10 @@ public final class InputMethodManager {
     public void windowDismissed(IBinder appWindowToken) {
         checkFocus();
         synchronized (mH) {
+            if (mCurRootView != null
+                    && mCurRootView.getWindowToken() == appWindowToken) {
+                mCurRootView = null;
+            }
             if (mServedView != null &&
                     mServedView.getWindowToken() == appWindowToken) {
                 finishInputLocked();
