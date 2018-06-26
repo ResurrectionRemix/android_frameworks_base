@@ -56,6 +56,7 @@ cc_library_shared {
         "android.hardware.cas.native@1.0",
         "android.hidl.memory@1.0",
         "android.hidl.token@1.0-utils",
+        "libsqlite",
     ],
 
     header_libs: ["libhardware_headers"],

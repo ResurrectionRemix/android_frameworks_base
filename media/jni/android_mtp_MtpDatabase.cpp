@@ -49,6 +49,10 @@ extern "C" {
 #include <stdio.h>
 #include <unistd.h>
 
+// for mtp query database enhancement
+#include <sqlite3.h>
+#include <sys/stat.h>
+
 using namespace android;
 
 // ----------------------------------------------------------------------------
@@ -87,6 +91,129 @@ static jfieldID field_mDataTypes;
 static jfieldID field_mLongValues;
 static jfieldID field_mStringValues;
 
+// ----------------------------------------------------------------------------
+
+// for mtp query database enhancement
+const int QUERY_BUSY_TIMEOUT_MS = 200;// 200ms
+const char *mtpDbPath = "/data/data/com.android.providers.media/databases/external.db";
+// mtp extension response code
+#define MTP_RESPONSE_LOCAL_CALL_FAIL     (MTP_RESPONSE_UNDEFINED-1)
+
+// add column sql string
+#define MTP_COLUMN_STORAGE_ID         "storage_id"
+#define MTP_COLUMN_OBJECT_FORMAT      "format"
+#define MTP_COLUMN_OBJECT_SIZE        "_size"
+#define MTP_COLUMN_OBJECT_FILE_NAME   "_data"
+#define MTP_COLUMN_DATE_MODIFIED      "date_modified"
+#define MTP_COLUMN_PARENT_OBJECT      "parent"
+#define MTP_COLUMN_NAME               "title"
+#define MTP_COLUMN_DISPLAY_NAME       "_display_name"
+#define MTP_COLUMN_DATE_ADDED         "date_added"
+#define MTP_COLUMN_ARTIST             "artist"
+#define MTP_COLUMN_ARTIST_KEY         "artist_key"
+#define MTP_COLUMN_ALBUM_ARTIST       "album_artist"
+#define MTP_COLUMN_ALBUM              "album"
+#define MTP_COLUMN_TRACK              "track"
+#define MTP_COLUMN_ORIGINAL_RELEASE_DATE "year"
+#define MTP_COLUMN_COMPOSER           "composer"
+#define MTP_COLUMN_DURATION           "duration"
+#define MTP_COLUMN_DESCRIPTION        "description"
+#define MTP_COLUMN_GENRES_NAME        "name"
+
+// mtp media file type
+#define MTP_MEDIA_TYPE_NONE  0
+#define MTP_MEDIA_TYPE_IMAGE  1
+#define MTP_MEDIA_TYPE_AUDIO  2
+#define MTP_MEDIA_TYPE_VIDEO  3
+#define MTP_MEDIA_TYPE_PLAYLIST  4
+
+// mtp file property group
+static int FILE_PROPERTIES[] = {
+        // NOTE must match beginning of AUDIO_PROPERTIES, VIDEO_PROPERTIES
+        // and IMAGE_PROPERTIES below
+        MTP_PROPERTY_STORAGE_ID,
+        MTP_PROPERTY_OBJECT_FORMAT,
+        MTP_PROPERTY_PROTECTION_STATUS,
+        MTP_PROPERTY_OBJECT_SIZE,
+        MTP_PROPERTY_OBJECT_FILE_NAME,
+        MTP_PROPERTY_DATE_MODIFIED,
+        MTP_PROPERTY_PARENT_OBJECT,
+        MTP_PROPERTY_PERSISTENT_UID,
+        MTP_PROPERTY_NAME,
+        MTP_PROPERTY_DISPLAY_NAME,
+        MTP_PROPERTY_DATE_ADDED,
+};
+
+static int AUDIO_PROPERTIES[] = {
+        // NOTE must match FILE_PROPERTIES above
+        MTP_PROPERTY_STORAGE_ID,
+        MTP_PROPERTY_OBJECT_FORMAT,
+        MTP_PROPERTY_PROTECTION_STATUS,
+        MTP_PROPERTY_OBJECT_SIZE,
+        MTP_PROPERTY_OBJECT_FILE_NAME,
+        MTP_PROPERTY_DATE_MODIFIED,
+        MTP_PROPERTY_PARENT_OBJECT,
+        MTP_PROPERTY_PERSISTENT_UID,
+        MTP_PROPERTY_NAME,
+        MTP_PROPERTY_DISPLAY_NAME,
+        MTP_PROPERTY_DATE_ADDED,
+
+        // audio specific properties
+        MTP_PROPERTY_ARTIST,
+        MTP_PROPERTY_ALBUM_NAME,
+        MTP_PROPERTY_ALBUM_ARTIST,
+        MTP_PROPERTY_TRACK,
+        MTP_PROPERTY_ORIGINAL_RELEASE_DATE,
+        MTP_PROPERTY_DURATION,
+        MTP_PROPERTY_GENRE,
+        MTP_PROPERTY_COMPOSER,
+        MTP_PROPERTY_AUDIO_WAVE_CODEC,
+        MTP_PROPERTY_BITRATE_TYPE,
+        MTP_PROPERTY_AUDIO_BITRATE,
+        MTP_PROPERTY_NUMBER_OF_CHANNELS,
+        MTP_PROPERTY_SAMPLE_RATE,
+};
+
+static int VIDEO_PROPERTIES[] = {
+        // NOTE must match FILE_PROPERTIES above
+        MTP_PROPERTY_STORAGE_ID,
+        MTP_PROPERTY_OBJECT_FORMAT,
+        MTP_PROPERTY_PROTECTION_STATUS,
+        MTP_PROPERTY_OBJECT_SIZE,
+        MTP_PROPERTY_OBJECT_FILE_NAME,
+        MTP_PROPERTY_DATE_MODIFIED,
+        MTP_PROPERTY_PARENT_OBJECT,
+        MTP_PROPERTY_PERSISTENT_UID,
+        MTP_PROPERTY_NAME,
+        MTP_PROPERTY_DISPLAY_NAME,
+        MTP_PROPERTY_DATE_ADDED,
+
+        // video specific properties
+        MTP_PROPERTY_ARTIST,
+        MTP_PROPERTY_ALBUM_NAME,
+        MTP_PROPERTY_DURATION,
+        MTP_PROPERTY_DESCRIPTION,
+};
+
+static int IMAGE_PROPERTIES[] = {
+        // NOTE must match FILE_PROPERTIES above
+        MTP_PROPERTY_STORAGE_ID,
+        MTP_PROPERTY_OBJECT_FORMAT,
+        MTP_PROPERTY_PROTECTION_STATUS,
+        MTP_PROPERTY_OBJECT_SIZE,
+        MTP_PROPERTY_OBJECT_FILE_NAME,
+        MTP_PROPERTY_DATE_MODIFIED,
+        MTP_PROPERTY_PARENT_OBJECT,
+        MTP_PROPERTY_PERSISTENT_UID,
+        MTP_PROPERTY_NAME,
+        MTP_PROPERTY_DISPLAY_NAME,
+        MTP_PROPERTY_DATE_ADDED,
+
+        // image specific properties
+        MTP_PROPERTY_DESCRIPTION,
+};
+
+// ----------------------------------------------------------------------------
 
 MtpDatabase* getMtpDatabase(JNIEnv *env, jobject database) {
     return (MtpDatabase *)env->GetLongField(database, field_context);
@@ -181,6 +308,39 @@ public:
     virtual void                    sessionStarted();
 
     virtual void                    sessionEnded();
+
+// ----------------------------------------------------------------------------
+
+// sqlite directly query add for mtp enhancement
+private:
+    sqlite3 *mMydb;
+    MtpObjectPropertyList propCodeList;
+    Int16List columnIndex;
+
+private:
+    // sqlite simple query method,  add to MyMtpDatabase  class
+    void openDataBase(const char *path);
+
+    void closeDataBase();
+
+    int getObjectFormat(int handle);
+
+    void getSupportedObjectPropertiesFast(int format);
+
+    MtpResponseCode         getObjectFilePathFast(MtpObjectHandle handle,
+                                            MtpString& outFilePath,
+                                            int64_t& outFileLength,
+                                            MtpObjectFormat& outFormat);
+
+    MtpObjectHandleList*    getObjectReferencesFast(MtpObjectHandle handle, MtpResponseCode& result);
+
+    MtpResponseCode         getObjectPropertyListFast(MtpObjectHandle handle,
+                                    uint32_t format, uint32_t property,
+                                    int groupCode, int depth,
+                                    MtpDataPacket& packet);
+
+    MtpResponseCode         getObjectInfoFast(MtpObjectHandle handle,
+                                    MtpObjectInfo& info);
 };
 
 // ----------------------------------------------------------------------------
@@ -219,6 +379,9 @@ MyMtpDatabase::MyMtpDatabase(JNIEnv *env, jobject client)
         return; // Already threw.
     }
     mStringBuffer = (jcharArray)env->NewGlobalRef(charArray);
+
+    // for mtp query enhancement
+    openDataBase(mtpDbPath);
 }
 
 void MyMtpDatabase::cleanup(JNIEnv *env) {
@@ -226,6 +389,9 @@ void MyMtpDatabase::cleanup(JNIEnv *env) {
     env->DeleteGlobalRef(mIntBuffer);
     env->DeleteGlobalRef(mLongBuffer);
     env->DeleteGlobalRef(mStringBuffer);
+
+    // for mtp query enhancement
+    closeDataBase();
 }
 
 MyMtpDatabase::~MyMtpDatabase() {
@@ -684,6 +850,13 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyList(MtpObjectHandle handle,
                                                      uint32_t format, uint32_t property,
                                                      int groupCode, int depth,
                                                      MtpDataPacket& packet) {
+    // try to use sqlite directly query, if fail go to original flow
+    MtpResponseCode fast_result;
+    fast_result = getObjectPropertyListFast(handle, format, property,
+            groupCode, depth, packet);
+    if (fast_result != MTP_RESPONSE_LOCAL_CALL_FAIL)
+        return fast_result;
+
     static_assert(sizeof(jint) >= sizeof(MtpObjectHandle),
                   "Casting MtpObjectHandle to jint loses a value");
     JNIEnv* env = AndroidRuntime::getJNIEnv();
@@ -807,6 +980,11 @@ static long getLongFromExifEntry(ExifEntry *e) {
 
 MtpResponseCode MyMtpDatabase::getObjectInfo(MtpObjectHandle handle,
                                              MtpObjectInfo& info) {
+    // try to use sqlite directly query, if fail go to original flow
+    if (getObjectInfoFast(handle, info) == MTP_RESPONSE_OK) {
+        return MTP_RESPONSE_OK;
+    }
+
     MtpString       path;
     int64_t         length;
     MtpObjectFormat format;
@@ -966,6 +1144,12 @@ MtpResponseCode MyMtpDatabase::getObjectFilePath(MtpObjectHandle handle,
                                                  MtpString& outFilePath,
                                                  int64_t& outFileLength,
                                                  MtpObjectFormat& outFormat) {
+    // try to use sqlite directly query, if fail go to original flow
+    if (getObjectFilePathFast(handle, outFilePath,
+            outFileLength, outFormat) == MTP_RESPONSE_OK) {
+        return MTP_RESPONSE_OK;
+    }
+
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     jint result = env->CallIntMethod(mDatabase, method_getObjectFilePath,
                 (jint)handle, mStringBuffer, mLongBuffer);
@@ -1062,6 +1246,13 @@ bool MyMtpDatabase::getDevicePropertyInfo(MtpDeviceProperty property, int& type)
 }
 
 MtpObjectHandleList* MyMtpDatabase::getObjectReferences(MtpObjectHandle handle) {
+    // try to use sqlite directly query, if fail go to original flow
+    MtpObjectHandleList* mylist = NULL;
+    MtpResponseCode result = MTP_RESPONSE_OK;
+    mylist = getObjectReferencesFast(handle, result);
+    if (result == MTP_RESPONSE_OK)
+        return mylist;
+
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     jintArray array = (jintArray)env->CallObjectMethod(mDatabase, method_getObjectReferences,
                 (jint)handle);
@@ -1235,6 +1426,658 @@ void MyMtpDatabase::sessionEnded() {
     env->CallVoidMethod(mDatabase, method_sessionEnded);
     checkAndClearExceptionFromCallback(env, __FUNCTION__);
 }
+
+
+// ----------------------------------------------------------------------------
+
+// for mtp enhancement
+// sqlite fast query method, add as MyMtpDatabase internal function
+const char* getSqlColumn(int code) {
+     switch (code) {
+        case MTP_PROPERTY_STORAGE_ID:
+            return (MTP_COLUMN_STORAGE_ID);
+         case MTP_PROPERTY_OBJECT_FORMAT:
+            return (MTP_COLUMN_OBJECT_FORMAT);
+        case MTP_PROPERTY_PROTECTION_STATUS:
+            // protection status is always 0
+            break;
+        case MTP_PROPERTY_OBJECT_SIZE:
+            return (MTP_COLUMN_OBJECT_SIZE);
+        case MTP_PROPERTY_OBJECT_FILE_NAME:
+            return (MTP_COLUMN_OBJECT_FILE_NAME);
+        case MTP_PROPERTY_NAME:
+            return (MTP_COLUMN_NAME);
+        case MTP_PROPERTY_DATE_MODIFIED:
+            return (MTP_COLUMN_DATE_MODIFIED);
+        case MTP_PROPERTY_DATE_ADDED:
+            return (MTP_COLUMN_DATE_ADDED);
+        case MTP_PROPERTY_ORIGINAL_RELEASE_DATE:
+            return (MTP_COLUMN_ORIGINAL_RELEASE_DATE);
+        case MTP_PROPERTY_PARENT_OBJECT:
+            return (MTP_COLUMN_PARENT_OBJECT);
+        case MTP_PROPERTY_PERSISTENT_UID:
+            // PUID is concatenation of storageID and object handle
+            return (MTP_COLUMN_STORAGE_ID);
+        case MTP_PROPERTY_DURATION:
+            return (MTP_COLUMN_DURATION);
+        case MTP_PROPERTY_TRACK:
+            return (MTP_COLUMN_TRACK);
+        case MTP_PROPERTY_DISPLAY_NAME:
+            return (MTP_COLUMN_DISPLAY_NAME);
+        case MTP_PROPERTY_ARTIST:
+            return (MTP_COLUMN_ARTIST);
+        case MTP_PROPERTY_ALBUM_NAME:
+            return (MTP_COLUMN_ALBUM);
+        case MTP_PROPERTY_ALBUM_ARTIST:
+            return (MTP_COLUMN_ALBUM_ARTIST);
+        case MTP_PROPERTY_GENRE:
+            // genre requires a special query
+            // to be fixed, not implemented now
+            // just use name
+            return (MTP_COLUMN_NAME);
+        case MTP_PROPERTY_COMPOSER:
+            return (MTP_COLUMN_COMPOSER);
+        case MTP_PROPERTY_DESCRIPTION:
+            return (MTP_COLUMN_DESCRIPTION);
+        case MTP_PROPERTY_AUDIO_WAVE_CODEC:
+        case MTP_PROPERTY_AUDIO_BITRATE:
+        case MTP_PROPERTY_SAMPLE_RATE:
+            // these are special cased
+        case MTP_PROPERTY_BITRATE_TYPE:
+        case MTP_PROPERTY_NUMBER_OF_CHANNELS:
+            // these are special cased
+        default:
+            ALOGE("unsupported property 0x%x", code);
+            break;
+    }
+    return NULL;
+}
+
+void MyMtpDatabase::openDataBase(const char *path) {
+    // open database
+    int rv;
+    rv = sqlite3_open(path, &mMydb);
+    if (rv != SQLITE_OK) {
+        ALOGE("Cannot open database: %s\n", sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        return;
+    }
+
+    // Set the default busy handler to retry automatically before returning SQLITE_BUSY.
+    rv = sqlite3_busy_timeout(mMydb, QUERY_BUSY_TIMEOUT_MS);
+    if (rv != SQLITE_OK) {
+        ALOGE("Could not set busy timeout");
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        return;
+    }
+    ALOGV("openDataBase success");
+}
+
+void MyMtpDatabase::closeDataBase() {
+    if (mMydb != NULL) {
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        ALOGV("sqlite3_close");
+    }
+    propCodeList.clear();
+    columnIndex.clear();
+}
+
+MtpResponseCode MyMtpDatabase::getObjectFilePathFast(MtpObjectHandle handle,
+                                                        MtpString& outFilePath,
+                                                        int64_t& outFileLength,
+                                                        MtpObjectFormat& outFormat) {
+    MtpResponseCode result = MTP_RESPONSE_OK;
+    String8 sqlcmd;
+    sqlite3_stmt * stmt = NULL;
+    int rc = SQLITE_OK;
+
+    // check mMydb is available or not
+    if (mMydb == NULL)
+        return MTP_RESPONSE_LOCAL_CALL_FAIL;
+
+    // set sql cmd
+    sqlcmd.clear();
+    sqlcmd.appendFormat("SELECT _id, _data, format FROM files WHERE (_id=%d)", handle);
+    //-------------------------0-----1-----2------------------------------------
+
+    // query and get data
+    rc = sqlite3_prepare_v2(mMydb, sqlcmd.string(), -1, &stmt, 0);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            const char *temppath = (const char *)sqlite3_column_text(stmt,1);
+            int tempformat = sqlite3_column_int(stmt, 2);
+            struct stat statbuf;
+            stat(temppath,&statbuf);
+            int size=statbuf.st_size;
+
+            outFilePath.setTo(temppath);;
+            outFormat = tempformat;
+            outFileLength = size;
+        }
+        sqlite3_finalize(stmt);
+    } else {
+        ALOGE("%s: %s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+    }
+
+    return result;
+}
+
+MtpObjectHandleList* MyMtpDatabase::getObjectReferencesFast(MtpObjectHandle handle, MtpResponseCode& result) {
+    String8 sqlcmd;
+    sqlite3_stmt * stmt = NULL;
+    int rc = SQLITE_OK;
+    int playlistId = 0;
+    int mediatype = -1;
+
+    // check mMydb is available or not
+    if (mMydb == NULL) {
+        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+        return NULL;
+    }
+
+    // set sql cmd to get media type
+    sqlcmd.clear();
+    sqlcmd.appendFormat("SELECT _id,media_type FROM files WHERE (_id=%d)", handle);
+    //-------------------------0-----1--------------------------------------
+
+    // query and get data
+    rc = sqlite3_prepare_v2(mMydb, sqlcmd.string(), -1, &stmt, 0);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            playlistId = sqlite3_column_int(stmt, 0);
+            mediatype = sqlite3_column_int(stmt, 1);
+        }
+        sqlite3_finalize(stmt);
+    } else {
+        ALOGE("%s: %s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+        return NULL;
+    }
+
+    if (mediatype != MTP_MEDIA_TYPE_PLAYLIST) {
+        // we only support object references for playlist objects
+        // return reponse ok in this case
+        ALOGV("mediatype != playlist return null");
+        result = MTP_RESPONSE_OK;
+        return NULL;
+    } else {
+        MtpObjectHandleList* list = new MtpObjectHandleList();
+        String8 OBJECT_REFERENCES_QUERY;
+        OBJECT_REFERENCES_QUERY.clear();
+        OBJECT_REFERENCES_QUERY.appendFormat("SELECT audio_id FROM audio_playlists_map \
+            WHERE playlist_id=%d ORDER BY play_order", playlistId);
+
+        // query audio_id and get data
+        rc = sqlite3_prepare_v2(mMydb, OBJECT_REFERENCES_QUERY.string(), -1, &stmt, 0);
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                int audioId = sqlite3_column_int(stmt, 0);
+                list->push(audioId);
+            }
+            sqlite3_finalize(stmt);
+        } else {
+            ALOGE("%s: %s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+            sqlite3_close(mMydb);
+            mMydb = NULL;
+            if(list != NULL)
+                delete list;
+            result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+            return NULL;
+        }
+        // result ok
+        result = MTP_RESPONSE_OK;
+        return list;
+    }
+}
+
+void MyMtpDatabase::getSupportedObjectPropertiesFast(int format) {
+    int count = 0, i = 0;
+    switch (format) {
+        case MTP_FORMAT_MP3:
+        case MTP_FORMAT_WAV:
+        case MTP_FORMAT_WMA:
+        case MTP_FORMAT_OGG:
+        case MTP_FORMAT_AAC:
+            count = sizeof(AUDIO_PROPERTIES)/sizeof(int);
+            for (i = 0; i < count; i++) {
+                propCodeList.push(AUDIO_PROPERTIES[i]);
+            }
+            break;
+        case MTP_FORMAT_MPEG:
+        case MTP_FORMAT_3GP_CONTAINER:
+        case MTP_FORMAT_WMV:
+            count = sizeof(VIDEO_PROPERTIES)/sizeof(int);
+            for (i = 0; i < count; i++) {
+                propCodeList.push(VIDEO_PROPERTIES[i]);
+            }
+            break;
+        case MTP_FORMAT_EXIF_JPEG:
+        case MTP_FORMAT_GIF:
+        case MTP_FORMAT_PNG:
+        case MTP_FORMAT_BMP:
+        case MTP_FORMAT_DNG:
+        case MTP_FORMAT_HEIF:
+            count = sizeof(IMAGE_PROPERTIES)/sizeof(int);
+            for (i = 0; i < count; i++) {
+                propCodeList.push(IMAGE_PROPERTIES[i]);
+            }
+
+            break;
+        default:
+            count = sizeof(FILE_PROPERTIES)/sizeof(int);
+            for (i = 0; i < count; i++) {
+                propCodeList.push(FILE_PROPERTIES[i]);
+            }
+
+    }
+    return;
+}
+
+int MyMtpDatabase::getObjectFormat(int handle) {
+    MtpResponseCode result = MTP_RESPONSE_OK;
+    String8 sqlcmd;
+    sqlite3_stmt * stmt = NULL;
+    int rc = SQLITE_OK;
+    int format = -1;
+
+    // check mMydb is available or not
+    if (mMydb == NULL)
+        return -1;
+
+    // set sql cmd
+    sqlcmd.clear();
+    sqlcmd.appendFormat("SELECT format FROM files WHERE (_id=%d)", handle);
+    //---------------------------0------------------------------------
+
+    // query and get data
+    rc = sqlite3_prepare_v2(mMydb, sqlcmd.string(), -1, &stmt, 0);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            format = sqlite3_column_int(stmt, 0);
+        }
+        sqlite3_finalize(stmt);
+    } else {
+        ALOGE("sqlite3_prepare_v2 fail sqlcmd:%s, error:%s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+    }
+    return format;
+}
+
+// reference to mtpdatabase.java
+MtpResponseCode MyMtpDatabase::getObjectPropertyListFast(MtpObjectHandle handle,
+                                                            uint32_t format, uint32_t property,
+                                                            int groupCode, int depth,
+                                                            MtpDataPacket& packet) {
+    MtpResponseCode result = MTP_RESPONSE_OK;
+    String8 sqlcmd;
+    String8 columns;
+    sqlite3_stmt * stmt = NULL;
+    int rc;
+    int proplistcnt = 0;
+
+    // check group code
+    if (groupCode != 0) {
+        packet.putUInt32(0);
+        ALOGE("groupCode != 0 not support");
+        return MTP_RESPONSE_GROUP_NOT_SUPPORTED;
+    }
+
+    // check depth
+    if (depth > 1) {
+        ALOGE("depth > 1 not support");
+        // to be fiexed
+        packet.putUInt32(0);
+        return MTP_RESPONSE_SPECIFICATION_BY_GROUP_UNSUPPORTED;
+    }
+
+    // check mMydb is available or not
+    if (mMydb == NULL)
+        return MTP_RESPONSE_LOCAL_CALL_FAIL;
+
+    columns.clear();
+    sqlcmd.clear();
+    propCodeList.clear();
+    columnIndex.clear();
+
+    if (property == 0xffffffff) {
+        if (format == 0 && handle != 0 && handle != 0xffffffff) {
+            // return properties based on the object's format
+            format = getObjectFormat(handle);
+        }
+        getSupportedObjectPropertiesFast(format);
+    } else {
+        propCodeList.push(property);
+    }
+
+    proplistcnt = propCodeList.size();
+
+    // create columns
+    int realColumnIndex = 0;
+    for (size_t i = 0; i< propCodeList.size();i++) {
+        const char *temp = getSqlColumn(propCodeList[i]);
+        if (temp != NULL) {
+            if(i > 0)
+                columns.append(",");
+            columns.append(temp);
+            columnIndex.push(realColumnIndex);
+            realColumnIndex++;
+        } else {
+            // mark -1 as column none
+            columnIndex.push(-1);
+        }
+    }
+
+    // create sqlcmd
+    if (format == 0) {
+        if (handle == 0xFFFFFFFF) {
+            // select all objects
+            sqlcmd.appendFormat("SELECT %s FROM files", columns.string());
+        } else {
+            if (depth == 1) {
+                sqlcmd.appendFormat("SELECT %s FROM files WHERE (parent=%d)", columns.string(), handle);
+            } else {
+                sqlcmd.appendFormat("SELECT %s FROM files WHERE (_id=%d)", columns.string(), handle);
+            }
+        }
+    } else {
+        if (handle == 0xFFFFFFFF) {
+            // select all objects with given format
+            sqlcmd.appendFormat("SELECT %s FROM files WHERE (format=%d)", columns.string(), format);
+        } else {
+            if (depth == 1) {
+                sqlcmd.appendFormat("SELECT %s FROM files WHERE parent=%d AND format=%d",
+                    columns.string(), handle, format);
+            } else {
+                sqlcmd.appendFormat("SELECT %s FROM files WHERE _id=%d AND format=%d",
+                    columns.string(), handle, format);
+            }
+        }
+    }
+    ALOGV("sqlcmd = %s", sqlcmd.string());
+
+    rc = sqlite3_prepare_v2(mMydb, sqlcmd.string(), -1, &stmt, 0);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            int64_t value = 0;
+            int type = 0;
+            char    date[20];
+            char *str = NULL;
+            String8 entryName;
+            String8 leaf;
+
+            packet.putUInt32(proplistcnt);
+            for (int j = 0; j < proplistcnt; j++) {
+                packet.putUInt32(handle);
+                packet.putUInt16(propCodeList[j]);
+                switch(propCodeList[j]) {
+                    case MTP_PROPERTY_STORAGE_ID:
+                    case MTP_PROPERTY_DURATION:
+                    case MTP_PROPERTY_PARENT_OBJECT:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        type = MTP_TYPE_UINT32;
+                        break;
+                    case MTP_PROPERTY_TRACK:
+                        value = sqlite3_column_int(stmt, columnIndex[j]) % 1000;
+                        type = MTP_TYPE_UINT16;
+                        break;
+                    case MTP_PROPERTY_OBJECT_FORMAT:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        type = MTP_TYPE_UINT16;
+                        break;
+                    case MTP_PROPERTY_PROTECTION_STATUS:
+                        // protection status is always 0
+                        value = 0;
+                        type = MTP_TYPE_UINT16;
+                        break;
+                    case MTP_PROPERTY_OBJECT_SIZE:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        type = MTP_TYPE_UINT64;
+                        break;
+                    case MTP_PROPERTY_DATE_MODIFIED:
+                    case MTP_PROPERTY_DATE_ADDED:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        formatDateTime(value, date, sizeof(date));
+                        type = MTP_TYPE_STR;
+                        str = date;
+                        break;
+                    case MTP_PROPERTY_OBJECT_FILE_NAME:
+                        str = (char *)sqlite3_column_text(stmt, columnIndex[j]);
+                        entryName.setPathName((const char*)str);
+                        leaf = entryName.getPathLeaf();
+                        str = (char *)leaf.string();
+                        type = MTP_TYPE_STR;
+                        break;
+                    case MTP_PROPERTY_PERSISTENT_UID:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        value <<= 32;
+                        value += handle;
+                        type = MTP_TYPE_UINT128;
+                        break;
+                    case MTP_PROPERTY_NAME:
+                        str = (char *)sqlite3_column_text(stmt, columnIndex[j]);
+                        type = MTP_TYPE_STR;
+                        if (str == NULL)
+                            str = (char *)leaf.string();
+                        break;
+                    case MTP_PROPERTY_ARTIST:
+                    case MTP_PROPERTY_ALBUM_NAME:
+                    case MTP_PROPERTY_DISPLAY_NAME:
+                    case MTP_PROPERTY_COMPOSER:
+                    case MTP_PROPERTY_DESCRIPTION:
+                    case MTP_PROPERTY_GENRE:
+                        str = (char *)sqlite3_column_text(stmt, columnIndex[j]);
+                        type = MTP_TYPE_STR;
+                        break;
+                    case MTP_PROPERTY_ORIGINAL_RELEASE_DATE:
+                        value = sqlite3_column_int(stmt, columnIndex[j]);
+                        entryName.clear();
+                        entryName.appendFormat("%d0101T000000", (int)value);
+                        str = (char *)entryName.string();
+                        type = MTP_TYPE_STR;
+                        break;
+                    case MTP_PROPERTY_AUDIO_WAVE_CODEC:
+                    case MTP_PROPERTY_AUDIO_BITRATE:
+                    case MTP_PROPERTY_SAMPLE_RATE:
+                        // we don't have these in our database, so return 0
+                        type = MTP_TYPE_UINT32;
+                        value = 0;
+                        break;
+                    case MTP_PROPERTY_BITRATE_TYPE:
+                    case MTP_PROPERTY_NUMBER_OF_CHANNELS:
+                        // we don't have these in our database, so return 0
+                        type = MTP_TYPE_UINT16;
+                        value = 0;
+                        break;
+
+                }
+                // type
+                packet.putUInt16(type);
+                switch (type) {
+                    case MTP_TYPE_INT8:
+                        packet.putInt8(value);
+                        break;
+                    case MTP_TYPE_UINT8:
+                        packet.putUInt8(value);
+                        break;
+                    case MTP_TYPE_INT16:
+                        packet.putInt16(value);
+                        break;
+                    case MTP_TYPE_UINT16:
+                        packet.putUInt16(value);
+                        break;
+                    case MTP_TYPE_INT32:
+                        packet.putInt32(value);
+                        break;
+                    case MTP_TYPE_UINT32:
+                        packet.putUInt32(value);
+                        break;
+                    case MTP_TYPE_INT64:
+                        packet.putInt64(value);
+                        break;
+                    case MTP_TYPE_UINT64:
+                        packet.putUInt64(value);
+                        break;
+                    case MTP_TYPE_INT128:
+                        packet.putInt128(value);
+                        break;
+                    case MTP_TYPE_UINT128:
+                        packet.putUInt128(value);
+                        break;
+                    case MTP_TYPE_STR: {
+                        if (str) {
+                            packet.putString(str);
+                        } else {
+                            packet.putEmptyString();
+                        }
+                        break;
+                    }
+                    default:
+                        ALOGE("bad or unsupported data type in MyMtpDatabase::getObjectPropertyListFast");
+                        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+                        packet.reset();
+                        break;
+                }
+            }
+        }
+
+        sqlite3_finalize(stmt);
+
+    } else  {
+        ALOGE("sqlite3_prepare_v2 fail sqlcmd:%s, error:%s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        result = MTP_RESPONSE_LOCAL_CALL_FAIL;
+    }
+    return result;
+}
+
+MtpResponseCode MyMtpDatabase::getObjectInfoFast(MtpObjectHandle handle,
+                                                    MtpObjectInfo& info) {
+    MtpString       path;
+    int64_t         length = 0;
+    MtpObjectFormat format;
+    MtpResponseCode result = MTP_RESPONSE_OK;
+    String8 sqlcmd;
+    sqlite3_stmt * stmt = NULL;
+    int rc = SQLITE_OK;
+
+    // check mMydb is available or not
+    if (mMydb == NULL)
+        return MTP_RESPONSE_LOCAL_CALL_FAIL;
+
+    result = getObjectFilePathFast(handle, path, length, format);
+    if (result != MTP_RESPONSE_OK) {
+        return result;
+    }
+
+    sqlcmd.clear();
+    sqlcmd.appendFormat(
+        "SELECT _id, storage_id, format, parent, _data, \
+        date_added, date_modified FROM files WHERE (_id=%d)", handle);
+
+    // query object info from external db
+    rc = sqlite3_prepare_v2(mMydb, sqlcmd.string(), -1, &stmt, 0);
+    if (rc == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            int temp_storage_id = sqlite3_column_int(stmt, 1);
+            int temp_format = sqlite3_column_int(stmt, 2);
+            int temp_parent = sqlite3_column_int(stmt, 3);
+            const char *temp_data = (const char *)sqlite3_column_text(stmt,4);
+            String8 entryName;
+            entryName.setPathName(temp_data);
+            const String8 leaf(entryName.getPathLeaf());
+            time_t temp_createtime = (long)sqlite3_column_int(stmt, 5);
+            time_t temp_modifytime = (long)sqlite3_column_int(stmt, 6);
+            // use modification date as creation date if date added is not set
+            if (temp_createtime == 0) {
+                temp_createtime = temp_modifytime;
+            }
+
+            info.mStorageID = temp_storage_id;
+            info.mFormat = temp_format;
+            info.mParent = temp_parent;
+            info.mDateCreated = temp_createtime;
+            info.mDateModified = temp_modifytime;
+            info.mName = strdup((const char *)leaf);
+        }
+        sqlite3_finalize(stmt);
+
+    } else {
+        ALOGE("sqlite3_prepare_v2 fail sqlcmd %s error %s\n", sqlcmd.string(), sqlite3_errmsg(mMydb));
+        sqlite3_close(mMydb);
+        mMydb = NULL;
+        return MTP_RESPONSE_LOCAL_CALL_FAIL;
+    }
+
+    info.mCompressedSize = (length > 0xFFFFFFFFLL ? 0xFFFFFFFF : (uint32_t)length);
+    if ((false)) {
+        info.mAssociationType = (format == MTP_FORMAT_ASSOCIATION ?
+                                MTP_ASSOCIATION_TYPE_GENERIC_FOLDER :
+                                MTP_ASSOCIATION_TYPE_UNDEFINED);
+    }
+    info.mAssociationType = MTP_ASSOCIATION_TYPE_UNDEFINED;
+
+    // read EXIF data for thumbnail information
+    switch (info.mFormat) {
+        case MTP_FORMAT_EXIF_JPEG:
+        case MTP_FORMAT_HEIF:
+        case MTP_FORMAT_JFIF: {
+            ExifData *exifdata = exif_data_new_from_file(path);
+            if (exifdata) {
+                if ((false)) {
+                    exif_data_foreach_content(exifdata, foreachcontent, NULL);
+                }
+
+                ExifEntry *w = exif_content_get_entry(
+                        exifdata->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
+                ExifEntry *h = exif_content_get_entry(
+                        exifdata->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_Y_DIMENSION);
+                info.mThumbCompressedSize = exifdata->data ? exifdata->size : 0;
+                info.mThumbFormat = MTP_FORMAT_EXIF_JPEG;
+                info.mImagePixWidth = w ? getLongFromExifEntry(w) : 0;
+                info.mImagePixHeight = h ? getLongFromExifEntry(h) : 0;
+                exif_data_unref(exifdata);
+            }
+            break;
+        }
+
+        // Except DNG, all supported RAW image formats are not defined in PTP 1.2 specification.
+        // Most of RAW image formats are based on TIFF or TIFF/EP. To render Fuji's RAF format,
+        // it checks MTP_FORMAT_DEFINED case since it's designed as a custom format.
+        case MTP_FORMAT_DNG:
+        case MTP_FORMAT_TIFF:
+        case MTP_FORMAT_TIFF_EP:
+        case MTP_FORMAT_DEFINED: {
+            std::unique_ptr<FileStream> stream(new FileStream(path));
+            piex::PreviewImageData image_data;
+            if (!GetExifFromRawImage(stream.get(), path, image_data)) {
+                // Couldn't parse EXIF data from a image file via piex.
+                break;
+            }
+
+            info.mThumbCompressedSize = image_data.thumbnail.length;
+            info.mThumbFormat = MTP_FORMAT_EXIF_JPEG;
+            info.mImagePixWidth = image_data.full_width;
+            info.mImagePixHeight = image_data.full_height;
+
+            break;
+        }
+    }
+
+    return MTP_RESPONSE_OK;
+}
+
+// ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
 
