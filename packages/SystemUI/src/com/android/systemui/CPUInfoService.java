@@ -180,8 +180,8 @@ public class CPUInfoService extends Service {
                 canvas.drawText("Temp " + getCpuTemp(mCpuTemp) + "°C",
                         RIGHT-mPaddingRight-mMaxWidth, y-1, mOnlinePaint);
                 mCpuTempAvail = true;
+                y += mFH;
             }
-            y += mFH;
 
             for(int i=0; i<mCurrFreq.length; i++){
                 String s=getCPUInfoString(i);
