@@ -336,7 +336,8 @@ public class ImageWallpaper extends WallpaperService {
                 boolean surfaceDimensionsChanged = dw != mLastSurfaceWidth
                         || dh != mLastSurfaceHeight;
 
-                boolean redrawNeeded = surfaceDimensionsChanged || newRotation != mLastRotation;
+                boolean redrawNeeded = surfaceDimensionsChanged || newRotation != mLastRotation ||
+                        mNeedsDrawAfterLoadingWallpaper;
                 if (!redrawNeeded && !mOffsetsChanged) {
                     if (DEBUG) {
                         Log.d(TAG, "Suppressed drawFrame since redraw is not needed "
