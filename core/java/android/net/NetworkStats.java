@@ -1025,28 +1025,32 @@ public class NetworkStats implements Parcelable {
             // deducted from the vpn app (see deductTrafficFromVpnApp below).
             if (Objects.equals(iface[i], tunIface) && uid[i] != tunUid) {
                 if (tunIfaceTotal.rxBytes > 0) {
-                    tmpEntry.rxBytes = pool.rxBytes * rxBytes[i] / tunIfaceTotal.rxBytes;
+                    tmpEntry.rxBytes =
+                            (long) (rxBytes[i] * ((float) pool.rxBytes / tunIfaceTotal.rxBytes));
                 } else {
                     tmpEntry.rxBytes = 0;
                 }
                 if (tunIfaceTotal.rxPackets > 0) {
-                    tmpEntry.rxPackets = pool.rxPackets * rxPackets[i] / tunIfaceTotal.rxPackets;
+                    tmpEntry.rxPackets =
+                            (long) (rxPackets[i] * ((float) pool.rxPackets / tunIfaceTotal.rxPackets));
                 } else {
                     tmpEntry.rxPackets = 0;
                 }
                 if (tunIfaceTotal.txBytes > 0) {
-                    tmpEntry.txBytes = pool.txBytes * txBytes[i] / tunIfaceTotal.txBytes;
+                    tmpEntry.txBytes =
+                            (long) (txBytes[i] * ((float) pool.txBytes / tunIfaceTotal.txBytes));
                 } else {
                     tmpEntry.txBytes = 0;
                 }
                 if (tunIfaceTotal.txPackets > 0) {
-                    tmpEntry.txPackets = pool.txPackets * txPackets[i] / tunIfaceTotal.txPackets;
+                    tmpEntry.txPackets =
+                            (long) (txPackets[i] * ((float) pool.txPackets / tunIfaceTotal.txPackets));
                 } else {
                     tmpEntry.txPackets = 0;
                 }
                 if (tunIfaceTotal.operations > 0) {
                     tmpEntry.operations =
-                            pool.operations * operations[i] / tunIfaceTotal.operations;
+                            (long) (txPackets[i] * ((float) pool.txPackets / tunIfaceTotal.txPackets));
                 } else {
                     tmpEntry.operations = 0;
                 }
