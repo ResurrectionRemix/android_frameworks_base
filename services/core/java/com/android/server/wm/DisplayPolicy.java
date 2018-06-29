@@ -960,7 +960,6 @@ public class DisplayPolicy {
                         attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideRightLeft;
                         break;
                 }
->>>>>>> c7987aced43... FW_Base - XuiMod: Toast Animations [1/2]
         }
 
         if (attrs.type != TYPE_STATUS_BAR) {
