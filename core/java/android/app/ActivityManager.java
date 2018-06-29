@@ -2621,7 +2621,6 @@ public class ActivityManager {
         public Rect bounds = new Rect();
         public int[] taskIds;
         public String[] taskNames;
-        public Rect[] taskBounds;
         public int[] taskUserIds;
         public ComponentName topActivity;
         public int displayId;
@@ -2649,14 +2648,6 @@ public class ActivityManager {
             dest.writeInt(bounds.bottom);
             dest.writeIntArray(taskIds);
             dest.writeStringArray(taskNames);
-            final int boundsCount = taskBounds == null ? 0 : taskBounds.length;
-            dest.writeInt(boundsCount);
-            for (int i = 0; i < boundsCount; i++) {
-                dest.writeInt(taskBounds[i].left);
-                dest.writeInt(taskBounds[i].top);
-                dest.writeInt(taskBounds[i].right);
-                dest.writeInt(taskBounds[i].bottom);
-            }
             dest.writeIntArray(taskUserIds);
             dest.writeInt(displayId);
             dest.writeInt(userId);
@@ -2677,17 +2668,6 @@ public class ActivityManager {
                     source.readInt(), source.readInt(), source.readInt(), source.readInt());
             taskIds = source.createIntArray();
             taskNames = source.createStringArray();
-            final int boundsCount = source.readInt();
-            if (boundsCount > 0) {
-                taskBounds = new Rect[boundsCount];
-                for (int i = 0; i < boundsCount; i++) {
-                    taskBounds[i] = new Rect();
-                    taskBounds[i].set(
-                            source.readInt(), source.readInt(), source.readInt(), source.readInt());
-                }
-            } else {
-                taskBounds = null;
-            }
             taskUserIds = source.createIntArray();
             displayId = source.readInt();
             userId = source.readInt();
@@ -2730,9 +2710,6 @@ public class ActivityManager {
             for (int i = 0; i < taskIds.length; ++i) {
                 sb.append(prefix); sb.append("taskId="); sb.append(taskIds[i]);
                         sb.append(": "); sb.append(taskNames[i]);
-                        if (taskBounds != null) {
-                            sb.append(" bounds="); sb.append(taskBounds[i].toShortString());
-                        }
                         sb.append(" userId=").append(taskUserIds[i]);
                         sb.append(" visible=").append(visible);
                         if (topActivity != null) {

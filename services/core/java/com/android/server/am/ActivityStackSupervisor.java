@@ -4449,7 +4449,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
         }
         info.taskIds = taskIds;
         info.taskNames = taskNames;
-        info.taskBounds = taskBounds;
         info.taskUserIds = taskUserIds;
 
         final ActivityRecord top = stack.topRunningActivityLocked();
