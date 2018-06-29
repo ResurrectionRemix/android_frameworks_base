@@ -429,7 +429,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public void setMobileDataIndicators(NetworkController.IconState statusIcon,
             NetworkController.IconState qsIcon, int statusType,
-            int qsType, boolean activityIn, boolean activityOut,
+            int qsType, boolean activityIn, boolean activityOut, int volteId,
             String typeContentDescription,
             String description, boolean isWide, int subId, boolean roaming) {
         mInfo.visible = statusIcon.visible;
