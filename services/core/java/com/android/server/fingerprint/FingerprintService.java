@@ -1055,7 +1055,11 @@ public class FingerprintService extends SystemService implements IHwBinder.Death
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    handleEnrollResult(deviceId, fingerId, groupId, remaining);
+                    int remaining2 = remaining;
+                    String fp = android.os.SystemProperties.get("ro.vendor.build.fingerprint");
+                    if(fp != null && (fp.contains("starlte") || fp.contains("star2lte") || fp.contains("starqlte") || fp.contains("star2qlte")))
+                        remaining2 = 100 - remaining2;
+                    handleEnrollResult(deviceId, fingerId, groupId, remaining2);
                 }
             });
         }
