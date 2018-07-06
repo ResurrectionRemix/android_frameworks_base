@@ -33,7 +33,7 @@
   <string name="app_stop_item_title">アプリを強制終了</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_dash_charging_time">急速充電中 (充電完了まで<xliff:g id="Charging_TIME_LEFT">%s</xliff:g>)</string>
-  <string name="keyguard_plugged_in_dash_charging">急速充電</string>
+  <string name="keyguard_plugged_in_dash_charging">急速充電中</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go が有効化されました</string>
   <string name="onthego_notif_title">On-The-Go が有効です</string>
@@ -91,13 +91,13 @@
   <string name="quick_settings_locale_label">言語</string>
   <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするために複数の言語を設定してください</string>
   <!-- Music tile -->
-  <string name="quick_settings_music_label">ミュージック</string>
+  <string name="quick_settings_music_label">音楽</string>
   <string name="quick_settings_music_play">再生</string>
   <string name="quick_settings_music_pause">一時停止</string>
   <!-- Sound tile -->
   <string name="quick_settings_sound_label">サウンド</string>
   <string name="quick_settings_sound_ring">着信</string>
-  <string name="quick_settings_sound_vibrate">マナーモード</string>
+  <string name="quick_settings_sound_vibrate">振動</string>
   <string name="quick_settings_sound_silent">サイレント</string>
   <!-- Sound Search TIle -->
   <string name="quick_settings_sound_search">音声検索</string>
@@ -181,7 +181,7 @@
   <string name="quick_settings_expanded_desktop_label">拡張デスクトップ</string>
   <string name="quick_settings_expanded_desktop">展開中</string>
   <string name="quick_settings_expanded_desktop_off">標準</string>
-  <string name="quick_settings_expanded_navigation_off">ナビバーを隠す</string>
+  <string name="quick_settings_expanded_navigation_off">ナビゲーションバーを隠す</string>
   <string name="quick_settings_expanded_statusbar_off">ステータスバーを隠す</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
@@ -190,9 +190,9 @@
   <string name="pie_state_summary">没入型モードでPieコントロールを使用する</string>
   <string name="pie_battery_level">"バッテリーレベル "</string>
   <string name="quick_settings_pie">Pie</string>
-  <string name="recents_custom_android_n">全てクリア</string>
+  <string name="recents_custom_android_n">全て消去</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_turbo_power_time">急速充電中 (残り<xliff:g id="charging_time_left">%s</xliff:g>)</string>
+  <string name="keyguard_indication_turbo_power_time">急速充電中 (充電完了まで<xliff:g id="charging_time_left">%s</xliff:g>)</string>
   <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">強制停止しますか？</string>

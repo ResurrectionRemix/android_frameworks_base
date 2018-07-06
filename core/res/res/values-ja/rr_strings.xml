@@ -46,5 +46,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">電源ボタンを長押しでライト点灯</string>
   <!-- Label for item that flashlight in power menu options dialog -->
-  <string name="global_action_flashlight">ライト</string>
+  <string name="global_action_flashlight">フラッシュライト</string>
 </resources>
