@@ -163,7 +163,7 @@
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Thanh điều hướng</string>
   <string name="quick_settings_smartbar">Thanh thông minh</string>
-  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling">Mở rộng</string>
   <string name="quick_settings_navigation_default">Gốc</string>
   <string name="quick_settings_navigation_disabled">Đã tắt</string>
   <string name="omnijaws_service_error">Lỗi</string>
@@ -187,7 +187,7 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
   <!-- Pie controls -->
   <string name="pie_state_name">Điều hướng Pie</string>
-  <string name="pie_state_summary">Sử dụng điều khiển pie khi ở chế độ nhập vai</string>
+  <string name="pie_state_summary">Sử dụng điều khiển pie khi ở chế độ toàn màn hình</string>
   <string name="pie_battery_level">"MỨC PIN "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>

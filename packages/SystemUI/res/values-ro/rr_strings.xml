@@ -23,7 +23,7 @@
   <string name="global_action_restart_recovery">Recuperare</string>
   <string name="global_action_restart_bootloader">Bootloader</string>
   <string name="global_action_restart_ui">Interfata sistem</string>
-  <string name="global_action_restart_hot">Populare</string>
+  <string name="global_action_restart_hot">Repornire rapidă</string>
   <string name="global_action_screenshot">Captura de ecran</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Captură de ecran ștearsă</string>

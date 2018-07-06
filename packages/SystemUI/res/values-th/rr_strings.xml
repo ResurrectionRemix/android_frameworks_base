@@ -61,6 +61,7 @@
   <string name="quick_settings_reboot_recovery_label">กู้คืน</string>
   <!-- Partial Screenshot -->
   <string name="screenshot_abort_title">ไม่มีภาพถ่ายหน้าจอ</string>
+  <string name="screenshot_abort_text">การดำเนินงานที่ยกเลิก</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">เข็มทิศ</string>
   <string name="quick_settings_compass_value"><xliff:g id="องศา">%1$.0f</xliff:g>\u00b0 <xliff:g id="ทิศ">%2$s</xliff:g></string>
