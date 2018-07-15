@@ -63,6 +63,7 @@ import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
+import com.android.systemui.tuner.TunerService;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -74,7 +75,7 @@ import java.util.Objects;
  */
 public class QuickStatusBarHeader extends RelativeLayout implements
         View.OnClickListener, NextAlarmController.NextAlarmChangeCallback,
-        ZenModeController.Callback {
+        ZenModeController.Callback, TunerService.Tunable {
     private static final String TAG = "QuickStatusBarHeader";
     private static final boolean DEBUG = false;
 
@@ -185,6 +186,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mClockView.setOnClickListener(this);
         mClockView.setQsHeader();
         mDateView = findViewById(R.id.date);
+
+        Dependency.get(TunerService.class).addTunable(this,
+                StatusBarIconController.ICON_BLACKLIST);
     }
 
     private void updateStatusText() {
@@ -631,5 +635,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             lp.leftMargin = sideMargins;
             lp.rightMargin = sideMargins;
         }
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
+                .contains("clock"));
     }
 }

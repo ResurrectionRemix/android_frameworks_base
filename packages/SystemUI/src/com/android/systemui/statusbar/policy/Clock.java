@@ -49,7 +49,6 @@ import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.statusbar.CommandQueue;
-import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.tuner.TunerService;
@@ -73,7 +72,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private int mCurrentUserId;
 
     private boolean mClockVisibleByPolicy = true;
-    private boolean mClockVisibleByUser = true;
+    private boolean mClockVisibleByUser = getVisibility() == View.VISIBLE;
 
     private boolean mAttached;
     private Calendar mCalendar;
@@ -86,6 +85,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public static final int AM_PM_STYLE_GONE    = 0;
     public static final int AM_PM_STYLE_SMALL   = 1;
     public static final int AM_PM_STYLE_NORMAL  = 2;
+    public static final String CLOCK_SECONDS = "clock_seconds";
 
     private static int AM_PM_STYLE = AM_PM_STYLE_GONE;
 
@@ -107,6 +107,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private int mAmPmStyle;
     private final boolean mShowDark;
     private boolean mQsHeader;
+    private boolean mShowSeconds;
+    private Handler mSecondsHandler;
 
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
@@ -168,7 +170,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     null, Dependency.get(Dependency.TIME_TICK_HANDLER));
             Dependency.get(TunerService.class).addTunable(this,
                     STATUS_BAR_CLOCK, STATUSBAR_CLOCK_AM_PM_STYLE, STATUSBAR_CLOCK_DATE_DISPLAY,
-                    STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_POSITION);
+                    STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_POSITION, CLOCK_SECONDS);
             SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).addCallbacks(this);
             if (mShowDark) {
                 Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
@@ -271,6 +273,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 || STATUS_BAR_CLOCK.equals(key)) {
             updateSettings(key, newValue);
         }
+        if (CLOCK_SECONDS.equals(key)) {
+            mShowSeconds = newValue != null && Integer.parseInt(newValue) != 0;
+            updateShowSeconds();
+        }
     }
 
     @Override
@@ -329,9 +335,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         final char MAGIC2 = '\uEF01';
 
         SimpleDateFormat sdf;
-        String format = /*mShowSeconds
-                ? is24 ? d.timeFormat_Hms : d.timeFormat_hms
-                : */is24 ? d.timeFormat_Hm : d.timeFormat_hm;
+        String format = mShowSeconds
+                //? is24 ? d.timeFormat_Hms : d.timeFormat_hms
+                : is24 ? d.timeFormat_Hm : d.timeFormat_hm;
         if (!format.equals(mClockFormatString)) {
             mContentDescriptionFormat = new SimpleDateFormat(format);
             /*
@@ -531,5 +537,58 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public void setQsHeader() {
         mQsHeader = true;
     }
+
+
+    private void updateShowSeconds() {
+        if (mShowSeconds) {
+            // Wait until we have a display to start trying to show seconds.
+            if (mSecondsHandler == null && getDisplay() != null) {
+                mSecondsHandler = new Handler();
+                if (getDisplay().getState() == Display.STATE_ON) {
+                    mSecondsHandler.postAtTime(mSecondTick,
+                            SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
+                }
+                IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+                filter.addAction(Intent.ACTION_SCREEN_ON);
+                mContext.registerReceiver(mScreenReceiver, filter);
+            }
+        } else {
+            if (mSecondsHandler != null) {
+                mContext.unregisterReceiver(mScreenReceiver);
+                mSecondsHandler.removeCallbacks(mSecondTick);
+                mSecondsHandler = null;
+                updateClock();
+            }
+        }
+    }
+
+
+    private final BroadcastReceiver mScreenReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                if (mSecondsHandler != null) {
+                    mSecondsHandler.removeCallbacks(mSecondTick);
+                }
+            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                if (mSecondsHandler != null) {
+                    mSecondsHandler.postAtTime(mSecondTick,
+                            SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
+                }
+            }
+        }
+    };
+
+    private final Runnable mSecondTick = new Runnable() {
+        @Override
+        public void run() {
+            if (mCalendar != null) {
+                updateClock();
+            }
+            mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
+        }
+    };
+  }
 }
 
