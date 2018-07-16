@@ -24,14 +24,17 @@
     <java-symbol type="bool" name="config_haveHigherAspectRatioScreen" />
     <java-symbol type="dimen" name="config_screenAspectRatio" />
 
-  <!-- In call notification vibration strength -->
-  <java-symbol type="integer" name="config_in_call_notification_vibration_strength" />
+    <!-- In call notification vibration strength -->
+    <java-symbol type="integer" name="config_in_call_notification_vibration_strength" />
 
-  <!-- Ambient play -->
-  <java-symbol type="string" name="ambient_recognition_notification" />
-  <java-symbol type="string" name="ambient_recognition_information" />
+    <!-- Ambient play -->
+    <java-symbol type="string" name="ambient_recognition_notification" />
+    <java-symbol type="string" name="ambient_recognition_information" />
 
-  <!-- Usb drive persistent notification -->
-  <java-symbol type="bool" name="config_persistUsbDriveNotification" />
+    <!-- Usb drive persistent notification -->
+    <java-symbol type="bool" name="config_persistUsbDriveNotification" />
+
+    <!-- Whether device ignores the RSSNR signal implementation -->
+    <java-symbol type="bool" name="config_ignoreRssnrSignalLevel" />
 
 </resources>
