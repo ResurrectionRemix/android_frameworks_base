@@ -1594,7 +1594,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             // It is possible the activity was freezing the screen before it was paused.
             // In that case go ahead and remove the freeze this activity has on the screen
             // since it is no longer visible.
-            if (prev != null) {
+            if (prev != null && prev.mWindowContainerController != null) {
                 prev.stopFreezingScreenLocked(true /*force*/);
             }
             mPausingActivity = null;
