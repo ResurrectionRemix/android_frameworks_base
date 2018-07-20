@@ -2560,6 +2560,12 @@ public class ExifInterface {
                     if (position < 0) {
                         return -1;
                     }
+                    if (position + size > in.mLength) {
+                        size = (int)(in.mLength - position);
+                        if (size <= 0) {
+                            return -1;
+                        }
+                    }
                     try {
                         if (mPosition != position) {
                             in.seek(position);
