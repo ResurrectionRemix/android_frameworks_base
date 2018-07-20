@@ -583,6 +583,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mWallpaperSupported;
 
     private VisualizerView mVisualizerView;
+    private boolean mAmbientVisualizer;
 
     private final BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -2024,6 +2025,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_DATAUSAGE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2048,6 +2052,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mCollapsedStatusBarFragment.updateSettings(false);
             }
             updateDataUsage();
+            setAmbientVis();
         }
     }
 
@@ -3947,6 +3952,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         mVisualizerView.setDozing(mDozing);
         updateQsExpansionEnabled();
         Trace.endSection();
+
+        if (mAmbientVisualizer && mDozing) {
+            mVisualizerView.setVisible(true);
+        }
     }
 
     public void userActivity() {
@@ -5398,5 +5407,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         mHeadsUpDisabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.GAMING_MODE_HEADSUP_TOGGLE, 0, UserHandle.USER_CURRENT) == 1;
         mNotificationInterruptionStateProvider.setGamingPeekMode(mGamingModeActivated && mHeadsUpDisabled);
+    }
+
+    private void setAmbientVis() {
+        mAmbientVisualizer = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.AMBIENT_VISUALIZER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 }
