@@ -129,8 +129,8 @@
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- PiP Tile -->
-  <string name="quick_settings_pip_label">Picture in Picture</string>
-  <string name="quick_settings_pip_tile_app_na">このアプリはPicture in Pictureに対応していません</string>
+  <string name="quick_settings_pip_label">ピクチャーインピクチャー</string>
+  <string name="quick_settings_pip_tile_app_na">このアプリはピクチャーインピクチャーに対応していません</string>
   <!-- Screenrecord tile -->
   <string name="quick_settings_screenrecord">画面録画</string>
   <string name="quick_settings_screenrecord_on">録画中...</string>
