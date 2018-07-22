@@ -4,7 +4,7 @@
 /**
  * Copyright (c) 2009, The Android Open Source Project
  * Copyright (c) 2015, The CyanogenMod Project
- * Copyright (c) 2017, The LineageOS Project
+ * Copyright (c) 2017-2018, The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,6 +64,7 @@
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
   <!-- Label for current user in power menu options dialog -->
+  <string name="global_action_current_user">Utilisateur actuel</string>
   <!-- Label for item that screenshots in power menu options dialog -->
   <string name="global_action_screenshot">Capture d\'écran</string>
   <!-- Advanced restart menu -->
@@ -74,6 +75,7 @@
   <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
   <string name="global_action_restart_bootloader">Bootloader</string>
   <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+  <string name="global_action_restart_download">Download</string>
   <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
   <string name="global_action_restart_progress">Redémarrage\u2026</string>
   <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
@@ -81,6 +83,7 @@
   <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
   <string name="global_action_restart_bootloader_progress">Redémarrage en mode bootloader\u2026</string>
   <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+  <string name="global_action_restart_download_progress">Redémarrage en mode download\u2026</string>
   <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie.</string>
   <!-- Content description of the location tile in quick settings when on, sensors only mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -112,4 +115,16 @@
   <string name="quick_settings_location_detail_mode_battery_saving_description">Utiliser le Wi\u2011Fi, le Bluetooth ou les réseaux mobiles pour déterminer la position</string>
   <!-- [CHAR LIMIT=130] Location detail panel, description for sensors only mode -->
   <string name="quick_settings_location_detail_mode_sensors_only_description">Utiliser le GPS pour déterminer votre position</string>
+  <!-- SysUI Tuner: Button that controls inversion of layout of navigation bar [CHAR LIMIT=60] -->
+  <string name="nav_bar_layout_inverse">Inverser la disposition des boutons</string>
+  <!-- Reader mode QS tile -->
+  <string name="quick_settings_reading_mode">Mode Lecture</string>
+  <!-- Content description of the reader mode tile when on -->
+  <string name="accessibility_quick_settings_reading_mode_on">Mode Lecture activé.</string>
+  <!-- Content description of the reader mode tile when off -->
+  <string name="accessibility_quick_settings_reading_mode_off">Mode Lecture désactivé.</string>
+  <!-- Content description of the reader mode tile when turned on -->
+  <string name="accessibility_quick_settings_reading_mode_changed_on">Mode Lecture activé.</string>
+  <!-- Content description of the reader mode tile when turned off -->
+  <string name="accessibility_quick_settings_reading_mode_changed_off">Mode Lecture désactivé.</string>
 </resources>
