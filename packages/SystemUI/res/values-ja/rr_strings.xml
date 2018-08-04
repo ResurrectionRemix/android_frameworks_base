@@ -172,7 +172,7 @@
   <string name="omnijaws_service_disabled">サービスは無効です</string>
   <string name="omnijaws_detail_header">天気</string>
   <string name="omnijaws_label_default">天気</string>
-  <string name="omnijaws_current_text">今</string>
+  <string name="omnijaws_current_text">現在</string>
   <string name="omnijaws_package_not_available">OmniJawsは使用できません</string>
   <string name="omnijaws_service_last_update">最終更新：</string>
   <!-- Battery saver tile -->
