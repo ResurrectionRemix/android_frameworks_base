@@ -174,4 +174,6 @@
   <java-symbol type="string" name="config_headlineFontFamilyMedium" />
   <java-symbol type="string" name="config_bodyFontFamily" />
   <java-symbol type="string" name="config_bodyFontFamilyMedium" />
+  <!-- Whether the device supports Smart Pixels -->
+  <java-symbol type="bool" name="config_supportSmartPixels" />
 </resources>
