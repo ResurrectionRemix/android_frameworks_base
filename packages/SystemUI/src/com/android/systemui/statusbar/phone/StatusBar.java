@@ -23,6 +23,7 @@ import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN_OR_SPLIT
 
 import static android.provider.Settings.Secure.AMBIENT_RECOGNITION;
 import static android.provider.Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD;
+import static android.provider.Settings.Secure.AMBIENT_RECOGNITION_INTERVAL;
 
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_ASLEEP;
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_AWAKE;
@@ -695,7 +696,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private RecoginitionObserverFactory mRecognition;
     private boolean mRecognitionEnabled;
     /* Interval indicating when AP-Recogntion will run. Default is 2 minutes */
-    private static final int AMBIENT_RECOGNITION_INTERVAL = 120000;
+    private int mAmbientRecognitionInterval = 120000;
     /* Interval indicating the max recording time. Default is 19 seconds */
     private static final int AMBIENT_RECOGNITION_INTERVAL_MAX = 19000;
 
@@ -4163,6 +4164,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mRecognitionEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
                 AMBIENT_RECOGNITION, 0) != 0;
         if (!mRecognitionEnabled) return;
+        mAmbientRecognitionInterval = Settings.Secure.getInt(mContext.getContentResolver(),
+                AMBIENT_RECOGNITION_INTERVAL, 120000);
         mRecognition = new RecoginitionObserverFactory(mContext);
         doAmbientRecognition();
     }
@@ -4178,7 +4181,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         Log.d(TAG, "Will start listening again in 2 minutes");
         mHandler.postDelayed(() -> {
                  initAmbientRecognition();
-        }, AMBIENT_RECOGNITION_INTERVAL);
+        }, mAmbientRecognitionInterval);
     }
 
     /**
@@ -5740,6 +5743,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.AMBIENT_RECOGNITION_INTERVAL),
                     false, this, UserHandle.USER_ALL);
         }
         @Override

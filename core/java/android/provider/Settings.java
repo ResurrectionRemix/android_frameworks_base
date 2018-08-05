@@ -7745,6 +7745,13 @@ public final class Settings {
          */
         public static final String AMBIENT_RECOGNITION_KEYGUARD = "ambient_recognition_keyguard";
 
+        /**
+         * The update interval in milliseconds that is used by Ambient Play to recognize music 
+         *
+         * @hide
+         */
+        public static final String AMBIENT_RECOGNITION_INTERVAL = "ambient_recognition_interval";
+
 	    /**
          * Whether or not the automatic storage manager is enabled and should run on the device.
          *
