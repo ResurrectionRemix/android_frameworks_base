@@ -54,18 +54,19 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
             mLastMatchTryTime = SystemClock.uptimeMillis();
 
             while (!isInterrupted() && mBuffer != null && mBufferIndex < mBuffer.length) {
-                int read;
+                int read = 0;
                 synchronized (this) {
-                    read = mRecorder.read(mBuffer, mBufferIndex, Math.min(512, mBuffer.length - mBufferIndex));
-
-                    if (read == AudioRecord.ERROR_BAD_VALUE) {
-                        Log.d(TAG, "BAD_VALUE while reading recorder");
-                        break;
-                    } else if (read == AudioRecord.ERROR_INVALID_OPERATION) {
-                        Log.d(TAG, "INVALID_OPERATION while reading recorder");
-                        break;
-                    } else if (read >= 0) {
-                        mBufferIndex += read;
+                    if (mRecorder != null) {
+                        read = mRecorder.read(mBuffer, mBufferIndex, Math.min(512, mBuffer.length - mBufferIndex));
+                        if (read == AudioRecord.ERROR_BAD_VALUE) {
+                            Log.d(TAG, "BAD_VALUE while reading recorder");
+                            break;
+                        } else if (read == AudioRecord.ERROR_INVALID_OPERATION) {
+                            Log.d(TAG, "INVALID_OPERATION while reading recorder");
+                            break;
+                        } else if (read >= 0) {
+                            mBufferIndex += read;
+                        }
                     }
                 }
 
