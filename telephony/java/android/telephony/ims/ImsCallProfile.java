@@ -110,6 +110,11 @@ public final class ImsCallProfile implements Parcelable {
      * VideoShare (video RX one way)
      */
     public static final int CALL_TYPE_VS_RX = 10;
+    /**
+     * Unknown (audio / video inactive)
+     * @hide
+     */
+    public static final int CALL_TYPE_UNKNOWN = (-1);
 
     /**
      * Extra properties for IMS call.
