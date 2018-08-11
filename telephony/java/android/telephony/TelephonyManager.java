@@ -81,6 +81,9 @@ import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.ContentResolver;
+import android.provider.Settings;
+
 /**
  * Provides access to information about the telephony services on
  * the device. Applications can use the methods in this class to
@@ -6626,6 +6629,45 @@ public class TelephonyManager {
             Log.e(TAG, "Permission error calling ITelephony#isHearingAidCompatibilitySupported", e);
         }
         return false;
+    }
+
+    /**
+     * This function retrieves value for setting "name+subId", and if that is not found
+     * retrieves value for setting "name", and if that is not found throws
+     * SettingNotFoundException
+     *
+     * @hide
+     */
+    public static int getIntWithSubId(ContentResolver cr, String name, int subId)
+            throws SettingNotFoundException {
+        try {
+            return Settings.Global.getInt(cr, name + subId);
+        } catch (SettingNotFoundException e) {
+            try {
+                int val = Settings.Global.getInt(cr, name);
+                Settings.Global.putInt(cr, name + subId, val);
+
+                /* We are now moving from 'setting' to 'setting+subId', and using the value stored
+                 * for 'setting' as default. Reset the default (since it may have a user set
+                 * value). */
+                int default_val = val;
+                if (name.equals(Settings.Global.MOBILE_DATA)) {
+                    default_val = "true".equalsIgnoreCase(
+                            SystemProperties.get("ro.com.android.mobiledata", "true")) ? 1 : 0;
+                } else if (name.equals(Settings.Global.DATA_ROAMING)) {
+                    default_val = "true".equalsIgnoreCase(
+                            SystemProperties.get("ro.com.android.dataroaming", "false")) ? 1 : 0;
+                }
+
+                if (default_val != val) {
+                    Settings.Global.putInt(cr, name, default_val);
+                }
+
+                return val;
+            } catch (SettingNotFoundException exc) {
+                throw new SettingNotFoundException(name);
+            }
+        }
     }
 
     /**
