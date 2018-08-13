@@ -582,6 +582,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     // How long we wait for an attached process to publish its content providers
     // before we decide it must be hung.
     static final int CONTENT_PROVIDER_PUBLISH_TIMEOUT = 10*1000;
+    // How long we wait for provider to be notify before we decide it may be hang.
+    static final int CONTENT_PROVIDER_WAIT_TIMEOUT = 20*1000;
 
     // How long we wait for a launched process to attach to the activity manager
     // before we decide it's never going to come up for real, when the process was
@@ -1937,6 +1939,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     static final int PUSH_TEMP_WHITELIST_UI_MSG = 68;
     static final int SERVICE_FOREGROUND_CRASH_MSG = 69;
     static final int DISPATCH_OOM_ADJ_OBSERVER_MSG = 70;
+    static final int CONTENT_PROVIDER_WAIT_TIMEOUT_MSG = 71;
 
     static final int FIRST_ACTIVITY_STACK_MSG = 100;
     static final int FIRST_BROADCAST_QUEUE_MSG = 200;
@@ -2292,6 +2295,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                 ProcessRecord app = (ProcessRecord)msg.obj;
                 synchronized (ActivityManagerService.this) {
                     processContentProviderPublishTimedOutLocked(app);
+                }
+            } break;
+            case CONTENT_PROVIDER_WAIT_TIMEOUT_MSG: {
+                ContentProviderRecord cpr = (ContentProviderRecord)msg.obj;
+                synchronized (ActivityManagerService.this) {
+                    processContentProviderWaitTimedOutLocked(cpr);
                 }
             } break;
             case KILL_APPLICATION_MSG: {
@@ -7531,6 +7540,30 @@ public class ActivityManagerService extends IActivityManager.Stub
         removeProcessLocked(app, false, true, "timeout publishing content providers");
     }
 
+    @GuardedBy("this")
+    private final void processContentProviderWaitTimedOutLocked(ContentProviderRecord cpr) {
+        try {
+            if (mLaunchingProviders.contains(cpr)) {
+                if (DEBUG_MU) Slog.v(TAG_MU,
+                    "Remove from mLaunchingProviders, " + cpr
+                    + " launchingApp=" + cpr.launchingApp);
+                mLaunchingProviders.remove(cpr);
+            }
+
+            if (DEBUG_MU) Slog.v(TAG_MU,
+                "RemoveMessages CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, " + cpr
+                + " launchingApp=" + cpr.launchingApp);
+            mHandler.removeMessages(CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, cpr);
+            synchronized (cpr) {
+                cpr.notifyAll();
+                cpr.launchingApp = null;
+            }
+        } catch (Exception e) {
+            if (DEBUG_MU) Slog.v(TAG_MU,
+                "processContentProviderWaitTimedOutLocked exception, " + e);
+        }
+    }
+
     private final void processStartTimedOutLocked(ProcessRecord app) {
         final int pid = app.pid;
         boolean gone = false;
@@ -12532,11 +12565,34 @@ public class ActivityManagerService extends IActivityManager.Stub
                     if (conn != null) {
                         conn.waiting = true;
                     }
+
+                    // add 20s wait timeout
+                    if (!mHandler.hasMessages(CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, cpr)) {
+                        if (DEBUG_MU) Slog.v(TAG_MU,
+                            "SendMessageDelayed CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, " + cpr
+                            + " launchingApp=" + cpr.launchingApp);
+                        Message msg = mHandler.obtainMessage(CONTENT_PROVIDER_WAIT_TIMEOUT_MSG);
+                        msg.obj = cpr;
+                        mHandler.sendMessageDelayed(msg, CONTENT_PROVIDER_WAIT_TIMEOUT);
+                    } else {
+                        if (DEBUG_MU) Slog.v(TAG_MU,
+                            "There is another waiting to start provider " + cpr
+                            + " launchingApp=" + cpr.launchingApp
+                            + ", not send CONTENT_PROVIDER_WAIT_TIMEOUT_MSG again");
+                    }
+
                     cpr.wait();
                 } catch (InterruptedException ex) {
                 } finally {
                     if (conn != null) {
                         conn.waiting = false;
+                    }
+                    // remove wait time out message
+                    if (mHandler.hasMessages(CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, cpr)) {
+                        if (DEBUG_MU) Slog.v(TAG_MU,
+                            "After wait removeMessages CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, "
+                            + cpr + " launchingApp=" + cpr.launchingApp);
+                            mHandler.removeMessages(CONTENT_PROVIDER_WAIT_TIMEOUT_MSG, cpr);
                     }
                 }
             }
