@@ -15,15 +15,17 @@
      limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="28dp"
-    android:height="28dp"
+    android:width="26dp"
+    android:height="26dp"
     android:viewportWidth="96"
     android:viewportHeight="96">
 
     <path
-        android:fillColor="?attr/singleToneColor"
-        android:pathData="M48 83.6c-19.6 0 -35.6 -16 -35.6 -35.6 0 -19.6 16 -35.6 35.6 -35.6 19.6 0 35.6 16 35.6 35.6l0 0.2C83.4 67.8 67.6 83.4 48 83.6ZM77.8 48.2C77.6 32 64.8 18.8 48.4 18.2c-16.2 0 -29.6 12.8 -30.2 29 0 16.6 13.2 30 29.6 30.4 16.4 -0.2 29.6 -13.2 30 -29.4z" />
+        android:fillColor="@color/light_mode_icon_color_single_tone"
+        android:pathData="M 48 20 C 63.4639729953 20 76 32.5360270047 76 48 C 76 63.4639729953 63.4639729953 76 48 76 C 32.5360270047 76 20 63.4639729953 20 48 C 20 32.5360270047 32.5360270047 20 48 20 Z" />
     <path
-        android:fillColor="?attr/singleToneColor"
-        android:pathData="M72 48.2C72 61.4 61.2 72.2 47.8 72 34.4 71.8 23.8 61.2 24 47.8 24.2 34.4 34.8 24 48 24l0.2 0C61.4 24.2 72 34.8 72 48.2c0 -0.2 0 0 0 0z" />
+        android:fillColor="@color/light_mode_icon_color_single_tone"
+        android:pathData="M48,10c-21,0-38,17-38,38s17,38,38,38s38-17,38-38S69,10,48,10z
+M48,82c-18.8,0-34-15.2-34-34
+c0-18.8,15.2-34,34-34s34,15.2,34,34C82,66.8,66.8,82,48,82z" />
 </vector>
