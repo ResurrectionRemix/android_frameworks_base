@@ -1308,7 +1308,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
     }
-
+/*
     DevelopmentSettingsObserver mDevelopmentSettingsObserver;
 
     private final class DevelopmentSettingsObserver extends ContentObserver {
@@ -1341,7 +1341,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                             : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                     0);
         }
-    }
+    }*/
 
     /**
      * Thread-local storage used to carry caller permissions over through
@@ -12913,7 +12913,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         mConstants.start(mContext.getContentResolver());
         mCoreSettingsObserver = new CoreSettingsObserver(this);
         mFontScaleSettingObserver = new FontScaleSettingObserver();
-        mDevelopmentSettingsObserver = new DevelopmentSettingsObserver();
+        //mDevelopmentSettingsObserver = new DevelopmentSettingsObserver();
         GlobalSettingsToPropertiesMapper.start(mContext.getContentResolver());
 
         // Now that the settings provider is published we can consider sending
