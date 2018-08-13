@@ -530,6 +530,10 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         return drawable;
     }
 
+    public KeyButtonDrawable getRecentsDrawable(Context lightContext, Context darkContext) {
+        return getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_recent);
+    }
+
     private void orientBackButton(KeyButtonDrawable drawable) {
         final boolean useAltBack =
             (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0;
