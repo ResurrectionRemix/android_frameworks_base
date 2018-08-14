@@ -4883,18 +4883,6 @@ public class NotificationManagerService extends SystemService {
         final NotificationChannel channel = mPreferencesHelper.getNotificationChannel(pkg,
                 notificationUid, channelId, false /* includeDeleted */);
         if (channel == null) {
-            final String noChannelStr = "No Channel found for "
-                    + "pkg=" + pkg
-                    + ", channelId=" + channelId
-                    + ", id=" + id
-                    + ", tag=" + tag
-                    + ", opPkg=" + opPkg
-                    + ", callingUid=" + callingUid
-                    + ", userId=" + userId
-                    + ", incomingUserId=" + incomingUserId
-                    + ", notificationUid=" + notificationUid
-                    + ", notification=" + notification;
-            Slog.e(TAG, noChannelStr);
             boolean appNotificationsOff = mPreferencesHelper.getImportance(pkg, notificationUid)
                     == NotificationManager.IMPORTANCE_NONE;
 
