@@ -4064,18 +4064,6 @@ public class NotificationManagerService extends SystemService {
         final NotificationChannel channel = mRankingHelper.getNotificationChannel(pkg,
                 notificationUid, channelId, false /* includeDeleted */);
         if (channel == null) {
-            final String noChannelStr = "No Channel found for "
-                    + "pkg=" + pkg
-                    + ", channelId=" + channelId
-                    + ", id=" + id
-                    + ", tag=" + tag
-                    + ", opPkg=" + opPkg
-                    + ", callingUid=" + callingUid
-                    + ", userId=" + userId
-                    + ", incomingUserId=" + incomingUserId
-                    + ", notificationUid=" + notificationUid
-                    + ", notification=" + notification;
-            Log.e(TAG, noChannelStr);
             boolean appNotificationsOff = mRankingHelper.getImportance(pkg, notificationUid)
                     == NotificationManager.IMPORTANCE_NONE;
 
