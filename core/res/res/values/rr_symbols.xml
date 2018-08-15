@@ -148,4 +148,11 @@
   <java-symbol type="attr" name="min" />
   <java-symbol type="attr" name="unitsLeft" />
   <java-symbol type="attr" name="unitsRight" />
+
+  <!-- Path to the library that contains a alternative device specific key handler -->
+  <string name="config_alternativeDeviceKeyHandlerLib" translatable="false"></string>
+
+  <!-- Name of that alternative key handler class -->
+  <string name="config_alternativeDeviceKeyHandlerClass" translatable="false"></string>
+
 </resources>
