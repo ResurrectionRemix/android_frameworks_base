@@ -436,6 +436,14 @@ public class GestureLauncherService extends SystemService {
         }
     }
 
+    /**
+     * @return true if camera was launched, false otherwise.
+     * @hide
+     */
+    public boolean doCameraLaunchGesture() {
+        return handleCameraGesture(false, StatusBarManager.CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP);
+    }
+
     private final BroadcastReceiver mUserReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

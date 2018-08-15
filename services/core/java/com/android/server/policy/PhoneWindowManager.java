@@ -224,8 +224,9 @@ import com.android.internal.accessibility.AccessibilityShortcutController;
 import com.android.internal.custom.longshot.ILongScreenshotManager;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
-import com.android.internal.os.RoSystemProperties;
+import com.android.internal.os.AlternativeDeviceKeyHandler;
 import com.android.internal.os.DeviceKeyHandler;
+import com.android.internal.os.RoSystemProperties;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.policy.PhoneWindow;
@@ -720,6 +721,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean mAodShowing;
     private final List<DeviceKeyHandler> mDeviceKeyHandlers = new ArrayList<>();
+    private AlternativeDeviceKeyHandler mAlternativeDeviceKeyHandler;
 
     private boolean mPerDisplayFocusEnabled = false;
     private volatile int mTopFocusedDisplayId = INVALID_DISPLAY;
@@ -2429,6 +2431,31 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         if (DEBUG_INPUT) Slog.d(TAG, "" + mDeviceKeyHandlers.size() + " device key handlers loaded");
+
+        if (!defaultKeyHandlerLoaded){
+            String alternativeDeviceKeyHandlerLib = res.getString(
+                    com.android.internal.R.string.config_alternativeDeviceKeyHandlerLib);
+
+            String alternativeDeviceKeyHandlerClass = res.getString(
+                    com.android.internal.R.string.config_alternativeDeviceKeyHandlerClass);
+
+            if (!alternativeDeviceKeyHandlerLib.isEmpty() && !alternativeDeviceKeyHandlerClass.isEmpty()) {
+                try {
+                    PathClassLoader loader =  new PathClassLoader(alternativeDeviceKeyHandlerLib,
+                            getClass().getClassLoader());
+
+                    Class<?> klass = loader.loadClass(alternativeDeviceKeyHandlerClass);
+                    Constructor<?> constructor = klass.getConstructor(Context.class);
+                    mAlternativeDeviceKeyHandler = (AlternativeDeviceKeyHandler) constructor.newInstance(
+                            mContext);
+                    if(DEBUG_INPUT) Slog.d(TAG, "Alternative Device key handler loaded");
+                } catch (Exception e) {
+                    Slog.w(TAG, "Could not instantiate alternative device key handler "
+                            + alternativeDeviceKeyHandlerClass + " from class "
+                            + alternativeDeviceKeyHandlerLib, e);
+                }
+            }
+        }
     }
 
     /**
@@ -4493,6 +4520,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // This dance forces the code in setHdmiPlugged to run.
         // Always do this so the sticky intent is stuck (to false) if there is no hdmi.
         mDefaultDisplayPolicy.setHdmiPlugged(plugged, true /* force */);
+    }
+
+    void launchKeyguardDismissIntent(Context context, UserHandle user, Intent launchIntent) {
+        Intent keyguardIntent = new Intent("com.android.systemui.ACTION_DISMISS_KEYGUARD");
+        keyguardIntent.setPackage("com.android.systemui");
+        keyguardIntent.putExtra("launch", launchIntent);
+        context.sendBroadcastAsUser(keyguardIntent, user);
     }
 
     private boolean isHwKeysDisabled() {
