@@ -5668,6 +5668,15 @@ public final class Settings {
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
 
         /**
+         * @hide
+         */
+        public static final String FORCE_SHOW_NAVBAR = "navigation_bar_show_new";
+
+        /** @hide */
+        private static final Validator FORCE_SHOW_NAVBAR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * Whether to show notifications/toasts (0:OFF, 1:notifications, 2:toasts, 3: all)
          * @hide
          */
@@ -6620,6 +6629,7 @@ public final class Settings {
             GESTURE_NAVBAR_SHOW,
             PULSE_BRIGHTNESS,
             DOZE_BRIGHTNESS,
+            FORCE_SHOW_NAVBAR,
             AUTO_BRIGHTNESS_MIN_VALUE,
             AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
             NAVIGATION_HANDLE_WIDTH,
@@ -6862,6 +6872,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS_FORCE);
+            PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(AUTO_BRIGHTNESS_MIN_VALUE);
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
@@ -7093,6 +7104,7 @@ public final class Settings {
             VALIDATORS.put(GESTURE_NAVBAR_SHOW,GESTURE_NAVBAR_SHOW_VALIDATOR);
             VALIDATORS.put(PULSE_BRIGHTNESS, PULSE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS, DOZE_BRIGHTNESS_VALIDATOR);
+            VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
             VALIDATORS.put(AUTO_BRIGHTNESS_MIN_VALUE, AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR);
             VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
