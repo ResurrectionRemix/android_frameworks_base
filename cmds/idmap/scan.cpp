@@ -29,6 +29,8 @@ namespace {
 
         bool operator<(Overlay const& rhs) const
         {
+            if(rhs.priority == priority)
+                return rhs.apk_path > apk_path;
             return rhs.priority > priority;
         }
 
