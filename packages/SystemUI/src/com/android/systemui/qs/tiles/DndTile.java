@@ -248,7 +248,6 @@ public class DndTile extends QSTileImpl<BooleanState> {
         final boolean newValue = zen != ZEN_MODE_OFF;
         final boolean valueChanged = state.value != newValue;
         if (state.slash == null) state.slash = new SlashState();
-        state.dualTarget = true;
         state.value = newValue;
         state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
         state.slash.isSlashed = !state.value;
