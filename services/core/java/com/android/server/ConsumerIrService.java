@@ -48,11 +48,6 @@ public class ConsumerIrService extends IConsumerIrService.Stub {
         mWakeLock.setReferenceCounted(true);
 
         mHasNativeHal = halOpen();
-        if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CONSUMER_IR)) {
-            if (!mHasNativeHal) {
-                throw new RuntimeException("FEATURE_CONSUMER_IR present, but no IR HAL loaded!");
-            }
-        }
         mParameter = AudioSystem.getParameters("audio_capability#irda_support");
     }
 

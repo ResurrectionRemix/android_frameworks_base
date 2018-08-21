@@ -36,7 +36,7 @@ static sp<IConsumerIr> mHal;
 
 static jboolean halOpen(JNIEnv* /* env */, jobject /* obj */) {
     // TODO(b/31632518)
-    mHal = IConsumerIr::getService();
+    mHal = IConsumerIr::tryGetService();
     return mHal != nullptr;
 }
 
