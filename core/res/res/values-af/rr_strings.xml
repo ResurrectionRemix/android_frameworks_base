@@ -18,19 +18,25 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu (legacy) -->
   <string name="reboot_title">重启</string>
+  <string name="reboot_message">Herlaai stelsel</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_toggleNavigationEditor">beheer navigasie redakteur</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">Laat \'n program toe om die navigeringstaafredakteur te beheer.</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Verdof</string>
   <string name="animation_slide_right">Gly in regs</string>
   <string name="animation_slide_left">Gly in links</string>
   <string name="animation_slide_up">Gly in onder</string>
   <string name="animation_slide_down">Gly in bo</string>
+  <string name="animation_default">Verstek</string>
   <string name="animation_translucent">Deurskynend</string>
   <string name="action_null">Leeg</string>
   <!-- Label for item that screenrecords in power menu options dialog -->
   <string name="global_action_screenrecord">Screenrecord</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go-af</string>
   <!-- Pocket Lock -->
   <!-- Label for item that flashlight in power menu options dialog -->
+  <string name="global_action_flashlight">Flitslig</string>
 </resources>

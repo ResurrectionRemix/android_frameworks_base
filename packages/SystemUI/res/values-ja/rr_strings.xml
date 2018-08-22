@@ -163,7 +163,7 @@
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
   <string name="quick_settings_smartbar">スマートバー</string>
-  <string name="quick_settings_fling">Flingジェスチャー</string>
+  <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_navigation_default">標準</string>
   <string name="quick_settings_navigation_disabled">無効</string>
   <string name="omnijaws_service_error">エラー</string>

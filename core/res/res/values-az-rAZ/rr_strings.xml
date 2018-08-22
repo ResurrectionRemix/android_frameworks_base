@@ -17,8 +17,11 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Power menu (legacy) -->
+  <string name="reboot_title">Yenidən başlat</string>
+  <string name="reboot_message">Sistem yenidən başladılır</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_toggleNavigationEditor">Proqrama naviqasiya panelini idarəetmə icazəsi verir.</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Qaralt</string>
   <string name="animation_slide_right">Sağa sürüşdür</string>
@@ -27,10 +30,10 @@
   <string name="animation_slide_left_no_fade">Sola sürüşdür(qaraltmadan)</string>
   <string name="animation_slide_up">Aşağı sürüşdür</string>
   <string name="animation_slide_down">Yuxarı sürüşdür</string>
-  <string name="animation_default">İlkin</string>
+  <string name="animation_default">Susmaya görə</string>
   <string name="animation_translucent">Yarı şəffaf</string>
-  <string name="animation_grow_shrink">Yayılan(yuxarıya)</string>
-  <string name="animation_grow_shrink_center">Yayılan(ortaya)</string>
+  <string name="animation_grow_shrink">Yayılan (yuxarıya)</string>
+  <string name="animation_grow_shrink_center">Yayılan (ortaya)</string>
   <string name="animation_grow_shrink_bottom">Yayılan (aşağıya)</string>
   <string name="animation_grow_shrink_left">Yayılan (sola)</string>
   <string name="animation_grow_shrink_right">Yayılan (sağa)</string>
@@ -42,4 +45,5 @@
   <!-- Pocket Lock -->
   <string name="pocket_lock_message_long_press">Long press power button to interact</string>
   <!-- Label for item that flashlight in power menu options dialog -->
+  <string name="global_action_flashlight">Fənər</string>
 </resources>
