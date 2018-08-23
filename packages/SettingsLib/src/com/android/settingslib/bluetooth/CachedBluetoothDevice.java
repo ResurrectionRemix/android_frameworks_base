@@ -1189,8 +1189,18 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
      * @return {@code true} if {@code cachedBluetoothDevice} is a2dp device
      */
     public boolean isA2dpDevice() {
-        return mProfileManager.getA2dpProfile().getConnectionStatus(mDevice) ==
-                BluetoothProfile.STATE_CONNECTED;
+        if (mProfileManager.getA2dpProfile() != null) {
+            return mProfileManager.getA2dpProfile().getConnectionStatus(mDevice) ==
+                    BluetoothProfile.STATE_CONNECTED;
+        } else if (mProfileManager.getA2dpSinkProfile() != null) {
+            return mProfileManager.getA2dpSinkProfile().getConnectionStatus(mDevice) ==
+                    BluetoothProfile.STATE_CONNECTED;
+        } else {
+            if (Utils.D) {
+                Log.d(TAG, "isA2dpDevice: no A2DP source/sink profile found");
+            }
+            return false;
+        }
     }
 
     /**
