@@ -590,8 +590,7 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                // TODO should animate back to 0f from current alpha
-                setMenuAlpha(0f);
+                mFadeAnimator.reverse();
             }
 
             @Override
