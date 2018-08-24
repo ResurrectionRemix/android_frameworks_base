@@ -52,4 +52,6 @@
     <!-- Quicksettings main QS background-->
     <color name="quick_settings_status_bar_background_color">#ff000000</color>
 
+    <color name="qs_icon_active_color">@*android:color/qs_icon_active_color</color>
+
 </resources>
