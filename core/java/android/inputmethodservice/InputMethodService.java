@@ -580,6 +580,8 @@ public class InputMethodService extends AbstractInputMethodService {
                     // detect errors in #showWindow() by checking BadTokenException.
                     // TODO: Investigate its feasibility.  Update JavaDoc of #showWindow() of
                     // whether it's OK to override #showWindow() or not.
+                    initSoftWindow();
+                    initViews();
                 }
             }
             clearInsetOfPreviousIme();
@@ -934,14 +936,17 @@ public class InputMethodService extends AbstractInputMethodService {
         mShouldClearInsetOfPreviousIme = (mImm.getInputMethodWindowVisibleHeight() > 0);
         mInflater = (LayoutInflater)getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
+        initSoftWindow();
+        initViews();
+    }
+
+    void initSoftWindow() {
         mWindow = new SoftInputWindow(this, "InputMethod", mTheme, null, null, mDispatcherState,
                 WindowManager.LayoutParams.TYPE_INPUT_METHOD, Gravity.BOTTOM, false);
         // For ColorView in DecorView to work, FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS needs to be set
         // by default (but IME developers can opt this out later if they want a new behavior).
         mWindow.getWindow().setFlags(
                 FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        initViews();
         mWindow.getWindow().setLayout(MATCH_PARENT, WRAP_CONTENT);
     }
 
