@@ -50,7 +50,7 @@
   <!-- SystemUI Tuner Parts -->
   <string name="systemui_tuner_icon_manager_title">アイコンマネージャー</string>
   <string name="systemui_tuner_lockscreen_bottom_shortcuts_title">下部のショートカット</string>
-  <string name="lockscreen_default">デフォルト</string>
+  <string name="lockscreen_default">既定</string>
   <string name="status_bar_vpn">VPN</string>
   <string name="status_bar_data_saver">データセーバー</string>
   <string name="lockscreen_hidden">なし</string>
