@@ -33,7 +33,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
-import android.support.v4.graphics.ColorUtils;
+import androidx.core.graphics.ColorUtils;
 import android.text.TextPaint;
 import android.text.format.DateFormat;
 import android.util.ArraySet;
@@ -133,7 +133,7 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     }
 
     private int getTintColor() {
-        return Utils.getColorAttr(mContext, R.attr.wallpaperTextColor);
+        return Utils.getColorAttrDefaultColor(mContext, R.attr.wallpaperTextColor);
     }
 
     private void setErrorView() {
@@ -148,7 +148,7 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     public void weatherError(int errorReason) {
         if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
         // since this is shown in ambient and lock screen
-        // it would look bad to show every error since the 
+        // it would look bad to show every error since the
         // screen-on revovery of the service had no chance
         // to run fast enough
         // so only show the disabled state

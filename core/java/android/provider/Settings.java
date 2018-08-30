@@ -5030,6 +5030,15 @@ public final class Settings {
         private static final Validator OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR =
                ANY_STRING_VALIDATOR;
 
+        /**
+        * @hide
+        */
+        public static final String OMNI_LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR =
+               BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5152,6 +5161,7 @@ public final class Settings {
             CHOOSER_ACTIVITY_BLACKLIST,
             HEADS_UP_BLACKLIST_VALUES,
             OMNIJAWS_WEATHER_ICON_PACK,
+            OMNI_LOCKSCREEN_WEATHER_ENABLED,
             // AICP Settings end
         };
 
@@ -5311,6 +5321,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CHOOSER_ACTIVITY_BLACKLIST);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
+            PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
             // AICP Settings end
         }
 
@@ -5444,6 +5455,7 @@ public final class Settings {
             VALIDATORS.put(CHOOSER_ACTIVITY_BLACKLIST, CHOOSER_ACTIVITY_BLACKLIST_VALIDATOR);
             VALIDATORS.put(HEADS_UP_BLACKLIST_VALUES, HEADS_UP_BLACKLIST_VALUES_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK,OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
+            VALIDATORS.put(OMNI_LOCKSCREEN_WEATHER_ENABLED,OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
             // AICP Settings end
         }
 

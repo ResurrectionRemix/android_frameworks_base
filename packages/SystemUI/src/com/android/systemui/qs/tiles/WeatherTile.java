@@ -53,6 +53,8 @@ import com.android.systemui.qs.QSDetailItems.Item;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
+import javax.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -69,6 +71,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     private WeatherDetailAdapter mDetailAdapter;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_weather_default_on);
 
+    @Inject
     public WeatherTile(QSHost host) {
         super(host);
         mWeatherClient = new OmniJawsClient(mContext);
