@@ -38,13 +38,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/wallpaperTextColor"
-            style="@style/widget_label"
-            android:letterSpacing="0.05"
             android:gravity="center"
             android:ellipsize="end"
             android:singleLine="true"
             android:paddingEnd="8dp"
-            android:fontFamily="sans-serif-medium" />
+            style="@style/TextAppearance.Keyguard" />
 
         <ImageView
             android:id="@+id/current_image"
@@ -57,12 +55,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/wallpaperTextColor"
-            style="@style/widget_label"
-            android:letterSpacing="0.05"
             android:gravity="center"
             android:singleLine="true"
             android:paddingStart="8dp"
-            android:fontFamily="sans-serif-medium" />
+            style="@style/TextAppearance.Keyguard" />
     </LinearLayout>
 
 </com.android.systemui.omni.CurrentWeatherView>
