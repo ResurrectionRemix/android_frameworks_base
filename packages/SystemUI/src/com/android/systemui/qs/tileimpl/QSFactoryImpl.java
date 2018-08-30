@@ -59,6 +59,7 @@ import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.WeatherTile;
 
 public class QSFactoryImpl implements QSFactory {
 
@@ -145,6 +146,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new PieTile(mHost);
             case "smartpixels":
                 return new SmartPixelsTile(mHost);
+            case "weather":
+                return new WeatherTile(mHost);
         }
 
         // Intent tiles.

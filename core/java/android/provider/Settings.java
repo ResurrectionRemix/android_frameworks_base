@@ -4992,6 +4992,15 @@ public final class Settings {
         public static final String SCREENSHOT_TYPE = "screenshot_type";
 
         /**
+         * @hide
+         */
+        public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
+
+        /** @hide */
+        private static final Validator OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5077,7 +5086,8 @@ public final class Settings {
             STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR,
             STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR,
             STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE,
-            STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE
+            STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE,
+            OMNIJAWS_WEATHER_ICON_PACK,
         };
 
         /**
@@ -5228,6 +5238,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
+            PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
         }
 
         /**
@@ -5365,6 +5376,7 @@ public final class Settings {
                     STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE,
                     STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR);
+            VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK, OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
         }
 
         /**

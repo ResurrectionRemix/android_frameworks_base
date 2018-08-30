@@ -30,4 +30,17 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/status_bar_carrier_color</item>
     </style>
+
+    <style name="TextAppearance.StatusBar.Expanded.Weather">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.StatusBar.Expanded.Weather.Detailed">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
 </resources>
