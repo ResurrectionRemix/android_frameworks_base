@@ -56,6 +56,7 @@ import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.VpnTile;
+import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
@@ -102,6 +103,8 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<VolumeTile> mVolumeTileProvider;
     private final Provider<VpnTile> mVpnTileProvider;
     private final Provider<SoundSearchTIle> mSoundSearchTIleProvider;
+    private final Provider<OnTheGoTile> mOnTheGoTileProvider;
+    private final Provider<WeatherTile> mWeatherTileProvider;
 
     private QSTileHost mHost;
 
@@ -136,7 +139,9 @@ public class QSFactoryImpl implements QSFactory {
             Provider<UsbTetherTile> usbTetherTileProvider,
             Provider<VolumeTile> volumeTileProvider,
             Provider<VpnTile> vpnTileProvider,
-            Provider<SoundSearchTIle> soundSearchTIleProvider) {
+            Provider<SoundSearchTIle> soundSearchTIleProvider), 
+            Provider<OnTheGoTile> onthegoTIleProvider),
+            Provider<WeatherTile> weatherTIleProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -168,6 +173,8 @@ public class QSFactoryImpl implements QSFactory {
         mVolumeTileProvider = volumeTileProvider;
         mVpnTileProvider = vpnTileProvider;
         mSoundSearchTIleProvider = soundSearchTIleProvider;
+        mOnTheGoTileProvider = onthegoTIleProvider;
+        mWeatherTileProvider = weatherTIleProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -247,7 +254,9 @@ public class QSFactoryImpl implements QSFactory {
             case "soundsearch":
                 return mSoundSearchTIleProvider.get();
             case "onthego":
-                return new OnTheGoTile.get();
+                return mOnTheGoTileProvider.get();
+            case "weather":
+                return mWeatherTileProvider.get();
         }
 
         // Intent tiles.
