@@ -29,6 +29,7 @@ import static android.net.ConnectivityManager.isNetworkTypeValid;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_PARTIAL;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_EIMS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
@@ -143,6 +144,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -584,6 +586,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private List mProtectedNetworks;
 
     private TelephonyManager mTelephonyManager;
+    private SubscriptionManager mSubscriptionManager;
 
     private KeepaliveTracker mKeepaliveTracker;
     private NetworkNotificationManager mNotifier;
@@ -898,6 +901,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNetd = netd;
         mKeyStore = KeyStore.getInstance();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        mSubscriptionManager = SubscriptionManager.from(mContext);
 
         // To ensure uid rules are synchronized with Network Policy, register for
         // NetworkPolicyManagerService events must happen prior to NetworkPolicyManagerService
@@ -7412,8 +7416,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private boolean satisfiesMobileNetworkDataCheck(NetworkCapabilities agentNc) {
         if (agentNc != null && agentNc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-            if (getIntSpecifier(agentNc.getNetworkSpecifier()) == SubscriptionManager
-                                    .getDefaultDataSubscriptionId()) {
+            if((agentNc.hasCapability(NET_CAPABILITY_EIMS) &&
+                 (mSubscriptionManager != null &&
+                  (mSubscriptionManager.getActiveSubscriptionInfoList() == null ||
+                   mSubscriptionManager.getActiveSubscriptionInfoList().size()==0))) ||
+               (getIntSpecifier(agentNc.getNetworkSpecifier()) == SubscriptionManager
+                                    .getDefaultDataSubscriptionId())) {
                 return true;
             } else {
                 return false;
