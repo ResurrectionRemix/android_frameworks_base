@@ -238,6 +238,10 @@ public class BatteryMeterDrawableBase extends Drawable {
         scheduleSelf(this::invalidateSelf, 0);
     }
 
+    public void refresh() {
+        postInvalidate();
+    }
+
     private static float[] loadPoints(Resources res, int pointArrayRes) {
         final int[] pts = res.getIntArray(pointArrayRes);
         int maxX = 0, maxY = 0;
