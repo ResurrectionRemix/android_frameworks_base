@@ -174,7 +174,8 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         mAccessibilityMgr =
                 (AccessibilityManager) mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
         mActiveSliderTint = ColorStateList.valueOf(Utils.getColorAccent(mContext));
-        mInactiveSliderTint = loadColorStateList(R.color.volume_slider_inactive);
+        mInactiveSliderTint = ColorStateList.valueOf(
+                Utils.getColorAttr(mContext, android.R.attr.colorForeground));
     }
 
     public void init(int windowType, Callback callback) {
