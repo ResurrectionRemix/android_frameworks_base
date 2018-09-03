@@ -1088,7 +1088,7 @@ public abstract class WindowOrientationListener {
 
         public int evaluateRotationChangeLocked() {
             unscheduleRotationEvaluationLocked();
-            if (mDesiredRotation == mProposedRotation) {
+            if (mDesiredRotation == mProposedRotation || mDesiredRotation > 3) {
                 return -1;
             }
             final long now = SystemClock.elapsedRealtimeNanos();
