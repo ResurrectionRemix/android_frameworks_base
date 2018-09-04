@@ -27,6 +27,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -107,6 +109,7 @@ public class PhoneStatusBarPolicy
     private final String mSlotMicrophone;
     private final String mSlotCamera;
     private final String mSlotSensorsOff;
+    private final String mSlotNfc;
 
     private final Context mContext;
     private final Handler mHandler = new Handler();
@@ -134,6 +137,8 @@ public class PhoneStatusBarPolicy
     private boolean mZenVisible;
     private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
+    private boolean mNfcVisible;
+    private NfcAdapter mAdapter;
 
     private boolean mManagedProfileIconVisible = false;
 
@@ -175,6 +180,7 @@ public class PhoneStatusBarPolicy
         mSlotMicrophone = context.getString(com.android.internal.R.string.status_bar_microphone);
         mSlotCamera = context.getString(com.android.internal.R.string.status_bar_camera);
         mSlotSensorsOff = context.getString(com.android.internal.R.string.status_bar_sensors_off);
+        mSlotNfc = context.getString(com.android.internal.R.string.status_bar_nfc);
 
         // listen for broadcasts
         IntentFilter filter = new IntentFilter();
@@ -187,6 +193,7 @@ public class PhoneStatusBarPolicy
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
+        filter.addAction(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
         mContext.registerReceiver(mIntentReceiver, filter, null, mHandler);
 
         // listen for user / profile change.
@@ -250,6 +257,12 @@ public class PhoneStatusBarPolicy
                 mContext.getString(R.string.accessibility_sensors_off_active));
         mIconController.setIconVisibility(mSlotSensorsOff,
                 mSensorPrivacyController.isSensorPrivacyEnabled());
+
+        // nfc
+        mIconController.setIcon(mSlotNfc, R.drawable.stat_sys_nfc,
+                mContext.getString(R.string.accessibility_status_bar_nfc));
+        mIconController.setIconVisibility(mSlotNfc, false);
+        updateNfc();
 
         mRotationLockController.addCallback(this);
         mBluetooth.addCallback(this);
@@ -328,6 +341,26 @@ public class PhoneStatusBarPolicy
             }
         } else {
             mSimState = IccCardConstants.State.UNKNOWN;
+        }
+    }
+
+    private NfcAdapter getAdapter() {
+        if (mAdapter == null) {
+            try {
+                mAdapter = NfcAdapter.getNfcAdapter(mContext);
+            } catch (UnsupportedOperationException e) {
+                mAdapter = null;
+            }
+        }
+        return mAdapter;
+    }
+
+    private final void updateNfc() {
+        mNfcVisible =  getAdapter() != null && getAdapter().isEnabled();
+        if (mNfcVisible) {
+            mIconController.setIconVisibility(mSlotNfc, true);
+        } else {
+            mIconController.setIconVisibility(mSlotNfc, false);
         }
     }
 
@@ -713,6 +746,9 @@ public class PhoneStatusBarPolicy
                     break;
                 case BluetoothDevice.ACTION_BATTERY_LEVEL_CHANGED:
                     updateBluetooth();
+                    break;
+                case NfcAdapter.ACTION_ADAPTER_STATE_CHANGED:
+                    updateNfc();
                     break;
             }
         }
