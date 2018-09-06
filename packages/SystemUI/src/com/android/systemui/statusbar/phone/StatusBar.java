@@ -2764,9 +2764,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
 
-        // TODO(b/62444020): remove when this bug is fixed
-        Log.v(TAG, "mStatusBarWindow: " + mStatusBarWindow + " canPanelBeCollapsed(): "
-                + mNotificationPanel.canPanelBeCollapsed());
         if (mStatusBarWindow != null && mNotificationPanel.canPanelBeCollapsed()) {
             // release focus immediately to kick off focus change transition
             mStatusBarWindowController.setStatusBarFocusable(false);
