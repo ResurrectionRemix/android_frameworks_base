@@ -81,10 +81,7 @@ public final class StorageController extends StateController {
         synchronized (mLock) {
             for (int i = mTrackedTasks.size() - 1; i >= 0; i--) {
                 final JobStatus ts = mTrackedTasks.valueAt(i);
-                boolean previous = ts.setStorageNotLowConstraintSatisfied(storageNotLow);
-                if (previous != storageNotLow) {
-                    reportChange = true;
-                }
+                reportChange |= ts.setStorageNotLowConstraintSatisfied(storageNotLow);
             }
         }
         // Let the scheduler know that state has changed. This may or may not result in an
