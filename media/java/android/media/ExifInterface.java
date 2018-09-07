@@ -223,6 +223,12 @@ public class ExifInterface {
     public static final String TAG_NEW_SUBFILE_TYPE = "NewSubfileType";
     /** Type is String. */
     public static final String TAG_OECF = "OECF";
+    /** Type is String. */
+    public static final String TAG_OFFSET_TIME = "OffsetTime";
+    /** Type is String. */
+    public static final String TAG_OFFSET_TIME_ORIGINAL = "OffsetTimeOriginal";
+    /** Type is String. */
+    public static final String TAG_OFFSET_TIME_DIGITIZED = "OffsetTimeDigitized";
     /** Type is int. */
     public static final String TAG_PIXEL_X_DIMENSION = "PixelXDimension";
     /** Type is int. */
@@ -469,6 +475,7 @@ public class ExifInterface {
     private static final int PEF_MAKER_NOTE_SKIP_SIZE = 6;
 
     private static SimpleDateFormat sFormatter;
+    private static SimpleDateFormat sFormatterTz;
 
     // See Exchangeable image file format for digital still cameras: Exif version 2.2.
     // The following values are for parsing EXIF data area. There are tag groups in EXIF data area.
@@ -1015,6 +1022,9 @@ public class ExifInterface {
             new ExifTag(TAG_EXIF_VERSION, 36864, IFD_FORMAT_STRING),
             new ExifTag(TAG_DATETIME_ORIGINAL, 36867, IFD_FORMAT_STRING),
             new ExifTag(TAG_DATETIME_DIGITIZED, 36868, IFD_FORMAT_STRING),
+            new ExifTag(TAG_OFFSET_TIME, 36880, IFD_FORMAT_STRING),
+            new ExifTag(TAG_OFFSET_TIME_ORIGINAL, 36881, IFD_FORMAT_STRING),
+            new ExifTag(TAG_OFFSET_TIME_DIGITIZED, 36882, IFD_FORMAT_STRING),
             new ExifTag(TAG_COMPONENTS_CONFIGURATION, 37121, IFD_FORMAT_UNDEFINED),
             new ExifTag(TAG_COMPRESSED_BITS_PER_PIXEL, 37122, IFD_FORMAT_URATIONAL),
             new ExifTag(TAG_SHUTTER_SPEED_VALUE, 37377, IFD_FORMAT_SRATIONAL),
@@ -1273,6 +1283,8 @@ public class ExifInterface {
     static {
         sFormatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
         sFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        sFormatterTz = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss XXX");
+        sFormatterTz.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         // Build up the hash tables to look up Exif tags for reading Exif tags.
         for (int ifdType = 0; ifdType < EXIF_TAGS.length; ++ifdType) {
@@ -2032,6 +2044,14 @@ public class ExifInterface {
             // The exif field is in local time. Parsing it as if it is UTC will yield time
             // since 1/1/1970 local time
             Date datetime = sFormatter.parse(dateTimeString, pos);
+
+            String tzString = getAttribute(TAG_OFFSET_TIME);
+            if (tzString != null) {
+                dateTimeString = dateTimeString + " " + tzString;
+                ParsePosition position = new ParsePosition(0);
+                datetime = sFormatterTz.parse(dateTimeString, position);
+            }
+
             if (datetime == null) return -1;
             long msecs = datetime.getTime();
 
