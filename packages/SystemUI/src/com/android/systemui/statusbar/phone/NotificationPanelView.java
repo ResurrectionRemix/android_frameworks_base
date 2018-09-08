@@ -50,6 +50,7 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
+import android.text.TextUtils;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -181,6 +182,9 @@ public class NotificationPanelView extends PanelView implements
             "global:" + Settings.Global.LOCKSCREEN_ENABLE_QS;
     private static final String QS_PANEL_VIBRATE = 
             "system:" + Settings.System.QS_PANEL_VIBRATE;
+
+    private static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
+            "system:" + Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN;
 
     private static final Rect mDummyDirtyRect = new Rect(0, 0, 1, 1);
     private static final Rect mEmptyRect = new Rect();
@@ -459,9 +463,9 @@ public class NotificationPanelView extends PanelView implements
 
     private boolean mDoubleTapToSleepEnabled;
     private GestureDetector mDoubleTapGesture;
-
     private int mStatusBarHeaderHeight;
     private int mStatusBarHeight;
+    private boolean mIsLockscreenDoubleTapEnabled;
     /**
      * Cache the resource id of the theme to avoid unnecessary work in onThemeChanged.
      *
@@ -618,6 +622,7 @@ public class NotificationPanelView extends PanelView implements
         Dependency.get(TunerService.class).addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
         Dependency.get(TunerService.class).addTunable(this, LOCKSCREEN_ENABLE_QS);
         Dependency.get(TunerService.class).addTunable(this, QS_PANEL_VIBRATE);
+        Dependency.get(TunerService.class).addTunable(this, DOUBLE_TAP_SLEEP_LOCKSCREEN);
         mUpdateMonitor.registerCallback(mKeyguardUpdateCallback);
         // Theme might have changed between inflating this view and attaching it to the window, so
         // force a call to onThemeChanged
@@ -647,6 +652,10 @@ public class NotificationPanelView extends PanelView implements
                 mStatusBar.updateQsExpansionEnabled();
         } else if (QS_PANEL_VIBRATE.equals(key)) {
                 mVibrationEnabled = TunerService.parseIntegerSwitch(newValue, false);
+
+        } else if (DOUBLE_TAP_SLEEP_LOCKSCREEN.equals(key)) {
+                mIsLockscreenDoubleTapEnabled =
+                        TunerService.parseIntegerSwitch(newValue, true);
         }
     }
 
@@ -680,6 +689,8 @@ public class NotificationPanelView extends PanelView implements
                 com.android.internal.R.dimen.status_bar_height);
         mHeadsUpInset = statusbarHeight + getResources().getDimensionPixelSize(
                 R.dimen.heads_up_status_bar_padding);
+        mStatusBarHeaderHeight = getResources().getDimensionPixelSize(
+                R.dimen.status_bar_header_height_keyguard);
     }
 
     /**
@@ -1348,7 +1359,10 @@ public class NotificationPanelView extends PanelView implements
             return false;
         }
 
-        if (mDoubleTapToSleepEnabled && mBarState == StatusBarState.KEYGUARD) {
+        if ((mIsLockscreenDoubleTapEnabled
+                && mBarState == StatusBarState.KEYGUARD) ||
+                (!mQsExpanded && mDoubleTapToSleepEnabled
+                && event.getY() < mStatusBarHeaderHeight)) {
             mDoubleTapGesture.onTouchEvent(event);
         }
 
