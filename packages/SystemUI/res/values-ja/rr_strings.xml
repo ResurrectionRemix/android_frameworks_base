@@ -89,7 +89,7 @@
   <string name="quick_settings_usb_tether_label">USBテザリング</string>
   <!-- Language toggle tile -->
   <string name="quick_settings_locale_label">言語</string>
-  <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするために複数の言語を設定してください</string>
+  <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするために複数の言語を設定して下さい</string>
   <!-- Music tile -->
   <string name="quick_settings_music_label">音楽</string>
   <string name="quick_settings_music_play">再生</string>
