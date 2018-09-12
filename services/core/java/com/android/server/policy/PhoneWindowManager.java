@@ -4443,6 +4443,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final boolean homeKey = keyCode == KeyEvent.KEYCODE_HOME;
         final boolean menuKey = keyCode == KeyEvent.KEYCODE_MENU;
         final boolean backKey = keyCode == KeyEvent.KEYCODE_BACK;
+        final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
 
         // If screen is off then we treat the case where the keyguard is open but hidden
         // the same as if it were open and in front.
@@ -4585,6 +4586,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // If not requested by our custom policy, then check if the key is virtual.
         hapticFeedbackRequested |= (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0;
 
+
         // Enable haptics if down and virtual key without multiple repetitions. If this is a hard
         // virtual key such as a navigation bar button, only vibrate if flag is enabled.
         final boolean isNavBarVirtKey = ((event.getFlags() & KeyEvent.FLAG_VIRTUAL_HARD_KEY) != 0);
@@ -4595,8 +4597,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && event.getRepeatCount() == 0
                 // Trigger haptic feedback only for "real" events.
                 && source != InputDevice.SOURCE_CUSTOM
-                && !isHwKeysDisabled()
-                && !keyguardOn();
+                && !isHwKeysDisabled();
+
+        if (!virtualKey) {
+            if (isHwKeysDisabled() || keyguardOn() || isDozeMode()) {
+                useHapticFeedback = false;
+            }
+        }
 
         // Specific device key handling
         if (mDeviceKeyHandler != null) {
