@@ -5048,7 +5048,7 @@ public final class Settings {
 
         /** @hide */
         private static final Validator AICP_LOCKSCREEN_WEATHER_STYLE_VALIDATOR =
-               new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);;
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
         * Toast animations
@@ -5344,6 +5344,23 @@ public final class Settings {
         private static final Validator ENABLE_SUGGESTIONS_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /**
+         * enable custom lockscreen max notifications config
+         * @hide
+         */
+        public static final String LOCK_SCREEN_CUSTOM_NOTIF = "lock_screen_custom_notif";
+        /** @hide */
+        private static final Validator LOCK_SCREEN_CUSTOM_NOTIF_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * custom lockscreen max notification config
+         * @hide
+         */
+        public static final String LOCKSCREEN_MAX_NOTIF_CONFIG = "lockscreen_max_notif_config";
+        /** @hide */
+        private static final Validator LOCKSCREEN_MAX_NOTIF_CONFIG_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(1, 3);
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5509,6 +5526,8 @@ public final class Settings {
             THEMING_SETTINGS_DASHBOARD_ICONS,
             ENABLE_CONDITIONS,
             ENABLE_SUGGESTIONS,
+            LOCK_SCREEN_CUSTOM_NOTIF,
+            LOCKSCREEN_MAX_NOTIF_CONFIG,
             // AICP Settings end
         };
 
@@ -5701,6 +5720,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
+            PRIVATE_SETTINGS.add(LOCK_SCREEN_CUSTOM_NOTIF);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_MAX_NOTIF_CONFIG);
             // AICP Settings end
         }
 
@@ -5868,6 +5889,8 @@ public final class Settings {
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
+            VALIDATORS.put(LOCK_SCREEN_CUSTOM_NOTIF, LOCK_SCREEN_CUSTOM_NOTIF_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_MAX_NOTIF_CONFIG, LOCKSCREEN_MAX_NOTIF_CONFIG_VALIDATOR);
             // AICP Settings end
         }
 
