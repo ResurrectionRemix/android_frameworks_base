@@ -4012,6 +4012,13 @@
     <permission android:name="android.permission.DISABLE_HIDDEN_API_CHECKS"
                 android:protectionLevel="signature" />
 
+    <!-- Allows an application to toggle navigation button editor.
+         @hide -->
+    <permission android:name="android.permission.NAVIGATION_EDITOR"
+        android:label="@string/permlab_toggleNavigationEditor"
+        android:description="@string/permdesc_toggleNavigationEditor"
+        android:protectionLevel="signatureOrSystem" />
+
     <!-- LineageOS additions -->
 
     <!-- Allows an application to override the power key action

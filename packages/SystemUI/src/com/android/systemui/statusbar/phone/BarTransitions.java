@@ -36,6 +36,7 @@ import android.view.View;
 import com.android.settingslib.Utils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
+import com.android.systemui.navigation.NavbarOverlayResources;
 
 public class BarTransitions {
     private static final boolean DEBUG = false;
@@ -73,6 +74,13 @@ public class BarTransitions {
 
     public void setAutoDim(boolean autoDim) {
         // Default is don't care.
+    }
+
+    /**
+     * @param resourceMap Theme support
+     */
+    public void updateResources (NavbarOverlayResources resourceMap) {
+        // currently unimplemented
     }
 
     /**

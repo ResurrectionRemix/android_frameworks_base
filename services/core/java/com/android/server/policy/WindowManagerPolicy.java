@@ -1797,4 +1797,9 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
      * Call screen record from WindowManager.
      */
     public void screenRecordAction(int mode);
+
+    /**
+     * Send some ActionHandler commands to WindowManager.
+     */
+    public void sendCustomAction(Intent intent);
 }
