@@ -121,7 +121,7 @@ public class StatusBarIconControllerImpl extends StatusBarIconList implements Tu
         // Remove all the icons.
         for (int i = currentSlots.size() - 1; i >= 0; i--) {
             Slot s = currentSlots.get(i);
-            slotsToReAdd.put(s, s.getHolderListInViewOrder());
+            slotsToReAdd.put(s, s.getHolderList());
             removeAllIconsForSlot(s.getName());
         }
 

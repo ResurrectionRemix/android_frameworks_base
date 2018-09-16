@@ -132,4 +132,16 @@ public class StatusBarIconHolder {
     public int getTag() {
         return mTag;
     }
+
+    @Override
+    public String toString() {
+        switch (mType) {
+            case TYPE_WIFI:
+                return String.valueOf(mTag) + " " + mWifiState.toString();
+
+            case TYPE_MOBILE:
+                return String.valueOf(mTag) + " " + mMobileState.toString();
+        }
+        return String.valueOf(mTag);
+    }
 }
