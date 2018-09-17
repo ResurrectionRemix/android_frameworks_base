@@ -589,7 +589,7 @@ final class ProcessRecord {
         final int servicesSize = services.size();
         for (int i = 0; i < servicesSize; i++) {
             ServiceRecord r = services.valueAt(i);
-            if (r.isForeground) {
+            if (r != null && r.isForeground) {
                 return true;
             }
         }
