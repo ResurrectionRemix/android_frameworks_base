@@ -226,6 +226,11 @@ public class MobileSignalController extends SignalController<
             case USE_OLD_MOBILETYPE:
                 notifyListeners();
                 break;
+            case "vowifi":
+                mVowifiIcon =
+                    TunerService.parseIntegerSwitch(newValue, true);
+                    notifyListenersIfNecessary();
+                break;
             default:
                 break;
         }
@@ -250,19 +255,6 @@ public class MobileSignalController extends SignalController<
 
         mapIconSets();
         updateTelephony();
-    }
-
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        switch (key) {
-            case "vowifi":
-                mVowifiIcon =
-                    TunerService.parseIntegerSwitch(newValue, true);
-                    notifyListenersIfNecessary();
-            default:
-                break;
-        }
     }
 
     public void setConfiguration(Config config) {
@@ -530,7 +522,6 @@ public class MobileSignalController extends SignalController<
                 && mCurrentState.activityOut;
         showDataIcon &= mCurrentState.isDefault || dataDisabled;
         int typeIcon = (showDataIcon || mConfig.alwaysShowDataRatIcon) ? icons.mDataType : 0;
-        int volteIcon = mConfig.showVolteIcon && isVolteSwitchOn() ? getVolteResId() : 0;
         int volteIcon = isVolteSwitchOn() ? getVolteResId() : 0;
 
         MobileIconGroup vowifiIconGroup = getVowifiIconGroup();
