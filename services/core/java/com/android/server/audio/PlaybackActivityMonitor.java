@@ -27,7 +27,10 @@ import android.media.IPlaybackConfigDispatcher;
 import android.media.PlayerBase;
 import android.media.VolumeShaper;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -97,11 +100,31 @@ public final class PlaybackActivityMonitor
     private final int mMaxAlarmVolume;
     private int mPrivilegedAlarmActiveCount = 0;
 
+    private Handler mHanlder;
+    private HandlerThread mHandlerThread;
+    private static final int MSG_PLAYBACK_CHANGED = 1;
+
     PlaybackActivityMonitor(Context context, int maxAlarmVolume) {
         mContext = context;
         mMaxAlarmVolume = maxAlarmVolume;
         PlayMonitorClient.sListenerDeathMonitor = this;
         AudioPlaybackConfiguration.sPlayerDeathMonitor = this;
+
+        mHandlerThread = new HandlerThread(TAG);
+        mHandlerThread.start();
+        mHanlder = new Handler(mHandlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case MSG_PLAYBACK_CHANGED:
+                        onDispatchPlaybackChange(msg.arg1 != 0);
+                        break;
+                    default:
+                        Log.d(TAG, "unknow msg:" + msg.what);
+                        break;
+                }
+            }
+        };
     }
 
     //=================================================================
@@ -352,11 +375,20 @@ public final class PlaybackActivityMonitor
         return true;
     }
 
+    private void dispatchPlaybackChange(boolean iplayerReleased) {
+        if (mHanlder != null) {
+            Message msg = mHanlder.obtainMessage(MSG_PLAYBACK_CHANGED,
+                                                 iplayerReleased ? 1 : 0,
+                                                 0,
+                                                 null);
+            msg.sendToTarget();
+        }
+    }
     /**
      * Sends new list after update of playback configurations
      * @param iplayerReleased indicates if the change was due to a player being released
      */
-    private void dispatchPlaybackChange(boolean iplayerReleased) {
+    private void onDispatchPlaybackChange(boolean iplayerReleased) {
         synchronized (mClients) {
             // typical use case, nobody is listening, don't do any work
             if (mClients.isEmpty()) {
