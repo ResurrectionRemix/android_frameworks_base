@@ -15,9 +15,9 @@
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="8.454dp"
-        android:height="17dp"
+        android:height="@dimen/signal_icon_size"
         android:viewportWidth="8.454"
-        android:viewportHeight="17">
+        android:viewportHeight="17.0">
     <path
         android:fillColor="#FFFFFFFF"
         android:pathData="M4.25,7.792H3.117V5.313H1.204v2.479H0V1.771h1.204v2.621h1.912V1.771H4.25V7.792Z" />
