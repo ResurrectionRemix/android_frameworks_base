@@ -95,15 +95,16 @@
                     android:scaleType="centerInside"/>
             </com.android.systemui.statusbar.phone.MultiUserSwitch>
 
-            <com.android.keyguard.AlphaOptimizedImageButton
+            <com.android.systemui.statusbar.AlphaOptimizedImageView
                 android:id="@+id/running_services_button"
                 style="@android:style/Widget.Material.Button.Borderless"
                 android:layout_width="@dimen/qs_footer_action_button_size"
                 android:layout_height="@dimen/qs_footer_action_button_size"
                 android:padding="@dimen/qs_footer_icon_padding"
                 android:clickable="true"
+                android:clipToPadding="false"
                 android:focusable="true"
-                android:background="@drawable/ripple_drawable"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_settings_memory"
                 android:tint="?android:attr/colorForeground"
                 android:contentDescription="@string/accessibility_quick_settings_running_services" />
