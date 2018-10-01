@@ -30,6 +30,7 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.net.ConnectivityManager;
 
 public class RRUtils {
 
@@ -64,6 +65,13 @@ public class RRUtils {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    // Check to see if device is WiFi only
+    public static boolean isWifiOnly(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+    return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
     }
 
     public static void takeScreenrecord(int mode) {

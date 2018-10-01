@@ -57,6 +57,11 @@
             android:key="mobile"
             android:title="@string/quick_settings_cellular_detail_title" />
 
+        <SwitchPreference
+            android:key="show_fourg"
+            android:title="@string/show_fourg_title"
+            android:defaultValue="false" />
+
         <com.android.systemui.tuner.ClockPreference
             android:title="@string/tuner_time"
             android:summary="%s"

@@ -117,4 +117,6 @@
     <string name="lockscreen_tuner_activity">Lockscreen shortcuts</string>
     <string name="powernotif_tuner_activity">Power notifications</string>
 
+    <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Show 4G instead of LTE</string>
 </resources>
