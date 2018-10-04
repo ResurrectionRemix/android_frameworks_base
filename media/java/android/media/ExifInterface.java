@@ -3168,7 +3168,12 @@ public class ExifInterface {
                 if (!mAttributesOffsets.contains(nextIfdOffset)) {
                     // Save offset of current IFD to prevent reading an IFD that is already read.
                     mAttributesOffsets.add(dataInputStream.mPosition);
+                    int pos_before_seek = dataInputStream.mPosition;
                     dataInputStream.seek(nextIfdOffset);
+                    if (pos_before_seek >= dataInputStream.mPosition) {
+                        Log.w(TAG, "Stop reading file since fail on stream seeking may cause an infinite loop: " + pos_before_seek + " => " + dataInputStream.mPosition);
+                        return;
+                    }
                     // Do not overwrite thumbnail IFD data if it alreay exists.
                     if (mAttributes[IFD_TYPE_THUMBNAIL].isEmpty()) {
                         readImageFileDirectory(dataInputStream, IFD_TYPE_THUMBNAIL);
