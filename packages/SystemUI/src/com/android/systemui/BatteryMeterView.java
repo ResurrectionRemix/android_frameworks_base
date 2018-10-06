@@ -92,6 +92,7 @@ public class BatteryMeterView extends LinearLayout implements
 
     private int mNonAdaptedForegroundColor;
     private int mNonAdaptedBackgroundColor;
+    private boolean isBatteryPercentHidden;
 
     public BatteryMeterView(Context context) {
         this(context, null, 0);
@@ -120,6 +121,9 @@ public class BatteryMeterView extends LinearLayout implements
 
         addOnAttachStateChangeListener(
                 new DisableStateTracker(DISABLE_NONE, DISABLE2_SYSTEM_ICONS));
+
+        isBatteryPercentHidden = Settings.System.getIntForUser(
+                getContext().getContentResolver(), SHOW_BATTERY_PERCENT, 0, mUser) == 0;
 
         mBatteryIconView = new ImageView(context);
         mBatteryIconView.setImageDrawable(mDrawable);
@@ -233,7 +237,7 @@ public class BatteryMeterView extends LinearLayout implements
     public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
 
         if (isCircleBattery()) {
-            setForceShowPercent(pluggedIn);
+            setForceShowPercent(pluggedIn && !isBatteryPercentHidden);
         }
 
         mDrawable.setBatteryLevel(level);
@@ -274,6 +278,8 @@ public class BatteryMeterView extends LinearLayout implements
                 getContext().getContentResolver(), STATUS_BAR_BATTERY_STYLE, 0, mUser) == 3;
         final boolean showingInside = Settings.System.getIntForUser(
                 getContext().getContentResolver(), SHOW_BATTERY_PERCENT, 0, mUser) == 2;
+        isBatteryPercentHidden = Settings.System.getIntForUser(
+                getContext().getContentResolver(), SHOW_BATTERY_PERCENT, 0, mUser) == 0;
         final boolean showingOutside = mBatteryPercentView != null;
         if (0 != Settings.System.getIntForUser(getContext().getContentResolver(),
                 SHOW_BATTERY_PERCENT, 0, mUser) || mForceShowPercent || showingText || hideText) {
