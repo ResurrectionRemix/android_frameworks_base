@@ -3259,6 +3259,18 @@ public final class Settings {
         public static final String MODE_RINGER = Global.MODE_RINGER;
 
         /**
+         * RR Config Setting
+         * @hide
+         */
+         public static final String RR_CONFIG_STYLE = "rr_config_style";
+        /**
+         * Transition effect in RR tabs
+         *
+         * @hide
+         */
+         public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
+
+        /**
          * Whether to use static IP and other static network attributes.
          * <p>
          * Set to 1 for true and 0 for false.
