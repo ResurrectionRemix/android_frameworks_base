@@ -60,6 +60,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -247,7 +248,7 @@ class RecentTasks {
      */
     void loadRecentsComponent(Resources res) {
         final String rawRecentsComponent = res.getString(
-                com.android.internal.R.string.config_recentsComponentName);
+               isPieRecentsEnabled() ? com.android.internal.R.string.config_recentsComponentName : com.android.internal.R.string.config_recentsComponentNameOreo);
         if (TextUtils.isEmpty(rawRecentsComponent)) {
             return;
         }
@@ -265,6 +266,11 @@ class RecentTasks {
                 Slog.w(TAG, "Could not load application info for recents component: " + cn);
             }
         }
+    }
+
+    private boolean isPieRecentsEnabled() {
+       return Settings.System.getInt(mService.mContext.getContentResolver(),
+                      Settings.System.RECENTS_COMPONENT, 0) == 0;
     }
 
     /**
