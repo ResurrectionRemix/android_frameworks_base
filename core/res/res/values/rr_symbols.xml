@@ -148,4 +148,8 @@
   <java-symbol type="attr" name="min" />
   <java-symbol type="attr" name="unitsLeft" />
   <java-symbol type="attr" name="unitsRight" />
+
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
 </resources>

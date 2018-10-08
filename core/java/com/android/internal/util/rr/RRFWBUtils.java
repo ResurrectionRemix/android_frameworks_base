@@ -44,6 +44,14 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import android.app.AlertDialog; 
+import android.app.IActivityManager;
+import android.os.AsyncTask;
+import android.content.DialogInterface;
+import com.android.internal.R;
+import android.app.ActivityManager;
+import android.app.IActivityManager;
+
 public class RRFWBUtils {
 
     public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
@@ -160,6 +168,63 @@ public class RRFWBUtils {
     public static boolean isChineseLanguage() {
        return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
                Locale.CHINESE.getLanguage());
+    }
+
+    public static void restartSystemUi(Context context) {
+        new RestartSystemUiTask(context).execute();
+    }
+
+    public static void showSystemUiRestartDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.systemui_restart_title)
+                .setMessage(R.string.systemui_restart_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        restartSystemUi(context);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private static class RestartSystemUiTask extends AsyncTask<Void, Void, Void> {
+        private Context mContext;
+
+
+        public RestartSystemUiTask(Context context) {
+            super();
+            mContext = context;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                ActivityManager am =
+                        (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+                IActivityManager ams = ActivityManager.getService();
+                for (ActivityManager.RunningAppProcessInfo app: am.getRunningAppProcesses()) {
+                    if ("com.android.systemui".equals(app.processName)) {
+                        ams.killApplicationProcess(app.processName, app.uid);
+                        break;
+                    }
+                }
+                //Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+                //Method getDefault = ActivityManagerNative.getDeclaredMethod("getDefault", null);
+                //Object amn = getDefault.invoke(null, null);
+                //Method killApplicationProcess = amn.getClass().getDeclaredMethod("killApplicationProcess", String.class, int.class);
+                //mContext.stopService(new Intent().setComponent(new ComponentName("com.android.systemui", "com.android.systemui.SystemUIService")));
+                //am.killBackgroundProcesses("com.android.systemui");
+                //for (ActivityManager.RunningAppProcessInfo app : am.getRunningAppProcesses()) {
+                //    if ("com.android.systemui".equals(app.processName)) {
+                //        killApplicationProcess.invoke(amn, app.processName, app.uid);
+                //        break;
+                //    }
+                //}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }
