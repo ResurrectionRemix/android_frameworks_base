@@ -44,7 +44,7 @@
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
         android:layout_height="@*android:dimen/quick_qs_offset_height"
-        android:background="@color/qs_statusbar_background" >
+        android:background="@color/quick_settings_status_bar_background_color" >
 
         <ImageView android:id="@+id/qs_header_image_view"
             android:layout_width="match_parent"
