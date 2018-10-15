@@ -23859,9 +23859,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                     if ((cr.flags&Context.BIND_ADJUST_WITH_ACTIVITY) != 0) {
                         if (a != null && adj > ProcessList.FOREGROUND_APP_ADJ && (a.visible
                                 || a.isState(ActivityState.RESUMED, ActivityState.PAUSING))) {
-                            adj = ProcessList.FOREGROUND_APP_ADJ;
+                            int clientCurAdj = cr.binding.client.curAdj;
+                            adj = ProcessList.FOREGROUND_APP_ADJ > clientCurAdj ? ProcessList.FOREGROUND_APP_ADJ : clientCurAdj ;
                             if ((cr.flags&Context.BIND_NOT_FOREGROUND) == 0) {
-                                if ((cr.flags&Context.BIND_IMPORTANT) != 0) {
+                                if ((cr.flags&Context.BIND_IMPORTANT) != 0 && adj == ProcessList.FOREGROUND_APP_ADJ) {
                                     schedGroup = ProcessList.SCHED_GROUP_TOP_APP_BOUND;
                                 } else {
                                     schedGroup = ProcessList.SCHED_GROUP_DEFAULT;
