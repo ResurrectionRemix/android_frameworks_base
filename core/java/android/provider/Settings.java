@@ -6138,6 +6138,15 @@ public final class Settings {
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
         /**
+         * 0 - Default
+         * 1 - Round with ring
+         * 2 - Two-toned round with ring
+	 * 3 - Squircle with ring
+         * @hide
+         */
+        public static final String QS_TILE_STYLE = "qs_tile_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6550,6 +6559,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_THREEG);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
             PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
+            PRIVATE_SETTINGS.add(QS_TILE_STYLE);
         }
 
         /**
