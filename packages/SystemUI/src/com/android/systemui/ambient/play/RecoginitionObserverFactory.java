@@ -250,6 +250,9 @@ public class RecoginitionObserverFactory extends RecoginitionObserver {
         if (mRecorder != null && mRecorder.getState() == AudioRecord.STATE_INITIALIZED) {
             Log.d(TAG, "Stopping recorder");
             mRecorder.stop();
+
+            // Don't forget to release the native resources.
+            mRecorder.release();
             mRecorder = null;
         }
     }
