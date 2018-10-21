@@ -81,4 +81,69 @@
 
     <!-- The translation for disappearing security views after having solved them. -->
     <dimen name="disappear_y_translation">-32dp</dimen>
+
+<!-- Lock date font size parameters -->
+<dimen name="lock_date_font_size_10">10dp</dimen>
+<dimen name="lock_date_font_size_11">11dp</dimen>
+<dimen name="lock_date_font_size_12">12dp</dimen>
+<dimen name="lock_date_font_size_13">13dp</dimen>
+<dimen name="lock_date_font_size_14">14dp</dimen>
+<dimen name="lock_date_font_size_15">15dp</dimen>
+<dimen name="lock_date_font_size_16">16dp</dimen>
+<dimen name="lock_date_font_size_17">17dp</dimen>
+<dimen name="lock_date_font_size_18">18dp</dimen>
+<dimen name="lock_date_font_size_19">19dp</dimen>
+<dimen name="lock_date_font_size_20">20dp</dimen>
+<dimen name="lock_date_font_size_21">21dp</dimen>
+<dimen name="lock_date_font_size_22">22dp</dimen>
+<dimen name="lock_date_font_size_23">23dp</dimen>
+<dimen name="lock_date_font_size_24">24dp</dimen>
+<dimen name="lock_date_font_size_25">25dp</dimen>
+
+<!-- Lock clock font size parameters -->
+<dimen name="lock_clock_font_size_65">65dp</dimen>
+<dimen name="lock_clock_font_size_66">66dp</dimen>
+<dimen name="lock_clock_font_size_67">67dp</dimen>
+<dimen name="lock_clock_font_size_68">68dp</dimen>
+<dimen name="lock_clock_font_size_69">69dp</dimen>
+<dimen name="lock_clock_font_size_70">70dp</dimen>
+<dimen name="lock_clock_font_size_71">71dp</dimen>
+<dimen name="lock_clock_font_size_72">72dp</dimen>
+<dimen name="lock_clock_font_size_73">73dp</dimen>
+<dimen name="lock_clock_font_size_74">74dp</dimen>
+<dimen name="lock_clock_font_size_75">75dp</dimen>
+<dimen name="lock_clock_font_size_76">76dp</dimen>
+<dimen name="lock_clock_font_size_77">77dp</dimen>
+<dimen name="lock_clock_font_size_78">78dp</dimen>
+<dimen name="lock_clock_font_size_79">79dp</dimen>
+<dimen name="lock_clock_font_size_80">80dp</dimen>
+<dimen name="lock_clock_font_size_81">81dp</dimen>
+<dimen name="lock_clock_font_size_82">82dp</dimen>
+<dimen name="lock_clock_font_size_83">83dp</dimen>
+<dimen name="lock_clock_font_size_84">84dp</dimen>
+<dimen name="lock_clock_font_size_85">85dp</dimen>
+<dimen name="lock_clock_font_size_86">86dp</dimen>
+<dimen name="lock_clock_font_size_87">87dp</dimen>
+<dimen name="lock_clock_font_size_88">88dp</dimen>
+<dimen name="lock_clock_font_size_89">89dp</dimen>
+<dimen name="lock_clock_font_size_90">90dp</dimen>
+<dimen name="lock_clock_font_size_91">91dp</dimen>
+<dimen name="lock_clock_font_size_92">92dp</dimen>
+<dimen name="lock_clock_font_size_93">93dp</dimen>
+<dimen name="lock_clock_font_size_94">94dp</dimen>
+<dimen name="lock_clock_font_size_95">95dp</dimen>
+<dimen name="lock_clock_font_size_96">96dp</dimen>
+<dimen name="lock_clock_font_size_97">97dp</dimen>
+<dimen name="lock_clock_font_size_98">98dp</dimen>
+<dimen name="lock_clock_font_size_99">99dp</dimen>
+<dimen name="lock_clock_font_size_100">100dp</dimen>
+<dimen name="lock_clock_font_size_101">101dp</dimen>
+<dimen name="lock_clock_font_size_102">102dp</dimen>
+<dimen name="lock_clock_font_size_103">103dp</dimen>
+<dimen name="lock_clock_font_size_104">104dp</dimen>
+<dimen name="lock_clock_font_size_105">105dp</dimen>
+<dimen name="lock_clock_font_size_106">106dp</dimen>
+<dimen name="lock_clock_font_size_107">107dp</dimen>
+<dimen name="lock_clock_font_size_108">108dp</dimen>
+
 </resources>
