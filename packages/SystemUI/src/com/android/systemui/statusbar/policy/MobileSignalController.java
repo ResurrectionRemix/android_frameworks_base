@@ -103,6 +103,7 @@ public class MobileSignalController extends SignalController<
 
     private boolean mRoamingIconAllowed;
     private boolean mShowLteFourGee;
+    private boolean mVoLTEicon;
 
     private boolean mDataDisabledIcon;
 
@@ -197,6 +198,9 @@ public class MobileSignalController extends SignalController<
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.DATA_DISABLED_ICON),
                   false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+                  this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -221,6 +225,9 @@ public class MobileSignalController extends SignalController<
                 UserHandle.USER_CURRENT) == 1;
         mDataDisabledIcon = Settings.System.getIntForUser(resolver,
                 Settings.System.DATA_DISABLED_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
+        mVoLTEicon = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_VOLTE_ICON, 0,
                 UserHandle.USER_CURRENT) == 1;
 
         mapIconSets();
@@ -411,7 +418,7 @@ public class MobileSignalController extends SignalController<
     private int getVolteResId() {
         int resId = 0;
 
-        if ( mCurrentState.isVolteRegistered ) {
+        if ( mCurrentState.isVolteRegistered && mVoLTEicon ) {
             resId = R.drawable.volte;
         }
         return resId;
