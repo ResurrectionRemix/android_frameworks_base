@@ -85,6 +85,8 @@ public class BatteryMeterView extends LinearLayout implements
 
     private int mStyle = BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT;
     private boolean mQsHeaderOrKeyguard;
+    private boolean mCharging;
+    private boolean mPowerSave;
 
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings.
@@ -233,10 +235,10 @@ public class BatteryMeterView extends LinearLayout implements
     @Override
     public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
 
-        if (isCircleBattery()  || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT) {
-            setForceShowPercent(pluggedIn);
+        if (mCharging != pluggedIn) {
+            mCharging = pluggedIn;
+            updateShowPercent();
         }
-
         mDrawable.setBatteryLevel(level);
         mDrawable.setCharging(pluggedIn);
         mLevel = level;
@@ -254,6 +256,10 @@ public class BatteryMeterView extends LinearLayout implements
     @Override
     public void onPowerSaveChanged(boolean isPowerSave) {
         mDrawable.setPowerSave(isPowerSave);
+        if (mPowerSave != isPowerSave) {
+            mPowerSave = isPowerSave;
+            updateShowPercent();
+        }
     }
 
     private TextView loadPercentView() {
@@ -273,7 +279,8 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private boolean forcePercentageQsHeader() {
-        return mQsHeaderOrKeyguard && (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT
+        return (mQsHeaderOrKeyguard || mCharging || mPowerSave)
+                && (mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT
                 || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN
                 || mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
                 || isCircleBattery());
