@@ -196,7 +196,7 @@ public class SignalStrength implements Parcelable {
         mLteRsrq = lteRsrq;
         mLteRssnr = lteRssnr;
         mLteCqi = lteCqi;
-        mTdScdmaRscp = INVALID;
+        mTdScdmaRscp = tdScdmaRscp;
         mWcdmaSignalStrength = wcdmaSignalStrength;
         mWcdmaRscpAsu = wcdmaRscpAsu;
         mWcdmaRscp = wcdmaRscpAsu - 120;
