@@ -80,6 +80,7 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
             } else {
                 mAmbientIndication.setVisibility(View.INVISIBLE);
             }
+            return;
         }
         mAmbientIndication.setVisibility(View.INVISIBLE);
     }
