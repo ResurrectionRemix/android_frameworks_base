@@ -61,7 +61,11 @@ public class PrivateStorageInfo {
         final Context context = AppGlobals.getInitialApplication();
         final StorageStatsManager stats = context.getSystemService(StorageStatsManager.class);
         try {
-            return stats.getTotalBytes(info.getFsUuid());
+            String fsUuid = info.getFsUuid();
+            if ( fsUuid != null && !fsUuid.isEmpty())
+                return stats.getTotalBytes(fsUuid);
+            else
+                return 0;
         } catch (IOException e) {
             Log.w(TAG, e);
             return 0;
