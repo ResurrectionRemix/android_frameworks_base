@@ -117,6 +117,7 @@ public interface QSTile {
         public boolean isTransient = false;
         public String expandedAccessibilityClassName;
         public SlashState slash;
+        public boolean handlesLongClick = true;
 
         public boolean copyTo(State other) {
             if (other == null) throw new IllegalArgumentException();
@@ -134,7 +135,8 @@ public interface QSTile {
                     || !Objects.equals(other.state, state)
                     || !Objects.equals(other.isTransient, isTransient)
                     || !Objects.equals(other.dualTarget, dualTarget)
-                    || !Objects.equals(other.slash, slash);
+                    || !Objects.equals(other.slash, slash)
+                    || !Objects.equals(other.handlesLongClick, handlesLongClick);
             other.icon = icon;
             other.iconSupplier = iconSupplier;
             other.label = label;
@@ -147,6 +149,7 @@ public interface QSTile {
             other.dualTarget = dualTarget;
             other.isTransient = isTransient;
             other.slash = slash != null ? slash.copy() : null;
+            other.handlesLongClick = handlesLongClick;
             return changed;
         }
 
