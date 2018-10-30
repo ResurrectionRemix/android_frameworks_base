@@ -23,6 +23,7 @@ import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
 import static android.os.Process.FIRST_APPLICATION_UID;
 import static android.provider.Settings.Secure.VOLUME_HUSH_MUTE;
+import static android.provider.Settings.Secure.VOLUME_HUSH_MUTE_NO_MEDIA;
 import static android.provider.Settings.Secure.VOLUME_HUSH_OFF;
 import static android.provider.Settings.Secure.VOLUME_HUSH_VIBRATE;
 
@@ -2959,6 +2960,12 @@ public class AudioService extends IAudioService.Stub
                 effect = VibrationEffect.get(VibrationEffect.EFFECT_DOUBLE_CLICK);
                 ringerMode = AudioManager.RINGER_MODE_SILENT;
                 toastText = com.android.internal.R.string.volume_dialog_ringer_guidance_silent;
+                break;
+            case VOLUME_HUSH_MUTE_NO_MEDIA:
+                effect = VibrationEffect.get(VibrationEffect.EFFECT_DOUBLE_CLICK);
+                ringerMode = AudioManager.RINGER_MODE_SILENT;
+                mStreamStates[AudioSystem.STREAM_MUSIC].mute(true);
+                toastText = com.android.internal.R.string.volume_dialog_ringer_guidance_silent_no_media;
                 break;
             case VOLUME_HUSH_VIBRATE:
                 effect = VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK);

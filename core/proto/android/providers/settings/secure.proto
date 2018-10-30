@@ -532,7 +532,7 @@ message SecureSettingsProto {
         option (android.msg_privacy).dest = DEST_EXPLICIT;
 
         // What behavior should be invoked when the volume hush gesture is triggered
-        // One of VOLUME_HUSH_OFF, VOLUME_HUSH_VIBRATE, VOLUME_HUSH_MUTE.
+        // One of VOLUME_HUSH_OFF, VOLUME_HUSH_VIBRATE, VOLUME_HUSH_MUTE, VOLUME_HUSH_MUTE_NO_MEDIA.
         optional SettingProto hush_gesture = 1 [ (android.privacy).dest = DEST_AUTOMATIC ];
         // Persisted playback time after a user confirmation of an unsafe volume level.
         optional SettingProto unsafe_volume_music_active_ms = 2 [ (android.privacy).dest = DEST_AUTOMATIC ];
