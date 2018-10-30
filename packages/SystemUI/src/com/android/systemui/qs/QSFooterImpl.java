@@ -63,14 +63,16 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.tuner.TunerService.Tunable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 public class QSFooterImpl extends FrameLayout implements QSFooter,
-        OnClickListener, OnUserInfoChangedListener {
+        OnClickListener, OnUserInfoChangedListener, Tunable {
 
     private static final String TAG = "QSFooterImpl";
+    public static final String QS_SHOW_DRAG_HANDLE = "qs_show_drag_handle";
 
     private final ActivityStarter mActivityStarter;
     private final UserInfoController mUserInfoController;
@@ -256,14 +258,26 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         /*mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
+                mDeveloperSettingsObserver, UserHandle.USER_ALL);
+
+        final TunerService tunerService = Dependency.get(TunerService.class);
+        tunerService.addTunable(this, QS_SHOW_DRAG_HANDLE);
     }
 
     @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
+        Dependency.get(TunerService.class).removeTunable(this);
         setListening(false);
         //mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (QS_SHOW_DRAG_HANDLE.equals(key)) {
+            setHideDragHandle(newValue != null && Integer.parseInt(newValue) == 0);
+        }
     }
 
     @Override
@@ -399,5 +413,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     Mode.SRC_IN);
         }
         mMultiUserAvatar.setImageDrawable(picture);
+    }
+
+    private void setHideDragHandle(boolean hide) {
+        mDragHandle.setVisibility(hide ? View.GONE : View.VISIBLE);
     }
 }

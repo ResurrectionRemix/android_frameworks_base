@@ -159,6 +159,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             "system:" + Settings.System.QS_BATTERY_MODE;
     public static final String STATUS_BAR_BATTERY_STYLE =
             "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
+    private boolean mHideDragHandle;
 
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
@@ -419,15 +420,17 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         if (mQsDisabled) {
             lp.height = topMargin;
         } else {
-            lp.height = Math.max(getMinimumHeight(),
-                    resources.getDimensionPixelSize(
-                            com.android.internal.R.dimen.quick_qs_total_height));
             int qsHeight = resources.getDimensionPixelSize(
                     com.android.internal.R.dimen.quick_qs_total_height);
 
             if (mHeaderImageEnabled) {
                 qsHeight += resources.getDimensionPixelSize(R.dimen.qs_header_image_offset);
             }
+            if (mHideDragHandle) {
+                qsHeight -= resources.getDimensionPixelSize(
+                        R.dimen.quick_qs_drag_handle_height);
+            }
+            lp.height = Math.max(getMinimumHeight(), qsHeight);
         }
 
         setLayoutParams(lp);
@@ -525,7 +528,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         requestApplyInsets();
 
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        tunerService.addTunable(this, StatusBarIconController.ICON_BLACKLIST, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
     }
 
     @Override
@@ -731,6 +734,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mBatteryRemainingIcon.updateBatteryStyle();
                 mBatteryRemainingIcon.updatePercentView();
                 mBatteryRemainingIcon.updateVisibility();
+                break;
+            case QSFooterImpl.QS_SHOW_DRAG_HANDLE:
+            mHideDragHandle = newValue != null && Integer.parseInt(newValue) == 0;
+            updateResources();
                 break;
             default:
                 break;
