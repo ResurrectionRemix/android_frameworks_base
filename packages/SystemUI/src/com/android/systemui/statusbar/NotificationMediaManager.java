@@ -28,6 +28,7 @@ import android.util.Log;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.Dumpable;
 import com.android.systemui.SysUiServiceProvider;
+import com.android.systemui.statusbar.phone.StatusBar;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -52,6 +53,12 @@ public class NotificationMediaManager implements Dumpable {
     private MediaController mMediaController;
     private String mMediaNotificationKey;
     private MediaMetadata mMediaMetadata;
+    private MediaUpdateListener mListener;
+
+    // callback into NavigationFragment for Pulse
+    public interface MediaUpdateListener {
+        public void onMediaUpdated(boolean playing);
+    }
 
     private final MediaController.Callback mMediaListener = new MediaController.Callback() {
         @Override
@@ -69,6 +76,9 @@ public class NotificationMediaManager implements Dumpable {
                     mStatusBar.getVisualizer().setPlaying(state.getState()
                             == PlaybackState.STATE_PLAYING);
                 }
+                if (mListener != null) {
+                    mListener.onMediaUpdated(isPlaybackActive(state.getState()));
+                }
             }
         }
 
@@ -80,6 +90,17 @@ public class NotificationMediaManager implements Dumpable {
             }
             mMediaMetadata = metadata;
             mPresenter.updateMediaMetaData(true, true);
+            if (mListener != null) {
+                mListener.onMediaUpdated(isPlaybackActive());
+            }
+        }
+
+        @Override
+        public void onSessionDestroyed() {
+            super.onSessionDestroyed();
+            if (mListener != null) {
+                mListener.onMediaUpdated(isPlaybackActive());
+            }
         }
     };
 
@@ -191,6 +212,9 @@ public class NotificationMediaManager implements Dumpable {
                 clearCurrentMediaNotificationSession();
                 mMediaController = controller;
                 mMediaController.registerCallback(mMediaListener);
+                if (mListener != null) {
+                    mListener.onMediaUpdated(isPlaybackActive());
+                }
                 mMediaMetadata = mMediaController.getMetadata();
                 if (DEBUG_MEDIA) {
                     Log.v(TAG, "DEBUG_MEDIA: insert listener, found new controller: "
@@ -214,6 +238,14 @@ public class NotificationMediaManager implements Dumpable {
             mEntryManager.updateNotifications();
         }
         mPresenter.updateMediaMetaData(metaDataChanged, true);
+    }
+
+    public void addCallback(MediaUpdateListener listener) {
+        mListener = listener;
+    }
+
+    public boolean isPlaybackActive() {
+        return isPlaybackActive(getMediaControllerPlaybackState(mMediaController));
     }
 
     public void clearCurrentMediaNotification() {
@@ -281,6 +313,9 @@ public class NotificationMediaManager implements Dumpable {
                         + mMediaController.getPackageName());
             }
             mMediaController.unregisterCallback(mMediaListener);
+            if (mListener != null) {
+                mListener.onMediaUpdated(isPlaybackActive());
+            }
         }
         mMediaController = null;
     }

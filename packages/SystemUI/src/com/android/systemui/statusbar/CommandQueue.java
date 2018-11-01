@@ -93,6 +93,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_SHOW_CHARGING_ANIMATION       = 44 << MSG_SHIFT;
     private static final int MSG_SHOW_PINNING_TOAST_ENTER_EXIT = 45 << MSG_SHIFT;
     private static final int MSG_SHOW_PINNING_TOAST_ESCAPE     = 46 << MSG_SHIFT;
+    private static final int MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED  = 47 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -165,6 +166,8 @@ public class CommandQueue extends IStatusBar.Stub {
         default void onFingerprintHelp(String message) { }
         default void onFingerprintError(String error) { }
         default void hideFingerprintDialog() { }
+
+        default void leftInLandscapeChanged(boolean isLeft) {}
     }
 
     @VisibleForTesting
@@ -551,6 +554,14 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+    public void leftInLandscapeChanged(boolean isLeft) {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED);
+            mHandler.obtainMessage(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED,
+                    isLeft ? 1 : 0, 0, null).sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         private H(Looper l) {
             super(l);
@@ -795,6 +806,11 @@ public class CommandQueue extends IStatusBar.Stub {
                 case MSG_SHOW_PINNING_TOAST_ESCAPE:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).showPinningEscapeToast();
+                    }
+                    break;
+                case MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).leftInLandscapeChanged(msg.arg1 != 0);
                     }
                     break;
             }
