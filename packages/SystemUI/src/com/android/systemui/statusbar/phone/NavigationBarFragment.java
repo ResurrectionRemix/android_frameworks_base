@@ -49,11 +49,13 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.inputmethodservice.InputMethodService;
+import android.media.AudioManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -83,6 +85,7 @@ import com.android.systemui.Interpolators;
 import com.android.systemui.OverviewProxyService;
 import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
+import com.android.systemui.navigation.pulse.PulseController;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
@@ -318,19 +321,17 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mNavigationBarView = (Navigator) view;
-
         mNavigationBarView.setResourceMap(mResourceMap);
         mNavigationBarView.setControllers(mPulseController);
         mNavigationBarView.setLeftInLandscape(mLeftInLandscape);
-
+        mNavigationBarView.setDisabledFlags(mDisabledFlags1);
         mNavigationBarView.setComponents(mRecents, mDivider, mStatusBar.getPanel());
         mNavigationBarView.setDisabledFlags(mDisabledFlags1);
         mNavigationBarView.setOnVerticalChangedListener(this::onVerticalChanged);
         if (isUsingStockNav()) {
             mNavigationBarView.getBaseView().setOnTouchListener(this::onNavigationTouch);
-        } else {
-            mNavigationBarView.setMediaPlaying(mMediaManager.isPlaybackActive());
         }
+        mNavigationBarView.setMediaPlaying(mMediaManager.isPlaybackActive());
         if (savedInstanceState != null) {
             mNavigationBarView.getLightTransitionsController().restoreState(savedInstanceState);
         }
@@ -343,6 +344,9 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_USER_SWITCHED);
+        filter.addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGING);
+        filter.addAction(AudioManager.STREAM_MUTE_CHANGED_ACTION);
+        filter.addAction(AudioManager.VOLUME_CHANGED_ACTION);
         getContext().registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
         notifyNavigationBarScreenOn();
         mOverviewProxyService.addCallback(mOverviewProxyListener);
@@ -1167,14 +1171,17 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (Intent.ACTION_SCREEN_OFF.equals(action)
-                    || Intent.ACTION_SCREEN_ON.equals(action)) {
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 notifyNavigationBarScreenOn();
-            }
-            if (Intent.ACTION_USER_SWITCHED.equals(action)) {
+                mPulseController.notifyScreenOn(false);
+            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                notifyNavigationBarScreenOn();
+                mPulseController.notifyScreenOn(true);
+            } else if (Intent.ACTION_USER_SWITCHED.equals(action)) {
                 // The accessibility settings may be different for the new user
                 updateAccessibilityServicesState(mAccessibilityManager);
-            };
+            }
+            mPulseController.onReceive(intent);
         }
     };
 
@@ -1386,8 +1393,8 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
                 mNavigationBarView.getBaseView().setOnTouchListener(this::onNavigationTouch);
             } else {
                 ((NavigationBarFrame) vg).disableDeadZone();
-                mNavigationBarView.setMediaPlaying(mMediaManager.isPlaybackActive());
             }
+            mNavigationBarView.setMediaPlaying(mMediaManager.isPlaybackActive());
             vg.addView(mNavigationBarView.getBaseView());
             prepareNavigationBarView();
             checkNavBarModes();
