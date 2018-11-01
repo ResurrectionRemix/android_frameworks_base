@@ -672,8 +672,10 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     padding, FLAG_END);
 
             FragmentHostManager fragmentHostManager = FragmentHostManager.get(statusBar);
+/*
             fragmentHostManager.addTagListener(CollapsedStatusBarFragment.TAG,
                     new TunablePaddingTagListener(padding, R.id.status_bar));
+*/
             fragmentHostManager.addTagListener(QS.TAG,
                     new TunablePaddingTagListener(qsPadding, R.id.header));
         }
