@@ -767,6 +767,12 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
         return (disable2Flags & StatusBarManager.DISABLE2_ROTATE_SUGGESTIONS) != 0;
     }
 
+    public void setPulseColors(boolean colorizedMedia, int[] colors) {
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setPulseColors(colorizedMedia, colors);
+        }
+    }
+
     // ----- Internal stuffz -----
 
     private void refreshLayout(int layoutDirection) {
