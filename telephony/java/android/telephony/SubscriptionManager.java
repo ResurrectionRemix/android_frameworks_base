@@ -543,7 +543,8 @@ public class SubscriptionManager {
         private final Handler mHandler;
 
         public OnSubscriptionsChangedListener() {
-            mHandler = new OnSubscriptionsChangedListenerHandler();
+            mHandler = new OnSubscriptionsChangedListenerHandler(Looper.myLooper() == null ?
+                Looper.getMainLooper() : Looper.myLooper());
         }
 
         /**
