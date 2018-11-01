@@ -4391,6 +4391,8 @@ public final class Settings {
         public static final String FLING_PULSE_COLOR = "fling_pulse_color";
 
         /**
+         * Fling pulse lavalamp
+         *
          * @hide
          */
         public static final String FLING_PULSE_LAVALAMP_ENABLED = "fling_pulse_lavalamp_enabled";

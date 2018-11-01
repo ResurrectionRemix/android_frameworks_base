@@ -430,6 +430,19 @@ public class NotificationData {
         return mSortedAndFiltered;
     }
 
+    public ArrayList<Entry> getAllNotifications() {
+        ArrayList<Entry> list = new ArrayList<>();
+        synchronized (mEntries) {
+            final int N = mEntries.size();
+            for (int i = 0; i < N; i++) {
+                Entry entry = mEntries.valueAt(i);
+                StatusBarNotification sbn = entry.notification;
+                list.add(entry);
+            }
+        }
+        return list;
+    }
+
     public ArrayList<Entry> getNotificationsForCurrentUser() {
         mFilteredForUser.clear();
 
