@@ -45,6 +45,10 @@ public class BootReceiver extends BroadcastReceiver {
             mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.SHOW_FPS_OVERLAY),
                     false, this);
+            mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.START_SCREEN_STATE_SERVICE),
+                    false, this);
+            update();
         }
 
         @Override
@@ -54,11 +58,17 @@ public class BootReceiver extends BroadcastReceiver {
 
         public void update() {
             Intent fpsinfo = new Intent(mContext, com.android.systemui.FPSInfoService.class);
+            Intent screenState = new Intent(mContext, com.android.systemui.screenstate.ScreenStateService.class);
             if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_FPS_OVERLAY, 0) != 0) {
                 mContext.startService(fpsinfo);
             } else {
                 mContext.stopService(fpsinfo);
-	        }
+            }
+            if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.START_SCREEN_STATE_SERVICE, 0) != 0) {
+                mContext.startService(screenState);
+            } else {
+                mContext.stopService(screenState);
+            }
         }
     }
 
@@ -76,6 +86,13 @@ public class BootReceiver extends BroadcastReceiver {
                 Intent fpsinfo = new Intent(context, com.android.systemui.FPSInfoService.class);
                 context.startService(fpsinfo);
             }
+
+            // start the screen state service if activated
+            if (Settings.Global.getInt(res, Settings.Global.START_SCREEN_STATE_SERVICE, 0) != 0) {
+                Intent screenstate = new Intent(context, com.android.systemui.screenstate.ScreenStateService.class);
+                context.startService(screenstate);
+            }
+
         } catch (Exception e) {
             Log.e(TAG, "Can't start custom services", e);
         }

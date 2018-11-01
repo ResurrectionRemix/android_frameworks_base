@@ -6020,6 +6020,34 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
+
+        /** @hide */
+        private static final Validator NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_TWOG = "screen_state_twog";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_TWOG_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_GPS = "screen_state_gps";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_GPS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_MOBILE_DATA = "screen_state_mobile_data";
+
+        /** @hide */
+        private static final Validator SCREEN_STATE_MOBILE_DATA_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Status bar weather temperature
          * 0: Hide the temperature
@@ -6207,6 +6235,9 @@ public final class Settings {
             NAVIGATION_HANDLE_WIDTH,
             NOTIFICATION_HEADERS,
             ADAPTIVE_PLAYBACK_ENABLED,
+            SCREEN_STATE_GPS,
+            SCREEN_STATE_MOBILE_DATA,
+            SCREEN_STATE_TWOG,
         };
 
         /**
@@ -6433,6 +6464,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BACK_GESTURE_BLOCK_IME);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_GPS);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_MOBILE_DATA);
+            PRIVATE_SETTINGS.add(SCREEN_STATE_TWOG);
         }
 
         /**
@@ -6650,6 +6684,9 @@ public final class Settings {
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(ADAPTIVE_PLAYBACK_ENABLED, ADAPTIVE_PLAYBACK_ENABLED_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_GPS, SCREEN_STATE_GPS_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_MOBILE_DATA, SCREEN_STATE_MOBILE_DATA_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_TWOG, SCREEN_STATE_TWOG_VALIDATOR);
         }
 
         /**
@@ -16136,6 +16173,30 @@ public final class Settings {
         public static final String REFRESH_RATE_SETTING = "refresh_rate_setting";
 
         /**
+         * @hide
+         */
+        public static final String START_SCREEN_STATE_SERVICE = "start_screen_state_service";
+
+        private static final Validator START_SCREEN_STATE_SERVICE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_OFF_DELAY = "screen_state_off_delay";
+
+        /** @hide */
+        public static final Validator SCREEN_STATE_OFF_DELAY_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 30);
+
+        /**
+         * @hide
+         */
+        public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
+
+        /** @hide */
+        public static final Validator SCREEN_STATE_ON_DELAY_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 30);
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -16186,6 +16247,9 @@ public final class Settings {
             AWARE_ALLOWED,
             NOTIFICATION_BUBBLES,
             SHOW_FPS_OVERLAY,
+            START_SCREEN_STATE_SERVICE,
+            SCREEN_STATE_OFF_DELAY,
+            SCREEN_STATE_ON_DELAY,
         };
 
         /**
@@ -16255,6 +16319,9 @@ public final class Settings {
             VALIDATORS.put(POWER_BUTTON_VERY_LONG_PRESS, POWER_BUTTON_VERY_LONG_PRESS_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_BUBBLES, NOTIFICATION_BUBBLES_VALIDATOR);
             VALIDATORS.put(SHOW_FPS_OVERLAY, SHOW_FPS_OVERLAY_VALIDATOR);
+            VALIDATORS.put(START_SCREEN_STATE_SERVICE, START_SCREEN_STATE_SERVICE_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_OFF_DELAY, SCREEN_STATE_OFF_DELAY_VALIDATOR);
+            VALIDATORS.put(SCREEN_STATE_ON_DELAY, SCREEN_STATE_ON_DELAY_VALIDATOR);
         }
 
         /**
