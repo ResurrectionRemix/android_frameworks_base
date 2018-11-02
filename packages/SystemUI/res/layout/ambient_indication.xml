@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<com.android.systemui.ambient.AmbientIndicationContainer
+<com.android.systemui.ambient.play.AmbientIndicationContainer
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="bottom"
     android:id="@id/ambient_indication_container"

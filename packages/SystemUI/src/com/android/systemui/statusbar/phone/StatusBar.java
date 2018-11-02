@@ -21,9 +21,6 @@ import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.app.StatusBarManager.windowStateToString;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN_OR_SPLIT_SCREEN_SECONDARY;
 
-import static android.provider.Settings.Secure.AMBIENT_RECOGNITION;
-import static android.provider.Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD;
-
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_ASLEEP;
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_AWAKE;
 import static com.android.systemui.keyguard.WakefulnessLifecycle.WAKEFULNESS_WAKING;
@@ -44,9 +41,11 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
 import android.os.Process;
-import android.ambient.AmbientIndicationManager;
-import android.ambient.AmbientIndicationManagerCallback;
-import android.ambient.play.RecoginitionObserver.Observable;
+import com.android.systemui.ambient.play.AmbientIndicationManager;
+import com.android.systemui.ambient.play.AmbientIndicationManagerCallback;
+import com.android.systemui.ambient.play.RecognitionObserver.Observable;
+import com.android.systemui.ambient.play.AmbientIndicationContainer;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.NonNull;
@@ -96,13 +95,8 @@ import android.media.MediaMetadata;
 import android.media.session.PlaybackState;
 import android.metrics.LogMaker;
 import android.net.Uri;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -174,9 +168,6 @@ import com.android.systemui.RecentsComponent;
 import com.android.systemui.SystemUI;
 import com.android.systemui.SystemUIFactory;
 import com.android.systemui.UiOffloadThread;
-import com.android.systemui.ambient.AmbientIndicationContainer;
-import com.android.systemui.ambient.AmbientIndicationNotification;
-import com.android.systemui.ambient.play.RecoginitionObserverFactory;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.charging.WirelessChargingAnimation;
 import com.android.systemui.classifier.FalsingLog;
@@ -690,6 +681,16 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     super.onStrongAuthStateChanged(userId);
                     mEntryManager.updateNotifications();
                 }
+
+                @Override
+                public void onKeyguardVisibilityChanged(boolean showing) {
+                    try {
+                        if (!showing && mRecognitionEnabled){
+                            hideAmbientPlayIndication(0, true);
+                        }
+                    } catch (Exception e) {
+                    }
+                }
             };
 
     private NavigationBarFragment mNavigationBar;
@@ -699,26 +700,12 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private boolean mVibrateOnOpening;
     private VibratorHelper mVibratorHelper;
 
-    private AmbientIndicationNotification mAmbientNotification;
-    private RecoginitionObserverFactory mRecognition;
+    private AmbientIndicationManager mAmbientIndicationManager;
     private boolean mRecognitionEnabled;
 
-    /* Interval indicating when AP-Recogntion will run, that is 2 minutes and 30 seconds */
-    private static final int AP_DURATION = 150000;
-    /* Interval indicating the max recording time. Default is 10 seconds */
-    private static final int AMBIENT_RECOGNITION_INTERVAL_MAX = 10000;
-    // Interval to clean the view after song is detected. (Default 3 minutes)
-    //This is needed as all / most of the work is now done in Worker thread.
-    private static final int AMBIENT_VIEW_CLEAR_INTERVAL = 180000;
+    private boolean mRecognitionEnabledOnKeyguard;
     private Handler ambientClearingHandler;
     private Runnable ambientClearingRunnable;
-    private static final String AMBIENT_PLAY_INTENT = "ambient_play_alarm_intent";
-    private static final IntentFilter AP_INTENT_FILTER = new IntentFilter(AMBIENT_PLAY_INTENT);
-    private static final Intent AP_INTENT = new Intent(AMBIENT_PLAY_INTENT);
-    private static final int AP_REQUEST_CODE = 6969;
-    private AlarmManager alarmManager;
-    private BatteryManager mBatteryManager;
-    private static int NO_MATCH_COUNT = 0;
 
     @Override
     public void start() {
@@ -785,8 +772,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 
-        mBatteryManager = (BatteryManager) mContext.getSystemService(Context.BATTERY_SERVICE);
-
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
 
         mBarService = IStatusBarService.Stub.asInterface(
@@ -824,9 +809,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mWallpaperChangedReceiver.onReceive(mContext, null);
 
         mLockscreenUserManager.setUpWithPresenter(this, mEntryManager);
-        mContext.registerReceiver(ambientReceiver, AP_INTENT_FILTER);
-        mAmbientSettingsObserver.observe();
-        mAmbientSettingsObserver.update();
         mCommandQueue.disable(switches[0], switches[6], false /* animate */);
         setSystemUiVisibility(switches[1], switches[7], switches[8], 0xffffffff,
                 fullscreenStackBounds, dockedStackBounds);
@@ -891,7 +873,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateCallback);
         putComponent(DozeHost.class, mDozeServiceHost);
 
-        AmbientIndicationManager.getInstance(mContext).registerCallback(mAmbientCallback);
+        mAmbientIndicationManager = new AmbientIndicationManager(mContext);
+        mAmbientIndicationManager.registerCallback(mAmbientCallback);
 
         mScreenPinningRequest = new ScreenPinningRequest(mContext);
         mFalsingManager = FalsingManager.getInstance(mContext);
@@ -1047,8 +1030,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         ambientClearingRunnable = new Runnable(){
             @Override
             public void run() {
-                mAmbientIndicationContainer.setVisibility(View.INVISIBLE);
-                ((AmbientIndicationContainer) mAmbientIndicationContainer).hideIndication();
             }
         };
 
@@ -1212,75 +1193,82 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
-        mAmbientNotification = new AmbientIndicationNotification(mContext);
     }
 
     private AmbientIndicationManagerCallback mAmbientCallback = new AmbientIndicationManagerCallback() {
         @Override
         public void onRecognitionResult(Observable observed) {
-            if (observed.Song == null && observed.Artist == null) return;
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    ((AmbientIndicationContainer) mAmbientIndicationContainer)
-                                .setIndication(observed.Song, observed.Artist);
-                    mAmbientIndicationContainer.setVisibility(View.VISIBLE);
-                    mAmbientNotification.show(observed.Song, observed.Artist);
-
-                    if (NO_MATCH_COUNT != 0)
-                        NO_MATCH_COUNT = 0;
-
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, AMBIENT_VIEW_CLEAR_INTERVAL);
-                    } catch (Exception e) {
-                        // This too shall pass
+                    if (mRecognitionEnabled && mRecognitionEnabledOnKeyguard){
+                        ((AmbientIndicationContainer) mAmbientIndicationContainer).setIndication(observed.Song, observed.Artist);
+                        if (isKeyguardShowing()){
+                            showAmbientPlayIndication();
+                            hideAmbientPlayIndication(mAmbientIndicationManager.getAmbientClearViewInterval(), true);
+                        }else{
+                            hideAmbientPlayIndication(0, true);
+                        }
+                    }else{
+                        hideAmbientPlayIndication(0, true);
                     }
-
-                    doStopAmbientRecognition();
                 }
             });
         }
 
         @Override
         public void onRecognitionNoResult() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, 0);
-                    } catch (Exception e) {
-                        // This too shall pass
-                    }
-
-                    if (!mBatteryManager.isCharging())
-                        NO_MATCH_COUNT++;
-                    doStopAmbientRecognition();
-                }
-            });
+            hideAmbientPlayIndication(0, true);
         }
 
         @Override
         public void onRecognitionError() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
-                        ambientClearingHandler.postDelayed(ambientClearingRunnable, 0);
-                    } catch (Exception e) {
-                        // This too shall pass
-                    }
+            hideAmbientPlayIndication(0, true);
+        }
 
-
-                    if (!mBatteryManager.isCharging())
-                        NO_MATCH_COUNT++;
-                    doStopAmbientRecognition();
-                }
-            });
+        @Override
+        public void onSettingsChanged(String key, boolean newValue) {
+            if (key.equals(Settings.System.AMBIENT_RECOGNITION)){
+                mRecognitionEnabled = newValue;
+            }else if (key.equals(Settings.System.AMBIENT_RECOGNITION_KEYGUARD)){
+                mRecognitionEnabledOnKeyguard = newValue;
+            }
         }
     };
+
+    private void showAmbientPlayIndication(){
+        try {
+            if (mAmbientIndicationContainer != null){
+                mAmbientIndicationContainer.setVisibility(View.VISIBLE);
+                ((AmbientIndicationContainer) mAmbientIndicationContainer).showIndication();
+            }
+        } catch (Exception e) {
+        }
+}
+
+    private void hideAmbientPlayIndication(int interval, final boolean forceClear){
+        try {
+            ambientClearingHandler.removeCallbacks(ambientClearingRunnable);
+            ambientClearingRunnable = new Runnable(){
+                @Override
+                public void run() {
+                    if (mAmbientIndicationContainer != null){
+                        ((AmbientIndicationContainer) mAmbientIndicationContainer).hideIndication();
+                        mAmbientIndicationContainer.setVisibility(View.GONE);
+                        if (forceClear){
+                            ((AmbientIndicationContainer) mAmbientIndicationContainer).setIndication(null, null);
+                        }
+                    }
+                }
+            };
+            if (interval == 0){
+                ambientClearingHandler.post(ambientClearingRunnable);
+            }else{
+                ambientClearingHandler.postDelayed(ambientClearingRunnable, interval);
+            }
+        } catch (Exception e) {
+        }
+}
 
     protected void createNavigationBar() {
         mNavigationBarView = NavigationBarFragment.create(mContext, (tag, fragment) -> {
@@ -3209,34 +3197,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         pw.println(BarTransitions.modeToString(transitions.getMode()));
     }
 
-    private int isNetworkAvailable() {
-        final ConnectivityManager connectivityManager
-              = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        final Network network = connectivityManager.getActiveNetwork();
-        final NetworkCapabilities capabilities = connectivityManager
-            .getNetworkCapabilities(network);
-        /**
-         * Return -1 if We don't have any network connectivity
-         * Return 0 if we are on WiFi  (desired)
-         * Return 1 if we are on MobileData (Little less desired)
-         * Return 2 if not sure which connection is user on but has network connectivity 
-         */
-
-        // NetworkInfo object will return null in case device is in flight mode.
-        if (activeNetworkInfo == null)
-            return -1;
-        else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
-            return 0;
-        else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
-            return 1;
-        else if (capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) 
-            && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED))
-            return 2;
-        else
-            return -1;
-    }
-
     public void createAndAddWindows() {
         addStatusBarWindow();
     }
@@ -3459,32 +3419,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     updateMediaMetaData(true, true);
                 }
             }
-        }
-    };
-
-    private final BroadcastReceiver ambientReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final int whichNetwork = isNetworkAvailable();
-            // Only start recording audio if we have internet connectivity.
-
-            if (whichNetwork != -1) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                        try {
-                            doAmbientRecognition();
-                            Thread.currentThread().sleep(AMBIENT_RECOGNITION_INTERVAL_MAX);
-                            // Stop recording, process audio and post result.
-                            doStopAmbientRecognition();
-                        } catch (InterruptedException e) {
-                        }
-                    }
-                }.start();
-	    }
-            // Schedule it for the next time.
-            scheduleAmbientPlayAlarm(whichNetwork);
         }
     };
 
@@ -3790,7 +3724,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     public void destroy() {
         // Begin old BaseStatusBar.destroy().
         mContext.unregisterReceiver(mBannerActionBroadcastReceiver);
-        mContext.unregisterReceiver(ambientReceiver);
+        mAmbientIndicationManager.unregister();
         mLockscreenUserManager.destroy();
         try {
             mNotificationListener.unregisterAsSystemService();
@@ -4231,15 +4165,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
     }
 
-    private void updateAmbientIndicationForKeyguard() {
-        int recognitionKeyguard = Settings.Secure.getInt(
-            mContext.getContentResolver(), AMBIENT_RECOGNITION_KEYGUARD, 1);
-        if (!mRecognitionEnabled) return;
-        if (mAmbientIndicationContainer != null && recognitionKeyguard != 0) {
-            mAmbientIndicationContainer.setVisibility(View.VISIBLE);
-        }
-    }
-
     protected void updateKeyguardState(boolean goingToFullShade, boolean fromShadeLocked) {
         Trace.beginSection("StatusBar#updateKeyguardState");
         if (mState == StatusBarState.KEYGUARD) {
@@ -4249,7 +4174,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 mKeyguardUserSwitcher.setKeyguard(true, fromShadeLocked);
             }
             if (mStatusBarView != null) mStatusBarView.removePendingHideExpandedRunnables();
-            updateAmbientIndicationForKeyguard();
+            if (mAmbientIndicationContainer != null && mRecognitionEnabled && mRecognitionEnabledOnKeyguard) {
+                showAmbientPlayIndication();
+            }
         } else {
             mKeyguardIndicationController.setVisible(false);
             if (mKeyguardUserSwitcher != null) {
@@ -4258,9 +4185,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                         mState == StatusBarState.SHADE_LOCKED ||
                         fromShadeLocked);
             }
-            if (mAmbientIndicationContainer != null) {
-                mAmbientIndicationContainer.setVisibility(View.INVISIBLE);
-            }
+            hideAmbientPlayIndication(0, false);
         }
         mNotificationPanel.setBarState(mState, mKeyguardFadingAway, goingToFullShade);
         updateTheme();
@@ -4275,52 +4200,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 mUnlockMethodCache.isMethodSecure(),
                 mStatusBarKeyguardViewManager.isOccluded());
         Trace.endSection();
-    }
-
-    // Observer will trigger this function, no need to call it manually.
-    private void initAmbientRecognition() {
-        mRecognitionEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                AMBIENT_RECOGNITION, 0) != 0;
-    }
-    private void doAmbientRecognition() {
-        mRecognition = new RecoginitionObserverFactory(mContext);
-        mRecognition.startRecording();
-    }
-    private void doStopAmbientRecognition() {
-        // If mRecognition is not initialized this means we have not started the recording, thus using stopRecording() will give NPE.
-        // So, just let's go directly in handler, doAmbientRecognition() will do the work for us.
-        if (mRecognition != null)
-            mRecognition.stopRecording();
-        // Set this null so that GC can clear this up, as we are initiating this object again in doAmbientRecognition()
-        mRecognition = null;
-    }
-    private void scheduleAmbientPlayAlarm(int networkType) {
-        // Check user's pref
-        if (!mRecognitionEnabled) return;
-
-        int duration = 150000;
-        /**
-         * Let's try to reduce battery consumption here.
-         *  - If device is charging then let's not worry about scan interval and let's scan every 2 minutes, else
-         *  - If device is not able to find matches for 20 consecutive times.
-         *    then chances are that user is probably not listening to music or maybe sleeping
-         *    So, Bump the scan interval to 5 minutes, else
-         *  - If device is on WiFi then let scan duration be 2 minutes and 30 seconds, or
-         *  - If device is on Mobile Data or anything else then let's set it to 3 minutes.
-         */
-
-        if (mBatteryManager.isCharging())
-            duration = 120000;
-        else if (NO_MATCH_COUNT >= 20)
-            duration = 300000;
-        else if (networkType == 0)
-            duration = 150000;
-        else if (networkType == 1 || networkType == 2)
-            duration = 180000;
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, AP_REQUEST_CODE, AP_INTENT, 0);
-        alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + duration, pendingIntent);
     }
 
     /**
@@ -5212,9 +5091,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mKeyguardViewMediator.setAodShowing(mDozing);
             mStatusBarWindowManager.setDozing(mDozing);
             mStatusBarKeyguardViewManager.setDozing(mDozing);
-            if (mAmbientIndicationContainer instanceof DozeReceiver) {
-                ((DozeReceiver) mAmbientIndicationContainer).setDozing(mDozing);
-            }
             mEntryManager.updateNotifications();
             updateDozingState();
             updateReportRejectedTouchVisibility();
@@ -5868,31 +5744,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             recomputeDisableFlags(true);
         }
         updateHideIconsForBouncer(true /* animate */);
-    }
-
-    private AmbientSettingsObserver mAmbientSettingsObserver = new AmbientSettingsObserver(mHandler);
-    private class AmbientSettingsObserver extends ContentObserver {
-        AmbientSettingsObserver(Handler handler) {
-            super(handler);
-        }
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.AMBIENT_RECOGNITION),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.AMBIENT_RECOGNITION_KEYGUARD),
-                    false, this, UserHandle.USER_ALL);
-        }
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            update();
-        }
-        public void update() {
-            initAmbientRecognition();
-            updateAmbientIndicationForKeyguard();
-            scheduleAmbientPlayAlarm(isNetworkAvailable());
-        }
     }
 
     protected void toggleKeyboardShortcuts(int deviceId) {
