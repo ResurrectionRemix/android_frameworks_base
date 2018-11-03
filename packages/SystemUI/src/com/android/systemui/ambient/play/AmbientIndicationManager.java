@@ -312,10 +312,10 @@ public class AmbientIndicationManager {
         Notification.Builder mBuilder =
                 new Notification.Builder(mContext, "music_recognized_channel");
         final Bundle extras = Bundle.forPair(Notification.EXTRA_SUBSTITUTE_APP_NAME,
-                mContext.getResources().getString(R.string.ambient_recognition_notification));
+                mContext.getResources().getString(com.android.internal.R.string.ambient_recognition_notification));
         mBuilder.setSmallIcon(R.drawable.ic_music_note_24dp);
         mBuilder.setContentText(String.format(mContext.getResources().getString(
-                R.string.ambient_recognition_information), song, artist));
+                com.android.internal.R.string.ambient_recognition_information), song, artist));
         mBuilder.setColor(mContext.getResources().getColor(com.android.internal.R.color.system_notification_accent_color));
         mBuilder.setAutoCancel(false);
         mBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -323,14 +323,14 @@ public class AmbientIndicationManager {
         mBuilder.setShowWhen(true);
         mBuilder.setWhen(System.currentTimeMillis());
         mBuilder.setTicker(String.format(mContext.getResources().getString(
-                R.string.ambient_recognition_information), song, artist));
+                com.android.internal.R.string.ambient_recognition_information), song, artist));
         mBuilder.setExtras(extras);
 
         NotificationManager mNotificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationChannel channel = new NotificationChannel("music_recognized_channel",
-                mContext.getResources().getString(R.string.ambient_recognition_notification),
+                mContext.getResources().getString(com.android.internal.R.string.ambient_recognition_notification),
                 NotificationManager.IMPORTANCE_MIN);
         mNotificationManager.createNotificationChannel(channel);
         mNotificationManager.notify(122306791, mBuilder.build());

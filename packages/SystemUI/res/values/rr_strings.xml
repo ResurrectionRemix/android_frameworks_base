@@ -19,11 +19,6 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- AmbientPlay: The contents of the displayed recognition. -->
-    <string name="ambient_recognition_notification">Now Playing</string>
-    <string name="ambient_recognition_notification_channel">Recognized Music Notifications</string>
-    <string name="ambient_recognition_information">%1$s by %2$s</string>
-
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ON </string>

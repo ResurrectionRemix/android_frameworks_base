@@ -27,4 +27,8 @@
   <!-- In call notification vibration strength -->
   <java-symbol type="integer" name="config_in_call_notification_vibration_strength" />
 
+  <!-- Ambient play -->
+  <java-symbol type="string" name="ambient_recognition_notification" />
+  <java-symbol type="string" name="ambient_recognition_information" />
+
 </resources>
