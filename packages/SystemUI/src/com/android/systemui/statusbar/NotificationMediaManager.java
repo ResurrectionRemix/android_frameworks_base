@@ -33,7 +33,9 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Handles tasks and state related to media notifications. For example, there is a 'current' media
@@ -54,6 +56,8 @@ public class NotificationMediaManager implements Dumpable {
     private String mMediaNotificationKey;
     private MediaMetadata mMediaMetadata;
     private MediaUpdateListener mListener;
+
+    private Set<String> mBlacklist = new HashSet<String>();
 
     // callback into NavigationFragment for Pulse
     public interface MediaUpdateListener {
@@ -331,6 +335,12 @@ public class NotificationMediaManager implements Dumpable {
                     mEntryManager.getNotificationData().getAllNotifications();
             int N = activeNotifications.size();
             final String pkg = mMediaController.getPackageName();
+
+            if (!mBlacklist.isEmpty() && mBlacklist.contains(pkg)) {
+                // don't play Pulse for this app
+                return;
+            }
+
             for (int i = 0; i < N; i++) {
                 final NotificationData.Entry entry = activeNotifications.get(i);
                 if (entry.notification.getPackageName().equals(pkg)) {
@@ -355,6 +365,15 @@ public class NotificationMediaManager implements Dumpable {
     public void setPulseColors(boolean isColorizedMEdia, int[] colors) {
         if (mListener != null) {
             mListener.setPulseColors(isColorizedMEdia, colors);
+        }
+    }
+
+    public void setPulseBlacklist(String blacklist) {
+        mBlacklist.clear();
+        if (blacklist != null) {
+            for (String app : blacklist.split("\\|")) {
+                mBlacklist.add(app);
+            }
         }
     }
 }
