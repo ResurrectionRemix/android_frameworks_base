@@ -26,6 +26,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 
 import com.android.internal.util.rr.OnTheGoActions;
+import com.android.internal.util.rr.OnTheGoUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 /** Quick settings tile: OnTheGo Mode **/
@@ -56,8 +57,8 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
-        refreshState();
         toggleState();
+        refreshState();
     }
 
     @Override
@@ -76,6 +77,9 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
                 R.string.quick_settings_onthego_label);
         state.label = mContext.getString(R.string.quick_settings_onthego_label);
         state.icon = ResourceIcon.get(R.drawable.ic_qs_onthego);
+        state.state = OnTheGoUtils.isServiceRunning(mContext,
+                "com.android.systemui.crdroid.onthego.OnTheGoService")  ?
+                Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
     }
 
     @Override
