@@ -4377,6 +4377,12 @@ public final class Settings {
         private static final Validator AMBIENT_RECOGNITION_NOTIFICATION_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /*
+         * Whether to use smart clock or not
+         * @hide
+         */
+        public static final String SMART_CLOCK_ENABLE = "smart_clock_enable";
+
         /**
          * Number of qs columns on landscape orientation
          * @hide
