@@ -73,7 +73,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private boolean mIsClockBlacklisted;
 
     // AICP additions
-    private View mBatteryBar;
+    private View mBatteryBars[] = new View[2];
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -113,7 +113,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mNetworkTrafficHolder = mStatusBar.findViewById(R.id.network_traffic_holder);
         mClockController = new ClockController(mStatusBar);
-        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         showSystemIconArea(false);
         showClock(false);
         initEmergencyCryptkeeperText();
@@ -272,13 +273,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mNetworkTrafficHolder, animate);
-        animateHide(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateHide(batteryBar, animate);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mNetworkTrafficHolder, animate);
-        animateShow(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateShow(batteryBar, animate);
+        }
     }
 
     public void hideClock(boolean animate) {

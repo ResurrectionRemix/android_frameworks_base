@@ -167,6 +167,14 @@
         android:id="@+id/battery_bar"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_gravity="top"
         systemui:viewLocation="1" />
+
+    <com.android.systemui.statusbar.policy.BatteryBarController
+        android:id="@+id/battery_bar_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        systemui:viewLocation="2" />
 
 </com.android.systemui.statusbar.phone.PhoneStatusBarView>

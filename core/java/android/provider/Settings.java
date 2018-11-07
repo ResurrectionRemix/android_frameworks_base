@@ -4597,7 +4597,16 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
 
         /** @hide */
-        private static final Validator STATUSBAR_BATTERY_BAR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator STATUSBAR_BATTERY_BAR_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Location of the battery bar
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_LOCATION = "statusbar_battery_bar_location";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_LOCATION_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
          * @hide
@@ -4766,6 +4775,7 @@ public final class Settings {
             AE_THEME,
             TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK,
             STATUSBAR_BATTERY_BAR,
+            STATUSBAR_BATTERY_BAR_LOCATION,
             STATUSBAR_BATTERY_BAR_COLOR,
             STATUSBAR_BATTERY_BAR_THICKNESS,
             STATUSBAR_BATTERY_BAR_STYLE,
@@ -4897,6 +4907,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AE_THEME);
             PRIVATE_SETTINGS.add(TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_LOCATION);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_COLOR);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_THICKNESS);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_STYLE);
@@ -5004,6 +5015,7 @@ public final class Settings {
             VALIDATORS.put(AE_THEME, AE_THEME_VALIDATOR);
             VALIDATORS.put(TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR, STATUSBAR_BATTERY_BAR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_LOCATION, STATUSBAR_BATTERY_BAR_LOCATION_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_COLOR, STATUSBAR_BATTERY_BAR_COLOR_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_THICKNESS,
                     STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR);
