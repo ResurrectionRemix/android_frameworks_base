@@ -710,15 +710,15 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "systemReady");
         final int oldPriority = Process.getThreadPriority(Process.myTid());
         try {
+            mUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
+            mNetworkStats = LocalServices.getService(NetworkStatsManagerInternal.class);
+
             // Boost thread's priority during system server init
             Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
             if (!isBandwidthControlEnabled()) {
                 Slog.w(TAG, "bandwidth controls disabled, unable to enforce policy");
                 return;
             }
-
-            mUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
-            mNetworkStats = LocalServices.getService(NetworkStatsManagerInternal.class);
 
             synchronized (mUidRulesFirstLock) {
                 synchronized (mNetworkPoliciesSecondLock) {
