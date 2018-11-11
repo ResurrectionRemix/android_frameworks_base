@@ -24,6 +24,7 @@ import android.os.UserHandle;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
+import com.android.systemui.statusbar.policy.StatusBarNetworkTraffic;
 
 /**
  * Wraps {@link com.android.internal.statusbar.StatusBarIcon} so we can still have a uniform list
@@ -32,6 +33,7 @@ public class StatusBarIconHolder {
     public static final int TYPE_ICON = 0;
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
+    public static final int TYPE_NETWORK_TRAFFIC = 42;
 
     private StatusBarIcon mIcon;
     private WifiIconState mWifiState;
@@ -67,6 +69,12 @@ public class StatusBarIconHolder {
         holder.mMobileState = state;
         holder.mType = TYPE_MOBILE;
         holder.mTag = state.subId;
+        return holder;
+    }
+
+    public static StatusBarIconHolder fromNetworkTraffic() {
+        StatusBarIconHolder holder = new StatusBarIconHolder();
+        holder.mType = TYPE_NETWORK_TRAFFIC;
         return holder;
     }
 
