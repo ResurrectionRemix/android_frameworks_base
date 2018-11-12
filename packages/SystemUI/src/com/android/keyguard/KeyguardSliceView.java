@@ -40,6 +40,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.TypedValue;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.graphics.ColorUtils;
@@ -302,6 +303,16 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
             View v = mRow.getChildAt(i);
             if (v instanceof Button) {
                 ((Button) v).setTypeface(tf);
+            }
+        }
+    }
+
+    public void setViewsTextSize(int scale, float size) {
+        int childCount = mRow.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View v = mRow.getChildAt(i);
+            if (v instanceof Button) {
+                ((Button) v).setTextSize(scale, size);
             }
         }
     }
