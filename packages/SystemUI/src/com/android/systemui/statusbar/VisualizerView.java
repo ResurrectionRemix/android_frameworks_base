@@ -116,29 +116,19 @@ public class VisualizerView extends View
         }
     };
 
-    private final Runnable mAsyncUnlinkVisualizer = new Runnable() {
-        @Override
-        public void run() {
-            AsyncTask.execute(mUnlinkVisualizer);
+    private void unlink() {
+        if (DEBUG) {
+            Log.w(TAG, "+++ mUnlinkVisualizer run(), mVisualizer: " + mVisualizer);
         }
-    };
-
-    private final Runnable mUnlinkVisualizer = new Runnable() {
-        @Override
-        public void run() {
-            if (DEBUG) {
-                Log.w(TAG, "+++ mUnlinkVisualizer run(), mVisualizer: " + mVisualizer);
-            }
-            if (mVisualizer != null) {
-                mVisualizer.setEnabled(false);
-                mVisualizer.release();
-                mVisualizer = null;
-            }
-            if (DEBUG) {
-                Log.w(TAG, "--- mUninkVisualizer run()");
-            }
+        if (mVisualizer != null) {
+            mVisualizer.setEnabled(false);
+            mVisualizer.release();
+            mVisualizer = null;
         }
-    };
+        if (DEBUG) {
+            Log.w(TAG, "--- mUninkVisualizer run()");
+        }
+    }
 
     public VisualizerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -358,16 +348,15 @@ public class VisualizerView extends View
             }
         } else {
             if (mDisplaying) {
+                unlink();
                 mDisplaying = false;
                 if (mVisible) {
                     animate()
                             .alpha(0f)
-                            .withEndAction(mAsyncUnlinkVisualizer)
                             .setDuration(600);
                 } else {
                     animate().
                             alpha(0f)
-                            .withEndAction(mAsyncUnlinkVisualizer)
                             .setDuration(0);
                 }
             }
