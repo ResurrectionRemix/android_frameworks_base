@@ -16,7 +16,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
-    android:title="@string/nav_bar">
+    android:title="@string/systemui_tuner_navbar_title">
 
     <com.android.systemui.tuner.RadioListPreference
         android:key="layout"

@@ -374,7 +374,7 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_navbar_title"
-                  android:parentActivityName="com.aicp.extras.SettingsActivity"
+                  android:parentActivityName="com.android.settings.rr.MainSettingsLayout"
                   android:process=":tuner"
                   android:exported="true">
         </activity>

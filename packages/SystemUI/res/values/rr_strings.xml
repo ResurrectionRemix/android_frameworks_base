@@ -139,4 +139,8 @@
 
     <!-- QS Header data usage info -->
     <string name="usage_data">used</string>
+
+    <!-- SystemUI tuner -->
+    <string name="systemui_tuner_navbar_title">Navigation bar</string>
+
 </resources>
