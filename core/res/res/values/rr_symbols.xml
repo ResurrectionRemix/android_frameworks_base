@@ -39,7 +39,12 @@
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
  
-           
+ 
+  <!-- Powermenu animations -->
+  <java-symbol type="style" name="GlobalActionsAnimation" />
+  <java-symbol type="style" name="GlobalActionsAnimationTop" />
+  <java-symbol type="style" name="GlobalActionsAnimationEnter" />
+          
   <!-- Pocket Lock -->
   <java-symbol type="layout" name="pocket_lock_view_layout" />
   <java-symbol type="id" name="pocket_hint_container" />
