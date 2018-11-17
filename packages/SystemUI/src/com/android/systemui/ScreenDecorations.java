@@ -21,15 +21,18 @@ import static android.view.Surface.ROTATION_90;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+import static android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
 
 import static com.android.systemui.tuner.TunablePadding.FLAG_END;
 import static com.android.systemui.tuner.TunablePadding.FLAG_START;
 
 import android.annotation.Dimension;
 import android.app.Fragment;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -39,11 +42,13 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.display.DisplayManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings.Secure;
+import android.provider.Settings.System;
 import android.support.annotation.VisibleForTesting;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -102,12 +107,17 @@ public class ScreenDecorations extends SystemUI implements Tunable {
     private DisplayCutoutView mCutoutBottom;
     private boolean mPendingRotationChange;
     private Handler mHandler;
+    private boolean mImmerseMode;
 
     @Override
     public void start() {
+        mImmerseMode = System.getIntForUser(mContext.getContentResolver(),
+                        System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
         mHandler = startHandlerThread();
         mHandler.post(this::startOnScreenDecorationsThread);
         setupStatusBarPaddingIfNeeded();
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
     }
 
     @VisibleForTesting
@@ -120,6 +130,7 @@ public class ScreenDecorations extends SystemUI implements Tunable {
     private void startOnScreenDecorationsThread() {
         mRotation = RotationUtils.getExactRotation(mContext);
         mWindowManager = mContext.getSystemService(WindowManager.class);
+
         updateRoundedCornerRadii();
 
         Dependency.get(Dependency.MAIN_HANDLER).post(
@@ -173,6 +184,12 @@ public class ScreenDecorations extends SystemUI implements Tunable {
     }
 
     private void setupDecorations() {
+        // Get rid of all views to redraw with new layout params
+        if (mOverlay != null)
+            mWindowManager.removeView(mOverlay);
+        if (mBottomOverlay != null)
+            mWindowManager.removeView(mBottomOverlay);
+
         mOverlay = LayoutInflater.from(mContext)
                 .inflate(R.layout.rounded_corners, null);
         mCutoutTop = new DisplayCutoutView(mContext, true,
@@ -259,6 +276,7 @@ public class ScreenDecorations extends SystemUI implements Tunable {
                 updateLayoutParams();
             }
         });
+        updateCutoutMode();
     }
 
     private void updateOrientation() {
@@ -417,7 +435,10 @@ public class ScreenDecorations extends SystemUI implements Tunable {
         } else {
             lp.gravity = Gravity.TOP | Gravity.LEFT;
         }
-        lp.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+        if (mImmerseMode)
+            lp.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
+        else
+            lp.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
         if (isLandscape(mRotation)) {
             lp.width = WRAP_CONTENT;
             lp.height = MATCH_PARENT;
@@ -475,6 +496,50 @@ public class ScreenDecorations extends SystemUI implements Tunable {
                 setSize(mBottomOverlay.findViewById(R.id.right), sizeBottom);
             }
         });
+    }
+
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(System.getUriFor(
+                    System.DISPLAY_CUTOUT_MODE), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(System.getUriFor(System.DISPLAY_CUTOUT_MODE))) {
+                updateCutoutMode();
+            }
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+            updateCutoutMode();
+        }
+    }
+
+    private void updateCutoutMode() {
+        boolean newImmerseMode;
+        if (mRotation == RotationUtils.ROTATION_LANDSCAPE ||
+                mRotation == RotationUtils.ROTATION_SEASCAPE)
+            newImmerseMode = false;
+        else
+            newImmerseMode = System.getIntForUser(mContext.getContentResolver(),
+                        System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
+        if (mImmerseMode != newImmerseMode) {
+            mImmerseMode = newImmerseMode;
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler.post(this::startOnScreenDecorationsThread);
+        }
     }
 
     private void setSize(View view, int pixelSize) {
