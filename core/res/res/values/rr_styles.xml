@@ -58,4 +58,8 @@
         <item name="windowExitAnimation">@anim/honami_toast_exit</item>
     </style>
 
+    <style name="GlobalActionsAnimationRotate">
+        <item name="windowEnterAnimation">@anim/rotate</item>
+    </style>
+
 </resources>

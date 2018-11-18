@@ -49,6 +49,7 @@
   <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
   <java-symbol type="style" name="GlobalActionsAnimationXylon" />
   <java-symbol type="style" name="GlobalActionsAnimationCard" />
+  <java-symbol type="style" name="GlobalActionsAnimationRotate" />
           
   <!-- Pocket Lock -->
   <java-symbol type="layout" name="pocket_lock_view_layout" />

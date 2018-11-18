@@ -348,6 +348,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
               attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
               attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
            break;
+           case 10:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationRotate;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
         }
 
         // If we only have 1 item and it's a simple press action, just do this action.
