@@ -33,4 +33,29 @@
         <item name="windowExitAnimation">@anim/dialog_exit</item>
     </style>
 
+    <style name="GlobalActionsAnimationFly">
+        <item name="windowEnterAnimation">@anim/recent_enter</item>
+        <item name="windowExitAnimation">@anim/recent_exit</item>
+    </style>
+
+    <style name="GlobalActionsAnimationTn">
+        <item name="windowEnterAnimation">@anim/tn_toast_enter</item>
+        <item name="windowExitAnimation">@anim/tn_toast_exit</item>
+    </style>
+
+    <style name="GlobalActionsAnimationTranslucent">
+        <item name="windowEnterAnimation">@anim/translucent_enter</item>
+        <item name="windowExitAnimation">@anim/translucent_exit</item>
+    </style>
+
+    <style name="GlobalActionsAnimationXylon">
+        <item name="windowEnterAnimation">@anim/xylon_toast_enter</item>
+        <item name="windowExitAnimation">@anim/xylon_toast_exit</item>
+    </style>
+
+    <style name="GlobalActionsAnimationCard">
+        <item name="windowEnterAnimation">@anim/honami_toast_enter</item>
+        <item name="windowExitAnimation">@anim/honami_toast_exit</item>
+    </style>
+
 </resources>
