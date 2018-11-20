@@ -77,4 +77,7 @@
     <!-- On-The-Go -->
     <java-symbol type="drawable" name="ic_lock_onthego" />
 
+    <!-- System fonts -->
+    <java-symbol type="array" name="config_fontPackages" />
+
 </resources>
