@@ -82,6 +82,7 @@ public class SoundSearchTIle extends QSTileImpl<BooleanState> {
         state.contentDescription = mContext.getString(
                 R.string.quick_settings_sound_search);
         state.icon = ResourceIcon.get(R.drawable.ic_qs_sound_search);
+        state.state = Tile.STATE_INACTIVE;
     }
 
     @Override
