@@ -5978,6 +5978,9 @@ public final class Settings {
         /** @hide */
         public static final String AUDIO_PANEL_VIEW_BT_SCO = "audio_panel_view_bt_sco";
 
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_TIMEOUT = "audio_panel_view_timeout";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
