@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.provider.FontRequest;
 import android.provider.FontsContract;
 import android.text.FontConfig;
+import android.text.FontConfig.Family;
 import android.util.ArrayMap;
 import android.util.Base64;
 import android.util.Log;
@@ -79,19 +80,19 @@ public class Typeface {
             Typeface.class.getClassLoader(), nativeGetReleaseFunc(), 64);
 
     /** The default NORMAL typeface object */
-    public static final Typeface DEFAULT;
+    public static Typeface DEFAULT;
     /**
      * The default BOLD typeface object. Note: this may be not actually be
      * bold, depending on what fonts are installed. Call getStyle() to know
      * for sure.
      */
-    public static final Typeface DEFAULT_BOLD;
+    public static Typeface DEFAULT_BOLD;
     /** The NORMAL style of the default sans serif typeface. */
-    public static final Typeface SANS_SERIF;
+    public static Typeface SANS_SERIF;
     /** The NORMAL style of the default serif typeface. */
-    public static final Typeface SERIF;
+    public static Typeface SERIF;
     /** The NORMAL style of the default monospace typeface. */
-    public static final Typeface MONOSPACE;
+    public static Typeface MONOSPACE;
 
     static Typeface[] sDefaults;
 
@@ -99,9 +100,9 @@ public class Typeface {
      * Cache for Typeface objects for style variant. Currently max size is 3.
      */
     @GuardedBy("sStyledCacheLock")
-    private static final LongSparseArray<SparseArray<Typeface>> sStyledTypefaceCache =
+    private static LongSparseArray<SparseArray<Typeface>> sStyledTypefaceCache =
             new LongSparseArray<>(3);
-    private static final Object sStyledCacheLock = new Object();
+    private static Object sStyledCacheLock = new Object();
 
     /**
      * Cache for Typeface objects for weight variant. Currently max size is 3.
@@ -119,8 +120,13 @@ public class Typeface {
     private static final Object sDynamicCacheLock = new Object();
 
     static Typeface sDefaultTypeface;
-    static final Map<String, Typeface> sSystemFontMap;
+    static Map<String, Typeface> sSystemFontMap;
+    static FontFamily[] sFallbackFonts;
     static final Map<String, FontFamily[]> sSystemFallbackMap;
+
+    static final String FONTS_CONFIG = "fonts.xml";
+
+    static final String SANS_SERIF_FAMILY_NAME = "sans-serif";
 
     /**
      * @hide
@@ -152,8 +158,8 @@ public class Typeface {
     // Value for weight and italic. Indicates the value is resolved by font metadata.
     // Must be the same as the C++ constant in core/jni/android/graphics/FontFamily.cpp
     /** @hide */
-    public static final int RESOLVE_BY_FONT_TABLE = -1;
-    private static final String DEFAULT_FAMILY = "sans-serif";
+    public static int RESOLVE_BY_FONT_TABLE = -1;
+    private static String DEFAULT_FAMILY = "sans-serif";
 
     // Style value for building typeface.
     private static final int STYLE_NORMAL = 0;
@@ -161,6 +167,12 @@ public class Typeface {
 
     private int[] mSupportedAxes;
     private static final int[] EMPTY_AXES = {};
+
+    private static Typeface DEFAULT_INTERNAL;
+    private static Typeface DEFAULT_BOLD_INTERNAL;
+    private static Typeface SANS_SERIF_INTERNAL;
+    private static Typeface SERIF_INTERNAL;
+    private static Typeface MONOSPACE_INTERNAL;
 
     private static void setDefault(Typeface t) {
         sDefaultTypeface = t;
@@ -896,17 +908,26 @@ public class Typeface {
         for (int i = 0; i < families.length; i++) {
             ptrArray[i] = families[i].mNativePtr;
         }
-        return new Typeface(nativeCreateFromArray(
+        Typeface typeface = new Typeface(nativeCreateFromArray(
                 ptrArray, RESOLVE_BY_FONT_TABLE, RESOLVE_BY_FONT_TABLE));
+        return typeface;
     }
 
     /**
      * This method is used by supportlib-v27.
      * TODO: Remove private API use in supportlib: http://b/72665240
      */
-    private static Typeface createFromFamiliesWithDefault(FontFamily[] families, int weight,
-                int italic) {
-        return createFromFamiliesWithDefault(families, DEFAULT_FAMILY, weight, italic);
+    private static Typeface createFromFamiliesWithDefault(FontFamily[] families,
+                int weight, int italic) {
+        long[] ptrArray = new long[families.length + sFallbackFonts.length];
+        for (int i = 0; i < families.length; i++) {
+            ptrArray[i] = families[i].mNativePtr;
+        }
+        for (int i = 0; i < sFallbackFonts.length; i++) {
+            ptrArray[i + families.length] = sFallbackFonts[i].mNativePtr;
+        }
+        Typeface typeface = new Typeface(nativeCreateFromArray(ptrArray, weight, italic));
+        return typeface;
     }
 
     /**
@@ -950,6 +971,37 @@ public class Typeface {
         mWeight = nativeGetWeight(ni);
     }
 
+    private static FontFamily makeFamilyFromParsed(FontConfig.Family family,
+            Map<String, ByteBuffer> bufferForPath) {
+        FontFamily fontFamily = new FontFamily(family.getLanguages(), family.getVariant());
+        for (FontConfig.Font font : family.getFonts()) {
+            String fullPathName = font.getFontName();
+            ByteBuffer fontBuffer = bufferForPath.get(fullPathName);
+            if (fontBuffer == null) {
+                try (FileInputStream file = new FileInputStream(fullPathName)) {
+                    FileChannel fileChannel = file.getChannel();
+                    long fontSize = fileChannel.size();
+                    fontBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fontSize);
+                    bufferForPath.put(fullPathName, fontBuffer);
+                } catch (IOException e) {
+                    Log.e(TAG, "Error mapping font file " + fullPathName);
+                    continue;
+                }
+            }
+            if (!fontFamily.addFontFromBuffer(fontBuffer, font.getTtcIndex(), font.getAxes(),
+                    font.getWeight(), font.isItalic() ? STYLE_ITALIC : STYLE_NORMAL)) {
+                Log.e(TAG, "Error creating font " + fullPathName + "#" + font.getTtcIndex());
+            }
+        }
+        if (!fontFamily.freeze()) {
+            // Treat as system error since reaching here means that a system pre-installed font
+            // can't be used by our font stack.
+            Log.e(TAG, "Unable to load Family: " + family.getName() + ":" + family.getLanguages());
+            return null;
+        }
+        return fontFamily;
+    }
+
     private static @Nullable ByteBuffer mmap(String fullPath) {
         try (FileInputStream file = new FileInputStream(fullPath)) {
             final FileChannel fileChannel = file.getChannel();
@@ -967,7 +1019,7 @@ public class Typeface {
         final FontFamily family = new FontFamily(languageTags, variant);
         for (int i = 0; i < fonts.size(); i++) {
             final FontConfig.Font font = fonts.get(i);
-            final String fullPath = fontDir + font.getFontName();
+            final String fullPath = font.getFontName();
             ByteBuffer buffer = cache.get(fullPath);
             if (buffer == null) {
                 if (cache.containsKey(fullPath)) {
@@ -1057,11 +1109,11 @@ public class Typeface {
     public static void buildSystemFallback(String xmlPath, String fontDir,
             ArrayMap<String, Typeface> fontMap, ArrayMap<String, FontFamily[]> fallbackMap) {
         try {
-            final FileInputStream fontsIn = new FileInputStream(xmlPath);
-            final FontConfig fontConfig = FontListParser.parse(fontsIn);
+            final InputStream xmlFile = new FileInputStream(xmlPath);
+            final FontConfig fontConfig = FontListParser.parse(xmlFile, fontDir);
 
             final HashMap<String, ByteBuffer> bufferCache = new HashMap<String, ByteBuffer>();
-            final FontConfig.Family[] xmlFamilies = fontConfig.getFamilies();
+            final List<FontConfig.Family> xmlFamilies = fontConfig.getFamilies();
 
             final ArrayMap<String, ArrayList<FontFamily>> fallbackListMap = new ArrayMap<>();
             // First traverse families which have a 'name' attribute to create fallback map.
@@ -1082,8 +1134,8 @@ public class Typeface {
             }
 
             // Then, add fallback fonts to the each fallback map.
-            for (int i = 0; i < xmlFamilies.length; i++) {
-                final FontConfig.Family xmlFamily = xmlFamilies[i];
+            for (int i = 0; i < xmlFamilies.size(); i++) {
+                final FontConfig.Family xmlFamily = xmlFamilies.get(i);
                 // The first family (usually the sans-serif family) is always placed immediately
                 // after the primary family in the fallback.
                 if (i == 0 || xmlFamily.getName() == null) {
@@ -1128,15 +1180,199 @@ public class Typeface {
         }
     }
 
+    private static void addFallbackFontsForFamilyName(FontConfig src,
+            FontConfig dst, String familyName) {
+        for (Family srcFamily : src.getFamilies()) {
+            if (familyName.equals(srcFamily.getName())) {
+                // set the name to null so that it will be added as a fallback
+                srcFamily.clearName();
+                dst.getFamilies().add(srcFamily);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Adds any font families in src that do not exist in dst
+     * @param src Source font config
+     * @param dst Destination font config
+     */
+    private static void addMissingFontFamilies(FontConfig src,
+            FontConfig dst) {
+        final int N = dst.getFamilies().size();
+        // add missing families
+        for (Family srcFamily : src.getFamilies()) {
+            boolean addFamily = true;
+            for (int i = 0; i < N && addFamily; i++) {
+                final Family dstFamily = dst.getFamilies().get(i);
+                final String dstFamilyName = dstFamily.getName();
+                if (dstFamilyName != null && dstFamilyName.equals(srcFamily.getName())) {
+                    addFamily = false;
+                    break;
+                }
+            }
+            if (addFamily) {
+                dst.getFamilies().add(srcFamily);
+            }
+        }
+    }
+
+    /**
+     * Adds any aliases in src that do not exist in dst
+     * @param src Source font config
+     * @param dst Destination font config
+     */
+    private static void addMissingFontAliases(FontConfig src,
+            FontConfig dst) {
+        final int N = dst.getAliases().size();
+        // add missing aliases
+        for (FontConfig.Alias alias : src.getAliases()) {
+            boolean addAlias = true;
+            for (int i = 0; i < N && addAlias; i++) {
+                final String dstAliasName = dst.getAliases().get(i).getName();
+                if (dstAliasName != null && dstAliasName.equals(alias.getName())) {
+                    addAlias = false;
+                    break;
+                }
+            }
+            if (addAlias) {
+                dst.getAliases().add(alias);
+            }
+        }
+    }
+
+
+    private static void init() {
+        // Load font config and initialize Minikin state
+        File systemFontConfigLocation = getSystemFontConfigLocation();
+        File themeFontConfigLocation = getThemeFontConfigLocation();
+
+        File systemConfigFile = new File(systemFontConfigLocation, FONTS_CONFIG);
+        File themeConfigFile = new File(themeFontConfigLocation, FONTS_CONFIG);
+        File configFile = null;
+        File fontDir;
+
+        if (themeConfigFile.exists()) {
+            // /data/system/theme/fonts/ exists so use it and copy default fonts
+            configFile = themeConfigFile;
+            fontDir = getThemeFontDirLocation();
+        } else {
+            configFile = systemConfigFile;
+            fontDir = getSystemFontDirLocation();
+        }
+
+        try {
+            FontConfig fontConfig = FontListParser.parse(configFile,
+                    fontDir.getAbsolutePath());
+            FontConfig systemFontConfig = null;
+
+            // If the fonts are coming from a theme, we will need to make sure that we include
+            // any font families from the system fonts that the theme did not include.
+            // NOTE: All the system font families without names ALWAYS get added.
+            if (configFile == themeConfigFile) {
+                systemFontConfig = FontListParser.parse(systemConfigFile,
+                        getSystemFontDirLocation().getAbsolutePath());
+                addFallbackFontsForFamilyName(systemFontConfig, fontConfig, SANS_SERIF_FAMILY_NAME);
+                addMissingFontFamilies(systemFontConfig, fontConfig);
+                addMissingFontAliases(systemFontConfig, fontConfig);
+            }
+
+            Map<String, ByteBuffer> bufferForPath = new HashMap<String, ByteBuffer>();
+
+            List<FontFamily> familyList = new ArrayList<FontFamily>();
+            // Note that the default typeface is always present in the fallback list;
+            // this is an enhancement from pre-Minikin behavior.
+            for (int i = 0; i < fontConfig.getFamilies().size(); i++) {
+                FontConfig.Family f = fontConfig.getFamilies().get(i);
+                if (i == 0 || f.getName() == null) {
+                    FontFamily family = makeFamilyFromParsed(f, bufferForPath);
+                    if (family != null) {
+                        familyList.add(family);
+                    }
+                }
+            }
+            sFallbackFonts = familyList.toArray(new FontFamily[familyList.size()]);
+            setDefault(Typeface.createFromFamilies(sFallbackFonts));
+
+            Map<String, Typeface> systemFonts = new HashMap<String, Typeface>();
+            for (int i = 0; i < fontConfig.getFamilies().size(); i++) {
+                Typeface typeface;
+                FontConfig.Family f = fontConfig.getFamilies().get(i);
+                if (f.getName() != null) {
+                    if (i == 0) {
+                        // The first entry is the default typeface; no sense in
+                        // duplicating the corresponding FontFamily.
+                        typeface = sDefaultTypeface;
+                    } else {
+                        FontFamily fontFamily = makeFamilyFromParsed(f, bufferForPath);
+                        if (fontFamily == null) {
+                            continue;
+                        }
+                        FontFamily[] families = { fontFamily };
+                        typeface = Typeface.createFromFamiliesWithDefault(families,
+                                RESOLVE_BY_FONT_TABLE, RESOLVE_BY_FONT_TABLE);
+                    }
+                    systemFonts.put(f.getName(), typeface);
+                }
+            }
+            for (FontConfig.Alias alias : fontConfig.getAliases()) {
+                Typeface base = systemFonts.get(alias.getToName());
+                Typeface newFace = base;
+                int weight = alias.getWeight();
+                if (weight != 400) {
+                    newFace = new Typeface(nativeCreateWeightAlias(base.native_instance, weight));
+                }
+                systemFonts.put(alias.getName(), newFace);
+            }
+            sSystemFontMap = systemFonts;
+
+        } catch (RuntimeException e) {
+            Log.w(TAG, "Didn't create default family (most likely, non-Minikin build)", e);
+            // TODO: normal in non-Minikin case, remove or make error when Minikin-only
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Error opening " + configFile, e);
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading " + configFile, e);
+        } catch (XmlPullParserException e) {
+            Log.e(TAG, "XML parse exception for " + configFile, e);
+        }
+    }
+
+    public static void recreateDefaults() {
+        sDynamicTypefaceCache.evictAll();
+        sSystemFontMap.clear();
+        sStyledTypefaceCache.clear();
+        init();
+        DEFAULT_BOLD_INTERNAL = create((String) null, Typeface.BOLD);
+        SANS_SERIF_INTERNAL = create("sans-serif", 0);
+        SERIF_INTERNAL = create("serif", 0);
+        MONOSPACE_INTERNAL = create("monospace", 0);
+
+        DEFAULT.native_instance = DEFAULT_INTERNAL.native_instance;
+        DEFAULT_BOLD.native_instance = DEFAULT_BOLD_INTERNAL.native_instance;
+        SANS_SERIF.native_instance = SANS_SERIF_INTERNAL.native_instance;
+        SERIF.native_instance = SERIF_INTERNAL.native_instance;
+        MONOSPACE.native_instance = MONOSPACE_INTERNAL.native_instance;
+        sDefaults[2] = create((String) null, Typeface.ITALIC);
+        sDefaults[3] = create((String) null, Typeface.BOLD_ITALIC);
+    }
+
     static {
-        final ArrayMap<String, Typeface> systemFontMap = new ArrayMap<>();
-        final ArrayMap<String, FontFamily[]> systemFallbackMap = new ArrayMap<>();
+        init();
+        ArrayMap<String, Typeface> systemFontMap = new ArrayMap<>();
+        ArrayMap<String, FontFamily[]> systemFallbackMap = new ArrayMap<>();
         buildSystemFallback("/system/etc/fonts.xml", "/system/fonts/", systemFontMap,
                 systemFallbackMap);
-        sSystemFontMap = Collections.unmodifiableMap(systemFontMap);
-        sSystemFallbackMap = Collections.unmodifiableMap(systemFallbackMap);
+        sSystemFontMap = systemFontMap;
+        sSystemFallbackMap = systemFallbackMap;
 
         setDefault(sSystemFontMap.get(DEFAULT_FAMILY));
+
+        DEFAULT_INTERNAL         = create((String) null, 0);
+        DEFAULT_BOLD_INTERNAL    = create((String) null, Typeface.BOLD);
+        SANS_SERIF_INTERNAL      = create("sans-serif", 0);
+        SERIF_INTERNAL           = create("serif", 0);
+        MONOSPACE_INTERNAL       = create("monospace", 0);
 
         // Set up defaults and typefaces exposed in public API
         DEFAULT         = create((String) null, 0);
@@ -1152,6 +1388,22 @@ public class Typeface {
             create((String) null, Typeface.BOLD_ITALIC),
         };
 
+    }
+
+    private static File getSystemFontConfigLocation() {
+        return new File("/system/etc/");
+    }
+
+    private static File getSystemFontDirLocation() {
+        return new File("/system/fonts/");
+    }
+
+    private static File getThemeFontConfigLocation() {
+        return new File("/data/system/theme/fonts/");
+    }
+
+    private static File getThemeFontDirLocation() {
+        return new File("/data/system/theme/fonts/");
     }
 
     @Override

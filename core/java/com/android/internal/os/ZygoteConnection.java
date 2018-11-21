@@ -26,6 +26,7 @@ import static com.android.internal.os.ZygoteConnectionConstants.CONNECTION_TIMEO
 import static com.android.internal.os.ZygoteConnectionConstants.MAX_ZYGOTE_ARGC;
 import static com.android.internal.os.ZygoteConnectionConstants.WRAPPED_PID_TIMEOUT_MILLIS;
 
+import android.graphics.Typeface;
 import android.net.Credentials;
 import android.net.LocalSocket;
 import android.os.FactoryTest;
@@ -201,6 +202,10 @@ class ZygoteConnection {
             } catch (ErrnoException errnoEx) {
                 throw new IllegalStateException("Unable to set up pipe for invoke-with", errnoEx);
             }
+        }
+
+        if (parsedArgs.refreshTheme) {
+            Typeface.recreateDefaults();
         }
 
         /**
@@ -409,6 +414,9 @@ class ZygoteConnection {
 
         /** from --invoke-with */
         String invokeWith;
+
+        /** from --refresh-theme */
+        boolean refreshTheme;
 
         /**
          * Any args after and including the first non-option arg
@@ -651,6 +659,8 @@ class ZygoteConnection {
                                 "Invalid log sampling rate: " + rateStr, nfe);
                     }
                     expectRuntimeArgs = false;
+                } else if (arg.equals("--refresh_theme")) {
+                    refreshTheme = true;
                 } else {
                     break;
                 }

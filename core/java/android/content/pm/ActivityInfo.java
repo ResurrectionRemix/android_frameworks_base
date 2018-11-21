@@ -758,6 +758,11 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
      */
     public static final int CONFIG_LAYOUT_DIRECTION = 0x2000;
     /**
+     * Bit in {@link #configChanges} that indicates a font change occurred
+     * @hide
+     */
+    public static final int CONFIG_THEME_FONT = 0x200000;
+    /**
      * Bit in {@link #configChanges} that indicates that the activity
      * can itself handle the change to the display color gamut or dynamic
      * range. Set from the {@link android.R.attr#configChanges} attribute.
