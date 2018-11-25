@@ -29,6 +29,7 @@ import com.android.systemui.statusbar.CrossFadeHelper;
 import com.android.systemui.statusbar.ExpandableNotificationRow;
 import com.android.systemui.statusbar.HeadsUpStatusBarView;
 import com.android.systemui.statusbar.NotificationData;
+import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
@@ -215,11 +216,15 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
                 mHeadsUpStatusBarView.setVisibility(View.VISIBLE);
                 CrossFadeHelper.fadeIn(mHeadsUpStatusBarView, CONTENT_FADE_DURATION /* duration */,
                         CONTENT_FADE_DELAY /* delay */);
-                CrossFadeHelper.fadeOut(mClockView, CONTENT_FADE_DURATION/* duration */,
-                        0 /* delay */, () -> mClockView.setVisibility(View.INVISIBLE));
+                if (((Clock)mClockView).isClockVisible()) {
+                    CrossFadeHelper.fadeOut(mClockView, CONTENT_FADE_DURATION/* duration */,
+                            0 /* delay */, () -> mClockView.setVisibility(View.INVISIBLE));
+                }
             } else {
-                CrossFadeHelper.fadeIn(mClockView, CONTENT_FADE_DURATION /* duration */,
-                        CONTENT_FADE_DELAY /* delay */);
+                if (((Clock)mClockView).isClockVisible()) {
+                    CrossFadeHelper.fadeIn(mClockView, CONTENT_FADE_DURATION /* duration */,
+                            CONTENT_FADE_DELAY /* delay */);
+                }
                 CrossFadeHelper.fadeOut(mHeadsUpStatusBarView, CONTENT_FADE_DURATION/* duration */,
                         0 /* delay */, () -> mHeadsUpStatusBarView.setVisibility(View.GONE));
 
