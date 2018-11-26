@@ -46,7 +46,7 @@ public class NotificationMediaManager implements Dumpable {
     private final Context mContext;
     private final MediaSessionManager mMediaSessionManager;
 
-    private final StatusBar mStatusBar;
+    private StatusBar mStatusBar;
 
     protected NotificationPresenter mPresenter;
     protected NotificationEntryManager mEntryManager;
@@ -75,10 +75,6 @@ public class NotificationMediaManager implements Dumpable {
                 }
                 if (mListener != null) {
                     setMediaPlaying();
-                }
-                if (mStatusBar != null) {
-                    mStatusBar.getVisualizer().setPlaying(state.getState()
-                            == PlaybackState.STATE_PLAYING);
                 }
             }
         }
@@ -112,7 +108,6 @@ public class NotificationMediaManager implements Dumpable {
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
 
-        mStatusBar = SysUiServiceProvider.getComponent(mContext, StatusBar.class);
     }
 
     public void setUpWithPresenter(NotificationPresenter presenter,
@@ -270,6 +265,10 @@ public class NotificationMediaManager implements Dumpable {
         mListener = listener;
     }
 
+    public void addCallback(StatusBar statusBar) {
+        mStatusBar = statusBar;
+    }
+
     public boolean isPlaybackActive() {
         return isPlaybackActive(getMediaControllerPlaybackState(mMediaController));
     }
@@ -322,10 +321,10 @@ public class NotificationMediaManager implements Dumpable {
     }
 
     public void setMediaPlaying() {
-        if (PlaybackState.STATE_PLAYING ==
+        if (mMediaController != null && (PlaybackState.STATE_PLAYING ==
                 getMediaControllerPlaybackState(mMediaController)
                 || PlaybackState.STATE_BUFFERING ==
-                getMediaControllerPlaybackState(mMediaController)) {
+                getMediaControllerPlaybackState(mMediaController))) {
 
             ArrayList<NotificationData.Entry> activeNotifications =
                     mEntryManager.getNotificationData().getAllNotifications();
@@ -344,10 +343,16 @@ public class NotificationMediaManager implements Dumpable {
             if (mListener != null) {
                 mListener.onMediaUpdated(true);
             }
+            if (mStatusBar != null && mStatusBar.getVisualizer() != null && !mStatusBar.isKeyguardFadingAway()) {
+                mStatusBar.getVisualizer().setPlaying(true);
+            }
         } else {
             mEntryManager.setEntryToRefresh(null);
             if (mListener != null) {
                 mListener.onMediaUpdated(false);
+            }
+            if (mStatusBar != null && mStatusBar.getVisualizer() != null) {
+                mStatusBar.getVisualizer().setPlaying(false);
             }
         }
     }
