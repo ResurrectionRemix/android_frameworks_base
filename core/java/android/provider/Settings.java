@@ -5314,6 +5314,18 @@ public final class Settings {
         private static final Validator OMNI_LOCKSCREEN_MEDIA_BLUR_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+        /**
+         * Whether to show the kill app button in notification guts
+         *
+         * @hide
+         */
+        public static final String NOTIFICATION_GUTS_KILL_APP_BUTTON =
+                "notification_guts_kill_app_button";
+
+        /** @hide */
+        private static final Validator NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5465,6 +5477,7 @@ public final class Settings {
             SLIM_RECENT_ENTER_EXIT_ANIMATION,
             SHOW_VOLTE_ICON,
             OMNI_LOCKSCREEN_MEDIA_BLUR,
+            NOTIFICATION_GUTS_KILL_APP_BUTTON,
             // AICP Settings end
         };
 
@@ -5653,6 +5666,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SLIM_RECENT_ENTER_EXIT_ANIMATION);
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_MEDIA_BLUR);
+            PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
             // AICP Settings end
         }
 
@@ -5815,6 +5829,8 @@ public final class Settings {
             VALIDATORS.put(SLIM_RECENT_ENTER_EXIT_ANIMATION, SLIM_RECENT_ENTER_EXIT_ANIMATION_VALIDATOR);
             VALIDATORS.put(SHOW_VOLTE_ICON,SHOW_VOLTE_ICON_VALIDATOR);
             VALIDATORS.put(OMNI_LOCKSCREEN_MEDIA_BLUR, OMNI_LOCKSCREEN_MEDIA_BLUR_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON,
+                    NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
             // AICP Settings end
         }
 
