@@ -38,6 +38,7 @@ import android.os.UserHandle;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 public class RRUtils {
 

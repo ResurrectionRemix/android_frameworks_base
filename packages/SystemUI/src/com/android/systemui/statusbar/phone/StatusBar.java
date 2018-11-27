@@ -4559,7 +4559,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
      */
     protected void updateTheme() {
         final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
-
+        haltTicker();
         // 0 = auto, 1 = time-based, 2 = light, 3 = dark
         final int globalStyleSetting = LineageSettings.System.getInt(mContext.getContentResolver(),
                 LineageSettings.System.BERRY_GLOBAL_STYLE, 0);
