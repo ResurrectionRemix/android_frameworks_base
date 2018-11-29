@@ -20,7 +20,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.provider.Settings;
 import android.provider.Settings.System;
 import android.provider.Settings.Global;
@@ -46,12 +45,10 @@ public class GamingModeTile extends QSTileImpl<BooleanState> {
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_gaming_mode);
     private final SystemSetting mSetting;
-    private final AudioManager mAudioManager;
 
     public GamingModeTile(QSHost host) {
         super(host);
 
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mSetting = new SystemSetting(mContext, mHandler, System.ENABLE_GAMING_MODE) {
             @Override
             protected void handleValueChanged(int value, boolean observedChange) {
@@ -116,34 +113,6 @@ public class GamingModeTile extends QSTileImpl<BooleanState> {
         } else if (!enabled) {
             Settings.Secure.putInt(mContext.getContentResolver(),
                     Settings.Secure.HARDWARE_KEYS_DISABLE, 0);
-        }
-        // Ringer changed to "Vibrate mode"
-        if (enabled) {
-            int oldState = mAudioManager.getRingerModeInternal();
-            int newState = oldState;
-            switch (oldState) {
-                case AudioManager.RINGER_MODE_NORMAL:
-                    newState = AudioManager.RINGER_MODE_VIBRATE;
-                    mAudioManager.setRingerModeInternal(newState);
-                    break;
-                case AudioManager.RINGER_MODE_SILENT:
-                    newState = AudioManager.RINGER_MODE_VIBRATE;
-                    mAudioManager.setRingerModeInternal(newState);
-                    break;
-                default:
-                break;
-            }
-        } else if (!enabled) {
-            int ringerMode = mAudioManager.getRingerModeInternal();
-            int newestState = ringerMode;
-            newestState = AudioManager.RINGER_MODE_NORMAL;
-            mAudioManager.setRingerModeInternal(newestState);
-        }
-        // Media volume increased to the fullest
-        if (enabled) {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 60, 0); // 60 in the case "Music Volume Steps" have been set to 60 by user.
-        } else if (!enabled) {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
         }
         // Show a toast
         if (enabled) {
