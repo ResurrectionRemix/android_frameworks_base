@@ -37,6 +37,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ParceledListSlice;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -152,7 +153,6 @@ public class ActionHandler {
         sDisabledActions.add(SYSTEMUI_TASK_ONE_HANDED_MODE_LEFT);
         sDisabledActions.add(SYSTEMUI_TASK_ONE_HANDED_MODE_RIGHT);
         sDisabledActions.add(SYSTEMUI_TASK_EXPANDED_DESKTOP);
-        sDisabledActions.add(SYSTEMUI_TASK_KILL_PROCESS);
         sDisabledActions.add(SYSTEMUI_TASK_SCREENRECORD);
     }
 
@@ -532,9 +532,9 @@ public class ActionHandler {
             return;
         } else if (action.equals(SYSTEMUI_TASK_NO_ACTION)) {
             return;
-//        } else if (action.equals(SYSTEMUI_TASK_KILL_PROCESS)) {
-//            killProcess(context);
-//            return;
+        } else if (action.equals(SYSTEMUI_TASK_KILL_PROCESS)) {
+            killProcess(context);
+            return;
         } else if (action.equals(SYSTEMUI_TASK_SCREENSHOT)) {
             sendCommandToWindowManager(new Intent(INTENT_SCREENSHOT));
             return;
@@ -951,10 +951,11 @@ public class ActionHandler {
             e.printStackTrace();
         }
     }
-/*
+
     public static void killProcess(Context context) {
-        if (context.checkCallingOrSelfPermission(android.Manifest.permission.FORCE_STOP_PACKAGES) == PackageManager.PERMISSION_GRANTED
-            && !isLockTaskOn()) {
+        if (context.checkCallingOrSelfPermission(
+                android.Manifest.permission.FORCE_STOP_PACKAGES) == PackageManager.PERMISSION_GRANTED
+                && !isLockTaskOn()) {
             try {
                 PackageManager packageManager = context.getPackageManager();
                 final Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -967,14 +968,16 @@ public class ActionHandler {
                 }
 
                 // Use UsageStats to determine foreground app
-                UsageStatsManager usageStatsManager = (UsageStatsManager)
-                    context.getSystemService(Context.USAGE_STATS_SERVICE);
+                UsageStatsManager usageStatsManager = (UsageStatsManager) context
+                        .getSystemService(Context.USAGE_STATS_SERVICE);
                 long current = System.currentTimeMillis();
-                long past = current - (1000 * 60 * 60); // uses snapshot of usage over past 60 minutes
+                long past = current - (1000 * 60 * 60); // uses snapshot of usage over past 60
+                                                        // minutes
 
-                // Get the list, then sort it chronilogically so most recent usage is at start of list
+                // Get the list, then sort it chronilogically so most recent usage is at start of
+                // list
                 List<UsageStats> recentApps = usageStatsManager.queryUsageStats(
-                    UsageStatsManager.INTERVAL_DAILY, past, current);
+                        UsageStatsManager.INTERVAL_DAILY, past, current);
                 Collections.sort(recentApps, new Comparator<UsageStats>() {
                     @Override
                     public int compare(UsageStats lhs, UsageStats rhs) {
@@ -991,7 +994,7 @@ public class ActionHandler {
 
                 IActivityManager iam = ActivityManagerNative.getDefault();
                 // this may not be needed due to !isLockTaskOn() in entry if
-                //if (am.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) return;
+                // if (am.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) return;
 
                 // Look for most recent usagestat with lastevent == 1 and grab package name
                 // ...this seems to map to the UsageEvents.Event.MOVE_TO_FOREGROUND
@@ -1005,7 +1008,7 @@ public class ActionHandler {
                 }
 
                 if (pkg != null && !pkg.equals("com.android.systemui")
-                        && !pkg.equals(defaultHomePackage)) {
+                        && !pkg.equals(defaultHomePackage) && !isPackageLiveWalls(context, pkg)) {
 
                     // Restore home screen stack before killing the app
                     Intent home = new Intent(Intent.ACTION_MAIN, null);
@@ -1018,38 +1021,38 @@ public class ActionHandler {
                     iam.forceStopPackage(pkg, UserHandle.USER_CURRENT);
 
                     // Remove killed app from Recents
-                    final ActivityManager am = (ActivityManager)
-                            context.getSystemService(Context.ACTIVITY_SERVICE);
-                    final List<ActivityManager.RecentTaskInfo> recentTasks =
-                            am.getRecentTasksForUser(ActivityManager.getMaxRecentTasksStatic(),
-//                            ActivityManager.RECENT_IGNORE_HOME_AND_RECENTS_STACK_TASKS         // follow up on these deprecated flags
-//                                    | ActivityManager.RECENT_INGORE_PINNED_STACK_TASKS
+                    final ParceledListSlice<ActivityManager.RecentTaskInfo> recentTasks = iam
+                            .getRecentTasks(ActivityManager.getMaxRecentTasksStatic(),
                                     ActivityManager.RECENT_IGNORE_UNAVAILABLE,
-//                                    | ActivityManager.RECENT_INCLUDE_PROFILES,
                                     UserHandle.CURRENT.getIdentifier());
-                    final int size = recentTasks.size();
+                    List<ActivityManager.RecentTaskInfo> recentList = recentTasks.getList();
+                    final int size = recentList.size();
                     for (int i = 0; i < size; i++) {
-                        ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(i);
+                        ActivityManager.RecentTaskInfo recentInfo = recentList.get(i);
                         if (recentInfo.baseIntent.getComponent().getPackageName().equals(pkg)) {
                             int taskid = recentInfo.persistentId;
-                            am.removeTask(taskid);
+                            iam.removeTask(taskid);
                         }
                     }
 
                     String pkgName;
                     try {
                         pkgName = (String) packageManager.getApplicationLabel(
-                            packageManager.getApplicationInfo(pkg, PackageManager.GET_META_DATA));
+                                packageManager.getApplicationInfo(pkg,
+                                        PackageManager.GET_META_DATA));
                     } catch (PackageManager.NameNotFoundException e) {
                         // Just use pkg if issues getting appName
                         pkgName = pkg;
                     }
 
-                    Resources systemUIRes = ActionUtils.getResourcesForPackage(context, ActionUtils.PACKAGE_SYSTEMUI);
-                    int ident = systemUIRes.getIdentifier("app_killed_message", ActionUtils.STRING, ActionUtils.PACKAGE_SYSTEMUI);
+                    Resources systemUIRes = ActionUtils.getResourcesForPackage(context,
+                            ActionUtils.PACKAGE_SYSTEMUI);
+                    int ident = systemUIRes.getIdentifier("app_killed_message", ActionUtils.STRING,
+                            ActionUtils.PACKAGE_SYSTEMUI);
                     String toastMsg = systemUIRes.getString(ident, pkgName);
                     Context ctx = getPackageContext(context, ActionUtils.PACKAGE_SYSTEMUI);
-                    Toast.makeText(ctx != null ? ctx : context, toastMsg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx != null ? ctx : context, toastMsg, Toast.LENGTH_SHORT)
+                            .show();
                     return;
                 } else {
                     // make a "didnt kill anything" toast?
@@ -1062,7 +1065,6 @@ public class ActionHandler {
             Log.d("ActionHandler", "Caller cannot kill processes, aborting");
         }
     }
-*/
 
     public static Context getPackageContext(Context context, String packageName) {
         Context pkgContext = null;
@@ -1121,14 +1123,8 @@ public class ActionHandler {
             }
         }
     }
-/*
-    public static void turnOffLockTask() {
-        try {
-        	ActivityManagerNative.getDefault().stopLockTaskMode();
-        } catch (Exception e) {
-        }
-    }
 
+    // needed to prevent hwkey actions from killing a process while locked
     public static boolean isLockTaskOn() {
         try {
             return ActivityManagerNative.getDefault().isInLockTaskMode();
@@ -1136,7 +1132,7 @@ public class ActionHandler {
         }
         return false;
     }
-*/
+
     public static void volumePanel(Context context) {
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
