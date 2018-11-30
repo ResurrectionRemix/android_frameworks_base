@@ -5347,6 +5347,16 @@ public final class Settings {
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
         /**
+         * Settings dashboard icon style
+         * @hide
+         */
+        public static final String THEMING_SETTINGS_DASHBOARD_ICONS =
+                "theming_settings_dashboard_icons";
+
+        /** @hide */
+        private static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5478,6 +5488,7 @@ public final class Settings {
             SHOW_VOLTE_ICON,
             OMNI_LOCKSCREEN_MEDIA_BLUR,
             NOTIFICATION_GUTS_KILL_APP_BUTTON,
+            THEMING_SETTINGS_DASHBOARD_ICONS,
             // AICP Settings end
         };
 
@@ -5667,6 +5678,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_MEDIA_BLUR);
             PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
+            PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             // AICP Settings end
         }
 
@@ -5830,7 +5842,8 @@ public final class Settings {
             VALIDATORS.put(SHOW_VOLTE_ICON,SHOW_VOLTE_ICON_VALIDATOR);
             VALIDATORS.put(OMNI_LOCKSCREEN_MEDIA_BLUR, OMNI_LOCKSCREEN_MEDIA_BLUR_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON,
-                    NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
+            VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             // AICP Settings end
         }
 
