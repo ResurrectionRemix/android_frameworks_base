@@ -488,9 +488,6 @@ public class FontService extends IFontService.Stub {
             Log.e(TAG, "Could not create cache directory...");
         }
 
-        // Copy system fonts into our cache dir
-        copyDir("/system/fonts", cacheDir.getAbsolutePath());
-
         // Append zip to filename since it is probably removed
         // for list presentation
         String zipFileName = info.fontName;
@@ -514,17 +511,6 @@ public class FontService extends IFontService.Stub {
         boolean deleted = fontZip.delete();
         if (!deleted) {
             Log.e(TAG, "Could not delete ZIP file");
-        }
-
-        // Check if theme zip included a fonts.xml. If not, get from existing file in /system
-        File srcConfig = new File("/system/etc/fonts.xml");
-        File dstConfig = new File(cacheDir, "fonts.xml");
-        if (!dstConfig.exists()) {
-            try {
-                FileUtils.copyFileOrThrow(srcConfig, dstConfig);
-            } catch (IOException e) {
-                Log.e(TAG, "There is an exception when trying to copy themed fonts", e);
-            }
         }
 
         // Prepare system theme fonts folder and copy new fonts folder from our cache
