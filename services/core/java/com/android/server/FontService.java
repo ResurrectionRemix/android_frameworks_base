@@ -48,6 +48,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.FontListParser;
@@ -81,6 +82,7 @@ public class FontService extends IFontService.Stub {
             "font_previews");
     private static final String FONTS_XML = "fonts.xml";
     private static final String FONT_IDENTIFIER = "custom_rom_font_provider";
+    private static final String SUBSTRATUM_INTENT = "projekt.substratum.THEME";
 
     private Context mContext;
     private FontHandler mFontHandler;
@@ -381,11 +383,30 @@ public class FontService extends IFontService.Stub {
     }
 
     private boolean isPackageFontProvider(String packageName) {
+        // check if the package res bool is set first
         Context appContext = getAppContext(packageName);
         int id = appContext.getResources().getIdentifier(FONT_IDENTIFIER,
                 "bool",
                 appContext.getPackageName());
-        return id != 0;
+        if (id != 0) {
+            return true;
+        }
+
+        // now check for Substratum package
+        // TODO: why resolve for ALL packages? Just analyze this package
+        List<ResolveInfo> subsPackages = new ArrayList<ResolveInfo>();
+        PackageManager pm = mContext.getPackageManager();
+        Intent i = new Intent(SUBSTRATUM_INTENT);
+        i.addCategory(Intent.CATEGORY_DEFAULT);
+        subsPackages.addAll(pm.queryIntentActivities(i,
+                PackageManager.GET_META_DATA));
+        for (ResolveInfo info : subsPackages) {
+            if (TextUtils.equals(info.activityInfo.packageName, packageName)) {
+                return true;
+            }
+        }
+        // bail out
+        return false;
     }
 
     private List<String> getFontsFromPackage(String packageName) {
@@ -397,6 +418,16 @@ public class FontService extends IFontService.Stub {
         } catch (Exception e) {
             Log.e(TAG, appContext.getPackageName() + "did not have a fonts folder!");
         }
+
+        // remove Substratum preview files, only grap zips
+        List<String> previews = new ArrayList<String>();
+        for (String font : list) {
+            if (font.contains("preview") || !font.endsWith(".zip")) {
+                previews.add(font);
+            }
+        }
+        list.removeAll(previews);
+
         Log.e(TAG, packageName + " has the following fonts - " + list.toString());
         return list;
     }
