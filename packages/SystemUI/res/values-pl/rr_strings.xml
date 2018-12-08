@@ -19,19 +19,69 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE włączone </string>
+    <string name="lte_off">LTE wyłączone</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
+    <string name="quick_settings_region_screenshot_label">Częściowy zrzut ekranu</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> Powiadomienia z podglądem w trybie drzemki znajdują się tam 1 minutę.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Wyskakujące powiadomienia są uśpione na <xliff:g id="number">%d </xliff:g> minut.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Nagrywanie ekranu rozpoczęte</string>
+    <string name="screenrecord_notif_final_ticker">Nagrywanie ekranu zakończone powodzeniem</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Nagrywanie ekranu</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+    <string name="screenrecord_notif_completed">Nagrywanie ekranu zakończone powodzeniem</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Pokaż wskaźnik</string>
+    <string name="screenrecord_notif_pointer_off">Ukryj wskaźnik</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nie można nagrać ekranu</string>
+    <string name="notification_channel_screenrecord">Nagrywanie ekranu</string>
+    <string name="screenrecord_hide_hint">Ukryj wskazówkę</string>
+    <string name="screenrecord_show_hint">Pokaż wskazówkę</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Nagrywanie ekranu</string>
+    <string name="quick_settings_screenrecord_lq_label">Nagrywanie ekranu 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Nagrywanie ekranu 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Nagrywanie ekranu 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Zrzut ekranu usunięty</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> do końca)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower podłączony (<xliff:g id="charging_time_left">%s</xliff:g> do pełnego naładowania)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower podłączony</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Kolumny</string>
+    <string name="qs_menu_item_columns_landscape">Kolumny (poziomo)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Przywróć domyślne</string>
+    <string name="qs_menu_item_titles">Pokaż etykiety</string>
+    <string name="qs_menu_item_rows">Wiersze</string>
+    <string name="qs_menu_item_rows_landscape">Wiersze (poziomo)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Podgląd</string>
+    <string name="keycode">Klawisz</string>
+    <string name="no_home_title">Nie znaleziono przycisku ekranu głównego</string>
+    <string name="no_home_message">Do prawidłowej obsługi urządzenia potrzebny jest przycisk ekranu głównego. Dodaj go, zanim zapiszesz zmiany.</string>
+    <string name="clipboard_description">Możesz przeciągać elementy bezpośrednio do schowka. Możesz też przeciągać umieszczone tam wcześniej elementy poza schowek jeśli jest obecny.</string>
+    <string name="keycode_description">Na pasku nawigacji możesz umieszczać przyciski, które po naciśnięciu emulują funkcje klawiszy klawiatury. Najpierw musisz wybrać, jaki klawisz ma być przypisany do danego przycisku, a następnie wybrać dla niego grafikę.</string>
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->

@@ -23,12 +23,14 @@
     <string name="lte_on">LTE Hidup </string>
     <string name="lte_off">LTE Mati</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Tangkap layar</string>
+    <string name="quick_settings_screenshot_label">Tangkapan Layar</string>
     <string name="quick_settings_region_screenshot_label">Tangkap sebagian layar</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama 1 menit.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama <xliff:g id="number">%d </xliff:g> menit.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Layar terekam</string>
-    <string name="screenrecord_notif_final_ticker">Rekaman layar selesai</string>
+    <string name="screenrecord_notif_final_ticker">Layar berhasil direkam</string>
     <!-- Screenrecord notification title -->
     <string name="screenrecord_notif_title">Merekam layar</string>
     <!-- Screenrecord notification action: Stop -->
@@ -39,15 +41,25 @@
     <string name="screenrecord_notif_pointer_off">Sembunyikan penunjuk</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Tidak dapat merekam layar</string>
-    <string name="notification_channel_screenrecord">Rekam layar</string>
+    <string name="notification_channel_screenrecord">Rekam Layar</string>
+    <string name="screenrecord_hide_hint">Sembunyikan petunjuk</string>
+    <string name="screenrecord_show_hint">Tampilkan petunjuk</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Rekam layar</string>
+    <string name="quick_settings_screenrecord_lq_label">Rekam layar 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Perekam layar 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Perekam layar 720p+</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Tangkapan layar terhapus</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Pengisian cepat (<xliff:g id="charging_time_left" example="4 jam dan 2 menit">%s</xliff:g> sampai penuh)</string>
+    <string name="keyguard_plugged_in_dash_charging">Pengisian Cepat</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower terhubung (<xliff:g id="charging_time_left">%s</xliff:g> sampai penuh)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower terhubung</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Kolom</string>
+    <string name="qs_menu_item_columns_landscape">Kolom mendatar</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -58,6 +70,7 @@
     <string name="qs_menu_item_reset">Ulang</string>
     <string name="qs_menu_item_titles">Tampilkan label</string>
     <string name="qs_menu_item_rows">Baris</string>
+    <string name="qs_menu_item_rows_landscape">Baris mendatar</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
@@ -66,14 +79,32 @@
     <string name="preview">Pratinjau</string>
     <string name="keycode">Kata kunci</string>
     <string name="no_home_title">Tidak di temukan tombol beranda</string>
+    <string name="no_home_message">Tombol beranda sangat dibutuhkan untuk menjalankan perangkat. Harap tambahkan tombol beranda sebelum menyimpan.</string>
+    <string name="clipboard_description">Papan Klip memungkinkan item untuk diseret langsung ke papan Klip. Item-item juga dapat diseret langsung dari papan klip ketika tersedia.</string>
+    <string name="keycode_description">Tombol Kata Kunci memungkinan tombol keyboard untuk ditambahkan di Panel Navigasi. Ketika ditekan akan meniru tombol keyboard yang dipilih. Pertama pilih tombol, lalu diikuti oleh gambar untuk ditampilkan pada tombol.</string>
     <string name="start">Mulai</string>
     <string name="center">Tengah</string>
+    <string name="end">Akhir</string>
+    <string name="space">Jarak</string>
+    <string name="menu_ime">Menu / Tukar Keyboard</string>
+    <string name="select_button">Pilih tombol untuk ditambahkan</string>
     <string name="add_button">Tambahkan tombol</string>
     <string name="save">Simpan</string>
+    <string name="reset">Atur Ulang</string>
     <string name="select_keycode">Pilih tombol keyboard</string>
     <string name="left">Kiri</string>
     <string name="right">Kanan</string>
+    <string name="navbar_editor_title">Penyunting</string>
+    <string name="navbar_editor_summary">Konfigurasi Panel Navigasi</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menu / Keyboard Switcher (selalu terlihat)</string>
+    <string name="search">Cari</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Ikon statusbar</string>
+    <string name="statusbar_icons_blacklist">Ikon status bar</string>
+    <string name="navbar_tuner_activity">Tombol bar navigasi</string>
+    <string name="lockscreen_tuner_activity">Pintasan kunci layar</string>
+    <string name="powernotif_tuner_activity">Notifikasi Tenaga</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Tampilkan 4G bukan LTE</string>
 </resources>

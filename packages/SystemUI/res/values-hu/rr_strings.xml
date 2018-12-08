@@ -19,20 +19,88 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE BE </string>
+    <string name="lte_off">LTE KI</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Képernyőmentés</string>
+    <string name="quick_settings_region_screenshot_label">Részleges képernyőmentés</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - lebegő értesítései 1 percig elhalasztásra kerülnek.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - lebegő értesítései <xliff:g id="number">%d</xliff:g> percig elhalasztásra kerülnek.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Képernyőfelvétel van folyamatban</string>
+    <string name="screenrecord_notif_final_ticker">A képernyőfelvétel elkészült</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Képernyőfelvétel folyamatban</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Leállítás</string>
+    <string name="screenrecord_notif_completed">A képernyőfelvétel elkészült</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">A Mutató megjelenítése</string>
+    <string name="screenrecord_notif_pointer_off">A Mutató elrejtése</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nem lehetséges felvételt készíteni a képernyőről</string>
+    <string name="notification_channel_screenrecord">Képernyőfelvételek</string>
+    <string name="screenrecord_hide_hint">Az utalás elrejtése</string>
+    <string name="screenrecord_show_hint">Az utalás megjelenítése</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Képernyőfelvétel</string>
+    <string name="quick_settings_screenrecord_lq_label">480p-es képernyővideó</string>
+    <string name="quick_settings_screenrecord_mq_label">720p-es képernyővideó</string>
+    <string name="quick_settings_screenrecord_hq_label">1080p-es képernyővideó</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">A képernyőmentés törölve</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash-töltés (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> a teljes töltöttségig)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash-töltés</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower csatlakoztatva (<xliff:g id="charging_time_left">%s</xliff:g> a teljes töltöttségig)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower csatlakoztatva</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Oszlopok</string>
+    <string name="qs_menu_item_columns_landscape">Oszlopok (fekvő módban)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Visszaállítás</string>
+    <string name="qs_menu_item_titles">Feliratok megjelenítése</string>
+    <string name="qs_menu_item_rows">Sorok</string>
+    <string name="qs_menu_item_rows_landscape">Sorok (fekvő módban)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Előnézet</string>
+    <string name="keycode">Billentyűkód</string>
+    <string name="no_home_title">Nem található a Kezdőoldal-gomb</string>
+    <string name="no_home_message">A készüléken történő navigáláshoz egy Kezdőoldal-gomb szükséges. Kérjük, a mentés előtt adjon hozzá egy Kezdőoldal-gombot.</string>
+    <string name="clipboard_description">A Vágólap lehetővé teszi az elemek áthúzását közvetlenül a vágólapra. Ugyanakkor az elemek le is húzhatóak onnan.</string>
+    <string name="keycode_description">A billentyűkód gombok lehetővé teszik gombok hozzáadását a Navigációs sávhoz. A gombok megnyomásuk esetén a kiválasztott billentyűt imitálják. Először ki kell választani a gombhoz tartozó billentyűt, majd a gombon megjeleníteni kívánt képet.</string>
+    <string name="space">Elválasztó</string>
+    <string name="menu_ime">Menü / Billentyűzetváltó</string>
+    <string name="select_button">Válassza ki a hozzáadni kívánt gombot</string>
+    <string name="add_button">Gomb hozzáadása</string>
+    <string name="save">Mentés</string>
+    <string name="reset">Visszaállítás</string>
+    <string name="select_keycode">Válasszon Billentyűgombot</string>
+    <string name="left">Bal</string>
+    <string name="right">Jobb</string>
+    <string name="navbar_editor_title">Szerkesztő</string>
+    <string name="navbar_editor_summary">A Navigációs sáv beállítása</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menü / Billentyűzetváltó (mindig látszik)</string>
+    <string name="search">Keresés</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Állapotsorikon</string>
+    <string name="statusbar_icons_blacklist">Az állapotsor ikonjai</string>
+    <string name="navbar_tuner_activity">A Navigációs sáv gombjai</string>
+    <string name="lockscreen_tuner_activity">Parancsikonok a záróképernyőn</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">4G megjelenítése LTE helyett</string>
 </resources>

@@ -19,13 +19,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
-    <string name="qs_lte_label">एलटीई</string>
+    <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE चालू </string>
     <string name="lte_off">LTE बंद</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">स्क्रीनशॉट</string>
     <string name="quick_settings_region_screenshot_label">आंशिक स्क्रीनशॉट</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - सूचना देखना 1 मिनट के लिए स्थगित करने हैं।</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • सूचनाएँ <xliff:g id="number">%d </xliff:g> मिनट के लिए स्थगित हैं।</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">स्क्रीन रिकॉर्ड की जा रही है</string>
@@ -36,7 +37,11 @@
     <string name="screenrecord_notif_stop">रोके</string>
     <string name="screenrecord_notif_completed">स्क्रीन सफलतापूर्वक रिकॉर्ड किया गया</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">सूचक दिखाएँ</string>
+    <string name="screenrecord_notif_pointer_off">सूचक छुपाएँ</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">स्क्रीन रिकॉर्ड करने में असमर्थ</string>
+    <string name="notification_channel_screenrecord">स्क्रीन रिकॉर्ड</string>
     <string name="screenrecord_hide_hint">संकेत छुपाएं</string>
     <string name="screenrecord_show_hint">संकेत दिखाएँ</string>
     <!-- Screenshot QS tile -->
@@ -50,9 +55,56 @@
     <string name="keyguard_indication_dash_charging_time">डैश चार्जिंग (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> पूर्ण होने में)</string>
     <string name="keyguard_plugged_in_dash_charging">डैश चार्जिंग</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">जल्द चार्ज हो रहा है(<xliff:g id="पूरा चार्ज होने में">%s</xliff:g>बाकी है)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">जल्द चार्जर जोड़ा गया</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">कॉलम</string>
+    <string name="qs_menu_item_columns_landscape">कॉलम परिदृश्य</string>
+    <string name="qs_menu_item_columns_three">३</string>
+    <string name="qs_menu_item_columns_four">४</string>
+    <string name="qs_menu_item_columns_five">५</string>
+    <string name="qs_menu_item_columns_six">६</string>
+    <string name="qs_menu_item_columns_seven">७</string>
+    <string name="qs_menu_item_columns_eight">८</string>
+    <string name="qs_menu_item_columns_nine">९</string>
+    <string name="qs_menu_item_reset">रीसेट करें</string>
+    <string name="qs_menu_item_titles">लेबल दिखाएं</string>
+    <string name="qs_menu_item_rows">पंक्तियाँ</string>
+    <string name="qs_menu_item_rows_landscape">पंक्तियाँ लैंडस्केप</string>
+    <string name="qs_menu_item_rows_one">१</string>
+    <string name="qs_menu_item_rows_two">२</string>
+    <string name="qs_menu_item_rows_three">३</string>
+    <string name="qs_menu_item_rows_four">४</string>
     <!-- Navbar Tuner -->
+    <string name="preview">पूर्वावलोकन/पूर्वदर्शन</string>
+    <string name="keycode">Keycode</string>
+    <string name="no_home_title">कोई घर बटन नहीं मिला</string>
+    <string name="no_home_message">इस डिवाइस पर नेविगेट करने में सक्षम होने के लिए एक होम बटन आवश्यक है। बचत से पहले एक होम बटन जोड़ें।</string>
+    <string name="clipboard_description">क्लिपबोर्ड आइटम को सीधे क्लिपबोर्ड पर खींचने की अनुमति देता है। उपस्थित होने पर आइटम को सीधे क्लिपबोर्ड से बाहर खींचा जा सकता है।</string>
+    <string name="keycode_description">Keycode बटन कुंजीपटल कुंजी को नेविगेशन बार में जोड़ने की अनुमति देते हैं। दबाए जाने पर वे चयनित कीबोर्ड कुंजी का अनुकरण करते हैं। पहले बटन को बटन पर दिखाए जाने के बाद बटन के लिए चुना जाना चाहिए</string>
+    <string name="start">शुरू करें</string>
+    <string name="center">मध्य</string>
+    <string name="end">अंत</string>
+    <string name="space">स्पेसर</string>
+    <string name="menu_ime">मेनू / कीबोर्ड स्विचर</string>
+    <string name="select_button">जोड़ने के लिए बटन का चयन करें</string>
+    <string name="add_button">बटन जोड़ें</string>
+    <string name="save">सेव करें</string>
+    <string name="reset">रीसेट करें</string>
+    <string name="select_keycode">कीबोर्ड बटन का चयन करें</string>
+    <string name="left">बाएँ</string>
+    <string name="right">दाईं </string>
+    <string name="navbar_editor_title">संपादक</string>
+    <string name="navbar_editor_summary">नेविगेशन बार कॉन्फ़िगर करें</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">मेनू / कुंजीपटल स्विचर (हमेशा दिखाएँ)</string>
+    <string name="search">तलाश</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">स्टेटसबार आइकन</string>
+    <string name="statusbar_icons_blacklist">स्टेटस बार चिह्न</string>
+    <string name="navbar_tuner_activity">नेविगेशन बटन्स</string>
+    <string name="lockscreen_tuner_activity">लॉक्सक्रीन शॉर्टकट</string>
+    <string name="powernotif_tuner_activity">पॉवर अधिसूचना</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">LTE के बजाय 4G दिखाएँ</string>
 </resources>

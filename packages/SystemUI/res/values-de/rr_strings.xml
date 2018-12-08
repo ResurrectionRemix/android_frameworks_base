@@ -20,20 +20,91 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE an </string>
+    <string name="lte_off">LTE aus</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Bildschirmfoto</string>
+    <string name="quick_settings_region_screenshot_label">Partieller Screenshot</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für 1 Minute deaktiviert.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Bildschirmaufnahme gestartet</string>
+    <string name="screenrecord_notif_final_ticker">Bildschirmaufnahme erfolgreich</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Bildschirm wird aufgenommen</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Abbrechen</string>
+    <string name="screenrecord_notif_completed">Bildschirmaufnahme erfolgreich</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Cursor anzeigen</string>
+    <string name="screenrecord_notif_pointer_off">Cursor ausblenden</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Bildschirmaufnahme fehlgeschlagen</string>
+    <string name="notification_channel_screenrecord">Bildschirmaufnahmen</string>
+    <string name="screenrecord_hide_hint">Hinweis ausblenden</string>
+    <string name="screenrecord_show_hint">Hinweis anzeigen</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Bildschirmaufnahme</string>
+    <string name="quick_settings_screenrecord_lq_label">Bildschirmaufnahme 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Bildschirmaufnahme 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Bildschirmaufnahme 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Screenshot gelöscht</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> bis aufgeladen)</string>
+    <string name="keyguard_plugged_in_dash_charging">Schnellladefunktion</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower verbunden (<xliff:g id="charging_time_left">%s</xliff:g> verbleibend)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower verbunden</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Spalten</string>
+    <string name="qs_menu_item_columns_landscape">Spalten (Querformat)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Zurücksetzen</string>
+    <string name="qs_menu_item_titles">Beschriftungen anzeigen</string>
+    <string name="qs_menu_item_rows">Rows (Automatic Copy)</string>
+    <string name="qs_menu_item_rows_landscape">Zeilen (Querformat)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Vorschau</string>
+    <string name="keycode">Keycode</string>
+    <string name="no_home_title">Keine Home-Taste gefunden</string>
+    <string name="no_home_message">Eine Home-Taste ist erforderlich, um dieses Gerät navigieren zu können. Bitte fügen Sie eine Home-Taste vor dem Speichern ein.</string>
+    <string name="clipboard_description">Elemente können direkt in die Zwischenablage gezogen werden. Ebenso können sie direkt aus der Zwischenablage gezogen werden, sofern diese geöffnet ist.</string>
+    <string name="keycode_description">Mit den Tastencode-Schaltflächen kann man der Navigationsleiste Tasten der Tastatur hinzufügen. Wird diese Schaltfläche ausgewählt, führt sie die Aktion der entsprechenden Taste aus. Wähle zuerst die Taste für die Schaltfläche aus und dann ein Bild, das auf der Schaltfläche erscheinen soll.</string>
+    <string name="start">Start</string>
+    <string name="center">Mitte</string>
+    <string name="end">Ende</string>
+    <string name="space">Abstandshalter</string>
+    <string name="menu_ime">Menü- / Tastaturumschalter</string>
+    <string name="select_button">Wähle eine Taste zum Hinzufügen</string>
+    <string name="add_button">Taste hinzufügen</string>
+    <string name="save">Speichern</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="select_keycode">Tastatur-Taste auswählen</string>
+    <string name="left">Links</string>
+    <string name="right">Rechts</string>
+    <string name="navbar_editor_title">Editor</string>
+    <string name="navbar_editor_summary">Navigationsleiste konfigurieren</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menü / Tastatur-Umschalter (immer anzeigen)</string>
+    <string name="search">Suche</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Statusbar-Symbol</string>
+    <string name="statusbar_icons_blacklist">Statusleisten Symbole</string>
+    <string name="navbar_tuner_activity">Navigationsleisten-Tasten</string>
+    <string name="lockscreen_tuner_activity">Sperrbildschirm-Verknüpfungen</string>
+    <string name="powernotif_tuner_activity">Energiestatus Benachrichtigungen</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">4G anstatt LTE anzeigen</string>
 </resources>

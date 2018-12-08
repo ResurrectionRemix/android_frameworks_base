@@ -19,20 +19,92 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE يعمل </string>
+    <string name="lte_off">LTE لا يعمل</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">لقطة الشاشة</string>
+    <string name="quick_settings_region_screenshot_label">لقطة الشاشة جزئية</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - التنبيهات الخاطفة غافية لدقيقة واحدة.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - التنبيهات الخاطفة غافية ل <xliff:g id="number">%d</xliff:g> دقائق.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">يتم الآن تسجيل الشاشة</string>
+    <string name="screenrecord_notif_final_ticker">تم تسجيل الشاشة بنجاح</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">تسجيل الشاشة</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">إيقاف</string>
+    <string name="screenrecord_notif_completed">تم تسجيل الشاشة بنجاح</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">اظهر المؤشر</string>
+    <string name="screenrecord_notif_pointer_off">اخفي المؤشر</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">لا يمكن تسجيل الشاشة</string>
+    <string name="notification_channel_screenrecord">تسجيلات الشاشة</string>
+    <string name="screenrecord_hide_hint">إخفاء التلميح</string>
+    <string name="screenrecord_show_hint">إظهار التلميح</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">تسجيل الشاشة</string>
+    <string name="quick_settings_screenrecord_lq_label">تسجيل الشاشة بجودة 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">تسجيل الشاشة بجودة 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">تسجيل الشاشة بجودة 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="وقت_الشحن_المتبقي_" example="4 ساعات و 2 دقيقة">%s</xliff:g> حتى الامتلاء)</string>
+    <string name="keyguard_plugged_in_dash_charging">الشحن السريع</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">متصل بشاحن سريع (<xliff:g id="charging_time_left">%s</xliff:g> until full>)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">متصل بشاحن سريع</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">الأعمدة</string>
+    <string name="qs_menu_item_columns_landscape">الأعمدة - أفقي</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">اعاده تعيين</string>
+    <string name="qs_menu_item_titles">عرض التسميات</string>
+    <string name="qs_menu_item_rows">الصفوف</string>
+    <string name="qs_menu_item_rows_landscape">الصفوف - أفقي</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">استعراض</string>
+    <string name="keycode">رمز المفتاح</string>
+    <string name="no_home_title">لم يتم العثور على زر الصفحة الرئيسية</string>
+    <string name="no_home_message">زر الصفحة الرئيسية مطلوب لكي تتمكن من التنقل في هذا الجهاز، الرجاء إضافة زر صفحة رئيسية قبل الحفظ.</string>
+    <string name="clipboard_description">تتيح الحافظة إمكانية سحب العناصر مباشرة إلى الحافظة، وكذلك يمكن سحب العناصر مباشرة خارج الحافظة عند وجودها.</string>
+    <string name="keycode_description">تتيح أزرار رموز المفاتيح إمكانية إضافة مفاتيح لوحة المفاتيح إلى شريط التنقل. وعند الضغط عليها، تحاكي الأزرار مفتاح لوحة المفاتيح المحدد. ويجب أولاً تحديد المفتاح للزر، وبعد ذلك تحديد صورة لكي يتم عرضها على الزر.</string>
+    <string name="start">بدء</string>
+    <string name="center">المركز</string>
+    <string name="end">النهاية</string>
+    <string name="space">فاصل</string>
+    <string name="menu_ime">مبدِّل القوائم / لوحة المفاتيح</string>
+    <string name="select_button">Select button to add</string>
+    <string name="add_button">إضافة زر</string>
+    <string name="save">حفظ</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="select_keycode">تحديد زر لوحة المفاتيح</string>
+    <string name="left">يسار</string>
+    <string name="right">يمين</string>
+    <string name="navbar_editor_title">المحرر</string>
+    <string name="navbar_editor_summary">تهيئة شريط التنقل</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">إظهار قائمة/مبدل لوحات المفاتيح (دائما)</string>
+    <string name="search">البحث</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">ايقونة شريط الحالة</string>
+    <string name="statusbar_icons_blacklist">رموز شريط الحالة</string>
+    <string name="navbar_tuner_activity">أزرار شريط التنقل</string>
+    <string name="lockscreen_tuner_activity">إختصارات شاشة القفل</string>
+    <string name="powernotif_tuner_activity">إشعارات الطاقة</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">إظهار 4G بدلاً من LTE</string>
 </resources>

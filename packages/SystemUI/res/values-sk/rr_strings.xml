@@ -19,20 +19,92 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE zap </string>
+    <string name="lte_off">LTE vyp</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
+    <string name="quick_settings_region_screenshot_label">Čiastočná snímka obrazovky</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Plávajúce upozornenia sú odložené na 1 minútu.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • Plávajúce upozornenia sú odložené na <xliff:g id="number">%d </xliff:g> minút.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Obrazovka sa nahráva</string>
+    <string name="screenrecord_notif_final_ticker">Obrazovka bola úspešne nahraná</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Nahrávam obrazovku</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Zastaviť</string>
+    <string name="screenrecord_notif_completed">Obrazovka bola úspešne nahraná</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Zobraziť ukazovateľ</string>
+    <string name="screenrecord_notif_pointer_off">Skryť ukazovateľ</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Nahrávánie obrazovky nie je možné</string>
+    <string name="notification_channel_screenrecord">Záznamy obrazovky</string>
+    <string name="screenrecord_hide_hint">Skryť nápovedu</string>
+    <string name="screenrecord_show_hint">Zobraziť nápovedu</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Záznam obrazovky</string>
+    <string name="quick_settings_screenrecord_lq_label">Záznam obrazovky 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Záznam obrazovky 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Záznam obrazovky 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Snímka obrazovky bola odstránená</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Rýchle nabíjanie (úplne nabité za <xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>)</string>
+    <string name="keyguard_plugged_in_dash_charging">Rýchle nabíjanie</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower je pripojený (<xliff:g id="charging_time_left">%s</xliff:g> až do plna)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower je pripojený</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Stĺpce</string>
+    <string name="qs_menu_item_columns_landscape">Stĺpce (na šírku)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Reset</string>
+    <string name="qs_menu_item_titles">Zobraziť popisky</string>
+    <string name="qs_menu_item_rows">Riadky</string>
+    <string name="qs_menu_item_rows_landscape">Riadky (na šírku)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Náhľad</string>
+    <string name="keycode">Heslo</string>
+    <string name="no_home_title">Nenájdene tlačidlo domov</string>
+    <string name="no_home_message">Na to, aby ste mohli toto zariadenie navigovať, je potrebné tlačidlo Domov. Pred uložením pridajte domovské tlačidlo.</string>
+    <string name="clipboard_description">Schránka umožňuje presúvať položky priamo do schránky. Položky je možné presunúť aj priamo zo schránky, ak sú prítomné.</string>
+    <string name="keycode_description">Klávesové skratky umožňujú pridanie klávesov klávesnice do navigačného panela. Po stlačení emulujú vybraný kláves na klávesnici. Najprv musí byť pre tlačidlo zvolené tlačidlo, po ktorom nasleduje obrázok, ktorý sa zobrazí na tlačidle.</string>
+    <string name="start">Štart</string>
+    <string name="center">V strede</string>
+    <string name="end">Koniec</string>
+    <string name="space">Oddeľovač</string>
+    <string name="menu_ime">Prepínač klávesnice</string>
+    <string name="select_button">Vybrať tlačidlo</string>
+    <string name="add_button">Pridať tlačidlo</string>
+    <string name="save">Uložiť</string>
+    <string name="reset">Resetovať</string>
+    <string name="select_keycode">Vybrať tlačidlo klávesnice</string>
+    <string name="left">Ľavý</string>
+    <string name="right">Vpravo</string>
+    <string name="navbar_editor_title">Uprav</string>
+    <string name="navbar_editor_summary">Konfigurovať nastavenia navigačného panela</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menu / Prepínač klávesnice (vždy zobrazovať)</string>
+    <string name="search">Hľadať</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Ikony stavového riadku</string>
+    <string name="statusbar_icons_blacklist">Ikony stavového riadku</string>
+    <string name="navbar_tuner_activity">Tlačidlá v navigačnom paneli</string>
+    <string name="lockscreen_tuner_activity">Skratky na obrazovke uzamknutia</string>
+    <string name="powernotif_tuner_activity">Rozšírené upozornenia</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Zobraziť 4G namiesto LTE</string>
 </resources>

@@ -19,8 +19,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE activat </string>
+    <string name="lte_off">LTE Desactivat</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Captura de Pantalla</string>
+    <string name="quick_settings_region_screenshot_label">Captura Parcial de Pantalla</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute">Notificacions Pospostes per 1 minut.</string>
     <!-- Screenrecord Notification Ticker -->
     <!-- Screenrecord notification title -->
     <!-- Screenrecord notification action: Stop -->

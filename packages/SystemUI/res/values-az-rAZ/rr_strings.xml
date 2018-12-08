@@ -52,8 +52,13 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Ekran şəkli silindi</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash Enerji Yığma (tam dolmaya <xliff:g id="charging_time_left" example="4 saat 2 dəqiqə">%s</xliff:g> qaldı)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash Enerji Yığma</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower qoşuldu (tam dolmasına <xliff:g id="charging_time_left">%s</xliff:g> qaldı)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower qoşuldu</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Sütunlar</string>
     <!-- Navbar Tuner -->
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->

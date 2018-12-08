@@ -19,20 +19,92 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE 开启 </string>
+    <string name="lte_off">LTE 关闭</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">屏幕截图</string>
+    <string name="quick_settings_region_screenshot_label">截取部分屏幕</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 浮动通知暂停1分钟。</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 浮动通知暂停<xliff:g id="number">%d</xliff:g>分钟。</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">正在录制屏幕</string>
+    <string name="screenrecord_notif_final_ticker">屏幕录制完成</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">正在录制屏幕</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">停止</string>
+    <string name="screenrecord_notif_completed">屏幕录制完成</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">显示触摸操作</string>
+    <string name="screenrecord_notif_pointer_off">隐藏触摸操作</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">无法录制屏幕</string>
+    <string name="notification_channel_screenrecord">屏幕录制</string>
+    <string name="screenrecord_hide_hint">隐藏提示</string>
+    <string name="screenrecord_show_hint">显示提示</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">屏幕录制</string>
+    <string name="quick_settings_screenrecord_lq_label">清晰度 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">清晰度 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">清晰度 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">屏幕截图已删除</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">正在快速充电 (还需<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 充满)</string>
+    <string name="keyguard_plugged_in_dash_charging">正在快速充电</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower 已连接 (还剩 <xliff:g id="charging_time_left">%s</xliff:g> 充满)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已连接</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">列</string>
+    <string name="qs_menu_item_columns_landscape">列（横向）</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">重置</string>
+    <string name="qs_menu_item_titles">显示标签</string>
+    <string name="qs_menu_item_rows">行</string>
+    <string name="qs_menu_item_rows_landscape">行 （横向）</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">预览</string>
+    <string name="keycode">键码</string>
+    <string name="no_home_title">未找到主屏幕按钮</string>
+    <string name="no_home_message">要在此设备上使用导航栏，您必须启用主屏幕按钮。请先添加主屏幕按钮，然后再保存。</string>
+    <string name="clipboard_description">您可以利用“剪贴板”按钮将相应内容直接拖动到剪贴板中。剪贴板中有内容时，您也可以将剪贴板中的内容直接拖出来。</string>
+    <string name="keycode_description">您可以利用“键码”按钮将键盘按键添加到导航栏中。只要按下这些按钮，按钮即可模仿所选键盘按键执行相应的操作。要使用这项功能，您必须先为按钮选择相应的按键，然后再选择要在按钮上显示的图片。</string>
+    <string name="start">起始</string>
+    <string name="center">中央</string>
+    <string name="end">末端</string>
+    <string name="space">空格键</string>
+    <string name="menu_ime">菜单 / 键盘切换器</string>
+    <string name="select_button">选择要添加的按钮</string>
+    <string name="add_button">添加按钮</string>
+    <string name="save">保存</string>
+    <string name="reset">重置</string>
+    <string name="select_keycode">选择键盘按钮</string>
+    <string name="left">左侧</string>
+    <string name="right">右侧</string>
+    <string name="navbar_editor_title">编辑器</string>
+    <string name="navbar_editor_summary">配置导航栏</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">菜单 / 键盘切换器（始终显示）</string>
+    <string name="search">搜索</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">状态栏图标</string>
+    <string name="statusbar_icons_blacklist">状态栏图标</string>
+    <string name="navbar_tuner_activity">导航栏按键</string>
+    <string name="lockscreen_tuner_activity">锁屏界面快捷方式</string>
+    <string name="powernotif_tuner_activity">电量通知</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">显示4G，而不是LTE</string>
 </resources>

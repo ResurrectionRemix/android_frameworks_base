@@ -19,20 +19,92 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Chụp ảnh màn hình</string>
+    <string name="quick_settings_region_screenshot_label">Chụp một phần màn hình</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong 1 phút.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong <xliff:g id="number">%d</xliff:g> phút.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Màn hình đang được ghi lại</string>
+    <string name="screenrecord_notif_final_ticker">Đã ghi màn hình thành công</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Đang quay màn hình</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Dừng</string>
+    <string name="screenrecord_notif_completed">Đã ghi màn hình thành công</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Hiện con trỏ</string>
+    <string name="screenrecord_notif_pointer_off">Ẩn con trỏ</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Không thể quay màn hình</string>
+    <string name="notification_channel_screenrecord">Bản ghi màn hình</string>
+    <string name="screenrecord_hide_hint">Ẩn gợi ý</string>
+    <string name="screenrecord_show_hint">Hiện gợi ý</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Quay màn hình</string>
+    <string name="quick_settings_screenrecord_lq_label">Quay màn hình chất lượng thấp</string>
+    <string name="quick_settings_screenrecord_mq_label">Quay màn hình chất lượng 720</string>
+    <string name="quick_settings_screenrecord_hq_label">Quay màn hình chất lượng 720+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> cho đến khi đầy)</string>
+    <string name="keyguard_plugged_in_dash_charging">Sạc nhanh</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower đã kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">Đã kết nối TurboPower</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Cột</string>
+    <string name="qs_menu_item_columns_landscape">Cột (màn hình ngang)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Thiết lập lại</string>
+    <string name="qs_menu_item_titles">Hiển thị nhãn</string>
+    <string name="qs_menu_item_rows">Hàng</string>
+    <string name="qs_menu_item_rows_landscape">Hàng (màn hình ngang)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Xem trước</string>
+    <string name="keycode">Mã phím</string>
+    <string name="no_home_title">Không tìm thấy nút Home</string>
+    <string name="no_home_message">Cần một nút Home để có thể điều khiển thiết bị này. Vui lòng thêm vào một nút Home trước khi lưu.</string>
+    <string name="clipboard_description">Khay nhớ tạm cho phép kéo trực tiếp mục vào khay nhớ tạm. Bạn cũng có thể kéo trực tiếp mục ra khỏi khay nhớ tạm khi hiển thị.</string>
+    <string name="keycode_description">Các nút mã phím cho phép thêm các phím trên bàn phím vào Thanh điều hướng. Khi bạn nhấn, các nút này sẽ mô phỏng phím trên bàn phím được chọn. Trước tiên, bạn phải chọn phím cho nút, sau đó chọn một hình ảnh để hiển thị trên nút.</string>
+    <string name="start">Bắt đầu</string>
+    <string name="center">Giữa</string>
+    <string name="end">Kết thúc</string>
+    <string name="space">Ký tự cách</string>
+    <string name="menu_ime">Trình chuyển đổi bàn phím / menu</string>
+    <string name="select_button">Chọn nút để thêm</string>
+    <string name="add_button">Thêm nút</string>
+    <string name="save">Lưu</string>
+    <string name="reset">Thiết lập lại</string>
+    <string name="select_keycode">Chọn nút bàn phím</string>
+    <string name="left">Trái</string>
+    <string name="right">Phải</string>
+    <string name="navbar_editor_title">Trình biên tập</string>
+    <string name="navbar_editor_summary">Cấu hình thiết lập thanh điều hướng</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Chuyển đổi Menu / Bàn phím (luôn hiển thị)</string>
+    <string name="search">Tìm kiếm</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Biểu tượng thanh trạng thái</string>
+    <string name="statusbar_icons_blacklist">Biểu tượng thanh trạng thái</string>
+    <string name="navbar_tuner_activity">Phím thanh điều hướng</string>
+    <string name="lockscreen_tuner_activity">Lối tắt màn hình khóa</string>
+    <string name="powernotif_tuner_activity">Thông báo năng lượng</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Hiện 4G thay cho LTE</string>
 </resources>

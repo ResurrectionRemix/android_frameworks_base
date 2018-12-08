@@ -52,8 +52,8 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Знімок екрану видалено</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Деш заряджання (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до повного заряду)</string>
-    <string name="keyguard_plugged_in_dash_charging">Деш заряджання</string>
+    <string name="keyguard_indication_dash_charging_time">Швидка зарядка (<xliff:g id="charging_time_left" example="4 години та 2 хвилини\'">%s</xliff:g> до повного заряду)</string>
+    <string name="keyguard_plugged_in_dash_charging">Швидка зарядка</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_turbo_power_time">Турбо зарядка під\'єднана (<xliff:g id="charging_time_left">%s</xliff:g> до повного заряду)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower підключено</string>

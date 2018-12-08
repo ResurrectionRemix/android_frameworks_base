@@ -14,7 +14,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">Falsifier signature paquet</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">Permet à l\'application de prétendre être une application différente. Les applications malveillantes peuvent l\'utiliser pour accéder à des données d\'applications privées. N\'accordez cette autorisation qu\'avec prudence !</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">Copier l\'URL du fichier du crash</string>
+   <string name="url_copy_success">URL copiée avec succès</string>
+   <string name="url_copy_failed">Une erreur est survenue pendant l\'envoi du journal à dogbin</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">En cours de lecture</string>
+   <string name="ambient_recognition_information">%1$s par %2$s</string>
 </resources>

@@ -14,7 +14,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">Csomag aláírásának hamisítása</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">Engedélyezi az alkalmazás számára, hogy más alkamázként azonosítsa magát. A kártékony alkalmazások ezt személyes adatok elérésére használhatják. Kellő elővigyázatossággal adja meg ezt az engedélyt!</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="url_copy_success">Az URL sikeresen másolva</string>
+   <string name="url_copy_failed">Hiba történt a napló dogbin-re való feltöltése során</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">\'Now Playing\'</string>
+   <string name="ambient_recognition_information">%1$s - %2$s szerzeménye</string>
 </resources>
