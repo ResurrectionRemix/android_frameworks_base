@@ -3028,6 +3028,14 @@ public final class Settings {
          public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
 
         /**
+         * Config FAB
+         *
+         * @hide
+         */
+         public static final String RR_OTA_FAB = "rr_ota_fab";
+
+
+        /**
          * Whether to use static IP and other static network attributes.
          * <p>
          * Set to 1 for true and 0 for false.
