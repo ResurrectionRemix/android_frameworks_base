@@ -31,6 +31,8 @@ import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -39,6 +41,7 @@ import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.Display;
 import android.widget.TextView;
 
 import com.android.settingslib.Utils;
@@ -187,7 +190,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
         // Make sure we update to the current time
         updateClock();
-        //updateShowSeconds();
+        updateShowSeconds();
     }
 
     @Override
@@ -269,8 +272,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 || STATUSBAR_CLOCK_DATE_DISPLAY.equals(key)
                 || STATUSBAR_CLOCK_DATE_STYLE.equals(key)
                 || STATUSBAR_CLOCK_DATE_FORMAT.equals(key)
-                || STATUSBAR_CLOCK_DATE_POSITION.equals(key)
-                || STATUS_BAR_CLOCK.equals(key)) {
+                || STATUSBAR_CLOCK_DATE_POSITION.equals(key)) {
             updateSettings(key, newValue);
         }
         if (CLOCK_SECONDS.equals(key)) {
@@ -336,7 +338,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
         SimpleDateFormat sdf;
         String format = mShowSeconds
-                //? is24 ? d.timeFormat_Hms : d.timeFormat_hms
+                ? is24 ? d.timeFormat_Hms : d.timeFormat_hms
                 : is24 ? d.timeFormat_Hm : d.timeFormat_hm;
         if (!format.equals(mClockFormatString)) {
             mContentDescriptionFormat = new SimpleDateFormat(format);
@@ -512,13 +514,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 }
                 mClockDatePosition = Integer.parseInt(newValue);
                 break;
-
-            case (STATUS_BAR_CLOCK):
-                if (newValue == null || mQsHeader) {
-                    newValue = "1"; // show clock
-                }
-                setClockVisibleByUser(Integer.parseInt(newValue) != 0);
-                break;
         }
 
         if (mCalendar != null) {
@@ -537,7 +532,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public void setQsHeader() {
         mQsHeader = true;
     }
-
 
     private void updateShowSeconds() {
         if (mShowSeconds) {
@@ -589,6 +583,4 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
         }
     };
-  }
 }
-

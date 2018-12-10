@@ -218,13 +218,13 @@ public class HeadsUpAppearanceController implements OnHeadsUpChangedListener,
                 mHeadsUpStatusBarView.setVisibility(View.VISIBLE);
                 CrossFadeHelper.fadeIn(mHeadsUpStatusBarView, CONTENT_FADE_DURATION /* duration */,
                         CONTENT_FADE_DELAY /* delay */);
-                if (((Clock)mClockView).isClockVisible() || !isRightClock) {
-                    CrossFadeHelper.fadeOut(mClockView, CONTENT_FADE_DURATION/* duration */,
-                            0 /* delay */, () -> mClockView.setVisibility(View.INVISIBLE));
+                if (((Clock)mClockController.getClock()).isClockVisible() || !isRightClock) {
+                    CrossFadeHelper.fadeOut(mClockController.getClock(),  CONTENT_FADE_DURATION/* duration */,
+                            0 /* delay */, () -> mClockController.getClock().setVisibility(View.INVISIBLE));
                 }
             } else {
-                if (((Clock)mClockView).isClockVisible() || !isRightClock) {
-                    CrossFadeHelper.fadeIn(mClockView, CONTENT_FADE_DURATION /* duration */,
+                if (((Clock)mClockController.getClock()).isClockVisible() || !isRightClock) {
+                    CrossFadeHelper.fadeIn(mClockController.getClock(), CONTENT_FADE_DURATION /* duration */,
                             CONTENT_FADE_DELAY /* delay */);
                 }
                 CrossFadeHelper.fadeOut(mHeadsUpStatusBarView, CONTENT_FADE_DURATION/* duration */,
