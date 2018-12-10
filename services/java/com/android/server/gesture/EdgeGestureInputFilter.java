@@ -30,7 +30,7 @@ import android.view.IInputFilterHost;
 import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.MotionEvent;
-import android.view.WindowManagerPolicy;
+import com.android.server.policy.WindowManagerPolicy;
 import android.view.MotionEvent.PointerCoords;
 import android.view.MotionEvent.PointerProperties;
 
