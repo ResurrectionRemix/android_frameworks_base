@@ -64,4 +64,8 @@
 
    <!-- Hardware key binding -->
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+    <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
+    <java-symbol type="dimen" name="edge_gesture_perpendicular_distance" />
+    <java-symbol type="dimen" name="edge_gesture_trigger_thickness" />
 </resources>
