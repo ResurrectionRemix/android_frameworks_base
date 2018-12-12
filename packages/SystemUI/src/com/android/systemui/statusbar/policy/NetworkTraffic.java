@@ -6,6 +6,7 @@ import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
 
 import java.text.DecimalFormat;
 
+import android.animation.ArgbEvaluator;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -27,21 +28,25 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
+import static com.android.systemui.statusbar.policy.DarkIconDispatcher.isInArea;
+
 /*
 *
 * Seeing how an Integer object in java requires at least 16 Bytes, it seemed awfully wasteful
 * to only use it for a single boolean. 32-bits is plenty of room for what we need it to do.
 *
 */
-public class NetworkTraffic extends TextView implements StatusIconDisplayable {
+public class NetworkTraffic extends TextView implements DarkReceiver,StatusIconDisplayable {
 
     public static final String SLOT = "networktraffic";
 
@@ -69,6 +74,8 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private int mVisibleState = -1;
     private boolean mTrafficVisible = false;
     private boolean mSystemIconVisible = true;
+    private int mDarkModeFillColor;
+    private int mLightModeFillColor;
 
     private boolean mScreenOn = true;
 
@@ -199,6 +206,12 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = resources.getColor(android.R.color.white);
+        int dualToneLightTheme = Utils.getThemeAttr(mContext, R.attr.lightIconTheme);
+        int dualToneDarkTheme = Utils.getThemeAttr(mContext, R.attr.darkIconTheme);
+        ContextThemeWrapper mLightContext = new ContextThemeWrapper(mContext, dualToneLightTheme);
+        ContextThemeWrapper mDarkContext = new ContextThemeWrapper(mContext, dualToneDarkTheme);
+        mDarkModeFillColor = Utils.getColorAttr(mDarkContext, R.attr.fillColor);
+        mLightModeFillColor = Utils.getColorAttr(mLightContext, R.attr.fillColor);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -316,9 +329,20 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
 
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
-        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+
+        if (!isInArea(area, this)) {
+            return;
+        }
+
+        float intensity = isInArea(area, this) ? darkIntensity : 0;
+        mTintColor = getColorForDarkIntensity(
+                intensity, mLightModeFillColor, mDarkModeFillColor);
         setTextColor(mTintColor);
         updateTrafficDrawable();
+    }
+
+    private int getColorForDarkIntensity(float darkIntensity, int lightColor, int darkColor) {
+        return (int) ArgbEvaluator.getInstance().evaluate(darkIntensity, lightColor, darkColor);
     }
 
     @Override
