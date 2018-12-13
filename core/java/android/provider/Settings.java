@@ -4493,12 +4493,6 @@ public final class Settings {
         public static final String PULSE_AUTO_COLOR = "pulse_auto_color";
 
         /**
-         * Apps to skip for Pulse
-         * @hide
-         */
-        public static final String PULSE_APPS_BLACKLIST = "pulse_apps_blacklist";
-
-        /**
          * 0 - fullscreen
          * 1 - partial
          * @hide

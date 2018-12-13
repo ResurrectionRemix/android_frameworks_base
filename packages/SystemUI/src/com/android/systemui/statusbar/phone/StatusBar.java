@@ -5447,34 +5447,14 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
 
         void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PULSE_APPS_BLACKLIST),
-                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-           if (uri.equals(Settings.System.getUriFor(Settings.System.PULSE_APPS_BLACKLIST))) {
-                setPulseBlacklist();
-            }
         }
 
         public void update() {
-            updateQsPanelResources();
         }
-    }
-
-    private void updateQsPanelResources() {
-        if (mQSPanel != null) {
-            setPulseBlacklist();
-        }
-    }
-
-    private void setPulseBlacklist() {
-        String blacklist = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_APPS_BLACKLIST, UserHandle.USER_CURRENT);
-        getMediaManager().setPulseBlacklist(blacklist);
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
