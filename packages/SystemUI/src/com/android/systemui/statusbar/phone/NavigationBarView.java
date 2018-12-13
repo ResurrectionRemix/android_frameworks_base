@@ -1085,12 +1085,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         }
     }
 
-    public void setPulseColors(boolean colorizedMedia, int[] colors) {
-        if (mPulse != null) {
-            mPulse.setPulseColors(colorizedMedia, colors);
-        }
-    }
-
     @Override
     public boolean onStartPulse(Animation animatePulseIn) {
         // TODO add buttons alpha animation
