@@ -5504,17 +5504,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return mStatusBarController.checkHiddenLw();
     }
 
-    private void notifyLeftInLandscapeChanged(boolean isOnLeft) {
-        IStatusBarService sbar = getStatusBarService();
-        if (sbar != null) {
-            try {
-                sbar.leftInLandscapeChanged(isOnLeft);
-            } catch (RemoteException e1) {
-                // oops, no statusbar. Ignore event.
-            }
-        }
-    }
-
     private boolean layoutNavigationBar(DisplayFrames displayFrames, int uiMode, Rect dcf,
             boolean navVisible, boolean navTranslucent, boolean navAllowedHidden,
             boolean statusBarExpandedNotKeyguard) {
@@ -5529,15 +5518,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final int displayHeight = displayFrames.mDisplayHeight;
         final int displayWidth = displayFrames.mDisplayWidth;
         final Rect dockFrame = displayFrames.mDock;
-        int lastNavbarPosition = mNavigationBarPosition;
         mNavigationBarPosition = navigationBarPosition(displayWidth, displayHeight, rotation);
-        // broadcast left in landscape changes to listeners
-        if (lastNavbarPosition == NAV_BAR_LEFT && mNavigationBarPosition != NAV_BAR_LEFT) {
-            notifyLeftInLandscapeChanged(false);
-        } else if (lastNavbarPosition != NAV_BAR_LEFT
-                && mNavigationBarPosition == NAV_BAR_LEFT) {
-            notifyLeftInLandscapeChanged(true);
-        }
 
         final Rect cutoutSafeUnrestricted = mTmpRect;
         cutoutSafeUnrestricted.set(displayFrames.mUnrestricted);

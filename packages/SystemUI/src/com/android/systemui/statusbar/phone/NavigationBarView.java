@@ -32,7 +32,6 @@ import android.annotation.StyleRes;
 import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -56,7 +55,6 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
-import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
@@ -67,8 +65,6 @@ import com.android.systemui.OverviewProxyService;
 import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
 import com.android.systemui.SysUiServiceProvider;
-import com.android.systemui.navigation.pulse.PulseController;
-import com.android.systemui.navigation.pulse.PulseController.PulseObserver;
 import com.android.systemui.plugins.PluginListener;
 import com.android.systemui.plugins.PluginManager;
 import com.android.systemui.plugins.statusbar.phone.NavGesture;
@@ -97,7 +93,7 @@ import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_ROTATION;
 
 public class NavigationBarView extends FrameLayout implements PluginListener<NavGesture>,
-        TunerService.Tunable, PulseObserver {
+        TunerService.Tunable {
     final static boolean DEBUG = false;
     final static String TAG = "StatusBar/NavBarView";
 
@@ -171,9 +167,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     private Divider mDivider;
     private RecentsOnboarding mRecentsOnboarding;
     private NotificationPanelView mPanelView;
-
-     private PulseController mPulse;
-     private boolean mKeyguardShowing;
 
     private int mRotateBtnStyle = R.style.RotateButtonCCWStart90;
 
@@ -713,10 +706,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
             disableBack = disableRecent = false;
         }
 
-        if (mPulse != null) {
-            mPulse.setScreenPinningState(pinningActive);
-        }
-
         ViewGroup navButtons = (ViewGroup) getCurrentView().findViewById(R.id.nav_buttons);
         if (navButtons != null) {
             LayoutTransition lt = navButtons.getLayoutTransition();
@@ -968,9 +957,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     protected void onDraw(Canvas canvas) {
         mGestureHelper.onDraw(canvas);
         mDeadZone.onDraw(canvas);
-        if (mPulse != null) {
-            mPulse.onDraw(canvas);
-        }
         super.onDraw(canvas);
     }
 
@@ -1040,77 +1026,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         return mVertical;
     }
 
-    public void setPulseController(PulseController pc) {
-        mPulse = pc;
-        mPulse.setPulseObserver(this);
-    }
-
-    public final void setKeyguardShowing(boolean showing) {
-        if (mKeyguardShowing != showing) {
-            mKeyguardShowing = showing;
-            if (mPulse != null) {
-                mPulse.setKeyguardShowing(showing);
-            }
-            //onKeyguardShowing(showing);
-        }
-    }
-
-    public void notifyPulseScreenOn(boolean screenOn) {
-        if (mPulse != null) {
-            mPulse.notifyScreenOn(screenOn);
-        }
-    }
-
-    public void sendIntentToPulse(Intent intent) {
-        if (mPulse != null) {
-            mPulse.onReceive(intent);
-        }
-    }
-
-    public final void dispose() {
-        if (mPulse != null) {
-            mPulse.doUnlinkVisualizer();
-        }
-    }
-
-    public final void notifyInflateFromUser() {
-        if (mPulse != null) {
-            mPulse.notifyScreenOn(true);
-        }
-    }
-
-    public void setLeftInLandscape(boolean leftInLandscape) {
-        if (mPulse != null) {
-            mPulse.setLeftInLandscape(leftInLandscape);
-        }
-    }
-
-    @Override
-    public boolean onStartPulse(Animation animatePulseIn) {
-        // TODO add buttons alpha animation
-        mPulse.turnOnPulse();
-        return true;
-    }
-
-    @Override
-    public void onStopPulse(Animation animatePulseOut) {
-        // TODO add buttons alpha animation
-    }
-
-    public boolean isBarPulseFaded() {
-        if (mPulse == null) {
-            return false;
-        } else {
-            return mPulse.shouldDrawPulse();
-        }
-    }
-
-    public void setMediaPlaying(boolean playing) {
-        if (mPulse != null) {
-            mPulse.setMediaPlaying(playing);
-        }
-    }
-
     public void reorient() {
         updateCurrentView();
 
@@ -1156,9 +1071,6 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         }
 
         postCheckForInvalidLayout("sizeChanged");
-        if (mPulse != null) {
-            mPulse.onSizeChanged(w, h, oldw, oldh);
-        }
         super.onSizeChanged(w, h, oldw, oldh);
     }
 

@@ -221,10 +221,6 @@
     <!--Screenshot and screenrecord -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
-    <!--Custom -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <protected-broadcast android:name="com.android.settingslib.action.REGISTER_SLICE_RECEIVER" />
     <protected-broadcast android:name="com.android.settingslib.action.UNREGISTER_SLICE_RECEIVER" />
 

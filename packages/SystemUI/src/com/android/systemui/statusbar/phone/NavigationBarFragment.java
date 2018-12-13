@@ -49,13 +49,11 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.inputmethodservice.InputMethodService;
-import android.media.AudioManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -85,7 +83,6 @@ import com.android.systemui.Interpolators;
 import com.android.systemui.OverviewProxyService;
 import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
-import com.android.systemui.navigation.pulse.PulseController;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
@@ -95,11 +92,9 @@ import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.CommandQueue.Callbacks;
-import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
 import com.android.systemui.statusbar.policy.KeyButtonDrawable;
 import com.android.systemui.statusbar.policy.KeyButtonView;
-import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.RotationLockController;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
 
@@ -113,7 +108,7 @@ import java.util.Optional;
  * Fragment containing the NavigationBarFragment. Contains logic for what happens
  * on clicks and view states of the nav bar.
  */
-public class NavigationBarFragment extends Fragment implements Callbacks, KeyguardMonitor.Callback, NotificationMediaManager.MediaUpdateListener {
+public class NavigationBarFragment extends Fragment implements Callbacks {
 
     public static final String TAG = "NavigationBar";
     private static final boolean DEBUG = false;
@@ -172,11 +167,6 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
             () -> mPendingRotationSuggestion = false;
     private Animator mRotateHideAnimator;
     private ViewRippler mViewRippler = new ViewRippler();
-
-    private PulseController mPulse;
-    private KeyguardMonitor mKeyguardMonitor;
-    private NotificationMediaManager mMediaManager;
-    private boolean mLeftInLandscape;
 
     private final OverviewProxyListener mOverviewProxyListener = new OverviewProxyListener() {
         @Override
@@ -252,19 +242,12 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
         // Register the task stack listener
         mTaskStackListener = new TaskStackListenerImpl();
         ActivityManagerWrapper.getInstance().registerTaskStackListener(mTaskStackListener);
-
-        mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
-        mMediaManager = mStatusBar.getMediaManager();
-        mMediaManager.addCallback(this);
-        mKeyguardMonitor.addCallback(this);
-        mPulse = new PulseController(getContext(), new Handler());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mCommandQueue.removeCallbacks(this);
-        mKeyguardMonitor.removeCallback(this);
         Dependency.get(AccessibilityManagerWrapper.class).removeCallback(
                 mAccessibilityListener);
         mContentResolver.unregisterContentObserver(mMagnificationObserver);
@@ -280,13 +263,6 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
     }
 
     @Override
-    public void onKeyguardShowingChanged() {
-        if (mNavigationBarView != null) {
-            mNavigationBarView.setKeyguardShowing(mKeyguardMonitor.isShowing());
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.navigation_bar, container, false);
@@ -299,12 +275,8 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
 
         mNavigationBarView.setComponents(mRecents, mDivider, mStatusBar.getPanel());
         mNavigationBarView.setDisabledFlags(mDisabledFlags1);
-        mNavigationBarView.setPulseController(mPulse);
-        mNavigationBarView.setLeftInLandscape(mLeftInLandscape);
         mNavigationBarView.setOnVerticalChangedListener(this::onVerticalChanged);
         mNavigationBarView.setOnTouchListener(this::onNavigationTouch);
-        mNavigationBarView.setMediaPlaying(mMediaManager.isPlaybackActive());
-
         if (savedInstanceState != null) {
             mNavigationBarView.getLightTransitionsController().restoreState(savedInstanceState);
         }
@@ -317,13 +289,9 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_USER_SWITCHED);
-        filter.addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGING);
-        filter.addAction(AudioManager.STREAM_MUTE_CHANGED_ACTION);
-        filter.addAction(AudioManager.VOLUME_CHANGED_ACTION);
         getContext().registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
         notifyNavigationBarScreenOn();
         mOverviewProxyService.addCallback(mOverviewProxyListener);
-        mNavigationBarView.notifyInflateFromUser();
     }
 
     @Override
@@ -733,14 +701,6 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
         return (disable2Flags & StatusBarManager.DISABLE2_ROTATE_SUGGESTIONS) != 0;
     }
 
-    @Override
-    public void leftInLandscapeChanged(boolean isLeft) {
-        mLeftInLandscape = isLeft;
-        if (mNavigationBarView != null) {
-            mNavigationBarView.setLeftInLandscape(isLeft);
-        }
-    }
-
     // ----- Internal stuffz -----
 
     private void refreshLayout(int layoutDirection) {
@@ -780,27 +740,6 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
 
     private void notifyNavigationBarScreenOn() {
         mNavigationBarView.updateNavButtonIcons();
-    }
-
-    private void notifyPulseScreenOn(boolean on) {
-        mNavigationBarView.notifyPulseScreenOn(on);
-    }
-
-    private void sendIntentToPulse(Intent intent) {
-        mNavigationBarView.sendIntentToPulse(intent);
-    }
-
-    @Override
-    public void onDetach() {
-        mNavigationBarView.dispose();
-        super.onDetach();
-    }
-
-    @Override
-    public void onMediaUpdated(boolean playing) {
-        if (mNavigationBarView != null) {
-            mNavigationBarView.setMediaPlaying(playing);
-        }
     }
 
     private void prepareNavigationBarView() {
@@ -1146,17 +1085,14 @@ public class NavigationBarFragment extends Fragment implements Callbacks, Keygua
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+            if (Intent.ACTION_SCREEN_OFF.equals(action)
+                    || Intent.ACTION_SCREEN_ON.equals(action)) {
                 notifyNavigationBarScreenOn();
-                notifyPulseScreenOn(false);
-            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                notifyNavigationBarScreenOn();
-                notifyPulseScreenOn(true);
-            } else if (Intent.ACTION_USER_SWITCHED.equals(action)) {
+            }
+            if (Intent.ACTION_USER_SWITCHED.equals(action)) {
                 // The accessibility settings may be different for the new user
                 updateAccessibilityServicesState(mAccessibilityManager);
-            }
-            sendIntentToPulse(intent);
+            };
         }
     };
 
