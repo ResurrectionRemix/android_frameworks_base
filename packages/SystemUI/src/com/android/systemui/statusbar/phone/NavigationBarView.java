@@ -98,7 +98,7 @@ import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_ROTATION;
 import com.android.systemui.navigation.Navigator;
 
-public class NavigationBarView extends FrameLayout implements Navigator, PulseObserver
+public class NavigationBarView extends FrameLayout implements Navigator, PulseObserver, 
         TunerService.Tunable {
     final static boolean DEBUG = false;
     final static String TAG = "StatusBar/NavBarView";

@@ -315,6 +315,7 @@ import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 
 import lineageos.providers.LineageSettings;
+import static org.lineageos.internal.util.DeviceKeysConstants.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -533,6 +534,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     WindowState mStatusBar = null;
     private final int[] mStatusBarHeightForRotation = new int[4];
     WindowState mNavigationBar = null;
+    boolean mHasNavigationBar = false;
     // User defined bar visibility, regardless of factory configuration
     boolean mNavbarVisible = false;
     boolean mNavigationBarCanMove = false; // can the navigation bar ever move to the side?
@@ -2073,13 +2075,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (unpinActivity(false)) {
                 return;
             }
-
-            if (ActionUtils.killForegroundApp(mContext, mCurrentUserId)) {
-                performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
-                Toast.makeText(mContext,
-                        org.lineageos.platform.internal.R.string.app_killed_message,
-                        Toast.LENGTH_SHORT).show();
-            }
         }
     };
 
@@ -2638,9 +2633,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mDoubleTapOnHomeBehavior > DOUBLE_TAP_HOME_RECENT_SYSTEM_UI) {
             mDoubleTapOnHomeBehavior = LONG_PRESS_HOME_NOTHING;
         }
-        mAppSwitchLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
-                mAppSwitchLongPressAction);
 
         mShortPressOnWindowBehavior = SHORT_PRESS_WINDOW_NOTHING;
         if (mContext.getPackageManager().hasSystemFeature(FEATURE_PICTURE_IN_PICTURE)) {
@@ -4021,6 +4013,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final int flags = event.getFlags();
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         final boolean canceled = event.isCanceled();
+        final boolean longPress = (flags & KeyEvent.FLAG_LONG_PRESS) != 0;
+        final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
 
         if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyTi keyCode=" + keyCode + " down=" + down + " repeatCount="
@@ -9350,7 +9344,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return mNavbarVisible;
     }
 
-    @Override
+    /*@Override
     public void sendCustomAction(Intent intent) {
         String action = intent.getAction();
         if (action != null) {
@@ -9368,7 +9362,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mHandler.post(mScreenshotRunnable);
             }
         }
-    }
+    }*/
 
     @Override
     public void setLastInputMethodWindowLw(WindowState ime, WindowState target) {
