@@ -834,8 +834,7 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
 
         ButtonDispatcher homeButton = mNavigationBarView.getHomeButton();
         if (homeButton != null) {
-	homeButton.setOnTouchListener(this::onHomeTouch);
-        homeButton.setLongClickable(true);
+        homeButton.setOnTouchListener(this::onHomeTouch);
         homeButton.setOnLongClickListener(this::onHomeLongClick);
         }
 
@@ -900,9 +899,17 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
                 && ActivityManagerWrapper.getInstance().isScreenPinningActive()) {
             return onLongPressBackHome(v);
         }
-        KeyButtonView keyButtonView = (KeyButtonView) v;
-        keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
-        keyButtonView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+        if (shouldDisableNavbarGestures()) {
+            return false;
+        }
+        mNavigationBarView.onNavigationButtonLongPress(v);
+        mMetricsLogger.action(MetricsEvent.ACTION_ASSIST_LONG_PRESS);
+        mAssistManager.startAssist(new Bundle() /* args */);
+        mStatusBar.awakenDreams();
+
+        if (mNavigationBarView != null) {
+            mNavigationBarView.abortCurrentGesture();
+        }
         return true;
     }
 
