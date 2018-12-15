@@ -60,7 +60,7 @@
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Sütunlar</string>
     <string name="qs_menu_item_columns_landscape">Sütunlar yatay</string>
-    <string name="qs_menu_item_columns_three">2</string>
+    <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
     <string name="qs_menu_item_columns_six">6</string>
@@ -107,4 +107,6 @@
     <string name="powernotif_tuner_activity">Güç bildirimleri</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">LTE yerine 4G göster</string>
+    <string name="global_action_reboot_recovery">Kurtarma</string>
+    <string name="global_action_reboot">Yeniden başlat</string>
 </resources>

@@ -26,33 +26,33 @@
     <string name="quick_settings_screenshot_label">Tangkapan Layar</string>
     <string name="quick_settings_region_screenshot_label">Tangkap sebagian layar</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama 1 menit.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama <xliff:g id="number">%d </xliff:g> menit.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tunda selama 1 menit.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tunda selama <xliff:g id="number">%d </xliff:g> menit.</string>
     <!-- Screenrecord Notification Ticker -->
-    <string name="screenrecord_notif_ticker">Layar terekam</string>
+    <string name="screenrecord_notif_ticker">Layar sedang direkam</string>
     <string name="screenrecord_notif_final_ticker">Layar berhasil direkam</string>
     <!-- Screenrecord notification title -->
     <string name="screenrecord_notif_title">Merekam layar</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Berhenti</string>
-    <string name="screenrecord_notif_completed">Rekaman layar selesai</string>
+    <string name="screenrecord_notif_completed">Layar berhasil direkam</string>
     <!-- Screenrecord notification action: show/hide pointer -->
-    <string name="screenrecord_notif_pointer_on">Tampilkan penunjuk</string>
-    <string name="screenrecord_notif_pointer_off">Sembunyikan penunjuk</string>
+    <string name="screenrecord_notif_pointer_on">Tampilkan pointer</string>
+    <string name="screenrecord_notif_pointer_off">Sembunyikan pointer</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Tidak dapat merekam layar</string>
     <string name="notification_channel_screenrecord">Rekam Layar</string>
-    <string name="screenrecord_hide_hint">Sembunyikan petunjuk</string>
-    <string name="screenrecord_show_hint">Tampilkan petunjuk</string>
+    <string name="screenrecord_hide_hint">Sembunyikan tanda</string>
+    <string name="screenrecord_show_hint">Tunjukkan penanda</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenrecord_label">Rekam layar</string>
-    <string name="quick_settings_screenrecord_lq_label">Rekam layar 480p</string>
+    <string name="quick_settings_screenrecord_label">Rekaman layar</string>
+    <string name="quick_settings_screenrecord_lq_label">Perekam layar 480p</string>
     <string name="quick_settings_screenrecord_mq_label">Perekam layar 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Perekam layar 720p+</string>
     <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">Tangkapan layar terhapus</string>
+    <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Pengisian cepat (<xliff:g id="charging_time_left" example="4 jam dan 2 menit">%s</xliff:g> sampai penuh)</string>
+    <string name="keyguard_indication_dash_charging_time">Pengisian Daya Cepat (<xliff:g id="charging_time_left" example="4 jam 2 menit">%s</xliff:g> hingga penuh)</string>
     <string name="keyguard_plugged_in_dash_charging">Pengisian Cepat</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_turbo_power_time">TurboPower terhubung (<xliff:g id="charging_time_left">%s</xliff:g> sampai penuh)</string>
@@ -67,7 +67,7 @@
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
-    <string name="qs_menu_item_reset">Ulang</string>
+    <string name="qs_menu_item_reset">Atur ulang</string>
     <string name="qs_menu_item_titles">Tampilkan label</string>
     <string name="qs_menu_item_rows">Baris</string>
     <string name="qs_menu_item_rows_landscape">Baris mendatar</string>
@@ -107,4 +107,6 @@
     <string name="powernotif_tuner_activity">Notifikasi Tenaga</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Tampilkan 4G bukan LTE</string>
+    <string name="global_action_reboot_recovery">Pemulihan</string>
+    <string name="global_action_reboot">Mulai ulang</string>
 </resources>

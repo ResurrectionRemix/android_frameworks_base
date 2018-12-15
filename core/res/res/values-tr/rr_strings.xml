@@ -22,6 +22,6 @@
    <string name="url_copy_success">URL başarıyla kopyalandı</string>
    <string name="url_copy_failed">Günlük dogbin\'e yüklerken bir hata oluştu</string>
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">Şimdi Yürütülüyor</string>
+   <string name="ambient_recognition_notification">Şimdi Çalınıyor</string>
    <string name="ambient_recognition_information">%2$s tarafından %1$s</string>
 </resources>

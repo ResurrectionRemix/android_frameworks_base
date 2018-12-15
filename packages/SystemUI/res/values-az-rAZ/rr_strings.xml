@@ -59,7 +59,17 @@
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower qoşuldu</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Sütunlar</string>
+    <string name="qs_menu_item_reset">Yenidən başlat</string>
+    <string name="qs_menu_item_titles">Etiketləri göstər</string>
+    <string name="qs_menu_item_rows">Sətir</string>
+    <string name="qs_menu_item_rows_landscape">Sətirlər üfuqi</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Göstər</string>
+    <string name="keycode">Açar şifrə</string>
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->

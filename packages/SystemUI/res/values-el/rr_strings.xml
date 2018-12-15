@@ -19,11 +19,23 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Στιγμιότυπο οθόνης</string>
+    <string name="quick_settings_region_screenshot_label">Μερικό στιγμιότυπο οθόνης</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Η αναδυόμενη ειδοποίηση αναβάλλεται για 1 λεπτό.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Οι αναδυόμενες ειδοποιήσεις αναβάλλονται για <xliff:g id="number">%d</xliff:g> λεπτά.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Η οθόνη καταγράφεται</string>
+    <string name="screenrecord_notif_final_ticker">Η οθόνη καταγράφηκε με επιτυχία</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Καταγραφή οθόνης</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Διακοπή</string>
+    <string name="screenrecord_notif_completed">Η οθόνη καταγράφηκε με επιτυχία</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <!-- Screen record notification error title -->
     <!-- Screenshot QS tile -->

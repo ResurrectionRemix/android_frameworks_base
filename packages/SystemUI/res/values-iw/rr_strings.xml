@@ -19,20 +19,89 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE פועל </string>
+    <string name="lte_off">LTE כבוי</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">צילום מסך</string>
+    <string name="quick_settings_region_screenshot_label">צילום מסך חלקי</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">הקלטת המסך מתבצעת</string>
+    <string name="screenrecord_notif_final_ticker">הקלטת המסך הסתיימה בהצלחה</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">מקליט מסך</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">עצור</string>
+    <string name="screenrecord_notif_completed">הקלטת המסך הסתיימה בהצלחה</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">הצג מצביע</string>
+    <string name="screenrecord_notif_pointer_off">הסתר מצביע</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">לא ניתן להקליט מסך</string>
+    <string name="notification_channel_screenrecord">הקלטות מסך</string>
+    <string name="screenrecord_hide_hint">הסתר רמז</string>
+    <string name="screenrecord_show_hint">הצג רמז</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">הקלטת מסך</string>
+    <string name="quick_settings_screenrecord_lq_label">הקלטת מסך 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">הקלטת מסך 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">הקלטת מסך 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">צילום המסך נמחק</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_plugged_in_dash_charging">טעינה מהירה</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower מחובר</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">עמודות</string>
+    <string name="qs_menu_item_columns_landscape">עמודות לרוחב</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">איפוס</string>
+    <string name="qs_menu_item_titles">הצג תוויות</string>
+    <string name="qs_menu_item_rows">שורות</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">תצוגה מקדימה</string>
+    <string name="keycode">קידוד מקש</string>
+    <string name="no_home_title">לחצן הבית לא נמצא</string>
+    <string name="no_home_message">לחצן הבית נדרש כדי לנווט במכשיר הזה. הוסף לחצן בית לפני השמירה.</string>
+    <string name="clipboard_description">הלוח מאפשר לפריטים להיגרר ישירות מהלוח. פריטים יכולים גם להיגרר ישירות מחוץ ללוח כאשר הוא מוצג.</string>
+    <string name="keycode_description">לחצנים של Keycode מאפשרים להוסיף מקשי מקלדת לסרגל הניווט. בעת הלחיצה הם מדמים את מקשי המקלדת שנבחרו. תחילה יש לבחור את המקש ללחצן, ולאחר מכן יש לבחור תמונה שתוצג בלחצן.</string>
+    <string name="start">התחל</string>
+    <string name="center">מרכז</string>
+    <string name="end">סוף</string>
+    <string name="space">רווח</string>
+    <string name="menu_ime">תפריט / מחליף מקלדת</string>
+    <string name="select_button">בחירת לחצן להוספה</string>
+    <string name="add_button">הוסף לחצן</string>
+    <string name="save">שמור</string>
+    <string name="reset">איפוס</string>
+    <string name="select_keycode">בחר לחצן מקלדת</string>
+    <string name="left">שמאל</string>
+    <string name="right">ימין</string>
+    <string name="navbar_editor_title">עורך</string>
+    <string name="navbar_editor_summary">הגדרת סרגל ניווט</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">תפריט / בוחר מקלדת (הצג תמיד)</string>
+    <string name="search">חפש</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">אייקון שורת מצב</string>
+    <string name="statusbar_icons_blacklist">איקוניים של שורת המצב</string>
+    <string name="navbar_tuner_activity">לחצני סרגל ניווט</string>
+    <string name="lockscreen_tuner_activity">קיצורי דרך במסך הנעילה</string>
+    <string name="powernotif_tuner_activity">הודעות סוללה</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">הצג 4G במקום LTE</string>
+    <string name="global_action_reboot_recovery">שחזור</string>
+    <string name="global_action_reboot">הפעל מחדש</string>
 </resources>

@@ -19,20 +19,94 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE オン</string>
+    <string name="lte_off">LTE オフ</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">スクリーンショット</string>
+    <string name="quick_settings_region_screenshot_label">範囲を選択してスクリーンショット</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 通知の表示は1分間一時停止します</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は<xliff:g id="number">%d</xliff:g>分間停止します</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">画面は録画されています</string>
+    <string name="screenrecord_notif_final_ticker">画面を録画しました</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">画面を録画中</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">停止</string>
+    <string name="screenrecord_notif_completed">画面を録画しました</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">タップを表示</string>
+    <string name="screenrecord_notif_pointer_off">タップを非表示</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">画面の録画に失敗しました</string>
+    <string name="notification_channel_screenrecord">画面録画</string>
+    <string name="screenrecord_hide_hint">ヒントを非表示</string>
+    <string name="screenrecord_show_hint">ヒントを表示</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">画面録画</string>
+    <string name="quick_settings_screenrecord_lq_label">画面録画 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">画面録画 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">画面録画 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">急速充電中（充電完了まで<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>）</string>
+    <string name="keyguard_plugged_in_dash_charging">急速充電中</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">急速充電中（充電完了まで<xliff:g id="charging_time_left">%s</xliff:g>）</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">列</string>
+    <string name="qs_menu_item_columns_landscape">列（横向き）</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">リセット</string>
+    <string name="qs_menu_item_titles">ラベルを表示</string>
+    <string name="qs_menu_item_rows">行</string>
+    <string name="qs_menu_item_rows_landscape">行数（横向き）</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">プレビュー</string>
+    <string name="keycode">キーコード</string>
+    <string name="no_home_title">ホームボタンが見つかりません</string>
+    <string name="no_home_message">この端末を操作できるようにするにはホームボタンが必要です。保存する前にホームボタンを追加してください。</string>
+    <string name="clipboard_description">クリップボード機能ではクリップボードにアイテムを直接ドラッグできます。クリップボードにアイテムがある場合、直接そのアイテムをドラッグして取り出すこともできます。</string>
+    <string name="keycode_description">キーコードボタンを利用すると、ナビゲーションバーにキーボードのキー機能を追加できるようになります。ボタンを押すと選択済みのキーボードのキーがエミュレートされます。まずボタン用にキーを選択し、次にボタン上の画像を選択する必要があります。</string>
+    <string name="start">開始</string>
+    <string name="center">中央</string>
+    <string name="end">終了</string>
+    <string name="space">スペース</string>
+    <string name="menu_ime">メニューとキーボードの切り替え</string>
+    <string name="select_button">追加するボタンの選択</string>
+    <string name="add_button">ボタンを追加</string>
+    <string name="save">保存</string>
+    <string name="reset">リセット</string>
+    <string name="select_keycode">キーボードのボタンの選択</string>
+    <string name="left">左側</string>
+    <string name="right">右側</string>
+    <string name="navbar_editor_title">エディター</string>
+    <string name="navbar_editor_summary">ナビゲーションバーを編集</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">メニュー/キーボード切り替え（常時表示）</string>
+    <string name="search">検索</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">ステータスバーアイコン</string>
+    <string name="statusbar_icons_blacklist">ステータスバーのアイコン</string>
+    <string name="navbar_tuner_activity">ナビゲーションバーのボタン</string>
+    <string name="lockscreen_tuner_activity">ロック画面のショートカット</string>
+    <string name="powernotif_tuner_activity">電源の通知</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">LTE表示の代わりに4G表示を使用する</string>
+    <string name="global_action_reboot_recovery">リカバリー</string>
+    <string name="global_action_reboot">再起動</string>
 </resources>

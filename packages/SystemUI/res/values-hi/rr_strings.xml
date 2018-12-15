@@ -107,4 +107,6 @@
     <string name="powernotif_tuner_activity">पॉवर अधिसूचना</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">LTE के बजाय 4G दिखाएँ</string>
+    <string name="global_action_reboot_recovery">रिकवरी</string>
+    <string name="global_action_reboot">पुन: शुरू करें</string>
 </resources>

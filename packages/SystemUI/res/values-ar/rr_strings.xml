@@ -107,4 +107,6 @@
     <string name="powernotif_tuner_activity">إشعارات الطاقة</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">إظهار 4G بدلاً من LTE</string>
+    <string name="global_action_reboot_recovery">الإسترداد</string>
+    <string name="global_action_reboot">إعادة تشغيل</string>
 </resources>

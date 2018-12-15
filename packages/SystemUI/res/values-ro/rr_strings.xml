@@ -82,7 +82,28 @@
     <string name="no_home_message">Pentru a naviga pe acest dispozitiv este necesar un buton Ecran de pornire. Adăugați un buton Ecran de pornire înainte să salvați.</string>
     <string name="clipboard_description">Folosind butonul Clipboard puteți să trageți elemente direct în clipboard. De asemenea, elementele pot fi trase direct din clipboard atunci când există.</string>
     <string name="keycode_description">Folosind butoanele cu coduri de taste puteți să adăugați taste de la tastatură în Bara de navigare. Când le apăsați, acestea simulează tasta selectată de la tastatură. Mai întâi, trebuie să selectați o tastă pentru un buton, apoi o imagine care să apară pe buton.</string>
+    <string name="start">Începe</string>
+    <string name="center">Centru</string>
+    <string name="end">Sfârșit</string>
+    <string name="space">Distanțier</string>
+    <string name="menu_ime">Comutator Meniu / Tastatură</string>
+    <string name="select_button">Selectați butonul de adăugat</string>
+    <string name="add_button">Adaugă buton</string>
+    <string name="save">Salvează</string>
+    <string name="reset">Resetare</string>
+    <string name="select_keycode">Selectați butonul pentru tastatură</string>
+    <string name="left">Stânga</string>
+    <string name="right">Dreapta</string>
+    <string name="navbar_editor_title">Editor</string>
+    <string name="navbar_editor_summary">Configurează bara de navigare</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Comutator Meniu / Tastatură (afișează mereu)</string>
+    <string name="search">Căutare</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Icon din bara de stare</string>
+    <string name="statusbar_icons_blacklist">Icon-uri din bara de stare</string>
+    <string name="navbar_tuner_activity">Butoanele bării de navigare</string>
+    <string name="lockscreen_tuner_activity">Scurtături pe ecranul de blocare</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Afișează 4G în loc de LTE</string>
 </resources>

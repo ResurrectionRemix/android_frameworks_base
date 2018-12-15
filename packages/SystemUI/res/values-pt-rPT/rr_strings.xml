@@ -20,46 +20,46 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE LIGADO</string>
-    <string name="lte_off">LTE DESLIGADO</string>
+    <string name="lte_on">LTE ligado </string>
+    <string name="lte_off">LTE desligado</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Captura de ecrã</string>
     <string name="quick_settings_region_screenshot_label">Captura de ecrã parcial</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notificações flutuantes desligadas por 1 minuto.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> Notificações flutuantes desligadas durante <xliff:g id="number">%d</xliff:g> minutos.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - as notificações flutuantes serão pausadas por 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - as notificações flutuantes serão pausadas por <xliff:g id="number">%d</xliff:g> minutos.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">O ecrã está a ser gravado</string>
     <string name="screenrecord_notif_final_ticker">O ecrã foi gravado com sucesso</string>
     <!-- Screenrecord notification title -->
-    <string name="screenrecord_notif_title">A gravar ecrã</string>
+    <string name="screenrecord_notif_title">A gravar o ecrã</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Parar</string>
     <string name="screenrecord_notif_completed">O ecrã foi gravado com sucesso</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">Mostrar ponteiro</string>
-    <string name="screenrecord_notif_pointer_off">Esconder ponteiro</string>
+    <string name="screenrecord_notif_pointer_off">Ocultar ponteiro</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Não foi possível gravar o ecrã</string>
     <string name="notification_channel_screenrecord">Gravações de ecrã</string>
     <string name="screenrecord_hide_hint">Esconder dica</string>
     <string name="screenrecord_show_hint">Mostrar dica</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenrecord_label">Gravação de ecrã</string>
+    <string name="quick_settings_screenrecord_label">Gravar ecrã</string>
     <string name="quick_settings_screenrecord_lq_label">Gravar ecrã a 480p</string>
     <string name="quick_settings_screenrecord_mq_label">Gravar ecrã a 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Gravar ecrã a 720p+</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Captura de ecrã apagada</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Carregamento rápido (<xliff:g id="charging_time_left" example="4 horas e 2 minutos">%s</xliff:g> até cheio)</string>
-    <string name="keyguard_plugged_in_dash_charging">Carregamento rápido</string>
+    <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left" example="4 horas e 2 minutos">%s</xliff:g> até à carga máxima)</string>
+    <string name="keyguard_plugged_in_dash_charging">Carregamento Dash</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">Carregamento turbo conectado (<xliff:g id="charging_time_left">%s</xliff:g> até cheio)</string>
-    <string name="keyguard_plugged_in_turbo_power_charging">Carregamento turbo conectado</string>
+    <string name="keyguard_indication_turbo_power_time">Carregamento TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> até à carga máxima)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">Carregamento TurboPower</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Colunas</string>
-    <string name="qs_menu_item_columns_landscape">Colunas horizontais</string>
+    <string name="qs_menu_item_columns_landscape">Colunas (em paisagem)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -68,34 +68,34 @@
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
     <string name="qs_menu_item_reset">Repor</string>
-    <string name="qs_menu_item_titles">Mostrar Rótulo</string>
+    <string name="qs_menu_item_titles">Mostrar títulos</string>
     <string name="qs_menu_item_rows">Linhas</string>
-    <string name="qs_menu_item_rows_landscape">Linhas (horizontal)</string>
+    <string name="qs_menu_item_rows_landscape">Linhas (paisagem)</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
     <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
     <string name="preview">Pré-visualizar</string>
-    <string name="keycode">Código de botão</string>
-    <string name="no_home_title">Não foi encontrado botão iniciar</string>
-    <string name="no_home_message">Um botão iniciar é requirido para poder navegar neste despositivo. Por favor adicione um botão iniciar antes de guardar.</string>
-    <string name="clipboard_description">A área de transferência permite que itens possam ser arrastados diretamente para a área de transferência. Itens podem também ser arrastados diretamente para fora da área de transferência quando presente.</string>
+    <string name="keycode">Código de tecla</string>
+    <string name="no_home_title">Sem botão de página inicial</string>
+    <string name="no_home_message">É necessário um botão de página inicial para navegar neste dispositivo. Adicione um botão de página inicial antes de guardar.</string>
+    <string name="clipboard_description">A Área de Transferência permite arrastar conteúdos diretamente para a área de transferência. Também é possível arrastar conteúdos diretamente para fora da mesma, quando aí se encontram.</string>
     <string name="keycode_description">Os códigos de tecla permitem adicionar teclas do teclado à Barra de navegação. Quando são pressionados, emulam a tecla selecionada. É necessário selecionar primeiro a tecla para o botão e depois a imagem a ser apresentada no mesmo.</string>
-    <string name="start">Iniciar</string>
+    <string name="start">Início</string>
     <string name="center">Centro</string>
     <string name="end">Fim</string>
-    <string name="space">Espacador</string>
-    <string name="menu_ime">Mudador de Menu / Teclado</string>
-    <string name="select_button">Selecionar Butão para adicionar</string>
+    <string name="space">Espaçador</string>
+    <string name="menu_ime">Alternador de Menu / Teclado</string>
+    <string name="select_button">Selecionar o botão a adicionar</string>
     <string name="add_button">Adicionar botão</string>
-    <string name="save">Gravar</string>
+    <string name="save">Guardar</string>
     <string name="reset">Repor</string>
     <string name="select_keycode">Selecionar botão do teclado</string>
     <string name="left">Esquerda</string>
     <string name="right">Direita</string>
     <string name="navbar_editor_title">Editor</string>
-    <string name="navbar_editor_summary">Configurar barra de navegação</string>
+    <string name="navbar_editor_summary">Configurar a barra de navegação</string>
     <!-- NavBar Tuner -->
     <string name="menu_ime_always_show">Alternador de Menu / Teclado (mostrar sempre)</string>
     <string name="search">Pesquisar</string>
@@ -107,4 +107,6 @@
     <string name="powernotif_tuner_activity">Notificações de energia</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Mostrar 4G em vez de LTE</string>
+    <string name="global_action_reboot_recovery">Recuperação</string>
+    <string name="global_action_reboot">Reiniciar</string>
 </resources>

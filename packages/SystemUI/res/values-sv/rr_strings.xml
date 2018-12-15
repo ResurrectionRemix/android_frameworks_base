@@ -19,6 +19,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE På </string>
+    <string name="lte_off">LTE Av</string>
     <!-- Screenshot QS tile -->
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
@@ -27,12 +30,38 @@
     <!-- Screenrecord notification action: show/hide pointer -->
     <!-- Screen record notification error title -->
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Skärminspelning</string>
+    <string name="quick_settings_screenrecord_lq_label">Skärminspelning 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Skärminspelning 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Skärminspelning 720p+</string>
     <!-- Screenshot Delete Toast -->
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <!-- QS Config -->
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Förhandsgranska</string>
+    <string name="start">Start</string>
+    <string name="center">Centrera</string>
+    <string name="end">Slut</string>
+    <string name="add_button">Lägg till knapp</string>
+    <string name="save">Spara</string>
+    <string name="reset">Återställ</string>
+    <string name="left">Vänster</string>
+    <string name="right">Höger</string>
     <!-- NavBar Tuner -->
+    <string name="search">Sök</string>
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
+    <string name="global_action_reboot">Starta om</string>
 </resources>

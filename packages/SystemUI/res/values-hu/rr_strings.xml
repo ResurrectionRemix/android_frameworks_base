@@ -82,6 +82,9 @@
     <string name="no_home_message">A készüléken történő navigáláshoz egy Kezdőoldal-gomb szükséges. Kérjük, a mentés előtt adjon hozzá egy Kezdőoldal-gombot.</string>
     <string name="clipboard_description">A Vágólap lehetővé teszi az elemek áthúzását közvetlenül a vágólapra. Ugyanakkor az elemek le is húzhatóak onnan.</string>
     <string name="keycode_description">A billentyűkód gombok lehetővé teszik gombok hozzáadását a Navigációs sávhoz. A gombok megnyomásuk esetén a kiválasztott billentyűt imitálják. Először ki kell választani a gombhoz tartozó billentyűt, majd a gombon megjeleníteni kívánt képet.</string>
+    <string name="start">Kezdő</string>
+    <string name="center">Közép</string>
+    <string name="end">Végző</string>
     <string name="space">Elválasztó</string>
     <string name="menu_ime">Menü / Billentyűzetváltó</string>
     <string name="select_button">Válassza ki a hozzáadni kívánt gombot</string>
@@ -101,6 +104,9 @@
     <string name="statusbar_icons_blacklist">Az állapotsor ikonjai</string>
     <string name="navbar_tuner_activity">A Navigációs sáv gombjai</string>
     <string name="lockscreen_tuner_activity">Parancsikonok a záróképernyőn</string>
+    <string name="powernotif_tuner_activity">Kikapcsolási értesítések</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">4G megjelenítése LTE helyett</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
+    <string name="global_action_reboot">Újraindítás</string>
 </resources>

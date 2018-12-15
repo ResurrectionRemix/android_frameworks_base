@@ -21,7 +21,10 @@
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE uključen </string>
+    <string name="lte_off">LTE uključen </string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Snimka zaslona.</string>
+    <string name="quick_settings_region_screenshot_label">Djelomična snimka zaslona</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
     <!-- Screenrecord notification title -->
