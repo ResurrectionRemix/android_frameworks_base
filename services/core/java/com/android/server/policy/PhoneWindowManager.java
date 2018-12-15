@@ -314,7 +314,6 @@ import com.android.server.wm.DisplayFrames;
 import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 
-import lineageos.hardware.LineageHardwareManager;
 import lineageos.providers.LineageSettings;
 
 import java.io.File;
@@ -784,9 +783,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mInitialMetaState;
     boolean mForceShowSystemBars;
 
-    boolean mNeedsNavigationBar;
-    int mForceNavbar = -1;
-
     // support for activating the lock screen while the screen is on
     boolean mAllowLockscreenWhenOn;
     int mLockScreenTimeout;
@@ -936,8 +932,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_STATUS = 0;
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_NAVIGATION = 1;
-
-    private LineageHardwareManager mLineageHardware;
     private boolean mClearedBecauseOfForceShow;
     private boolean mTopWindowIsKeyguard;
 
@@ -1140,9 +1134,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.FORCE_SHOW_NAVBAR), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(LineageSettings.System.getUriFor(
                     LineageSettings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
@@ -2337,6 +2328,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         mSettingsObserver = new SettingsObserver(mHandler);
+        mSettingsObserver.observe();
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
@@ -2706,7 +2698,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Allow the navigation bar to move on non-square small devices (phones).
         mNavigationBarCanMove = width != height && shortSizeDp < 600;
 
-        mNeedsNavigationBar = mHasNavigationBar;
+        mHasNavigationBar = res.getBoolean(com.android.internal.R.bool.config_showNavigationBar);
+
+        // Allow a system property to override this. Used by the emulator.
+        // See also hasNavigationBar().
+        String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
+        if ("1".equals(navBarOverride)) {
+            mHasNavigationBar = false;
+        } else if ("0".equals(navBarOverride)) {
+            mHasNavigationBar = true;
+        }
 
         // For demo purposes, allow the rotation of the HDMI display to be controlled.
         // By default, HDMI locks rotation to landscape.
@@ -2877,17 +2878,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mWakeGestureEnabledSetting != wakeGestureEnabledSetting) {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
-            }
-
-            int forceNavbar = LineageSettings.System.getInt(resolver,
-                    LineageSettings.System.FORCE_SHOW_NAVBAR, 0);
-            if (forceNavbar != mForceNavbar) {
-                mForceNavbar = forceNavbar;
-                if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_DISABLE)) {
-                    mLineageHardware.set(LineageHardwareManager.FEATURE_KEY_DISABLE,
-                            mForceNavbar == 1);
-                }
-                mHasNavigationBar = mNeedsNavigationBar || mForceNavbar == 1;
             }
 
             // Configure rotation lock.
@@ -8417,11 +8407,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mVrManagerInternal != null) {
             mVrManagerInternal.addPersistentVrModeStateListener(mPersistentVrModeListener);
         }
-
-        mLineageHardware = LineageHardwareManager.getInstance(mContext);
-        // Ensure observe happens in systemReady() since we need
-        // LineageHardwareService to be up and running
-        mSettingsObserver.observe();
 
         readCameraLensCoverState();
         updateUiMode();
