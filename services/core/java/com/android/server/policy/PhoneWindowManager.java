@@ -2800,6 +2800,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Allow the navigation bar to move on non-square small devices (phones).
         mNavigationBarCanMove = width != height && shortSizeDp < 600;
 
+        mNeedsNavigationBar = mHasNavigationBar;
+
         // For demo purposes, allow the rotation of the HDMI display to be controlled.
         // By default, HDMI locks rotation to landscape.
         if ("portrait".equals(SystemProperties.get("persist.demo.hdmirotation"))) {
@@ -2971,9 +2973,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateWakeGestureListenerLp();
             }
 
-            int forceNavbar = LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
-                    UserHandle.USER_CURRENT);
+            int forceNavbar = LineageSettings.System.getInt(resolver,
+                    LineageSettings.System.FORCE_SHOW_NAVBAR, 0);
             if (forceNavbar != mForceNavbar) {
                 mForceNavbar = forceNavbar;
                 if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_DISABLE)) {
