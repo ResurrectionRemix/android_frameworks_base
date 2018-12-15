@@ -6098,8 +6098,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mBrightnessControl = newValue != null && Integer.parseInt(newValue) == 1;
         } else if (BERRY_GLOBAL_STYLE.equals(key)) {
             updateTheme();
-        } else if (LOCKSCREEN_MEDIA_METADATA.equals(key)) {
-            mShowMediaMetadata = newValue != null && Integer.parseInt(newValue) == 1;
         }
     }
     // End Extra BaseStatusBarMethods.
