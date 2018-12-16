@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <dimen name="nav_gesture_swipe_min_length">50dp</dimen>
+    <dimen name="nav_gesture_long_press_max_length">45dp</dimen>
+</resources>

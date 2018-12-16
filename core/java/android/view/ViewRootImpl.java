@@ -147,6 +147,19 @@ public final class ViewRootImpl implements ViewParent,
     private static final boolean DEBUG_INPUT_STAGES = false || LOCAL_LOGV;
     private static final boolean DEBUG_KEEP_SCREEN_ON = false || LOCAL_LOGV;
 
+    private static final float GESTURE_KEY_DISTANCE_THRESHOLD = 50.0f;
+    private static final long GESTURE_MOTION_QUEUE_DELAY = 200;
+    private static final int MSG_GESTURE_MOTION_DOWN = 5566;
+    private boolean mCheckForGestureButton = false;
+    private boolean mGestureButtonActive = false;
+    private int mGestureButtonZone = 0;
+    private boolean mQueueMotionConsumed = true;
+    private ArrayList<MotionEvent> mBackupEventList = new ArrayList();
+    private float mRawX = 0.0f;
+    private float mRawY = 0.0f;
+    private int mScreenHeight = -1;
+    private int mScreenWidth = -1;
+
     /**
      * Set to false if we do not want to use the multi threaded renderer even though
      * threaded renderer (aka hardware renderering) is used. Note that by disabling
@@ -544,6 +557,11 @@ public final class ViewRootImpl implements ViewParent,
         }
 
         loadSystemProperties();
+
+        DisplayMetrics dm = new DisplayMetrics();
+        mAttachInfo.mDisplay.getRealMetrics(dm);
+        mScreenHeight = Math.max(dm.widthPixels, dm.heightPixels);
+        mScreenWidth = Math.min(dm.widthPixels, dm.heightPixels);
     }
 
     public static void addFirstDrawHandler(Runnable callback) {
@@ -4049,6 +4067,8 @@ public final class ViewRootImpl implements ViewParent,
                     return "MSG_POINTER_CAPTURE_CHANGED";
                 case MSG_DRAW_FINISHED:
                     return "MSG_DRAW_FINISHED";
+                case MSG_GESTURE_MOTION_DOWN:
+                    return "MSG_GESTURE_MOTION_DOWN";
             }
             return super.getMessageName(message);
         }
@@ -4268,6 +4288,18 @@ public final class ViewRootImpl implements ViewParent,
                 } break;
                 case MSG_DRAW_FINISHED: {
                     pendingDrawFinished();
+                } break;
+                case MSG_GESTURE_MOTION_DOWN: {
+                    int k = 0;
+                    while (k < ViewRootImpl.this.mBackupEventList.size()) {
+                        try {
+                            boolean ishandled = ViewRootImpl.this.mView.dispatchPointerEvent(
+                                    (MotionEvent) ViewRootImpl.this.mBackupEventList.get(k));
+                            k++;
+                        } catch (NullPointerException e) {
+                            Log.e(ViewRootImpl.TAG, "mView does not exist, discard points. " + e);
+                        }
+                    }
                 } break;
             }
         }
@@ -5096,6 +5128,164 @@ public final class ViewRootImpl implements ViewParent,
 
         private int processPointerEvent(QueuedInputEvent q) {
             final MotionEvent event = (MotionEvent)q.mEvent;
+            int action;
+            int i;
+            int rotation;
+            boolean isLandscape;
+            float raw;
+            boolean hit;
+
+            IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+            boolean isGestureButtonEnabled = false;
+            boolean isKeyguardOn = false;
+            try {
+                isGestureButtonEnabled = wm.isGestureButtonEnabled();
+                isKeyguardOn = wm.isKeyguardLocked();
+            } catch (RemoteException ex) {
+                isGestureButtonEnabled = false;
+                isKeyguardOn = false;
+            }
+            if (isGestureButtonEnabled && !isKeyguardOn) {
+                if (event.getPointerCount() == 1) {
+                    action = event.getActionMasked();
+                    rotation = 0;
+                    isLandscape = false;
+                    if (action == 0 || mCheckForGestureButton || mGestureButtonActive) {
+                        rotation = mAttachInfo.mDisplay.getRotation();
+                        isLandscape = rotation != 1 ? rotation == 3 : true;
+                    }
+
+                    Message msg;
+                    int i2;
+                    boolean ishandled;
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            mCheckForGestureButton = false;
+                            mGestureButtonActive = false;
+                            mQueueMotionConsumed = true;
+                            mBackupEventList.clear();
+                            if (isLandscape) {
+                                raw = event.getRawX();
+                            } else {
+                                raw = event.getRawY();
+                            }
+                            if (rotation == 0 || rotation == 1) {
+                                mGestureButtonZone = mScreenHeight - 20;
+                                hit = raw > ((float) mGestureButtonZone);
+                            } else {
+                                mGestureButtonZone = 20;
+                                hit = raw < ((float) mGestureButtonZone);
+                            }
+                            if (hit) {
+                                mCheckForGestureButton = true;
+                                mRawX = event.getRawX();
+                                mRawY = event.getRawY();
+                                mBackupEventList.add(MotionEvent.obtain(event));
+                                msg = Message.obtain(mHandler,
+                                        ViewRootImpl.MSG_GESTURE_MOTION_DOWN, mView);
+                                mQueueMotionConsumed = false;
+                                mHandler.sendMessageDelayed(msg,
+                                        ViewRootImpl.GESTURE_MOTION_QUEUE_DELAY);
+                                return 1;
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            if (!mGestureButtonActive) {
+                                if (mCheckForGestureButton) {
+                                    if (mHandler.hasMessages(
+                                            ViewRootImpl.MSG_GESTURE_MOTION_DOWN)) {
+                                        mHandler.removeMessages(
+                                                ViewRootImpl.MSG_GESTURE_MOTION_DOWN);
+                                    }
+                                    if (!mQueueMotionConsumed) {
+                                        i2 = 0;
+                                        while (i2 < mBackupEventList.size()) {
+                                            try {
+                                                ishandled = mView.dispatchPointerEvent(
+                                                        (MotionEvent) mBackupEventList.get(i2));
+                                                i2++;
+                                            } catch (NullPointerException e) {
+                                                Log.e(ViewRootImpl.TAG, "discard points" + e);
+                                            }
+                                        }
+                                    }
+                                    mQueueMotionConsumed = true;
+                                    mCheckForGestureButton = false;
+                                    mGestureButtonActive = false;
+                                }
+                                break;
+                            }
+                            mCheckForGestureButton = false;
+                            mGestureButtonActive = false;
+                            mQueueMotionConsumed = true;
+                            return 1;
+                        case MotionEvent.ACTION_MOVE:
+                            if (mCheckForGestureButton) {
+                                mBackupEventList.add(MotionEvent.obtain(event));
+                                boolean swipeTimeoSlow = false;
+                                boolean reachDistance = false;
+                                if (event.getEventTime() - event.getDownTime() > 400) {
+                                    swipeTimeoSlow = true;
+                                }
+                                float threshold = ViewRootImpl.GESTURE_KEY_DISTANCE_THRESHOLD;
+                                if (rotation == 0 || rotation == 2) {
+                                    if (Math.abs(event.getRawY() - mRawY) > ((float) threshold)) {
+                                        reachDistance = true;
+                                    }
+                                } else if (rotation == 1 || rotation == 3) {
+                                    if (Math.abs(event.getRawX() - mRawX) > ((float) threshold)) {
+                                        reachDistance = true;
+                                    }
+                                }
+                                if (reachDistance) {
+                                    mGestureButtonActive = true;
+                                    if (mHandler.hasMessages(
+                                            ViewRootImpl.MSG_GESTURE_MOTION_DOWN)) {
+                                        mHandler.removeMessages(
+                                                ViewRootImpl.MSG_GESTURE_MOTION_DOWN);
+                                    }
+
+                                    mCheckForGestureButton = false;
+                                    mQueueMotionConsumed = true;
+                                } else if (reachDistance || swipeTimeoSlow) {
+                                    if (mHandler.hasMessages(
+                                            ViewRootImpl.MSG_GESTURE_MOTION_DOWN)) {
+                                        mHandler.removeMessages(
+                                                ViewRootImpl.MSG_GESTURE_MOTION_DOWN);
+                                    }
+                                    if (!mQueueMotionConsumed) {
+                                        i2 = 0;
+                                        while (i2 < mBackupEventList.size()) {
+                                            try {
+                                                ishandled = mView.dispatchPointerEvent(
+                                                        (MotionEvent) mBackupEventList.get(i2));
+                                                i2++;
+                                            } catch (NullPointerException e2) {
+                                                Log.e(ViewRootImpl.TAG, "discard points" + e2);
+                                            }
+                                        }
+                                    }
+                                    mCheckForGestureButton = false;
+                                    mGestureButtonActive = false;
+                                    mQueueMotionConsumed = true;
+                                } else if (mHandler.hasMessages(
+                                        ViewRootImpl.MSG_GESTURE_MOTION_DOWN)) {
+                                    mHandler.removeMessages(ViewRootImpl.MSG_GESTURE_MOTION_DOWN);
+                                    msg = Message.obtain(mHandler,
+                                            ViewRootImpl.MSG_GESTURE_MOTION_DOWN, mView);
+                                    mQueueMotionConsumed = false;
+                                    mHandler.sendMessageDelayed(msg,
+                                            (long) ViewRootImpl.GESTURE_MOTION_QUEUE_DELAY);
+                                }
+                                return 1;
+                            } else if (mGestureButtonActive) {
+                                return 1;
+                            }
+                            break;
+                    }
+                }
+            }
 
             mAttachInfo.mUnbufferedDispatchRequested = false;
             mAttachInfo.mHandlingPointerEvent = true;
@@ -7409,6 +7599,7 @@ public final class ViewRootImpl implements ViewParent,
             mUpcomingWindowFocus = hasFocus;
             mUpcomingInTouchMode = inTouchMode;
         }
+
         Message msg = Message.obtain();
         msg.what = MSG_WINDOW_FOCUS_CHANGED;
         mHandler.sendMessage(msg);

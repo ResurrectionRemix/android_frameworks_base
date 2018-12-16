@@ -1798,4 +1798,17 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
      */
     public void screenRecordAction(int mode);
 
+    /**
+     * Check if gesture navigation is enable.
+     *
+     * @return true if enable; false otherwise.
+     */
+    boolean isGestureButtonEnabled();
+
+    /**
+     * Check if current touch move is in gestu.
+     *
+     * @return true if enable; false otherwise.
+     */
+    boolean isGestureButtonRegion(int i, int i2);
 }

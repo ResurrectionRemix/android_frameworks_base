@@ -64,4 +64,8 @@
 
    <!-- Hardware key binding -->
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+    <java-symbol type="dimen" name="nav_gesture_swipe_min_length" />
+    <java-symbol type="dimen" name="nav_gesture_long_press_max_length" />
+
 </resources>
