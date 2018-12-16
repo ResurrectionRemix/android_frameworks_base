@@ -32,6 +32,7 @@ import android.util.ArraySet;
 import android.util.Log;
 import android.util.TimingsTraceLog;
 
+import com.android.systemui.navigation.Navigator;
 import com.android.systemui.plugins.OverlayPlugin;
 import com.android.systemui.plugins.PluginListener;
 import com.android.systemui.plugins.PluginManager;
@@ -203,8 +204,9 @@ public class SystemUIApplication extends Application implements SysUiServiceProv
                     public void onPluginConnected(OverlayPlugin plugin, Context pluginContext) {
                         StatusBar statusBar = getComponent(StatusBar.class);
                         if (statusBar != null) {
+                            Navigator navbar = statusBar.getNavigationBarView();                            
                             plugin.setup(statusBar.getStatusBarWindow(),
-                                    statusBar.getNavigationBarView());
+                                    navbar != null ? navbar.getBaseView() : null);
                         }
                         // Lazy init.
                         if (mOverlays == null) mOverlays = new ArraySet<>();

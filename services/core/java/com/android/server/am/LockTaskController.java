@@ -481,6 +481,7 @@ public class LockTaskController {
                 getStatusBarService().showPinningEnterExitToast(false /* entering */);
             }
             mWindowManager.onLockTaskStateChanged(LOCK_TASK_MODE_NONE);
+            getStatusBarService().screenPinningStateChanged(false);
         } catch (RemoteException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -600,6 +601,7 @@ public class LockTaskController {
             if (getDevicePolicyManager() != null) {
                 getDevicePolicyManager().notifyLockTaskModeChanged(true, packageName, userId);
             }
+            getStatusBarService().screenPinningStateChanged(true);
         } catch (RemoteException ex) {
             throw new RuntimeException(ex);
         }

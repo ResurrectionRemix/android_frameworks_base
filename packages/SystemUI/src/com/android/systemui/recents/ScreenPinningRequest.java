@@ -42,6 +42,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.graphics.drawable.Drawable;
+import com.android.systemui.navigation.Navigator;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
@@ -242,7 +244,7 @@ public class ScreenPinningRequest implements View.OnClickListener {
             }
 
             StatusBar statusBar = SysUiServiceProvider.getComponent(mContext, StatusBar.class);
-            NavigationBarView navigationBarView =
+            Navigator navigationBarView =
                     statusBar != null ? statusBar.getNavigationBarView() : null;
             final boolean recentsVisible = navigationBarView != null
                     && navigationBarView.isRecentsButtonVisible();
@@ -273,16 +275,17 @@ public class ScreenPinningRequest implements View.OnClickListener {
                 int dualToneLightTheme = Utils.getThemeAttr(getContext(), R.attr.lightIconTheme);
                 Context lightContext = new ContextThemeWrapper(getContext(), dualToneLightTheme);
                 Context darkContext = new ContextThemeWrapper(getContext(), dualToneDarkTheme);
-                ((ImageView) mLayout.findViewById(R.id.screen_pinning_back_icon))
-                        .setImageDrawable(navigationBarView.getBackDrawable(lightContext,
-                                darkContext));
-                ((ImageView) mLayout.findViewById(R.id.screen_pinning_home_icon))
-                        .setImageDrawable(navigationBarView.getHomeDrawable(lightContext,
-                                darkContext));
-                if (recentsVisible) {
-                    ((ImageView) mLayout.findViewById(R.id.screen_pinning_recents_icon))
-                            .setImageDrawable(navigationBarView.getRecentsDrawable(lightContext,
-                                    darkContext));
+                Drawable backDrawable = navigationBarView.getBackDrawable(lightContext,
+                        darkContext);
+                Drawable homeDrawable = navigationBarView.getHomeDrawable(lightContext,
+                        darkContext);
+                if (backDrawable != null) {
+                    ((ImageView) mLayout.findViewById(R.id.screen_pinning_back_icon))
+                            .setImageDrawable(backDrawable);
+                }
+                if (homeDrawable != null) {
+                    ((ImageView) mLayout.findViewById(R.id.screen_pinning_home_icon))
+                            .setImageDrawable(homeDrawable);
                 }
             }
 

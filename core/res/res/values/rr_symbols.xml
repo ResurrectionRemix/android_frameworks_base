@@ -59,4 +59,9 @@
     <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
     <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 
+    <java-symbol type="anim" name="inv_app_in" />
+    <java-symbol type="anim" name="inv_app_out" />
+
+   <!-- Hardware key binding -->
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
 </resources>

@@ -234,7 +234,6 @@ public class Visualizer {
                 throw (new UnsupportedOperationException(packageName
                         + " is locked out from Visualizer by Pulse"));
             }
-
             // native initialization
             int result = native_setup(new WeakReference<Visualizer>(this), audioSession, id,
                     ActivityThread.currentOpPackageName());

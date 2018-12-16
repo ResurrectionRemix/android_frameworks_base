@@ -67,6 +67,7 @@ import com.android.systemui.OverviewProxyService;
 import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
 import com.android.systemui.SysUiServiceProvider;
+import com.android.systemui.navigation.Navigator;
 import com.android.systemui.navigation.pulse.PulseController;
 import com.android.systemui.navigation.pulse.PulseController.PulseObserver;
 import com.android.systemui.plugins.PluginListener;
@@ -95,9 +96,10 @@ import static com.android.systemui.shared.system.NavigationBarCompat.FLAG_DISABL
 import static com.android.systemui.shared.system.NavigationBarCompat.FLAG_SHOW_OVERVIEW_BUTTON;
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_OVERVIEW;
 import static com.android.systemui.shared.system.NavigationBarCompat.HIT_TARGET_ROTATION;
+import com.android.systemui.navigation.Navigator;
 
-public class NavigationBarView extends FrameLayout implements PluginListener<NavGesture>,
-        TunerService.Tunable, PulseObserver {
+public class NavigationBarView extends FrameLayout implements Navigator, PulseObserver, 
+        TunerService.Tunable {
     final static boolean DEBUG = false;
     final static String TAG = "StatusBar/NavBarView";
 
@@ -810,13 +812,20 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     }
 
     public void updateSlippery() {
-        setSlippery(!isQuickStepSwipeUpEnabled() ||
-                (mPanelView != null && mPanelView.isFullyExpanded()));
+        // temp hax for null mPanelView
+        if (mPanelView == null) {
+            mPanelView = SysUiServiceProvider.getComponent(getContext(), StatusBar.class).getPanel();
+        }
+        final boolean isExpanded = mPanelView != null ? mPanelView.isFullyExpanded() : false;
+        setSlippery(!isQuickStepSwipeUpEnabled() || isExpanded);
     }
 
     private void setSlippery(boolean slippery) {
         boolean changed = false;
         final ViewGroup navbarView = ((ViewGroup) getParent());
+        if (navbarView == null) {
+            return;
+        }
         final WindowManager.LayoutParams lp = (WindowManager.LayoutParams) navbarView
                 .getLayoutParams();
         if (lp == null) {
@@ -1040,11 +1049,13 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         return mVertical;
     }
 
-    public void setPulseController(PulseController pc) {
+    @Override
+    public void setControllers(PulseController pc) {
         mPulse = pc;
         mPulse.setPulseObserver(this);
     }
 
+    @Override
     public final void setKeyguardShowing(boolean showing) {
         if (mKeyguardShowing != showing) {
             mKeyguardShowing = showing;
@@ -1055,30 +1066,14 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         }
     }
 
-    public void notifyPulseScreenOn(boolean screenOn) {
-        if (mPulse != null) {
-            mPulse.notifyScreenOn(screenOn);
-        }
-    }
-
-    public void sendIntentToPulse(Intent intent) {
-        if (mPulse != null) {
-            mPulse.onReceive(intent);
-        }
-    }
-
-    public final void dispose() {
-        if (mPulse != null) {
-            mPulse.doUnlinkVisualizer();
-        }
-    }
-
+    @Override
     public final void notifyInflateFromUser() {
         if (mPulse != null) {
             mPulse.notifyScreenOn(true);
         }
     }
 
+    @Override
     public void setLeftInLandscape(boolean leftInLandscape) {
         if (mPulse != null) {
             mPulse.setLeftInLandscape(leftInLandscape);
@@ -1392,4 +1387,17 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         mDockedStackExists = exists;
         updateRecentsIcon();
     });
+
+    @Override
+    public View getBaseView() {
+        return this;
+    }
+
+    @Override
+    public void dispose() {
+        if (mPulse != null) {
+            mPulse.doUnlinkVisualizer();
+        }
+        removeAllViews();
+    }
 }

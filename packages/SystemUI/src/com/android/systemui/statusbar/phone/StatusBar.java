@@ -94,6 +94,7 @@ import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
+import android.media.session.MediaController;
 import android.media.session.PlaybackState;
 import android.metrics.LogMaker;
 import android.net.Uri;
@@ -104,6 +105,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
@@ -151,6 +153,11 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.internal.utils.ActionConstants;
+import com.android.internal.utils.ActionUtils;
+import com.android.internal.utils.SmartPackageMonitor;
+import com.android.internal.utils.SmartPackageMonitor.PackageChangedListener;
+import com.android.internal.utils.SmartPackageMonitor.PackageState;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.MessagingGroup;
 import com.android.internal.widget.MessagingMessage;
@@ -183,6 +190,7 @@ import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
+import com.android.systemui.navigation.Navigator;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.qs.QS;
 import com.android.systemui.plugins.statusbar.NotificationSwipeActionHelper.SnoozeOption;
@@ -242,6 +250,7 @@ import com.android.systemui.statusbar.policy.DarkIconDispatcher;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.HeadsUpUtil;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
@@ -273,7 +282,7 @@ import java.util.Map;
 public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunable,
         DragDownHelper.DragDownCallback, ActivityStarter, OnUnlockMethodChangedListener,
         OnHeadsUpChangedListener, CommandQueue.Callbacks, ZenModeController.Callback,
-        ColorExtractor.OnColorsChangedListener, ConfigurationListener, NotificationPresenter {
+        ColorExtractor.OnColorsChangedListener, ConfigurationListener, NotificationPresenter, PackageChangedListener {
     public static final boolean MULTIUSER_DEBUG = false;
 
     public static final boolean ENABLE_CHILD_NOTIFICATIONS
@@ -294,10 +303,10 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             "system:" + Settings.System.SCREEN_BRIGHTNESS_MODE;
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL =
             "lineagesystem:" + LineageSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL;
-    private static final String FORCE_SHOW_NAVBAR =
-            "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
     private static final String BERRY_GLOBAL_STYLE =
             "lineagesystem:" + LineageSettings.System.BERRY_GLOBAL_STYLE;
+    private static final String LOCKSCREEN_MEDIA_METADATA =
+            "lineagesecure:" + LineageSettings.Secure.LOCKSCREEN_MEDIA_METADATA;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -494,6 +503,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
     private final DisplayMetrics mDisplayMetrics = new DisplayMetrics();
 
+    private SmartPackageMonitor mPackageMonitor;
+    private FlashlightController mFlashlightController;
+
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
         ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
@@ -540,6 +552,20 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     };
 
     protected final H mHandler = createHandler();
+
+    protected final ContentObserver mNavbarObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            boolean showing = Settings.Secure.getInt(mContext.getContentResolver(),
+                    Settings.Secure.NAVIGATION_BAR_VISIBLE,
+                    ActionUtils.hasNavbarByDefault(mContext) ? 1 : 0) != 0;
+            if (!showing && mNavigationBar != null && mNavigationBarView != null) {
+                removeNavigationBar();
+            } else if (showing && mNavigationBar == null && mNavigationBarView == null) {
+                createNavigationBar();
+            }
+        }
+    };
 
     private int mInteractingWindows;
     private boolean mAutohideSuspended;
@@ -740,14 +766,19 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
-        tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         tunerService.addTunable(this, BERRY_GLOBAL_STYLE);
+        tunerService.addTunable(this, LOCKSCREEN_MEDIA_METADATA);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 
         mDisplay = mWindowManager.getDefaultDisplay();
+
+        mPackageMonitor = new SmartPackageMonitor();
+        mPackageMonitor.register(mContext, mHandler);
+        mPackageMonitor.addListener(this);
+
         updateDisplaySize();
 
         Resources res = mContext.getResources();
@@ -771,6 +802,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
+
+        mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.NAVIGATION_BAR_VISIBLE), false, mNavbarObserver, UserHandle.USER_ALL);
 
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -884,6 +918,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         Dependency.get(ActivityStarterDelegate.class).setActivityStarterImpl(this);
 
         Dependency.get(ConfigurationController.class).addCallback(this);
+        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
     // ================================================================================
@@ -984,15 +1019,15 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mNotificationPanelDebugText.setVisibility(View.VISIBLE);
         }
 
-        try {
-            boolean showNav = mWindowManagerService.hasNavigationBar();
-            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
-            if (showNav) {
-                createNavigationBar();
-            }
-        } catch (RemoteException ex) {
-            // no window manager? good luck with that
+        boolean showNav = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.NAVIGATION_BAR_VISIBLE,
+                ActionUtils.hasNavbarByDefault(mContext) ? 1 : 0) != 0;
+        if (DEBUG)
+            Log.v(TAG, "hasNavigationBar=" + showNav);
+        if (showNav) {
+            createNavigationBar();
         }
+
         mScreenPinningNotify = new ScreenPinningNotify(mContext);
         mStackScroller.setLongPressListener(mEntryManager.getNotificationLongClicker());
         mStackScroller.setStatusBar(this);
@@ -1276,8 +1311,23 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             if (mLightBarController != null) {
                 mNavigationBar.setLightBarController(mLightBarController);
             }
+            if (!mNavigationBar.isUsingStockNav()) {
+                ((NavigationBarFrame)mNavigationBarView).disableDeadZone();
+            }
             mNavigationBar.setCurrentSysuiVisibility(mSystemUiVisibility);
         });
+    }
+
+    protected void removeNavigationBar() {
+        if (mNavigationBar != null && mNavigationBarView != null) {
+            FragmentHostManager fragmentHost = FragmentHostManager.get(mNavigationBarView);
+            if (mNavigationBarView.isAttachedToWindow()) {
+                mWindowManager.removeViewImmediate(mNavigationBarView);
+                mNavigationBarView = null;
+            }
+            fragmentHost.getFragmentManager().beginTransaction().remove(mNavigationBar).commit();
+            mNavigationBar = null;
+        }
     }
 
     public NotificationMediaManager getMediaManager() {
@@ -2273,6 +2323,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         if (!isExpanded) {
             mRemoteInputManager.removeRemoteInputEntriesKeptUntilCollapsed();
         }
+        if (mNavigationBar != null) {
+            mNavigationBar.setPanelExpanded(isExpanded);
+        }
     }
 
     public NotificationStackScrollLayout getNotificationScrollLayout() {
@@ -2887,6 +2940,40 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             // workspace
             WirelessChargingAnimation.makeWirelessChargingAnimation(mContext, null,
                     batteryLevel, null, false).show();
+        }
+    }
+
+    @Override
+    public void toggleFlashlight() {
+        if (mFlashlightController != null
+                && mFlashlightController.hasFlashlight()
+                && mFlashlightController.isAvailable()) {
+            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        }
+    }
+
+    @Override
+    public void onPackageChanged(String pkg, PackageState state) {
+        if (state == PackageState.PACKAGE_REMOVED
+                || state == PackageState.PACKAGE_CHANGED) {
+            final Context ctx = mContext;
+            final Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!ActionUtils.hasNavbarByDefault(ctx)) {
+                        ActionUtils.resolveAndUpdateButtonActions(ctx,
+                                ActionConstants
+                                        .getDefaults(ActionConstants.HWKEYS));
+                    }
+                    ActionUtils
+                            .resolveAndUpdateButtonActions(ctx, ActionConstants
+                                    .getDefaults(ActionConstants.SMARTBAR));
+                    ActionUtils.resolveAndUpdateButtonActions(ctx,
+                            ActionConstants.getDefaults(ActionConstants.FLING));
+                }
+            });
+            thread.setPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            thread.start();
         }
     }
 
@@ -3758,6 +3845,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         Dependency.get(ConfigurationController.class).removeCallback(this);
         mZenController.removeCallback(this);
         mAppOpsListener.destroy();
+
+        mPackageMonitor.removeListener(this);
+        mPackageMonitor.unregister();
     }
 
     private boolean mDemoModeAllowed;
@@ -4528,9 +4618,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         return getMaxNotificationsWhileLocked(false /* recompute */);
     }
 
-    // TODO: Figure out way to remove these.
-    public NavigationBarView getNavigationBarView() {
-        return (mNavigationBar != null ? (NavigationBarView) mNavigationBar.getView() : null);
+    // TODO: Figure out way to remove this.
+    public Navigator getNavigationBarView() {
+        return mNavigationBar != null ? mNavigationBar.getNavigator() : null;
     }
 
     public View getNavigationBarWindow() {
@@ -5447,34 +5537,14 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
 
         void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PULSE_APPS_BLACKLIST),
-                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-           if (uri.equals(Settings.System.getUriFor(Settings.System.PULSE_APPS_BLACKLIST))) {
-                setPulseBlacklist();
-            }
         }
 
         public void update() {
-            updateQsPanelResources();
         }
-    }
-
-    private void updateQsPanelResources() {
-        if (mQSPanel != null) {
-            setPulseBlacklist();
-        }
-    }
-
-    private void setPulseBlacklist() {
-        String blacklist = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_APPS_BLACKLIST, UserHandle.USER_CURRENT);
-        getMediaManager().setPulseBlacklist(blacklist);
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
@@ -6026,15 +6096,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = newValue != null && Integer.parseInt(newValue) == 1;
-        } else if (mWindowManagerService != null && FORCE_SHOW_NAVBAR.equals(key)) {
-            boolean forcedVisibility = newValue != null && Integer.parseInt(newValue) == 1;
-
-            if (forcedVisibility && mNavigationBarView == null) {
-                createNavigationBar();
-            } else if (mNavigationBarView != null) {
-                mWindowManager.removeViewImmediate(mNavigationBarView);
-                mNavigationBarView = null;
-            }
         } else if (BERRY_GLOBAL_STYLE.equals(key)) {
             updateTheme();
         }

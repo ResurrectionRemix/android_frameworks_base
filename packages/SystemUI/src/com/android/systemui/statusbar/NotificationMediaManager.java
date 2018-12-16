@@ -33,9 +33,7 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Handles tasks and state related to media notifications. For example, there is a 'current' media
@@ -57,8 +55,6 @@ public class NotificationMediaManager implements Dumpable {
     private MediaMetadata mMediaMetadata;
     private MediaUpdateListener mListener;
 
-    private Set<String> mBlacklist = new HashSet<String>();
-
     // callback into NavigationFragment for Pulse
     public interface MediaUpdateListener {
         public void onMediaUpdated(boolean playing);
@@ -77,12 +73,12 @@ public class NotificationMediaManager implements Dumpable {
                     clearCurrentMediaNotification();
                     mPresenter.updateMediaMetaData(true, true);
                 }
+                if (mListener != null) {
+                    setMediaPlaying();
+                }
                 if (mStatusBar != null) {
                     mStatusBar.getVisualizer().setPlaying(state.getState()
                             == PlaybackState.STATE_PLAYING);
-                }
-                if (mListener != null) {
-                    setMediaPlaying();
                 }
             }
         }
@@ -245,14 +241,6 @@ public class NotificationMediaManager implements Dumpable {
         mPresenter.updateMediaMetaData(metaDataChanged, true);
     }
 
-    public void addCallback(MediaUpdateListener listener) {
-        mListener = listener;
-    }
-
-    public boolean isPlaybackActive() {
-        return isPlaybackActive(getMediaControllerPlaybackState(mMediaController));
-    }
-
     public void clearCurrentMediaNotification() {
         mMediaNotificationKey = null;
         clearCurrentMediaNotificationSession();
@@ -276,6 +264,14 @@ public class NotificationMediaManager implements Dumpable {
             pw.print(" title=" + mMediaMetadata.getText(MediaMetadata.METADATA_KEY_TITLE));
         }
         pw.println();
+    }
+
+    public void addCallback(MediaUpdateListener listener) {
+        mListener = listener;
+    }
+
+    public boolean isPlaybackActive() {
+        return isPlaybackActive(getMediaControllerPlaybackState(mMediaController));
     }
 
     private boolean isPlaybackActive(int state) {
@@ -335,12 +331,6 @@ public class NotificationMediaManager implements Dumpable {
                     mEntryManager.getNotificationData().getAllNotifications();
             int N = activeNotifications.size();
             final String pkg = mMediaController.getPackageName();
-
-            if (!mBlacklist.isEmpty() && mBlacklist.contains(pkg)) {
-                // don't play Pulse for this app
-                return;
-            }
-
             for (int i = 0; i < N; i++) {
                 final NotificationData.Entry entry = activeNotifications.get(i);
                 if (entry.notification.getPackageName().equals(pkg)) {
@@ -365,15 +355,6 @@ public class NotificationMediaManager implements Dumpable {
     public void setPulseColors(boolean isColorizedMEdia, int[] colors) {
         if (mListener != null) {
             mListener.setPulseColors(isColorizedMEdia, colors);
-        }
-    }
-
-    public void setPulseBlacklist(String blacklist) {
-        mBlacklist.clear();
-        if (blacklist != null) {
-            for (String app : blacklist.split("\\|")) {
-                mBlacklist.add(app);
-            }
         }
     }
 }
