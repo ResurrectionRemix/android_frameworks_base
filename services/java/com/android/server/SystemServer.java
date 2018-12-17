@@ -978,7 +978,6 @@ public final class SystemServer {
         CountryDetectorService countryDetector = null;
         ILockSettings lockSettings = null;
         MediaRouterService mediaRouter = null;
-        GestureService gestureService = null;
         EdgeGestureService edgeGestureService = null;
 
         // Bring up services needed for UI.
