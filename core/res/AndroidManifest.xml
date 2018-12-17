@@ -4425,6 +4425,8 @@
                     android:resource="@xml/autofill_compat_accessibility_service" />
         </service>
 
+        <service android:name="com.android.server.smartpixels.SmartPixelsService"
+                 android:exported="true" />
 </application>
 
 </manifest>

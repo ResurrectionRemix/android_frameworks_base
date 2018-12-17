@@ -43,6 +43,8 @@
     <!-- Whether device has turbo power charging support -->
     <java-symbol type="bool" name="config_hasTurboPowerCharger" />
 
+    <java-symbol type="bool" name="config_supportSmartPixels" />
+
     <!-- Toast Animation -->
     <java-symbol type="style" name="Animation.Toast.Fade" />
     <java-symbol type="style" name="Animation.Toast.SlideRight" />
@@ -62,8 +64,12 @@
     <java-symbol type="anim" name="inv_app_in" />
     <java-symbol type="anim" name="inv_app_out" />
 
-   <!-- Hardware key binding -->
+    <!-- Hardware key binding -->
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+    <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
+    <java-symbol type="dimen" name="edge_gesture_perpendicular_distance" />
+    <java-symbol type="dimen" name="edge_gesture_trigger_thickness" />
 
     <java-symbol type="dimen" name="nav_gesture_swipe_min_length" />
     <java-symbol type="dimen" name="nav_gesture_long_press_max_length" />
