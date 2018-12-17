@@ -122,6 +122,18 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     public static final String SETTING_VOLUME_PANEL_ON_LEFT =
             "lineagesecure:" + LineageSettings.Secure.VOLUME_PANEL_ON_LEFT;
+    public static final String AUDIO_PANEL_VIEW_MEDIA =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_MEDIA;
+    public static final String AUDIO_PANEL_VIEW_RINGER =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_RINGER;
+    public static final String AUDIO_PANEL_VIEW_NOTIFICATION =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_NOTIFICATION;
+    public static final String AUDIO_PANEL_VIEW_ALARM =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_ALARM;
+    public static final String AUDIO_PANEL_VIEW_VOICE =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_VOICE;
+    public static final String AUDIO_PANEL_VIEW_BT_SCO =
+            "system:" + Settings.System.AUDIO_PANEL_VIEW_BT_SCO;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -174,6 +186,13 @@ public class VolumeDialogImpl implements VolumeDialog,
     // Volume panel placement left or right
     private boolean mVolumePanelOnLeft;
 
+    private boolean mMediaShowing;
+    private boolean mRingerShowing;
+    private boolean mNotificationShowing;
+    private boolean mAlarmShowing;
+    private boolean mVoiceShowing;
+    private boolean mBTSCOShowing;
+
     public VolumeDialogImpl(Context context) {
         mContext =
                 new ContextThemeWrapper(context, R.style.qs_theme);
@@ -185,7 +204,14 @@ public class VolumeDialogImpl implements VolumeDialog,
         mShowActiveStreamOnly = showActiveStreamOnly();
         mHasSeenODICaptionsTooltip =
                 Prefs.getBoolean(context, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
-        Dependency.get(TunerService.class).addTunable(mTunable, SETTING_VOLUME_PANEL_ON_LEFT);
+        final TunerService tunerService = Dependency.get(TunerService.class);
+        tunerService.addTunable(this, SETTING_VOLUME_PANEL_ON_LEFT));
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_MEDIA);
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_RINGER);
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_NOTIFICATION);
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_ALARM);
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_VOICE);
+        tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
     }
 
     @Override
@@ -349,7 +375,8 @@ public class VolumeDialogImpl implements VolumeDialog,
     private final TunerService.Tunable mTunable = new TunerService.Tunable() {
         @Override
         public void onTuningChanged(String key, String newValue) {
-            if (key.equals(SETTING_VOLUME_PANEL_ON_LEFT)) {
+        switch (key) {
+            case SETTING_VOLUME_PANEL_ON_LEFT:
                 final boolean volumePanelOnLeft = TunerService.parseIntegerSwitch(newValue, false);
                 if (mVolumePanelOnLeft != volumePanelOnLeft) {
                     mVolumePanelOnLeft = volumePanelOnLeft;
@@ -358,7 +385,28 @@ public class VolumeDialogImpl implements VolumeDialog,
                         mConfigChanged = true;
                     });
                 }
-            }
+                break;
+            case AUDIO_PANEL_VIEW_MEDIA:
+                mMediaShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            case AUDIO_PANEL_VIEW_RINGER:
+                mRingerShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            case AUDIO_PANEL_VIEW_NOTIFICATION:
+                mNotificationShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            case AUDIO_PANEL_VIEW_ALARM:
+                mAlarmShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            case AUDIO_PANEL_VIEW_VOICE:
+                mVoiceShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            case AUDIO_PANEL_VIEW_BT_SCO:
+                mBTSCOShowing = TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            default:
+                break;
+          }
         }
     };
 
@@ -833,6 +881,25 @@ public class VolumeDialogImpl implements VolumeDialog,
     }
 
     private boolean shouldBeVisibleH(VolumeRow row, VolumeRow activeRow) {
+        if (row.stream == AudioManager.STREAM_MUSIC && mMediaShowing) {
+            return true;
+        }
+        if (row.stream == AudioManager.STREAM_RING && mRingerShowing) {
+            return true;
+        }
+        if (row.stream == AudioManager.STREAM_NOTIFICATION && mNotificationShowing) {
+            return true;
+        }
+        if (row.stream == AudioManager.STREAM_ALARM && mAlarmShowing) {
+            return true;
+        }
+        if (row.stream == AudioManager.STREAM_VOICE_CALL && mVoiceShowing) {
+            return true;
+        }
+        if (row.stream == AudioManager.STREAM_BLUETOOTH_SCO && mBTSCOShowing) {
+            return true;
+        }
+
         boolean isActive = row.stream == activeRow.stream;
 
         if (isActive) {
