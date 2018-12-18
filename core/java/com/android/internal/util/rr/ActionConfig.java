@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.aicp.gear.util;
+package com.android.internal.util.rr;
 
 public class ActionConfig {
 
