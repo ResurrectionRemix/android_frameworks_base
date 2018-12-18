@@ -4569,8 +4569,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         Trace.endSection();
     }
 
-        haltTicker();
-
     /**
      * Switches theme from light to dark and vice-versa.
      */
