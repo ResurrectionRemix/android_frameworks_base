@@ -51,5 +51,8 @@
     <bool name="config_audioPanelOnLeftSide">false</bool>
 
     <bool name="qs_status_bar_hidden">false</bool>
-</resources>
+
+    <!-- Allow devices override audio panel location to the left side -->
+    <bool name="config_audioPanelOnLeftSide">false</bool>
+
 </resources>
