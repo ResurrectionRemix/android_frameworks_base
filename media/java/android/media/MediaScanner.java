@@ -465,6 +465,9 @@ public class MediaScanner implements AutoCloseable {
                 // If length of defaultRingtoneArray more than 1, it means ro.default.ringtone
                 // also includes slot2's ringtone
                 mDefaultRingtone2Filename = defaultRingtoneArray[1];
+            } else {
+                // Use slot1's ringtone if default not specified for slot2
+                mDefaultRingtone2Filename = defaultRingtoneArray[0];
             }
         }
         mDefaultNotificationFilename = SystemProperties.get(DEFAULT_RINGTONE_PROPERTY_PREFIX
