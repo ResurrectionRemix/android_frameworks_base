@@ -43,7 +43,7 @@
     <color name="legacy_light_primary_dark">@color/black</color>
     <color name="legacy_light_primary">#ffe6e6e6</color>
     <color name="legacy_light_control_activated">@color/legacy_green</color>
-    <color name="legacy_light_control_normal">#99000000</color>
+    <color name="legacy_light_control_normal">#b3000000</color>
     <color name="legacy_light_button_pressed">@color/legacy_orange</color>
     <color name="legacy_light_button_normal">#f3dbdbdb</color>
 </resources>
