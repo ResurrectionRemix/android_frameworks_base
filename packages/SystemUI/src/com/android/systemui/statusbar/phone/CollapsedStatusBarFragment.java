@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.systemui.Dependency;
@@ -81,8 +82,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mCustomCarrierLabel;
     private int mShowCarrierLabel;
 
-    // AICP additions
     private View mBatteryBars[] = new View[2];
+
+    private ImageView RRLogo;
+    private ImageView RRLogoRight;
+    private int mShowLogo;
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -90,9 +94,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mStatusBarComponent.recomputeDisableFlags(true /* animate */);
         }
     };
-
     private final Handler mHandler = new Handler();
-
     private class RRSettingsObserver extends ContentObserver {
         RRSettingsObserver(Handler handler) {
             super(handler);
@@ -105,6 +107,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.STATUS_BAR_SHOW_CARRIER),
                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        protected void update() {
+            updateSettings(true);
+       }
+
+        protected void unobserve() {
+            getContext().getContentResolver().unregisterContentObserver(this);
         }
 
         @Override
@@ -151,6 +164,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
         mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
+        RRLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+        RRLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(RRLogo);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(RRLogoRight);
         showSystemIconArea(false);
         showClock(false);
         initEmergencyCryptkeeperText();
@@ -181,9 +198,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void onDestroyView() {
         super.onDestroyView();
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(RRLogo);
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(RRLogoRight);
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
         }
+        mRRSettingsObserver.unobserve();
     }
 
     @Override
@@ -280,6 +300,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         for (View batteryBar: mBatteryBars) {
             animateHide(batteryBar, animate);
         }
+        if (mShowLogo == 2) {
+            animateHide(RRLogoRight, animate);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -287,6 +310,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mClockController.getClockLayout(), animate);
         for (View batteryBar: mBatteryBars) {
             animateShow(batteryBar, animate);
+        }
+        if (mShowLogo == 2) {
+            animateShow(RRLogoRight, animate);
         }
     }
 
@@ -312,11 +338,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mClockController.getClockLayout(), animate);
+        if (mShowLogo == 1) {
+            animateHiddenState(RRLogo, View.GONE, animate);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mClockController.getClockLayout(), animate);
+        if (mShowLogo == 1) {
+            animateShow(RRLogo, animate);
+        }
     }
 
     public void hideOperatorName(boolean animate) {
@@ -426,17 +458,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
-    public void updateSettings(boolean animate) {
-        mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
-                Settings.System.STATUS_BAR_SHOW_TICKER, 0,
-                UserHandle.USER_CURRENT);
-        initTickerView();
-        mShowCarrierLabel = Settings.System.getIntForUser(mContentResolver,
-                Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
-                UserHandle.USER_CURRENT);
-        setCarrierLabel(animate);
-    }
-
     private void initTickerView() {
         if (mTickerEnabled != 0) {
             View tickerStub = mStatusBar.findViewById(R.id.ticker_stub);
@@ -457,6 +478,40 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mCustomCarrierLabel, animate);
         } else {
             animateHiddenState(mCustomCarrierLabel, View.GONE, animate);
+        }
+    }
+
+    public void updateSettings(boolean animate) {
+        mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_SHOW_TICKER, 0,
+                UserHandle.USER_CURRENT);
+        initTickerView();
+        mShowCarrierLabel = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
+                UserHandle.USER_CURRENT);
+        setCarrierLabel(animate);
+        mShowLogo = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
+                UserHandle.USER_CURRENT);
+        if (mNotificationIconAreaInner != null) {
+            if (mShowLogo == 1) {
+                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+                    animateShow(RRLogo, animate);
+                }
+            } else if (mShowLogo != 1) {
+                animateHiddenState(RRLogo, View.GONE, animate);
+
+            }
+        }
+        if (mSystemIconArea != null) {
+            if (mShowLogo == 2) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
+                    animateShow(RRLogoRight, animate);
+                }
+            } else if (mShowLogo != 2) {
+                animateHiddenState(RRLogoRight, View.GONE, animate);
+
+            }
         }
     }
 }
