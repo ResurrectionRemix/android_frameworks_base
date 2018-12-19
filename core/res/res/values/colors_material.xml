@@ -85,10 +85,10 @@
     <!-- Primary & accent colors -->
     <eat-comment />
 
-    <color name="material_grey_900">#ff212121</color>
-    <color name="material_grey_850">#ff303030</color>
-    <color name="material_grey_800">#ff424242</color>
-    <color name="material_grey_600">#ff757575</color>
+    <color name="material_grey_900">#ff1a1a1c</color>
+    <color name="material_grey_850">#ff16161a</color>
+    <color name="material_grey_800">#ff1a1a1c</color>
+    <color name="material_grey_600">#ff1a1a1c</color>
     <color name="material_grey_300">#ffe0e0e0</color>
     <color name="material_grey_200">#ffeeeeee</color>
     <color name="material_grey_100">#fff5f5f5</color>
@@ -100,10 +100,10 @@
     <color name="material_deep_teal_500">#ff008577</color>
 
     <color name="material_blue_grey_200">#ffb0bec5</color>
-    <color name="material_blue_grey_700">#ff455a64</color>
-    <color name="material_blue_grey_800">#ff37474f</color>
-    <color name="material_blue_grey_900">#ff263238</color>
-    <color name="material_blue_grey_950">#ff21272b</color>
+    <color name="material_blue_grey_700">#ff1a1a1c</color>
+    <color name="material_blue_grey_800">#ff1a1a1c</color>
+    <color name="material_blue_grey_900">#ff1a1a1c</color>
+    <color name="material_blue_grey_950">#ff1a1a1c</color>
 
     <color name="material_red_A100">#ff8a80</color>
     <color name="material_red_A700">#d50000</color>
