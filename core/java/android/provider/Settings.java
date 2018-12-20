@@ -4640,16 +4640,6 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String STATUSBAR_BATTERY_BAR_THICKNESS =
-                "statusbar_battery_bar_thickness";
-
-        /** @hide */
-        private static final Validator STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
-        /**
-         * @hide
-         */
         public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";
 
         /** @hide */
@@ -5658,8 +5648,7 @@ public final class Settings {
             STATUS_BAR_LOGO_COLOR,
             STATUS_BAR_LOGO_COLOR_ACCENT,
             STATUS_BAR_LOGO_POSITION,
-            STATUS_BAR_LOGO_STYLE,N,
-            OMNI_DOZE_ON_CHARGE,
+            STATUS_BAR_LOGO_STYLE,
             LOCK_HIDE_STATUS_BAR,
             HEADS_UP_NOTIFICATION_SNOOZE,
             HEADS_UP_TIMEOUT,
@@ -5841,8 +5830,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
-            PRIVATE_SETTINGS.add(AE_THEME);
-            PRIVATE_SETTINGS.add(TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_LOCATION);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_COLOR);
@@ -6096,7 +6083,7 @@ public final class Settings {
             VALIDATORS.put(SHOW_VOLTE_ICON,SHOW_VOLTE_ICON_VALIDATOR);
             VALIDATORS.put(OMNI_LOCKSCREEN_MEDIA_BLUR, OMNI_LOCKSCREEN_MEDIA_BLUR_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON,
-            VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
+                            NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
@@ -10623,13 +10610,7 @@ public final class Settings {
             AWARE_LOCK_ENABLED,
             AWARE_TAP_PAUSE_GESTURE_COUNT,
             AWARE_TAP_PAUSE_TOUCH_COUNT,
-            VOLUME_LINK_NOTIFICATION
-            FACE_AUTO_UNLOCK,
-            VOLUME_PANEL_ON_LEFT,
             VOLUME_LINK_NOTIFICATION,
-            LOCK_QS_DISABLED,
-            EMERGENCY_IN_POWER_MENU,
-            LOCKSCREEN_VISUALIZER_ENABLED,
             STATUSBAR_CLOCK_SECONDS,
             STATUS_BAR_CLOCK,
             STATUSBAR_CLOCK_AM_PM_STYLE,

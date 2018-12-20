@@ -17,6 +17,7 @@ package com.android.systemui.qs.tileimpl;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Provider;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
@@ -143,10 +144,10 @@ public class QSFactoryImpl implements QSFactory {
             Provider<UsbTetherTile> usbTetherTileProvider,
             Provider<VolumeTile> volumeTileProvider,
             Provider<VpnTile> vpnTileProvider,
-            Provider<SoundSearchTIle> soundSearchTIleProvider), 
-            Provider<OnTheGoTile> onthegoTIleProvider),
-            Provider<WeatherTile> weatherTIleProvider),
-            Provider<DataSwitchTile> dataSwitchTileProvider),
+            Provider<SoundSearchTIle> soundSearchTIleProvider, 
+            Provider<OnTheGoTile> onthegoTIleProvider,
+            Provider<WeatherTile> weatherTIleProvider,
+            Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<GamingModeTile> gamingModeTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;

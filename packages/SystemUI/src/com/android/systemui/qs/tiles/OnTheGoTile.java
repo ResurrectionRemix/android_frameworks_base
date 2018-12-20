@@ -28,11 +28,14 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.internal.util.rr.OnTheGoActions;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
+import javax.inject.Inject;
+
 /** Quick settings tile: OnTheGo Mode **/
 public class OnTheGoTile extends QSTileImpl<BooleanState> {
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_onthego);
 
+    @Inject
     public OnTheGoTile(QSHost host) {
         super(host);
     }
