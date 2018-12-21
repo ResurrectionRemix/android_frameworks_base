@@ -192,12 +192,15 @@ public class VolumeDialogImpl implements VolumeDialog {
 
     private SettingsObserver settingsObserver;
 
+    private boolean mLeftVolumeRocker;
+
     public VolumeDialogImpl(Context context) {
         mContext = new ContextThemeWrapper(context, com.android.systemui.R.style.qs_theme);
         mController = Dependency.get(VolumeDialogController.class);
         mKeyguard = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         mAccessibilityMgr = Dependency.get(AccessibilityManagerWrapper.class);
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
+        mLeftVolumeRocker = mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide);
     }
 
     public void init(int windowType, Callback callback) {
@@ -1360,8 +1363,7 @@ public class VolumeDialogImpl implements VolumeDialog {
     }
 
     private boolean isAudioPanelOnLeftSide() {
-	return mContext.getResources()
-                .getBoolean(R.bool.config_audioPanelOnLeftSide);
+        return mLeftVolumeRocker;
     }
 
     private static class VolumeRow {
