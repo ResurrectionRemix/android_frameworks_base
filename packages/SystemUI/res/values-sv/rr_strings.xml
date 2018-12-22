@@ -64,4 +64,7 @@
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
     <string name="global_action_reboot">Starta om</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

@@ -104,4 +104,7 @@
     <string name="show_fourg_title">הצג 4G במקום LTE</string>
     <string name="global_action_reboot_recovery">שחזור</string>
     <string name="global_action_reboot">הפעל מחדש</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

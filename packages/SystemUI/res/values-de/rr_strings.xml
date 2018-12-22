@@ -24,9 +24,9 @@
     <string name="lte_off">LTE aus</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Bildschirmfoto</string>
-    <string name="quick_settings_region_screenshot_label">Partieller Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Teilweiser Screenshot</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für 1 Minute deaktiviert.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Heads-Up Benachrichtigungen sind für 1 Minute deaktiviert.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Bildschirmaufnahme gestartet</string>
@@ -109,4 +109,7 @@
     <string name="show_fourg_title">4G anstatt LTE anzeigen</string>
     <string name="global_action_reboot_recovery">Wiederherstellung</string>
     <string name="global_action_reboot">Neustart</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

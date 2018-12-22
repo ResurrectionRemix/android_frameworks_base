@@ -109,4 +109,7 @@
     <string name="show_fourg_title">إظهار 4G بدلاً من LTE</string>
     <string name="global_action_reboot_recovery">الإسترداد</string>
     <string name="global_action_reboot">إعادة تشغيل</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

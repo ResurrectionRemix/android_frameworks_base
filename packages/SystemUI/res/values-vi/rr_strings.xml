@@ -107,4 +107,9 @@
     <string name="powernotif_tuner_activity">Thông báo năng lượng</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Hiện 4G thay cho LTE</string>
+    <string name="global_action_reboot_recovery">Phục hồi</string>
+    <string name="global_action_reboot">Khởi động lại</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

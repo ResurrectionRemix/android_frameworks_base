@@ -109,4 +109,7 @@
     <string name="show_fourg_title">Zobrazit 4G místo LTE</string>
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Restartovat</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>
