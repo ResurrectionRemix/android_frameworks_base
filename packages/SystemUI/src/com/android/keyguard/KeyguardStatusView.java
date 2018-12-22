@@ -50,6 +50,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.util.wakelock.KeepAwakeAnimationListener;
+import android.provider.Settings;
 
 import com.google.android.collect.Sets;
 
