@@ -245,6 +245,7 @@
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
+        android:usesCleartextTraffic="true"
         android:allowClearUserData="false"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
