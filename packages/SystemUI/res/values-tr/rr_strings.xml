@@ -109,4 +109,7 @@
     <string name="show_fourg_title">LTE yerine 4G göster</string>
     <string name="global_action_reboot_recovery">Kurtarma</string>
     <string name="global_action_reboot">Yeniden başlat</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

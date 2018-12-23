@@ -107,4 +107,7 @@
     <string name="powernotif_tuner_activity">Rozšírené upozornenia</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Zobraziť 4G namiesto LTE</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

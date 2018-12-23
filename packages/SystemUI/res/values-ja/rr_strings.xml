@@ -109,4 +109,7 @@
     <string name="show_fourg_title">LTE表示の代わりに4G表示を使用する</string>
     <string name="global_action_reboot_recovery">リカバリー</string>
     <string name="global_action_reboot">再起動</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

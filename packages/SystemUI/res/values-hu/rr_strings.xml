@@ -109,4 +109,7 @@
     <string name="show_fourg_title">4G megjelenítése LTE helyett</string>
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Újraindítás</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

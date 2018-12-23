@@ -109,4 +109,7 @@
     <string name="show_fourg_title">LTE के बजाय 4G दिखाएँ</string>
     <string name="global_action_reboot_recovery">रिकवरी</string>
     <string name="global_action_reboot">पुन: शुरू करें</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

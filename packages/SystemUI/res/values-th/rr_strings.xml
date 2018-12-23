@@ -19,6 +19,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE เปิด </string>
     <!-- Screenshot QS tile -->
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
@@ -35,4 +37,7 @@
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>

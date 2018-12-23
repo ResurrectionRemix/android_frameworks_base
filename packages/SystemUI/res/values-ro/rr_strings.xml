@@ -106,4 +106,7 @@
     <string name="lockscreen_tuner_activity">Scurtături pe ecranul de blocare</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Afișează 4G în loc de LTE</string>
+    <!-- Pie controls -->
+    <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
 </resources>
