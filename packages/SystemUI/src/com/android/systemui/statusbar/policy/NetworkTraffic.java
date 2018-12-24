@@ -260,15 +260,13 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
 
     private void updateSettings() {
         if (mIsEnabled) {
-            if (getConnectAvailable()) {
-                if (mAttached) {
-                    totalRxBytes = TrafficStats.getTotalRxBytes();
-                    lastUpdateTime = SystemClock.elapsedRealtime();
-                    mTrafficHandler.sendEmptyMessage(1);
-                }
-                updateTrafficDrawable();
-                return;
+            if (mAttached) {
+                totalRxBytes = TrafficStats.getTotalRxBytes();
+                lastUpdateTime = SystemClock.elapsedRealtime();
+                mTrafficHandler.sendEmptyMessage(1);
             }
+            updateTrafficDrawable();
+            return;
         } else {
             clearHandlerCallbacks();
         }
