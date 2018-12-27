@@ -2161,12 +2161,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         @Override
         public void run() {
-            if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SCREEN_RECORD_SHORTCUT_SWITCH, 1) == 1) {
             takeScreenrecord(mMode);
-            } else {
-             Slog.d(TAG, "ScreenRecord Shortcut Disabled");
-            }
         }
     }
 

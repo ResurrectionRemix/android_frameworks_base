@@ -4967,13 +4967,6 @@ public final class Settings {
          */
         public static final String LOCKCLOCK_FONT_SIZE = "lockclock_font_size";
 
-        /**
-         * Switch to Enable/Disable ScreenRecord Shortcut.
-         *
-         * @hide
-         */
-        public static final String SCREEN_RECORD_SHORTCUT_SWITCH = "screen_record_shortcut";
-        
 	    /**
          * Switch to Enable/Disable ScreenShot Shortcut.
          *
