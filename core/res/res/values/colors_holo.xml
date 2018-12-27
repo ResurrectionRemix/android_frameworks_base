@@ -51,7 +51,7 @@
     <eat-comment />
 
     <!-- A light Holo shade of blue. Equivalent to #ff33b5e5. -->
-    <color name="holo_blue_light">#ff33b5e5</color>
+    <color name="holo_blue_light">@color/accent_material_light</color>
     <!-- A light Holo shade of gray. Equivalent to #33999999. -->
     <color name="holo_gray_light">#33999999</color>
     <!-- A light Holo shade of green. Equivalent to #ff99cc00. -->
@@ -59,7 +59,7 @@
     <!-- A light Holo shade of red. Equivalent to #ffff4444. <-->
     <color name="holo_red_light">#ffff4444</color>
     <!-- A dark Holo shade of blue. Equivalent to #ff0099cc -->
-    <color name="holo_blue_dark">#ff0099cc</color>
+    <color name="holo_blue_dark">@color/accent_material_light</color>
     <!-- A dark Holo shade of green. Equivalent to #ff669900 -->
     <color name="holo_green_dark">#ff669900</color>
     <!-- A dark Holo shade of red. Equivalent to #ffcc0000 -->
