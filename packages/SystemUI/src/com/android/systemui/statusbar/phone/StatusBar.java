@@ -271,7 +271,6 @@ import com.android.systemui.statusbar.notification.VisualStabilityManager;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher;
@@ -437,8 +436,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private StatusBarSignalPolicy mSignalPolicy;
 
     private VolumeComponent mVolumeComponent;
-    private BrightnessMirrorController mBrightnessMirrorController;
-    private boolean mBrightnessMirrorVisible;
     protected FingerprintUnlockController mFingerprintUnlockController;
     private LightBarController mLightBarController;
     protected LockscreenWallpaper mLockscreenWallpaper;
@@ -1213,17 +1210,11 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                             .build());
             final QSTileHost qsh = SystemUIFactory.getInstance().createQSTileHost(mContext, this,
                     mIconController);
-            mBrightnessMirrorController = new BrightnessMirrorController(mStatusBarWindow,
-                    (visible) -> {
-                        mBrightnessMirrorVisible = visible;
-                        updateScrimController();
-                    });
             fragmentHostManager.addTagListener(QS.TAG, (tag, f) -> {
                 QS qs = (QS) f;
                 if (qs instanceof QSFragment) {
                     ((QSFragment) qs).setHost(qsh);
                     mQSPanel = ((QSFragment) qs).getQsPanel();
-                    mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                 }
             });
@@ -1446,9 +1437,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
         // end old BaseStatusBar.onDensityOrFontScaleChanged().
         // TODO: Remove this.
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onDensityOrFontScaleChanged();
-        }
         mStatusBarKeyguardViewManager.onDensityOrFontScaleChanged();
         // TODO: Bring these out of StatusBar.
         ((UserInfoControllerImpl) Dependency.get(UserInfoController.class))
@@ -1507,9 +1495,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
     @Override
     public void onOverlayChanged() {
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.onOverlayChanged();
-        }
     }
 
     private void inflateEmptyShadeView() {
@@ -3910,9 +3895,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
         }
-        if (mBrightnessMirrorController != null) {
-            mBrightnessMirrorController.updateResources();
-        }
     }
 
     protected void loadDimens() {
@@ -5503,8 +5485,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         } else if (isInLaunchTransition() || mLaunchCameraOnScreenTurningOn
                 || launchingAffordanceWithPreview) {
             mScrimController.transitionTo(ScrimState.UNLOCKED, mUnlockScrimCallback);
-        } else if (mBrightnessMirrorVisible) {
-            mScrimController.transitionTo(ScrimState.BRIGHTNESS_MIRROR);
         } else if (isPulsing()) {
             // Handled in DozeScrimController#setPulsing
         } else if (mDozing) {
