@@ -431,10 +431,10 @@ public class KeyguardSliceProvider extends SliceProvider implements
             mZenModeController = new ZenModeControllerImpl(getContext(), mHandler);
             mZenModeController.addCallback(this);
             mWeatherSettingsObserver = new WeatherSettingsObserver(mHandler);
+            mWeatherSettingsObserver.updateLockscreenWeatherStyle();
+            mWeatherSettingsObserver.updateLockscreenWeather();
             mWeatherSettingsObserver.observe();
             mWeatherClient = new OmniJawsClient(getContext());
-            mWeatherEnabled = Settings.System.getIntForUser(mContentResolver, Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
-            mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE, 0, UserHandle.USER_CURRENT) != 0;
             mWeatherClient.addSettingsObserver();
             mWeatherClient.addObserver(this);
             queryAndUpdateWeather();
