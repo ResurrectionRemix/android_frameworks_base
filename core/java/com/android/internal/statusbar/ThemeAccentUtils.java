@@ -83,6 +83,17 @@ public class ThemeAccentUtils {
         "com.android.system.theme.amoledblack", // 1
     };
 
+    // Switch themes
+    private static final String[] SWITCH_STYLES = {
+        "com.android.system.switch.stock", // 0
+        "com.android.system.switch.md2", // 1
+        "com.android.system.switch.oneplus", // 2
+        "com.android.system.switch.narrow", // 3
+        "com.android.system.switch.contained", // 4
+        "com.android.system.switch.retro", // 5
+        "com.android.system.switch.telegram", // 6
+    };
+
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
         OverlayInfo themeInfo = null;
@@ -150,6 +161,29 @@ public class ThemeAccentUtils {
             }
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Unloads the switch styles
+    private static void unloadSwitchStyle(IOverlayManager om, int userId) {
+        for (String style : SWITCH_STYLES) {
+            try {
+                om.setEnabled(style, false, userId);
+            } catch (RemoteException e) {
+            }
+        }
+    }
+
+    // Set switch style
+    public static void setSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
+        // Always unload switch styles
+        unloadSwitchStyle(om, userId);
+
+        if (switchStyle == 0) return;
+
+        try {
+            om.setEnabled(SWITCH_STYLES[switchStyle], true, userId);
+        } catch (RemoteException e) {
         }
     }
 }

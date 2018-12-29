@@ -316,6 +316,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             "system:" + Settings.System.BERRY_DARK_STYLE;
     private static final String STATUS_BAR_CUSTOM_HEADER =
             "system:" + Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER;
+    private static final String BERRY_SWITCH_STYLE =
+            "system:" + Settings.System.BERRY_SWITCH_STYLE;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -666,6 +668,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mBouncerWasShowingWhenHidden;
 
     private int mDarkStyle;
+    private int mSwitchStyle;
     private boolean mPowerSave;
     private boolean mUseDarkTheme;
     private IOverlayManager mOverlayManager;
@@ -823,6 +826,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         tunerService.addTunable(this, BERRY_DARK_STYLE);
         tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
+        tunerService.addTunable(this, BERRY_SWITCH_STYLE);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -4136,6 +4140,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateCorners();
     }
 
+    private void updateSwitchStyle() {
+        mUiOffloadThread.submit(() -> {
+            ThemeAccentUtils.setSwitchStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), mSwitchStyle);
+        });
+    }
+
     private void updateCorners() {
         if (mSysuiRoundedFwvals && !isCurrentRoundedSameAsFw()) {
             float density = Resources.getSystem().getDisplayMetrics().density;
@@ -5602,7 +5612,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        }else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
+        } else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
                 mWindowManagerService != null) {
             boolean forcedVisibility = mNeedsNavigationBar ||
                     TunerService.parseIntegerSwitch(newValue, false);
@@ -5626,7 +5636,14 @@ public class StatusBar extends SystemUI implements DemoMode,
                 }
         } else if (STATUS_BAR_CUSTOM_HEADER.equals(key)) {
                     updateTheme();
-        }
+        } else if (BERRY_SWITCH_STYLE.equals(key)) {
+                int switchStyle =
+                        TunerService.parseInteger(newValue, 0);
+                if (mSwitchStyle != switchStyle) {
+                    mSwitchStyle = switchStyle;
+                    updateSwitchStyle();
+                }
+         }
 
     }
 
