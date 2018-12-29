@@ -110,6 +110,30 @@
     <string name="global_action_reboot_recovery">リカバリー</string>
     <string name="global_action_reboot">再起動</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie コントロール</string>
+    <string name="pie_state_summary">全画面モードでPieコントロールを使用する</string>
+    <string name="pie_battery_level">"バッテリーレベル "</string>
+    <string name="quick_settings_pie">Pie コントロール</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">スマートピクセル</string>
+    <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効にする</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">OTG が有効化されました</string>
+    <string name="onthego_notif_title">OTG が有効です</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">オプション</string>
+    <string name="onthego_notif_error">OTG を開始できません</string>
+    <string name="onthego_notif_restart">OTG を再起動</string>
+    <string name="onthego_notif_camera_changed">カメラモードが変更されました</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">フロントカメラを使用</string>
+    <string name="onthego_service_toggle">自動でサービスを再起動する</string>
+    <string name="onthego_channel_name">メイン</string>
+    <string name="global_action_onthego">OTG</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

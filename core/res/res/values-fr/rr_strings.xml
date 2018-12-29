@@ -25,9 +25,14 @@
    <string name="ambient_recognition_notification">En cours de lecture</string>
    <string name="ambient_recognition_information">%1$s par %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">éditeur de navigation de contrôle</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Permet à une application de contrôler l\'éditeur de la barre de navigation.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">accéder au gestionnaire de polices</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Permet à une application d\'accéder au gestionnaire de polices.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Le paquet de police que vous avez installé n\'est pas compatible à cause du fichier fonts.xml manquant dans les fichiers. Veuillez contacter le développeur du paquet pour le support.</string>
 </resources>

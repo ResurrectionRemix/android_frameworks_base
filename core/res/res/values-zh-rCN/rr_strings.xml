@@ -16,7 +16,7 @@
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_fakePackageSignature">伪装安装包签名</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">允许程序伪装成其他程序。 请注意，恶意程序可能会利用此权限访问隐私数据。请谨慎授予此权限！</string>
+   <string name="permdesc_fakePackageSignature">允许程序伪装成其他程序。 请注意，恶意程序可能会利用此权限访问应用私有数据。请谨慎授予此权限！</string>
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">复制崩溃日志链接</string>
    <string name="url_copy_success">已成功复制链接</string>
@@ -25,9 +25,14 @@
    <string name="ambient_recognition_notification">正在播放</string>
    <string name="ambient_recognition_information">%1$s 的 %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">控制导航栏编辑器</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">允许应用控制导航栏编辑器。</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">访问字体管理器</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">允许应用访问字体管理器。</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">你安装的字体包由于缺失 fonts.xml 文件而不兼容。请联系包的开发者以寻求支持。</string>
 </resources>

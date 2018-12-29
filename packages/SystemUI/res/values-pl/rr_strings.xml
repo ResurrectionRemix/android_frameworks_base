@@ -82,10 +82,53 @@
     <string name="no_home_message">Do prawidłowej obsługi urządzenia potrzebny jest przycisk ekranu głównego. Dodaj go, zanim zapiszesz zmiany.</string>
     <string name="clipboard_description">Możesz przeciągać elementy bezpośrednio do schowka. Możesz też przeciągać umieszczone tam wcześniej elementy poza schowek jeśli jest obecny.</string>
     <string name="keycode_description">Na pasku nawigacji możesz umieszczać przyciski, które po naciśnięciu emulują funkcje klawiszy klawiatury. Najpierw musisz wybrać, jaki klawisz ma być przypisany do danego przycisku, a następnie wybrać dla niego grafikę.</string>
+    <string name="start">Start</string>
+    <string name="end">Koniec</string>
+    <string name="menu_ime">Menu / Przełącznik klawiatury</string>
+    <string name="select_button">Wybierz przycisk do dodania</string>
+    <string name="add_button">Dodaj przycisk</string>
+    <string name="save">Zapisz</string>
+    <string name="reset">Przywróć domyślne</string>
+    <string name="select_keycode">Wybierz przycisk klawiatury</string>
+    <string name="navbar_editor_title">Edytor</string>
+    <string name="navbar_editor_summary">Skonfiguruj pasek nawigacji</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menu / Przełącznik klawiatury (zawsze pokazuj)</string>
+    <string name="search">Szukaj</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Ikona paska stanu</string>
+    <string name="statusbar_icons_blacklist">Ikony paska stanu</string>
+    <string name="navbar_tuner_activity">Przyciski paska nawigacji</string>
+    <string name="lockscreen_tuner_activity">Skróty ekranu blokady</string>
+    <string name="powernotif_tuner_activity">Powiadomienia zasilania</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Pokaż 4G zamiast LTE</string>
+    <string name="global_action_reboot_recovery">Tryb recovery</string>
+    <string name="global_action_reboot">Uruchom ponownie</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Kontrola Pie</string>
+    <string name="pie_battery_level">"POZIOM NAŁADOWANIA BATERII "</string>
+    <string name="quick_settings_pie">Kontrola Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Automatyczne włączanie inteligentnych pixeli</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
+    <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Ustawienia</string>
+    <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
+    <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
+    <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
+    <string name="onthego_transparency">Przezroczystość</string>
+    <string name="onthego_front_camera">Użyj przedniej kamery</string>
+    <string name="global_action_onthego">W ruchu</string>
+    <string name="omnijaws_service_error">Błąd</string>
+    <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
+    <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
+    <string name="omnijaws_service_disabled">Usługa wyłączona</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

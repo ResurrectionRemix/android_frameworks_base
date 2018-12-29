@@ -25,9 +25,14 @@
    <string name="ambient_recognition_notification">A reproduzir</string>
    <string name="ambient_recognition_information">%1$s por %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">controlar o editor da barra de navegação</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Permite que uma aplicação controle o editor da barra de navegação.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">aceder ao gestor de tipos de letra</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Permite que uma aplicação aceda ao gestor de tipos de letra.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">O tipo de letra que instalou não é compatível devido à inexistência do ficheiro fonts.xml nos seus ficheiros. Por favor, contacte o criador do pacote para obter ajuda.</string>
 </resources>

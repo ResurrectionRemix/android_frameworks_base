@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Récupération</string>
     <string name="global_action_reboot">Redémarrer</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, jj MMMM aaaa</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Contrôle du menu circulaire</string>
+    <string name="pie_state_summary">Utiliser l\'arc en mode immersif</string>
+    <string name="pie_battery_level">"NIVEAU DE BATTERIE "</string>
+    <string name="quick_settings_pie">Contrôle en arc</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Activation automatique de Smart pixels</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activé</string>
+    <string name="onthego_notif_title">On-The-Go est actif</string>
+    <string name="onthego_notif_stop">Arrêter</string>
+    <string name="onthego_notif_options">Options</string>
+    <string name="onthego_notif_error">Impossible de démarrer On-The-Go</string>
+    <string name="onthego_notif_restart">Redémarrer On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Mode de caméra modifié</string>
+    <string name="onthego_transparency">Transparence</string>
+    <string name="onthego_front_camera">Utiliser la caméra frontale</string>
+    <string name="onthego_service_toggle">Redémarrer automatiquement le service</string>
+    <string name="onthego_channel_name">Général</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">Erreur</string>
+    <string name="omnijaws_service_unkown">Données météo indisponibles</string>
+    <string name="omnijaws_service_error_long">Erreur lors du chargement des données météo</string>
+    <string name="omnijaws_service_disabled">Le service est désactivé</string>
+    <string name="omnijaws_detail_header">Prévisions Météo</string>
+    <string name="omnijaws_label_default">Prévisions Météo</string>
+    <string name="omnijaws_current_text">Actuellement</string>
+    <string name="omnijaws_package_not_available">OmniJaws indisponible</string>
+    <string name="omnijaws_service_last_update">Dernière actualisation :</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

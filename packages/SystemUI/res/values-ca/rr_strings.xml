@@ -27,21 +27,76 @@
     <string name="quick_settings_region_screenshot_label">Captura Parcial de Pantalla</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute">Notificacions Pospostes per 1 minut.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • notificació "Peeking" estan dormint durant <xliff:g id="number">%d</xliff:g> minuts.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">La pantalla està sent gravada</string>
+    <string name="screenrecord_notif_final_ticker">Pantalla registrada amb èxit</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Enregistrant pantalla</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Aturar</string>
+    <string name="screenrecord_notif_completed">Pantalla registrada amb èxit</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Mostra el punter</string>
+    <string name="screenrecord_notif_pointer_off">Amaga el punter</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">No es pot gravar la pantalla</string>
+    <string name="notification_channel_screenrecord">Gravació de pantalla</string>
+    <string name="screenrecord_hide_hint">Amaga les pistes</string>
+    <string name="screenrecord_show_hint">Mostra les pistes</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Gravació de pantalla</string>
+    <string name="quick_settings_screenrecord_lq_label">Gravació de pantalla 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Gravació de pantalla 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Gravació de pantalla 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Captura de pantalla eliminada</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Càrrega Dash (<xliff:g id="charging_time_left" example="4 hores i 2 minuts">%s</xliff:g> fins càrrega completa)</string>
+    <string name="keyguard_plugged_in_dash_charging">Carregant Ràpidament</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower connectat (<xliff:g id="charging_time_left"></xliff:g> %sfins que estigui plena)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower connectat</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Columnes</string>
+    <string name="qs_menu_item_columns_landscape">Columnes horitzontals</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Reiniciar</string>
+    <string name="qs_menu_item_titles">Mostra les etiquetes</string>
+    <string name="qs_menu_item_rows">Files</string>
+    <string name="qs_menu_item_rows_landscape">Columnes (apaïsat)</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Vista prèvia</string>
+    <string name="keycode">Codi de tecla</string>
+    <string name="no_home_title">No s\'ha trobat cap botó d\'inici</string>
+    <string name="no_home_message">Per poder navegar per aquest dispositiu, cal un botó d\'inici. Afegeix-ne un abans de desar.</string>
+    <string name="clipboard_description">Pots arrossegar elements al porta-retalls directament. Si conté elements, també els pots treure directament arrossegant-los.</string>
+    <string name="keycode_description">Amb els botons de codi de tecla es poden afegir tecles del teclat a la barra de navegació. En prémer aquests botons es duen a terme les mateixes accions que quan es prem la tecla corresponent. Primer cal seleccionar la tecla del botó i, a continuació, triar la imatge que es mostrarà.</string>
+    <string name="start">Inici</string>
+    <string name="center">Centre</string>
+    <string name="end">Fi</string>
+    <string name="space">Espaiador</string>
+    <string name="menu_ime">Menú / Canvi de teclat</string>
+    <string name="select_button">Tria un botó per afegir-lo</string>
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM aaaa</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

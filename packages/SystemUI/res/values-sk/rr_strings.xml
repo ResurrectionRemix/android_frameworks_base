@@ -107,7 +107,33 @@
     <string name="powernotif_tuner_activity">Rozšírené upozornenia</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Zobraziť 4G namiesto LTE</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
+    <string name="global_action_reboot">Reštartovať</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Ovládanie Pie</string>
+    <string name="pie_state_summary">Použiť kruhové ovládacie prvky v pohlcujúcom režime</string>
+    <string name="pie_battery_level">"ÚROVEŇ NABITIA BATÉRIE "</string>
+    <string name="quick_settings_pie">Ovládanie Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Povoliť Smart Pixels automaticky</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Režim na cestách aktivovaný</string>
+    <string name="onthego_notif_title">Režim na cestách je aktívny</string>
+    <string name="onthego_notif_stop">Zastaviť</string>
+    <string name="onthego_notif_options">Voľby</string>
+    <string name="onthego_notif_error">Nepodarilo sa spustiť režim na cestách</string>
+    <string name="onthego_notif_restart">Reštartovať režim na cestách</string>
+    <string name="onthego_notif_camera_changed">Režim fotoaparátu bol zmenený</string>
+    <string name="onthego_transparency">Priehľadnosť</string>
+    <string name="onthego_front_camera">Použiť prednú kameru</string>
+    <string name="onthego_service_toggle">Automaticky reštartovať službu</string>
+    <string name="onthego_channel_name">Hlavné</string>
+    <string name="global_action_onthego">Režim na cestách</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

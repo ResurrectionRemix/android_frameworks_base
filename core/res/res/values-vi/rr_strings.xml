@@ -14,20 +14,25 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">Giả mạo chữ ký gói</string>
+   <string name="permlab_fakePackageSignature">Gói chữ ký tạm</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">Cho phép ứng dụng có thể giả mạo làm ứng dụng khác. Các ứng dụng độc hại có thể sử dụng quyền này để truy cập trái phép vào dữ liệu riêng tư của bạn. Hãy thận trọng khi cấp quyền này!</string>
+   <string name="permdesc_fakePackageSignature">Cho phép ứng dụng có thể giả mạo tạm thời làm ứng dụng khác. Các ứng dụng độc hại có thể sử dụng quyền này để truy cập trái phép vào dữ liệu riêng tư của bạn. Hãy thận trọng khi cấp quyền này!</string>
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">Sao chép sự cố log URL</string>
    <string name="url_copy_success">Đã sao chép URL thành công</string>
-   <string name="url_copy_failed">Lỗi xảy ra trong khi tải log lên dogbin</string>
+   <string name="url_copy_failed">Lỗi xảy ra trong khi tải bản ghi chép lên dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Đang phát</string>
    <string name="ambient_recognition_information">%1$s bởi %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">trình chỉnh sửa thanh điều hướng</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Cho phép ứng dụng chỉnh sửa thanh điều hướng.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">truy cập trình quản lý phông chữ</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Cho phép ứng dụng được quyền quản lý phông chữ.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Gói phông chữ bạn đã cài đặt không tương thích do thiếu fonts.xml trong tập tin. Vui lòng liên hệ với nhà phát triển gói để được hỗ trợ.</string>
 </resources>

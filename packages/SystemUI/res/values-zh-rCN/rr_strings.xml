@@ -79,7 +79,7 @@
     <string name="preview">预览</string>
     <string name="keycode">键码</string>
     <string name="no_home_title">未找到主屏幕按钮</string>
-    <string name="no_home_message">要在此设备上使用导航栏，您必须启用主屏幕按钮。请先添加主屏幕按钮，然后再保存。</string>
+    <string name="no_home_message">要在此设备上使用导航栏，您必须启用主屏幕按钮。请添加主屏幕按钮并保存。</string>
     <string name="clipboard_description">您可以利用“剪贴板”按钮将相应内容直接拖动到剪贴板中。剪贴板中有内容时，您也可以将剪贴板中的内容直接拖出来。</string>
     <string name="keycode_description">您可以利用“键码”按钮将键盘按键添加到导航栏中。只要按下这些按钮，按钮即可模仿所选键盘按键执行相应的操作。要使用这项功能，您必须先为按钮选择相应的按键，然后再选择要在按钮上显示的图片。</string>
     <string name="start">起始</string>
@@ -110,6 +110,39 @@
     <string name="global_action_reboot_recovery">恢复模式</string>
     <string name="global_action_reboot">重新启动</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">星期, 日 月 年</string>
+    <string name="pie_hour_format_12">小时：分钟</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie 手势控制</string>
+    <string name="pie_state_summary">处于沉浸模式时使用 Pie 手势控制</string>
+    <string name="pie_battery_level">"电池电量 "</string>
+    <string name="quick_settings_pie">Pie 手势控制</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">智能像素</string>
+    <string name="quick_settings_smart_pixels_on_power_save">自动启用智能像素</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">行走模式已激活</string>
+    <string name="onthego_notif_title">正在使用行走模式</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">选项</string>
+    <string name="onthego_notif_error">无法启动 On-The-Go</string>
+    <string name="onthego_notif_restart">重新启动行走模式</string>
+    <string name="onthego_notif_camera_changed">相机模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置摄像头</string>
+    <string name="onthego_service_toggle">自动重启服务</string>
+    <string name="global_action_onthego">行走模式</string>
+    <string name="omnijaws_service_error">错误</string>
+    <string name="omnijaws_service_unkown">没有天气数据</string>
+    <string name="omnijaws_service_error_long">加载天气数据时出错</string>
+    <string name="omnijaws_service_disabled">服务已禁用</string>
+    <string name="omnijaws_detail_header">天气</string>
+    <string name="omnijaws_label_default">天气</string>
+    <string name="omnijaws_current_text">现在</string>
+    <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
+    <string name="omnijaws_service_last_update">上次更新：</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

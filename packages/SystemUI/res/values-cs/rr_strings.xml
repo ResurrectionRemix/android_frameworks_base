@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Restartovat</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Ovládání Pie</string>
+    <string name="pie_state_summary">Použít prvky Pie v režimu přes celou obrazovku</string>
+    <string name="pie_battery_level">"ÚROVEŇ NABITÍ BATERIE "</string>
+    <string name="quick_settings_pie">Ovládání Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Automaticky povolit Smart Pixels</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go aktivováno</string>
+    <string name="onthego_notif_title">On-The-Go je aktivní</string>
+    <string name="onthego_notif_stop">Zastavit</string>
+    <string name="onthego_notif_options">Možnosti</string>
+    <string name="onthego_notif_error">On-The-Go nelze spustit</string>
+    <string name="onthego_notif_restart">Restartovat On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Režim fotoaparátu byl změněn</string>
+    <string name="onthego_transparency">Průhlednost</string>
+    <string name="onthego_front_camera">Použít přední fotoaparát</string>
+    <string name="onthego_service_toggle">Automaticky restartovat službu</string>
+    <string name="onthego_channel_name">Hlavní</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">Chyba</string>
+    <string name="omnijaws_service_unkown">Žádné údaje o počasí</string>
+    <string name="omnijaws_service_error_long">Chyba při načítání údajů o počasí</string>
+    <string name="omnijaws_service_disabled">Služba je zakázána</string>
+    <string name="omnijaws_detail_header">Počasí</string>
+    <string name="omnijaws_label_default">Počasí</string>
+    <string name="omnijaws_current_text">Nyní</string>
+    <string name="omnijaws_package_not_available">OmniJaws není k dispozici</string>
+    <string name="omnijaws_service_last_update">Poslední aktualizace:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

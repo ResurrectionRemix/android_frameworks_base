@@ -18,16 +18,20 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Pozwala aplikacji na udawanie innej aplikacji. Złośliwe aplikacje mogą wykorzystać to w celu uzyskania dostępu do prywatnych danych. Zachowaj ostrożność udzielając uprawnienień!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Skopiuj logi wyrzucenia URL</string>
+   <string name="aerr_copy">Skopiuj adres URL logu awarii</string>
    <string name="url_copy_success">URL skopiowany pomyślnie</string>
-   <string name="url_copy_failed">Nastąpił error podczas przesyłania logów do dogbin</string>
+   <string name="url_copy_failed">Nastąpił błąd podczas przesyłania logów do dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Teraz odtwarzane</string>
    <string name="ambient_recognition_information">%1$s przez %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">edytor paska nawigacji</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Zezwól aplikacjom na używanie edytora paska nawigacji.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">dostęp do menadżera czcionek</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Zezwalaj aplikacjom na dostęp do menadżera czcionek.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
 </resources>

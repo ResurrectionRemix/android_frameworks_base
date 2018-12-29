@@ -14,20 +14,25 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">Falsifica la firma del pacchetto</string>
+   <string name="permlab_fakePackageSignature">Imitazione firma pacchetto</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Permette a una applicazione di pretendere di essere un\'altra app. Alcune applicazioni malevole potrebbero usarli per accedere a dati privati. Concedi questi permessi con cautela!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Copia l\'url del log di crash</string>
-   <string name="url_copy_success">URL copiato</string>
-   <string name="url_copy_failed">Si è riscontrato un errore durante il caricamento del log su dogbin</string>
+   <string name="aerr_copy">Copia l\'URL del log di crash</string>
+   <string name="url_copy_success">URL Copiato con successo</string>
+   <string name="url_copy_failed">É stato riscontrato un errore durante il caricamento del log su dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">In riproduzione</string>
    <string name="ambient_recognition_information">%1$s di %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">controllo editor di navigazione</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Consenti ad un\'applicazione di controllare l\'editor della barra di navigazione.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">accesso al font manager</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Consenti all\'applicazione di accedere al font manager.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Il pacchetto dei caratteri che hai installato non è compatibile a causa della mancanza di fonts.xml sui loro file. Si prega di contattare lo sviluppatore del pacchetto per il supporto.</string>
 </resources>

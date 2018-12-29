@@ -110,6 +110,30 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Reiniciar</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Controles Pie</string>
+    <string name="pie_state_summary">Usar controles Pie en modo inmersivo</string>
+    <string name="pie_battery_level">"NIVEL DE BATERÍA "</string>
+    <string name="quick_settings_pie">Controles Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Píxeles inteligentes</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Habilitar automáticamente Smart Pixels</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activado</string>
+    <string name="onthego_notif_title">On-The-Go está activo</string>
+    <string name="onthego_notif_stop">Detener</string>
+    <string name="onthego_notif_options">Opciones</string>
+    <string name="onthego_notif_error">No a sido posible iniciar On-The-Go</string>
+    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
+    <string name="onthego_transparency">Transparencia</string>
+    <string name="onthego_front_camera">Utilizar la cámara frontal</string>
+    <string name="onthego_service_toggle">Reiniciar el servicio automáticamente</string>
+    <string name="onthego_channel_name">Principal</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

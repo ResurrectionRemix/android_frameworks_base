@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Kurtarma</string>
     <string name="global_action_reboot">Yeniden başlat</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">ss:dd</string>
+    <string name="pie_hour_format_24">SS:dd</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie kontrol</string>
+    <string name="pie_state_summary">Tam ekran modundayken pie kontrollerini kullanın</string>
+    <string name="pie_battery_level">"PİL SEVİYESİ "</string>
+    <string name="quick_settings_pie">Pie kontrol</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Akıllı pikseller</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Otomatik olarak akıllı pikselleri etkinleştir</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Yürüme modu etkin</string>
+    <string name="onthego_notif_title">Yürüme modu aktif</string>
+    <string name="onthego_notif_stop">Durdur</string>
+    <string name="onthego_notif_options">Seçenekler</string>
+    <string name="onthego_notif_error">Yürüme modu başlatılamıyor</string>
+    <string name="onthego_notif_restart">Yürüme modunu yeniden başlat</string>
+    <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
+    <string name="onthego_transparency">Şeffaflık</string>
+    <string name="onthego_front_camera">Ön kamerayı kullan</string>
+    <string name="onthego_service_toggle">Hizmeti otomatik olarak yeniden başlat</string>
+    <string name="onthego_channel_name">Ana</string>
+    <string name="global_action_onthego">Yürüme modu</string>
+    <string name="omnijaws_service_error">Hata</string>
+    <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
+    <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
+    <string name="omnijaws_service_disabled">Servis devre dışı</string>
+    <string name="omnijaws_detail_header">Hava durumu</string>
+    <string name="omnijaws_label_default">Hava durumu</string>
+    <string name="omnijaws_current_text">Şimdi</string>
+    <string name="omnijaws_package_not_available">OmniJaws mevcut değil</string>
+    <string name="omnijaws_service_last_update">Son güncelleme:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

@@ -23,8 +23,8 @@
     <string name="lte_on">LTE ON </string>
     <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Cattura di schermata</string>
-    <string name="quick_settings_region_screenshot_label">Cattura di schermata parziale</string>
+    <string name="quick_settings_screenshot_label">Cattura schermo</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot parziale</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Le notifiche peeking sono sospese per un minuto.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Le notifiche peeking sono state sospese per <xliff:g id="number">%d</xliff:g> minuti.</string>
@@ -50,9 +50,9 @@
     <string name="quick_settings_screenrecord_mq_label">Registrazione dello schermo a 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Registrazione dello schermo a 720p+</string>
     <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">Cattura di schermata eliminata</string>
+    <string name="delete_screenshot_toast">Screenshot eliminato</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Ricarica rapida (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> al termine)</string>
+    <string name="keyguard_indication_dash_charging_time">Ricarica Dash (<xliff:g id="charging_time_left" example="4 ore e 2 minuti"> %s</xliff:g> al termine)</string>
     <string name="keyguard_plugged_in_dash_charging">Ricarica rapida</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_turbo_power_time">TurboPower collegato (<xliff:g id="charging_time_left">%s</xliff:g> al termine)</string>
@@ -67,7 +67,7 @@
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
-    <string name="qs_menu_item_reset">Reimposta</string>
+    <string name="qs_menu_item_reset">Ripristina</string>
     <string name="qs_menu_item_titles">Mostra etichette</string>
     <string name="qs_menu_item_rows">Righe</string>
     <string name="qs_menu_item_rows_landscape">Righe orizzontali</string>
@@ -80,8 +80,8 @@
     <string name="keycode">Keycode</string>
     <string name="no_home_title">Nessun tasto home trovato</string>
     <string name="no_home_message">Il bottone home è richiesto per poter navigare sul dispositivo. Per favore aggiungere un bottone home prima di salvare.</string>
-    <string name="clipboard_description">Gli appunti permettono agli elementi di essere trascinati direttamente dentro di essa. Gli elementi possono essere a loro volta trascinati all\'esterno di essa quando presenti.</string>
-    <string name="keycode_description">I bottoni keycode permettono di aggiungere tasti della tastiera direttamente alla barra di navigazione. Quando vengono premuti emulano il tasto selezionato. Prima il tasto deve essere stato selezionato per il bottone, seguiti da un immagine per essere mostrata sopra di esso.</string>
+    <string name="clipboard_description">Gli appunti permettono agli oggetti di essere trascinati direttamente agli appunti. Gli oggetti possono anche essere trascinati direttamente fuori dagli appunti quando presenti.</string>
+    <string name="keycode_description">I pulsanti keycode consentono di essere aggiunte tasti della tastiera alla Barra di Navigazione. Quando premuti emulano il tasto della tastiera selezionato. Prima il tasto deve essere selezionato per il pulsante, seguito da un\'immagine da mostrarvi sopra.</string>
     <string name="start">Inizio</string>
     <string name="center">Centro</string>
     <string name="end">Fine</string>
@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Riavvia</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">un</string>
+    <string name="pie_state_name">Controllo Pie</string>
+    <string name="pie_state_summary">Usa controlli Pie in modalità immersiva</string>
+    <string name="pie_battery_level">"LIVELLO BATTERIA "</string>
+    <string name="quick_settings_pie">Controllo Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixel</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Abilita automaticamente Smart Pixel</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go attivato</string>
+    <string name="onthego_notif_title">On-The-Go è attivo</string>
+    <string name="onthego_notif_stop">Interrompi</string>
+    <string name="onthego_notif_options">Opzioni</string>
+    <string name="onthego_notif_error">Impossibile avviare On-The-Go</string>
+    <string name="onthego_notif_restart">Riavvia On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modalità fotocamera modificata</string>
+    <string name="onthego_transparency">Trasparenza</string>
+    <string name="onthego_front_camera">Usa fotocamera anteriore</string>
+    <string name="onthego_service_toggle">Riavvia automaticamente il servizio</string>
+    <string name="onthego_channel_name">Principale</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">Errore</string>
+    <string name="omnijaws_service_unkown">Nessun dato meteorologico</string>
+    <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
+    <string name="omnijaws_service_disabled">Servizio disabilitato</string>
+    <string name="omnijaws_detail_header">Meteo</string>
+    <string name="omnijaws_label_default">Meteo</string>
+    <string name="omnijaws_current_text">Adesso</string>
+    <string name="omnijaws_package_not_available">OmniJaws non disponibile</string>
+    <string name="omnijaws_service_last_update">Ultimo aggiornamento:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

@@ -110,6 +110,26 @@
     <string name="global_action_reboot_recovery">الإسترداد</string>
     <string name="global_action_reboot">إعادة تشغيل</string>
     <!-- Pie controls -->
+    <string name="pie_state_name">التحكم الدائري</string>
+    <string name="pie_state_summary">استخدام عناصر تحكم Pie اثناء وضع سطح المكتب</string>
+    <string name="pie_battery_level">"مستوى البطارية "</string>
+    <string name="quick_settings_pie">التحكم الدائري</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">الدقة الذكية</string>
+    <string name="quick_settings_smart_pixels_on_power_save">تمكين الدقة الذكية تلقائياً</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">وضع On-The-Go مفعل</string>
+    <string name="onthego_notif_title">تم تفعيل وضع On-The-Go</string>
+    <string name="onthego_notif_stop">إيقاف</string>
+    <string name="onthego_notif_options">خيارات</string>
+    <string name="onthego_notif_error">فشل في تشغيل On-The-Go</string>
+    <string name="onthego_notif_restart">إعادة تشغيل On-The-Go</string>
+    <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
+    <string name="onthego_transparency">الشفافية</string>
+    <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
+    <string name="onthego_service_toggle">إعادة تشغيل الخدمة تلقائيا</string>
+    <string name="onthego_channel_name">الرئيسية</string>
+    <string name="global_action_onthego">وضع On-The-Go</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

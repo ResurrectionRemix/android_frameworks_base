@@ -23,8 +23,8 @@
     <string name="lte_on">LTE AÇIQ </string>
     <string name="lte_off">LTE BAĞLI</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Ekran şəkli</string>
-    <string name="quick_settings_region_screenshot_label">Qismən ekran şəkli</string>
+    <string name="quick_settings_screenshot_label">Ekran Görüntüsü</string>
+    <string name="quick_settings_region_screenshot_label">Qismən ekran görüntüsü</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Bildirişi gözdən keçirmə 1 dəqiqəyə qədər təxirə salınır.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Bildirişi gözdən keçirmə <xliff:g id="number">%d</xliff:g> dəqiqəyə qədər təxirə salınır.</string>
@@ -59,7 +59,15 @@
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower qoşuldu</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Sütunlar</string>
-    <string name="qs_menu_item_reset">Yenidən başlat</string>
+    <string name="qs_menu_item_columns_landscape">Sütunlar üfuqi</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Sıfırla</string>
     <string name="qs_menu_item_titles">Etiketləri göstər</string>
     <string name="qs_menu_item_rows">Sətir</string>
     <string name="qs_menu_item_rows_landscape">Sətirlər üfuqi</string>
@@ -70,10 +78,62 @@
     <!-- Navbar Tuner -->
     <string name="preview">Göstər</string>
     <string name="keycode">Açar şifrə</string>
+    <string name="no_home_title">Əsas ekran düyməsi tapılmadı</string>
+    <string name="no_home_message">Bu cihazda gəzinmək üçün əsas ekran düyməsi gərəklidir. Yadda saxlamazdan əvvəl zəhmət olmasa bir əsas ekran düyməsi əlavə edin.</string>
+    <string name="clipboard_description">Mübadilə buferi, elementlərin birbaşa buferə sürüklənməsinə icazə verir. Elementlər mövcud olduqda birbaşa buferdən də sürüklənə bilər.</string>
+    <string name="keycode_description">Əsas kod düymələri klaviatura düymələrinin Naviqasiya Panelinə əlavə olunmasına imkan verir. Basıldıqda seçilmiş klaviatura düyməsini təqlid edər. Əvvəlcə düyməni seçmək lazımdır və düymədə göstəriləcək bir şəkil seçilməsi gərəklidir.</string>
+    <string name="start">Başlat</string>
+    <string name="center">Mərkəz</string>
+    <string name="end">Son</string>
+    <string name="space">Ayırıcı</string>
+    <string name="menu_ime">Menyu / Klaviatura dəyişdiricisi</string>
+    <string name="select_button">Əlavə ediləcək düyməni seçin</string>
+    <string name="add_button">Düymə əlavə et</string>
+    <string name="save">Yadda Saxla</string>
+    <string name="reset">Sıfırla</string>
+    <string name="select_keycode">Klaviatura düyməsi seçin</string>
+    <string name="left">Sol</string>
+    <string name="right">Sağ</string>
+    <string name="navbar_editor_title">Redaktor</string>
+    <string name="navbar_editor_summary">Naviqasiya panelini konfiqurasiya etmə</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Menyu / Klaviatura dəyişdirici (hər zaman göstər)</string>
+    <string name="search">Axtar</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Status paneli ikonları</string>
+    <string name="statusbar_icons_blacklist">Vəziyyət çubuğu ikonları</string>
+    <string name="navbar_tuner_activity">Naviqasiya paneli düymələri</string>
+    <string name="lockscreen_tuner_activity">Kilid ekranı qısayolları</string>
+    <string name="powernotif_tuner_activity">Güç bildirişləri</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">LTE yerinə 4G göstər</string>
+    <string name="global_action_reboot_recovery">Xilasetmə rejimi (Recovery)</string>
+    <string name="global_action_reboot">Yenidən başlat</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">ss:dd</string>
+    <string name="pie_hour_format_24">SS:dd</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie Kontrol</string>
+    <string name="pie_state_summary">Tam ekran rejimdəykən pie kontrollerini istifadə edin</string>
+    <string name="pie_battery_level">"BATAREYA SƏVİYYƏSİ"</string>
+    <string name="quick_settings_pie">Pie Kontrol</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Ağıllı piksellər</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Avtomatik olaraq ağıllı pikselləri aktivləşdir</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Yeriş rejimi aktivdir</string>
+    <string name="onthego_notif_title">Yeriş rejimi aktiv</string>
+    <string name="onthego_notif_stop">Dayandır</string>
+    <string name="onthego_notif_options">Seçimlər</string>
+    <string name="onthego_notif_error">Yeriş rejimi başladıla bilmir</string>
+    <string name="onthego_notif_restart">Yeriş rejimini yenidən başlat</string>
+    <string name="onthego_notif_camera_changed">Kamera rejimi dəyişdirildi</string>
+    <string name="onthego_transparency">Şəffaflıq</string>
+    <string name="onthego_front_camera">Ön kameranı istifadə et</string>
+    <string name="onthego_service_toggle">Avtomatik olaraq xidməti yenidən başladın</string>
+    <string name="onthego_channel_name">Əsas</string>
+    <string name="global_action_onthego">Yeriş rejimi</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <!-- Gaming Mode -->
 </resources>

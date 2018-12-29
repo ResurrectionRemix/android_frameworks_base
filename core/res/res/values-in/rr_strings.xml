@@ -25,9 +25,14 @@
    <string name="ambient_recognition_notification">Sedang dimainkan</string>
    <string name="ambient_recognition_information">%1$s oleh %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">editor kontrol navigasi</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Izinkan aplikasi untuk mengontrol editor bilah navigasi.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">mengakses pengelola font</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Izinkan aplikasi mengakses pengelola font.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Paket font yg diinstal tidak kompatibel karna tak adanya font.xml dalam berkas font.hubungi pengembang paket font.</string>
 </resources>

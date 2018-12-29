@@ -25,9 +25,14 @@
    <string name="ambient_recognition_notification">\'Now Playing\'</string>
    <string name="ambient_recognition_information">%1$s - %2$s szerzeménye</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">a navigációssáv-szerkesztő kezelése</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Lehetővé teszi egy alkalmazás számára, hogy a navigációssáv-szerkesztőt kezelje.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">hozzáférés a betűtípus-kezelőhöz</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Lehetővé teszi egy alkalmazás számára, hogy hozzáférjen a betűtípus-kezelőhöz.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">A betűkészlet amit telepített nem kompatibilis a fájljaihoz hiányzó fonts.xml miatt. Kérjük, vegye fel a kapcsolatot a font fejlesztőjével.</string>
 </resources>

@@ -58,8 +58,8 @@
     <string name="keyguard_indication_turbo_power_time">TurboPower подключен (<xliff:g id="charging_time_left">%s</xliff:g> до полной зарядки)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower подключен</string>
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">Количество столбцов</string>
-    <string name="qs_menu_item_columns_landscape">Столбцы (альбомный режим)</string>
+    <string name="qs_menu_item_columns">Колонки</string>
+    <string name="qs_menu_item_columns_landscape">Колонки (альбомный режим)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Режим восстановления</string>
     <string name="global_action_reboot">Перезагрузить</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, дд ММММ гггг</string>
+    <string name="pie_hour_format_12">чч:мм</string>
+    <string name="pie_hour_format_24">ЧЧ:мм</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Панель Pie</string>
+    <string name="pie_state_summary">Использовать веерное управление (Pie) в полноэкранном режиме</string>
+    <string name="pie_battery_level">"Уровень заряда аккумулятора"</string>
+    <string name="quick_settings_pie">Панель Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Умные пиксели</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение умных пикселей</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
+    <string name="onthego_notif_title">Режим «На ходу» активен</string>
+    <string name="onthego_notif_stop">Остановить</string>
+    <string name="onthego_notif_options">Параметры</string>
+    <string name="onthego_notif_error">Невозможно запустить режим «На ходу»</string>
+    <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
+    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использовать фронтальную камеру</string>
+    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
+    <string name="onthego_channel_name">Главный</string>
+    <string name="global_action_onthego">Режим \"На ходу\"</string>
+    <string name="omnijaws_service_error">Ошибка</string>
+    <string name="omnijaws_service_unkown">Нет данных о погоде</string>
+    <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>
+    <string name="omnijaws_service_disabled">Служба отключена</string>
+    <string name="omnijaws_detail_header">Погода</string>
+    <string name="omnijaws_label_default">Погода</string>
+    <string name="omnijaws_current_text">Сейчас</string>
+    <string name="omnijaws_package_not_available">OmniJaws недоступен</string>
+    <string name="omnijaws_service_last_update">Последнее обновление:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

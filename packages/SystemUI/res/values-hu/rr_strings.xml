@@ -110,6 +110,40 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Újraindítás</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">yyyy. MMMM dd., EEEE</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie Vezérlés</string>
+    <string name="pie_state_summary">Pie vezérlő használata teljes képernyős üzemmódban</string>
+    <string name="pie_battery_level">"AKKUMULÁTORSZINT "</string>
+    <string name="quick_settings_pie">Pie Vezérlés</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Intelligens pixelek</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Intelligens pixelek automatikus engedélyezése</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Menet közben (On-The-Go) aktiválva</string>
+    <string name="onthego_notif_title">A Menet közben (On-The-Go) aktív</string>
+    <string name="onthego_notif_stop">Leállítás</string>
+    <string name="onthego_notif_options">Beállítások</string>
+    <string name="onthego_notif_error">Nem lehet elindítani a Menet közben (On-The-Go) módot</string>
+    <string name="onthego_notif_restart">A Menet közben (On-The-Go) mód újraindítása</string>
+    <string name="onthego_notif_camera_changed">A Kameramód megváltoztatva</string>
+    <string name="onthego_transparency">Átlátszóság</string>
+    <string name="onthego_front_camera">Az előlapi kamera használata</string>
+    <string name="onthego_service_toggle">Szolgáltatás automatikus újraindítása</string>
+    <string name="onthego_channel_name">Elsődleges</string>
+    <string name="global_action_onthego">Menet közben (On-The-Go)</string>
+    <string name="omnijaws_service_error">Hiba</string>
+    <string name="omnijaws_service_unkown">Nincsenek időjárási adatok</string>
+    <string name="omnijaws_service_error_long">Hiba az időjárási adatok betöltésekor</string>
+    <string name="omnijaws_service_disabled">A szolgáltatás ki van kapcsolva</string>
+    <string name="omnijaws_detail_header">Időjárás</string>
+    <string name="omnijaws_label_default">Időjárás</string>
+    <string name="omnijaws_current_text">Most</string>
+    <string name="omnijaws_package_not_available">Az OmniJaws nem érhető el</string>
+    <string name="omnijaws_service_last_update">Utoljára frissítve:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>

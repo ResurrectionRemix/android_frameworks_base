@@ -20,11 +20,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE ON </string>
-    <string name="lte_off">LTE OFF</string>
+    <string name="lte_on">BẬT LTE </string>
+    <string name="lte_off">TẮT LTE</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Chụp ảnh màn hình</string>
-    <string name="quick_settings_region_screenshot_label">Chụp một phần màn hình</string>
+    <string name="quick_settings_screenshot_label">Ảnh chụp màn hình</string>
+    <string name="quick_settings_region_screenshot_label">Ảnh chụp màn hình một phần</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong 1 phút.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong <xliff:g id="number">%d</xliff:g> phút.</string>
@@ -46,17 +46,17 @@
     <string name="screenrecord_show_hint">Hiện gợi ý</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Quay màn hình</string>
-    <string name="quick_settings_screenrecord_lq_label">Quay màn hình chất lượng thấp</string>
-    <string name="quick_settings_screenrecord_mq_label">Quay màn hình chất lượng 720</string>
-    <string name="quick_settings_screenrecord_hq_label">Quay màn hình chất lượng 720+</string>
+    <string name="quick_settings_screenrecord_lq_label">Quay màn hình ở chất lượng 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Quay màn hình ở chất lượng 720</string>
+    <string name="quick_settings_screenrecord_hq_label">Quay màn hình ở chất lượng 720+</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> cho đến khi đầy)</string>
     <string name="keyguard_plugged_in_dash_charging">Sạc nhanh</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">TurboPower đã kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
-    <string name="keyguard_plugged_in_turbo_power_charging">Đã kết nối TurboPower</string>
+    <string name="keyguard_indication_turbo_power_time">Sạc nhanh đã được kết nối (<xliff:g id="charging_time_left">%s</xliff:g> cho đến khi đầy)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">Sạc nhanh</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Cột</string>
     <string name="qs_menu_item_columns_landscape">Cột (màn hình ngang)</string>
@@ -104,12 +104,46 @@
     <string name="statusbar_icons_blacklist">Biểu tượng thanh trạng thái</string>
     <string name="navbar_tuner_activity">Phím thanh điều hướng</string>
     <string name="lockscreen_tuner_activity">Lối tắt màn hình khóa</string>
-    <string name="powernotif_tuner_activity">Thông báo năng lượng</string>
+    <string name="powernotif_tuner_activity">Thông báo nguồn</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Hiện 4G thay cho LTE</string>
     <string name="global_action_reboot_recovery">Phục hồi</string>
     <string name="global_action_reboot">Khởi động lại</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Trình điều khiển Pie</string>
+    <string name="pie_state_summary">Sử dụng trình điều khiển pie khi ở chế độ toàn màn hình</string>
+    <string name="pie_battery_level">"MỨC PIN "</string>
+    <string name="quick_settings_pie">Trình điều khiển Pie</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Điểm ảnh thông minh</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Tự đông bật Điểm ảnh thông minh</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Đã kích hoạt On-The-Go</string>
+    <string name="onthego_notif_title">On-The-Go đang hoạt động</string>
+    <string name="onthego_notif_stop">Dừng</string>
+    <string name="onthego_notif_options">Tùy chọn</string>
+    <string name="onthego_notif_error">Không thể khởi động On-The-Go</string>
+    <string name="onthego_notif_restart">Khởi động lại On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Đã thay đổi chế độ Camera</string>
+    <string name="onthego_transparency">Trong suốt</string>
+    <string name="onthego_front_camera">Sử dụng camera trước</string>
+    <string name="onthego_service_toggle">Tự động khởi động lại dịch vụ</string>
+    <string name="onthego_channel_name">Chính</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">Lỗi</string>
+    <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
+    <string name="omnijaws_service_error_long">Lỗi tải dữ liệu thời tiết</string>
+    <string name="omnijaws_service_disabled">Dịch vụ bị vô hiệu hóa</string>
+    <string name="omnijaws_detail_header">Thời tiết</string>
+    <string name="omnijaws_label_default">Thời tiết</string>
+    <string name="omnijaws_current_text">Hiện tại</string>
+    <string name="omnijaws_package_not_available">OmniJaws không có sẵn</string>
+    <string name="omnijaws_service_last_update">Lần cập nhật cuối:</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming Mode -->
 </resources>
