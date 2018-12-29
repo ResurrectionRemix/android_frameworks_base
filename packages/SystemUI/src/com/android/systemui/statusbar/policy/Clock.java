@@ -94,6 +94,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private SimpleDateFormat mContentDescriptionFormat;
     private Locale mLocale;
     private boolean mScreenOn = true;
+    private Handler autoHideHandler = new Handler();
 
     public static final int AM_PM_STYLE_GONE    = 0;
     public static final int AM_PM_STYLE_SMALL   = 1;
@@ -111,7 +112,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
     public static final int STYLE_DATE_LEFT = 0;
     public static final int STYLE_DATE_RIGHT = 1;
-
+    private static final int HIDE_DURATION = 60; // 1 minute
+    private static final int SHOW_DURATION = 5; // 5 seconds
     private int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
     private int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
     private String mClockDateFormat = null;
@@ -121,6 +123,16 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private boolean mShowSeconds;
     private Handler mSecondsHandler;
     private boolean mQsHeader;
+    private boolean mClockAutoHide;
+    private int mHideDuration = HIDE_DURATION, mShowDuration = SHOW_DURATION;
+    private Handler mHandler = new Handler();
+
+    public static final String STATUS_BAR_CLOCK_AUTO_HIDE =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
+    public static final String STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION;
+    public static final String STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION;
 
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
@@ -216,8 +228,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     null, Dependency.get(Dependency.TIME_TICK_HANDLER));
             Dependency.get(TunerService.class).addTunable(this, STATUSBAR_CLOCK_SECONDS,
                     STATUSBAR_CLOCK_AM_PM_STYLE, STATUSBAR_CLOCK_DATE_DISPLAY,
-                    STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_POSITION);
-            SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).addCallback(this);
+                    STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_POSITION,
+                    STATUS_BAR_CLOCK_AUTO_HIDE,
+                    STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
+                    STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION);
             if (mShowDark) {
                 Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
             }
@@ -259,7 +273,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
                 String tz = intent.getStringExtra("time-zone");
-                getHandler().post(() -> {
+                mHandler.post(() -> {
                     mCalendar = Calendar.getInstance(TimeZone.getTimeZone(tz));
                     if (mClockFormat != null) {
                         mClockFormat.setTimeZone(mCalendar.getTimeZone());
@@ -267,21 +281,19 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 });
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 final Locale newLocale = getResources().getConfiguration().locale;
-                getHandler().post(() -> {
+                mHandler.post(() -> {
                     if (!newLocale.equals(mLocale)) {
                         mLocale = newLocale;
                     }
                 });
-            }
-
-            if (action.equals(Intent.ACTION_SCREEN_ON)) {
+            } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
                 mScreenOn = true;
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
             }
-
             if (mScreenOn) {
-                getHandler().post(() -> updateClock());
+                mHandler.post(() -> updateClock());
+                if (mClockAutoHide) autoHideHandler.post(() -> updateClockVisibility());
             }
         }
     };
@@ -312,9 +324,22 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     }
 
     private void updateClockVisibility() {
-        boolean visible = shouldBeVisible();
+        boolean visible = mClockVisibleByPolicy && mClockVisibleByUser;
         int visibility = visible ? View.VISIBLE : View.GONE;
-        super.setVisibility(visibility);
+        try {
+            autoHideHandler.removeCallbacksAndMessages(null);
+        } catch (NullPointerException e) {
+            // Do nothing
+        }
+        setVisibility(visibility);
+        if (mClockAutoHide && visible && mScreenOn) {
+            autoHideHandler.postDelayed(()->autoHideClock(), mShowDuration * 1000);
+        }
+    }
+
+    private void autoHideClock() {
+        setVisibility(View.GONE);
+        autoHideHandler.postDelayed(()->updateClockVisibility(), mHideDuration * 1000);
     }
 
     public boolean isClockVisible() {
@@ -343,6 +368,15 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 || STATUSBAR_CLOCK_DATE_FORMAT.equals(key)
                 || STATUSBAR_CLOCK_DATE_POSITION.equals(key)) {
             updateSettings(key, newValue);
+        } else if (STATUS_BAR_CLOCK_AUTO_HIDE.equals(key)) {
+            mClockAutoHide =
+                    TunerService.parseIntegerSwitch(newValue, false);
+        } else if (STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION.equals(key)) {
+            mHideDuration =
+                    TunerService.parseInteger(newValue, HIDE_DURATION);
+        } else if (STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION.equals(key)) {
+            mShowDuration =
+                    TunerService.parseInteger(newValue, SHOW_DURATION);
         }
     }
 
