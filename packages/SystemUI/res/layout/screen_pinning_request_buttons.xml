@@ -102,8 +102,7 @@
             android:paddingEnd="@dimen/screen_pinning_request_inner_padding"
             android:paddingStart="@dimen/screen_pinning_request_inner_padding"
             android:paddingTop="@dimen/screen_pinning_request_inner_padding"
-            android:scaleType="matrix"
-            android:src="@drawable/screen_pinning_bg_circ" />
+            android:scaleType="matrix" />
 
         <ImageView
             android:id="@+id/screen_pinning_home_icon"
@@ -145,8 +144,7 @@
             android:paddingEnd="@dimen/screen_pinning_request_inner_padding"
             android:paddingStart="@dimen/screen_pinning_request_inner_padding"
             android:paddingTop="@dimen/screen_pinning_request_inner_padding"
-            android:scaleType="matrix"
-            android:src="@drawable/screen_pinning_bg_circ" />
+            android:scaleType="matrix" />
 
         <ImageView
             android:id="@+id/screen_pinning_recents_icon"

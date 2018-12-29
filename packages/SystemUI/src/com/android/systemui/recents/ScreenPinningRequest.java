@@ -273,24 +273,18 @@ public class ScreenPinningRequest implements View.OnClickListener,
                                 : R.string.screen_pinning_description;
             } else {
                 mLayout.findViewById(R.id.screen_pinning_recents_group).setVisibility(INVISIBLE);
-                mLayout.findViewById(R.id.screen_pinning_home_bg_light).setVisibility(VISIBLE);
-                mLayout.findViewById(R.id.screen_pinning_home_bg).setVisibility(VISIBLE);
-                descriptionStringResId = !hasNavigationBar()
-                        ? R.string.screen_pinning_description_no_navbar
-                        : touchExplorationEnabled
-                                ? R.string.screen_pinning_description_recents_invisible_accessible
-                                : R.string.screen_pinning_description_recents_invisible;
+                mLayout.findViewById(R.id.screen_pinning_home_bg_light).setVisibility(INVISIBLE);
+                mLayout.findViewById(R.id.screen_pinning_home_bg).setVisibility(INVISIBLE);
+                descriptionStringResId = touchExplorationEnabled
+                        ? R.string.screen_pinning_description_recents_invisible_accessible_custom
+                        : R.string.screen_pinning_description_recents_invisible_custom;
             }
 
             if (navigationBarView != null) {
                 ((ImageView) mLayout.findViewById(R.id.screen_pinning_back_icon))
                         .setImageDrawable(navigationBarView.getBackDrawable());
-                ((ImageView) mLayout.findViewById(R.id.screen_pinning_home_icon))
-                        .setImageDrawable(navigationBarView.getHomeDrawable());
-                if (recentsVisible) {
-                    ((ImageView) mLayout.findViewById(R.id.screen_pinning_recents_icon))
-                            .setImageDrawable(navigationBarView.getRecentsDrawable());
-                }
+                /*((ImageView) mLayout.findViewById(R.id.screen_pinning_home_icon))
+                        .setImageDrawable(navigationBarView.getHomeDrawable());*/
             }
 
             ((TextView) mLayout.findViewById(R.id.screen_pinning_description))

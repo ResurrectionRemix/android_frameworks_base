@@ -64,13 +64,11 @@ public class ScreenPinningNotify {
         if (mLastToast != null) {
             mLastToast.cancel();
         }
-        mLastToast = makeAllUserToastAndShow(!hasNavigationBar()
-                ? R.string.screen_pinning_toast_no_navbar
-                : isGestureNavEnabled
-                        ? R.string.screen_pinning_toast_gesture_nav
-                        : isRecentsButtonVisible
-                                ? R.string.screen_pinning_toast
-                                : R.string.screen_pinning_toast_recents_invisible);
+        mLastToast = makeAllUserToastAndShow(isGestureNavEnabled
+                ? R.string.screen_pinning_toast_gesture_nav
+                : isRecentsButtonVisible
+                        ? R.string.screen_pinning_toast_custom
+                        : R.string.screen_pinning_toast_recents_invisible_custom);
         mLastShowToastTime = showToastTime;
     }
 
