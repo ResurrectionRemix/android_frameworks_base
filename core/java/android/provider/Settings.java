@@ -4214,48 +4214,6 @@ public final class Settings {
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
 
         /**
-         * If On-The-Go should be displayed at the power menu.
-         *
-         * @hide
-         */
-        public static final String GLOBAL_ACTIONS_ONTHEGO = "global_actions_onthego";
-
-        /** @hide */
-        private static final Validator GLOBAL_ACTIONS_ONTHEGO_VALIDATOR =
-              BOOLEAN_VALIDATOR;
-
-        /**
-         * The alpha value of the On-The-Go overlay.
-         *
-         * @hide
-         */
-        public static final String ON_THE_GO_ALPHA = "on_the_go_alpha";
-
-        /**
-         * Whether the service should restart itself or not.
-         *
-         * @hide
-         */
-        public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
-
-        /** @hide */
-        private static final Validator ON_THE_GO_SERVICE_RESTART_VALIDATOR =
-              BOOLEAN_VALIDATOR;
-
-        /**
-         * The camera instance to use.
-         * 0 = Rear Camera
-         * 1 = Front Camera
-         *
-         * @hide
-         */
-        public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
-
-        /** @hide */
-        private static final Validator ON_THE_GO_CAMERA_VALIDATOR =
-              new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
-
-        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -5297,7 +5255,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_CARRIER);
             PRIVATE_SETTINGS.add(CUSTOM_CARRIER_LABEL);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
-            PRIVATE_SETTINGS.add(ON_THE_GO_CAMERA);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_LOCATION);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_COLOR);
@@ -5427,9 +5384,6 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_CARRIER_LABEL,CUSTOM_CARRIER_LABEL_VALIDATOR);
             VALIDATORS.put(FINGERPRINT_SUCCESS_VIB,
                     FINGERPRINT_SUCCESS_VIB_VALIDATOR);
-            VALIDATORS.put(GLOBAL_ACTIONS_ONTHEGO,GLOBAL_ACTIONS_ONTHEGO_VALIDATOR);
-            VALIDATORS.put(ON_THE_GO_SERVICE_RESTART,ON_THE_GO_SERVICE_RESTART_VALIDATOR);
-            VALIDATORS.put(ON_THE_GO_CAMERA,ON_THE_GO_CAMERA_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR, STATUSBAR_BATTERY_BAR_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_LOCATION, STATUSBAR_BATTERY_BAR_LOCATION_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_COLOR, STATUSBAR_BATTERY_BAR_COLOR_VALIDATOR);

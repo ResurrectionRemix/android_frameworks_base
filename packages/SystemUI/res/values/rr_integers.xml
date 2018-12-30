@@ -21,9 +21,4 @@
      <!-- Indicates wether device is a tablet or not -->
     <bool name="config_isTablet">false</bool>
 
-    <!-- On-The-Go -->
-    <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
-    <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
-
-
 </resources>
