@@ -23,11 +23,13 @@ import android.annotation.ColorInt;
 import android.app.PendingIntent;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.Layout;
 import android.text.TextUtils;
@@ -169,6 +171,11 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
                 subItems.add(subItem);
             }
         }
+
+        ContentResolver resolver = getContext().getContentResolver();
+        boolean showInfo = Settings.System.getIntForUser(resolver,
+                Settings.System.LOCKSCREEN_INFO, 1, UserHandle.USER_CURRENT) == 1;
+
         if (!mHasHeader) {
             mTitle.setVisibility(GONE);
         } else {
@@ -186,7 +193,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         final int subItemsCount = subItems.size();
         final int blendedColor = getTextColor();
         final int startIndex = mHasHeader ? 1 : 0; // First item is header; skip it
-        mRow.setVisibility(subItemsCount > 0 ? VISIBLE : GONE);
+        mRow.setVisibility(subItemsCount > 0 && showInfo ? VISIBLE : GONE);
         for (int i = startIndex; i < subItemsCount; i++) {
             SliceItem item = subItems.get(i);
             RowContent rc = new RowContent(getContext(), item, true /* showStartItem */);
