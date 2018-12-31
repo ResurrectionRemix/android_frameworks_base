@@ -773,6 +773,13 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
         }
     }
 
+    @Override
+    public void onMediaUpdated(boolean playing) {
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setMediaPlaying(playing);
+        }
+    }
+
     // ----- Internal stuffz -----
 
     private void refreshLayout(int layoutDirection) {
@@ -1366,13 +1373,6 @@ Navigator.OnVerticalChangedListener, KeyguardMonitor.Callback, NotificationMedia
         mIsAttached = false;
         mNavigationBarView.dispose();
         super.onDetach();
-    }
-
-    @Override
-    public void onMediaUpdated(boolean playing) {
-        if (mNavigationBarView != null) {
-            mNavigationBarView.setMediaPlaying(playing);
-        }
     }
 
     public void setPanelExpanded(boolean expanded) {
