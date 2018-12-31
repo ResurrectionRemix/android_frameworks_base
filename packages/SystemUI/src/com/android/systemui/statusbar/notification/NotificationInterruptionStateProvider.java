@@ -43,6 +43,8 @@ import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -77,6 +79,7 @@ public class NotificationInterruptionStateProvider {
     private boolean mDisableNotificationAlerts;
 
     private boolean mLessBoringHeadsUp;
+    private ArrayList<String> mHeadsUpBlacklist = new ArrayList<String>();
 
     @Inject
     public NotificationInterruptionStateProvider(Context context, NotificationFilter filter,
@@ -371,6 +374,14 @@ public class NotificationInterruptionStateProvider {
         return !getShadeController().isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
     }
 
+    private boolean isPackageBlacklisted(String packageName) {
+        return mHeadsUpBlacklist.contains(packageName);
+    }
+
+    public void setHeadsUpBlacklist(ArrayList<String> arrayList) {
+            mHeadsUpBlacklist = arrayList;
+    }
+
     /**
      * Common checks between alerts that occur while the device is awake (heads up & bubbles).
      *
@@ -380,6 +391,11 @@ public class NotificationInterruptionStateProvider {
     @VisibleForTesting
     public boolean canAlertAwakeCommon(NotificationEntry entry) {
         StatusBarNotification sbn = entry.notification;
+
+        // check if package is blacklisted first
+        if (isPackageBlacklisted(sbn.getPackageName())) {
+            return false;
+        }
 
         if (mPresenter.isDeviceInVrMode() || shouldSkipHeadsUp(sbn)) {
             if (DEBUG_HEADS_UP) {
