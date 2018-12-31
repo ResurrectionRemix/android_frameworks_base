@@ -62,6 +62,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
+                android:letterSpacing="0.03"
                 android:textColor="?attr/wallpaperTextColor"
                 style="@style/widget_big_thin" />
             <CustomAnalogClock
