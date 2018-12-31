@@ -193,7 +193,8 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         final int subItemsCount = subItems.size();
         final int blendedColor = getTextColor();
         final int startIndex = mHasHeader ? 1 : 0; // First item is header; skip it
-        mRow.setVisibility(subItemsCount > 0 && showInfo ? VISIBLE : GONE);
+        mRow.setVisibility(mDarkAmount != 1 ? (subItemsCount > 0 && showInfo ?
+                View.VISIBLE : View.GONE) : View.VISIBLE);
         for (int i = startIndex; i < subItemsCount; i++) {
             SliceItem item = subItems.get(i);
             RowContent rc = new RowContent(getContext(), item, true /* showStartItem */);
@@ -302,6 +303,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mDarkAmount = darkAmount;
         mRow.setDarkAmount(darkAmount);
         updateTextColors();
+        showSlice();
     }
 
     public void setViewsTypeface(Typeface tf) {

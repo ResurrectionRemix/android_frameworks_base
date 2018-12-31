@@ -410,7 +410,8 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCKSCREEN_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
 
         mClockView = (TextClock) findViewById(R.id.clock_view);
-        mClockView.setVisibility(showClock ? View.VISIBLE : View.GONE);
+        mClockView.setVisibility(mDarkAmount != 1 ? (showClock ?
+                View.VISIBLE : View.GONE) : View.VISIBLE);
     }
 
     public void updateAll() {
@@ -471,6 +472,7 @@ public class KeyguardStatusView extends GridLayout implements
         mKeyguardSlice.setDarkAmount(mDarkAmount);
         mClockView.setTextColor(blendedTextColor);
         mClockSeparator.setBackgroundColor(blendedTextColor);
+        updateSettings();
     }
 
     private void layoutOwnerInfo() {
