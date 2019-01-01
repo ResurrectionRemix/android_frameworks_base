@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.widget;
+package com.android.keyguard.clocks;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,15 +31,17 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RemoteViews.RemoteView;
 
+import com.android.systemui.R;
+
 import java.util.TimeZone;
 
 /**
  * This widget display an analogic clock with two hands for hours and
  * minutes.
  *
- * @attr ref android.R.styleable#CustomAnalogClock_dial
- * @attr ref android.R.styleable#CustomAnalogClock_hand_hour
- * @attr ref android.R.styleable#CustomAnalogClock_hand_minute
+ * @attr ref R.styleable#CustomAnalogClock_dial
+ * @attr ref R.styleable#CustomAnalogClock_hand_hour
+ * @attr ref R.styleable#CustomAnalogClock_hand_minute
  * @deprecated This widget is no longer supported.
  */
 @RemoteView
@@ -80,23 +82,15 @@ public class CustomAnalogClock extends View {
 
         final Resources r = context.getResources();
         final TypedArray a = context.obtainStyledAttributes(
-                attrs, com.android.internal.R.styleable.CustomAnalogClock, defStyleAttr, defStyleRes);
+                attrs, R.styleable.CustomAnalogClock, defStyleAttr, defStyleRes);
 
-        mDial = a.getDrawable(com.android.internal.R.styleable.CustomAnalogClock_custom_dial);
-        if (mDial == null) {
-            mDial = context.getDrawable(com.android.internal.R.drawable.custom_clock_dial);
-        }
-        mDialAmbient = context.getDrawable(com.android.internal.R.drawable.custom_clock_dial_ambient);
+        mDial = a.getDrawable(R.styleable.CustomAnalogClock_custom_dial);
 
-        mHourHand = a.getDrawable(com.android.internal.R.styleable.CustomAnalogClock_custom_hand_hour);
-        if (mHourHand == null) {
-            mHourHand = context.getDrawable(com.android.internal.R.drawable.custom_clock_hand_hour);
-        }
+        mDialAmbient = context.getDrawable(R.drawable.custom_clock_dial_ambient);
 
-        mMinuteHand = a.getDrawable(com.android.internal.R.styleable.CustomAnalogClock_custom_hand_minute);
-        if (mMinuteHand == null) {
-            mMinuteHand = context.getDrawable(com.android.internal.R.drawable.custom_clock_hand_minute);
-        }
+        mHourHand = a.getDrawable(R.styleable.CustomAnalogClock_custom_hand_hour);
+
+        mMinuteHand = a.getDrawable(R.styleable.CustomAnalogClock_custom_hand_minute);
 
         a.recycle();
 

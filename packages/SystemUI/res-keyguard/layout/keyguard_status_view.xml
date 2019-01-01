@@ -21,6 +21,7 @@
 <com.android.keyguard.KeyguardStatusView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidprv="http://schemas.android.com/apk/res-auto"
+    xmlns:analog="http://schemas.android.com/apk/res-auto"
     android:id="@+id/keyguard_status_view"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -65,15 +66,16 @@
                 android:letterSpacing="0.03"
                 android:textColor="?attr/wallpaperTextColor"
                 style="@style/widget_big_thin" />
-            <CustomAnalogClock
-                android:id="@+id/analog_clock_view"
+            <com.android.keyguard.clocks.CustomAnalogClock
+                android:id="@+id/custom_clock_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:textColor="?attr/wallpaperTextColor"
-                style="@style/widget_big_thin" />
+                analog:custom_dial="@drawable/custom_clock_dial"
+                analog:custom_hand_hour="@drawable/custom_clock_hand_hour"
+                analog:custom_hand_minute="@drawable/custom_clock_hand_minute"/>
             <View
                 android:id="@+id/clock_separator"
                 android:layout_width="@dimen/widget_separator_width"
