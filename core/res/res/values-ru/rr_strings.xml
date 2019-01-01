@@ -36,7 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Набор шрифтов который вы установили несовместим, из-за отсутствия важных файлов (Например fonts.xml). Пожалуйста, обратитесь к разработчику набора для помощи.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Перезагрузиться в Fastboot</string>
+   <string name="reboot_to_bootloader_message">Перезагрузка в режим fastboot\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Перезагрузиться в рекавери</string>
+   <string name="reboot_to_recovery_message">Перезагрузка в режим восстановления\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Полный перезапуск</string>
+   <string name="reboot_system_message">Перезапуск\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Затухание</string>
+   <string name="animation_slide_right">Сдвинуть вправо</string>
+   <string name="animation_slide_left">Сдвинуть влево</string>
+   <string name="animation_slide_right_no_fade">Сдвинуть вправо (без затухания)</string>
+   <string name="animation_slide_left_no_fade">Сдвинуть влево (без затухания)</string>
+   <string name="animation_slide_up">Сдвинуть вниз</string>
+   <string name="animation_slide_down">Сдвинуть вверх</string>
+   <string name="animation_default">По умолчанию</string>
+   <string name="animation_translucent">Прозрачность</string>
+   <string name="animation_grow_shrink">Увеличение (вверх)</string>
+   <string name="animation_grow_shrink_center">Увеличение (по центру)</string>
+   <string name="animation_grow_shrink_bottom">Увеличение (вниз)</string>
+   <string name="animation_grow_shrink_left">Увеличение (влево)</string>
+   <string name="animation_grow_shrink_right">Увеличение (вправо)</string>
+   <string name="animation_random">Случайный</string>
+   <string name="action_null">Пусто</string>
+   <string name="default_string">По умолчанию</string>
 </resources>

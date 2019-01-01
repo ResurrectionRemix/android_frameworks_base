@@ -141,8 +141,17 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Oyun modu açık</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Oyun modu kapalı</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Yeniden Başlat</string>
+    <string name="global_action_reboot_sub">Sistem</string>
+    <string name="global_action_reboot_bootloader">Ön Yükleyici</string>
+    <string name="global_action_reboot_systemui">Sistem arayüzü</string>
+    <string name="global_action_dnaa">Tekrar gösterme</string>
+    <string name="global_action_settings">Ayarlar</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Ekran görüntüsü</string>
+    <string name="global_action_screenrecord">Ekran Kaydı</string>
+    <string name="global_action_flashlight">El feneri</string>
 </resources>

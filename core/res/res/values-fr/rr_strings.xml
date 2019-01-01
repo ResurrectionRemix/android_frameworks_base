@@ -36,7 +36,24 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Le paquet de police que vous avez installé n\'est pas compatible à cause du fichier fonts.xml manquant dans les fichiers. Veuillez contacter le développeur du paquet pour le support.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Redémarrage dans le bootloader</string>
+   <string name="reboot_to_bootloader_message">Redémarrage dans le bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Redémarrer en mode Récupération</string>
+   <string name="reboot_to_recovery_message">Redémarrage en mode Récupération\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Redémarrer le système</string>
+   <string name="reboot_system_message">Redémarrage du système\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Fondu</string>
+   <string name="animation_slide_right">Glisser vers la droite</string>
+   <string name="animation_slide_left">Glisser vers la gauche</string>
+   <string name="animation_slide_right_no_fade">Glisser vers la droite (Sans fondu)</string>
+   <string name="animation_slide_left_no_fade">Glisser vers la gauche (Sans fondu)</string>
+   <string name="animation_slide_up">Glisser vers le bas</string>
+   <string name="animation_slide_down">Glisser vers le haut</string>
+   <string name="animation_default">Par Défaut</string>
+   <string name="animation_translucent">Translucide</string>
+   <string name="animation_random">Aléatoire</string>
+   <string name="default_string">Par Défaut</string>
 </resources>

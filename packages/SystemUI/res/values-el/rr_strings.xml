@@ -141,6 +141,10 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Λειτουργία παιχνιδιού ενεργή</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Λειτουργία παιχνιδιού ανενεργή</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Επανεκκίνηση\u2026</string>
+    <string name="global_action_reboot_sub">Σύστημα</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">ΣύστημαUI</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>

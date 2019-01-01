@@ -141,8 +141,18 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Включить игровой режим</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Выключить игровой режим</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Перезагрузка\u2026</string>
+    <string name="global_action_reboot_sub">Система</string>
+    <string name="global_action_reboot_bootloader">Загрузчик</string>
+    <string name="global_action_reboot_systemui">Интерфейс системы</string>
+    <string name="global_action_dismissable_dialog_text">Расширенная перезагрузка отключена.\nХотите перезагрузиться\u003f</string>
+    <string name="global_action_dnaa">Больше не показывать</string>
+    <string name="global_action_settings">Настройки</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Скриншот</string>
+    <string name="global_action_screenrecord">Запись экрана</string>
+    <string name="global_action_flashlight">Фонарик</string>
 </resources>
