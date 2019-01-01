@@ -121,19 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixel</string>
     <string name="quick_settings_smart_pixels_on_power_save">Abilita automaticamente Smart Pixel</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go attivato</string>
-    <string name="onthego_notif_title">On-The-Go è attivo</string>
-    <string name="onthego_notif_stop">Interrompi</string>
-    <string name="onthego_notif_options">Opzioni</string>
-    <string name="onthego_notif_error">Impossibile avviare On-The-Go</string>
-    <string name="onthego_notif_restart">Riavvia On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Modalità fotocamera modificata</string>
-    <string name="onthego_transparency">Trasparenza</string>
-    <string name="onthego_front_camera">Usa fotocamera anteriore</string>
-    <string name="onthego_service_toggle">Riavvia automaticamente il servizio</string>
-    <string name="onthego_channel_name">Principale</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Errore</string>
     <string name="omnijaws_service_unkown">Nessun dato meteorologico</string>
     <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
@@ -146,4 +133,9 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g></string>
     <!-- Gaming Mode -->
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

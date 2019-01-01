@@ -121,19 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Pixel pintar</string>
     <string name="quick_settings_smart_pixels_on_power_save">Pixel pintar otomatis</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go diaktifkan</string>
-    <string name="onthego_notif_title">On-The-Go sedang aktif</string>
-    <string name="onthego_notif_stop">Hentikan</string>
-    <string name="onthego_notif_options">Opsi</string>
-    <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
-    <string name="onthego_notif_restart">Mulai ulang On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Mode kamera berubah</string>
-    <string name="onthego_transparency">Transparansi</string>
-    <string name="onthego_front_camera">Gunakan kamera depan</string>
-    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
-    <string name="onthego_channel_name">Utama</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Kesalahan</string>
     <string name="omnijaws_service_unkown">Tidak ada data cuaca</string>
     <string name="omnijaws_service_error_long">Kesalahan memuat data cuaca</string>
@@ -146,4 +133,15 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_toast">Mode permainan dinonaktifkan</string>
+    <string name="gaming_mode_tile_toast_disabled">Mode permainan dinonaktifkan</string>
+    <string name="gaming_mode_dialog_title">Mode Permainan</string>
+    <string name="gaming_mode_dialog_message">Ketika mode permainan dinyalakan, nada dering Anda akan diset dalam mode getar, semua notifikasi akan di nonaktifkan dan tombol fisik akan dimatikan. Volume media akan diset maksimal. Semua pengaturan akan akan diatur ulang ketika Anda menonaktifkan mode permainan.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Mode permainan nonaktif</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Mode permainan aktif</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

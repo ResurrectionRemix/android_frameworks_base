@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">允许应用访问字体管理器。</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">你安装的字体包由于缺失 fonts.xml 文件而不兼容。请联系包的开发者以寻求支持。</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

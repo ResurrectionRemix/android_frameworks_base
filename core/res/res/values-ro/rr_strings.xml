@@ -20,14 +20,23 @@
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">Copiază URL-ul jurnalului de eroare</string>
    <string name="url_copy_success">URL-ul a fost copiat cu succes</string>
-   <string name="url_copy_failed">A aparut o eroare la incarcarea imaginii.</string>
+   <string name="url_copy_failed">A aparut o eroare la încărcarea jurnalului în dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Se redă acum</string>
    <string name="ambient_recognition_information">%1$s de %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">controlează editarea bării de navigare</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Permite unei aplicații să controleze editorul barei de navigare.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">accesați managerul de fonturi</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Permite unei aplicații să acceseze managerul de font.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Pachetul de fonturi pe care l-ați instalat nu este compatibil datorită lipsei fișierelor fonts.xml. Vă rugăm contactați dezvoltatorul pachetului pentru suport.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

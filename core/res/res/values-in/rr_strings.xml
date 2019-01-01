@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">Izinkan aplikasi mengakses pengelola font.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Paket font yg diinstal tidak kompatibel karna tak adanya font.xml dalam berkas font.hubungi pengembang paket font.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

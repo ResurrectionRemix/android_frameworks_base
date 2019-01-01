@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">アプリのフォントマネージャーへのアクセスを許可する</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">あなたがインストールしたフォントパッケージは fonts.xml が見つからないため互換性がありません。支援を受けるにはパッケージ開発者に連絡して下さい。</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

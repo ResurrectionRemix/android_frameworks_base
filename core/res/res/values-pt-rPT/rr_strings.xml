@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">Permite que uma aplicação aceda ao gestor de tipos de letra.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">O tipo de letra que instalou não é compatível devido à inexistência do ficheiro fonts.xml nos seus ficheiros. Por favor, contacte o criador do pacote para obter ajuda.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

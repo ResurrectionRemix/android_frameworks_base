@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">Позволяет приложению, получить доступ к менеджеру шрифтов.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Набор шрифтов который вы установили несовместим, из-за отсутствия важных файлов (Например fonts.xml). Пожалуйста, обратитесь к разработчику набора для помощи.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

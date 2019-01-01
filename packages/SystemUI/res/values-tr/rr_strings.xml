@@ -121,19 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Akıllı pikseller</string>
     <string name="quick_settings_smart_pixels_on_power_save">Otomatik olarak akıllı pikselleri etkinleştir</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Yürüme modu etkin</string>
-    <string name="onthego_notif_title">Yürüme modu aktif</string>
-    <string name="onthego_notif_stop">Durdur</string>
-    <string name="onthego_notif_options">Seçenekler</string>
-    <string name="onthego_notif_error">Yürüme modu başlatılamıyor</string>
-    <string name="onthego_notif_restart">Yürüme modunu yeniden başlat</string>
-    <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
-    <string name="onthego_transparency">Şeffaflık</string>
-    <string name="onthego_front_camera">Ön kamerayı kullan</string>
-    <string name="onthego_service_toggle">Hizmeti otomatik olarak yeniden başlat</string>
-    <string name="onthego_channel_name">Ana</string>
-    <string name="global_action_onthego">Yürüme modu</string>
     <string name="omnijaws_service_error">Hata</string>
     <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
     <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
@@ -146,4 +133,16 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Oyun Modu</string>
+    <string name="gaming_mode_tile_toast">Oyun modu etkin</string>
+    <string name="gaming_mode_tile_toast_disabled">Oyun modu devre dışı</string>
+    <string name="gaming_mode_dialog_title">Oyun Modu</string>
+    <string name="gaming_mode_dialog_message">Oyun modu etkinleştirildiğinde zil modunuz titreşim moduna geçer, tüm uyarı mesajları devre dışı bırakılır ve donanım tuşları kapatılır. Medya sesi maksimum değere yükseltilecektir. Oyun modundan çıktığınızda tüm ayarlar varsayılana sıfırlanacaktır.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Oyun modu açık</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Oyun modu kapalı</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

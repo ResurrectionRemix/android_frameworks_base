@@ -121,19 +121,28 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
     <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効にする</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">OTG が有効化されました</string>
-    <string name="onthego_notif_title">OTG が有効です</string>
-    <string name="onthego_notif_stop">停止</string>
-    <string name="onthego_notif_options">オプション</string>
-    <string name="onthego_notif_error">OTG を開始できません</string>
-    <string name="onthego_notif_restart">OTG を再起動</string>
-    <string name="onthego_notif_camera_changed">カメラモードが変更されました</string>
-    <string name="onthego_transparency">透明度</string>
-    <string name="onthego_front_camera">フロントカメラを使用</string>
-    <string name="onthego_service_toggle">自動でサービスを再起動する</string>
-    <string name="onthego_channel_name">メイン</string>
-    <string name="global_action_onthego">OTG</string>
+    <string name="omnijaws_service_error">エラー</string>
+    <string name="omnijaws_service_unkown">気象情報がありません</string>
+    <string name="omnijaws_service_error_long">気象情報読み込みエラー</string>
+    <string name="omnijaws_service_disabled">サービスが無効です</string>
+    <string name="omnijaws_detail_header">天気</string>
+    <string name="omnijaws_label_default">天気</string>
+    <string name="omnijaws_current_text">現在</string>
+    <string name="omnijaws_package_not_available">OmniJawsは使用できません</string>
+    <string name="omnijaws_service_last_update">最終更新：</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">ゲームモード</string>
+    <string name="gaming_mode_tile_toast">ゲームモード有効</string>
+    <string name="gaming_mode_tile_toast_disabled">ゲームモード無効</string>
+    <string name="gaming_mode_dialog_title">ゲームモード</string>
+    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、すべてのポップアップ通知が無効になり、ハードのキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると、先の設定に戻されます。</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

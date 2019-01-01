@@ -25,9 +25,18 @@
    <string name="ambient_recognition_notification">Παίζει Τώρα</string>
    <string name="ambient_recognition_information">%1$s από %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">Επεξεργασία ελέγχου πλοήγησης</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Επιτρέπει σε μια εφαρμογή να ελέγχει την επεξεργασία της γραμμής πλοήγησης.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">Διαχείριση γραμματοσειράς</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Επιτρέπει σε μια εφαρμογή να έχει πρόσβαση στην Διαχείριση γραμματοσειράς.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Η γραμματοσειρά δεν είναι συμβατή.Το αρχείο fonts.xml δεν βρέθηκε.Παρακαλώ επικοινωνήστε με τον εκδότη για υποστήριξη.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

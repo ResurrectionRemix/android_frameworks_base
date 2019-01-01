@@ -66,7 +66,11 @@
     <string name="global_action_reboot">Starta om</string>
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

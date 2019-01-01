@@ -27,7 +27,7 @@
     <string name="quick_settings_region_screenshot_label">Captură parțială de ecran</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Atenționarea este oprită timp de 1 minut.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Atenționările sunt blocate timp de <xliff:g id="number">%d </xliff:g> minute.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Atenționările sunt oprite timp de <xliff:g id="number">%d </xliff:g> minute.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Ecranul se înregistrează</string>
     <string name="screenrecord_notif_final_ticker">Ecranul a fost înregistrat cu succes</string>
@@ -89,7 +89,7 @@
     <string name="menu_ime">Comutator Meniu / Tastatură</string>
     <string name="select_button">Selectați butonul de adăugat</string>
     <string name="add_button">Adaugă buton</string>
-    <string name="save">Salvează</string>
+    <string name="save">Salvaţi</string>
     <string name="reset">Resetare</string>
     <string name="select_keycode">Selectați butonul pentru tastatură</string>
     <string name="left">Stânga</string>
@@ -100,15 +100,49 @@
     <string name="menu_ime_always_show">Comutator Meniu / Tastatură (afișează mereu)</string>
     <string name="search">Căutare</string>
     <!-- SysUI Tuner -->
-    <string name="statusbar_items_title">Icon din bara de stare</string>
-    <string name="statusbar_icons_blacklist">Icon-uri din bara de stare</string>
+    <string name="statusbar_items_title">Pictogramă din bara de stare</string>
+    <string name="statusbar_icons_blacklist">Pictograme din bara de stare</string>
     <string name="navbar_tuner_activity">Butoanele bării de navigare</string>
     <string name="lockscreen_tuner_activity">Scurtături pe ecranul de blocare</string>
+    <string name="powernotif_tuner_activity">Notificări avansate</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Afișează 4G în loc de LTE</string>
+    <string name="global_action_reboot_recovery">Recuperare</string>
+    <string name="global_action_reboot">Repornire</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, zz LLLL aaaa</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Control Evantai</string>
+    <string name="pie_state_summary">Utilizaţi controale evantai în modul imersiv</string>
+    <string name="pie_battery_level">"NIVELUL BATERIEI "</string>
+    <string name="quick_settings_pie">Control Evantai</string>
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
+    <string name="quick_settings_smart_pixels">Pixeli inteligenți</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Auto-activare pixeli inteligenți</string>
+    <string name="omnijaws_service_error">Eroare</string>
+    <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
+    <string name="omnijaws_service_error_long">Eroare la încărcarea datelor meteo</string>
+    <string name="omnijaws_service_disabled">Serviciu dezactivat</string>
+    <string name="omnijaws_detail_header">Meteo</string>
+    <string name="omnijaws_label_default">Meteo</string>
+    <string name="omnijaws_current_text">Acum</string>
+    <string name="omnijaws_package_not_available">OmniJaws nu este disponibil</string>
+    <string name="omnijaws_service_last_update">Ultima actualizare:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Mod Joc</string>
+    <string name="gaming_mode_tile_toast">Mod pentru jocuri activat</string>
+    <string name="gaming_mode_tile_toast_disabled">Mod pentru jocuri dezactivat</string>
+    <string name="gaming_mode_dialog_title">Mod Joc</string>
+    <string name="gaming_mode_dialog_message">Când modul pentru jocuri este activat, telefonul va trece pe vibrații, toate notificările heads-up vor fi dezactivate și butoanele fizice vor fi dezactivate. Volumul media va fi dat la maxim. Toate setările vor reveni de indată ce ieșiți din modul pentru jocuri.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Mod pentru jocuri activat</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Mod pentru jocuri dezactivat</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

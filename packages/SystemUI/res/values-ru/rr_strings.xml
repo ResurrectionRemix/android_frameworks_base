@@ -121,19 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Умные пиксели</string>
     <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение умных пикселей</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
-    <string name="onthego_notif_title">Режим «На ходу» активен</string>
-    <string name="onthego_notif_stop">Остановить</string>
-    <string name="onthego_notif_options">Параметры</string>
-    <string name="onthego_notif_error">Невозможно запустить режим «На ходу»</string>
-    <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
-    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
-    <string name="onthego_transparency">Прозрачность</string>
-    <string name="onthego_front_camera">Использовать фронтальную камеру</string>
-    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
-    <string name="onthego_channel_name">Главный</string>
-    <string name="global_action_onthego">Режим \"На ходу\"</string>
     <string name="omnijaws_service_error">Ошибка</string>
     <string name="omnijaws_service_unkown">Нет данных о погоде</string>
     <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>
@@ -146,4 +133,16 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Игровой режим</string>
+    <string name="gaming_mode_tile_toast">Игровой режим включен</string>
+    <string name="gaming_mode_tile_toast_disabled">Игровой режим выключен</string>
+    <string name="gaming_mode_dialog_title">Игровой режим</string>
+    <string name="gaming_mode_dialog_message">Когда игровой режим включен, ваш режим звонка переключится в режим вибрации, все уведомления и аппаратные клавиши будут отключены. Громкость медиа будет увеличена до максимального уровня. Все отключенные настройки будут восстановлены после выхода из режима игры.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Включить игровой режим</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Выключить игровой режим</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

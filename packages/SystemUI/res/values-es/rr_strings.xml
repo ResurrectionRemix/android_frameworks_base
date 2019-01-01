@@ -121,19 +121,28 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Píxeles inteligentes</string>
     <string name="quick_settings_smart_pixels_on_power_save">Habilitar automáticamente Smart Pixels</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activado</string>
-    <string name="onthego_notif_title">On-The-Go está activo</string>
-    <string name="onthego_notif_stop">Detener</string>
-    <string name="onthego_notif_options">Opciones</string>
-    <string name="onthego_notif_error">No a sido posible iniciar On-The-Go</string>
-    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
-    <string name="onthego_transparency">Transparencia</string>
-    <string name="onthego_front_camera">Utilizar la cámara frontal</string>
-    <string name="onthego_service_toggle">Reiniciar el servicio automáticamente</string>
-    <string name="onthego_channel_name">Principal</string>
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No hay datos del clima</string>
+    <string name="omnijaws_service_error_long">Error al cargar datos del clima</string>
+    <string name="omnijaws_service_disabled">Servicio deshabilitado</string>
+    <string name="omnijaws_detail_header">Clima</string>
+    <string name="omnijaws_label_default">Clima</string>
+    <string name="omnijaws_current_text">Ahora</string>
+    <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
+    <string name="omnijaws_service_last_update">Última actualización:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Modo Juego</string>
+    <string name="gaming_mode_tile_toast">Modo juego activado</string>
+    <string name="gaming_mode_tile_toast_disabled">Modo juego desactivado</string>
+    <string name="gaming_mode_dialog_title">Modo Juego</string>
+    <string name="gaming_mode_dialog_message">Cuando se activa el Modo Juego, el modo de timbre va a cambiar a vibración, las notificaciones flotantes van a ser desactivadas y las teclas de hardware se van a deshabilitar. El volumen multimedia se aumentará hasta el valor máximo. Todos los ajustes modificados van a volver a su valor por defecto una vez que salgas del Modo Juego.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Modo juego activado</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Modo juego desactivado</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

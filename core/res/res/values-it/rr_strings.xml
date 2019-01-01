@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">Consenti all\'applicazione di accedere al font manager.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Il pacchetto dei caratteri che hai installato non è compatibile a causa della mancanza di fonts.xml sui loro file. Si prega di contattare lo sviluppatore del pacchetto per il supporto.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>

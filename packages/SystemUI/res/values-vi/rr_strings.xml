@@ -86,7 +86,7 @@
     <string name="center">Giữa</string>
     <string name="end">Kết thúc</string>
     <string name="space">Ký tự cách</string>
-    <string name="menu_ime">Trình chuyển đổi bàn phím / menu</string>
+    <string name="menu_ime">Chuyển đổi bàn phím/Menu</string>
     <string name="select_button">Chọn nút để thêm</string>
     <string name="add_button">Thêm nút</string>
     <string name="save">Lưu</string>
@@ -115,25 +115,12 @@
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Trình điều khiển Pie</string>
-    <string name="pie_state_summary">Sử dụng trình điều khiển pie khi ở chế độ toàn màn hình</string>
+    <string name="pie_state_summary">Sử dụng điều khiển Pie ở chế độ toàn màn hình</string>
     <string name="pie_battery_level">"MỨC PIN "</string>
     <string name="quick_settings_pie">Trình điều khiển Pie</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Điểm ảnh thông minh</string>
     <string name="quick_settings_smart_pixels_on_power_save">Tự đông bật Điểm ảnh thông minh</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Đã kích hoạt On-The-Go</string>
-    <string name="onthego_notif_title">On-The-Go đang hoạt động</string>
-    <string name="onthego_notif_stop">Dừng</string>
-    <string name="onthego_notif_options">Tùy chọn</string>
-    <string name="onthego_notif_error">Không thể khởi động On-The-Go</string>
-    <string name="onthego_notif_restart">Khởi động lại On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Đã thay đổi chế độ Camera</string>
-    <string name="onthego_transparency">Trong suốt</string>
-    <string name="onthego_front_camera">Sử dụng camera trước</string>
-    <string name="onthego_service_toggle">Tự động khởi động lại dịch vụ</string>
-    <string name="onthego_channel_name">Chính</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Lỗi</string>
     <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
     <string name="omnijaws_service_error_long">Lỗi tải dữ liệu thời tiết</string>
@@ -146,4 +133,16 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Chế độ chơi game</string>
+    <string name="gaming_mode_tile_toast">Chế độ chơi game được bật</string>
+    <string name="gaming_mode_tile_toast_disabled">Chế độ chơi game đã tắt</string>
+    <string name="gaming_mode_dialog_title">Chế độ chơi game</string>
+    <string name="gaming_mode_dialog_message">Khi Chế độ chơi game được bật, chế độ chuông sẽ được đặt thành chế độ rung, tất cả các thông báo nổi sẽ bị vô hiệu và các phím cứng sẽ bị tắt. Âm lượng phương tiện sẽ được tăng lên mức tối đa. Tất cả các tính năng trên sẽ được khôi phục lại về mặc định khi bạn tắt Chế độ chơi game.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Chế độ chơi game bật</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Chế độ chơi game tắt</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

@@ -114,21 +114,20 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automatyczne włączanie inteligentnych pixeli</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
-    <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Ustawienia</string>
-    <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
-    <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
-    <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
-    <string name="onthego_transparency">Przezroczystość</string>
-    <string name="onthego_front_camera">Użyj przedniej kamery</string>
-    <string name="global_action_onthego">W ruchu</string>
     <string name="omnijaws_service_error">Błąd</string>
     <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
     <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
     <string name="omnijaws_service_disabled">Usługa wyłączona</string>
+    <string name="omnijaws_detail_header">Pogoda</string>
+    <string name="omnijaws_label_default">Pogoda</string>
+    <string name="omnijaws_current_text">Teraz</string>
+    <string name="omnijaws_package_not_available">OmniJaws nie jest dostępny</string>
+    <string name="omnijaws_service_last_update">Ostatnia aktualizacja:</string>
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

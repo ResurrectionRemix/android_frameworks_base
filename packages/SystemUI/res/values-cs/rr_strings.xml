@@ -121,19 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automaticky povolit Smart Pixels</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go aktivováno</string>
-    <string name="onthego_notif_title">On-The-Go je aktivní</string>
-    <string name="onthego_notif_stop">Zastavit</string>
-    <string name="onthego_notif_options">Možnosti</string>
-    <string name="onthego_notif_error">On-The-Go nelze spustit</string>
-    <string name="onthego_notif_restart">Restartovat On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Režim fotoaparátu byl změněn</string>
-    <string name="onthego_transparency">Průhlednost</string>
-    <string name="onthego_front_camera">Použít přední fotoaparát</string>
-    <string name="onthego_service_toggle">Automaticky restartovat službu</string>
-    <string name="onthego_channel_name">Hlavní</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Chyba</string>
     <string name="omnijaws_service_unkown">Žádné údaje o počasí</string>
     <string name="omnijaws_service_error_long">Chyba při načítání údajů o počasí</string>
@@ -146,4 +133,16 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Herní režim</string>
+    <string name="gaming_mode_tile_toast">Herní režim povolen</string>
+    <string name="gaming_mode_tile_toast_disabled">Herní režim zakázán</string>
+    <string name="gaming_mode_dialog_title">Herní režim</string>
+    <string name="gaming_mode_dialog_message">Pokud je herní režim povolen, vyzvánění se změní na vibrace, všechny plovoucí zprávy budou deaktivovány a hardwarová tlačítka budou vypnuta. Hlasitost médií se zvýší na maximální hodnotu. Po ukončení herního režimu budou všechna deaktivovaná nastavení obnovena na výchozí.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Herní režim zap.</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Herní režim vyp.</string>
+    <!-- Power Menu -->
+    <!-- Global actions -->
+    <!-- string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string-->
 </resources>

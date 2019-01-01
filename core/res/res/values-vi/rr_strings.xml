@@ -35,4 +35,8 @@
    <string name="permdesc_accessFontManager">Cho phép ứng dụng được quyền quản lý phông chữ.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Gói phông chữ bạn đã cài đặt không tương thích do thiếu fonts.xml trong tập tin. Vui lòng liên hệ với nhà phát triển gói để được hỗ trợ.</string>
+   <!-- advanced reboot to bootloader. -->
+   <!-- advanced reboot to recovery. -->
+   <!-- advanced reboot system -->
+   <!-- AOKP custom system animations -->
 </resources>
