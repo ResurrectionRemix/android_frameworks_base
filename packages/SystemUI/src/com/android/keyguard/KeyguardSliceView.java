@@ -88,6 +88,9 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
 
     private LiveData<Slice> mLiveData;
     private int mIconSize;
+
+    private boolean mShowInfo;
+    private boolean mRowAvailable;
     /**
      * Runnable called whenever the view contents change.
      */
@@ -131,6 +134,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mTitle = findViewById(R.id.title);
         mRow = findViewById(R.id.row);
         mTextColor = Utils.getColorAttr(mContext, R.attr.wallpaperTextColor);
+        updateSettings();
     }
 
     @Override
@@ -148,6 +152,11 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
 
         mLiveData.removeObserver(this);
         Dependency.get(ConfigurationController.class).removeCallback(this);
+    }
+
+    public void updateSettings() {
+        mShowInfo = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_INFO, 1, UserHandle.USER_CURRENT) == 1;
     }
 
     private void showSlice() {
@@ -172,10 +181,6 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
             }
         }
 
-        ContentResolver resolver = getContext().getContentResolver();
-        boolean showInfo = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCKSCREEN_INFO, 1, UserHandle.USER_CURRENT) == 1;
-
         if (!mHasHeader) {
             mTitle.setVisibility(GONE);
         } else {
@@ -193,8 +198,9 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         final int subItemsCount = subItems.size();
         final int blendedColor = getTextColor();
         final int startIndex = mHasHeader ? 1 : 0; // First item is header; skip it
-        mRow.setVisibility(mDarkAmount != 1 ? (subItemsCount > 0 && showInfo ?
-                View.VISIBLE : View.GONE) : View.VISIBLE);
+        mRow.setVisibility(subItemsCount > 0 ? ((mShowInfo || mDarkAmount == 1) ? VISIBLE : GONE)
+                : GONE);
+        mRowAvailable = subItemsCount > 0;
         for (int i = startIndex; i < subItemsCount; i++) {
             SliceItem item = subItems.get(i);
             RowContent rc = new RowContent(getContext(), item, true /* showStartItem */);
@@ -303,7 +309,8 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mDarkAmount = darkAmount;
         mRow.setDarkAmount(darkAmount);
         updateTextColors();
-        showSlice();
+        mRow.setVisibility(mRowAvailable ? ((mShowInfo || mDarkAmount == 1) ? VISIBLE : GONE)
+                : GONE);
     }
 
     public void setViewsTypeface(Typeface tf) {

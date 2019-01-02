@@ -510,6 +510,7 @@ public class KeyguardStatusView extends GridLayout implements
     public void updateAll() {
         mKeyguardSlice.refresh();
         mAnalogClockView.setDark(dark);
+        mKeyguardSlice.updateSettings();
         updateVisibilities();
     }
 
