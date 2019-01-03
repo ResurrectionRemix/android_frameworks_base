@@ -251,7 +251,7 @@ public class KeyguardStatusView extends GridLayout implements
         RelativeLayout.LayoutParams customlayoutParams =
                 (RelativeLayout.LayoutParams) mCustomClockView.getLayoutParams();
         customlayoutParams.bottomMargin = getResources().getDimensionPixelSize(
-                R.dimen.bottom_text_spacing_digital);
+                R.dimen.keyguard_security_view_top_margin);
         mCustomClockView.setLayoutParams(customlayoutParams);
 
         layoutParams = (RelativeLayout.LayoutParams) mClockSeparator.getLayoutParams();

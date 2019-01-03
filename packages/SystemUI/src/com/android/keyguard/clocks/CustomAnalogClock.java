@@ -86,11 +86,11 @@ public class CustomAnalogClock extends View {
 
         mDial = a.getDrawable(R.styleable.CustomAnalogClock_custom_dial);
 
-        mDialAmbient = context.getDrawable(R.drawable.custom_clock_dial_ambient);
-
         mHourHand = a.getDrawable(R.styleable.CustomAnalogClock_custom_hand_hour);
 
         mMinuteHand = a.getDrawable(R.styleable.CustomAnalogClock_custom_hand_minute);
+
+        mDialAmbient = a.getDrawable(R.styleable.CustomAnalogClock_custom_clock_dial_ambient);
 
         a.recycle();
 

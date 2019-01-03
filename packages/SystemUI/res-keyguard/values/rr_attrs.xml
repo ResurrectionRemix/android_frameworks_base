@@ -26,6 +26,7 @@
         <attr name="custom_dial" format="reference"/>
         <attr name="custom_hand_hour" format="reference"/>
         <attr name="custom_hand_minute" format="reference"/>
+        <attr name="custom_clock_dial_ambient" format="reference"/>
     </declare-styleable>
 
 </resources>
