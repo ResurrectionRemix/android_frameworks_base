@@ -51,6 +51,8 @@ import android.content.DialogInterface;
 import com.android.internal.R;
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 
 public class RRFWBUtils {
 
@@ -225,6 +227,18 @@ public class RRFWBUtils {
             }
             return null;
         }
+    }
+
+    // Method to detect if device is plugged in (wired or wireless)
+    public static boolean isPlugged(Context context) {
+        boolean isPlugged;
+        Intent intent = context.registerReceiver(null, new IntentFilter(
+                Intent.ACTION_BATTERY_CHANGED));
+        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        isPlugged = plugged ==
+                BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB;
+        isPlugged = isPlugged || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS;
+        return isPlugged;
     }
 
 }
