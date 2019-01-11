@@ -114,6 +114,7 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automatyczne włączanie inteligentnych pixeli</string>
+    <!-- On The Go -->
     <string name="omnijaws_service_error">Błąd</string>
     <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
     <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>

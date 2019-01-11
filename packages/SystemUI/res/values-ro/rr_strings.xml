@@ -121,6 +121,7 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Pixeli inteligenți</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-activare pixeli inteligenți</string>
+    <!-- On The Go -->
     <string name="omnijaws_service_error">Eroare</string>
     <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
     <string name="omnijaws_service_error_long">Eroare la încărcarea datelor meteo</string>

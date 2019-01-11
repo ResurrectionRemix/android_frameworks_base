@@ -70,7 +70,7 @@
     <string name="qs_menu_item_reset">重置</string>
     <string name="qs_menu_item_titles">显示标签</string>
     <string name="qs_menu_item_rows">行</string>
-    <string name="qs_menu_item_rows_landscape">行 （横向）</string>
+    <string name="qs_menu_item_rows_landscape">行 (横向)</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
@@ -79,14 +79,14 @@
     <string name="preview">预览</string>
     <string name="keycode">键码</string>
     <string name="no_home_title">未找到主屏幕按钮</string>
-    <string name="no_home_message">要在此设备上使用导航栏，您必须启用主屏幕按钮。请添加主屏幕按钮并保存。</string>
+    <string name="no_home_message">要在此设备上使用导航栏，您必须启用主页按钮。请添加主页按钮并保存。</string>
     <string name="clipboard_description">您可以利用“剪贴板”按钮将相应内容直接拖动到剪贴板中。剪贴板中有内容时，您也可以将剪贴板中的内容直接拖出来。</string>
     <string name="keycode_description">您可以利用“键码”按钮将键盘按键添加到导航栏中。只要按下这些按钮，按钮即可模仿所选键盘按键执行相应的操作。要使用这项功能，您必须先为按钮选择相应的按键，然后再选择要在按钮上显示的图片。</string>
     <string name="start">起始</string>
-    <string name="center">中央</string>
+    <string name="center">居中</string>
     <string name="end">末端</string>
     <string name="space">空格键</string>
-    <string name="menu_ime">菜单 / 键盘切换器</string>
+    <string name="menu_ime">菜单/键盘切换器</string>
     <string name="select_button">选择要添加的按钮</string>
     <string name="add_button">添加按钮</string>
     <string name="save">保存</string>
@@ -97,7 +97,7 @@
     <string name="navbar_editor_title">编辑器</string>
     <string name="navbar_editor_summary">配置导航栏</string>
     <!-- NavBar Tuner -->
-    <string name="menu_ime_always_show">菜单 / 键盘切换器（始终显示）</string>
+    <string name="menu_ime_always_show">菜单/键盘切换器 (始终显示)</string>
     <string name="search">搜索</string>
     <!-- SysUI Tuner -->
     <string name="statusbar_items_title">状态栏图标</string>
@@ -106,7 +106,7 @@
     <string name="lockscreen_tuner_activity">锁屏界面快捷方式</string>
     <string name="powernotif_tuner_activity">电量通知</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">显示4G，而不是LTE</string>
+    <string name="show_fourg_title">显示 4G，而不是 LTE</string>
     <string name="global_action_reboot_recovery">恢复模式</string>
     <string name="global_action_reboot">重新启动</string>
     <!-- Pie controls -->
@@ -121,6 +121,19 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">智能像素</string>
     <string name="quick_settings_smart_pixels_on_power_save">自动启用智能像素</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">行走模式已激活</string>
+    <string name="onthego_notif_title">正在使用行走模式</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">选项</string>
+    <string name="onthego_notif_error">无法启动行走模式</string>
+    <string name="onthego_notif_restart">重新启动行走模式</string>
+    <string name="onthego_notif_camera_changed">相机模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置摄像头</string>
+    <string name="onthego_service_toggle">自动重启服务</string>
+    <string name="onthego_channel_name">主要</string>
+    <string name="global_action_onthego">行走模式</string>
     <string name="omnijaws_service_error">错误</string>
     <string name="omnijaws_service_unkown">没有天气数据</string>
     <string name="omnijaws_service_error_long">加载天气数据时出错</string>
@@ -141,8 +154,18 @@
     <string name="accessibility_quick_settings_gaming_mode_on">游戏模式开启</string>
     <string name="accessibility_quick_settings_gaming_mode_off">游戏模式关闭</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">正在重新启动\u2026</string>
+    <string name="global_action_reboot_sub">系统</string>
+    <string name="global_action_reboot_bootloader">引导程序</string>
+    <string name="global_action_reboot_systemui">系统界面</string>
+    <string name="global_action_dismissable_dialog_text">高级重启已禁用。\n你要重启吗\u003f</string>
+    <string name="global_action_dnaa">不再显示</string>
+    <string name="global_action_settings">设置</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">屏幕截图</string>
+    <string name="global_action_screenrecord">屏幕录制</string>
+    <string name="global_action_flashlight">手电筒</string>
 </resources>

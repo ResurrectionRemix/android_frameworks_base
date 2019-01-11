@@ -24,28 +24,98 @@
     <string name="lte_off">LTE 關閉</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
+    <string name="quick_settings_region_screenshot_label">區域螢幕擷取</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">開始錄製畫面</string>
+    <string name="screenrecord_notif_final_ticker">畫面已錄製</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">正在錄製畫面</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">停止</string>
+    <string name="screenrecord_notif_completed">畫面已錄製</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">顯示觸控指標</string>
+    <string name="screenrecord_notif_pointer_off">隱藏觸控指標</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">無法錄製畫面</string>
+    <string name="notification_channel_screenrecord">螢幕錄製</string>
+    <string name="screenrecord_hide_hint">隱藏提示</string>
+    <string name="screenrecord_show_hint">顯示提示</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">螢幕錄製</string>
+    <string name="quick_settings_screenrecord_lq_label">螢幕錄製：480P</string>
+    <string name="quick_settings_screenrecord_mq_label">螢幕錄製：720P</string>
+    <string name="quick_settings_screenrecord_hq_label">螢幕錄製：720P+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">已刪除螢幕錄影。</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash 閃充中 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 後充飽)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash 閃充中</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">已連接 TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> 後充飽)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">已連接 TurboPower</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">欄</string>
+    <string name="qs_menu_item_columns_landscape">欄（橫向）</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">重設</string>
+    <string name="qs_menu_item_titles">顯示標籤</string>
+    <string name="qs_menu_item_rows">列</string>
+    <string name="qs_menu_item_rows_landscape">列（橫向）</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">預覽</string>
+    <string name="keycode">按鍵碼</string>
+    <string name="no_home_title">找不到「主畫面」按鈕</string>
+    <string name="no_home_message">您必須設定「主畫面」按鈕才能操作這部裝置。請先新增「主畫面」按鈕再儲存。</string>
+    <string name="clipboard_description">您可以利用「剪貼簿」按鈕將所需項目直接拖曳到剪貼簿中，或是將剪貼簿中的項目直接拖曳出來。</string>
+    <string name="keycode_description">您可以利用「按鍵碼」按鈕將鍵盤按鍵加到導覽列。只要按下這些按鈕，即可執行與所選鍵盤按鍵對應的操作。如要使用這項功能，請先為按鈕選取要模擬的鍵盤按鍵，然後指定按鈕的顯示圖示。</string>
+    <string name="start">開始</string>
+    <string name="center">中央</string>
+    <string name="end">結束</string>
+    <string name="space">間隔</string>
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
+    <string name="pie_state_summary">在全螢幕模式中使用扇形導航列</string>
     <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
+    <string name="onthego_notif_camera_changed">相機模式已更改</string>
+    <string name="omnijaws_current_text">立刻</string>
+    <string name="omnijaws_package_not_available">OmniJaws 無法使用</string>
+    <string name="omnijaws_service_last_update">上次更新：</string>
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">遊戲模式</string>
+    <string name="gaming_mode_tile_toast">遊戲模式已啟用</string>
+    <string name="gaming_mode_tile_toast_disabled">遊戲模式已停用</string>
+    <string name="gaming_mode_dialog_title">遊戲模式</string>
+    <string name="gaming_mode_dialog_message">啟用遊戲模式後，響鈴模式將被調整為震動模式，抬頭顯示及硬體導覽列將被停用。媒體音量會被調整至最大值。所有被更改的設定都會在離開遊戲模式後還原。</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">遊戲模式已開啟</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">遊戲模式已關閉</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_sub">系統</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">系統使用者介面</string>
+    <string name="global_action_dismissable_dialog_text">進階重新啟動已停用。\n是否重新啟動\uff1f</string>
+    <string name="global_action_dnaa">不要再顯示</string>
+    <string name="global_action_settings">設定</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">螢幕截圖</string>
+    <string name="global_action_screenrecord">螢幕錄影</string>
+    <string name="global_action_flashlight">手電筒</string>
 </resources>

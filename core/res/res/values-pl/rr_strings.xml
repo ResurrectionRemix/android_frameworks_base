@@ -35,7 +35,17 @@
    <string name="permdesc_accessFontManager">Zezwalaj aplikacjom na dostęp do menadżera czcionek.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Uruchom ponownie w trybie Bootloadera</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_message">Ponowne uruchamianie w trybie recovery</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Uruchom ponownie</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Zanikanie</string>
+   <string name="animation_slide_right">Wjazd z prawej</string>
+   <string name="animation_slide_left">Wjazd z lewej</string>
+   <string name="animation_slide_right_no_fade">Wjazd z prawo (Bez zaniku)</string>
+   <string name="animation_random">Losowa</string>
+   <string name="action_null">Puste</string>
+   <string name="default_string">Domyślne</string>
 </resources>

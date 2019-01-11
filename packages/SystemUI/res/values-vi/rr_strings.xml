@@ -121,6 +121,19 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Điểm ảnh thông minh</string>
     <string name="quick_settings_smart_pixels_on_power_save">Tự đông bật Điểm ảnh thông minh</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">Đã kích hoạt OTG</string>
+    <string name="onthego_notif_title">OTG đang hoạt động</string>
+    <string name="onthego_notif_stop">Dừng</string>
+    <string name="onthego_notif_options">Tùy chọn</string>
+    <string name="onthego_notif_error">Không thể khởi động OTG</string>
+    <string name="onthego_notif_restart">Khởi động lại OTG</string>
+    <string name="onthego_notif_camera_changed">Đã thay đổi chế độ camera</string>
+    <string name="onthego_transparency">Độ trong suốt</string>
+    <string name="onthego_front_camera">Sử dụng camera trước</string>
+    <string name="onthego_service_toggle">Tự động khởi động lại dịch vụ</string>
+    <string name="onthego_channel_name">Chính</string>
+    <string name="global_action_onthego">OTG</string>
     <string name="omnijaws_service_error">Lỗi</string>
     <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
     <string name="omnijaws_service_error_long">Lỗi tải dữ liệu thời tiết</string>
@@ -141,8 +154,18 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Chế độ chơi game bật</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Chế độ chơi game tắt</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Đang khởi động lại\u2026</string>
+    <string name="global_action_reboot_sub">Hệ thống</string>
+    <string name="global_action_reboot_bootloader">Chế độ bootloader</string>
+    <string name="global_action_reboot_systemui">Giao diện người dùng</string>
+    <string name="global_action_dismissable_dialog_text">Khởi động lại nâng cao bị dừng. \nBạn có muốn khởi động lại\u003f</string>
+    <string name="global_action_dnaa">Không hiển thị lại</string>
+    <string name="global_action_settings">Cài đặt</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Chụp màn hình</string>
+    <string name="global_action_screenrecord">Quay màn hình</string>
+    <string name="global_action_flashlight">Đèn pin</string>
 </resources>

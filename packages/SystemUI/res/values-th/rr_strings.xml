@@ -21,7 +21,9 @@
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE เปิด </string>
+    <string name="lte_off">LTE ปิด</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">ภาพหน้าจอ</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
     <!-- Screenrecord notification title -->
@@ -39,6 +41,7 @@
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->

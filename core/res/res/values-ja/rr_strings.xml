@@ -36,7 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">あなたがインストールしたフォントパッケージは fonts.xml が見つからないため互換性がありません。支援を受けるにはパッケージ開発者に連絡して下さい。</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">ブートローダへ再起動</string>
+   <string name="reboot_to_bootloader_message">ブートローダーへ再起動中\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">リカバリーへ再起動</string>
+   <string name="reboot_to_recovery_message">リカバリーへ再起動中\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">システムの再起動</string>
+   <string name="reboot_system_message">システムを再起動中\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">フェード</string>
+   <string name="animation_slide_right">右スライド</string>
+   <string name="animation_slide_left">左スライド</string>
+   <string name="animation_slide_right_no_fade">右スライド（フェードなし）</string>
+   <string name="animation_slide_left_no_fade">左スライド（フェードなし）</string>
+   <string name="animation_slide_up">下スライド</string>
+   <string name="animation_slide_down">上スライド</string>
+   <string name="animation_default">既定</string>
+   <string name="animation_translucent">半透明</string>
+   <string name="animation_grow_shrink">拡大（上）</string>
+   <string name="animation_grow_shrink_center">拡大（中央）</string>
+   <string name="animation_grow_shrink_bottom">拡大（下）</string>
+   <string name="animation_grow_shrink_left">拡大（左）</string>
+   <string name="animation_grow_shrink_right">拡大（右）</string>
+   <string name="animation_random">ランダム</string>
+   <string name="action_null">なし</string>
+   <string name="default_string">既定</string>
 </resources>

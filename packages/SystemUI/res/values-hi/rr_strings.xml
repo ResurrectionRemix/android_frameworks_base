@@ -110,7 +110,9 @@
     <string name="global_action_reboot_recovery">रिकवरी</string>
     <string name="global_action_reboot">पुन: शुरू करें</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
     <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->

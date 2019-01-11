@@ -121,6 +121,19 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automaticky povolit Smart Pixels</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go aktivováno</string>
+    <string name="onthego_notif_title">On-The-Go je aktivní</string>
+    <string name="onthego_notif_stop">Ukočit</string>
+    <string name="onthego_notif_options">Možnosti</string>
+    <string name="onthego_notif_error">On-The-Go nelze spustit</string>
+    <string name="onthego_notif_restart">Restartovat On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Režim fotoaparátu byl změněn</string>
+    <string name="onthego_transparency">Průhlednost</string>
+    <string name="onthego_front_camera">Použít přední fotoaparát</string>
+    <string name="onthego_service_toggle">Automaticky restartovat službu</string>
+    <string name="onthego_channel_name">Hlavní</string>
+    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Chyba</string>
     <string name="omnijaws_service_unkown">Žádné údaje o počasí</string>
     <string name="omnijaws_service_error_long">Chyba při načítání údajů o počasí</string>
@@ -141,8 +154,18 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Herní režim zap.</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Herní režim vyp.</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Restartovat\u2026</string>
+    <string name="global_action_reboot_sub">Systém</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">SystemUI</string>
+    <string name="global_action_dismissable_dialog_text">Rozšířený restart je zakázán.\nChcete restartovat\u003f</string>
+    <string name="global_action_dnaa">Znovu nezobrazovat</string>
+    <string name="global_action_settings">Nastavení</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Snímek obrazovky</string>
+    <string name="global_action_screenrecord">Záznam obrazovky</string>
+    <string name="global_action_flashlight">Svítilna</string>
 </resources>

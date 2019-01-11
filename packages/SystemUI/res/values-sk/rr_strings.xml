@@ -121,6 +121,7 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Povoliť Smart Pixels automaticky</string>
+    <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->

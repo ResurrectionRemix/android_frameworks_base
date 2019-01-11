@@ -14,9 +14,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">Tiruan tanda tangan paket</string>
+   <string name="permlab_fakePackageSignature">Tanda tangan paket palsu</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">Mengizinkan aplikasi berpura-pura menjadi aplikasi yang berbeda. Aplikasi hasad mungkin dapat menggunakan ini untuk mengakses data aplikasi pribadi. Berikan izin ini hanya dengan hati-hati!</string>
+   <string name="permdesc_fakePackageSignature">Mengizinkan aplikasi berpura-pura menjadi aplikasi yang berbeda. Aplikasi berbahaya mungkin dapat menggunakan ini untuk mengakses data aplikasi pribadi. Berikan izin ini hanya dengan hati-hati!</string>
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">Salin URL log kerusakan</string>
    <string name="url_copy_success">URL berhasil disalin</string>
@@ -34,9 +34,32 @@
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_accessFontManager">Izinkan aplikasi mengakses pengelola font.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
-   <string name="fontservice_incompatible_font">Paket font yg diinstal tidak kompatibel karna tak adanya font.xml dalam berkas font.hubungi pengembang paket font.</string>
+   <string name="fontservice_incompatible_font">Paket font yg diinstal tidak kompatibel karena tak ada font.xml dalam berkas font.hubungi pengembang paket font.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Memulai ulang ke bootloader</string>
+   <string name="reboot_to_bootloader_message">Memulai ulang ke bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Memulai ulang ke Recovery Mode</string>
+   <string name="reboot_to_recovery_message">Memulai ulang ke Recovery Mode\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Memulai ulang sistem</string>
+   <string name="reboot_system_message">Memulai ulang sistem\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Pudar</string>
+   <string name="animation_slide_right">Geser ke kanan</string>
+   <string name="animation_slide_left">Geser ke kiri</string>
+   <string name="animation_slide_right_no_fade">Geser ke kanan (tanpa memudar)</string>
+   <string name="animation_slide_left_no_fade">Geser ke kiri (tanpa memudar)</string>
+   <string name="animation_slide_up">Geser dari bawah</string>
+   <string name="animation_slide_down">Geser dari atas</string>
+   <string name="animation_default">Bawaan</string>
+   <string name="animation_translucent">Tembus cahaya</string>
+   <string name="animation_grow_shrink">Timbulkan (atas)</string>
+   <string name="animation_grow_shrink_center">Timbulkan (Tengah)</string>
+   <string name="animation_grow_shrink_bottom">Timbulkan (Bawah)</string>
+   <string name="animation_grow_shrink_left">Timbulkan (Kiri)</string>
+   <string name="animation_grow_shrink_right">Timbulkan (Kanan)</string>
+   <string name="animation_random">Acak</string>
+   <string name="action_null">Kosong</string>
+   <string name="default_string">Bawaan</string>
 </resources>

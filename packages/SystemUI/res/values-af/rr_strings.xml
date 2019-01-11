@@ -19,7 +19,11 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE aan </string>
+    <string name="lte_off">LTE af</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Skermfoto</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
     <!-- Screenrecord notification title -->
@@ -37,6 +41,7 @@
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
+    <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->

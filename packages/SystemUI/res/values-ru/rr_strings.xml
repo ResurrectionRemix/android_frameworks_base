@@ -121,6 +121,19 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Умные пиксели</string>
     <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение умных пикселей</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
+    <string name="onthego_notif_title">Режим «На ходу» активен</string>
+    <string name="onthego_notif_stop">Остановить</string>
+    <string name="onthego_notif_options">Параметры</string>
+    <string name="onthego_notif_error">Не удается включить режим \"на ходу\"</string>
+    <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
+    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использовать фронтальную камеру</string>
+    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
+    <string name="onthego_channel_name">Главный</string>
+    <string name="global_action_onthego">Режим \"На ходу\"</string>
     <string name="omnijaws_service_error">Ошибка</string>
     <string name="omnijaws_service_unkown">Нет данных о погоде</string>
     <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>

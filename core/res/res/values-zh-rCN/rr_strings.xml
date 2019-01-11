@@ -32,11 +32,34 @@
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_accessFontManager">访问字体管理器</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_accessFontManager">允许应用访问字体管理器。</string>
+   <string name="permdesc_accessFontManager">允许应用程序访问字体管理器</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">你安装的字体包由于缺失 fonts.xml 文件而不兼容。请联系包的开发者以寻求支持。</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">重启至引导程序</string>
+   <string name="reboot_to_bootloader_message">正在重启至引导程序\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">重启至恢复模式</string>
+   <string name="reboot_to_recovery_message">正在重启至恢复模式\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">重启系统</string>
+   <string name="reboot_system_message">正在重启系统\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">淡入淡出</string>
+   <string name="animation_slide_right">右侧滑入</string>
+   <string name="animation_slide_left">左侧滑入</string>
+   <string name="animation_slide_right_no_fade">右侧滑入 (无渐变)</string>
+   <string name="animation_slide_left_no_fade">左侧滑入 (无渐变)</string>
+   <string name="animation_slide_up">底部滑入</string>
+   <string name="animation_slide_down">顶部滑入</string>
+   <string name="animation_default">默认</string>
+   <string name="animation_translucent">半透明动画</string>
+   <string name="animation_grow_shrink">缩放 (顶部)</string>
+   <string name="animation_grow_shrink_center">缩放 (中心)</string>
+   <string name="animation_grow_shrink_bottom">缩放 (底部)</string>
+   <string name="animation_grow_shrink_left">缩放 (左侧)</string>
+   <string name="animation_grow_shrink_right">缩放 (右侧)</string>
+   <string name="animation_random">随机</string>
+   <string name="action_null">空白</string>
+   <string name="default_string">默认</string>
 </resources>

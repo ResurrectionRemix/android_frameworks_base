@@ -36,7 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Gói phông chữ bạn đã cài đặt không tương thích do thiếu fonts.xml trong tập tin. Vui lòng liên hệ với nhà phát triển gói để được hỗ trợ.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Khởi động vào bootloader</string>
+   <string name="reboot_to_bootloader_message">Khởi động vào bootloader</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Khởi động vào recovery</string>
+   <string name="reboot_to_recovery_message">Khởi động vào recovery</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Khởi động lại hệ thống</string>
+   <string name="reboot_system_message">Đang khởi động lại \u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Mờ dần</string>
+   <string name="animation_slide_right">Trượt sang phải</string>
+   <string name="animation_slide_left">Trượt sang trái</string>
+   <string name="animation_slide_right_no_fade">Trượt sang phải (Không mờ dần)</string>
+   <string name="animation_slide_left_no_fade">Trượt sang trái (Không mờ dần)</string>
+   <string name="animation_slide_up">Trượt xuống dưới</string>
+   <string name="animation_slide_down">Trượt lên trên</string>
+   <string name="animation_default">Mặc định</string>
+   <string name="animation_translucent">Mờ</string>
+   <string name="animation_grow_shrink">Lớn dần (Trên cùng)</string>
+   <string name="animation_grow_shrink_center">Lớn dần (Ở giữa)</string>
+   <string name="animation_grow_shrink_bottom">Lớn dần (Dưới cùng)</string>
+   <string name="animation_grow_shrink_left">Lớn dần (Bên trái)</string>
+   <string name="animation_grow_shrink_right">Lớn dần (Bên phải)</string>
+   <string name="animation_random">Ngẫu nhiên</string>
+   <string name="action_null">Trống</string>
+   <string name="default_string">Mặc định</string>
 </resources>

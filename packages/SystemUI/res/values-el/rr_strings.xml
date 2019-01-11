@@ -121,6 +121,7 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Έξυπνα Πίξελ</string>
     <string name="quick_settings_smart_pixels_on_power_save">Αυτόματη ενεργοποίηση Έξυπνων Πίξελ</string>
+    <!-- On The Go -->
     <string name="omnijaws_service_error">Σφάλμα</string>
     <string name="omnijaws_service_unkown">Δεν υπάρχουν δεδομένα καιρού</string>
     <string name="omnijaws_service_error_long">Σφάλμα κατά τη φόρτωση δεδομένων καιρού</string>

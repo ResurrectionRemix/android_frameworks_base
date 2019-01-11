@@ -36,7 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Das Schriftpacket, welches Sie installiert haben, ist aufgrund fehlender fonts.xml Dateien nicht kompatibel. Bitte kontaktieren Sie den Entwickler des Schriftpacketes.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Neustart in Bootloader</string>
+   <string name="reboot_to_bootloader_message">Neustart in Bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Neustart ins Recovery</string>
+   <string name="reboot_to_recovery_message">Neustart ins Recovery\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">System neustarten</string>
+   <string name="reboot_system_message">System wird neugestartet\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Überblenden</string>
+   <string name="animation_slide_right">Nach rechts hineingleiten</string>
+   <string name="animation_slide_left">Nach links hineingleiten</string>
+   <string name="animation_slide_right_no_fade">Gleiten von rechts (ohne verblassen)</string>
+   <string name="animation_slide_left_no_fade">Gleiten von links (ohne Verblassen)</string>
+   <string name="animation_slide_up">Von unten hineingleiten</string>
+   <string name="animation_slide_down">Von oben hinein gleiten</string>
+   <string name="animation_default">Standard</string>
+   <string name="animation_translucent">Durchsichtig</string>
+   <string name="animation_grow_shrink">Hineinwachsen (oben)</string>
+   <string name="animation_grow_shrink_center">Hineinwachsen (zentriert)</string>
+   <string name="animation_grow_shrink_bottom">Hineinwachsen (unten)</string>
+   <string name="animation_grow_shrink_left">Hineinwachsen (links)</string>
+   <string name="animation_grow_shrink_right">Hineinwachsen (rechts)</string>
+   <string name="animation_random">Zufällig</string>
+   <string name="action_null">Leer</string>
+   <string name="default_string">Standard</string>
 </resources>

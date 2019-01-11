@@ -54,6 +54,12 @@
    <string name="animation_slide_down">Glisser vers le haut</string>
    <string name="animation_default">Par Défaut</string>
    <string name="animation_translucent">Translucide</string>
+   <string name="animation_grow_shrink">Agrandissement vers (Haut)</string>
+   <string name="animation_grow_shrink_center">Agrandissement vers (Centre)</string>
+   <string name="animation_grow_shrink_bottom">Agrandissement vers (Bas)</string>
+   <string name="animation_grow_shrink_left">Agrandissement vers (Gauche)</string>
+   <string name="animation_grow_shrink_right">Agrandissement vers (Droite)</string>
    <string name="animation_random">Aléatoire</string>
+   <string name="action_null">Vide</string>
    <string name="default_string">Par Défaut</string>
 </resources>

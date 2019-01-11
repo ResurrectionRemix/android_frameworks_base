@@ -37,7 +37,29 @@
    <string name="fontservice_incompatible_font">Yüklediğiniz font paketi dosyalarındaki eksik fonts.xml nedeniyle uyumlu değil. Lütfen destek için paket geliştiriciye başvurun.</string>
    <!-- advanced reboot to bootloader. -->
    <string name="reboot_to_bootloader_title">Ön yükleyici modunda başlat</string>
+   <string name="reboot_to_bootloader_message">Ön yükleyici modunda başlatılıyor\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Kurtarma modunda başlat</string>
+   <string name="reboot_to_recovery_message">Kurtarma modunda başlatılıyor\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Sistemi yeniden başlat</string>
+   <string name="reboot_system_message">Sistem yeniden başlatılıyor\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Karart</string>
+   <string name="animation_slide_right">Sağa kaydır</string>
+   <string name="animation_slide_left">Sola kaydır</string>
+   <string name="animation_slide_right_no_fade">Sağa kaydır (Karartma yok)</string>
+   <string name="animation_slide_left_no_fade">Sola kaydır (Karartma yok)</string>
+   <string name="animation_slide_up">Aşağı kaydır</string>
+   <string name="animation_slide_down">Yukarı kaydır</string>
+   <string name="animation_default">Varsayılan</string>
+   <string name="animation_translucent">Yarı şeffaf</string>
+   <string name="animation_grow_shrink">Büyüt (Yukarıdan)</string>
+   <string name="animation_grow_shrink_center">Büyüt (Ortadan)</string>
+   <string name="animation_grow_shrink_bottom">Büyüt (Aşağıdan)</string>
+   <string name="animation_grow_shrink_left">Büyüt (Soldan)</string>
+   <string name="animation_grow_shrink_right">Büyüt (Sağdan)</string>
+   <string name="animation_random">Rastgele</string>
+   <string name="action_null">Boş</string>
+   <string name="default_string">Varsayılan</string>
 </resources>

@@ -121,6 +121,19 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Píxeis Inteligentes</string>
     <string name="quick_settings_smart_pixels_on_power_save">Ativação automática dos Pixeis Inteligentes</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go ativado</string>
+    <string name="onthego_notif_title">On-The-Go está ativo</string>
+    <string name="onthego_notif_stop">Parar</string>
+    <string name="onthego_notif_options">Opções</string>
+    <string name="onthego_notif_error">Não é possível iniciar On-The-Go</string>
+    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modo de câmera alterado</string>
+    <string name="onthego_transparency">Transparência</string>
+    <string name="onthego_front_camera">Usar câmera frontal</string>
+    <string name="onthego_service_toggle">Reiniciar automaticamente o serviço</string>
+    <string name="onthego_channel_name">Principal</string>
+    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Erro</string>
     <string name="omnijaws_service_unkown">Sem dados meteorológicos</string>
     <string name="omnijaws_service_error_long">Erro ao carregar os dados meteorológicos</string>
@@ -141,8 +154,18 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Modo de jogo ligado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo de jogo desligado</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Reiniciando\u2026</string>
+    <string name="global_action_reboot_sub">Sistema</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">Interface do sistema</string>
+    <string name="global_action_dismissable_dialog_text">Reniciar avançado está desativado.\nVocê quer reniciar? \u003f</string>
+    <string name="global_action_dnaa">Não exibir novamente</string>
+    <string name="global_action_settings">Definições</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Captura de tela</string>
+    <string name="global_action_screenrecord">Gravação de Tela</string>
+    <string name="global_action_flashlight">Lanterna</string>
 </resources>

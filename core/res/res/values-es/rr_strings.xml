@@ -36,7 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">El paquete de la fuente que instalaste no es compatible debido a que falta el archivo fonts.xml. Por favor contacte al desarrollador del paquete de la fuente para obtener soporte.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Reiniciar en Bootloader</string>
+   <string name="reboot_to_bootloader_message">Reiniciando al bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Reiniciar en modo recovery</string>
+   <string name="reboot_to_recovery_message">Reiniciando en modo recovery\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Reiniciar sistema</string>
+   <string name="reboot_system_message">Reiniciando sistema\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Desvanecer</string>
+   <string name="animation_slide_right">Deslizar desde la derecha</string>
+   <string name="animation_slide_left">Deslizar desde la izquierda</string>
+   <string name="animation_slide_right_no_fade">Deslizar desde la derecha (sin desvanecer)</string>
+   <string name="animation_slide_left_no_fade">Deslizar desde la izquierda (sin desvanecer)</string>
+   <string name="animation_slide_up">Deslizar desde abajo</string>
+   <string name="animation_slide_down">Deslizar desde arriba</string>
+   <string name="animation_default">Predeterminado</string>
+   <string name="animation_translucent">Translúcido</string>
+   <string name="animation_grow_shrink">Aparecer (por arriba)</string>
+   <string name="animation_grow_shrink_center">Aparecer (por el centro)</string>
+   <string name="animation_grow_shrink_bottom">Aparecer (por abajo)</string>
+   <string name="animation_grow_shrink_left">Aparecer (por izquierda)</string>
+   <string name="animation_grow_shrink_right">Aparecer (por derecha)</string>
+   <string name="animation_random">Aleatorio</string>
+   <string name="action_null">Vacío</string>
+   <string name="default_string">Predeterminado</string>
 </resources>
