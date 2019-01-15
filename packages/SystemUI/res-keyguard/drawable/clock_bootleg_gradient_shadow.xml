@@ -1,0 +1,3 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval" android:width="42dp" android:height="42dp">
+    <gradient android:type="linear" android:startColor="@color/clock_gradient_general_gradient_start" android:endColor="@color/clock_gradient_general_gradient_end" android:angle="45" />
+</shape>
