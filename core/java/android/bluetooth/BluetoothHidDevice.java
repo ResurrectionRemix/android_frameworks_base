@@ -463,13 +463,11 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     }
 
     void doUnbind() {
-        if (mService != null) {
-            mService = null;
-            try {
-                mContext.unbindService(mConnection);
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Unable to unbind HidDevService", e);
-            }
+        mService = null;
+        try {
+            mContext.unbindService(mConnection);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Unable to unbind HidDevService", e);
         }
     }
 
