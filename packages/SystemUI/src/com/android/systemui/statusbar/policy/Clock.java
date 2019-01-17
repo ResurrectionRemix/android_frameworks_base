@@ -16,7 +16,6 @@
 
 package com.android.systemui.statusbar.policy;
 
-import static android.provider.Settings.Secure.STATUS_BAR_CLOCK;
 import static android.provider.Settings.Secure.STATUSBAR_CLOCK_AM_PM_STYLE;
 import static android.provider.Settings.Secure.STATUSBAR_CLOCK_DATE_DISPLAY;
 import static android.provider.Settings.Secure.STATUSBAR_CLOCK_DATE_STYLE;
@@ -216,7 +215,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             getContext().registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
                     null, Dependency.get(Dependency.TIME_TICK_HANDLER));
             Dependency.get(TunerService.class).addTunable(this, STATUSBAR_CLOCK_SECONDS,
-                    STATUS_BAR_CLOCK, STATUSBAR_CLOCK_AM_PM_STYLE, STATUSBAR_CLOCK_DATE_DISPLAY,
+                    STATUSBAR_CLOCK_AM_PM_STYLE, STATUSBAR_CLOCK_DATE_DISPLAY,
                     STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_POSITION);
             SysUiServiceProvider.getComponent(getContext(), CommandQueue.class).addCallback(this);
             if (mShowDark) {
@@ -342,8 +341,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 || STATUSBAR_CLOCK_DATE_DISPLAY.equals(key)
                 || STATUSBAR_CLOCK_DATE_STYLE.equals(key)
                 || STATUSBAR_CLOCK_DATE_FORMAT.equals(key)
-                || STATUSBAR_CLOCK_DATE_POSITION.equals(key)
-                || STATUS_BAR_CLOCK.equals(key)) {
+                || STATUSBAR_CLOCK_DATE_POSITION.equals(key)) {
             updateSettings(key, newValue);
         }
     }
@@ -634,13 +632,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 }
                 mClockDatePosition = Integer.parseInt(newValue);
                 break;
-
-            case (STATUS_BAR_CLOCK):
-                if (newValue == null || mQsHeader) {
-                    newValue = "1"; // show clock
-                }
-                setClockVisibleByUser(Integer.parseInt(newValue) != 0);
-                break;
         }
 
         if (mCalendar != null) {
@@ -654,5 +645,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
     public void setQsHeader() {
         mQsHeader = true;
+        setClockVisibleByUser(Integer.parseInt("1") != 0);
     }
 }

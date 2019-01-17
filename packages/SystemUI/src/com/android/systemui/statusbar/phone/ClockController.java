@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static android.provider.Settings.Secure.STATUS_BAR_CLOCK;
 import static android.provider.Settings.Secure.STATUSBAR_CLOCK_POSITION;
 
 import android.provider.Settings;
@@ -31,6 +32,7 @@ import com.android.systemui.tuner.TunerService;
 public class ClockController implements TunerService.Tunable {
 
     private static final String TAG = "ClockController";
+    private static final boolean DEBUG = false;
 
     private static final int CLOCK_POSITION_RIGHT = 0;
     private static final int CLOCK_POSITION_CENTER = 1;
@@ -43,6 +45,7 @@ public class ClockController implements TunerService.Tunable {
 
     private int mClockPosition = CLOCK_POSITION_LEFT;
     private boolean mBlackListed = false;
+    private boolean mShowClock = true;
 
     public ClockController(View statusBar) {
         mCenterClock = statusBar.findViewById(R.id.clock_center);
@@ -56,7 +59,8 @@ public class ClockController implements TunerService.Tunable {
 
         Dependency.get(TunerService.class).addTunable(this,
                 StatusBarIconController.ICON_BLACKLIST,
-                CLOCK_POSITION);
+                CLOCK_POSITION,
+                STATUS_BAR_CLOCK);
     }
 
     public Clock getClock() {
@@ -78,20 +82,28 @@ public class ClockController implements TunerService.Tunable {
     }
 
     private void updateActiveClock() {
-        mActiveClock.setClockVisibleByUser(false);
-        mActiveClock = getClock();
-        mActiveClock.setClockVisibleByUser(true);
+        if (mShowClock) {
+            mActiveClock.setClockVisibleByUser(false);
+            mActiveClock = getClock();
+            mActiveClock.setClockVisibleByUser(true);
+        } else {
+            mActiveClock.setClockVisibleByUser(false);
+        }
 
         // Override any previous setting
-        mActiveClock.setClockVisibleByUser(!mBlackListed);
+        if (mBlackListed) {
+            mActiveClock.setClockVisibleByUser(false);
+        }
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        Log.d(TAG, "onTuningChanged key=" + key + " value=" + newValue);
+        if (DEBUG) Log.d(TAG, "onTuningChanged key=" + key + " value=" + newValue);
 
         if (CLOCK_POSITION.equals(key)) {
             mClockPosition = newValue == null ? CLOCK_POSITION_LEFT : Integer.valueOf(newValue);
+        } if (STATUS_BAR_CLOCK.equals(key)) {
+            mShowClock = newValue == null ? false : "1".equals(newValue);
         } else {
             mBlackListed = StatusBarIconController.getIconBlacklist(newValue).contains("clock");
         }
