@@ -68,7 +68,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private KeyguardMonitor mKeyguardMonitor;
     private NetworkController mNetworkController;
     private LinearLayout mSystemIconArea;
-    private Clock mClockView;
     private View mStatusBarLogo, mStatusBarLogoRight;
     private View mNotificationIconAreaInner;
     private View mNetworkTrafficHolder;
@@ -82,7 +81,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     // RR additions
     private View mBatteryBars[] = new View[2];
 
-
     // custom carrier label
     private View mCustomCarrierLabel;
     private int mShowCarrierLabel;
@@ -90,6 +88,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     // Notification ticker
     private int mTickerEnabled;
     private View mTickerViewFromStub;
+    // clock position
+    private ClockController mClockController;
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -148,14 +148,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mNetworkTrafficHolder = mStatusBar.findViewById(R.id.network_traffic_holder);
-        mClockView = (Clock) mStatusBar.findViewById(R.id.clock);
+        mClockController = new ClockController(mStatusBar);
         mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
         mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         mStatusBarLogo = mStatusBar.findViewById(R.id.statusbar_logo);
         mStatusBarLogoRight = mStatusBar.findViewById(R.id.statusbar_logo_right);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         showSystemIconArea(false);
-        showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
         mRRSettingsObserver = new RRSettingsObserver(mHandler);
@@ -245,7 +244,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
         // The clock may have already been hidden, but we might want to shift its
         // visibility to GONE from INVISIBLE or vice versa
-        if ((diff1 & DISABLE_CLOCK) != 0 || mClockView.getVisibility() != clockHiddenMode()) {
+        if ((diff1 & DISABLE_CLOCK) != 0 ||
+                mClockController.getClock().getVisibility() != clockHiddenMode()) {
             if ((state1 & DISABLE_CLOCK) != 0) {
                 hideClock(animate);
             } else {
@@ -307,6 +307,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateHide(batteryBar, animate);
         }
         animateHide(mStatusBarLogoRight, animate);
+        animateHide(mClockController.getClockLayout(), animate);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -316,18 +317,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(batteryBar, animate);
         }
         animateShow(mStatusBarLogoRight, animate);
+        animateShow(mClockController.getClockLayout(), animate);
     }
 
     public void hideClock(boolean animate) {
-        if (mClockView.isClockVisible()) {
-            animateHiddenState(mClockView, clockHiddenMode(), animate);
-        }
+        animateHiddenState(mClockController.getClock(), clockHiddenMode(), animate);
     }
 
     public void showClock(boolean animate) {
-        if (mClockView.isClockVisible()) {
-            animateShow(mClockView, animate);
-        }
+        animateShow(mClockController.getClock(), animate);
     }
 
     /**
@@ -346,12 +344,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCenteredIconArea, animate);
         animateHide(mStatusBarLogo, animate);
+        animateHide(mClockController.getClockLayout(), animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenteredIconArea, animate);
         animateShow(mStatusBarLogo, animate);
+        animateShow(mClockController.getClockLayout(), animate);
     }
 
     public void hideOperatorName(boolean animate) {
