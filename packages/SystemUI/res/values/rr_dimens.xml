@@ -82,4 +82,7 @@
 
     <!-- Membar spacing -->
     <dimen name="recents_membar_spacing">12dp</dimen>
+
+    <dimen name="qs_header_image_offset">0dp</dimen>
+    <dimen name="qs_header_image_side_margin">0dp</dimen>
 </resources>
