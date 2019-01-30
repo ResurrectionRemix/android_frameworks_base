@@ -155,6 +155,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private PrivacyItemController mPrivacyItemController;
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
+
     private static final String QS_BATTERY_MODE =
             "system:" + Settings.System.QS_BATTERY_MODE;
     public static final String STATUS_BAR_BATTERY_STYLE =
@@ -163,6 +164,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private static final String SHOW_QS_CLOCK =
             "system:" + Settings.System.SHOW_QS_CLOCK;
+
+    private boolean mForceHideQsStatusBar;
 
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
@@ -238,7 +241,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mPrivacyChip.setOnClickListener(this::onClick);
         mCarrierGroup = findViewById(R.id.carrier_group);
-
+        mForceHideQsStatusBar = mContext.getResources().getBoolean(R.bool.qs_status_bar_hidden);
 
         updateResources();
 
@@ -763,7 +766,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     // Update color schemes in landscape to use wallpaperTextColor
     private void updateStatusbarProperties() {
-        boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
+        boolean shouldUseWallpaperTextColor = (mLandscape || mForceHideQsStatusBar) && !mHeaderImageEnabled;
         mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
     }
 }
