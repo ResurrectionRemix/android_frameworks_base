@@ -583,6 +583,9 @@ public class UserRestrictionsUtils {
                         android.provider.Settings.Secure.putIntForUser(
                                 context.getContentResolver(),
                                 Settings.Secure.DOZE_PULSE_ON_DOUBLE_TAP, 0, userId);
+                        android.provider.Settings.System.putIntForUser(
+                                context.getContentResolver(),
+                                Settings.System.DOZE_ON_CHARGE, 0, userId);
                     }
                     break;
                 case UserManager.DISALLOW_CONFIG_LOCATION:
