@@ -6110,6 +6110,22 @@ public final class Settings {
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
 
 
+         /**
+         * Whether to enable DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE = "doze_on_charge";
+
+        private static final Validator OMNI_DOZE_ON_CHARGE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * hidden stting of the current atate of DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
+
+
         /**
          * Enable\Disable Bluetooth Battery bar
          * @hide
@@ -6301,6 +6317,8 @@ public final class Settings {
             SCREEN_STATE_TWOG,
             SCREEN_STATE_THREEG,
             FLASHLIGHT_ON_CALL,
+            WIRELESS_CHARGING_ANIMATION,
+            OMNI_DOZE_ON_CHARGE,
         };
 
         /**
@@ -6532,6 +6550,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_TWOG);
             PRIVATE_SETTINGS.add(SCREEN_STATE_THREEG);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
+            PRIVATE_SETTINGS.add(WIRELESS_CHARGING_ANIMATION);
+            PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
         }
 
         /**
@@ -6754,6 +6774,8 @@ public final class Settings {
             VALIDATORS.put(SCREEN_STATE_TWOG, SCREEN_STATE_TWOG_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_THREEG, SCREEN_STATE_THREEG_VALIDATOR);
             VALIDATORS.put(FLASHLIGHT_ON_CALL, FLASHLIGHT_ON_CALL_VALIDATOR);
+            VALIDATORS.put(WIRELESS_CHARGING_ANIMATION, WIRELESS_CHARGING_ANIMATION_VALIDATOR);
+            VALIDATORS.put(OMNI_DOZE_ON_CHARGE, OMNI_DOZE_ON_CHARGE_VALIDATOR);
         }
 
         /**
