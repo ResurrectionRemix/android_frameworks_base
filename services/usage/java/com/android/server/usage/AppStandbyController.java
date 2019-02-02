@@ -1783,6 +1783,10 @@ public class AppStandbyController {
         public static final long DEFAULT_EXEMPTED_SYNC_START_TIMEOUT = 10 * ONE_MINUTE;
         public static final long DEFAULT_STABLE_CHARGING_THRESHOLD = 10 * ONE_MINUTE;
 
+        // Aggressive standby
+        private boolean mAggressiveStandby = false;
+        private static final long AGGRESSIVE_WEIGHT = 3;
+
         private final KeyValueListParser mParser = new KeyValueListParser(',');
 
         SettingsObserver(Handler handler) {
@@ -1795,12 +1799,23 @@ public class AppStandbyController {
             /*cr.registerContentObserver(Global.getUriFor(Global.APP_STANDBY_ENABLED), false, this);*/
             cr.registerContentObserver(Global.getUriFor(Global.ADAPTIVE_BATTERY_MANAGEMENT_ENABLED),
                     false, this);
+            cr.registerContentObserver(Global.getUriFor(Global.AGGRESSIVE_STANDBY_ENABLED),
+                    false, this);
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
             postOneTimeCheckIdleStates();
+        }
+
+        private long getDurationWeighted(String key, long defaultValue) {
+            long duration = mParser.getDurationMillis(key, defaultValue);
+
+            if (mAggressiveStandby)
+                return duration / AGGRESSIVE_WEIGHT;
+
+            return duration;
         }
 
         void updateSettings() {
@@ -1816,6 +1831,15 @@ public class AppStandbyController {
                         Global.APP_IDLE_CONSTANTS));
             }
 
+            // Check if aggressive_standby_enabled has changed
+            try {
+                mAggressiveStandby = Global.getInt(mContext.getContentResolver(),
+                        Global.AGGRESSIVE_STANDBY_ENABLED) == 1;
+            } catch (Exception e) {
+                // Setting not found, assume false
+                mAggressiveStandby = false;
+            }
+
             // Look at global settings for this.
             // TODO: Maybe apply different thresholds for different users.
             try {
@@ -1828,14 +1852,14 @@ public class AppStandbyController {
             synchronized (mAppIdleLock) {
 
                 // Default: 24 hours between paroles
-                mAppIdleParoleIntervalMillis = mParser.getDurationMillis(KEY_PAROLE_INTERVAL,
+                mAppIdleParoleIntervalMillis = getDurationWeighted(KEY_PAROLE_INTERVAL,
                         COMPRESS_TIME ? ONE_MINUTE * 10 : 24 * 60 * ONE_MINUTE);
 
                 // Default: 2 hours to wait on network
-                mAppIdleParoleWindowMillis = mParser.getDurationMillis(KEY_PAROLE_WINDOW,
+                mAppIdleParoleWindowMillis = getDurationWeighted(KEY_PAROLE_WINDOW,
                         COMPRESS_TIME ? ONE_MINUTE * 2 : 2 * 60 * ONE_MINUTE);
 
-                mAppIdleParoleDurationMillis = mParser.getDurationMillis(KEY_PAROLE_DURATION,
+                mAppIdleParoleDurationMillis = getDurationWeighted(KEY_PAROLE_DURATION,
                         COMPRESS_TIME ? ONE_MINUTE : 10 * ONE_MINUTE); // 10 minutes
 
                 String screenThresholdsValue = mParser.getString(KEY_SCREEN_TIME_THRESHOLDS, null);
@@ -1848,41 +1872,41 @@ public class AppStandbyController {
                         ELAPSED_TIME_THRESHOLDS);
                 mCheckIdleIntervalMillis = Math.min(mAppStandbyElapsedThresholds[1] / 4,
                         COMPRESS_TIME ? ONE_MINUTE : 4 * 60 * ONE_MINUTE); // 4 hours
-                mStrongUsageTimeoutMillis = mParser.getDurationMillis
+                mStrongUsageTimeoutMillis = getDurationWeighted
                         (KEY_STRONG_USAGE_HOLD_DURATION,
                                 COMPRESS_TIME ? ONE_MINUTE : DEFAULT_STRONG_USAGE_TIMEOUT);
-                mNotificationSeenTimeoutMillis = mParser.getDurationMillis
+                mNotificationSeenTimeoutMillis = getDurationWeighted
                         (KEY_NOTIFICATION_SEEN_HOLD_DURATION,
                                 COMPRESS_TIME ? 12 * ONE_MINUTE : DEFAULT_NOTIFICATION_TIMEOUT);
-                mSystemUpdateUsageTimeoutMillis = mParser.getDurationMillis
+                mSystemUpdateUsageTimeoutMillis = getDurationWeighted
                         (KEY_SYSTEM_UPDATE_HOLD_DURATION,
                                 COMPRESS_TIME ? 2 * ONE_MINUTE : DEFAULT_SYSTEM_UPDATE_TIMEOUT);
-                mPredictionTimeoutMillis = mParser.getDurationMillis
+                mPredictionTimeoutMillis = getDurationWeighted
                         (KEY_PREDICTION_TIMEOUT,
                                 COMPRESS_TIME ? 10 * ONE_MINUTE : DEFAULT_PREDICTION_TIMEOUT);
-                mSyncAdapterTimeoutMillis = mParser.getDurationMillis
+                mSyncAdapterTimeoutMillis = getDurationWeighted
                         (KEY_SYNC_ADAPTER_HOLD_DURATION,
                                 COMPRESS_TIME ? ONE_MINUTE : DEFAULT_SYNC_ADAPTER_TIMEOUT);
 
-                mExemptedSyncScheduledNonDozeTimeoutMillis = mParser.getDurationMillis
+                mExemptedSyncScheduledNonDozeTimeoutMillis = getDurationWeighted
                         (KEY_EXEMPTED_SYNC_SCHEDULED_NON_DOZE_HOLD_DURATION,
                                 COMPRESS_TIME ? (ONE_MINUTE / 2)
                                         : DEFAULT_EXEMPTED_SYNC_SCHEDULED_NON_DOZE_TIMEOUT);
 
-                mExemptedSyncScheduledDozeTimeoutMillis = mParser.getDurationMillis
+                mExemptedSyncScheduledDozeTimeoutMillis = getDurationWeighted
                         (KEY_EXEMPTED_SYNC_SCHEDULED_DOZE_HOLD_DURATION,
                                 COMPRESS_TIME ? ONE_MINUTE
                                         : DEFAULT_EXEMPTED_SYNC_SCHEDULED_DOZE_TIMEOUT);
 
-                mExemptedSyncStartTimeoutMillis = mParser.getDurationMillis
+                mExemptedSyncStartTimeoutMillis = getDurationWeighted
                         (KEY_EXEMPTED_SYNC_START_HOLD_DURATION,
                                 COMPRESS_TIME ? ONE_MINUTE
                                         : DEFAULT_EXEMPTED_SYNC_START_TIMEOUT);
 
-                mSystemInteractionTimeoutMillis = mParser.getDurationMillis
+                mSystemInteractionTimeoutMillis = getDurationWeighted
                         (KEY_SYSTEM_INTERACTION_HOLD_DURATION,
                                 COMPRESS_TIME ? ONE_MINUTE : DEFAULT_SYSTEM_INTERACTION_TIMEOUT);
-                mStableChargingThresholdMillis = mParser.getDurationMillis
+                mStableChargingThresholdMillis = getDurationWeighted
                         (KEY_STABLE_CHARGING_THRESHOLD,
                                 COMPRESS_TIME ? ONE_MINUTE : DEFAULT_STABLE_CHARGING_THRESHOLD);
             }
