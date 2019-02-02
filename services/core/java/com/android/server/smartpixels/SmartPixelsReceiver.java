@@ -151,5 +151,17 @@ public class SmartPixelsReceiver extends BroadcastReceiver {
    @Override
    public void onReceive(final Context context, Intent intent) {
        mSettingsObserver.update();
+       handleAggressiveBattery();
+   }
+
+   private void handleAggressiveBattery() {
+       boolean aggressiveBatterySaver = (Settings.Global.getInt(
+                   mResolver, Settings.Global.AGGRESSIVE_BATTERY_SAVER, 1) == 1);
+       int desiredState = (aggressiveBatterySaver && mPowerSave) ? 1 : 0;
+
+       Settings.Global.putInt(mResolver, Settings.Global.AGGRESSIVE_STANDBY_ENABLED,
+               desiredState);
+       Settings.Global.putInt(mResolver, Settings.Global.AGGRESSIVE_IDLE_ENABLED,
+               desiredState);
    }
 }
