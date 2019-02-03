@@ -570,12 +570,8 @@ public class QSContainerImpl extends FrameLayout implements
                 UserHandle.USER_CURRENT);
 
         if (mCurrentBackground != null) {
-            if (headerShadow != 0) {
-                int shadow = Color.argb(headerShadow, 0, 0, 0);
-                mCurrentBackground.setColorFilter(shadow, Mode.SRC_ATOP);
-            } else {
-                mCurrentBackground.setColorFilter(null);
-            }
+            float shadow = headerShadow;
+            mBackgroundImage.setImageAlpha(255-headerShadow);
         }
     }
 
