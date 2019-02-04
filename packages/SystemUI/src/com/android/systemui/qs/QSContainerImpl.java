@@ -71,6 +71,7 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mLandscape;
     private int mQsBackgroundAlpha = 255;
     private boolean mForceHideQsStatusBar;
+    private boolean mIsAlpha;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -123,7 +124,7 @@ public class QSContainerImpl extends FrameLayout implements
         // Hide the backgrounds when in landscape mode.
         if (mLandscape || mForceHideQsStatusBar) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
-        } else {
+        } else if (!mIsAlpha || !mLandscape) {
             mBackgroundGradient.setVisibility(View.VISIBLE);
         }
 
@@ -156,6 +157,12 @@ public class QSContainerImpl extends FrameLayout implements
         mQsBackgroundAlpha = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
+
+        if (mQsBackgroundAlpha < 255 ) {
+            mIsAlpha = true;
+        } else {
+            mIsAlpha = false;
+        }
 
         mBackground.getBackground().setAlpha(mQsBackgroundAlpha);
         mStatusBarBackground.getBackground().setAlpha(mQsBackgroundAlpha);
@@ -236,17 +243,20 @@ public class QSContainerImpl extends FrameLayout implements
         int statusBarSideMargin = mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_header_image_side_margin) : 0;
 
-        // always add the margin below the statusbar with or without image
-        int statusBarBottomMargin = mContext.getResources().getDimensionPixelSize(
-                R.dimen.qs_header_image_bottom_margin);
+        int gradientTopMargin = !mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.quick_qs_offset_height) : 0;
 
-        ((LayoutParams) mQSPanel.getLayoutParams()).topMargin = topMargin + statusBarBottomMargin;
+        ((LayoutParams) mQSPanel.getLayoutParams()).topMargin = topMargin;
         mQSPanel.setLayoutParams(mQSPanel.getLayoutParams());
 
         ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mStatusBarBackground.getLayoutParams();
         lp.height = topMargin;
         lp.setMargins(statusBarSideMargin, 0, statusBarSideMargin, 0);
         mStatusBarBackground.setLayoutParams(lp);
+
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) mBackgroundGradient.getLayoutParams();
+        mlp.setMargins(0, gradientTopMargin, 0, 0);
+        mBackgroundGradient.setLayoutParams(mlp);
 
         if (mHeaderImageEnabled) {
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
