@@ -255,6 +255,7 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
         }
 
         @Override
+        @Nullable
         public Uri insert(String callingPkg, Uri uri, ContentValues initialValues) {
             uri = validateIncomingUri(uri);
             int userId = getUserIdFromUri(uri);
@@ -1260,16 +1261,16 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
      * Implementation when a caller has performed an insert on the content
      * provider, but that call has been rejected for the operation given
      * to {@link #setAppOps(int, int)}.  The default implementation simply
-     * returns a dummy URI that is the base URI with a 0 path element
-     * appended.
+     * returns null.
      */
+    @Nullable
     public Uri rejectInsert(Uri uri, ContentValues values) {
-        // If not allowed, we need to return some reasonable URI.  Maybe the
-        // content provider should be responsible for this, but for now we
-        // will just return the base URI with a dummy '0' tagged on to it.
-        // You shouldn't be able to read if you can't write, anyway, so it
-        // shouldn't matter much what is returned.
-        return uri.buildUpon().appendPath("0").build();
+        // Though we could return a dummy Uri here, we return null to indicate that there was a
+        // failure. In particular, returning a dummy Uri could cause confusion in the case that a
+        // user of the ContentProvider has read, but not write, permissions. Worst case, a user
+        // could begin using another row after a failed insert believing it to be the newly inserted
+        // row.
+        return null;
     }
 
     /**
