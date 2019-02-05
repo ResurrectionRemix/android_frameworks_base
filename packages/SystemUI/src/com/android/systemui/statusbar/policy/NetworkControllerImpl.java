@@ -1030,6 +1030,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         boolean inflateSignalStrengths = false;
         boolean alwaysShowDataRatIcon = false;
         boolean showVolteIcon;
+        boolean showHDVolteIcon;
 
         static Config readConfig(Context context) {
             Config config = new Config();
@@ -1051,6 +1052,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
                         CarrierConfigManager.KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL);
             }
             config.showVolteIcon = res.getBoolean(R.bool.config_display_volte);
+            config.showHDVolteIcon = res.getBoolean(R.bool.config_display_hd_volte);
             return config;
         }
     }
