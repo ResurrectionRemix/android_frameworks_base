@@ -97,7 +97,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public static final int AM_PM_STYLE_GONE    = 0;
     public static final int AM_PM_STYLE_SMALL   = 1;
     public static final int AM_PM_STYLE_NORMAL  = 2;
-    public static final String CLOCK_SECONDS = "clock_seconds";
 
     private static int AM_PM_STYLE = AM_PM_STYLE_GONE;
 
