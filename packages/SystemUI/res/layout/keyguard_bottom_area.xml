@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/keyguard_indication_margin_bottom"
         android:layout_gravity="bottom|center_horizontal"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <frameworks.support.lottie.LottieAnimationView
@@ -41,6 +42,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:lottie_fileName="keyguard_charging_indication.json"
+            android:animateLayoutChanges="true"
             app:lottie_loop="true"
             android:visibility="gone" />
 
