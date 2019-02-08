@@ -111,6 +111,7 @@ public class HardwareUiLayout extends LinearLayout implements Tunable {
                 params.bottomMargin = edge;
             } else {
                 params.rightMargin = edge;
+                params.leftMargin = edge;
             }
             mList.setLayoutParams(params);
         }
