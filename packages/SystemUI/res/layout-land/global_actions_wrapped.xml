@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top|right"
     android:layout_marginBottom="@dimen/global_actions_top_padding"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingTop="@dimen/global_actions_top_padding"
     android:clipToPadding="false"
     android:theme="@style/qs_theme"
