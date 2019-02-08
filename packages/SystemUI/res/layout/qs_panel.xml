@@ -36,7 +36,7 @@
         android:layout_height="@*android:dimen/quick_qs_offset_height"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:background="#ff000000" />
+        android:background="@color/qs_statusbar_background" />
 
     <!-- Gradient view behind QS -->
     <View

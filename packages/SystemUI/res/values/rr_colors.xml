@@ -41,5 +41,9 @@
 
     <!-- Custom Carrier Label -->
     <color name="status_bar_carrier_color">#FFFFFFFF</color>
+    
+    <!-- Exposed qs_statusbar_background -->
+    <color name="qs_statusbar_background">#FF000000</color>
+
 
 </resources>
