@@ -574,6 +574,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void updateSmartClockStatus() {
+        if (getContext() == null) return;
         useSmartClock = (Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.SMART_CLOCK_ENABLE, 0,
                 UserHandle.USER_CURRENT) == 1);
