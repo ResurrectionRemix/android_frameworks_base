@@ -110,13 +110,63 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Перезавантажити</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie-керування</string>
+    <string name="pie_state_summary">Використовувати керування Pie в повноекранному режимі</string>
+    <string name="pie_battery_level">"Заряд батареї "</string>
+    <string name="quick_settings_pie">Pie-керування</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Розумні пікселі</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автоматичне увімкнення розумних пікселів</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">\"В дорозі\" активовано</string>
+    <string name="onthego_notif_title">On-The-Go ввімкнений</string>
+    <string name="onthego_notif_stop">Зупинити</string>
+    <string name="onthego_notif_options">Опції</string>
+    <string name="onthego_notif_error">Не вдається запустити режим \"В дорозі\"</string>
+    <string name="onthego_notif_restart">Перезавантажити режим \"В дорозі\"</string>
+    <string name="onthego_notif_camera_changed">Режим камери змінено</string>
+    <string name="onthego_transparency">Прозорість</string>
+    <string name="onthego_front_camera">Використовувати передню камеру</string>
+    <string name="onthego_service_toggle">Автоматично перезапустити службу</string>
+    <string name="onthego_channel_name">Основний</string>
+    <string name="global_action_onthego">Режим \"В дорозі\"</string>
+    <string name="omnijaws_service_error">Помилка</string>
+    <string name="omnijaws_service_unkown">Немає даних про погоду</string>
+    <string name="omnijaws_service_error_long">Помилка завантаження даних про погоду</string>
+    <string name="omnijaws_service_disabled">Службу вимкнуто</string>
+    <string name="omnijaws_detail_header">Погода</string>
+    <string name="omnijaws_label_default">Погода</string>
+    <string name="omnijaws_current_text">Зараз</string>
+    <string name="omnijaws_package_not_available">OmniJaws недоступний</string>
+    <string name="omnijaws_service_last_update">Останнє оновлення:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Ігровий режим</string>
+    <string name="gaming_mode_tile_toast">Ігровий режим ввімкнено</string>
+    <string name="gaming_mode_tile_toast_disabled">Ігровий режим вимк.</string>
+    <string name="gaming_mode_dialog_title">Ігровий режим</string>
+    <string name="gaming_mode_dialog_message">Коли ігровий режим увімкнуто, ваш режим дзвінку переключиться в режим вібрації, всі сповішення та аппаратні клавіші будуть вимкнуті. Гучність медіа буде збільшена до максимального рівню. Усі вимкнуті налаштування будуть відновлені після виходу з режиму гри.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Ігровий режим увімк.</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Ігровий режим вимк.</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Перезавантаження\u2026</string>
+    <string name="global_action_reboot_sub">Система</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">SystemUI</string>
+    <string name="global_action_dismissable_dialog_text">Розширене перезавантаження вимкнено.\nХочете перезавантажитися\u003f</string>
+    <string name="global_action_dnaa">Не показувати знову</string>
+    <string name="global_action_settings">Налаштування</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Знімок екрану</string>
+    <string name="global_action_screenrecord">Запис екрану</string>
+    <string name="global_action_flashlight">Ліхтарик</string>
+    <!-- Advance location quick setting tile -->
 </resources>

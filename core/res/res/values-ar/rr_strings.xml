@@ -27,14 +27,39 @@
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">التحكم فى محرر التنقل</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">يسمح لتطبيق التحكم بمحرر شريط التنقل.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_accessFontManager">الوصول لادارة الخطوط</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_accessFontManager">يسمح لتطبيق ما بالوصول إلى ادارة الخطوط.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">حزمة الخط التي ثبتها غير متوافقة بسبب عدم وجود fonts.xml في ملفاتها. يرجى الاتصال بمطور الحزمة للحصول على الدعم.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">إعادة التشغيل الى وضع التحميل (الداونلود)</string>
+   <string name="reboot_to_bootloader_message">يتم إعادة التشغيل إلى وضع البوتلودر</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">اعادة التشغيل إلى وضع الإسترداد</string>
+   <string name="reboot_to_recovery_message">يتم اعادة التشغيل إلى وضع الإسترداد</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">إعادة تشغيل النظام</string>
+   <string name="reboot_system_message">جارِ إعادة تشغيل النظام\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">تلاشي</string>
+   <string name="animation_slide_right">انزلاق إلى اليمين</string>
+   <string name="animation_slide_left">انزلاق إلى اليسار</string>
+   <string name="animation_slide_right_no_fade">انزلاق إلى اليمين (بدون تلاشي)</string>
+   <string name="animation_slide_left_no_fade">انزلاق إلى اليسار (بدون تلاشي)</string>
+   <string name="animation_slide_up">انزلاق إلى الأسفل</string>
+   <string name="animation_slide_down">الانزلاق الى الاعلى</string>
+   <string name="animation_default">الإفتراضي</string>
+   <string name="animation_translucent">شفاف</string>
+   <string name="animation_grow_shrink">نمو نحو (الأعلى)</string>
+   <string name="animation_grow_shrink_center">نمو نحو (الوسط)</string>
+   <string name="animation_grow_shrink_bottom">نمو نحو (الأسفل)</string>
+   <string name="animation_grow_shrink_left">نمو نحو (اليسار)</string>
+   <string name="animation_grow_shrink_right">نمو نحو (اليمين)</string>
+   <string name="animation_random">عشوائي</string>
+   <string name="action_null">فارغ</string>
+   <string name="default_string">إفتراضي</string>
 </resources>

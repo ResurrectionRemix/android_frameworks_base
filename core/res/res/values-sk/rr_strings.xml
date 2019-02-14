@@ -14,12 +14,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">Podpis balíka</string>
+   <string name="permlab_fakePackageSignature">Napodobniť podpis balíčku</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Umožňuje aplikácii predstierať, že je inou aplikáciou. Škodlivé aplikácie môžu používať na prístup k údajom o súkromných aplikáciách. Udeľte toto iba opatrne!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Kopírovať adresu URL crash log</string>
-   <string name="url_copy_success">URL skopirovane</string>
+   <string name="aerr_copy">Kopírovať adresu URL záznamu o chybe</string>
+   <string name="url_copy_success">URL skopírované</string>
    <string name="url_copy_failed">Vyskytla sa chyba pri nahrávaní obrázku</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Práve sa prehráva</string>
@@ -47,4 +47,19 @@
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Miznutie</string>
    <string name="animation_slide_right">Posunúť vpravo</string>
+   <string name="animation_slide_left">Prílet zľava</string>
+   <string name="animation_slide_right_no_fade">Prílet sprava (Bez zanikania)</string>
+   <string name="animation_slide_left_no_fade">Prílet zľava (Bez zanikania)</string>
+   <string name="animation_slide_up">Prílet zospodu</string>
+   <string name="animation_slide_down">Prílet zvrchu</string>
+   <string name="animation_default">Predvolené</string>
+   <string name="animation_translucent">Priesvitné</string>
+   <string name="animation_grow_shrink">Zväčšenie (zvrchu)</string>
+   <string name="animation_grow_shrink_center">Zväčšenie (stred)</string>
+   <string name="animation_grow_shrink_bottom">Zväčšenie (zospodu)</string>
+   <string name="animation_grow_shrink_left">Zväčšenie (zľava)</string>
+   <string name="animation_grow_shrink_right">Zväčšenie (sprava)</string>
+   <string name="animation_random">Náhodné</string>
+   <string name="action_null">Prázdne</string>
+   <string name="default_string">Predvolené</string>
 </resources>

@@ -154,7 +154,7 @@
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">再起動中\u2026</string>
+    <string name="global_action_reboot_more">再起動\u2026</string>
     <string name="global_action_reboot_sub">システム</string>
     <string name="global_action_reboot_bootloader">ブートローダー</string>
     <string name="global_action_reboot_systemui">システムUI</string>
@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">スクリーンショット</string>
     <string name="global_action_screenrecord">画面録画</string>
     <string name="global_action_flashlight">フラッシュライト</string>
+    <!-- Advance location quick setting tile -->
 </resources>

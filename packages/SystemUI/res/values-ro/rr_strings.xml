@@ -122,6 +122,7 @@
     <string name="quick_settings_smart_pixels">Pixeli inteligenți</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-activare pixeli inteligenți</string>
     <!-- On The Go -->
+    <string name="onthego_front_camera">Utilizare cameră frontală</string>
     <string name="omnijaws_service_error">Eroare</string>
     <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
     <string name="omnijaws_service_error_long">Eroare la încărcarea datelor meteo</string>
@@ -142,8 +143,11 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Mod pentru jocuri activat</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mod pentru jocuri dezactivat</string>
     <!-- Power Menu -->
+    <string name="global_action_settings">Setări</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_flashlight">Lanternă</string>
+    <!-- Advance location quick setting tile -->
 </resources>

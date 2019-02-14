@@ -39,4 +39,5 @@
    <!-- advanced reboot to recovery. -->
    <!-- advanced reboot system -->
    <!-- AOKP custom system animations -->
+   <string name="action_null">Gol</string>
 </resources>

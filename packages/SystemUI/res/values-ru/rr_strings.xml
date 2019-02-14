@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Скриншот</string>
     <string name="global_action_screenrecord">Запись экрана</string>
     <string name="global_action_flashlight">Фонарик</string>
+    <!-- Advance location quick setting tile -->
 </resources>

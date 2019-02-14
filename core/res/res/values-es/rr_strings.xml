@@ -20,7 +20,7 @@
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">Copiar URL del registro de errores</string>
    <string name="url_copy_success">URL copiada con éxito</string>
-   <string name="url_copy_failed">Ocurrió un error mientras se cargaba el archivo de registro a dogbin</string>
+   <string name="url_copy_failed">Ocurrió un error mientras se subia el archivo de registro a dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Reproduciendo ahora</string>
    <string name="ambient_recognition_information">%1$s por %2$s</string>
@@ -34,22 +34,22 @@
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_accessFontManager">Permite a una aplicación acceder al gestor de fuentes.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
-   <string name="fontservice_incompatible_font">El paquete de la fuente que instalaste no es compatible debido a que falta el archivo fonts.xml. Por favor contacte al desarrollador del paquete de la fuente para obtener soporte.</string>
+   <string name="fontservice_incompatible_font">El paquete de la fuente ha instalalado no es compatible debido a que falta el archivo fonts.xml. Por favor contacte al desarrollador del paquete de la fuente para obtener soporte.</string>
    <!-- advanced reboot to bootloader. -->
-   <string name="reboot_to_bootloader_title">Reiniciar en Bootloader</string>
+   <string name="reboot_to_bootloader_title">Reiniciar al Bootloader</string>
    <string name="reboot_to_bootloader_message">Reiniciando al bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
    <string name="reboot_to_recovery_title">Reiniciar en modo recovery</string>
    <string name="reboot_to_recovery_message">Reiniciando en modo recovery\u2026</string>
    <!-- advanced reboot system -->
-   <string name="reboot_system_title">Reiniciar sistema</string>
-   <string name="reboot_system_message">Reiniciando sistema\u2026</string>
+   <string name="reboot_system_title">Reiniciar el sistema</string>
+   <string name="reboot_system_message">Reiniciando el sistema\u2026</string>
    <!-- AOKP custom system animations -->
-   <string name="animation_fade">Desvanecer</string>
+   <string name="animation_fade">Fundido</string>
    <string name="animation_slide_right">Deslizar desde la derecha</string>
    <string name="animation_slide_left">Deslizar desde la izquierda</string>
-   <string name="animation_slide_right_no_fade">Deslizar desde la derecha (sin desvanecer)</string>
-   <string name="animation_slide_left_no_fade">Deslizar desde la izquierda (sin desvanecer)</string>
+   <string name="animation_slide_right_no_fade">Deslizar desde la derecha (sin fundido)</string>
+   <string name="animation_slide_left_no_fade">Deslizar desde la izquierda (sin fundido)</string>
    <string name="animation_slide_up">Deslizar desde abajo</string>
    <string name="animation_slide_down">Deslizar desde arriba</string>
    <string name="animation_default">Predeterminado</string>

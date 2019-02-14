@@ -83,13 +83,17 @@
     <string name="clipboard_description">Możesz przeciągać elementy bezpośrednio do schowka. Możesz też przeciągać umieszczone tam wcześniej elementy poza schowek jeśli jest obecny.</string>
     <string name="keycode_description">Na pasku nawigacji możesz umieszczać przyciski, które po naciśnięciu emulują funkcje klawiszy klawiatury. Najpierw musisz wybrać, jaki klawisz ma być przypisany do danego przycisku, a następnie wybrać dla niego grafikę.</string>
     <string name="start">Start</string>
+    <string name="center">Na środku</string>
     <string name="end">Koniec</string>
+    <string name="space">Spacja</string>
     <string name="menu_ime">Menu / Przełącznik klawiatury</string>
     <string name="select_button">Wybierz przycisk do dodania</string>
     <string name="add_button">Dodaj przycisk</string>
     <string name="save">Zapisz</string>
     <string name="reset">Przywróć domyślne</string>
     <string name="select_keycode">Wybierz przycisk klawiatury</string>
+    <string name="left">Z lewej strony</string>
+    <string name="right">Po prawej</string>
     <string name="navbar_editor_title">Edytor</string>
     <string name="navbar_editor_summary">Skonfiguruj pasek nawigacji</string>
     <!-- NavBar Tuner -->
@@ -107,14 +111,29 @@
     <string name="global_action_reboot">Uruchom ponownie</string>
     <!-- Pie controls -->
     <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">gg:mm</string>
+    <string name="pie_hour_format_24">GG:mm</string>
     <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Kontrola Pie</string>
+    <string name="pie_state_summary">Używaj kontroli PIE w trybie pełnoekranowym</string>
     <string name="pie_battery_level">"POZIOM NAŁADOWANIA BATERII "</string>
     <string name="quick_settings_pie">Kontrola Pie</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automatyczne włączanie inteligentnych pixeli</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
+    <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Ustawienia</string>
+    <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
+    <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
+    <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
+    <string name="onthego_transparency">Przezroczystość</string>
+    <string name="onthego_front_camera">Użyj przedniej kamery</string>
+    <string name="onthego_service_toggle">Automatycznie uruchom ponownie usługę</string>
+    <string name="onthego_channel_name">Główny</string>
+    <string name="global_action_onthego">W ruchu</string>
     <string name="omnijaws_service_error">Błąd</string>
     <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
     <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
@@ -125,10 +144,29 @@
     <string name="omnijaws_package_not_available">OmniJaws nie jest dostępny</string>
     <string name="omnijaws_service_last_update">Ostatnia aktualizacja:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Tryb grania</string>
+    <string name="gaming_mode_tile_toast">Włączono Tryb grania</string>
+    <string name="gaming_mode_tile_toast_disabled">Wyłączono Tryb grania</string>
+    <string name="gaming_mode_dialog_title">Tryb grania</string>
+    <string name="gaming_mode_dialog_message">Gdy tryb grania jest włączony, tryb dzwonka zostanie zmieniony na tryb wibracji, zostaną wyłączone wszystkie wyskakujące powiadomienia, a klawisze zostaną wyłączone. Głośność multimediów zostanie zwiększona do maksymalnej wartości. Wszystkie wyłączone ustawienia zostaną zresetowane do domyślnych wartości po wyłączeniu trybu grania.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Tryb grania włączony</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Tryb grania wyłączony</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Ponowne uruchamianie\u2026</string>
+    <string name="global_action_reboot_sub">System</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">Interfejs</string>
+    <string name="global_action_dismissable_dialog_text">Zaawansowany restart jest wyłączony.\nCzy na pewno chcesz zrestartować urządzenie\u003f</string>
+    <string name="global_action_dnaa">Nie pokazuj ponownie</string>
+    <string name="global_action_settings">Ustawienia</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Zrzut ekranu</string>
+    <string name="global_action_screenrecord">Nagrywanie ekranu</string>
+    <string name="global_action_flashlight">Latarka</string>
+    <!-- Advance location quick setting tile -->
 </resources>

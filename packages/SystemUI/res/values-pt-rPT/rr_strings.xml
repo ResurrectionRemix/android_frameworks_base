@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Captura de Ecrã</string>
     <string name="global_action_screenrecord">Gravação de ecrã</string>
     <string name="global_action_flashlight">Lanterna</string>
+    <!-- Advance location quick setting tile -->
 </resources>

@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Chụp màn hình</string>
     <string name="global_action_screenrecord">Quay màn hình</string>
     <string name="global_action_flashlight">Đèn pin</string>
+    <!-- Advance location quick setting tile -->
 </resources>

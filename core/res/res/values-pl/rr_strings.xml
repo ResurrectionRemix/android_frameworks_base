@@ -34,17 +34,31 @@
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_accessFontManager">Zezwalaj aplikacjom na dostęp do menadżera czcionek.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Zainstalowany pakiet czcionek nie jest zgodny ze względu na brak pliku fonts.xml. W celu uzyskania pomocy skontaktuj się z twórcą pakietu.</string>
    <!-- advanced reboot to bootloader. -->
    <string name="reboot_to_bootloader_title">Uruchom ponownie w trybie Bootloadera</string>
+   <string name="reboot_to_bootloader_message">Uruchom ponownie do trybu bootloader</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Uruchom ponownie w trybie recovery</string>
    <string name="reboot_to_recovery_message">Ponowne uruchamianie w trybie recovery</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Uruchom ponownie</string>
+   <string name="reboot_system_message">Restartowanie systemu</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Zanikanie</string>
    <string name="animation_slide_right">Wjazd z prawej</string>
    <string name="animation_slide_left">Wjazd z lewej</string>
    <string name="animation_slide_right_no_fade">Wjazd z prawo (Bez zaniku)</string>
+   <string name="animation_slide_left_no_fade">Wjazd z lewej (Bez zanikania)</string>
+   <string name="animation_slide_up">Przesunięcie w dół</string>
+   <string name="animation_slide_down">Przesunięcie w górę</string>
+   <string name="animation_default">Domyślne</string>
+   <string name="animation_translucent">Prześwitujący</string>
+   <string name="animation_grow_shrink">Wyrastanie (z góry)</string>
+   <string name="animation_grow_shrink_center">Powiększenie (do środka)</string>
+   <string name="animation_grow_shrink_bottom">Powiększenie (od dołu)</string>
+   <string name="animation_grow_shrink_left">Powiększenie (z lewej)</string>
+   <string name="animation_grow_shrink_right">Powiększenie (z prawej)</string>
    <string name="animation_random">Losowa</string>
    <string name="action_null">Puste</string>
    <string name="default_string">Domyślne</string>

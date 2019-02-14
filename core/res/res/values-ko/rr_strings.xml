@@ -14,17 +14,52 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">패키지 서명 스푸핑</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">앱이 다른 앱인 것처럼 흉내내는 것을 허용합니다. 악성 앱들이 이 권한을 사용하여 사적인 앱 정보에 접근할 수 있으니 주의하세요.</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">충돌 로그 링크 복사</string>
+   <string name="url_copy_success">링크가 성공적으로 복사되었습니다</string>
+   <string name="url_copy_failed">Dogbin에 로그를 업로드하는 중 에러가 발생했습니다</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">지금 재생 중</string>
+   <string name="ambient_recognition_information">%2$s님의 %1$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">네비게이션 바 편집</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">앱의 네비게이션 바 편집을 허용합니다.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">글꼴 관리자 액세스</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">앱에서 글꼴 관리자 접근을 허용합니다.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">설치한 글꼴 패키지 파일에 fonts.xml이 누락되어 호환되지 않습니다. 패키지 개발자에게 문의하십시오.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">부트로더로 재시작</string>
+   <string name="reboot_to_bootloader_message">부트로더 모드로 다시 시작하는 중\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">복구 모드로 다시 시작</string>
+   <string name="reboot_to_recovery_message">복구 모드로 다시 시작하는 중\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">시스템 재시작</string>
+   <string name="reboot_system_message">시스템 재시작 중</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">페이드</string>
+   <string name="animation_slide_right">오른쪽으로 밀기</string>
+   <string name="animation_slide_left">왼쪽으로 슬라이드</string>
+   <string name="animation_slide_right_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
+   <string name="animation_slide_left_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
+   <string name="animation_slide_up">밑에서 슬라이드</string>
+   <string name="animation_slide_down">위에서 슬라이드</string>
+   <string name="animation_default">기본값</string>
+   <string name="animation_translucent">반투명 효과</string>
+   <string name="animation_grow_shrink">커지기 (상단에서)</string>
+   <string name="animation_grow_shrink_center">커지기 (중앙에서)</string>
+   <string name="animation_grow_shrink_bottom">커지기 (밑에서)</string>
+   <string name="animation_grow_shrink_left">커지기 (왼쪽에서)</string>
+   <string name="animation_grow_shrink_right">커지기 (오른쪽에서)</string>
+   <string name="animation_random">임의</string>
+   <string name="action_null">빈</string>
+   <string name="default_string">기본값</string>
 </resources>

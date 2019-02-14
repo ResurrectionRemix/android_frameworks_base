@@ -122,11 +122,51 @@
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Povoliť Smart Pixels automaticky</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">Režim na cestách aktivovaný</string>
+    <string name="onthego_notif_title">Režim na cestách je aktívny</string>
+    <string name="onthego_notif_stop">Zastaviť</string>
+    <string name="onthego_notif_options">Nastavenia</string>
+    <string name="onthego_notif_error">Nepodarilo sa spustiť Režim na cestách</string>
+    <string name="onthego_notif_restart">Reštartovať režim na cestách</string>
+    <string name="onthego_notif_camera_changed">Režim fotoaparátu bol zmenený</string>
+    <string name="onthego_transparency">Priehľadnosť</string>
+    <string name="onthego_front_camera">Použiť prednú kameru</string>
+    <string name="onthego_service_toggle">Automaticky reštartovať službu</string>
+    <string name="onthego_channel_name">Hlavné</string>
+    <string name="global_action_onthego">Režim na cestách</string>
+    <string name="omnijaws_service_error">Chyba</string>
+    <string name="omnijaws_service_unkown">Žiadne údaje o počasí</string>
+    <string name="omnijaws_service_error_long">Chyba pri načítavaní údajov o počasí</string>
+    <string name="omnijaws_service_disabled">Služba je vypnutá</string>
+    <string name="omnijaws_detail_header">Počasie</string>
+    <string name="omnijaws_label_default">Počasie</string>
+    <string name="omnijaws_current_text">Teraz</string>
+    <string name="omnijaws_package_not_available">OmniJaws nie je k dispozícii</string>
+    <string name="omnijaws_service_last_update">Posledná aktualizácia:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Herný režim</string>
+    <string name="gaming_mode_tile_toast">Herný režim povolený</string>
+    <string name="gaming_mode_tile_toast_disabled">Herný režim zakázaný</string>
+    <string name="gaming_mode_dialog_title">Herný režim</string>
+    <string name="gaming_mode_dialog_message">Ak je herný režim povolený, zvonenie sa zmení na vibrácie, všetky plávajúce správy budú deaktivované a hardvérové tlačidlá budú vypnuté. Hlasitosť médií sa zvýši na maximálnu hodnotu. Po ukončení herného režimu budú všetky deaktivované nastavenia obnovené na predvolené.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Herný režim zapnutý</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Herný režim vypnutý</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Reštartovať\u2026</string>
+    <string name="global_action_reboot_sub">Systém</string>
+    <string name="global_action_reboot_bootloader">Bootloader</string>
+    <string name="global_action_reboot_systemui">SystemUI</string>
+    <string name="global_action_dismissable_dialog_text">Rozšírený reštart je zakázaný.\nChcete reštartovať\u003f</string>
+    <string name="global_action_dnaa">Už nezobrazovať</string>
+    <string name="global_action_settings">Nastavenia</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Snímka obrazovky</string>
+    <string name="global_action_screenrecord">Záznam obrazovky</string>
+    <string name="global_action_flashlight">Baterka</string>
+    <!-- Advance location quick setting tile -->
 </resources>

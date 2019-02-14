@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Képernyőmentés</string>
     <string name="global_action_screenrecord">Képernyőfelvétel</string>
     <string name="global_action_flashlight">Zseblámpa</string>
+    <!-- Advance location quick setting tile -->
 </resources>

@@ -19,30 +19,154 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE 켜짐 </string>
+    <string name="lte_off">LTE 꺼짐</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">스크린샷</string>
+    <string name="quick_settings_region_screenshot_label">부분 스크린샷</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 알림 엿보기를 1분동안 중지합니다.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • 알림 엿보기를 <xliff:g id="number">%d </xliff:g> 분간 중지합니다.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">화면 녹화중...</string>
+    <string name="screenrecord_notif_final_ticker">화면이 성공적으로 녹화되었습니다</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">화면 녹화 중</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">중지</string>
+    <string name="screenrecord_notif_completed">화면 녹화 성공</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">포인터 표시</string>
+    <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">화면을 녹화할 수 없음</string>
+    <string name="notification_channel_screenrecord">화면 녹화</string>
+    <string name="screenrecord_hide_hint">힌트 숨기기</string>
+    <string name="screenrecord_show_hint">힌트 보기</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">화면녹화</string>
+    <string name="quick_settings_screenrecord_lq_label">화면 녹화 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">화면 녹화 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">화면녹화 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">스크린샷 지워짐</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">고속 충전중 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 후에 충전 완료)</string>
+    <string name="keyguard_plugged_in_dash_charging">Dash 충전중</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower 연결됨 (<xliff:g id="charging_time_left">%s</xliff:g> 후 충전 완료)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 연결됨</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">컬럼</string>
+    <string name="qs_menu_item_columns_landscape">가로 모드 행</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">초기화</string>
+    <string name="qs_menu_item_titles">라벨 보이기</string>
+    <string name="qs_menu_item_rows">열</string>
+    <string name="qs_menu_item_rows_landscape">가로 모드 열</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">미리보기</string>
+    <string name="keycode">키 코드</string>
+    <string name="no_home_title">홈 버튼을 찾지 못했습니다</string>
+    <string name="no_home_message">이 기기를 탐색하려면 홈 버튼을 사용해야 합니다. 홈 버튼을 추가한 다음 저장하세요.</string>
+    <string name="clipboard_description">클립보드를 사용하면 항목을 클립보드로 바로 드래그할 수 있습니다. 또한 발표 시 항목을 클립보드 밖으로 바로 드래그할 수도 있습니다.</string>
+    <string name="keycode_description">키 코드 버튼을 사용하면 키보드 키를 네비게이션 바에 추가할 수 있습니다. 설정된 키 코드 버튼을 누르면 키보드 키가 에뮬레이션됩니다. 먼저 버튼에 할당할 키를 선택하고 그 다음 버튼에 표시될 이미지를 선택해야 합니다.</string>
+    <string name="start">시작</string>
+    <string name="center">가운데</string>
+    <string name="end">끝</string>
+    <string name="space">공백</string>
+    <string name="menu_ime">메뉴 / 키보드 선택기</string>
+    <string name="select_button">추가할 버튼 선택</string>
+    <string name="add_button">버튼 추가</string>
+    <string name="save">저장</string>
+    <string name="reset">초기화</string>
+    <string name="select_keycode">키보드 버튼 선택</string>
+    <string name="left">왼쪽</string>
+    <string name="right">오른쪽</string>
+    <string name="navbar_editor_title">편집기</string>
+    <string name="navbar_editor_summary">내비게이션 바 설정</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">메뉴 / 키보드 선택기 (항상 표시)</string>
+    <string name="search">검색</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">상태 표시줄 항목</string>
+    <string name="statusbar_icons_blacklist">상태표시줄 아이콘</string>
+    <string name="navbar_tuner_activity">내비게이션 바 버튼</string>
+    <string name="lockscreen_tuner_activity">잠금화면 바로 가기</string>
+    <string name="powernotif_tuner_activity">전원 알림</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">LTE 대신 4G 표시</string>
+    <string name="global_action_reboot_recovery">복구 모드</string>
+    <string name="global_action_reboot">다시 시작</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">요일, 날짜 월 년</string>
+    <string name="pie_hour_format_12">시:분</string>
+    <string name="pie_hour_format_24">시:분</string>
+    <string name="pie_am_pm">오전</string>
+    <string name="pie_state_name">파이 컨트롤</string>
+    <string name="pie_state_summary">Immersive 모드에서 Pie 컨트롤 사용</string>
+    <string name="pie_battery_level">"배터리 잔량 "</string>
+    <string name="quick_settings_pie">Pie 컨트롤</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">스마트 픽셀</string>
+    <string name="quick_settings_smart_pixels_on_power_save">스마트 픽셀 자동으로 켜기</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go 모드 활성화됨</string>
+    <string name="onthego_notif_title">On-The-Go 모드가 활성화 되었습니다</string>
+    <string name="onthego_notif_stop">중지</string>
+    <string name="onthego_notif_options">옵션</string>
+    <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없습니다.</string>
+    <string name="onthego_notif_restart">On-The-Go 모드 다시 시작</string>
+    <string name="onthego_notif_camera_changed">카메라 모드 변경됨</string>
+    <string name="onthego_transparency">투명도</string>
+    <string name="onthego_front_camera">전면 카메라 사용</string>
+    <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
+    <string name="onthego_channel_name">메인</string>
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="omnijaws_service_error">오류</string>
+    <string name="omnijaws_service_unkown">날씨 데이터 없음</string>
+    <string name="omnijaws_service_error_long">날씨 정보 불러오기 오류</string>
+    <string name="omnijaws_service_disabled">서비스 사용 중지됨</string>
+    <string name="omnijaws_detail_header">날씨</string>
+    <string name="omnijaws_label_default">날씨</string>
+    <string name="omnijaws_current_text">현재</string>
+    <string name="omnijaws_package_not_available">OmniJaws를 사용할 수 없음</string>
+    <string name="omnijaws_service_last_update">- 마지막 업데이트:</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">게이밍 모드</string>
+    <string name="gaming_mode_tile_toast">게이밍 모드 활성화됨</string>
+    <string name="gaming_mode_tile_toast_disabled">게이밍 모드 비활성화됨</string>
+    <string name="gaming_mode_dialog_title">게이밍 모드</string>
+    <string name="gaming_mode_dialog_message">게이밍 모드가 활성화되면 알림은 진동으로 설정되며 하드웨어 키는 비활성화 됩니다. 미디어 음량은 최대로 바뀌며 이 설정은 게이밍 모드를 비활성화할 때까지 유지됩니다.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">게이밍 모드 사용</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">게이밍 모드 사용 안함</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">재시작\u2026</string>
+    <string name="global_action_reboot_sub">시스템</string>
+    <string name="global_action_reboot_bootloader">부트로더</string>
+    <string name="global_action_reboot_systemui">시스템UI</string>
+    <string name="global_action_dismissable_dialog_text">고급재부팅이 꺼져있습니다.\n재부팅하겠습니까?\u003f</string>
+    <string name="global_action_dnaa">다시 표시하지 않기</string>
+    <string name="global_action_settings">세팅</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">스크린샷</string>
+    <string name="global_action_screenrecord">화면녹화</string>
+    <string name="global_action_flashlight">플래시</string>
+    <!-- Advance location quick setting tile -->
 </resources>

@@ -14,17 +14,52 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">欺騙應用程式簽名</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">允許應用程式偽裝成不同的簽名。有害的應用程式可能會使用這個功能來存取私人的應用程式資料，授予此權限時請小心！</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">複製崩潰日誌連接</string>
+   <string name="url_copy_success">連接已被成功複製</string>
+   <string name="url_copy_failed">上傳崩潰日誌至 Dogbin 時發生錯誤</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">現正播放</string>
+   <string name="ambient_recognition_information">%2$s 由 %1$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">控制導覽列編輯器</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">允許應用程式控制導覽列編輯器。</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">存取字型管理員</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">允許應用程式存取字型管理員。</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">您安裝的字體包由於缺少 Fonts.xml 而不相容。請與字體包開發者取得聯繫以尋求幫助</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">重啟至 Bootloader</string>
+   <string name="reboot_to_bootloader_message">重新啟動至 Bootloader 模式</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">重啟至 Recovery</string>
+   <string name="reboot_to_recovery_message">重新啟動至 Recovery 模式</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">重新啟動系統</string>
+   <string name="reboot_system_message">正在重新啟動系統\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">淡出</string>
+   <string name="animation_slide_right">向右滑動</string>
+   <string name="animation_slide_left">向左滑動</string>
+   <string name="animation_slide_right_no_fade">向右滑動(無淡出)</string>
+   <string name="animation_slide_left_no_fade">向左滑動(無淡出)</string>
+   <string name="animation_slide_up">向下滑動</string>
+   <string name="animation_slide_down">向上滑動</string>
+   <string name="animation_default">預設</string>
+   <string name="animation_translucent">半透明</string>
+   <string name="animation_grow_shrink">縮放 (頂端)</string>
+   <string name="animation_grow_shrink_center">縮放 (中央)</string>
+   <string name="animation_grow_shrink_bottom">縮放 (底部)</string>
+   <string name="animation_grow_shrink_left">縮放 (左側)</string>
+   <string name="animation_grow_shrink_right">縮放 (右側)</string>
+   <string name="animation_random">隨機</string>
+   <string name="action_null">空白</string>
+   <string name="default_string">預設</string>
 </resources>

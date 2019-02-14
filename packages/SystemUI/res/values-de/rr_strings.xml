@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Bildschirmfoto</string>
     <string name="global_action_screenrecord">Bildschirmaufnahme</string>
     <string name="global_action_flashlight">Taschenlampe</string>
+    <!-- Advance location quick setting tile -->
 </resources>

@@ -106,7 +106,7 @@
     <string name="lockscreen_tuner_activity">锁屏界面快捷方式</string>
     <string name="powernotif_tuner_activity">电量通知</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">显示 4G，而不是 LTE</string>
+    <string name="show_fourg_title">使用 4G 图标替代 LTE 图标</string>
     <string name="global_action_reboot_recovery">恢复模式</string>
     <string name="global_action_reboot">重新启动</string>
     <!-- Pie controls -->
@@ -154,7 +154,7 @@
     <string name="accessibility_quick_settings_gaming_mode_on">游戏模式开启</string>
     <string name="accessibility_quick_settings_gaming_mode_off">游戏模式关闭</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">正在重新启动\u2026</string>
+    <string name="global_action_reboot_more">重新启动\u2026</string>
     <string name="global_action_reboot_sub">系统</string>
     <string name="global_action_reboot_bootloader">引导程序</string>
     <string name="global_action_reboot_systemui">系统界面</string>
@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">屏幕截图</string>
     <string name="global_action_screenrecord">屏幕录制</string>
     <string name="global_action_flashlight">手电筒</string>
+    <!-- Advance location quick setting tile -->
 </resources>

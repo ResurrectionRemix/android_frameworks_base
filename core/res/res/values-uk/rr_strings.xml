@@ -18,24 +18,47 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Дозволяти програмі видавати себе за іншу програму. Небезпечні програми можуть отримати доступ до приватних даних користувача. Будьте обережні під час надання цього дозволу!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Копіювати URL логу збою</string>
+   <string name="aerr_copy">Копіювати URL звіту про помилку</string>
    <string name="url_copy_success">URL успішно скопійовано</string>
    <string name="url_copy_failed">Під час завантаження логу на сервіс dogbin відбулася помилка</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Зараз грає</string>
    <string name="ambient_recognition_information">%1$s від %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">керування редактором панелі навігації</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Дозволяє додатку контролювати редактор панелі навігації.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">доступ до менеджера шрифтів</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Дозволяє програмі отримувати доступ до менеджеру шрифтів.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Пакет шрифтів, який ви встановили, не сумісний через відсутність файлів fonts.xml. Зверніться до розробника пакету для підтримки.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Перезавантажитись у Bootloader</string>
+   <string name="reboot_to_bootloader_message">Перезавантаження у Bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Перевантажитися у Recovery</string>
+   <string name="reboot_to_recovery_message">Перезавантаження у Recovery\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Перезапустити систему</string>
+   <string name="reboot_system_message">Перезавантаження системи\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Блякнути</string>
+   <string name="animation_slide_right">Зсув праворуч</string>
+   <string name="animation_slide_left">Зсув ліворуч</string>
+   <string name="animation_slide_right_no_fade">Зсув праворуч (без згасання)</string>
+   <string name="animation_slide_left_no_fade">Зсув ліворуч (без згасання)</string>
+   <string name="animation_slide_up">Зсунути вниз</string>
+   <string name="animation_slide_down">Зсунути вверх</string>
+   <string name="animation_default">За замовчуванням</string>
+   <string name="animation_translucent">Напівпрозорий</string>
+   <string name="animation_grow_shrink">Збільшення (зверху)</string>
+   <string name="animation_grow_shrink_center">Збільшення (всередину)</string>
+   <string name="animation_grow_shrink_bottom">Збільшення (знизу)</string>
+   <string name="animation_grow_shrink_left">Збільшення (ліворуч)</string>
+   <string name="animation_grow_shrink_right">Збільшення (праворуч)</string>
    <string name="animation_random">Випадково</string>
    <string name="action_null">Пусто</string>
    <string name="default_string">За замовчуванням</string>

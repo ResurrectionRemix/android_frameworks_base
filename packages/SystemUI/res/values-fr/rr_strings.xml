@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Capture d\'écran</string>
     <string name="global_action_screenrecord">Enregistrement de l\'écran</string>
     <string name="global_action_flashlight">Lampe de poche</string>
+    <!-- Advance location quick setting tile -->
 </resources>

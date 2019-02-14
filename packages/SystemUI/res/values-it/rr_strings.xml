@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Screenshot</string>
     <string name="global_action_screenrecord">Registra schermo</string>
     <string name="global_action_flashlight">Torcia</string>
+    <!-- Advance location quick setting tile -->
 </resources>

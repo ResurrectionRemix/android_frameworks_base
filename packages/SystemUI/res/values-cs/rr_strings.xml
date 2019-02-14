@@ -168,4 +168,5 @@
     <string name="global_action_screenshot">Snímek obrazovky</string>
     <string name="global_action_screenrecord">Záznam obrazovky</string>
     <string name="global_action_flashlight">Svítilna</string>
+    <!-- Advance location quick setting tile -->
 </resources>

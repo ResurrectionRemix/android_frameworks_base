@@ -26,6 +26,8 @@
     <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
     <string name="quick_settings_region_screenshot_label">區域螢幕擷取</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 顯示預覽通知會暫停 1 分鐘。</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 顯示預覽通知會暫停 <xliff:g id="number">%d</xliff:g> 分鐘。</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">開始錄製畫面</string>
     <string name="screenrecord_notif_final_ticker">畫面已錄製</string>
@@ -84,27 +86,75 @@
     <string name="center">中央</string>
     <string name="end">結束</string>
     <string name="space">間隔</string>
+    <string name="menu_ime">功能表/鍵盤切換器</string>
+    <string name="select_button">選取要新增的按鈕</string>
+    <string name="add_button">新增按鈕</string>
+    <string name="save">儲存</string>
+    <string name="reset">重設</string>
+    <string name="select_keycode">選擇鍵盤按鈕</string>
+    <string name="left">靠左</string>
+    <string name="right">靠右</string>
+    <string name="navbar_editor_title">編輯器</string>
+    <string name="navbar_editor_summary">配置導覽列</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">選單 / 鍵盤切換器 (一律顯示)</string>
+    <string name="search">搜尋</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">狀態列圖示</string>
+    <string name="statusbar_icons_blacklist">狀態列圖示</string>
+    <string name="navbar_tuner_activity">導覽列按鈕</string>
+    <string name="lockscreen_tuner_activity">鎖定螢幕捷徑</string>
+    <string name="powernotif_tuner_activity">電源通知</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">顯示 4G 而非 LTE</string>
+    <string name="global_action_reboot_recovery">Recovery 模式</string>
+    <string name="global_action_reboot">重新啟動</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">Yyyy MMMM dd, EEEE</string>
+    <string name="pie_hour_format_12">小時:分鐘</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">上午</string>
+    <string name="pie_state_name">扇形控制</string>
     <string name="pie_state_summary">在全螢幕模式中使用扇形導航列</string>
+    <string name="pie_battery_level">"電池電量 "</string>
+    <string name="quick_settings_pie">扇形控制</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">智慧像素</string>
+    <string name="quick_settings_smart_pixels_on_power_save">自動啟用智慧像素</string>
     <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go 已啟動</string>
+    <string name="onthego_notif_title">On-The-Go 處於啟動狀態</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">選項</string>
+    <string name="onthego_notif_error">無法啟動 On-The-Go</string>
+    <string name="onthego_notif_restart">重新啟動 On-The-Go</string>
     <string name="onthego_notif_camera_changed">相機模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置鏡頭</string>
+    <string name="onthego_service_toggle">自動重新啟動服務</string>
+    <string name="onthego_channel_name">主要</string>
+    <string name="global_action_onthego">行走模式</string>
+    <string name="omnijaws_service_error">錯誤</string>
+    <string name="omnijaws_service_unkown">沒有天氣資料</string>
+    <string name="omnijaws_service_error_long">載入天氣資訊時錯誤</string>
+    <string name="omnijaws_service_disabled">服務已停用</string>
+    <string name="omnijaws_detail_header">天氣</string>
+    <string name="omnijaws_label_default">天氣</string>
     <string name="omnijaws_current_text">立刻</string>
     <string name="omnijaws_package_not_available">OmniJaws 無法使用</string>
     <string name="omnijaws_service_last_update">上次更新：</string>
     <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">遊戲模式</string>
     <string name="gaming_mode_tile_toast">遊戲模式已啟用</string>
     <string name="gaming_mode_tile_toast_disabled">遊戲模式已停用</string>
     <string name="gaming_mode_dialog_title">遊戲模式</string>
-    <string name="gaming_mode_dialog_message">啟用遊戲模式後，響鈴模式將被調整為震動模式，抬頭顯示及硬體導覽列將被停用。媒體音量會被調整至最大值。所有被更改的設定都會在離開遊戲模式後還原。</string>
+    <string name="gaming_mode_dialog_message">當啟用遊戲模式，響鈴模式將被調整為震動模式，抬頭顯示及硬體導覽列將被停用。媒體音量會被調整至最大值。所有被更改的設定都會在離開遊戲模式後還原。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">遊戲模式已開啟</string>
     <string name="accessibility_quick_settings_gaming_mode_off">遊戲模式已關閉</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">重新啟動\u2026</string>
     <string name="global_action_reboot_sub">系統</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
     <string name="global_action_reboot_systemui">系統使用者介面</string>
@@ -118,4 +168,5 @@
     <string name="global_action_screenshot">螢幕截圖</string>
     <string name="global_action_screenrecord">螢幕錄影</string>
     <string name="global_action_flashlight">手電筒</string>
+    <!-- Advance location quick setting tile -->
 </resources>
