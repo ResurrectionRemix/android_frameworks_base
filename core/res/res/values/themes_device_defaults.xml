@@ -816,6 +816,7 @@ easier.
         <item name="buttonStyleToggle">@style/Widget.DeviceDefault.Light.Button.Toggle</item>
 
         <item name="borderlessButtonStyle">@style/Widget.DeviceDefault.Light.Button.Borderless</item>
+        <item name="switchStyle">@style/Widget.DeviceDefault.CompoundButton.Switch</item>
 
         <item name="listSeparatorTextViewStyle">@style/Widget.DeviceDefault.Light.TextView.ListSeparator</item>
 
@@ -1486,9 +1487,12 @@ easier.
         <!-- Button styles -->
         <item name="buttonCornerRadius">@dimen/config_buttonCornerRadius</item>
         <item name="buttonBarButtonStyle">@style/Widget.DeviceDefault.Button.ButtonBar.AlertDialog</item>
+        <item name="switchStyle">@style/Widget.DeviceDefault.CompoundButton.Switch</item>
 
         <!-- Progress bar attributes -->
         <item name="progressBarCornerRadius">@dimen/config_progressBarCornerRadius</item>
+        <item name="progressBarStyleHorizontal">@style/Widget.DeviceDefault.Light.ProgressBar.Horizontal</item>
+        <item name="seekBarStyle">@style/Widget.DeviceDefault.Light.SeekBar</item>
 
         <item name="colorListDivider">@color/list_divider_color_light</item>
         <item name="opacityListDivider">@color/list_divider_opacity_device_default_light</item>

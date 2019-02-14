@@ -38,6 +38,7 @@ easier.
     <style name="Widget.DeviceDefault.Button.Inset" parent="Widget.Material.Button.Inset"/>
     <style name="Widget.DeviceDefault.Button.Toggle" parent="Widget.Material.Button.Toggle"/>
     <style name="Widget.DeviceDefault.Button.Colored" parent="Widget.Material.Button.Colored">
+        <item name="background">@drawable/x_btn_colored_material</item>
         <item name="outlineAmbientShadowColor">@color/btn_colored_background_material</item>
         <item name="outlineSpotShadowColor">@color/btn_colored_background_material</item>
         <item name="textAppearance">?attr/textAppearanceButton</item>
@@ -55,11 +56,17 @@ easier.
     <style name="Widget.DeviceDefault.ListView" parent="Widget.Material.ListView"/>
     <style name="Widget.DeviceDefault.PopupWindow" parent="Widget.Material.PopupWindow"/>
     <style name="Widget.DeviceDefault.ProgressBar" parent="Widget.Material.ProgressBar"/>
-    <style name="Widget.DeviceDefault.ProgressBar.Horizontal" parent="Widget.Material.ProgressBar.Horizontal"/>
+    <style name="Widget.DeviceDefault.ProgressBar.Horizontal" parent="Widget.Material.ProgressBar.Horizontal">
+        <item name="progressDrawable">@drawable/x_progress_horizontal_material</item>
+        <item name="indeterminateDrawable">@drawable/x_progress_horizontal_material</item>
+    </style>
     <style name="Widget.DeviceDefault.ProgressBar.Small" parent="Widget.Material.ProgressBar.Small"/>
     <style name="Widget.DeviceDefault.ProgressBar.Small.Title" parent="Widget.Material.ProgressBar.Small.Title"/>
     <style name="Widget.DeviceDefault.ProgressBar.Large" parent="Widget.Material.ProgressBar.Large"/>
-    <style name="Widget.DeviceDefault.SeekBar" parent="Widget.Material.SeekBar"/>
+    <style name="Widget.DeviceDefault.SeekBar" parent="Widget.Material.SeekBar">
+        <item name="progressDrawable">@drawable/x_seekbar_track_material</item>
+        <item name="indeterminateDrawable">@drawable/x_seekbar_track_material</item>
+    </style>
     <style name="Widget.DeviceDefault.RatingBar" parent="Widget.Material.RatingBar"/>
     <style name="Widget.DeviceDefault.RatingBar.Indicator" parent="Widget.Material.RatingBar.Indicator"/>
     <style name="Widget.DeviceDefault.RatingBar.Small" parent="Widget.Material.RatingBar.Small"/>
@@ -127,6 +134,8 @@ easier.
     <style name="Widget.DeviceDefault.PopupWindow.ActionMode" parent="Widget.Material.PopupWindow.ActionMode"/>
     <style name="Widget.DeviceDefault.CompoundButton.Switch" parent="Widget.Material.CompoundButton.Switch">
         <item name="switchTextAppearance">@style/TextAppearance.DeviceDefault.Widget.Switch</item>
+        <item name="track">@drawable/x_switch_track_material</item>
+        <item name="thumb">@drawable/x_switch_thumb_material_anim</item>
     </style>
     <style name="Widget.DeviceDefault.ExpandableListView.White" parent="Widget.Material.ExpandableListView.White"/>
     <style name="Widget.DeviceDefault.FastScroll" parent="Widget.Material.FastScroll"/>
@@ -189,14 +198,20 @@ easier.
     <style name="Widget.DeviceDefault.Light.MediaRouteButton" parent="Widget.Material.Light.MediaRouteButton" />
     <style name="Widget.DeviceDefault.Light.PopupWindow" parent="Widget.Material.Light.PopupWindow"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar" parent="Widget.Material.Light.ProgressBar"/>
-    <style name="Widget.DeviceDefault.Light.ProgressBar.Horizontal" parent="Widget.Material.Light.ProgressBar.Horizontal"/>
+    <style name="Widget.DeviceDefault.Light.ProgressBar.Horizontal" parent="Widget.Material.Light.ProgressBar.Horizontal">
+        <item name="progressDrawable">@drawable/x_progress_horizontal_material</item>
+        <item name="indeterminateDrawable">@drawable/x_progress_horizontal_material</item>
+    </style>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Small" parent="Widget.Material.Light.ProgressBar.Small"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Small.Title" parent="Widget.Material.Light.ProgressBar.Small.Title"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Large" parent="Widget.Material.Light.ProgressBar.Large"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Inverse" parent="Widget.Material.Light.ProgressBar.Inverse"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Small.Inverse" parent="Widget.Material.Light.ProgressBar.Small.Inverse"/>
     <style name="Widget.DeviceDefault.Light.ProgressBar.Large.Inverse" parent="Widget.Material.Light.ProgressBar.Large.Inverse"/>
-    <style name="Widget.DeviceDefault.Light.SeekBar" parent="Widget.Material.Light.SeekBar"/>
+    <style name="Widget.DeviceDefault.Light.SeekBar" parent="Widget.Material.Light.SeekBar">
+        <item name="progressDrawable">@drawable/x_seekbar_track_material</item>
+        <item name="indeterminateDrawable">@drawable/x_seekbar_track_material</item>
+    </style>
     <style name="Widget.DeviceDefault.Light.RatingBar" parent="Widget.Material.Light.RatingBar"/>
     <style name="Widget.DeviceDefault.Light.RatingBar.Indicator" parent="Widget.Material.Light.RatingBar.Indicator"/>
     <style name="Widget.DeviceDefault.Light.RatingBar.Small" parent="Widget.Material.Light.RatingBar.Small"/>

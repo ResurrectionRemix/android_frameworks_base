@@ -1814,8 +1814,10 @@ public class VolumeDialogImpl implements VolumeDialog,
                         SLIDER_PROGRESS_ALPHA_ACTIVE_DARK : SLIDER_PROGRESS_ALPHA_ACTIVE)
                 : Utils.getColorAccent(mContext).withAlpha(mDarkMode ?
                         SLIDER_PROGRESS_ALPHA_DARK : SLIDER_PROGRESS_ALPHA);
+        final ColorStateList progressTint = useActiveColoring ? null : tint;
         if (tint == row.cachedTint) return;
-        row.slider.setProgressTintList(tint);
+        //row.slider.setProgressTintList(tint);
+        row.slider.setProgressTintList(progressTint);
         row.cachedTint = tint;
     }
 
