@@ -7089,6 +7089,19 @@ public final class Settings {
         public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
 
         /**
+         * Launch custom application when home key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_HOME_LONG_PRESS_CUSTOM_APP = "key_home_long_press_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * home key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_HOME_LONG_PRESS_CUSTOM_APP_FR_NAME = "key_home_long_press_custom_app_fr_name";
+
+        /**
          * Action to perform when the home key is double-tapped.
          * (Default can be configured via config_doubleTapOnHardwareHomeBehavior)
          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
@@ -7096,6 +7109,18 @@ public final class Settings {
          */
         public static final String KEY_HOME_DOUBLE_TAP_ACTION = "key_home_double_tap_action";
 
+        /**
+         * Launch custom application when home key is double-tapped.
+         * @hide
+         */
+        public static final String KEY_HOME_DOUBLE_TAP_CUSTOM_APP = "key_home_double_tap_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * home key is double-tapped.
+         * @hide
+         */
+        public static final String KEY_HOME_DOUBLE_TAP_CUSTOM_APP_FR_NAME = "key_home_double_tap_custom_app_fr_name";
 
         /**
          * Action to perform when the menu key is long-pressed.
@@ -7114,12 +7139,38 @@ public final class Settings {
         public static final String KEY_MENU_DOUBLE_TAP_ACTION = "key_menu_double_tap_action";
 
         /**
+         * Launch custom application when back key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_BACK_LONG_PRESS_CUSTOM_APP = "key_back_long_press_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * back key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_BACK_LONG_PRESS_CUSTOM_APP_FR_NAME = "key_back_long_press_custom_app_fr_name";
+
+        /**
          * Action to perform when the back key is long-pressed.
          * (Default can be configured via config_longPressOnHardwareBackBehavior)
          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
          * @hide
          */
         public static final String KEY_BACK_LONG_PRESS_ACTION = "key_back_long_press_action";
+
+        /**
+         * Launch custom application when back key is double tapped.
+         * @hide
+         */
+        public static final String KEY_BACK_DOUBLE_TAP_CUSTOM_APP = "key_back_double_tap_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * back key is double-tapped.
+         * @hide
+         */
+        public static final String KEY_BACK_DOUBLE_TAP_CUSTOM_APP_FR_NAME = "key_back_double_tap_custom_app_fr_name";
 
         /**
          * Action to perform when the back key is double-tapped.
@@ -7154,12 +7205,40 @@ public final class Settings {
         public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
 
         /**
+         * Launch custom application when app switch key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_LONG_PRESS_CUSTOM_APP = "key_app_switch_long_press_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * app switch key is long-pressed.
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_LONG_PRESS_CUSTOM_APP_FR_NAME =
+                "key_app_switch_long_press_custom_app_fr_name";
+
+        /**
          * Action to perform when the app switch key is double-tapped.
          * (Default can be configured via config_doubleTapOnHardwareAppSwitchBehavior)
          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
          * @hide
          */
         public static final String KEY_APP_SWITCH_DOUBLE_TAP_ACTION = "key_app_switch_double_tap_action";
+
+        /**
+         * Launch custom application when app switch key is double-tapped.
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_DOUBLE_TAP_CUSTOM_APP = "key_app_switch_double_tap_custom_app";
+
+        /**
+         * Display friendly name of custom application launched when
+         * app switch key is double-tapped.
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_DOUBLE_TAP_CUSTOM_APP_FR_NAME =
+                "key_app_switch_double_tap_custom_app_fr_name";
 
         /**
          * Action to perform when the app switch key is long-pressed.

@@ -6792,7 +6792,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         int longPressBehavior = NavbarUtilities.getKeyLongPressBehavior(keyCode);
         if (longPressBehavior != NavbarUtilities.KEY_ACTION_NOTHING) {
             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false, "");
-            runBehaviorAction(keyCode, longPressBehavior);
+            runLongPressBehaviorAction(keyCode, longPressBehavior);
         }
     }
 
@@ -6803,7 +6803,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void handleDoubleTapOnKeyCode(int keyCode) {
         int doubleTapBehavior = NavbarUtilities.getKeyDoubleTapBehavior(keyCode);
         if (doubleTapBehavior != NavbarUtilities.KEY_ACTION_NOTHING) {
-            runBehaviorAction(keyCode, doubleTapBehavior);
+            runDoubleTapBehaviorAction(keyCode, doubleTapBehavior);
         }
     }
 
@@ -6868,7 +6868,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      * @param keyCode the KeyEvent key code.
      * @param behavior the user selected behavior.
      */
-    private void runBehaviorAction(int keyCode, int behavior) {
+    private void runLongPressBehaviorAction(int keyCode, int behavior) {
         switch(behavior) {
             case NavbarUtilities.KEY_ACTION_NOTHING:
                 break;
@@ -6901,7 +6901,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 NavbarUtilities.toggleSplitScreen();
                 break;
             case NavbarUtilities.KEY_ACTION_FLASHLIGHT:
-                ActionUtils.toggleFlashLight();
+                 ActionUtils.toggleCameraFlash();
                 break;
             case NavbarUtilities.KEY_ACTION_CLEAR_NOTIFICATIONS:
                 ActionUtils.toggleClearNotifications();
@@ -6923,6 +6923,105 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case NavbarUtilities.KEY_ACTION_QS_PANEL:
                 ActionUtils.toggleQsPanel();
+                break;
+            case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_HOME:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_HOME_LONG_PRESS_CUSTOM_APP);
+                        break;
+                    case KeyEvent.KEYCODE_BACK:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_BACK_LONG_PRESS_CUSTOM_APP);
+                        break;
+                    case KeyEvent.KEYCODE_APP_SWITCH:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_APP_SWITCH_LONG_PRESS_CUSTOM_APP);
+                        break;
+                }
+                break;
+            case NavbarUtilities.KEY_ACTION_RINGER_MODES:
+                ActionUtils.toggleRingerModes(mContext);
+                break;
+        }
+    }
+
+    /**
+     * Execute key code action based on behavior.
+     * @param keyCode the KeyEvent key code.
+     * @param behavior the user selected behavior.
+     */
+    private void runDoubleTapBehaviorAction(int keyCode, int behavior) {
+        switch(behavior) {
+            case NavbarUtilities.KEY_ACTION_NOTHING:
+                break;
+            case NavbarUtilities.KEY_ACTION_HOME:
+                launchHomeFromHotKey(DEFAULT_DISPLAY);
+                break;
+            case NavbarUtilities.KEY_ACTION_MENU:
+                triggerVirtualKeypress(KeyEvent.KEYCODE_MENU, false, false);
+                break;
+            case NavbarUtilities.KEY_ACTION_BACK:
+            case NavbarUtilities.KEY_ACTION_APP_SWITCH:
+                toggleRecentApps();
+                break;
+            case NavbarUtilities.KEY_ACTION_SEARCH:
+                launchAssistAction(null, -1);
+                break;
+            case NavbarUtilities.KEY_ACTION_VOICE_SEARCH:
+                launchAssistLongPressAction(false, false);
+                break;
+            case NavbarUtilities.KEY_ACTION_CAMERA:
+                sendCloseSystemWindows();
+                NavbarUtilities.launchCamera();
+                break;
+            case NavbarUtilities.KEY_ACTION_LAST_APP:
+                awakenDreams();
+                // TODO> handle no recent apps
+                triggerVirtualKeypress(KeyEvent.KEYCODE_APP_SWITCH, !mRecentsVisible, false);
+                break;
+            case NavbarUtilities.KEY_ACTION_SPLIT_SCREEN:
+                NavbarUtilities.toggleSplitScreen();
+                break;
+            case NavbarUtilities.KEY_ACTION_FLASHLIGHT:
+                ActionUtils.toggleCameraFlash();
+                break;
+            case NavbarUtilities.KEY_ACTION_CLEAR_NOTIFICATIONS:
+                ActionUtils.clearAllNotifications();
+                break;
+            case NavbarUtilities.KEY_ACTION_VOLUME_PANEL:
+                ActionUtils.toggleVolumePanel(mContext);
+                break;
+            case NavbarUtilities.KEY_ACTION_SCREEN_OFF:
+                ActionUtils.switchScreenOff(mContext);
+                break;
+            case NavbarUtilities.KEY_ACTION_NOTIFICATIONS:
+                ActionUtils.toggleNotifications();
+                break;
+            case NavbarUtilities.KEY_ACTION_POWER_MENU:
+                triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
+                break;
+            case NavbarUtilities.KEY_ACTION_SCREENSHOT:
+                ActionUtils.takeScreenshot(true);
+                break;
+            case NavbarUtilities.KEY_ACTION_QS_PANEL:
+                ActionUtils.toggleQsPanel();
+                break;
+            case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_HOME:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_HOME_DOUBLE_TAP_CUSTOM_APP);
+                        break;
+                    case KeyEvent.KEYCODE_BACK:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_BACK_DOUBLE_TAP_CUSTOM_APP);
+                        break;
+                    case KeyEvent.KEYCODE_APP_SWITCH:
+                        customAppLaunch(mContext,
+                                Settings.System.KEY_APP_SWITCH_DOUBLE_TAP_CUSTOM_APP);
+                        break;
+                }
                 break;
             case NavbarUtilities.KEY_ACTION_RINGER_MODES:
                 ActionUtils.toggleRingerModes(mContext);
@@ -6981,6 +7080,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mWindowManagerFuncs.onUserSwitched();
         } catch (RemoteException|NullPointerException e) {
             // no-op
+        }
+    }
+
+    private static void customAppLaunch(Context context, String action) {
+        try {
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(
+                    Settings.System.getString(context.getContentResolver(), action));
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

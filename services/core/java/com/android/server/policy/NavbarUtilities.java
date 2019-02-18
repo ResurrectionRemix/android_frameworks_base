@@ -44,7 +44,8 @@ public class NavbarUtilities {
     public static final int KEY_ACTION_POWER_MENU = 13;
     public static final int KEY_ACTION_SCREENSHOT = 14;
     public static final int KEY_ACTION_QS_PANEL = 15;
-    public static final int KEY_ACTION_RINGER_MODES = 16;
+    public static final int KEY_ACTION_CUSTOM_APP = 16;
+    public static final int KEY_ACTION_RINGER_MODES = 17;
 
     // Special values, used internal only.
     public static final int KEY_ACTION_HOME = 100;
@@ -133,6 +134,7 @@ public class NavbarUtilities {
             KEY_ACTION_POWER_MENU,
             KEY_ACTION_SCREENSHOT,
             KEY_ACTION_QS_PANEL,
+            KEY_ACTION_CUSTOM_APP,
             KEY_ACTION_RINGER_MODES
     };
 
