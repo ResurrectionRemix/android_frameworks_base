@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Rekam Layar</string>
     <string name="global_action_flashlight">Senter</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Penghemat Baterai</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Pelaporan lokasi: mode hemat baterai.</string>
+    <string name="quick_settings_location_secondary_gps_only">Hanya Sensor</string>
+    <string name="accessibility_quick_settings_location_gps_only">Laporan lokasi: mode hanya sensor.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Akurasi Tinggi</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Laporan lokasi: mode akurasi tinggi.</string>
 </resources>

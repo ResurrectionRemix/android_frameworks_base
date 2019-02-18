@@ -23,21 +23,31 @@
     <string name="lte_on">LTE På </string>
     <string name="lte_off">LTE Av</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Skärmdump</string>
     <!-- Heads up snooze toast -->
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Skärmen spelas in</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Spelar in skärmen</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stoppa</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Visa pekaren</string>
+    <string name="screenrecord_notif_pointer_off">Dölj pekaren</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_hide_hint">Dölj ledtråd</string>
+    <string name="screenrecord_show_hint">Visa ledtråd</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Skärminspelning</string>
     <string name="quick_settings_screenrecord_lq_label">Skärminspelning 480p</string>
     <string name="quick_settings_screenrecord_mq_label">Skärminspelning 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Skärminspelning 720p+</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Skärmdump togs bort</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Kolumner</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -45,30 +55,49 @@
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Återställ</string>
+    <string name="qs_menu_item_titles">Visa etiketter</string>
+    <string name="qs_menu_item_rows">Rader</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
     <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
     <string name="preview">Förhandsgranska</string>
+    <string name="keycode">Tangentkod</string>
+    <string name="no_home_title">Ingen hem-knapp hittades</string>
     <string name="start">Start</string>
     <string name="center">Centrera</string>
     <string name="end">Slut</string>
+    <string name="select_button">Välj en knapp att lägga till</string>
     <string name="add_button">Lägg till knapp</string>
     <string name="save">Spara</string>
     <string name="reset">Återställ</string>
+    <string name="select_keycode">Välj tangentbordsknapp</string>
     <string name="left">Vänster</string>
     <string name="right">Höger</string>
+    <string name="navbar_editor_title">Redigerare</string>
     <!-- NavBar Tuner -->
     <string name="search">Sök</string>
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Visa 4G istället för LTE</string>
+    <string name="global_action_reboot_recovery">Återställning</string>
     <string name="global_action_reboot">Starta om</string>
     <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM åååå</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_battery_level">"BATTERINIVÅ "</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Smarta pixlar</string>
     <!-- On The Go -->
+    <string name="onthego_notif_options">Alternativ</string>
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">Spelläge</string>
+    <string name="gaming_mode_dialog_title">Spelläge</string>
     <!-- Power Menu -->
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>

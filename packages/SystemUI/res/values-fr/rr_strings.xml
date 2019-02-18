@@ -32,7 +32,7 @@
     <string name="screenrecord_notif_ticker">L\'écran est en cours d\'enregistrement</string>
     <string name="screenrecord_notif_final_ticker">Écran enregistré avec succès</string>
     <!-- Screenrecord notification title -->
-    <string name="screenrecord_notif_title">Enregistrement de l\'écran</string>
+    <string name="screenrecord_notif_title">Capture vidéo</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Arrêter</string>
     <string name="screenrecord_notif_completed">Écran enregistré avec succès</string>
@@ -46,9 +46,9 @@
     <string name="screenrecord_show_hint">Montrer le conseil</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Enregistrement de l\'écran</string>
-    <string name="quick_settings_screenrecord_lq_label">Enregistrement d\'écran 480p</string>
-    <string name="quick_settings_screenrecord_mq_label">Enregistrement d\'écran 720p</string>
-    <string name="quick_settings_screenrecord_hq_label">Enregistrement d\'écran 720p+</string>
+    <string name="quick_settings_screenrecord_lq_label">Capture vidéo 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Capture vidéo 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Capture vidéo 720p+</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Capture d\'écran supprimée</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -79,8 +79,8 @@
     <string name="preview">Aperçu</string>
     <string name="keycode">Code de touche</string>
     <string name="no_home_title">Aucun bouton d\'accueil trouvé</string>
-    <string name="no_home_message">Un bouton d\'accueil est nécessaire pour naviguer sur cet appareil. Veuillez ajouter un bouton d\'accueil avant d\'enregistrer.</string>
-    <string name="clipboard_description">Vous pouvez faire glisser des éléments directement dans le Presse-papiers et inversement.</string>
+    <string name="no_home_message">Un bouton d\'accueil est nécessaire pour naviguer sur cet appareil. Veuillez ajouter un bouton d\'accueil avant de sauvegarder.</string>
+    <string name="clipboard_description">La fonction Presse-papiers vous permet de faire glisser des objets directement dans celui-ci. Les objets peuvent également en être extraits lorsqu\'ils sont présents.</string>
     <string name="keycode_description">Les touches à codes permettent d\'ajouter des touches du clavier à la barre de navigation. En appuyant sur cette touche, ils émulent la touche clavier sélectionnée. Il faut d\'abord sélectionner la cible du bouton, puis l\'image à afficher comme bouton.</string>
     <string name="start">Démarrer</string>
     <string name="center">Centrer</string>
@@ -100,8 +100,8 @@
     <string name="menu_ime_always_show">Permutteur du Menu/Clavier (toujours afficher)</string>
     <string name="search">Rechercher</string>
     <!-- SysUI Tuner -->
-    <string name="statusbar_items_title">Icône de la barre de statut</string>
-    <string name="statusbar_icons_blacklist">Icônes de la barre des statut</string>
+    <string name="statusbar_items_title">Icône de la barre d\'état</string>
+    <string name="statusbar_icons_blacklist">Icônes de la barre d\'état</string>
     <string name="navbar_tuner_activity">Bouttons de la barre de navigation</string>
     <string name="lockscreen_tuner_activity">Raccourcis sur écran de verrouillage</string>
     <string name="powernotif_tuner_activity">Notifications d\'alimentation</string>
@@ -166,7 +166,13 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <string name="global_action_screenshot">Capture d\'écran</string>
-    <string name="global_action_screenrecord">Enregistrement de l\'écran</string>
+    <string name="global_action_screenrecord">Capture vidéo</string>
     <string name="global_action_flashlight">Lampe de poche</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Économiseur de batterie</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie.</string>
+    <string name="quick_settings_location_secondary_gps_only">Capteurs Uniquement</string>
+    <string name="accessibility_quick_settings_location_gps_only">Localisation : mode capteurs uniquement.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Haute précision</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Localisation : mode haute précision.</string>
 </resources>

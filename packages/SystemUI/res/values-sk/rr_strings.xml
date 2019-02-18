@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Záznam obrazovky</string>
     <string name="global_action_flashlight">Baterka</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Šetrenie batérie</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Hlásenie polohy: režim šetrenia batérie.</string>
+    <string name="quick_settings_location_secondary_gps_only">Len GPS</string>
+    <string name="accessibility_quick_settings_location_gps_only">Hlásenie polohy: režim len GPS.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Vysoká presnosť</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Hlásenie polohy: vysoká presnosť.</string>
 </resources>

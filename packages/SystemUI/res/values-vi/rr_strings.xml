@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Quay màn hình</string>
     <string name="global_action_flashlight">Đèn pin</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Tiết kiệm pin</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Báo cáo vị trí: chế độ tiết kiệm pin.</string>
+    <string name="quick_settings_location_secondary_gps_only">Chỉ các cảm biến</string>
+    <string name="accessibility_quick_settings_location_gps_only">Báo cáo vị trí: chế độ chỉ các cảm biến.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Độ chính xác cao</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Báo cáo vị trí: chế độ chính xác cao.</string>
 </resources>

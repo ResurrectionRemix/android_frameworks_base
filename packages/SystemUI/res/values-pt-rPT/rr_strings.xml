@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Gravação de ecrã</string>
     <string name="global_action_flashlight">Lanterna</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Poupança de bateria</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
+    <string name="quick_settings_location_secondary_gps_only">Apenas no dispositivo</string>
+    <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas no dispositivo.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Alta precisão</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
 </resources>

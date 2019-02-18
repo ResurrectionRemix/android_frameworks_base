@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Ekran Kaydı</string>
     <string name="global_action_flashlight">El feneri</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Pil Tasarrufu</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Konum bildirimi: pil tasarruf modu.</string>
+    <string name="quick_settings_location_secondary_gps_only">Sadece Sensörler</string>
+    <string name="accessibility_quick_settings_location_gps_only">Konum bildirimi: sadece sensörler modu.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Yüksek Doğruluk</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Konum bildirmi: yüksek doğruluk modu.</string>
 </resources>

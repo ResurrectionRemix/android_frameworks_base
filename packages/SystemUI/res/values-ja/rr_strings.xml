@@ -27,7 +27,7 @@
     <string name="quick_settings_region_screenshot_label">範囲を選択してスクリーンショット</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 通知の表示は1分間一時停止します</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は<xliff:g id="number">%d</xliff:g>分間停止します</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は <xliff:g id="number">%d</xliff:g> 分間停止します</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">画面は録画されています</string>
     <string name="screenrecord_notif_final_ticker">画面を録画しました</string>
@@ -52,14 +52,14 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">急速充電中（充電完了まで<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>）</string>
+    <string name="keyguard_indication_dash_charging_time">急速充電中 (充電完了まで <xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>)</string>
     <string name="keyguard_plugged_in_dash_charging">急速充電中</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">急速充電中（充電完了まで<xliff:g id="charging_time_left">%s</xliff:g>）</string>
+    <string name="keyguard_indication_turbo_power_time">急速充電中 (充電完了まで <xliff:g id="charging_time_left">%s</xliff:g>)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">列</string>
-    <string name="qs_menu_item_columns_landscape">列（横向き）</string>
+    <string name="qs_menu_item_columns_landscape">列数 (横向き)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -70,7 +70,7 @@
     <string name="qs_menu_item_reset">リセット</string>
     <string name="qs_menu_item_titles">ラベルを表示</string>
     <string name="qs_menu_item_rows">行</string>
-    <string name="qs_menu_item_rows_landscape">行数（横向き）</string>
+    <string name="qs_menu_item_rows_landscape">行数 (横向き)</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
@@ -97,7 +97,7 @@
     <string name="navbar_editor_title">エディター</string>
     <string name="navbar_editor_summary">ナビゲーションバーを編集</string>
     <!-- NavBar Tuner -->
-    <string name="menu_ime_always_show">メニュー/キーボード切り替え（常時表示）</string>
+    <string name="menu_ime_always_show">メニュー/キーボード切り替え (常時表示)</string>
     <string name="search">検索</string>
     <!-- SysUI Tuner -->
     <string name="statusbar_items_title">ステータスバーアイコン</string>
@@ -106,7 +106,7 @@
     <string name="lockscreen_tuner_activity">ロック画面のショートカット</string>
     <string name="powernotif_tuner_activity">電源の通知</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">LTE表示の代わりに4G表示を使用する</string>
+    <string name="show_fourg_title">LTE 表示の代わりに 4G 表示を使用する</string>
     <string name="global_action_reboot_recovery">リカバリー</string>
     <string name="global_action_reboot">再起動</string>
     <!-- Pie controls -->
@@ -115,8 +115,8 @@
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Pie コントロール</string>
-    <string name="pie_state_summary">全画面モードでPieコントロールを使用する</string>
-    <string name="pie_battery_level">"バッテリーレベル "</string>
+    <string name="pie_state_summary">全画面モードで Pie コントロールを使用する</string>
+    <string name="pie_battery_level">"バッテリーレベル"</string>
     <string name="quick_settings_pie">Pie コントロール</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
@@ -141,8 +141,8 @@
     <string name="omnijaws_detail_header">天気</string>
     <string name="omnijaws_label_default">天気</string>
     <string name="omnijaws_current_text">現在</string>
-    <string name="omnijaws_package_not_available">OmniJawsは使用できません</string>
-    <string name="omnijaws_service_last_update">最終更新：</string>
+    <string name="omnijaws_package_not_available">OmniJaws は使用できません</string>
+    <string name="omnijaws_service_last_update">最終更新:</string>
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
@@ -154,10 +154,10 @@
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">再起動\u2026</string>
+    <string name="global_action_reboot_more">再起動</string>
     <string name="global_action_reboot_sub">システム</string>
     <string name="global_action_reboot_bootloader">ブートローダー</string>
-    <string name="global_action_reboot_systemui">システムUI</string>
+    <string name="global_action_reboot_systemui">システム UI</string>
     <string name="global_action_dismissable_dialog_text">高度な再起動が無効です。\n再起動しますか\u003f</string>
     <string name="global_action_dnaa">今後表示しない</string>
     <string name="global_action_settings">設定</string>
@@ -167,6 +167,12 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <string name="global_action_screenshot">スクリーンショット</string>
     <string name="global_action_screenrecord">画面録画</string>
-    <string name="global_action_flashlight">フラッシュライト</string>
+    <string name="global_action_flashlight">ライト</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">バッテリーセーバー</string>
+    <string name="accessibility_quick_settings_location_battery_saving">位置情報レポート: バッテリー節約モード</string>
+    <string name="quick_settings_location_secondary_gps_only">センサーのみ</string>
+    <string name="accessibility_quick_settings_location_gps_only">位置情報レポート: センサーのみ</string>
+    <string name="quick_settings_location_secondary_high_accuracy">高精度</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート: 高精度モード</string>
 </resources>

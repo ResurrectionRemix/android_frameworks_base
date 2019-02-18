@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Registra schermo</string>
     <string name="global_action_flashlight">Torcia</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Risparmio energetico</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Geolocalizzazione: modalità risparmio batteria.</string>
+    <string name="quick_settings_location_secondary_gps_only">Solo Sensori</string>
+    <string name="accessibility_quick_settings_location_gps_only">Segnalazione della posizione: modalità solo sensori.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Alta precisione</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Geolocalizzazione: modalità alta precisione.</string>
 </resources>

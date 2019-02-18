@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">屏幕录制</string>
     <string name="global_action_flashlight">手电筒</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">节省电量</string>
+    <string name="accessibility_quick_settings_location_battery_saving">位置报告：省电模式</string>
+    <string name="quick_settings_location_secondary_gps_only">仅限设备</string>
+    <string name="accessibility_quick_settings_location_gps_only">位置报告：仅限设备</string>
+    <string name="quick_settings_location_secondary_high_accuracy">高精确度</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高精确度</string>
 </resources>

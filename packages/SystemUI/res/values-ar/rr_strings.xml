@@ -154,7 +154,7 @@
     <string name="accessibility_quick_settings_gaming_mode_on">وضع الألعاب مفعل</string>
     <string name="accessibility_quick_settings_gaming_mode_off">وضع الألعاب معطل</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">جارٍ إعادة التشغيل</string>
+    <string name="global_action_reboot_more">إعادة التشغيل</string>
     <string name="global_action_reboot_sub">النظام</string>
     <string name="global_action_reboot_bootloader">محمل الإقلاع</string>
     <string name="global_action_reboot_systemui">واجهة النظام</string>
@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">تسجيل الشاشة</string>
     <string name="global_action_flashlight">الكشاف</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">توفير البطارية</string>
+    <string name="accessibility_quick_settings_location_battery_saving">تقرير الموقع: وضعية توفير الطاقة.</string>
+    <string name="quick_settings_location_secondary_gps_only">وضع الجهاز فقط</string>
+    <string name="accessibility_quick_settings_location_gps_only">تحديد الموقع: وضع الجهاز فقط.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">دقة عالية</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">تحديد الموقع: وضع الدقة العالية.</string>
 </resources>

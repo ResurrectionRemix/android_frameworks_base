@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">화면녹화</string>
     <string name="global_action_flashlight">플래시</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">배터리 절약</string>
+    <string name="accessibility_quick_settings_location_battery_saving">위치 모드: 배터리 절약 모드</string>
+    <string name="quick_settings_location_secondary_gps_only">센서만 사용</string>
+    <string name="accessibility_quick_settings_location_gps_only">위치 모드: 센서만 사용</string>
+    <string name="quick_settings_location_secondary_high_accuracy">높은 정확도</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">위치 모드: 높은 정확도</string>
 </resources>

@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Запис екрану</string>
     <string name="global_action_flashlight">Ліхтарик</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Режим енергозбереження</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Визначення місцезнаходження: режим енергозбереження.</string>
+    <string name="quick_settings_location_secondary_gps_only">Тільки датчики</string>
+    <string name="accessibility_quick_settings_location_gps_only">Визначення місцезнаходження: тільки датчики.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Висока точність</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Визначення місцезнаходження: режим високої точності.</string>
 </resources>

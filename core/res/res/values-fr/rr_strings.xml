@@ -16,13 +16,13 @@
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_fakePackageSignature">Falsifier signature paquet</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">Permet à l\'application de prétendre être une application différente. Les applications malveillantes peuvent l\'utiliser pour accéder à des données d\'applications privées. N\'accordez cette autorisation qu\'avec prudence !</string>
+   <string name="permdesc_fakePackageSignature">Autoriser l\'application à se faire passer pour une autre. Les applications malveillantes pourraient utiliser cette fonctionnalité pour accéder à des données d\'applications privées. N\'accordez cette autorisation qu\'avec prudence !</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Copier l\'URL du fichier du crash</string>
+   <string name="aerr_copy">Copier l\'URL du rapport d\'erreur</string>
    <string name="url_copy_success">URL copiée avec succès</string>
-   <string name="url_copy_failed">Une erreur est survenue pendant l\'envoi du journal à dogbin</string>
+   <string name="url_copy_failed">Une erreur est survenue pendant l\'envoi du rapport à dogbin</string>
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">En cours de lecture</string>
+   <string name="ambient_recognition_notification">Lecture en cours</string>
    <string name="ambient_recognition_information">%1$s par %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">éditeur de navigation de contrôle</string>
@@ -52,7 +52,7 @@
    <string name="animation_slide_left_no_fade">Glisser vers la gauche (Sans fondu)</string>
    <string name="animation_slide_up">Glisser vers le bas</string>
    <string name="animation_slide_down">Glisser vers le haut</string>
-   <string name="animation_default">Par Défaut</string>
+   <string name="animation_default">Par défaut</string>
    <string name="animation_translucent">Translucide</string>
    <string name="animation_grow_shrink">Agrandissement vers (Haut)</string>
    <string name="animation_grow_shrink_center">Agrandissement vers (Centre)</string>
@@ -61,5 +61,5 @@
    <string name="animation_grow_shrink_right">Agrandissement vers (Droite)</string>
    <string name="animation_random">Aléatoire</string>
    <string name="action_null">Vide</string>
-   <string name="default_string">Par Défaut</string>
+   <string name="default_string">Par défaut</string>
 </resources>

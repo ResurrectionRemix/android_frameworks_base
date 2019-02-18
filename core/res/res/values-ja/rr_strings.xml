@@ -16,14 +16,14 @@
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_fakePackageSignature">パッケージ署名を偽装</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">アプリが別のアプリになりすます事を許可します。 悪意のあるアプリケーションがこれを利用してアプリの個人情報にアクセスする可能性があります。 慎重にこの許可を与えてください！</string>
+   <string name="permdesc_fakePackageSignature">アプリが別のアプリになりすます事を許可します。 悪意のあるアプリケーションがこれを利用してアプリの個人情報にアクセスする可能性があります。 慎重にこの許可を与えてください!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">クラッシュログURLをコピーする</string>
-   <string name="url_copy_success">URLを正常にコピーしました</string>
-   <string name="url_copy_failed">dogbinへのログのアップロード中にエラーが発生しました</string>
+   <string name="aerr_copy">クラッシュログ URL をコピーする</string>
+   <string name="url_copy_success">URL を正常にコピーしました</string>
+   <string name="url_copy_failed">dogbin へのログのアップロード中にエラーが発生しました</string>
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">現在再生中</string>
-   <string name="ambient_recognition_information">%2$sによる%1$s</string>
+   <string name="ambient_recognition_notification">再生中 </string>
+   <string name="ambient_recognition_information">%1$s - %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">ナビゲーションバーエディターの制御</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -36,7 +36,7 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">あなたがインストールしたフォントパッケージは fonts.xml が見つからないため互換性がありません。支援を受けるにはパッケージ開発者に連絡して下さい。</string>
    <!-- advanced reboot to bootloader. -->
-   <string name="reboot_to_bootloader_title">ブートローダへ再起動</string>
+   <string name="reboot_to_bootloader_title">ブートローダーへ再起動</string>
    <string name="reboot_to_bootloader_message">ブートローダーへ再起動中\u2026</string>
    <!-- advanced reboot to recovery. -->
    <string name="reboot_to_recovery_title">リカバリーへ再起動</string>
@@ -48,17 +48,17 @@
    <string name="animation_fade">フェード</string>
    <string name="animation_slide_right">右スライド</string>
    <string name="animation_slide_left">左スライド</string>
-   <string name="animation_slide_right_no_fade">右スライド（フェードなし）</string>
-   <string name="animation_slide_left_no_fade">左スライド（フェードなし）</string>
+   <string name="animation_slide_right_no_fade">右スライド (フェードなし)</string>
+   <string name="animation_slide_left_no_fade">左スライド (フェードなし)</string>
    <string name="animation_slide_up">下スライド</string>
    <string name="animation_slide_down">上スライド</string>
    <string name="animation_default">既定</string>
    <string name="animation_translucent">半透明</string>
-   <string name="animation_grow_shrink">拡大（上）</string>
-   <string name="animation_grow_shrink_center">拡大（中央）</string>
-   <string name="animation_grow_shrink_bottom">拡大（下）</string>
-   <string name="animation_grow_shrink_left">拡大（左）</string>
-   <string name="animation_grow_shrink_right">拡大（右）</string>
+   <string name="animation_grow_shrink">拡大 (上)</string>
+   <string name="animation_grow_shrink_center">拡大 (中央)</string>
+   <string name="animation_grow_shrink_bottom">拡大 (下)</string>
+   <string name="animation_grow_shrink_left">拡大 (左)</string>
+   <string name="animation_grow_shrink_right">拡大 (右)</string>
    <string name="animation_random">ランダム</string>
    <string name="action_null">なし</string>
    <string name="default_string">既定</string>

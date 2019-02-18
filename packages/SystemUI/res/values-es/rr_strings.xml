@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Grabación de pantalla</string>
     <string name="global_action_flashlight">Linterna</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Ahorro de energía</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Reporte de localización: modo de ahorro de energía.</string>
+    <string name="quick_settings_location_secondary_gps_only">Sólo sensores</string>
+    <string name="accessibility_quick_settings_location_gps_only">Reporte de localización: modo de solo sensores.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Alta precisión</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Reporte de localización: modo de alta precisión.</string>
 </resources>

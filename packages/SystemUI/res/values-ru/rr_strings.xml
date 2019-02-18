@@ -169,4 +169,10 @@
     <string name="global_action_screenrecord">Запись экрана</string>
     <string name="global_action_flashlight">Фонарик</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Экономия заряда батареи</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Определение местоположения: по координатам сети.</string>
+    <string name="quick_settings_location_secondary_gps_only">Только датчики Gps</string>
+    <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: только GPS.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Высокая точность</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: по всем источникам.</string>
 </resources>
