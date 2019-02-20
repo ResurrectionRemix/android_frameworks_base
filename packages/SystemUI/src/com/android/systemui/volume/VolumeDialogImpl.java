@@ -623,6 +623,10 @@ public class VolumeDialogImpl implements VolumeDialog {
     }
 
     protected void dismissH(int reason) {
+        // Avoid multiple animation calls on touch spams.
+        if (!mShowing) {
+            return;
+        }
         mHandler.removeMessages(H.DISMISS);
         mHandler.removeMessages(H.SHOW);
         mDialogView.animate().cancel();
