@@ -242,6 +242,12 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         // Set the initial status of airplane mode toggle
         mAirplaneState = getUpdatedAirplaneToggleState();
+
+        mDefaultMenuActions = mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_globalActionsList);
+        mRebootMenuActions = mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_rebootActionsList);
+        updatePowerMenuActions();
     }
 
     /**
@@ -292,12 +298,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         } else {
             mHasTelephony = false;
         }
-
-        mDefaultMenuActions = mContext.getResources().getStringArray(
-                com.android.internal.R.array.config_globalActionsList);
-        mRebootMenuActions = mContext.getResources().getStringArray(
-                com.android.internal.R.array.config_rebootActionsList);
-        settingsChanged();
     }
 
     /**
@@ -380,12 +380,12 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
           return dim;
         }
             
-    public void settingsChanged() {
-        final String globalAction = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.GLOBAL_ACTIONS_LIST, UserHandle.USER_CURRENT);
+    public void updatePowerMenuActions() {
+        final String[] globalAction = mContext.getResources().getStringArray(
+                com.android.internal.R.array.values_globalActionsList);
 
         if (globalAction != null) {
-            mRootMenuActions = globalAction.split(",");
+            mRootMenuActions = globalAction;
         } else {
             mRootMenuActions = mDefaultMenuActions;
         }

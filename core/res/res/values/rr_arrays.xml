@@ -34,16 +34,17 @@
     <!-- Defines all possible global actions -->
     <string-array translatable="false" name="values_globalActionsList">
         <item>power</item>
+        <item>restart</item>
+        <item>recovery</item>
+        <item>screenshot</item>
+        <item>screenrecord</item>
         <item>airplane</item>
-        <item>bugreport</item>
-        <item>silent</item>
-        <item>users</item>
         <item>settings</item>
         <item>lockdown</item>
-        <item>voiceassist</item>
-        <item>assist</item>
-        <item>voiceassist</item>
-        <item>restart</item>
+        <item>flashlight</item>
+        <item>silent</item>
+        <item>users</item>
+        <item>onthego</item>
     </string-array>
 
 </resources>
