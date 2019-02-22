@@ -161,6 +161,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
     private boolean mHideDragHandle;
 
+    private static final String SHOW_QS_CLOCK =
+            "system:" + Settings.System.SHOW_QS_CLOCK;
+
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -255,7 +258,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         mClockView = findViewById(R.id.clock);
         mClockView.setOnClickListener(this);
-        mClockView.setClockHideableByUser(false);
         mClockView.setQsHeader();
         mDateView = findViewById(R.id.date);
         mSpace = findViewById(R.id.space);
@@ -276,7 +278,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         Dependency.get(TunerService.class).addTunable(this,
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
                 StatusBarIconController.ICON_BLACKLIST, QS_BATTERY_MODE,
-                STATUS_BAR_BATTERY_STYLE);
+                STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK,
+                QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
 
@@ -530,9 +533,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         super.onAttachedToWindow();
         mStatusBarIconController.addIconGroup(mIconManager);
         requestApplyInsets();
-
-        final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, StatusBarIconController.ICON_BLACKLIST, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
     }
 
     @Override
@@ -753,5 +753,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateStatusbarProperties() {
         boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
         mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
+        mClockView.setClockVisibleByUser(newValue == null ? true :
+                Integer.valueOf(newValue) != 0);
     }
 }
