@@ -451,6 +451,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         mItems = new ArrayList<Action>();
 
         ArraySet<String> addedKeys = new ArraySet<String>();
+        mHasLogoutButton = false;
+        mHasLockdownButton = false;
+        mSeparatedEmergencyButtonEnabled = false;
         for (int i = 0; i < mCurrentMenuActions.length; i++) {
             String actionKey = mCurrentMenuActions[i];
             if (addedKeys.contains(actionKey)) {
@@ -527,6 +530,17 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.GLOBAL_ACTIONS_ONTHEGO, 0) == 1) {
                     mItems.add(getOnTheGoAction());
+                }
+           } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
+                if (mDevicePolicyManager.isLogoutEnabled()
+                        && getCurrentUser().id != UserHandle.USER_SYSTEM) {
+                    mItems.add(new LogoutAction());
+                    mHasLogoutButton = true;
+                }
+            } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
+                if (mSeparatedEmergencyButtonEnabled
+                        && !mEmergencyAffordanceManager.needsEmergencyAffordance()) {
+                    mItems.add(new EmergencyDialerAction());
                 }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
