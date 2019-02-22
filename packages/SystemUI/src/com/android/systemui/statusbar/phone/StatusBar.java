@@ -996,7 +996,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mStatusBarWindow.setOnTouchListener(getStatusBarWindowTouchListener());
 
         mMinBrightness = context.getResources().getInteger(
-                com.android.internal.R.integer.config_screenBrightnessDim);
+                com.android.internal.R.integer.config_screenBrightnessSettingMinimum);
 
         // TODO: Deal with the ugliness that comes from having some of the statusbar broken out
         // into fragments, but the rest here, it leaves some awkward lifecycle and whatnot.
