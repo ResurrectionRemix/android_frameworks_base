@@ -210,4 +210,7 @@
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
 
+    <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">OneHand mode</string>
+
 </resources>
