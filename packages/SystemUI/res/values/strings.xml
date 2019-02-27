@@ -1416,6 +1416,9 @@
     <!-- Name of the work status bar icon. -->
     <string name="status_bar_work">Work profile</string>
 
+    <!-- Name of the nfc status bar icon. -->
+    <string name="status_bar_nfc">NFC</string>
+
     <!-- Name of the airplane status bar icon. -->
     <string name="status_bar_airplane">Airplane mode</string>
 
@@ -1450,6 +1453,9 @@
 
     <!-- Accessibility label for managed profile icon (not shown on screen) [CHAR LIMIT=NONE] -->
     <string name="accessibility_managed_profile">Work profile</string>
+
+    <!-- Accessibility label for nfc icon (not shown on screen) [CHAR LIMIT=NONE] -->
+    <string name="accessibility_status_bar_nfc">Nfc</string>
 
     <!-- Title of warning when entering System UI tuner for first time [CHAR LIMIT=NONE] -->
     <string name="tuner_warning_title">Fun for some but not for all</string>

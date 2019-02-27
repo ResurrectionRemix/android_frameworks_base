@@ -14,14 +14,30 @@
 
 package com.android.systemui.tuner;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
+import android.support.v7.preference.PreferenceScreen;
 import com.android.systemui.R;
 
 public class StatusbarItems extends PreferenceFragment {
 
+    private static final String NFC_KEY = "nfc";
+
+    private StatusBarSwitch mNfcSwitch;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.statusbar_items);
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+        final PackageManager pm = getActivity().getApplicationContext().getPackageManager();
+
+        mNfcSwitch = (StatusBarSwitch) findPreference(NFC_KEY);
+        final boolean isNfcAvailable = pm.hasSystemFeature(PackageManager.FEATURE_NFC);
+
+        if (!isNfcAvailable) {
+            prefScreen.removePreference(mNfcSwitch);
+        }
     }
 }
