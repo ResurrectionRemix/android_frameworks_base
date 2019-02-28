@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.keyguard;
 
 import android.animation.Animator;
@@ -60,12 +59,40 @@ import com.google.android.collect.Sets;
 import java.util.Locale;
 
 public class KeyguardStatusView extends GridLayout implements
-        ConfigurationController.ConfigurationListener, View.OnLayoutChangeListener {
+    ConfigurationController.ConfigurationListener, View.OnLayoutChangeListener {
+
     private static final boolean DEBUG = KeyguardConstants.DEBUG;
     private static final String TAG = "KeyguardStatusView";
     private static final int MARQUEE_DELAY_MS = 2000;
 
-	private static final String FONT_FAMILY = "sans-serif-light";
+    private static final String FONT_SS_NORMAL = "sans-serif";
+    private static final String FONT_SS_LIGTH = "sans-serif-light";
+    private static final String FONT_SS_MEDIUM = "sans-serif-medium";
+    private static final String FONT_SS_BLACK = "sans-serif-black";
+    private static final String FONT_SS_THIN = "sans-serif-thin";
+    private static final String FONT_SS_CONDENSED = "sans-serif-condensed";
+    private static final String FONT_SS_CONDENSED_LIGTH = "sans-serif-condensed-light";
+
+    private static final Typeface[] LOCK_FONTS = new Typeface[] {
+        Typeface.create(FONT_SS_NORMAL, Typeface.NORMAL),
+        Typeface.create(FONT_SS_NORMAL, Typeface.ITALIC),
+        Typeface.create(FONT_SS_NORMAL, Typeface.BOLD),
+        Typeface.create(FONT_SS_NORMAL, Typeface.BOLD_ITALIC),
+        Typeface.create(FONT_SS_LIGTH, Typeface.NORMAL),
+        Typeface.create(FONT_SS_LIGTH, Typeface.ITALIC),
+        Typeface.create(FONT_SS_THIN, Typeface.NORMAL),
+        Typeface.create(FONT_SS_THIN, Typeface.ITALIC),
+        Typeface.create(FONT_SS_CONDENSED, Typeface.NORMAL),
+        Typeface.create(FONT_SS_CONDENSED, Typeface.ITALIC),
+        Typeface.create(FONT_SS_CONDENSED_LIGTH, Typeface.NORMAL),
+        Typeface.create(FONT_SS_CONDENSED_LIGTH, Typeface.ITALIC),
+        Typeface.create(FONT_SS_CONDENSED, Typeface.BOLD),
+        Typeface.create(FONT_SS_CONDENSED, Typeface.BOLD_ITALIC),
+        Typeface.create(FONT_SS_MEDIUM, Typeface.NORMAL),
+        Typeface.create(FONT_SS_MEDIUM, Typeface.ITALIC),
+        Typeface.create(FONT_SS_BLACK, Typeface.NORMAL),
+        Typeface.create(FONT_SS_BLACK, Typeface.ITALIC)
+    };
 
     private final LockPatternUtils mLockPatternUtils;
     private final IActivityManager mIActivityManager;
@@ -80,7 +107,7 @@ public class KeyguardStatusView extends GridLayout implements
     private Runnable mPendingMarqueeStart;
     private Handler mHandler;
 
-    private ArraySet<View> mVisibleInDoze;
+    private ArraySet < View > mVisibleInDoze;
     private boolean mPulsing;
     private boolean mWasPulsing;
     private float mDarkAmount = 0;
@@ -105,7 +132,7 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfo();
                 updateLogoutView();
                 refreshLockFont();
-		        refreshLockDateFont();
+                refreshLockDateFont();
                 refreshclocksize();
                 refreshdatesize();
                 updateSettings();
@@ -128,7 +155,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfo();
             updateLogoutView();
             refreshLockFont();
-	        refreshLockDateFont();
+            refreshLockDateFont();
             refreshclocksize();
             refreshdatesize();
             updateSettings();
@@ -153,8 +180,8 @@ public class KeyguardStatusView extends GridLayout implements
         mIActivityManager = ActivityManager.getService();
         mLockPatternUtils = new LockPatternUtils(getContext());
         mHandler = new Handler(Looper.myLooper());
-        mSmallClockScale = getResources().getDimension(R.dimen.widget_small_font_size)
-                / getResources().getDimension(R.dimen.widget_big_font_size);
+        mSmallClockScale = getResources().getDimension(R.dimen.widget_small_font_size) /
+            getResources().getDimension(R.dimen.widget_big_font_size);
         onDensityOrFontScaleChanged();
     }
 
@@ -225,7 +252,7 @@ public class KeyguardStatusView extends GridLayout implements
         updateLogoutView();
         updateDark();
         refreshLockFont();
-	    refreshLockDateFont();
+        refreshLockDateFont();
         refreshclocksize();
         refreshdatesize();
         updateSettings();
@@ -237,13 +264,13 @@ public class KeyguardStatusView extends GridLayout implements
     private void onSliceContentChanged() {
         boolean smallClock = mKeyguardSlice.hasHeader() || mPulsing;
         float clockScale = smallClock ? mSmallClockScale : 1;
-		Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
+        Typeface tf = Typeface.create(FONT_SS_LIGTH, Typeface.NORMAL);
         RelativeLayout.LayoutParams layoutParams =
-                (RelativeLayout.LayoutParams) mClockView.getLayoutParams();
+            (RelativeLayout.LayoutParams) mClockView.getLayoutParams();
         int height = mClockView.getHeight();
-        layoutParams.bottomMargin = (int) -(height - (clockScale * height));
+        layoutParams.bottomMargin = (int) - (height - (clockScale * height));
         mClockView.setLayoutParams(layoutParams);
-		mClockView.setTypeface(tf);
+        mClockView.setTypeface(tf);
         layoutParams = (RelativeLayout.LayoutParams) mClockSeparator.getLayoutParams();
         layoutParams.topMargin = smallClock ? (int) mWidgetPadding : 0;
         layoutParams.bottomMargin = layoutParams.topMargin;
@@ -255,7 +282,7 @@ public class KeyguardStatusView extends GridLayout implements
      */
     @Override
     public void onLayoutChange(View view, int left, int top, int right, int bottom,
-            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        int oldLeft, int oldTop, int oldRight, int oldBottom) {
         int heightOffset = mPulsing || mWasPulsing ? 0 : getHeight() - mLastLayoutHeight;
         boolean hasHeader = mKeyguardSlice.hasHeader();
         boolean smallClock = hasHeader || mPulsing;
@@ -263,8 +290,8 @@ public class KeyguardStatusView extends GridLayout implements
         long delay = smallClock || mWasPulsing ? 0 : duration / 4;
         mWasPulsing = false;
 
-        boolean shouldAnimate = mKeyguardSlice.getLayoutTransition() != null
-                && mKeyguardSlice.getLayoutTransition().isRunning();
+        boolean shouldAnimate = mKeyguardSlice.getLayoutTransition() != null &&
+            mKeyguardSlice.getLayoutTransition().isRunning();
         if (view == mClockView) {
             float clockScale = smallClock ? mSmallClockScale : 1;
             Paint.Style style = smallClock ? Paint.Style.FILL_AND_STROKE : Paint.Style.FILL;
@@ -272,18 +299,18 @@ public class KeyguardStatusView extends GridLayout implements
             if (shouldAnimate) {
                 mClockView.setY(oldTop + heightOffset);
                 mClockView.animate()
-                        .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
-                        .setDuration(duration)
-                        .setListener(new ClipChildrenAnimationListener())
-                        .setStartDelay(delay)
-                        .y(top)
-                        .scaleX(clockScale)
-                        .scaleY(clockScale)
-                        .withEndAction(() -> {
-                            mClockView.getPaint().setStyle(style);
-                            mClockView.invalidate();
-                        })
-                        .start();
+                    .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
+                    .setDuration(duration)
+                    .setListener(new ClipChildrenAnimationListener())
+                    .setStartDelay(delay)
+                    .y(top)
+                    .scaleX(clockScale)
+                    .scaleY(clockScale)
+                    .withEndAction(() -> {
+                        mClockView.getPaint().setStyle(style);
+                        mClockView.invalidate();
+                    })
+                    .start();
             } else {
                 mClockView.setY(top);
                 mClockView.setScaleX(clockScale);
@@ -299,13 +326,13 @@ public class KeyguardStatusView extends GridLayout implements
                 boolean isAwake = mDarkAmount != 0;
                 mClockSeparator.setY(oldTop + heightOffset);
                 mClockSeparator.animate()
-                        .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
-                        .setDuration(duration)
-                        .setListener(isAwake ? null : new KeepAwakeAnimationListener(getContext()))
-                        .setStartDelay(delay)
-                        .y(top)
-                        .alpha(alpha)
-                        .start();
+                    .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
+                    .setDuration(duration)
+                    .setListener(isAwake ? null : new KeepAwakeAnimationListener(getContext()))
+                    .setStartDelay(delay)
+                    .y(top)
+                    .alpha(alpha)
+                    .start();
             } else {
                 mClockSeparator.setY(top);
                 mClockSeparator.setAlpha(alpha);
@@ -327,11 +354,11 @@ public class KeyguardStatusView extends GridLayout implements
         mWidgetPadding = getResources().getDimension(R.dimen.widget_vertical_padding);
         if (mClockView != null) {
             mClockView.getPaint().setStrokeWidth(
-                    getResources().getDimensionPixelSize(R.dimen.widget_small_font_stroke));
+                getResources().getDimensionPixelSize(R.dimen.widget_small_font_stroke));
         }
         if (mOwnerInfo != null) {
             mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
+                getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
         }
         if (mWeatherView != null) {
             mWeatherView.onDensityOrFontScaleChanged();
@@ -349,22 +376,22 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockClockFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_CLOCK_FONTS, 0);
+            Settings.System.LOCK_CLOCK_FONTS, 0);
     }
 
     private int getLockDateFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_DATE_FONTS, 0);
+            Settings.System.LOCK_DATE_FONTS, 0);
     }
 
     private int getLockClockSize() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCKCLOCK_FONT_SIZE, 64);
+            Settings.System.LOCKCLOCK_FONT_SIZE, 64);
     }
 
     private int getLockDateSize() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCKDATE_FONT_SIZE, 16);
+            Settings.System.LOCKDATE_FONT_SIZE, 16);
     }
 
     private void refreshFormat() {
@@ -391,7 +418,7 @@ public class KeyguardStatusView extends GridLayout implements
         mLogoutView.setVisibility(shouldShowLogout() ? VISIBLE : GONE);
         // Logout button will stay in language of user 0 if we don't set that manually.
         mLogoutView.setText(mContext.getResources().getString(
-                com.android.internal.R.string.global_action_logout));
+            com.android.internal.R.string.global_action_logout));
     }
 
     private void updateOwnerInfo() {
@@ -400,7 +427,7 @@ public class KeyguardStatusView extends GridLayout implements
         if (info == null) {
             // Use the current user owner information if enabled.
             final boolean ownerInfoEnabled = mLockPatternUtils.isOwnerInfoEnabled(
-                    KeyguardUpdateMonitor.getCurrentUser());
+                KeyguardUpdateMonitor.getCurrentUser());
             if (ownerInfoEnabled) {
                 info = mLockPatternUtils.getOwnerInfo(KeyguardUpdateMonitor.getCurrentUser());
             }
@@ -433,476 +460,25 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private void refreshLockFont() {
-        final Resources res = getContext().getResources();
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockFont = isPrimary ? getLockClockFont() : 0;
-
-        if (lockClockFont == 0) {
-            mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        }
-        if (lockClockFont == 1) {
-            mClockView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-        }
-        if (lockClockFont == 2) {
-            mClockView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-        }
-        if (lockClockFont == 3) {
-            mClockView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-        }
-        if (lockClockFont == 4) {
-            mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        }
-        if (lockClockFont == 5) {
-            mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-        }
-        if (lockClockFont == 6) {
-            mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        }
-        if (lockClockFont == 7) {
-            mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-        }
-        if (lockClockFont == 8) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        }
-        if (lockClockFont == 9) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-        }
-        if (lockClockFont == 10) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-        }
-        if (lockClockFont == 11) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-        }
-        if (lockClockFont == 12) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-        }
-        if (lockClockFont == 13) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-        }
-        if (lockClockFont == 14) {
-            mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        }
-        if (lockClockFont == 15) {
-            mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-        }
-        if (lockClockFont == 16) {
-            mClockView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-        }
-        if (lockClockFont == 17) {
-            mClockView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-        }
+        int lockClockFont = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockClockFont() : 0;
+        mClockView.setTypeface(LOCK_FONTS[lockClockFont]);
     }
 
     private void refreshLockDateFont() {
-        final Resources res = getContext().getResources();
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateFont = isPrimary ? getLockDateFont() : 0;
-        if (lockDateFont == 0) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        }
-        if (lockDateFont == 1) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-        }
-        if (lockDateFont == 2) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-        }
-        if (lockDateFont == 3) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-        }
-        if (lockDateFont == 4) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        }
-        if (lockDateFont == 5) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-        }
-        if (lockDateFont == 6) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        }
-        if (lockDateFont == 7) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-        }
-        if (lockDateFont == 8) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        }
-        if (lockDateFont == 9) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-        }
-        if (lockDateFont == 10) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-        }
-        if (lockDateFont == 11) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-        }
-        if (lockDateFont == 12) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-        }
-        if (lockDateFont == 13) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-        }
-        if (lockDateFont == 14) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        }
-        if (lockDateFont == 15) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-        }
-        if (lockDateFont == 16) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-        }
-        if (lockDateFont == 17) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-        }
+        int lockDateFont = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockDateFont() : 0;
+        mKeyguardSlice.setViewsTypeface(LOCK_FONTS[lockDateFont]);
     }
 
     public void refreshclocksize() {
-        final Resources res = getContext().getResources();
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockSize = isPrimary ? getLockClockSize() : 64;
-
-        if (lockClockSize == 50) {
+        int lockClockSize = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockClockSize() : 64;
         mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_50));
-        } else if (lockClockSize == 51) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_51));
-        } else if (lockClockSize == 52) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_52));
-        } else if (lockClockSize == 53) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_53));
-        } else if (lockClockSize == 54) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_54));
-        } else if (lockClockSize == 55) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_55));
-        } else if (lockClockSize == 56) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_56));
-        } else if (lockClockSize == 57) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_57));
-        } else if (lockClockSize == 58) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_58));
-        } else if (lockClockSize == 59) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_59));
-        } else if (lockClockSize == 60) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_60));
-        } else if (lockClockSize == 61) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_61));
-        } else if (lockClockSize == 62) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_62));
-        } else if (lockClockSize == 63) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_63));
-        } else if (lockClockSize == 64) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_64));
-        } else if (lockClockSize == 65) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_65));
-        } else if (lockClockSize == 66) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_66));
-        } else if (lockClockSize == 66) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_67));
-        } else if (lockClockSize == 68) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_68));
-        } else if (lockClockSize == 69) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_69));
-        } else if (lockClockSize == 70) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_70));
-        } else if (lockClockSize == 71) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_71));
-        } else if (lockClockSize == 72) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_72));
-        } else if (lockClockSize == 73) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_73));
-        } else if (lockClockSize == 74) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_74));
-        } else if (lockClockSize == 75) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_75));
-        } else if (lockClockSize == 76) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_76));
-        } else if (lockClockSize == 77) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_77));
-        } else if (lockClockSize == 78) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_78));
-        } else if (lockClockSize == 79) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_79));
-        } else if (lockClockSize == 80) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_80));
-        } else if (lockClockSize == 81) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_81));
-        } else if (lockClockSize == 82) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_82));
-        } else if (lockClockSize == 83) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_83));
-        } else if (lockClockSize == 84) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_84));
-        } else if (lockClockSize == 85) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_85));
-        } else if (lockClockSize == 86) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_86));
-        } else if (lockClockSize == 87) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_87));
-        } else if (lockClockSize == 88) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_88));
-        } else if (lockClockSize == 89) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_89));
-        } else if (lockClockSize == 90) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_90));
-        } else if (lockClockSize == 91) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_91));
-        } else if (lockClockSize == 92) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_92));
-        } else if (lockClockSize == 93) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_93));
-        } else if (lockClockSize == 94) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_94));
-        } else if (lockClockSize == 95) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_95));
-        } else if (lockClockSize == 96) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_96));
-        } else if (lockClockSize == 97) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_97));
-        } else if (lockClockSize == 98) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_98));
-        } else if (lockClockSize == 99) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_99));
-        } else if (lockClockSize == 100) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_100));
-        } else if (lockClockSize == 101) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_101));
-        } else if (lockClockSize == 102) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_102));
-        } else if (lockClockSize == 103) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_103));
-        } else if (lockClockSize == 104) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_104));
-        } else if (lockClockSize == 105) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_105));
-        } else if (lockClockSize == 106) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_106));
-        } else if (lockClockSize == 107) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_107));
-        } else if (lockClockSize == 108) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_108));
-        } else if (lockClockSize == 109) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_109));
-        } else if (lockClockSize == 110) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_110));
-        } else if (lockClockSize == 111) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_111));
-        } else if (lockClockSize == 112) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_112));
-        } else if (lockClockSize == 113) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_113));
-        } else if (lockClockSize == 114) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_114));
-        } else if (lockClockSize == 115) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_115));
-        } else if (lockClockSize == 116) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_116));
-        } else if (lockClockSize == 117) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_117));
-        } else if (lockClockSize == 118) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_118));
-        } else if (lockClockSize == 119) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_119));
-        } else if (lockClockSize == 120) {
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_120));
-        }
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) lockClockSize, getContext().getResources().getDisplayMetrics()));
     }
 
     public void refreshdatesize() {
-        final Resources res = getContext().getResources();
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateSize = isPrimary ? getLockDateSize() : 16;
-
-        if (lockDateSize == 0) {
+        int lockDateSize = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockDateSize() : 16;
         mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_1));
-        } else if (lockDateSize == 1) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_1));
-        } else if (lockDateSize == 2) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_2));
-        } else if (lockDateSize == 3) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_3));
-        } else if (lockDateSize == 4) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_4));
-        } else if (lockDateSize == 5) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_5));
-        } else if (lockDateSize == 6) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_6));
-        } else if (lockDateSize == 7) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_7));
-        } else if (lockDateSize == 8) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_8));
-        } else if (lockDateSize == 9) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_9));
-        } else if (lockDateSize == 10) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_10));
-        } else if (lockDateSize == 11) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_11));
-        } else if (lockDateSize == 12) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_12));
-        } else if (lockDateSize == 13) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_13));
-        } else if (lockDateSize == 14) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_14));
-        } else if (lockDateSize == 15) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_15));
-        } else if (lockDateSize == 16) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_16));
-        } else if (lockDateSize == 17) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_17));
-        } else if (lockDateSize == 18) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_18));
-        } else if (lockDateSize == 19) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_19));
-        } else if (lockDateSize == 20) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_20));
-        } else if (lockDateSize == 21) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21));
-        } else if (lockDateSize == 22) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_22));
-        } else if (lockDateSize == 23) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_23));
-        } else if (lockDateSize == 24) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_24));
-        } else if (lockDateSize == 25) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_25));
-        } else if (lockDateSize == 26) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_26));
-        } else if (lockDateSize == 27) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_27));
-        } else if (lockDateSize == 28) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_28));
-        } else if (lockDateSize == 29) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_29));
-        } else if (lockDateSize == 30) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_30));
-        } else if (lockDateSize == 31) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_31));
-        } else if (lockDateSize == 32) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_32));
-        } else if (lockDateSize == 33) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_33));
-        } else if (lockDateSize == 34) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_34));
-        } else if (lockDateSize == 35) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_35));
-        } else if (lockDateSize == 36) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_36));
-        } else if (lockDateSize == 37) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_37));
-        } else if (lockDateSize == 38) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_38));
-        } else if (lockDateSize == 39) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_39));
-        } else if (lockDateSize == 40) {
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_40));
-        }
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) lockDateSize, getContext().getResources().getDisplayMetrics()));
     }
 
     // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
@@ -942,9 +518,8 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private void updateDark() {
-        boolean dark = mDarkAmount == 1;
         if (mLogoutView != null) {
-            mLogoutView.setAlpha(dark ? 0 : 1);
+            mLogoutView.setAlpha((mDarkAmount == 1) ? 0 : 1);
         }
 
         if (mOwnerInfo != null) {
@@ -969,7 +544,7 @@ public class KeyguardStatusView extends GridLayout implements
             // Calculate how much of it we should crop in order to have a smooth transition
             int collapsed = mOwnerInfo.getTop() - mOwnerInfo.getPaddingTop();
             int expanded = mOwnerInfo.getBottom() + mOwnerInfo.getPaddingBottom();
-            int toRemove = (int) ((expanded - collapsed) * ratio);
+            int toRemove = (int)((expanded - collapsed) * ratio);
             setBottom(getMeasuredHeight() - toRemove);
         }
     }
@@ -995,21 +570,21 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private void updateDozeVisibleViews() {
-        for (View child : mVisibleInDoze) {
+        for (View child: mVisibleInDoze) {
             child.setAlpha(mDarkAmount == 1 && mPulsing ? 0.8f : 1);
         }
     }
 
     private boolean shouldShowLogout() {
-        return KeyguardUpdateMonitor.getInstance(mContext).isLogoutEnabled()
-                && KeyguardUpdateMonitor.getCurrentUser() != UserHandle.USER_SYSTEM;
+        return KeyguardUpdateMonitor.getInstance(mContext).isLogoutEnabled() &&
+            KeyguardUpdateMonitor.getCurrentUser() != UserHandle.USER_SYSTEM;
     }
 
     private void onLogoutClicked(View view) {
         int currentUserId = KeyguardUpdateMonitor.getCurrentUser();
         try {
             mIActivityManager.switchUser(UserHandle.USER_SYSTEM);
-            mIActivityManager.stopUser(currentUserId, true /*force*/, null);
+            mIActivityManager.stopUser(currentUserId, true /*force*/ , null);
         } catch (RemoteException re) {
             Log.e(TAG, "Failed to logout user", re);
         }
@@ -1019,8 +594,8 @@ public class KeyguardStatusView extends GridLayout implements
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
         mShowWeather = Settings.System.getIntForUser(resolver,
-                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
-                UserHandle.USER_CURRENT) == 1;
+            Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+            UserHandle.USER_CURRENT) == 1;
 
         if (mWeatherView != null) {
             if (mShowWeather) {
@@ -1035,17 +610,17 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private class ClipChildrenAnimationListener extends AnimatorListenerAdapter implements
-            ViewClippingUtil.ClippingParameters {
+    ViewClippingUtil.ClippingParameters {
 
         ClipChildrenAnimationListener() {
-            ViewClippingUtil.setClippingDeactivated(mClockView, true /* deactivated */,
-                    this /* clippingParams */);
+            ViewClippingUtil.setClippingDeactivated(mClockView, true /* deactivated */ ,
+                this /* clippingParams */ );
         }
 
         @Override
         public void onAnimationEnd(Animator animation) {
-            ViewClippingUtil.setClippingDeactivated(mClockView, false /* deactivated */,
-                    this /* clippingParams */);
+            ViewClippingUtil.setClippingDeactivated(mClockView, false /* deactivated */ ,
+                this /* clippingParams */ );
         }
 
         @Override
