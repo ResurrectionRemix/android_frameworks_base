@@ -1642,14 +1642,18 @@ public class WifiManager {
     }
 
     /**
-     * WPS has been deprecated from Client mode operation.
+     * Creates a configuration token describing the current network of MIME type
+     * application/vnd.wfa.wsc. Can be used to configure WiFi networks via NFC.
      *
-     * @return null
+     * @return hex-string encoded configuration token or null if there is no current network
      * @hide
-     * @deprecated This API is deprecated
      */
     public String getCurrentNetworkWpsNfcConfigurationToken() {
-        return null;
+        try {
+            return mService.getCurrentNetworkWpsNfcConfigurationToken();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -2252,34 +2256,20 @@ public class WifiManager {
     /** @hide */
     public static final int SAVE_NETWORK_SUCCEEDED          = BASE + 9;
 
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int START_WPS                       = BASE + 10;
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int START_WPS_SUCCEEDED             = BASE + 11;
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int WPS_FAILED                      = BASE + 12;
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int WPS_COMPLETED                   = BASE + 13;
 
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int CANCEL_WPS                      = BASE + 14;
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int CANCEL_WPS_FAILED               = BASE + 15;
-    /** @hide
-     * @deprecated This is deprecated
-     */
+    /** @hide */
     public static final int CANCEL_WPS_SUCCEDED             = BASE + 16;
 
     /** @hide */
@@ -2319,25 +2309,15 @@ public class WifiManager {
     public static final int BUSY                        = 2;
 
     /* WPS specific errors */
-    /** WPS overlap detected
-     * @deprecated This is deprecated
-     */
+    /** WPS overlap detected */
     public static final int WPS_OVERLAP_ERROR           = 3;
-    /** WEP on WPS is prohibited
-     * @deprecated This is deprecated
-     */
+    /** WEP on WPS is prohibited */
     public static final int WPS_WEP_PROHIBITED          = 4;
-    /** TKIP only prohibited
-     * @deprecated This is deprecated
-     */
+    /** TKIP only prohibited */
     public static final int WPS_TKIP_ONLY_PROHIBITED    = 5;
-    /** Authentication failure on WPS
-     * @deprecated This is deprecated
-     */
+    /** Authentication failure on WPS */
     public static final int WPS_AUTH_FAILURE            = 6;
-    /** WPS timed out
-     * @deprecated This is deprecated
-     */
+    /** WPS timed out */
     public static final int WPS_TIMED_OUT               = 7;
 
     /**
@@ -2378,19 +2358,12 @@ public class WifiManager {
         public void onFailure(int reason);
     }
 
-    /** Interface for callback invocation on a start WPS action
-     * @deprecated This is deprecated
-     */
+    /** Interface for callback invocation on a start WPS action */
     public static abstract class WpsCallback {
-
-        /** WPS start succeeded
-         * @deprecated This API is deprecated
-         */
+        /** WPS start succeeded */
         public abstract void onStarted(String pin);
 
-        /** WPS operation completed successfully
-         * @deprecated This API is deprecated
-         */
+        /** WPS operation completed successfully */
         public abstract void onSucceeded();
 
         /**
@@ -2399,7 +2372,6 @@ public class WifiManager {
          * {@link #WPS_TKIP_ONLY_PROHIBITED}, {@link #WPS_OVERLAP_ERROR},
          * {@link #WPS_WEP_PROHIBITED}, {@link #WPS_TIMED_OUT} or {@link #WPS_AUTH_FAILURE}
          * and some generic errors.
-         * @deprecated This API is deprecated
          */
         public abstract void onFailed(int reason);
     }
@@ -2892,6 +2864,36 @@ public class WifiManager {
                         ((ActionListener) listener).onSuccess();
                     }
                     break;
+                case WifiManager.START_WPS_SUCCEEDED:
+                    if (listener != null) {
+                        WpsResult result = (WpsResult) message.obj;
+                        ((WpsCallback) listener).onStarted(result.pin);
+                        //Listener needs to stay until completion or failure
+                        synchronized (mListenerMapLock) {
+                            mListenerMap.put(message.arg2, listener);
+                        }
+                    }
+                    break;
+                case WifiManager.WPS_COMPLETED:
+                    if (listener != null) {
+                        ((WpsCallback) listener).onSucceeded();
+                    }
+                    break;
+                case WifiManager.WPS_FAILED:
+                    if (listener != null) {
+                        ((WpsCallback) listener).onFailed(message.arg1);
+                    }
+                    break;
+                case WifiManager.CANCEL_WPS_SUCCEDED:
+                    if (listener != null) {
+                        ((WpsCallback) listener).onSucceeded();
+                    }
+                    break;
+                case WifiManager.CANCEL_WPS_FAILED:
+                    if (listener != null) {
+                        ((WpsCallback) listener).onFailed(message.arg1);
+                    }
+                    break;
                 case WifiManager.RSSI_PKTCNT_FETCH_SUCCEEDED:
                     if (listener != null) {
                         RssiPacketCountInfo info = (RssiPacketCountInfo) message.obj;
@@ -3070,32 +3072,27 @@ public class WifiManager {
     }
 
     /**
-     * WPS suport has been deprecated from Client mode and this method will immediately trigger
-     * {@link WpsCallback#onFailed(int)} with a generic error.
+     * Start Wi-fi Protected Setup
      *
      * @param config WPS configuration (does not support {@link WpsInfo#LABEL})
      * @param listener for callbacks on success or failure. Can be null.
-     * @throws IllegalStateException if the WifiManager instance needs to be initialized again
-     * @deprecated This API is deprecated
+     * @throws IllegalStateException if the WifiManager instance needs to be
+     * initialized again
      */
     public void startWps(WpsInfo config, WpsCallback listener) {
-        if (listener != null ) {
-            listener.onFailed(ERROR);
-        }
+        if (config == null) throw new IllegalArgumentException("config cannot be null");
+        getChannel().sendMessage(START_WPS, 0, putListener(listener), config);
     }
 
     /**
-     * WPS support has been deprecated from Client mode and this method will immediately trigger
-     * {@link WpsCallback#onFailed(int)} with a generic error.
+     * Cancel any ongoing Wi-fi Protected Setup
      *
      * @param listener for callbacks on success or failure. Can be null.
-     * @throws IllegalStateException if the WifiManager instance needs to be initialized again
-     * @deprecated This API is deprecated
+     * @throws IllegalStateException if the WifiManager instance needs to be
+     * initialized again
      */
     public void cancelWps(WpsCallback listener) {
-        if (listener != null) {
-            listener.onFailed(ERROR);
-        }
+        getChannel().sendMessage(CANCEL_WPS, 0, putListener(listener));
     }
 
     /**
