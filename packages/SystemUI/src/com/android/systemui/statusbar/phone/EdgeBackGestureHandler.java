@@ -66,8 +66,8 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
-import com.android.internal.util.havoc.ActionUtils;
-import com.android.internal.util.havoc.Utils;
+import com.android.internal.util.rr.RRActionUtils;
+import com.android.internal.util.rr.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.assist.AssistManager;
@@ -659,31 +659,40 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 launchCamera(mContext);
                 break;
             case 4: // Flashlight
-                ActionUtils.toggleCameraFlash();
+                RRActionUtils.toggleCameraFlash();
                 break;
             case 5: // Application
                 launchApp(mContext, isLeftPanel);
                 break;
             case 6: // Volume panel
-                ActionUtils.toggleVolumePanel(mContext);
+                RRActionUtils.toggleVolumePanel(mContext);
                 break;
             case 7: // Screen off
-                ActionUtils.switchScreenOff(mContext);
+                RRActionUtils.switchScreenOff(mContext);
                 break;
             case 8: // Screenshot
-                ActionUtils.takeScreenshot(true);
+                RRActionUtils.takeScreenshot(true);
                 break;
             case 9: // Notification panel
-                ActionUtils.toggleNotifications();
+                RRActionUtils.toggleNotifications();
                 break;
             case 10: // QS panel
-                ActionUtils.toggleQsPanel();
+                RRActionUtils.toggleQsPanel();
                 break;
             case 11: // Clear notifications
-                ActionUtils.clearAllNotifications();
+                RRActionUtils.clearAllNotifications();
                 break;
             case 12: // Ringer modes
-                ActionUtils.toggleRingerModes(mContext);
+                RRActionUtils.toggleRingerModes(mContext);
+                break;
+            case 13: // Kill app
+                RRActionUtils.killForegroundApp();
+                break;
+            case 14: // Skip song
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case 15: // Previous song
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                 break;
         }
     }

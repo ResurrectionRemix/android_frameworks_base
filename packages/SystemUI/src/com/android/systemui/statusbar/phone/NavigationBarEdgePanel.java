@@ -253,12 +253,7 @@ public class NavigationBarEdgePanel extends View {
     public NavigationBarEdgePanel(Context context) {
         super(context);
 
-<<<<<<< HEAD
-=======
         mContext = context;
-
-        mVibrator = context.getSystemService(Vibrator.class);
->>>>>>> 38355e06abe... Extended swipe double arrow: don't show if option is disabled
         mVibratorHelper = Dependency.get(VibratorHelper.class);
 
         mDensity = context.getResources().getDisplayMetrics().density;
