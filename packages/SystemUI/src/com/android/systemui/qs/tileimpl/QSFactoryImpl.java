@@ -154,7 +154,7 @@ public class QSFactoryImpl implements QSFactory {
             case "gaming":
                 return new GamingModeTile(mHost);
             case "aod":
-                return new AODTile(mHost)
+                return new AODTile(mHost);
             case "onehand":
                 return new OneHandTile(mHost);
         }

@@ -1852,6 +1852,7 @@ public final class PowerManagerService extends SystemService
                     Settings.System.putIntForUser(mContext.getContentResolver(),
                             Settings.System.DOZE_ON_CHARGE_NOW, mIsPowered ? 1 : 0,
                             UserHandle.USER_CURRENT);
+		}
 
                 // Treat plugging and unplugging the devices as a user activity.
                 // Users find it disconcerting when they plug or unplug the device
