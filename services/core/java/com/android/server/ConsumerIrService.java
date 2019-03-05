@@ -37,7 +37,7 @@ public class ConsumerIrService extends IConsumerIrService.Stub {
     private final Context mContext;
     private final PowerManager.WakeLock mWakeLock;
     private final boolean mHasNativeHal;
-    private String mParameter;
+    private final String mParameter;
     private final Object mHalLock = new Object();
 
     ConsumerIrService(Context context) {

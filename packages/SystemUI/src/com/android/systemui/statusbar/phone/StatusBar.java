@@ -328,9 +328,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     public static final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
     static public final String SYSTEM_DIALOG_REASON_SCREENSHOT = "screenshot";
 
-    private static final String SCREEN_BRIGHTNESS_MODE =
+    public static final String SCREEN_BRIGHTNESS_MODE =
             "system:" + Settings.System.SCREEN_BRIGHTNESS_MODE;
-    private static final String STATUS_BAR_BRIGHTNESS_CONTROL =
+    public static final String STATUS_BAR_BRIGHTNESS_CONTROL =
             "lineagesystem:" + LineageSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL;
     private static final String BERRY_GLOBAL_STYLE =
             "lineagesystem:" + LineageSettings.System.BERRY_GLOBAL_STYLE;
@@ -645,6 +645,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private NotificationMediaManager mMediaManager;
     protected NotificationLockscreenUserManager mLockscreenUserManager;
     protected NotificationRemoteInputManager mRemoteInputManager;
+
+    private boolean mShowMediaMetadata;
 
     private BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -1996,8 +1998,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
 
         Drawable artworkDrawable = null;
-        if (mediaMetadata != null && (Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.LOCKSCREEN_MEDIA_METADATA, 1, UserHandle.USER_CURRENT) == 1)) {
+        if (mediaMetadata != null && mShowMediaMetadata) {
             Bitmap artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
@@ -6452,6 +6453,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = newValue != null && Integer.parseInt(newValue) == 1;
+        } else if (LOCKSCREEN_MEDIA_METADATA.equals(key)) {
+            mShowMediaMetadata = newValue == null || Integer.parseInt(newValue) != 0;
         } else if (BERRY_GLOBAL_STYLE.equals(key)) {
             updateTheme();
         }
