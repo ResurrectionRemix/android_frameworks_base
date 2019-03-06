@@ -154,7 +154,7 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Chế độ chơi game bật</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Chế độ chơi game tắt</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">Đang khởi động lại\u2026</string>
+    <string name="global_action_reboot_more">Khởi động lại</string>
     <string name="global_action_reboot_sub">Hệ thống</string>
     <string name="global_action_reboot_bootloader">Chế độ bootloader</string>
     <string name="global_action_reboot_systemui">Giao diện người dùng</string>
@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">Báo cáo vị trí: chế độ chỉ các cảm biến.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Độ chính xác cao</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Báo cáo vị trí: chế độ chính xác cao.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

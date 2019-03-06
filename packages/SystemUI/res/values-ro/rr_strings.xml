@@ -150,4 +150,7 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <string name="global_action_flashlight">Lanternă</string>
     <!-- Advance location quick setting tile -->
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

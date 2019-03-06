@@ -43,7 +43,7 @@
    <string name="reboot_to_recovery_message">Đang khởi động vào recovery\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Khởi động lại hệ thống</string>
-   <string name="reboot_system_message">Đang khởi động lại \u2026</string>
+   <string name="reboot_system_message">Đang khởi động lại\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Mờ dần</string>
    <string name="animation_slide_right">Trượt sang phải</string>

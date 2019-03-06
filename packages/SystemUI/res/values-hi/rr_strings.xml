@@ -111,6 +111,11 @@
     <string name="global_action_reboot">पुन: शुरू करें</string>
     <!-- Pie controls -->
     <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">पाइ नियंत्रण</string>
+    <string name="pie_state_summary">Use pie controls while in immersive mode</string>
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->
@@ -121,4 +126,7 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <!-- Advance location quick setting tile -->
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

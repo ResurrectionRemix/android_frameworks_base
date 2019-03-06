@@ -169,4 +169,7 @@
     <string name="global_action_screenrecord">螢幕錄影</string>
     <string name="global_action_flashlight">手電筒</string>
     <!-- Advance location quick setting tile -->
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

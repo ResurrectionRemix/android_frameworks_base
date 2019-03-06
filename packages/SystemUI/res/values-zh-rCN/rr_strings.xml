@@ -114,10 +114,10 @@
     <string name="pie_hour_format_12">小时：分钟</string>
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
-    <string name="pie_state_name">Pie 手势控制</string>
-    <string name="pie_state_summary">处于沉浸模式时使用 Pie 手势控制</string>
+    <string name="pie_state_name">扇形控制</string>
+    <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
     <string name="pie_battery_level">"电池电量 "</string>
-    <string name="quick_settings_pie">Pie 手势控制</string>
+    <string name="quick_settings_pie">扇形控制</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">智能像素</string>
     <string name="quick_settings_smart_pixels_on_power_save">自动启用智能像素</string>
@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">位置报告：仅限设备</string>
     <string name="quick_settings_location_secondary_high_accuracy">高精确度</string>
     <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高精确度</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

@@ -36,8 +36,30 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Pachetul de fonturi pe care l-ați instalat nu este compatibil datorită lipsei fișierelor fonts.xml. Vă rugăm contactați dezvoltatorul pachetului pentru suport.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Reporniţi în modul bootloader</string>
+   <string name="reboot_to_bootloader_message">Se repornește în modul bootloader</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Reporniţi în modul recuperare</string>
+   <string name="reboot_to_recovery_message">Se repornește în modul recuperare\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Reporniţi SystemUI</string>
+   <string name="reboot_system_message">Se repornește interfața\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Diminuează</string>
+   <string name="animation_slide_right">Glisare spre partea dreapta</string>
+   <string name="animation_slide_left">Glisare pe partea stângă</string>
+   <string name="animation_slide_right_no_fade">Glisează spre dreapta (Fără estompare)</string>
+   <string name="animation_slide_left_no_fade">Glisează spre stânga (Fără estompare)</string>
+   <string name="animation_slide_up">Glisare in partea de jos</string>
+   <string name="animation_slide_down">Glisare in partea de sus</string>
+   <string name="animation_default">Prestabilit</string>
+   <string name="animation_translucent">Translucid</string>
+   <string name="animation_grow_shrink">Mărește (în sus)</string>
+   <string name="animation_grow_shrink_center">Mărește (spre centru)</string>
+   <string name="animation_grow_shrink_bottom">Mărește (în jos)</string>
+   <string name="animation_grow_shrink_left">Mărește (la stânga)</string>
+   <string name="animation_grow_shrink_right">Mărește (la dreapta)</string>
+   <string name="animation_random">Aleatoriu</string>
    <string name="action_null">Gol</string>
+   <string name="default_string">Prestabilit</string>
 </resources>

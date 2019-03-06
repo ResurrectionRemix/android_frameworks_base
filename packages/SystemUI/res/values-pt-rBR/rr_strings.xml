@@ -80,7 +80,7 @@
     <string name="keycode">Código de botão</string>
     <string name="no_home_title">Nenhum botão de início encontrado</string>
     <string name="no_home_message">É necessário um botão de início para navegar neste dispositivo. Adicione um botão de início antes de salvar.</string>
-    <string name="clipboard_description">A Prancheta permite que itens sejam arrastados diretamente para a área de transferência. Também é possível arrastar os itens diretamente para fora da área de transferência, quando estiver presente.</string>
+    <string name="clipboard_description">A Área de Transferência permite arrastar conteúdos diretamente para a área de transferência. Também é possível arrastar conteúdos diretamente para fora da mesma, quando aí se encontram.</string>
     <string name="keycode_description">Os botões de código de tecla permitem que as teclas do teclado sejam adicionadas à barra de navegação. Quando pressionados, eles emulam a tecla selecionada. Primeiro, a tecla deve ser selecionada para o botão, seguida de uma imagem a ser exibida no botão.</string>
     <string name="start">Início</string>
     <string name="center">Centro</string>
@@ -154,11 +154,11 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Modo de jogo ligado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo de jogo desligado</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">Reiniciando\u2026</string>
+    <string name="global_action_reboot_more">Reiniciar\u2026</string>
     <string name="global_action_reboot_sub">Sistema</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
     <string name="global_action_reboot_systemui">Interface do sistema</string>
-    <string name="global_action_dismissable_dialog_text">Reniciar avançado está desativado.\nVocê quer reniciar? \u003f</string>
+    <string name="global_action_dismissable_dialog_text">A reinicialização avançada está desativada.\nQuer reiniciar\u003f</string>
     <string name="global_action_dnaa">Não exibir novamente</string>
     <string name="global_action_settings">Definições</string>
     <!-- Global actions -->
@@ -169,10 +169,13 @@
     <string name="global_action_screenrecord">Gravação de Tela</string>
     <string name="global_action_flashlight">Lanterna</string>
     <!-- Advance location quick setting tile -->
-    <string name="quick_settings_location_secondary_battery_saving">Poupança de bateria</string>
+    <string name="quick_settings_location_secondary_battery_saving">Economia de bateria</string>
     <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: economia de bateria.</string>
     <string name="quick_settings_location_secondary_gps_only">Somente sensores</string>
     <string name="accessibility_quick_settings_location_gps_only">Modo de localização: somente no dispositivo.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Alta precisão</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

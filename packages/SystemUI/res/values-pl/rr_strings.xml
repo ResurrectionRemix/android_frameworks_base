@@ -52,11 +52,11 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Zrzut ekranu usunięty</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> do końca)</string>
-    <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
+    <string name="keyguard_indication_dash_charging_time">Szybkie Łandowanie (<xliff:g id="charging_time_left" example="4 godziny i 2 minuty">%s</xliff:g> do końca)</string>
+    <string name="keyguard_plugged_in_dash_charging">Szybkie Ładowanie</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">TurboPower podłączony (<xliff:g id="charging_time_left">%s</xliff:g> do pełnego naładowania)</string>
-    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower podłączony</string>
+    <string name="keyguard_indication_turbo_power_time">Podłączono TurboPower (<xliff:g id="charging_time_left">%s</xliff:g> do pełnego naładowania)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">Podłączono TurboPower</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Kolumny</string>
     <string name="qs_menu_item_columns_landscape">Kolumny (poziomo)</string>
@@ -67,7 +67,7 @@
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
-    <string name="qs_menu_item_reset">Przywróć domyślne</string>
+    <string name="qs_menu_item_reset">Przywróć domyślnie</string>
     <string name="qs_menu_item_titles">Pokaż etykiety</string>
     <string name="qs_menu_item_rows">Wiersze</string>
     <string name="qs_menu_item_rows_landscape">Wiersze (poziomo)</string>
@@ -78,8 +78,8 @@
     <!-- Navbar Tuner -->
     <string name="preview">Podgląd</string>
     <string name="keycode">Klawisz</string>
-    <string name="no_home_title">Nie znaleziono przycisku ekranu głównego</string>
-    <string name="no_home_message">Do prawidłowej obsługi urządzenia potrzebny jest przycisk ekranu głównego. Dodaj go, zanim zapiszesz zmiany.</string>
+    <string name="no_home_title">Nie znaleziono przycisku Home</string>
+    <string name="no_home_message">Do prawidłowej obsługi urządzenia potrzebny jest przycisk Home. Dodaj go, zanim zapiszesz zmiany.</string>
     <string name="clipboard_description">Możesz przeciągać elementy bezpośrednio do schowka. Możesz też przeciągać umieszczone tam wcześniej elementy poza schowek jeśli jest obecny.</string>
     <string name="keycode_description">Na pasku nawigacji możesz umieszczać przyciski, które po naciśnięciu emulują funkcje klawiszy klawiatury. Najpierw musisz wybrać, jaki klawisz ma być przypisany do danego przycisku, a następnie wybrać dla niego grafikę.</string>
     <string name="start">Start</string>
@@ -90,14 +90,14 @@
     <string name="select_button">Wybierz przycisk do dodania</string>
     <string name="add_button">Dodaj przycisk</string>
     <string name="save">Zapisz</string>
-    <string name="reset">Przywróć domyślne</string>
+    <string name="reset">Przywróć domyślnie</string>
     <string name="select_keycode">Wybierz przycisk klawiatury</string>
-    <string name="left">Z lewej strony</string>
+    <string name="left">Po lewej</string>
     <string name="right">Po prawej</string>
     <string name="navbar_editor_title">Edytor</string>
     <string name="navbar_editor_summary">Skonfiguruj pasek nawigacji</string>
     <!-- NavBar Tuner -->
-    <string name="menu_ime_always_show">Menu / Przełącznik klawiatury (zawsze pokazuj)</string>
+    <string name="menu_ime_always_show">Menu / Przełącznik klawiatury (pokazuj zawsze)</string>
     <string name="search">Szukaj</string>
     <!-- SysUI Tuner -->
     <string name="statusbar_items_title">Ikona paska stanu</string>
@@ -107,16 +107,16 @@
     <string name="powernotif_tuner_activity">Powiadomienia zasilania</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Pokaż 4G zamiast LTE</string>
-    <string name="global_action_reboot_recovery">Tryb recovery</string>
-    <string name="global_action_reboot">Uruchom ponownie</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
+    <string name="global_action_reboot">Zrestartuj</string>
     <!-- Pie controls -->
     <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
     <string name="pie_hour_format_12">gg:mm</string>
     <string name="pie_hour_format_24">GG:mm</string>
     <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Kontrola Pie</string>
-    <string name="pie_state_summary">Używaj kontroli PIE w trybie pełnoekranowym</string>
-    <string name="pie_battery_level">"POZIOM NAŁADOWANIA BATERII "</string>
+    <string name="pie_state_summary">Używaj kontroli Pie w trybie pełnoekranowym</string>
+    <string name="pie_battery_level">"POZIOM BATERII "</string>
     <string name="quick_settings_pie">Kontrola Pie</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
@@ -127,17 +127,17 @@
     <string name="onthego_notif_stop">Stop</string>
     <string name="onthego_notif_options">Ustawienia</string>
     <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
-    <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
+    <string name="onthego_notif_restart">Zrestartuj tryb \"W ruchu\"</string>
     <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
     <string name="onthego_transparency">Przezroczystość</string>
     <string name="onthego_front_camera">Użyj przedniej kamery</string>
-    <string name="onthego_service_toggle">Automatycznie uruchom ponownie usługę</string>
+    <string name="onthego_service_toggle">Automatycznie zrestartuj usługę</string>
     <string name="onthego_channel_name">Główny</string>
     <string name="global_action_onthego">W ruchu</string>
     <string name="omnijaws_service_error">Błąd</string>
     <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
     <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
-    <string name="omnijaws_service_disabled">Usługa wyłączona</string>
+    <string name="omnijaws_service_disabled">Usługa jest wyłączona</string>
     <string name="omnijaws_detail_header">Pogoda</string>
     <string name="omnijaws_label_default">Pogoda</string>
     <string name="omnijaws_current_text">Teraz</string>
@@ -157,7 +157,7 @@
     <string name="global_action_reboot_more">Ponowne uruchamianie\u2026</string>
     <string name="global_action_reboot_sub">System</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
-    <string name="global_action_reboot_systemui">Interfejs</string>
+    <string name="global_action_reboot_systemui">SystemUI</string>
     <string name="global_action_dismissable_dialog_text">Zaawansowany restart jest wyłączony.\nCzy na pewno chcesz zrestartować urządzenie\u003f</string>
     <string name="global_action_dnaa">Nie pokazuj ponownie</string>
     <string name="global_action_settings">Ustawienia</string>
@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">Usługa lokalizacji: tylko czujniki.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Wysoka dokładność</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Usługa lokalizacji: wysoka dokładność.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>
