@@ -104,4 +104,7 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <!-- Advance location quick setting tile -->
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

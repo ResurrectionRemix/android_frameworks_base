@@ -25433,8 +25433,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             }
         }
-        if ((numBServices > mBServiceAppThreshold) && (true == mAllowLowerMemLevel)
-                && (selectedAppRecord != null)) {
+        if (numBServices > mBServiceAppThreshold && true == mAllowLowerMemLevel
+                && selectedAppRecord != null) {
             ProcessList.setOomAdj(selectedAppRecord.pid, selectedAppRecord.info.uid,
                     ProcessList.CACHED_APP_MAX_ADJ);
             selectedAppRecord.setAdj = selectedAppRecord.curAdj;

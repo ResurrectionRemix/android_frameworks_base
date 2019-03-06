@@ -24,10 +24,10 @@
     <string name="lte_off">LTE aus</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Bildschirmfoto</string>
-    <string name="quick_settings_region_screenshot_label">Teilweiser Screenshot</string>
+    <string name="quick_settings_region_screenshot_label">Screenshot Bildschirmbereich</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Heads-Up Benachrichtigungen sind für 1 Minute deaktiviert.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> Benachrichtigungen sind für 1 Minute deaktiviert.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Bildschirmaufnahme gestartet</string>
     <string name="screenrecord_notif_final_ticker">Bildschirmaufnahme erfolgreich</string>
@@ -169,4 +169,13 @@
     <string name="global_action_screenrecord">Bildschirmaufnahme</string>
     <string name="global_action_flashlight">Taschenlampe</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Energiesparmodus</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Standortdienste: Energiesparmodus.</string>
+    <string name="quick_settings_location_secondary_gps_only">Nur GPS</string>
+    <string name="accessibility_quick_settings_location_gps_only">Standortdienste: Nur Gerät.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Hohe Genauigkeit</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Standortbestimmung: Hohe Genauigkeit.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

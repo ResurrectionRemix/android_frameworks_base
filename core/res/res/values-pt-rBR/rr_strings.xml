@@ -36,13 +36,13 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">O arquivo de fonte que você instalou não é compatível devido à inexistência do arquivo fonts.xml no pacote. Por favor, contate o criador do pacote para obter ajuda.</string>
    <!-- advanced reboot to bootloader. -->
-   <string name="reboot_to_bootloader_title">Reiniciar no Bootloader</string>
+   <string name="reboot_to_bootloader_title">Reiniciar para o bootloader</string>
    <string name="reboot_to_bootloader_message">Reiniciando para o bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
-   <string name="reboot_to_recovery_title">Reiniciar no recovery</string>
+   <string name="reboot_to_recovery_title">Reiniciar para a recuperação</string>
    <string name="reboot_to_recovery_message">Reiniciando para a recuperação\u2026</string>
    <!-- advanced reboot system -->
-   <string name="reboot_system_title">Reiniciar SystemUI</string>
+   <string name="reboot_system_title">Reiniciar o sistema</string>
    <string name="reboot_system_message">Reiniciando o sistema\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Esmaecer</string>

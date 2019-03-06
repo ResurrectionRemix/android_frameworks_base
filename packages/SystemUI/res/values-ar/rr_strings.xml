@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">تحديد الموقع: وضع الجهاز فقط.</string>
     <string name="quick_settings_location_secondary_high_accuracy">دقة عالية</string>
     <string name="accessibility_quick_settings_location_high_accuracy">تحديد الموقع: وضع الدقة العالية.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

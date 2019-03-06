@@ -20,8 +20,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE オン</string>
-    <string name="lte_off">LTE オフ</string>
+    <string name="lte_on">LTE ON</string>
+    <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">スクリーンショット</string>
     <string name="quick_settings_region_screenshot_label">範囲を選択してスクリーンショット</string>
@@ -58,7 +58,7 @@
     <string name="keyguard_indication_turbo_power_time">急速充電中 (充電完了まで <xliff:g id="charging_time_left">%s</xliff:g>)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">列</string>
+    <string name="qs_menu_item_columns">列数</string>
     <string name="qs_menu_item_columns_landscape">列数 (横向き)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
@@ -69,7 +69,7 @@
     <string name="qs_menu_item_columns_nine">9</string>
     <string name="qs_menu_item_reset">リセット</string>
     <string name="qs_menu_item_titles">ラベルを表示</string>
-    <string name="qs_menu_item_rows">行</string>
+    <string name="qs_menu_item_rows">行数</string>
     <string name="qs_menu_item_rows_landscape">行数 (横向き)</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
@@ -106,11 +106,11 @@
     <string name="lockscreen_tuner_activity">ロック画面のショートカット</string>
     <string name="powernotif_tuner_activity">電源の通知</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">LTE 表示の代わりに 4G 表示を使用する</string>
+    <string name="show_fourg_title">LTE の代わりに 4G を表示</string>
     <string name="global_action_reboot_recovery">リカバリー</string>
     <string name="global_action_reboot">再起動</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_date_format">EEEE, yyyy MMMM dd</string>
     <string name="pie_hour_format_12">hh:mm</string>
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
@@ -120,7 +120,7 @@
     <string name="quick_settings_pie">Pie コントロール</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
-    <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効にする</string>
+    <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効化</string>
     <!-- On The Go -->
     <string name="onthego_notif_ticker">OTG が有効化されました</string>
     <string name="onthego_notif_title">OTG が有効です</string>
@@ -150,11 +150,11 @@
     <string name="gaming_mode_tile_toast">ゲームモード有効</string>
     <string name="gaming_mode_tile_toast_disabled">ゲームモード無効</string>
     <string name="gaming_mode_dialog_title">ゲームモード</string>
-    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、すべてのポップアップ通知が無効になり、ハードのキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると、先の設定に戻されます。</string>
+    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、すべてのポップアップ通知が無効になり、ハードのキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると先の設定に戻されます。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">再起動</string>
+    <string name="global_action_reboot_more">再起動\u2026</string>
     <string name="global_action_reboot_sub">システム</string>
     <string name="global_action_reboot_bootloader">ブートローダー</string>
     <string name="global_action_reboot_systemui">システム UI</string>
@@ -167,7 +167,7 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <string name="global_action_screenshot">スクリーンショット</string>
     <string name="global_action_screenrecord">画面録画</string>
-    <string name="global_action_flashlight">ライト</string>
+    <string name="global_action_flashlight">フラッシュライト</string>
     <!-- Advance location quick setting tile -->
     <string name="quick_settings_location_secondary_battery_saving">バッテリーセーバー</string>
     <string name="accessibility_quick_settings_location_battery_saving">位置情報レポート: バッテリー節約モード</string>
@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">位置情報レポート: センサーのみ</string>
     <string name="quick_settings_location_secondary_high_accuracy">高精度</string>
     <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート: 高精度モード</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

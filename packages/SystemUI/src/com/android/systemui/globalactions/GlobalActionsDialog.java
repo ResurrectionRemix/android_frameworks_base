@@ -1098,12 +1098,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     }
 
     private Action getEmergencyAction() {
-        Drawable emergencyIcon = mContext.getDrawable(R.drawable.emergency_icon);
-        if(!mSeparatedEmergencyButtonEnabled) {
-            // use un-colored legacy treatment
-            emergencyIcon.setTintList(null);
-        }
-
         return new SinglePressAction(R.drawable.emergency_icon,
                 R.string.global_action_emergency) {
             @Override

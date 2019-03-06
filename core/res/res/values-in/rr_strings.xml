@@ -14,7 +14,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">Tanda tangan paket palsu</string>
+   <string name="permlab_fakePackageSignature">Tiruan tanda tangan paket</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Mengizinkan aplikasi berpura-pura menjadi aplikasi yang berbeda. Aplikasi berbahaya mungkin dapat menggunakan ini untuk mengakses data aplikasi pribadi. Berikan izin ini hanya dengan hati-hati!</string>
    <!-- Button that copies the url to the log of a crashed application -->

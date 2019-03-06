@@ -175,4 +175,7 @@
     <string name="accessibility_quick_settings_location_gps_only">Визначення місцезнаходження: тільки датчики.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Висока точність</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Визначення місцезнаходження: режим високої точності.</string>
+    <!-- Kill button in notification guts -->
+    <!-- AOD QS tile -->
+    <!-- OneHand mode QS tile -->
 </resources>

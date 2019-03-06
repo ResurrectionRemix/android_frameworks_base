@@ -246,9 +246,7 @@ public class PowerProfile {
     }
 
     private void readPowerValuesFromXml(Context context, boolean forTest) {
-        int stockId = forTest ? com.android.internal.R.xml.power_profile_test :
-                com.android.internal.R.xml.power_profile;
-        final int id = getPowerProfileResId(context, stockId);
+        int id = getPowerProfileResId(context, forTest);
         final Resources resources = context.getResources();
         XmlResourceParser parser = resources.getXml(id);
         boolean parsingArray = false;
@@ -407,25 +405,28 @@ public class PowerProfile {
         return 0;
     }
 
-    private int getPowerProfileResId(final Context context, int id) {
+    private int getPowerProfileResId(final Context context, boolean forTest) {
+        if (forTest) {
+            return com.android.internal.R.xml.power_profile_test;
+        }
+
         /*
          * If ro.power_profile.override is set, use it to override the default.
          * This is used for devices, which need to dynamically define the power profile.
          */
         String powerProfileOverride = SystemProperties.get("ro.power_profile.override");
         if (!powerProfileOverride.isEmpty()) {
-            int tmpId = context.getResources().getIdentifier(powerProfileOverride, "xml",
-                    "android");
-            if (tmpId > 0) {
+            int id = context.getResources().getIdentifier(powerProfileOverride, "xml", "android");
+            if (id > 0) {
                 Slog.i(TAG, "getPowerProfileResId: using power profile \""
                         + powerProfileOverride + "\"");
-                id = tmpId;
-            } else {
-                Slog.e(TAG, "getPowerProfileResId: could not retrieve power profile \""
-                        + powerProfileOverride + "\", using default instead");
+                return id;
             }
+            Slog.e(TAG, "getPowerProfileResId: could not retrieve power profile \""
+                    + powerProfileOverride + "\", using default instead");
         }
-        return id;
+
+        return com.android.internal.R.xml.power_profile;
     }
 
     /**
