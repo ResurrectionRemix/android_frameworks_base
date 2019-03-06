@@ -176,6 +176,8 @@ public class PocketLock {
         mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         mLayoutParams.gravity = Gravity.CENTER;
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        mLayoutParams.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
