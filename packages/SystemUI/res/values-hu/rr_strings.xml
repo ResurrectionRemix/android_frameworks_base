@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Újraindítás</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">yyyy. MMMM dd., EEEE</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Pie Vezérlés</string>
     <string name="pie_state_summary">Pie vezérlő használata teljes képernyős üzemmódban</string>
     <string name="pie_battery_level">"AKKUMULÁTORSZINT "</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">Nagy pontosságú</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Helymeghatározás: nagy pontosságú.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Leállítja kényszerítetten?</string>
+    <string name="force_stop_dlg_text">Ha egy alkalmazást leállásra kényszerít, lehetséges, hogy az hibásan fog működni.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Alkalmazás-leállítás</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Mindig bekapcsolt kijelző (AOD)</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Egykezes üzemmód</string>
 </resources>

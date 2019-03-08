@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Reštartovať</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Ovládanie Pie</string>
     <string name="pie_state_summary">Použiť kruhové ovládacie prvky v pohlcujúcom režime</string>
     <string name="pie_battery_level">"ÚROVEŇ NABITIA BATÉRIE "</string>

@@ -36,11 +36,11 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">Gói phông chữ bạn đã cài đặt không tương thích do thiếu fonts.xml trong tập tin. Vui lòng liên hệ với nhà phát triển gói để được hỗ trợ.</string>
    <!-- advanced reboot to bootloader. -->
-   <string name="reboot_to_bootloader_title">Khởi động vào bootloader</string>
-   <string name="reboot_to_bootloader_message">Đang khởi động vào bootloader\u2026</string>
+   <string name="reboot_to_bootloader_title">Khởi động vào trình nạp khởi động</string>
+   <string name="reboot_to_bootloader_message">Đang khởi động vào trình nạp khởi động\u2026</string>
    <!-- advanced reboot to recovery. -->
-   <string name="reboot_to_recovery_title">Khởi động vào recovery</string>
-   <string name="reboot_to_recovery_message">Đang khởi động vào recovery\u2026</string>
+   <string name="reboot_to_recovery_title">Khởi động vào trình phục hồi</string>
+   <string name="reboot_to_recovery_message">Đang khởi động vào trình phục hồi\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Khởi động lại hệ thống</string>
    <string name="reboot_system_message">Đang khởi động lại\u2026</string>

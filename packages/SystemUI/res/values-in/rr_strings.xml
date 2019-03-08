@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Pemulihan</string>
     <string name="global_action_reboot">Mulai ulang</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Kontrol Pie</string>
     <string name="pie_state_summary">Gunakan kontrol pie dalam mode layar penuh</string>
     <string name="pie_battery_level">"TINGKAT BATERAI "</string>
@@ -176,6 +172,8 @@
     <string name="quick_settings_location_secondary_high_accuracy">Akurasi Tinggi</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Laporan lokasi: mode akurasi tinggi.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="dlg_ok">@android:string/ok</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
 </resources>

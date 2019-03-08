@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery 模式</string>
     <string name="global_action_reboot">重新啟動</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">Yyyy MMMM dd, EEEE</string>
-    <string name="pie_hour_format_12">小時:分鐘</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">上午</string>
     <string name="pie_state_name">扇形控制</string>
     <string name="pie_state_summary">在全螢幕模式中使用扇形導航列</string>
     <string name="pie_battery_level">"電池電量 "</string>
@@ -169,7 +165,20 @@
     <string name="global_action_screenrecord">螢幕錄影</string>
     <string name="global_action_flashlight">手電筒</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">省電模式</string>
+    <string name="accessibility_quick_settings_location_battery_saving">位置回報：省電模式。</string>
+    <string name="quick_settings_location_secondary_gps_only">僅限裝置</string>
+    <string name="accessibility_quick_settings_location_gps_only">位置回報：僅限裝置</string>
+    <string name="quick_settings_location_secondary_high_accuracy">高精確度</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">位置回報：高精確度</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">您要強制停止嗎？</string>
+    <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">終止應用程式</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">單手模式</string>
 </resources>

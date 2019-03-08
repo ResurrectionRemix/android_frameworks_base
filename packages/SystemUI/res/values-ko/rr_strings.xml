@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">복구 모드</string>
     <string name="global_action_reboot">다시 시작</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">요일, 날짜 월 년</string>
-    <string name="pie_hour_format_12">시:분</string>
-    <string name="pie_hour_format_24">시:분</string>
-    <string name="pie_am_pm">오전</string>
     <string name="pie_state_name">파이 컨트롤</string>
     <string name="pie_state_summary">Immersive 모드에서 Pie 컨트롤 사용</string>
     <string name="pie_battery_level">"배터리 잔량 "</string>

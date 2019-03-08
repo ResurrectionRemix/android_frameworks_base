@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Riavvia</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">un</string>
     <string name="pie_state_name">Controllo Pie</string>
     <string name="pie_state_summary">Usa controlli Pie in modalità immersiva</string>
     <string name="pie_battery_level">"LIVELLO BATTERIA "</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">Alta precisione</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Geolocalizzazione: modalità alta precisione.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Forzare la chiusura?</string>
+    <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'app, tale app potrebbe funzionare in modo anomalo.</string>
+    <string name="dlg_ok">ok</string>
+    <string name="dlg_cancel">annulla</string>
+    <string name="kill">Termina app</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Schermo sempre attivo</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Modalità a una mano</string>
 </resources>

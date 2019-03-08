@@ -92,9 +92,6 @@
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM aaaa</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
     <!-- Weather string format in expanded statusbar header -->

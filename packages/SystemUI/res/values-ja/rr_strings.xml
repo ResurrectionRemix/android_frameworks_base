@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">リカバリー</string>
     <string name="global_action_reboot">再起動</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, yyyy MMMM dd</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Pie コントロール</string>
     <string name="pie_state_summary">全画面モードで Pie コントロールを使用する</string>
     <string name="pie_battery_level">"バッテリーレベル"</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">高精度</string>
     <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート: 高精度モード</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">強制停止しますか?</string>
+    <string name="force_stop_dlg_text">アプリを強制停止するとアプリが正常に機能しないことがあります</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">アプリを終了</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">片手モード</string>
 </resources>

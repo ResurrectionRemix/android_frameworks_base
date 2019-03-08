@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Xilasetmə rejimi (Recovery)</string>
     <string name="global_action_reboot">Yenidən başlat</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">ss:dd</string>
-    <string name="pie_hour_format_24">SS:dd</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Pie Kontrol</string>
     <string name="pie_state_summary">Tam ekran rejimdəykən pie kontrollerini istifadə edin</string>
     <string name="pie_battery_level">"BATAREYA SƏVİYYƏSİ"</string>
@@ -122,6 +118,7 @@
     <string name="quick_settings_smart_pixels">Ağıllı piksellər</string>
     <string name="quick_settings_smart_pixels_on_power_save">Avtomatik olaraq ağıllı pikselləri aktivləşdir</string>
     <!-- On The Go -->
+    <string name="onthego_front_camera">Ön kameradan istifade et</string>
     <string name="omnijaws_service_error">Erro</string>
     <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
@@ -132,6 +129,7 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <!-- Advance location quick setting tile -->
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Məcburi dayandırılsın?</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
 </resources>

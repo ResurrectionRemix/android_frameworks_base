@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Επανεκκίνηση</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">ωω:λλ</string>
-    <string name="pie_hour_format_24">ΩΩ:λλ</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Χειρισμοί Pie</string>
     <string name="pie_state_summary">Χρησιμοποιήστε χειρισμό pie στη λειτουργία πλήρους οθόνης</string>
     <string name="pie_battery_level">"ΕΠΙΠΕΔΟ ΜΠΑΤΑΡΙΑΣ "</string>

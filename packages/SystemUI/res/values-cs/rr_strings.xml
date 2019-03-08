@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Restartovat</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Ovládání Pie</string>
     <string name="pie_state_summary">Použít prvky Pie v režimu přes celou obrazovku</string>
     <string name="pie_battery_level">"ÚROVEŇ NABITÍ BATERIE "</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">Vysoká přesnost</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Hlášení polohy: vysoká přesnost.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Vynutit ukončení?</string>
+    <string name="force_stop_dlg_text">Vynucené ukončení může způsobit nepředvídatelné chování aplikace.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Ukončit aplikaci</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Režim jedné ruky</string>
 </resources>

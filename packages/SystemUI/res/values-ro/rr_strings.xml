@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Recuperare</string>
     <string name="global_action_reboot">Repornire</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, zz LLLL aaaa</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Control Evantai</string>
     <string name="pie_state_summary">Utilizaţi controale evantai în modul imersiv</string>
     <string name="pie_battery_level">"NIVELUL BATERIEI "</string>

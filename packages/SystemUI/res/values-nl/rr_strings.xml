@@ -52,6 +52,11 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <!-- Advance location quick setting tile -->
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Gedwongen stoppen?</string>
+    <string name="force_stop_dlg_text">Als je een app gedwongen stopt, kan deze onverwacht gedrag vertonen.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/annuleer</string>
+    <string name="kill">App Beëindigen</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
 </resources>

@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">恢复模式</string>
     <string name="global_action_reboot">重新启动</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">星期, 日 月 年</string>
-    <string name="pie_hour_format_12">小时：分钟</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">扇形控制</string>
     <string name="pie_state_summary">处于沉浸模式时使用扇形控制</string>
     <string name="pie_battery_level">"电池电量 "</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">高精确度</string>
     <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高精确度</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">是否强制停止？</string>
+    <string name="force_stop_dlg_text">强行停止某个应用可能导致其出现异常。</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">终止应用程序</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">息屏显示</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">单手模式</string>
 </resources>

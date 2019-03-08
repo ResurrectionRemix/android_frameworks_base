@@ -24,7 +24,7 @@
     <string name="lte_off">LTE выкл</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Скриншот</string>
-    <string name="quick_settings_region_screenshot_label">Скриншот выбранной области экрана</string>
+    <string name="quick_settings_region_screenshot_label">Частичный скриншот</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Всплывающие уведомления выключены на 1 минуту.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Всплывающие уведомления выключены на <xliff:g id="number">%d</xliff:g> минут.</string>
@@ -110,10 +110,6 @@
     <string name="global_action_reboot_recovery">Режим восстановления</string>
     <string name="global_action_reboot">Перезагрузить</string>
     <!-- Pie controls -->
-    <string name="pie_date_format">EEEE, дд ММММ гггг</string>
-    <string name="pie_hour_format_12">чч:мм</string>
-    <string name="pie_hour_format_24">ЧЧ:мм</string>
-    <string name="pie_am_pm">a</string>
     <string name="pie_state_name">Панель Pie</string>
     <string name="pie_state_summary">Использовать веерное управление (Pie) в полноэкранном режиме</string>
     <string name="pie_battery_level">"Уровень заряда аккумулятора"</string>
@@ -176,6 +172,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">Высокая точность</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: по всем источникам.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Остановить принудительно?</string>
+    <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Закрыть приложение</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Режим \"Управление одной рукой\"</string>
 </resources>
