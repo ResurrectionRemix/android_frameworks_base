@@ -175,7 +175,7 @@
     <string name="force_stop_dlg_title">Wymusić zatrzymanie?</string>
     <string name="force_stop_dlg_text">Jeśli wymusisz zatrzymanie aplikacji, może ona działać nieprawidłowo.</string>
     <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/anuluj</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Zabij aplikację</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">Tryb Always-On</string>

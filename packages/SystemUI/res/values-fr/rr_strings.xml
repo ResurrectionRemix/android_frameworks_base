@@ -175,7 +175,7 @@
     <string name="force_stop_dlg_title">Forcer l\'arrêt ?</string>
     <string name="force_stop_dlg_text">Forcer l\'arrêt d\'une application peut provoquer un dysfonctionnement.</string>
     <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/annuler</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Arrêter l’application</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">Ecran permanent Allumé</string>

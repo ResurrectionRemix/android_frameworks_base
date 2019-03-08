@@ -174,8 +174,8 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Forzare la chiusura?</string>
     <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'app, tale app potrebbe funzionare in modo anomalo.</string>
-    <string name="dlg_ok">ok</string>
-    <string name="dlg_cancel">annulla</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Termina app</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">Schermo sempre attivo</string>

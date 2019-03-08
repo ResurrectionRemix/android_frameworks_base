@@ -104,7 +104,7 @@
     <string name="force_stop_dlg_title">Tvinga avslut?</string>
     <string name="force_stop_dlg_text">Om du tvingar appen att avslutas kanske den inte fungerar som den ska.</string>
     <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/avbryt</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Döda appen</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
