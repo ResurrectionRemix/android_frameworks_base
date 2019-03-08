@@ -4795,18 +4795,16 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 quality = PASSWORD_QUALITY_UNSPECIFIED;
             }
             final PasswordMetrics metrics = PasswordMetrics.computeForPassword(password);
-            if (quality != PASSWORD_QUALITY_UNSPECIFIED) {
-                final int realQuality = metrics.quality;
-                if (realQuality < quality
-                        && quality != DevicePolicyManager.PASSWORD_QUALITY_COMPLEX) {
-                    Slog.w(LOG_TAG, "resetPassword: password quality 0x"
-                            + Integer.toHexString(realQuality)
-                            + " does not meet required quality 0x"
-                            + Integer.toHexString(quality));
-                    return false;
-                }
-                quality = Math.max(realQuality, quality);
+            final int realQuality = metrics.quality;
+            if (realQuality < quality
+                    && quality != DevicePolicyManager.PASSWORD_QUALITY_COMPLEX) {
+                Slog.w(LOG_TAG, "resetPassword: password quality 0x"
+                        + Integer.toHexString(realQuality)
+                        + " does not meet required quality 0x"
+                        + Integer.toHexString(quality));
+                return false;
             }
+            quality = Math.max(realQuality, quality);
             int length = getPasswordMinimumLength(null, userHandle, /* parent */ false);
             if (password.length() < length) {
                 Slog.w(LOG_TAG, "resetPassword: password length " + password.length()
