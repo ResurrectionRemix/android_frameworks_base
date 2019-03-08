@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,7 +49,11 @@ public class StatusbarIconsFragment extends TunerFragment {
 
     private static final String SHOW_FOURG = "show_fourg";
 
+    private static final String NFC_KEY = "nfc";
+
     private SwitchPreference mShowFourG;
+
+    private StatusBarSwitch mNfcSwitch;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -62,6 +67,13 @@ public class StatusbarIconsFragment extends TunerFragment {
         } else {
             mShowFourG.setChecked((Settings.System.getInt(resolver,
                 Settings.System.SHOW_FOURG, 0) == 1));
+        }
+
+        final PackageManager pm = getActivity().getApplicationContext().getPackageManager();
+
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_NFC)) {
+            mNfcSwitch = (StatusBarSwitch) findPreference(NFC_KEY);
+            prefSet.removePreference(mNfcSwitch);
         }
     }
 
