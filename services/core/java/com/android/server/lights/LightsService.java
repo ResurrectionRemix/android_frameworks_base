@@ -56,6 +56,15 @@ public class LightsService extends SystemService {
 
                 if(mId == 0) {
                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+                    if(fp.matches(".*astarqlte.*")) {
+                        int newBrightness = brightness;
+                        if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
+                            newBrightness = (int) (brightness * 365.0 / 255.0);
+                        }
+                        setLightLocked(newBrightness, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+                        return;
+                    }
+
                     if(fp.matches(".*(crown|star)[q2]*lte.*") ||
 				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
                         int newBrightness = brightness * 100;
