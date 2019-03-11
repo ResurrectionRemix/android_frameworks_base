@@ -21,7 +21,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
-import com.android.internal.util.rr.RRUtils;
+import com.android.internal.util.rr.RRFWBUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -70,7 +70,7 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
         try {
              Thread.sleep(1000); //1s
         } catch (InterruptedException ie) {}
-        RRUtils.takeScreenshot(mRegion ? false : true);
+        RRFWBUtils.takeScreenshot(mRegion ? false : true);
     }
 
     @Override

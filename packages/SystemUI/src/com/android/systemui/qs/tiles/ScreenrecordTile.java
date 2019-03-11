@@ -22,7 +22,7 @@ import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.view.WindowManager;
 
-import com.android.internal.util.rr.RRUtils;
+import com.android.internal.util.rr.RRFWBUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -85,7 +85,7 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
         try {
              Thread.sleep(1000); //1s
         } catch (InterruptedException ie) {}
-        RRUtils.takeScreenrecord(mMode);
+        RRFWBUtils.takeScreenrecord(mMode);
     }
 
     @Override

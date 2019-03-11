@@ -38,7 +38,7 @@ import android.view.MenuItem;
 import com.android.internal.hardware.AmbientDisplayConfiguration;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.rr.RRUtils;
+import com.android.internal.util.rr.RRFWBUtils;
 
 import com.android.systemui.R;
 import com.android.systemui.plugins.PluginPrefs;
@@ -62,7 +62,7 @@ public class StatusbarIconsFragment extends TunerFragment {
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mShowFourG = (SwitchPreference) findPreference(SHOW_FOURG);
-        if (RRUtils.isWifiOnly(getActivity())) {
+        if (RRFWBUtils.isWifiOnly(getActivity())) {
             prefSet.removePreference(mShowFourG);
         } else {
             mShowFourG.setChecked((Settings.System.getInt(resolver,
