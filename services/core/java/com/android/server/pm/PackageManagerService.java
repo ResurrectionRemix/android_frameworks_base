@@ -4000,8 +4000,7 @@ public class PackageManagerService extends IPackageManager.Stub
             final int[] gids = (flags & PackageManager.GET_GIDS) == 0
                     ? EMPTY_INT_ARRAY : permissionsState.computeGids(userId);
             // Compute granted permissions only if package has requested permissions
-            final Set<String> permissions = ((flags & PackageManager.GET_PERMISSIONS) == 0
-                    || ArrayUtils.isEmpty(p.requestedPermissions))
+            final Set<String> permissions = ArrayUtils.isEmpty(p.requestedPermissions)
                     ? Collections.<String>emptySet() : permissionsState.getPermissions(userId);
 
         PackageInfo packageInfo = mayFakeSignature(p, PackageParser
