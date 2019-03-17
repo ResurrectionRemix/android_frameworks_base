@@ -62,4 +62,5 @@
    <string name="animation_random">Aleatoriu</string>
    <string name="action_null">Gol</string>
    <string name="default_string">Prestabilit</string>
+   <!-- SystemUI Restart -->
 </resources>

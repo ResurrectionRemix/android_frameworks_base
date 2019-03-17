@@ -62,4 +62,5 @@
    <string name="animation_random">Losowo</string>
    <string name="action_null">Pusto</string>
    <string name="default_string">Domyślnie</string>
+   <!-- SystemUI Restart -->
 </resources>

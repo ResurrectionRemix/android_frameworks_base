@@ -45,4 +45,5 @@
    <string name="animation_grow_shrink_bottom">(नीचे से/में) बढना</string>
    <string name="animation_grow_shrink_left">(बायें से/में) बढना</string>
    <string name="animation_grow_shrink_right">(दायें से / में) बढना</string>
+   <!-- SystemUI Restart -->
 </resources>

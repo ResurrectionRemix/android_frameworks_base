@@ -173,7 +173,12 @@
     <string name="accessibility_quick_settings_location_high_accuracy">Laporan lokasi: mode akurasi tinggi.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="force_stop_dlg_text">Jika Anda memaksa menghentikan aplikasi, itu mungkin akan mengganggunya.</string>
     <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Tutup Apl</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Mode satu tangan</string>
 </resources>

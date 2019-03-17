@@ -62,4 +62,5 @@
    <string name="animation_random">Véletlenszerű</string>
    <string name="action_null">Üres</string>
    <string name="default_string">Alapértelmezett</string>
+   <!-- SystemUI Restart -->
 </resources>

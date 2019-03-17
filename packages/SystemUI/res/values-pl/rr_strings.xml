@@ -150,10 +150,10 @@
     <string name="accessibility_quick_settings_gaming_mode_on">Tryb grania włączony</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Tryb grania wyłączony</string>
     <!-- Power Menu -->
-    <string name="global_action_reboot_more">Ponowne uruchamianie\u2026</string>
+    <string name="global_action_reboot_more">Zrestartuj\u2026</string>
     <string name="global_action_reboot_sub">System</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
-    <string name="global_action_reboot_systemui">SystemUI</string>
+    <string name="global_action_reboot_systemui">Interfejs</string>
     <string name="global_action_dismissable_dialog_text">Zaawansowany restart jest wyłączony.\nCzy na pewno chcesz zrestartować urządzenie\u003f</string>
     <string name="global_action_dnaa">Nie pokazuj ponownie</string>
     <string name="global_action_settings">Ustawienia</string>

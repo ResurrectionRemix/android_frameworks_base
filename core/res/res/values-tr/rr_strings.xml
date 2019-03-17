@@ -62,4 +62,5 @@
    <string name="animation_random">Rastgele</string>
    <string name="action_null">Boş</string>
    <string name="default_string">Varsayılan</string>
+   <!-- SystemUI Restart -->
 </resources>

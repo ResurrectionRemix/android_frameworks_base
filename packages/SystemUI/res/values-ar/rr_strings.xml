@@ -24,7 +24,7 @@
     <string name="lte_off">LTE لا يعمل</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">لقطة الشاشة</string>
-    <string name="quick_settings_region_screenshot_label">لقطة الشاشة جزئية</string>
+    <string name="quick_settings_region_screenshot_label">لقطة الشاشة الجزئية</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - التنبيهات الخاطفة غافية لدقيقة واحدة.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - التنبيهات الخاطفة غافية ل <xliff:g id="number">%d</xliff:g> دقائق.</string>
@@ -163,7 +163,7 @@
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <string name="global_action_screenshot">لقطة الشاشة</string>
     <string name="global_action_screenrecord">تسجيل الشاشة</string>
-    <string name="global_action_flashlight">الكشاف</string>
+    <string name="global_action_flashlight">ضوء الفلاش</string>
     <!-- Advance location quick setting tile -->
     <string name="quick_settings_location_secondary_battery_saving">توفير البطارية</string>
     <string name="accessibility_quick_settings_location_battery_saving">تقرير الموقع: وضعية توفير الطاقة.</string>

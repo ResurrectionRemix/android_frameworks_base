@@ -62,4 +62,5 @@
    <string name="animation_random">임의</string>
    <string name="action_null">빈</string>
    <string name="default_string">기본값</string>
+   <!-- SystemUI Restart -->
 </resources>

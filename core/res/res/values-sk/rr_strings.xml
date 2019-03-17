@@ -62,4 +62,5 @@
    <string name="animation_random">Náhodné</string>
    <string name="action_null">Prázdne</string>
    <string name="default_string">Predvolené</string>
+   <!-- SystemUI Restart -->
 </resources>

@@ -62,4 +62,5 @@
    <string name="animation_random">عشوائي</string>
    <string name="action_null">فارغ</string>
    <string name="default_string">إفتراضي</string>
+   <!-- SystemUI Restart -->
 </resources>

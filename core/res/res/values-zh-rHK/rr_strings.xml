@@ -62,4 +62,5 @@
    <string name="animation_random">隨機</string>
    <string name="action_null">空白</string>
    <string name="default_string">預設</string>
+   <!-- SystemUI Restart -->
 </resources>

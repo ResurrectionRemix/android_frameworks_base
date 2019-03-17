@@ -62,4 +62,5 @@
    <string name="animation_random">Casuale</string>
    <string name="action_null">Vuoto</string>
    <string name="default_string">Predefinito</string>
+   <!-- SystemUI Restart -->
 </resources>

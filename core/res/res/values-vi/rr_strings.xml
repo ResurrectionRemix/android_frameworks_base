@@ -62,4 +62,5 @@
    <string name="animation_random">Ngẫu nhiên</string>
    <string name="action_null">Trống</string>
    <string name="default_string">Mặc định</string>
+   <!-- SystemUI Restart -->
 </resources>

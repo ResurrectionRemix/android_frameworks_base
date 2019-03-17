@@ -62,4 +62,5 @@
    <string name="animation_random">Acak</string>
    <string name="action_null">Kosong</string>
    <string name="default_string">Bawaan</string>
+   <!-- SystemUI Restart -->
 </resources>

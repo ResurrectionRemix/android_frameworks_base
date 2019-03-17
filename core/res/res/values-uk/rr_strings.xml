@@ -62,4 +62,5 @@
    <string name="animation_random">Випадково</string>
    <string name="action_null">Пусто</string>
    <string name="default_string">За замовчуванням</string>
+   <!-- SystemUI Restart -->
 </resources>

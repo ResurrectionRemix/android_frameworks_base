@@ -62,4 +62,5 @@
    <string name="animation_random">ランダム</string>
    <string name="action_null">なし</string>
    <string name="default_string">既定</string>
+   <!-- SystemUI Restart -->
 </resources>
