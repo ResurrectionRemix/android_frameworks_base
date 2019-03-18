@@ -181,4 +181,5 @@
     <string name="quick_settings_aod_label">Schermo sempre attivo</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Modalità a una mano</string>
+    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

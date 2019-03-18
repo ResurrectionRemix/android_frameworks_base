@@ -63,4 +63,6 @@
    <string name="action_null">Пусто</string>
    <string name="default_string">По умолчанию</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Необходима перезагрузка системного интерфейса</string>
+   <string name="systemui_restart_message">Чтобы все изменения вступили в силу, требуется перезагрузка системного интерфейса. Перезагрузить сейчас?</string>
 </resources>

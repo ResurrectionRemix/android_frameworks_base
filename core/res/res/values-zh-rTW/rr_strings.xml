@@ -63,4 +63,6 @@
    <string name="action_null">空白</string>
    <string name="default_string">預設</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">系統介面需要重新啟動</string>
+   <string name="systemui_restart_message">為了讓所有變更生效，我們需要重新啟動系統介面。是否現在重新啟動系統介面？</string>
 </resources>

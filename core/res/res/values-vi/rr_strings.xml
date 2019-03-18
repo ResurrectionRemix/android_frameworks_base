@@ -63,4 +63,6 @@
    <string name="action_null">Trống</string>
    <string name="default_string">Mặc định</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Phải khởi động lại giao diện hệ thống</string>
+   <string name="systemui_restart_message">Để những thay đổi có hiệu lực, SystemUI cần được khởi động lại. Khởi động lại SystemUI ngay?</string>
 </resources>

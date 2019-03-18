@@ -15,17 +15,52 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">Dopušta aplikaciji da se pretvara da je druga aplikacija. Zlonamjerne aplikacije mogu koristiti ovo kako bi pristupile privatnim podacima aplikacija. Dopustite ovu dozvolu s oprezom!</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">Kopiraj URL zapisa pada</string>
+   <string name="url_copy_success">URL kopiran uspješno</string>
+   <string name="url_copy_failed">Dogodila se greška tijekom uploada zapisa na dogbin</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">Trenutno svira</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">upravljati uređivačem navigacije</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Dopušta aplikaciji upravljanje uređivačem navigacijske trake.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">pristup upravitelju fonta</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Dopušta aplikaciji pristup upravitelju fonta.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Paket fonta koji ste instalirali nije podržan zbog nepostojećeg fonts.xml u datotekama fonta. Molimo kontaktirajte razvijača paketa za podršku.</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Ponovno pokreni u bootloader</string>
+   <string name="reboot_to_bootloader_message">Ponovno pokretanje u bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Ponovno pokretanje u recovery</string>
+   <string name="reboot_to_recovery_message">Ponovno pokretanje u recovery\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Ponovno pokreni sustav</string>
+   <string name="reboot_system_message">Ponovno pokretanje sustava\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Blijeđenje</string>
+   <string name="animation_slide_right">Klizanje udesno</string>
+   <string name="animation_slide_left">Klizanje ulijevo</string>
+   <string name="animation_slide_right_no_fade">Klizanje udesno (bez blijeđenja)</string>
+   <string name="animation_slide_left_no_fade">Klizanje ulijevo (bez blijeđenja)</string>
+   <string name="animation_slide_up">Klizanje prema dolje</string>
+   <string name="animation_slide_down">Klizanje prema gore</string>
+   <string name="animation_default">Zadano</string>
+   <string name="animation_translucent">Prozirno</string>
+   <string name="animation_grow_shrink">Širenje u rastu (gore)</string>
+   <string name="animation_grow_shrink_center">Širenje u rastu (sredina)</string>
+   <string name="animation_grow_shrink_bottom">Širenje u rastu (dno)</string>
+   <string name="animation_grow_shrink_left">Širenje u rastu (lijevo)</string>
+   <string name="animation_grow_shrink_right">Širenje u rastu (desno)</string>
+   <string name="animation_random">Nasumično</string>
+   <string name="action_null">Prazno</string>
+   <string name="default_string">Zadano</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Potrebno ponovno pokretanje korisničkog sučelja sustava</string>
+   <string name="systemui_restart_message">Kako bi se primijenile sve promjene, potrebno je ponovno pokretanje korisničkog sučelja sustava. Ponovno pokrenuti korisničko sučelje sustava?</string>
 </resources>

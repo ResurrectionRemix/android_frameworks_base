@@ -63,4 +63,6 @@
    <string name="action_null">空白</string>
    <string name="default_string">默认</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">需要重启系统界面</string>
+   <string name="systemui_restart_message">要使所有更改生效，需要重新启动系统界面。现在重新启动系统界面吗？</string>
 </resources>

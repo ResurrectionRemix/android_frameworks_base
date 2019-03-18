@@ -63,4 +63,6 @@
    <string name="action_null">Vide</string>
    <string name="default_string">Par défaut</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Un redémarrage de l\'interface utilisateur est nécessaire</string>
+   <string name="systemui_restart_message">Afin que toutes les modifications soient prises en compte, un redémarrage de l’interface utilisateur est nécessaire. Voulez vous redémarrer l’interface utilisateur maintenant ?</string>
 </resources>

@@ -63,4 +63,6 @@
    <string name="action_null">فارغ</string>
    <string name="default_string">إفتراضي</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">مطلوب إعادة تشغيل واجهة النظام</string>
+   <string name="systemui_restart_message">لتكون كافة التغييرات نافذة المفعول، مطلوب إعادة تشغيل واجهة النظام. إعادة تشغيل واجهة النظام الآن؟</string>
 </resources>

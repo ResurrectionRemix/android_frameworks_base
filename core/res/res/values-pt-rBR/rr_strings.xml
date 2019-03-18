@@ -63,4 +63,6 @@
    <string name="action_null">Vazio</string>
    <string name="default_string">Padrão </string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Reinício da interface do sistema requerido</string>
+   <string name="systemui_restart_message">Para que todas as alterações sejam efetivadas, uma reinicialização da Interface de Usuário do Sistema é necessária. Reiniciá-la agora?</string>
 </resources>

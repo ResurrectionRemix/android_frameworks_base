@@ -181,4 +181,5 @@
     <string name="quick_settings_aod_label">Mindig bekapcsolt kijelző (AOD)</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Egykezes üzemmód</string>
+    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

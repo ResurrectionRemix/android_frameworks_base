@@ -63,4 +63,6 @@
    <string name="action_null">Kosong</string>
    <string name="default_string">Bawaan</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Mulai Ulang SystemUI Diperlukan</string>
+   <string name="systemui_restart_message">Untuk membuat perubahan, diperlukan memulai ulang SystemUI. Mulai ulang sekarang?</string>
 </resources>

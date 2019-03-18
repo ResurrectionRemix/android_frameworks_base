@@ -63,4 +63,6 @@
    <string name="action_null">Üres</string>
    <string name="default_string">Alapértelmezett</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Rendszerfelület-újraindítás szükséges</string>
+   <string name="systemui_restart_message">Az összes módosítás érvénybe léptetéséhez a rendszerfelület újraindítása szükséges. Újraindítja most?</string>
 </resources>

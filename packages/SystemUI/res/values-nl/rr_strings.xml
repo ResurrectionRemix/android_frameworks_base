@@ -59,4 +59,5 @@
     <string name="kill">App Beëindigen</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

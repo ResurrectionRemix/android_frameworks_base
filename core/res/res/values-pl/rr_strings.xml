@@ -63,4 +63,6 @@
    <string name="action_null">Pusto</string>
    <string name="default_string">Domyślnie</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Wymagany restart SystemUI</string>
+   <string name="systemui_restart_message">Aby wszystkie zmiany zostały wprowadzone wymagany jest restart SystemUI. Zrestartować SystemUI teraz?</string>
 </resources>

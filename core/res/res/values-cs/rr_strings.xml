@@ -63,4 +63,6 @@
    <string name="action_null">Nic</string>
    <string name="default_string">Výchozí</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Je vyžadován restart SystemUI</string>
+   <string name="systemui_restart_message">Aby se projevily všechny změny, je třeba restartovat SystemUI. Restartovat nyní?</string>
 </resources>
