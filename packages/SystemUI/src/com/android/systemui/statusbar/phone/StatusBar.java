@@ -184,6 +184,10 @@ import com.android.internal.utils.SmartPackageMonitor.PackageChangedListener;
 import com.android.internal.utils.SmartPackageMonitor.PackageState;
 import com.android.systemui.statusbar.phone.Ticker;
 import com.android.systemui.statusbar.phone.TickerView;
+import com.android.internal.utils.ImageHelper;
+import com.android.internal.utils.PackageMonitor;
+import com.android.internal.utils.PackageMonitor.PackageChangedListener;
+import com.android.internal.utils.PackageMonitor.PackageState;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.MessagingGroup;
 import com.android.internal.widget.MessagingMessage;
@@ -339,7 +343,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             "lineagesystem:" + LineageSettings.System.BERRY_GLOBAL_STYLE;
     private static final String LOCKSCREEN_MEDIA_METADATA =
             "lineagesecure:" + LineageSettings.Secure.LOCKSCREEN_MEDIA_METADATA;
-
+    private static final String LOCKSCREEN_ALBUMART_FILTER =
+            Settings.Secure.LOCKSCREEN_ALBUMART_FILTER;
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
     private static final String BANNER_ACTION_SETUP =
@@ -801,6 +806,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private Handler ambientClearingHandler;
     private Runnable ambientClearingRunnable;
 
+    private int mAlbumArtFilter;
+
     @Override
     public void start() {
         mGroupManager = Dependency.get(NotificationGroupManager.class);
@@ -847,6 +854,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mDisplay = mWindowManager.getDefaultDisplay();
 
         mPackageMonitor = new SmartPackageMonitor();
+        tunerService.addTunable(this, LOCKSCREEN_ALBUMART_FILTER);
         mPackageMonitor.register(mContext, mHandler);
         mPackageMonitor.addListener(this);
 
@@ -2029,7 +2037,29 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 // might still be null
             }
             if (artworkBitmap != null) {
-                artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
+                switch (mAlbumArtFilter) {
+                    case 0:
+                    default:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
+                        break;
+                    case 1:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                            ImageHelper.toGrayscale(artworkBitmap));
+                        break;
+                    case 2:
+                        Drawable aw = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
+                        artworkDrawable = new BitmapDrawable(ImageHelper.getColoredBitmap(aw,
+                            mContext.getResources().getColor(R.color.fab_color)));
+                        break;
+                    case 3:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                            ImageHelper.getBlurredImage(mContext, artworkBitmap, 7.0f));
+                        break;
+                    case 4:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                            ImageHelper.getGrayscaleBlurredImage(mContext, artworkBitmap, 7.0f));
+                        break;
+                }
             }
         }
 
@@ -6678,6 +6708,16 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mShowMediaMetadata = TunerService.parseIntegerSwitch(newValue, true);
         } else if (BERRY_GLOBAL_STYLE.equals(key)) {
             updateTheme();
+        }
+        switch (key) {
+            case LOCKSCREEN_ALBUMART_FILTER:
+                mAlbumArtFilter = 0;
+                try {
+                    mAlbumArtFilter = Integer.valueOf(newValue);
+                } catch (NumberFormatException ex) {}
+                break;
+            default:
+                break;
         }
     }
     // End Extra BaseStatusBarMethods.
