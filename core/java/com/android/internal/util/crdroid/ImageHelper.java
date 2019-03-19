@@ -17,7 +17,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.rr;
+package com.android.internal.util.crdroid;
 
 import java.io.File;
 import java.io.FileDescriptor;
