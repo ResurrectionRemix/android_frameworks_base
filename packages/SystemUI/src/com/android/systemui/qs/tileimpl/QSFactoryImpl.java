@@ -55,6 +55,11 @@ import com.android.systemui.qs.tiles.ReadingModeTile;
 import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
+<<<<<<< HEAD
+=======
+import com.android.systemui.qs.tiles.SoundSearchTile;
+import com.android.systemui.qs.tiles.SoundTile;
+>>>>>>> b551b51620b... QS: Add Sound tile to Quick Settings
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
@@ -119,6 +124,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
     private final Provider<RRTile> mRRTileProvider;
     private final Provider<SmartPixelsTile> mSmartPixelsTileProvider;
+    private final Provider<SoundTile> mSoundTileProvider;
 
     private QSTileHost mHost;
 
@@ -162,7 +168,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<RRTile> rrTileProvider,
             Provider<AODTile> aodTileProvider,
-            Provider<SmartPixelsTile> smartPixelsTileProvider) {
+            Provider<SmartPixelsTile> smartPixelsTileProvider),
+            Provider<SoundTile> soundTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -203,6 +210,7 @@ public class QSFactoryImpl implements QSFactory {
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mRRTileProvider = rrTileProvider;
         mSmartPixelsTileProvider = smartPixelsTileProvider;
+        mSoundTileProvider = soundTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -299,6 +307,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mRRTileProvider.get();
             case "smartpixels":
                 return mSmartPixelsTileProvider.get();
+            case "sound":
+                return mSoundTileProvider.get();
         }
 
         // Intent tiles.
