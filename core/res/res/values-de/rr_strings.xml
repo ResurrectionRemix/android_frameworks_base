@@ -63,4 +63,6 @@
    <string name="action_null">Leer</string>
    <string name="default_string">Standard</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">SystemUI-Neustart erforderlich</string>
+   <string name="systemui_restart_message">Um alle Änderungen anzuwenden ist ein Neustart des SystemUI notwendig. SystemUI jetzt neustarten?</string>
 </resources>

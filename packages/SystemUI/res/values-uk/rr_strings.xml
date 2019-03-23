@@ -49,6 +49,7 @@
     <string name="quick_settings_screenrecord_lq_label">Запис екрану 480р</string>
     <string name="quick_settings_screenrecord_mq_label">Запис екрану 720р</string>
     <string name="quick_settings_screenrecord_hq_label">Запис екрану 720р+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Знімок екрану видалено</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -139,8 +140,6 @@
     <string name="omnijaws_current_text">Зараз</string>
     <string name="omnijaws_package_not_available">OmniJaws недоступний</string>
     <string name="omnijaws_service_last_update">Останнє оновлення:</string>
-    <!-- Weather string format in expanded statusbar header -->
-    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">Ігровий режим</string>
     <string name="gaming_mode_tile_toast">Ігровий режим ввімкнено</string>
@@ -182,4 +181,5 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Керування однією рукою</string>
     <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">Відкрити список запущених сервісів.</string>
 </resources>

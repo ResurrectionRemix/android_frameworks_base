@@ -49,6 +49,7 @@
     <string name="quick_settings_screenrecord_lq_label">स्क्रीन रिकॉर्ड 480p</string>
     <string name="quick_settings_screenrecord_mq_label">स्क्रीन रिकॉर्ड 720p</string>
     <string name="quick_settings_screenrecord_hq_label">स्क्रीन रिकॉर्ड 720p+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">स्क्रीनशॉट मिटा दिये</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -114,7 +115,6 @@
     <string name="pie_state_summary">Use pie controls while in immersive mode</string>
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
-    <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->

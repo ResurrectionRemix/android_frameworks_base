@@ -63,4 +63,6 @@
    <string name="action_null">Пусто</string>
    <string name="default_string">За замовчуванням</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Необхідно перезавантажити інтерфейс системи</string>
+   <string name="systemui_restart_message">Для застосування змін потрібно перезаватажити системний інтерфейс. Перезавантажити зараз?</string>
 </resources>

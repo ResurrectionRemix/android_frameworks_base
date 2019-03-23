@@ -24,7 +24,7 @@
     <string name="lte_off">LTE выкл</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Скриншот</string>
-    <string name="quick_settings_region_screenshot_label">Частичный скриншот</string>
+    <string name="quick_settings_region_screenshot_label">Скриншот выбранной области экрана</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Всплывающие уведомления выключены на 1 минуту.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Всплывающие уведомления выключены на <xliff:g id="number">%d</xliff:g> минут.</string>
@@ -49,6 +49,7 @@
     <string name="quick_settings_screenrecord_lq_label">Запись экрана 480p</string>
     <string name="quick_settings_screenrecord_mq_label">Запись экрана 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Запись экрана 720p+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Скриншот удалён</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -58,8 +59,8 @@
     <string name="keyguard_indication_turbo_power_time">TurboPower подключен (<xliff:g id="charging_time_left">%s</xliff:g> до полной зарядки)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower подключен</string>
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">Колонки</string>
-    <string name="qs_menu_item_columns_landscape">Колонки (альбомный режим)</string>
+    <string name="qs_menu_item_columns">Количество столбцов</string>
+    <string name="qs_menu_item_columns_landscape">Столбцы (альбомный режим)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -139,8 +140,6 @@
     <string name="omnijaws_current_text">Сейчас</string>
     <string name="omnijaws_package_not_available">OmniJaws недоступен</string>
     <string name="omnijaws_service_last_update">Последнее обновление:</string>
-    <!-- Weather string format in expanded statusbar header -->
-    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">Игровой режим</string>
     <string name="gaming_mode_tile_toast">Игровой режим включен</string>
@@ -182,4 +181,5 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Режим \"Управление одной рукой\"</string>
     <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">Открыть окно запущенных служб.</string>
 </resources>

@@ -32,6 +32,7 @@
     <!-- Screenrecord notification action: show/hide pointer -->
     <!-- Screen record notification error title -->
     <!-- Screenshot QS tile -->
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
@@ -43,7 +44,6 @@
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
-    <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->

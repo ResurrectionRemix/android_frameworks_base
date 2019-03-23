@@ -49,6 +49,7 @@
     <string name="quick_settings_screenrecord_lq_label">Ekran çəkilişi 480p</string>
     <string name="quick_settings_screenrecord_mq_label">Ekran çəkilişi 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Ekran çəkilişi 720p+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Ekran şəkli silindi</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -120,7 +121,6 @@
     <!-- On The Go -->
     <string name="onthego_front_camera">Ön kameradan istifade et</string>
     <string name="omnijaws_service_error">Erro</string>
-    <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->

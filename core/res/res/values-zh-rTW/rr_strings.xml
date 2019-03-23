@@ -14,7 +14,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_fakePackageSignature">欺騙應用程式簽名</string>
+   <string name="permlab_fakePackageSignature">假冒應用程式簽名</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">允許應用程式偽裝成不同的簽名。有害的應用程式可能會使用這個功能來存取私人的應用程式資料，授予此權限時請小心！</string>
    <!-- Button that copies the url to the log of a crashed application -->

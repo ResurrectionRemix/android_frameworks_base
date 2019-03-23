@@ -49,6 +49,7 @@
     <string name="quick_settings_screenrecord_lq_label">清晰度 480p</string>
     <string name="quick_settings_screenrecord_mq_label">清晰度 720p</string>
     <string name="quick_settings_screenrecord_hq_label">清晰度 720p+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">屏幕截图已删除</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -139,8 +140,6 @@
     <string name="omnijaws_current_text">现在</string>
     <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
     <string name="omnijaws_service_last_update">上次更新：</string>
-    <!-- Weather string format in expanded statusbar header -->
-    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">游戏模式</string>
     <string name="gaming_mode_tile_toast">游戏模式已启用</string>
@@ -182,4 +181,5 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">单手模式</string>
     <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">显示正在运行的服务</string>
 </resources>

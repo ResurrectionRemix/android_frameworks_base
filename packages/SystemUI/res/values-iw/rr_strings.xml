@@ -47,6 +47,7 @@
     <string name="quick_settings_screenrecord_lq_label">הקלטת מסך 480p</string>
     <string name="quick_settings_screenrecord_mq_label">הקלטת מסך 720p</string>
     <string name="quick_settings_screenrecord_hq_label">הקלטת מסך 720p+</string>
+    <!-- Sound QS Tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">צילום המסך נמחק</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -107,7 +108,6 @@
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
     <!-- On The Go -->
-    <!-- Weather string format in expanded statusbar header -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->
