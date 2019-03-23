@@ -50,6 +50,10 @@
     <string name="quick_settings_screenrecord_mq_label">Bildschirmaufnahme 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Bildschirmaufnahme 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Töne</string>
+    <string name="quick_settings_sound_ring">Klingeln</string>
+    <string name="quick_settings_sound_vibrate">Vibrieren</string>
+    <string name="quick_settings_sound_dnd">Nicht stören</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot gelöscht</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->

@@ -174,7 +174,7 @@
     <string name="force_stop_dlg_title">Αναγκαστική διακοπή;</string>
     <string name="force_stop_dlg_text">Αν κάνετε αναγκαστική διακοπή μιας εφαρμογής, ενδέχεται να μη λειτουργεί σωστά.</string>
     <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/ακύρωση</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Τερματισμός Εφαρμογής</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
