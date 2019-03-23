@@ -5051,18 +5051,6 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-         * Statusbar weather font size setting
-         * @hide
-         */
-        public static final String STATUS_BAR_WEATHER_SIZE = "status_bar_weather_size";
-
-        /**
-         * Statusbar weather font style setting
-         * @hide
-         */
-        public static final String STATUS_BAR_WEATHER_FONT_STYLE = "status_bar_weather_font_style";
-
-        /**
          * Enable blocking wakelock
          * @hide
          */
