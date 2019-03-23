@@ -31,7 +31,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
 
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
-    private View mLeftSide, mStatusIcons, mBattery, mClockCenter, mLogoIcon, mLogoIconRight, mNetworkTraffic, mNetworkTraffic;
+    private View mLeftSide, mStatusIcons, mBattery, mClockCenter, mLogoIcon, mLogoIconRight;
     private View mBatteryBars[] = new View[2];
     private Animator mCurrentAnimation;
 
@@ -47,9 +47,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mClockCenter = mView.findViewById(R.id.center_clock_layout);
         mStatusIcons = mView.findViewById(R.id.statusIcons);
         mBattery = mView.findViewById(R.id.battery);
-        mNetworkTraffic = mView.findViewById(R.id.networkTraffic);
         mBatteryBars[0] = mView.findViewById(R.id.battery_bar);
-        mNetworkTraffic = mView.findViewById(R.id.networkTraffic);
         mBatteryBars[1] = mView.findViewById(R.id.battery_bar_1);
         mLogoIcon = mView.findViewById(R.id.status_bar_logo);
         mLogoIconRight = mView.findViewById(R.id.status_bar_logo_right);
@@ -100,9 +98,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
                     animateTransitionTo(mBatteryBars[1], newAlphaBC),
                     animateTransitionTo(mLogoIcon, newAlpha),
                     animateTransitionTo(mLogoIconRight, newAlphaBC),
-                    animateTransitionTo(mNetworkTraffic, newAlpha),
-                    animateTransitionTo(mClockCenter, newAlpha),
-                    animateTransitionTo(mNetworkTraffic, newAlpha)
+                    animateTransitionTo(mClockCenter, newAlpha)
                     );
             if (isLightsOut(mode)) {
                 anims.setDuration(LIGHTS_OUT_DURATION);
@@ -117,9 +113,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mBatteryBars[1].setAlpha(newAlphaBC);
             mLogoIcon.setAlpha(newAlpha);
             mLogoIconRight.setAlpha(newAlphaBC);
-            mNetworkTraffic.setAlpha(newAlpha);
             mClockCenter.setAlpha(newAlpha);
-            mNetworkTraffic.setAlpha(newAlpha);
         }
     }
 }
