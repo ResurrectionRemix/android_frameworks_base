@@ -64,6 +64,11 @@ import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
+import android.database.ContentObserver;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.content.ContentResolver;
+
 
 import java.util.Locale;
 import java.util.Objects;
@@ -308,10 +313,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         int qqsHeight = mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_quick_header_panel_height);
 
-        if (mHideDragHandle) {
-            qqsHeight -= mContext.getResources().getDimensionPixelSize(
-                    R.dimen.quick_qs_drag_handle_height);
-        }
         setMinimumHeight(sbHeight + qqsHeight);
     }
 
@@ -678,9 +679,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private void updateSettings() {
-        if (mNetworkTraffic != null) {
-            mNetworkTraffic.updateSettings();
-        }
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;

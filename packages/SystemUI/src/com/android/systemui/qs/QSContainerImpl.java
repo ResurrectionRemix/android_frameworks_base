@@ -39,6 +39,10 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.PorterDuff.Mode;
 
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
+
 /**
  * Wrapper view with background which contains {@link QSPanel} and {@link BaseStatusBarHeader}
  */
@@ -64,10 +68,6 @@ public class QSContainerImpl extends FrameLayout implements
 
     private Drawable mQsBackGround;
 
-    public QSContainerImpl(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     // omni additions start
     private boolean mHeaderImageEnabled;
     private ImageView mBackgroundImage;
@@ -78,8 +78,6 @@ public class QSContainerImpl extends FrameLayout implements
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         Handler mHandler = new Handler();
-        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
-        settingsObserver.observe();
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(context);
     }
 
