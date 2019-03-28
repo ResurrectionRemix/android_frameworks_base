@@ -38,5 +38,7 @@
     <!-- Whether device has warp charging support -->
     <bool name="config_hasWarpCharger">false</bool>
 
+    <!-- Smart charging battery percentage -->
+    <integer name="config_smartChargingBatteryLevel">80</integer>
 
 </resources>
