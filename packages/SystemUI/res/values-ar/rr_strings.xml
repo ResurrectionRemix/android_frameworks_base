@@ -50,6 +50,11 @@
     <string name="quick_settings_screenrecord_mq_label">تسجيل الشاشة بجودة 720p</string>
     <string name="quick_settings_screenrecord_hq_label">تسجيل الشاشة بجودة 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">الصوت</string>
+    <string name="quick_settings_sound_ring">رنين</string>
+    <string name="quick_settings_sound_vibrate">إهتزاز</string>
+    <string name="quick_settings_sound_dnd">عدم الإزعاج</string>
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->

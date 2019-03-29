@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Απαιτείται η επανεκκίνηση του συστήματος του περιβάλλοντος χρήστη</string>
    <string name="systemui_restart_message">Για να τεθούν σε ισχύ οι αλλαγές, απαιτείται επανεκκίνηση του συστήματος του περιβάλλοντος χρήστη. Επανεκκίνηση του συστήματος του περιβάλλοντος χρήστη τώρα;</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Un redémarrage de l\'interface utilisateur est nécessaire</string>
    <string name="systemui_restart_message">Afin que toutes les modifications soient prises en compte, un redémarrage de l’interface utilisateur est nécessaire. Voulez vous redémarrer l’interface utilisateur maintenant ?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

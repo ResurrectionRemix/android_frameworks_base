@@ -63,4 +63,7 @@
    <string name="action_null">Prázdne</string>
    <string name="default_string">Predvolené</string>
    <!-- SystemUI Restart -->
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

@@ -28,6 +28,7 @@
     <!-- Screen record notification error title -->
     <!-- Screenshot QS tile -->
     <!-- Sound QS Tile -->
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->

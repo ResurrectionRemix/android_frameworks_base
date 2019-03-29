@@ -46,4 +46,7 @@
    <string name="animation_grow_shrink_left">(बायें से/में) बढना</string>
    <string name="animation_grow_shrink_right">(दायें से / में) बढना</string>
    <!-- SystemUI Restart -->
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

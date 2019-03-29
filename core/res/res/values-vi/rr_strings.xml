@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Phải khởi động lại giao diện hệ thống</string>
    <string name="systemui_restart_message">Để những thay đổi có hiệu lực, SystemUI cần được khởi động lại. Khởi động lại SystemUI ngay?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

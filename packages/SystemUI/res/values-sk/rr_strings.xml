@@ -50,6 +50,7 @@
     <string name="quick_settings_screenrecord_mq_label">Záznam obrazovky 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Záznam obrazovky 720p+</string>
     <!-- Sound QS Tile -->
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Snímka obrazovky bola odstránená</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->

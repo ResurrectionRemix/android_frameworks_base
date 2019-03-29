@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Rendszerfelület-újraindítás szükséges</string>
    <string name="systemui_restart_message">Az összes módosítás érvénybe léptetéséhez a rendszerfelület újraindítása szükséges. Újraindítja most?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

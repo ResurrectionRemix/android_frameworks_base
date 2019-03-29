@@ -43,7 +43,7 @@
    <string name="reboot_to_recovery_message">Restartowanie do recovery</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Zrestartuj system</string>
-   <string name="reboot_system_message">Restartowanie systemu</string>
+   <string name="reboot_system_message">Restartowanie systemu\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Zanikanie</string>
    <string name="animation_slide_right">Wjazd z prawej</string>
@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Wymagany restart SystemUI</string>
    <string name="systemui_restart_message">Aby wszystkie zmiany zostały wprowadzone wymagany jest restart SystemUI. Zrestartować SystemUI teraz?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

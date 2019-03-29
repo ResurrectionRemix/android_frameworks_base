@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Reinício da interface do sistema requerido</string>
    <string name="systemui_restart_message">Para que todas as alterações sejam efetivadas, uma reinicialização da Interface de Usuário do Sistema é necessária. Reiniciá-la agora?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

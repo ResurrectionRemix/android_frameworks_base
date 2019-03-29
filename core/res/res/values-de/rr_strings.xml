@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">SystemUI-Neustart erforderlich</string>
    <string name="systemui_restart_message">Um alle Änderungen anzuwenden ist ein Neustart des SystemUI notwendig. SystemUI jetzt neustarten?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

@@ -50,6 +50,11 @@
     <string name="quick_settings_screenrecord_mq_label">螢幕錄製：720P</string>
     <string name="quick_settings_screenrecord_hq_label">螢幕錄製：720P+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">音效</string>
+    <string name="quick_settings_sound_ring">鈴聲</string>
+    <string name="quick_settings_sound_vibrate">震動</string>
+    <string name="quick_settings_sound_dnd">請勿打擾</string>
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">已刪除螢幕錄影。</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->

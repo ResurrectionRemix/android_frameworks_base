@@ -32,4 +32,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Systemgränssnitt kräver omstart</string>
    <string name="systemui_restart_message">För att alla ändringar ska träda i kraft, krävs en SystemUI omstart. Starta om SystemUI nu?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

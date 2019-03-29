@@ -50,6 +50,11 @@
     <string name="quick_settings_screenrecord_mq_label">Запись экрана 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Запись экрана 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Мелодия вызова</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_dnd">\"Не беспокоить\"</string>
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Скриншот удалён</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -111,13 +116,13 @@
     <string name="global_action_reboot_recovery">Режим восстановления</string>
     <string name="global_action_reboot">Перезагрузить</string>
     <!-- Pie controls -->
-    <string name="pie_state_name">Панель Pie</string>
-    <string name="pie_state_summary">Использовать веерное управление (Pie) в полноэкранном режиме</string>
-    <string name="pie_battery_level">"Уровень заряда аккумулятора"</string>
-    <string name="quick_settings_pie">Панель Pie</string>
+    <string name="pie_state_name">Панель управления PIE</string>
+    <string name="pie_state_summary">Использовать панель управления PIE в полноэкранном режиме</string>
+    <string name="pie_battery_level">"Уровень заряда батареи"</string>
+    <string name="quick_settings_pie">Панель PIE</string>
     <!-- Smart pixels QS tile -->
-    <string name="quick_settings_smart_pixels">Умные пиксели</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение умных пикселей</string>
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение Smart Pixels</string>
     <!-- On The Go -->
     <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
     <string name="onthego_notif_title">Режим «На ходу» активен</string>

@@ -27,14 +27,14 @@
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">Управление редактором панели навигации</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_toggleNavigationEditor">Описание разрешения приложения, пользователь может выбрать каким приложениям позволять что либо.</string>
+   <string name="permdesc_toggleNavigationEditor">Позволяет приложению управлять редактором панели навигации.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_accessFontManager">доступ к менеджеру шрифтов</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_accessFontManager">Позволяет приложению, получить доступ к менеджеру шрифтов.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
-   <string name="fontservice_incompatible_font">Набор шрифтов который вы установили несовместим, из-за отсутствия важных файлов (Например fonts.xml). Пожалуйста, обратитесь к разработчику набора для помощи.</string>
+   <string name="fontservice_incompatible_font">Набор шрифтов, который вы установили, несовместим из-за отсутствия файла fonts.xml. Пожалуйста, обратитесь к разработчику набора для получения поддержки.</string>
    <!-- advanced reboot to bootloader. -->
    <string name="reboot_to_bootloader_title">Перезагрузиться в Fastboot</string>
    <string name="reboot_to_bootloader_message">Перезагрузка в режим fastboot\u2026</string>
@@ -65,4 +65,7 @@
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Необходима перезагрузка системного интерфейса</string>
    <string name="systemui_restart_message">Чтобы все изменения вступили в силу, требуется перезагрузка системного интерфейса. Перезагрузить сейчас?</string>
+   <!-- Pocket Lock -->
+   <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

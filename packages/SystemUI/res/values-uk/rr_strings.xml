@@ -50,6 +50,11 @@
     <string name="quick_settings_screenrecord_mq_label">Запис екрану 720р</string>
     <string name="quick_settings_screenrecord_hq_label">Запис екрану 720р+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Дзвінок</string>
+    <string name="quick_settings_sound_vibrate">Вібрація</string>
+    <string name="quick_settings_sound_dnd">Не турбувати</string>
+    <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Знімок екрану видалено</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
