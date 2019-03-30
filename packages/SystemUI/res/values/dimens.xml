@@ -675,7 +675,7 @@
 
     <!-- Extra padding between the mobile data type icon and the strength indicator when the data
          type icon is wide. -->
-    <dimen name="wide_type_icon_start_padding">2dp</dimen>
+    <dimen name="wide_type_icon_start_padding">1.76dp</dimen>
 
     <!-- Padding between the mobile signal indicator and the start icon when the roaming icon
          is displayed in the upper left corner. -->

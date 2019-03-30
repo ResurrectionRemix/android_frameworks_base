@@ -123,6 +123,14 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         mMobileType.setVisibility(View.GONE);
         mMobileType = findViewById(useOldStyle ? R.id.mobile_type_old : R.id.mobile_type);
         mMobileType.setVisibility(visOld);
+        int wideTypeIconStartPadding = mContext.getResources().getDimensionPixelSize(R.dimen.wide_type_icon_start_padding);
+        mMobile.setPaddingRelative(
+          useOldStyle &&
+          mState.typeId != 0 &&
+          mState.typeId != R.drawable.stat_sys_data_fully_connected_g &&
+          mState.typeId != R.drawable.stat_sys_data_fully_connected_e &&
+          mState.typeId != R.drawable.stat_sys_data_fully_connected_h
+            ? wideTypeIconStartPadding : 0, 0, 0, 0);
     }
 
     private void initDotView() {
