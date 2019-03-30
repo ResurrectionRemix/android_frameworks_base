@@ -14,8 +14,8 @@
     limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="10.5dp"
-        android:height="@dimen/signal_icon_size"
+        android:width="11.25dp"
+        android:height="15.0dp"
         android:viewportWidth="18.0"
         android:viewportHeight="26.0">
     <path
