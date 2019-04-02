@@ -246,8 +246,8 @@ public class EdgeGestureService extends IEdgeGestureService.Stub {
             Slog.d(TAG, "Shutting down monitoring input events ...");
         }
         mDisplayObserver.unobserve();
-        mInputManager.setInputFilter(mInputFilter);
         mInputFilter = null;
+        mInputManager.setInputFilter(mInputFilter);
     }
 
     // called through Binder
