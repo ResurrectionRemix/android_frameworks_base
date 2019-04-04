@@ -66,6 +66,7 @@
    <string name="systemui_restart_title">Wymagany restart SystemUI</string>
    <string name="systemui_restart_message">Aby wszystkie zmiany zostały wprowadzone wymagany jest restart SystemUI. Zrestartować SystemUI teraz?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Przytrzymaj przycisk zasilania w celu interakcji</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

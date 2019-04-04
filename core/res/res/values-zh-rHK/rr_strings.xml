@@ -18,9 +18,9 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">允許應用程式偽裝成不同的簽名。有害的應用程式可能會使用這個功能來存取私人的應用程式資料，授予此權限時請小心！</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">複製崩潰日誌連接</string>
-   <string name="url_copy_success">連接已被成功複製</string>
-   <string name="url_copy_failed">上傳崩潰日誌至 Dogbin 時發生錯誤</string>
+   <string name="aerr_copy">複製崩潰紀錄連結</string>
+   <string name="url_copy_success">已成功複製連結</string>
+   <string name="url_copy_failed">上傳崩潰紀錄至 Dogbin 時發生錯誤</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">現正播放</string>
    <string name="ambient_recognition_information">%2$s 由 %1$s</string>
@@ -66,6 +66,7 @@
    <string name="systemui_restart_title">系統介面需要重新啟動</string>
    <string name="systemui_restart_message">為了讓所有變更生效，我們需要重新啟動系統介面。是否現在重新啟動系統介面？</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">長按電源鍵進行互動</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

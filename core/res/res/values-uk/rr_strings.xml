@@ -66,6 +66,7 @@
    <string name="systemui_restart_title">Необхідно перезавантажити інтерфейс системи</string>
    <string name="systemui_restart_message">Для застосування змін потрібно перезаватажити системний інтерфейс. Перезавантажити зараз?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Довге натискання кнопки живлення для увімкнення ліхтарика</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

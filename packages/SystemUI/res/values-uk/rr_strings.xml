@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">Вібрація</string>
     <string name="quick_settings_sound_dnd">Не турбувати</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Інформація про процесор</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Інформація про процесор вимкнена</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Інформація про процесор увімкнена</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Інформація про процесор вимкнена</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Інформація про процесор увімкнута</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Знімок екрану видалено</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Керування однією рукою</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Відкрити список запущених сервісів.</string>
 </resources>

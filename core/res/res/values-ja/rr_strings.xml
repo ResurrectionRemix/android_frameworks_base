@@ -66,6 +66,7 @@
    <string name="systemui_restart_title">システム UI の再起動が必要です</string>
    <string name="systemui_restart_message">全ての変更を反映するにはシステム UI の再起動が必要です。再起動しますか?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">電源ボタンを長押しで操作</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

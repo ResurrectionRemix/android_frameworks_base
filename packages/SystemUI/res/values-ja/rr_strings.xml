@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">振動</string>
     <string name="quick_settings_sound_dnd">マナーモード</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU 情報</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU 情報 OFF</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU 情報 ON</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">CPU 情報を OFF にしました</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">CPU 情報を ON にしました</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">片手モード</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">実行中のサービスを開く</string>
 </resources>

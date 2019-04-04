@@ -26,6 +26,8 @@
     <string name="quick_settings_screenshot_label">Schermafbeelding</string>
     <string name="quick_settings_region_screenshot_label">Gedeeltelijke schermafbeelding</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Meldingen zijn voor 1 minuut gedempt.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Meldingen zijn voor <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
     <!-- Screenrecord Notification Ticker -->
     <!-- Screenrecord notification title -->
     <!-- Screenrecord notification action: Stop -->
@@ -60,5 +62,4 @@
     <string name="kill">App Beëindigen</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

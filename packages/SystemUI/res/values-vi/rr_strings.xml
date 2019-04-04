@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">Rung</string>
     <string name="quick_settings_sound_dnd">Không làm phiền</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Thông tin CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Tắt thông tin CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Bật thông tin CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Thông tin CPU đã tắt</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Thông tin CPU đã bật</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Chế độ một tay</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Mở các dịch vụ đang hoạt động.</string>
 </resources>

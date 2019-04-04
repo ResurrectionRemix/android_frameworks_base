@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">Vibrace</string>
     <string name="quick_settings_sound_dnd">Nerušit</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Informace o CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informace o CPU vypnuty</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informace o CPU zapnuty</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Informace o CPU byly vypnuty</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Informace o CPU byly zapnuty</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Snímek obrazovky byl smazán</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Režim jedné ruky</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Otevřít obrazovku spuštěných služeb.</string>
 </resources>

@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">Rezgés</string>
     <string name="quick_settings_sound_dnd">Ne zavarjanak (DND)</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU-adatok</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU-adatok ki</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU-adatok be</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">A CPU-adatok kikapcsolva</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">A CPU-adatok bekapcsolva</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">A képernyőmentés törölve</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">Mindig bekapcsolt kijelző (AOD)</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Egykezes üzemmód</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">A Futó szolgálatások képernyőjének megnyitása.</string>
 </resources>

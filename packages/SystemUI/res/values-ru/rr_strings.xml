@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">Вибрация</string>
     <string name="quick_settings_sound_dnd">\"Не беспокоить\"</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Информация о ЦП</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Информация о ЦП выключена</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Информация о ЦП включена</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Информация о процессоре выключена</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Информация о процессоре включена</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Скриншот удалён</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Режим \"Управление одной рукой\"</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Открыть окно запущенных служб.</string>
 </resources>

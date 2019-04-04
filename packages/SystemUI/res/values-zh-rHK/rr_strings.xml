@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">震動</string>
     <string name="quick_settings_sound_dnd">請勿打擾</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU 資訊</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">關閉CPU資訊</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">開啟CPU資訊</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">CPU資訊已關閉</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">CPU資訊已開啟</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">已刪除螢幕錄影。</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">單手模式</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">開啟正在執行的服務畫面。</string>
 </resources>

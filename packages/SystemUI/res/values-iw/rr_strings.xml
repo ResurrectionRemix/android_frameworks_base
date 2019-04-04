@@ -53,6 +53,11 @@
     <string name="quick_settings_sound_vibrate">רטט</string>
     <string name="quick_settings_sound_dnd">לא להפריע</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">פרטי המעבד</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">כיבוי פרטי המעבד</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">הפעלת פרטי המעבד</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">פרטי המעבד כבויים</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">פרטי המעבד מופעלים</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">צילום המסך נמחק</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -111,17 +116,46 @@
     <string name="global_action_reboot_recovery">שחזור</string>
     <string name="global_action_reboot">הפעל מחדש</string>
     <!-- Pie controls -->
+    <string name="pie_battery_level">"רמת סוללה "</string>
+    <string name="quick_settings_pie">תפריט מעגלי</string>
     <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">פיקסלים חכמים</string>
+    <string name="quick_settings_smart_pixels_on_power_save">הפעלה אוטומטית של פיקסלים חכמים</string>
     <!-- On The Go -->
+    <string name="onthego_notif_options">אפשרויות</string>
+    <string name="onthego_transparency">שקיפות</string>
+    <string name="onthego_front_camera">שימוש במצלמה קדמית</string>
+    <string name="onthego_service_toggle">הפעלת שירות מחדש אוטומטית</string>
+    <string name="onthego_channel_name">ראשי</string>
+    <string name="omnijaws_service_error">שגיאה</string>
+    <string name="omnijaws_service_unkown">אין נתוני מזג אוויר</string>
+    <string name="omnijaws_service_error_long">שגיאה בטעינת נתוני מזג האויר</string>
+    <string name="omnijaws_service_disabled">השירות מושבת</string>
+    <string name="omnijaws_detail_header">מזג אוויר</string>
+    <string name="omnijaws_label_default">מזג אוויר</string>
+    <string name="omnijaws_current_text">כעת</string>
+    <string name="omnijaws_package_not_available">OmniJaws אינו זמין</string>
+    <string name="omnijaws_service_last_update">עדכון אחרון:</string>
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_title">מצב משחק</string>
+    <string name="gaming_mode_tile_toast">מצב משחק פעיל</string>
+    <string name="gaming_mode_tile_toast_disabled">מצב משחק מושבת</string>
+    <string name="gaming_mode_dialog_title">מצב משחק</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_sub">מערכת</string>
+    <string name="global_action_reboot_bootloader">מנהל הפעלה</string>
+    <string name="global_action_dnaa">לא להציג שוב</string>
+    <string name="global_action_settings">הגדרות</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">צילום מסך</string>
+    <string name="global_action_screenrecord">הקלטת מסך</string>
+    <string name="global_action_flashlight">פנס</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">חיסכון בסוללה</string>
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
 </resources>

@@ -55,6 +55,11 @@
     <string name="quick_settings_sound_vibrate">إهتزاز</string>
     <string name="quick_settings_sound_dnd">عدم الإزعاج</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">معلومات المعالج</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">إيقاف معلومات المعالج</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">تشغيل معلومات المعالج</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">تم إيقاف تشغيل معلومات المعالج</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">تم تشغيل معلومات المعالج</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -185,6 +190,4 @@
     <string name="quick_settings_aod_label">دائماً على الشاشة</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">وضع اليد الواحدة</string>
-    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">فتح شاشة الخدمات المشغلة في الخلفية.</string>
 </resources>
