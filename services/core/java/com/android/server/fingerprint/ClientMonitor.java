@@ -30,6 +30,8 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Slog;
 
+import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreen;
+
 import java.util.NoSuchElementException;
 
 /**
@@ -114,6 +116,11 @@ public abstract class ClientMonitor implements IBinder.DeathRecipient {
      * Gets the fingerprint daemon from the cached state in the container class.
      */
     public abstract IBiometricsFingerprint getFingerprintDaemon();
+
+    /**
+     * Gets the fingerprint in screen daemon from the cached state in the container class.
+     */
+    public abstract IFingerprintInscreen getFingerprintInScreenDaemon();
 
     // Event callbacks from driver. Inappropriate calls is flagged/logged by the
     // respective client (e.g. enrolling shouldn't get authenticate events).
