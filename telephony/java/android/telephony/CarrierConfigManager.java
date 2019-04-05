@@ -2393,6 +2393,12 @@ public class CarrierConfigManager {
     public static final String KEY_HIDE_TTY_HCO_VCO_WITH_RTT_BOOL = "hide_tty_hco_vco_with_rtt";
 
     /**
+     * Flag indicating whether RTT is always enabled.
+     * @hide
+     */
+    public static final String KEY_RTT_ALWAYS_ENABLED_BOOL = "rtt_always_enabled_bool";
+
+    /**
      * The flag to disable the popup dialog which warns the user of data charges.
      * @hide
      */
@@ -3606,6 +3612,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_ROAMING_OPERATOR_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
         sDefaults.putBoolean(KEY_RTT_SUPPORTED_BOOL, false);
+        sDefaults.putBoolean(KEY_RTT_ALWAYS_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_TTY_SUPPORTED_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_TTY_HCO_VCO_WITH_RTT_BOOL, false);
         sDefaults.putBoolean(KEY_DISABLE_CHARGE_INDICATION_BOOL, false);
