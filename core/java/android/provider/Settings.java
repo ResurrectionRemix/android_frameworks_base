@@ -10782,6 +10782,42 @@ public final class Settings {
         private static final Validator LOCKSCREEN_VISUALIZER_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Lockscreen lavalamp psychedelic colors
+         * @hide
+         */
+        public static final String LOCKSCREEN_LAVALAMP_ENABLED = "lockscreen_lavalamp_enabled";
+
+        /**
+         * Lockscreen lavalamp animation speed
+         * @hide
+         */
+        public static final String LOCKSCREEN_LAVALAMP_SPEED = "lockscreen_lavalamp_speed";
+
+        /**
+         * Whether to use automatic color for visualizer
+         * @hide
+         */
+        public static final String LOCKSCREEN_VISUALIZER_AUTOCOLOR = "lockscreen_visualizer_autocolor";
+
+        /**
+         * Number of bars shown in visualizer
+         * @hide
+         */
+        public static final String LOCKSCREEN_SOLID_UNITS_COUNT = "lockscreen_solid_units_count";
+
+        /**
+         * Visualizer sanity level
+         * @hide
+         */
+        public static final String LOCKSCREEN_SOLID_FUDGE_FACTOR = "lockscreen_solid_fudge_factor";
+
+        /**
+         * Visualizer opacity
+         * @hide
+         */
+        public static final String LOCKSCREEN_SOLID_UNITS_OPACITY = "lockscreen_solid_units_opacity";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear

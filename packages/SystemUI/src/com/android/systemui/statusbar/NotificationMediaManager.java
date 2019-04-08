@@ -565,8 +565,8 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         if (statusBar != null &&
                 mStatusBarStateController.getState() != StatusBarState.SHADE) {
             VisualizerView visualizerView = statusBar.getVisualizer();
-            if (!mKeyguardMonitor.isKeyguardFadingAway() && hasArtwork) {
-                // if there's album art, ensure visualizer is visible
+            if (!mKeyguardMonitor.isKeyguardFadingAway()) {
+                // ensure visualizer is visible
                 visualizerView.setPlaying(getMediaControllerPlaybackState(mMediaController) ==
                         PlaybackState.STATE_PLAYING);
             }
