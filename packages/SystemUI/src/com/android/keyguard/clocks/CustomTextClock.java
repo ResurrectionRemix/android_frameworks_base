@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.text.format.DateUtils;
@@ -21,10 +22,61 @@ import com.android.systemui.R;
 
 public class CustomTextClock extends TextView {
 
-    private final String[] TensString = {"", "", "Twenty","Thirty","Forty", "Fifty", "Sixty"};
-    private final String[] UnitsString = {"Clock", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
-    private final String[] TensStringH = {"", "", "Twenty","Thirty","Forty", "Fifty", "Sixty"};
-    private final String[] UnitsStringH = {"Twelve", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+    final Resources res = getResources();
+
+    private final String[] TensString  = { "", "", res.getString(R.string.text_clock_tens_string_twenty),
+                                           res.getString(R.string.text_clock_tens_string_thirty),
+                                           res.getString(R.string.text_clock_tens_string_forty),
+                                           res.getString(R.string.text_clock_tens_string_fifty),
+                                           res.getString(R.string.text_clock_tens_string_sixty) };
+
+    private final String[] UnitsString = { res.getString(R.string.text_clock_units_string_clock),
+                                           res.getString(R.string.text_clock_units_string_one),
+                                           res.getString(R.string.text_clock_units_string_two),
+                                           res.getString(R.string.text_clock_units_string_three),
+                                           res.getString(R.string.text_clock_units_string_four),
+                                           res.getString(R.string.text_clock_units_string_five),
+                                           res.getString(R.string.text_clock_units_string_six),
+                                           res.getString(R.string.text_clock_units_string_seven),
+                                           res.getString(R.string.text_clock_units_string_eight),
+                                           res.getString(R.string.text_clock_units_string_nine),
+                                           res.getString(R.string.text_clock_units_string_ten),
+                                           res.getString(R.string.text_clock_units_string_eleven),
+                                           res.getString(R.string.text_clock_units_string_twelve),
+                                           res.getString(R.string.text_clock_units_string_thirteen),
+                                           res.getString(R.string.text_clock_units_string_fourteen),
+                                           res.getString(R.string.text_clock_units_string_fifteen),
+                                           res.getString(R.string.text_clock_units_string_sixteen),
+                                           res.getString(R.string.text_clock_units_string_seventeen),
+                                           res.getString(R.string.text_clock_units_string_eighteen),
+                                           res.getString(R.string.text_clock_units_string_nineteen) };
+
+    private final String[] TensStringH  = { "", "", res.getString(R.string.text_clock_tens_string_h_twenty),
+                                            res.getString(R.string.text_clock_tens_string_h_thirty),
+                                            res.getString(R.string.text_clock_tens_string_h_forty),
+                                            res.getString(R.string.text_clock_tens_string_h_fifty),
+                                            res.getString(R.string.text_clock_tens_string_h_sixty) };
+
+    private final String[] UnitsStringH = { res.getString(R.string.text_clock_units_string_h_twelve_h),
+                                            res.getString(R.string.text_clock_units_string_h_one),
+                                            res.getString(R.string.text_clock_units_string_h_two),
+                                            res.getString(R.string.text_clock_units_string_h_three),
+                                            res.getString(R.string.text_clock_units_string_h_four),
+                                            res.getString(R.string.text_clock_units_string_h_five),
+                                            res.getString(R.string.text_clock_units_string_h_six),
+                                            res.getString(R.string.text_clock_units_string_h_seven),
+                                            res.getString(R.string.text_clock_units_string_h_eight),
+                                            res.getString(R.string.text_clock_units_string_h_nine),
+                                            res.getString(R.string.text_clock_units_string_h_ten),
+                                            res.getString(R.string.text_clock_units_string_h_eleven),
+                                            res.getString(R.string.text_clock_units_string_h_twelve),
+                                            res.getString(R.string.text_clock_units_string_h_thirteen),
+                                            res.getString(R.string.text_clock_units_string_h_fourteen),
+                                            res.getString(R.string.text_clock_units_string_h_fifteen),
+                                            res.getString(R.string.text_clock_units_string_h_sixteen),
+                                            res.getString(R.string.text_clock_units_string_h_seventeen),
+                                            res.getString(R.string.text_clock_units_string_h_eighteen),
+                                            res.getString(R.string.text_clock_units_string_h_nineteen) };
 
     private Time mCalendar;
 
@@ -116,14 +168,14 @@ public class CustomTextClock extends TextView {
         switch(handType){
             case 0:
                 if (hour == 12 && minute == 0) {
-                setText("High");
+                setText(res.getString(R.string.text_clock_high));
                 } else {
                 setText(getIntStringHour(hour));
                 }
                 break;
             case 1:
                 if (hour == 12 && minute == 0) {
-                setText("Noon");
+                setText(res.getString(R.string.text_clock_noon));
                 } else {
                 setText(getIntStringMin(minute));
                 }
@@ -183,10 +235,11 @@ public class CustomTextClock extends TextView {
             if ( units == 0 ) {
                 NumString = TensString[tens];
             } else {
-                NumString = TensString[tens]+" "+UnitsString[units];
+                NumString = TensString[tens] + " " + UnitsString[units];
             }
         } else if (num < 10 ) {
-            NumString = "O\'"+UnitsString[num];
+            NumString = res.getString(R.string.text_clock_zero_h_min) +
+                            " " + UnitsString[num];
         } else if (num >= 10 && num < 20) {
             NumString = UnitsString[num];
         }
@@ -195,4 +248,3 @@ public class CustomTextClock extends TextView {
     }
 
 }
-
