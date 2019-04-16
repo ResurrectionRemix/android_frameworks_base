@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (C) 2019 ResurrectionRemix
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources>
+
+    <string-array name="TensString">
+        <item></item>
+        <item></item>
+        <item>@string/text_clock_tens_string_twenty</item>
+        <item>@string/text_clock_tens_string_thirty</item>
+        <item>@string/text_clock_tens_string_forty</item>
+        <item>@string/text_clock_tens_string_fifty</item>
+        <item>@string/text_clock_tens_string_sixty</item>
+    </string-array>
+
+    <string-array name="UnitsString">
+        <item>@string/text_clock_units_string_clock</item>
+        <item>@string/text_clock_units_string_one</item>
+        <item>@string/text_clock_units_string_two</item>
+        <item>@string/text_clock_units_string_three</item>
+        <item>@string/text_clock_units_string_four</item>
+        <item>@string/text_clock_units_string_five</item>
+        <item>@string/text_clock_units_string_six</item>
+        <item>@string/text_clock_units_string_seven</item>
+        <item>@string/text_clock_units_string_eight</item>
+        <item>@string/text_clock_units_string_nine</item>
+        <item>@string/text_clock_units_string_ten</item>
+        <item>@string/text_clock_units_string_eleven</item>
+        <item>@string/text_clock_units_string_twelve</item>
+        <item>@string/text_clock_units_string_thirteen</item>
+        <item>@string/text_clock_units_string_fourteen</item>
+        <item>@string/text_clock_units_string_fifteen</item>
+        <item>@string/text_clock_units_string_sixteen</item>
+        <item>@string/text_clock_units_string_seventeen</item>
+        <item>@string/text_clock_units_string_eighteen</item>
+        <item>@string/text_clock_units_string_nineteen</item>
+    </string-array>
+
+    <string-array name="TensStringH">
+        <item></item>
+        <item></item>
+        <item>@string/text_clock_tens_string_h_twenty</item>
+        <item>@string/text_clock_tens_string_h_thirty</item>
+        <item>@string/text_clock_tens_string_h_forty</item>
+        <item>@string/text_clock_tens_string_h_fifty</item>
+        <item>@string/text_clock_tens_string_h_sixty</item>
+    </string-array>
+
+    <string-array name="UnitsStringH">
+        <item>@string/text_clock_units_string_h_twelve_h</item>
+        <item>@string/text_clock_units_string_h_one</item>
+        <item>@string/text_clock_units_string_h_two</item>
+        <item>@string/text_clock_units_string_h_three</item>
+        <item>@string/text_clock_units_string_h_four</item>
+        <item>@string/text_clock_units_string_h_five</item>
+        <item>@string/text_clock_units_string_h_six</item>
+        <item>@string/text_clock_units_string_h_seven</item>
+        <item>@string/text_clock_units_string_h_eight</item>
+        <item>@string/text_clock_units_string_h_nine</item>
+        <item>@string/text_clock_units_string_h_ten</item>
+        <item>@string/text_clock_units_string_h_eleven</item>
+        <item>@string/text_clock_units_string_h_twelve</item>
+        <item>@string/text_clock_units_string_h_thirteen</item>
+        <item>@string/text_clock_units_string_h_fourteen</item>
+        <item>@string/text_clock_units_string_h_fifteen</item>
+        <item>@string/text_clock_units_string_h_sixteen</item>
+        <item>@string/text_clock_units_string_h_seventeen</item>
+        <item>@string/text_clock_units_string_h_eighteen</item>
+        <item>@string/text_clock_units_string_h_nineteen</item>
+    </string-array>
+
+</resources>
