@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.keyguard;
 
 import android.animation.Animator;
@@ -20,7 +21,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.IActivityManager;
 import android.content.Context;
-import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,7 +29,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.support.v4.graphics.ColorUtils;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -43,7 +42,6 @@ import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.graphics.Typeface;
 
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.ViewClippingUtil;
@@ -51,48 +49,18 @@ import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.util.wakelock.KeepAwakeAnimationListener;
-import android.provider.Settings;
-import com.android.systemui.omni.CurrentWeatherView;
 
 import com.google.android.collect.Sets;
 
 import java.util.Locale;
 
 public class KeyguardStatusView extends GridLayout implements
-    ConfigurationController.ConfigurationListener, View.OnLayoutChangeListener {
-
+        ConfigurationController.ConfigurationListener, View.OnLayoutChangeListener {
     private static final boolean DEBUG = KeyguardConstants.DEBUG;
     private static final String TAG = "KeyguardStatusView";
     private static final int MARQUEE_DELAY_MS = 2000;
 
-    private static final String FONT_SS_NORMAL = "sans-serif";
-    private static final String FONT_SS_LIGTH = "sans-serif-light";
-    private static final String FONT_SS_MEDIUM = "sans-serif-medium";
-    private static final String FONT_SS_BLACK = "sans-serif-black";
-    private static final String FONT_SS_THIN = "sans-serif-thin";
-    private static final String FONT_SS_CONDENSED = "sans-serif-condensed";
-    private static final String FONT_SS_CONDENSED_LIGTH = "sans-serif-condensed-light";
-
-    private static final Typeface[] LOCK_FONTS = new Typeface[] {
-        Typeface.create(FONT_SS_NORMAL, Typeface.NORMAL),
-        Typeface.create(FONT_SS_NORMAL, Typeface.ITALIC),
-        Typeface.create(FONT_SS_NORMAL, Typeface.BOLD),
-        Typeface.create(FONT_SS_NORMAL, Typeface.BOLD_ITALIC),
-        Typeface.create(FONT_SS_LIGTH, Typeface.NORMAL),
-        Typeface.create(FONT_SS_LIGTH, Typeface.ITALIC),
-        Typeface.create(FONT_SS_THIN, Typeface.NORMAL),
-        Typeface.create(FONT_SS_THIN, Typeface.ITALIC),
-        Typeface.create(FONT_SS_CONDENSED, Typeface.NORMAL),
-        Typeface.create(FONT_SS_CONDENSED, Typeface.ITALIC),
-        Typeface.create(FONT_SS_CONDENSED_LIGTH, Typeface.NORMAL),
-        Typeface.create(FONT_SS_CONDENSED_LIGTH, Typeface.ITALIC),
-        Typeface.create(FONT_SS_CONDENSED, Typeface.BOLD),
-        Typeface.create(FONT_SS_CONDENSED, Typeface.BOLD_ITALIC),
-        Typeface.create(FONT_SS_MEDIUM, Typeface.NORMAL),
-        Typeface.create(FONT_SS_MEDIUM, Typeface.ITALIC),
-        Typeface.create(FONT_SS_BLACK, Typeface.NORMAL),
-        Typeface.create(FONT_SS_BLACK, Typeface.ITALIC)
-    };
+	private static final String FONT_FAMILY = "sans-serif-light";
 
     private final LockPatternUtils mLockPatternUtils;
     private final IActivityManager mIActivityManager;
@@ -103,19 +71,16 @@ public class KeyguardStatusView extends GridLayout implements
     private View mClockSeparator;
     private TextView mOwnerInfo;
     private KeyguardSliceView mKeyguardSlice;
-    private View mKeyguardSliceView;
     private Runnable mPendingMarqueeStart;
     private Handler mHandler;
 
-    private ArraySet < View > mVisibleInDoze;
+    private ArraySet<View> mVisibleInDoze;
     private boolean mPulsing;
     private boolean mWasPulsing;
     private float mDarkAmount = 0;
     private int mTextColor;
     private float mWidgetPadding;
     private int mLastLayoutHeight;
-    private CurrentWeatherView mWeatherView;
-    private boolean mShowWeather;
 
     private KeyguardUpdateMonitorCallback mInfoCallback = new KeyguardUpdateMonitorCallback() {
 
@@ -131,11 +96,6 @@ public class KeyguardStatusView extends GridLayout implements
                 refreshTime();
                 updateOwnerInfo();
                 updateLogoutView();
-                refreshLockFont();
-                refreshLockDateFont();
-                refreshclocksize();
-                refreshdatesize();
-                updateSettings();
             }
         }
 
@@ -154,11 +114,6 @@ public class KeyguardStatusView extends GridLayout implements
             refreshFormat();
             updateOwnerInfo();
             updateLogoutView();
-            refreshLockFont();
-            refreshLockDateFont();
-            refreshclocksize();
-            refreshdatesize();
-            updateSettings();
         }
 
         @Override
@@ -180,8 +135,8 @@ public class KeyguardStatusView extends GridLayout implements
         mIActivityManager = ActivityManager.getService();
         mLockPatternUtils = new LockPatternUtils(getContext());
         mHandler = new Handler(Looper.myLooper());
-        mSmallClockScale = getResources().getDimension(R.dimen.widget_small_font_size) /
-            getResources().getDimension(R.dimen.widget_big_font_size);
+        mSmallClockScale = getResources().getDimension(R.dimen.widget_small_font_size)
+                / getResources().getDimension(R.dimen.widget_big_font_size);
         onDensityOrFontScaleChanged();
     }
 
@@ -221,22 +176,9 @@ public class KeyguardStatusView extends GridLayout implements
         mClockView.setShowCurrentUserTime(true);
         mOwnerInfo = findViewById(R.id.owner_info);
         mKeyguardSlice = findViewById(R.id.keyguard_status_area);
-        mKeyguardSliceView = findViewById(R.id.keyguard_status_area);
         mClockSeparator = findViewById(R.id.clock_separator);
+        mVisibleInDoze = Sets.newArraySet(mClockView, mKeyguardSlice);
         mTextColor = mClockView.getCurrentTextColor();
-
-        mWeatherView = (CurrentWeatherView) findViewById(R.id.weather_container);
-
-        mVisibleInDoze = Sets.newArraySet();
-        if (mWeatherView != null) {
-            mVisibleInDoze.add(mWeatherView);
-        }
-        if (mClockView != null) {
-            mVisibleInDoze.add(mClockView);
-        }
-        if (mKeyguardSlice != null) {
-            mVisibleInDoze.add(mKeyguardSlice);
-        }
 
         int clockStroke = getResources().getDimensionPixelSize(R.dimen.widget_small_font_stroke);
         mClockView.getPaint().setStrokeWidth(clockStroke);
@@ -251,11 +193,6 @@ public class KeyguardStatusView extends GridLayout implements
         updateOwnerInfo();
         updateLogoutView();
         updateDark();
-        refreshLockFont();
-        refreshLockDateFont();
-        refreshclocksize();
-        refreshdatesize();
-        updateSettings();
     }
 
     /**
@@ -264,11 +201,13 @@ public class KeyguardStatusView extends GridLayout implements
     private void onSliceContentChanged() {
         boolean smallClock = mKeyguardSlice.hasHeader() || mPulsing;
         float clockScale = smallClock ? mSmallClockScale : 1;
+		Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
         RelativeLayout.LayoutParams layoutParams =
-            (RelativeLayout.LayoutParams) mClockView.getLayoutParams();
+                (RelativeLayout.LayoutParams) mClockView.getLayoutParams();
         int height = mClockView.getHeight();
-        layoutParams.bottomMargin = (int) - (height - (clockScale * height));
+        layoutParams.bottomMargin = (int) -(height - (clockScale * height));
         mClockView.setLayoutParams(layoutParams);
+		mClockView.setTypeface(tf);
         layoutParams = (RelativeLayout.LayoutParams) mClockSeparator.getLayoutParams();
         layoutParams.topMargin = smallClock ? (int) mWidgetPadding : 0;
         layoutParams.bottomMargin = layoutParams.topMargin;
@@ -280,7 +219,7 @@ public class KeyguardStatusView extends GridLayout implements
      */
     @Override
     public void onLayoutChange(View view, int left, int top, int right, int bottom,
-        int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            int oldLeft, int oldTop, int oldRight, int oldBottom) {
         int heightOffset = mPulsing || mWasPulsing ? 0 : getHeight() - mLastLayoutHeight;
         boolean hasHeader = mKeyguardSlice.hasHeader();
         boolean smallClock = hasHeader || mPulsing;
@@ -288,8 +227,8 @@ public class KeyguardStatusView extends GridLayout implements
         long delay = smallClock || mWasPulsing ? 0 : duration / 4;
         mWasPulsing = false;
 
-        boolean shouldAnimate = mKeyguardSlice.getLayoutTransition() != null &&
-            mKeyguardSlice.getLayoutTransition().isRunning();
+        boolean shouldAnimate = mKeyguardSlice.getLayoutTransition() != null
+                && mKeyguardSlice.getLayoutTransition().isRunning();
         if (view == mClockView) {
             float clockScale = smallClock ? mSmallClockScale : 1;
             Paint.Style style = smallClock ? Paint.Style.FILL_AND_STROKE : Paint.Style.FILL;
@@ -297,18 +236,18 @@ public class KeyguardStatusView extends GridLayout implements
             if (shouldAnimate) {
                 mClockView.setY(oldTop + heightOffset);
                 mClockView.animate()
-                    .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
-                    .setDuration(duration)
-                    .setListener(new ClipChildrenAnimationListener())
-                    .setStartDelay(delay)
-                    .y(top)
-                    .scaleX(clockScale)
-                    .scaleY(clockScale)
-                    .withEndAction(() -> {
-                        mClockView.getPaint().setStyle(style);
-                        mClockView.invalidate();
-                    })
-                    .start();
+                        .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
+                        .setDuration(duration)
+                        .setListener(new ClipChildrenAnimationListener())
+                        .setStartDelay(delay)
+                        .y(top)
+                        .scaleX(clockScale)
+                        .scaleY(clockScale)
+                        .withEndAction(() -> {
+                            mClockView.getPaint().setStyle(style);
+                            mClockView.invalidate();
+                        })
+                        .start();
             } else {
                 mClockView.setY(top);
                 mClockView.setScaleX(clockScale);
@@ -324,13 +263,13 @@ public class KeyguardStatusView extends GridLayout implements
                 boolean isAwake = mDarkAmount != 0;
                 mClockSeparator.setY(oldTop + heightOffset);
                 mClockSeparator.animate()
-                    .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
-                    .setDuration(duration)
-                    .setListener(isAwake ? null : new KeepAwakeAnimationListener(getContext()))
-                    .setStartDelay(delay)
-                    .y(top)
-                    .alpha(alpha)
-                    .start();
+                        .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
+                        .setDuration(duration)
+                        .setListener(isAwake ? null : new KeepAwakeAnimationListener(getContext()))
+                        .setStartDelay(delay)
+                        .y(top)
+                        .alpha(alpha)
+                        .start();
             } else {
                 mClockSeparator.setY(top);
                 mClockSeparator.setAlpha(alpha);
@@ -351,15 +290,14 @@ public class KeyguardStatusView extends GridLayout implements
     public void onDensityOrFontScaleChanged() {
         mWidgetPadding = getResources().getDimension(R.dimen.widget_vertical_padding);
         if (mClockView != null) {
+            mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                    getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
             mClockView.getPaint().setStrokeWidth(
-                getResources().getDimensionPixelSize(R.dimen.widget_small_font_stroke));
+                    getResources().getDimensionPixelSize(R.dimen.widget_small_font_stroke));
         }
         if (mOwnerInfo != null) {
             mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
-        }
-        if (mWeatherView != null) {
-            mWeatherView.onDensityOrFontScaleChanged();
+                    getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
         }
     }
 
@@ -370,26 +308,6 @@ public class KeyguardStatusView extends GridLayout implements
 
     private void refreshTime() {
         mClockView.refresh();
-    }
-
-    private int getLockClockFont() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCK_CLOCK_FONTS, 0);
-    }
-
-    private int getLockDateFont() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCK_DATE_FONTS, 0);
-    }
-
-    private int getLockClockSize() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCKCLOCK_FONT_SIZE, 64);
-    }
-
-    private int getLockDateSize() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCKDATE_FONT_SIZE, 16);
     }
 
     private void refreshFormat() {
@@ -416,7 +334,7 @@ public class KeyguardStatusView extends GridLayout implements
         mLogoutView.setVisibility(shouldShowLogout() ? VISIBLE : GONE);
         // Logout button will stay in language of user 0 if we don't set that manually.
         mLogoutView.setText(mContext.getResources().getString(
-            com.android.internal.R.string.global_action_logout));
+                com.android.internal.R.string.global_action_logout));
     }
 
     private void updateOwnerInfo() {
@@ -425,7 +343,7 @@ public class KeyguardStatusView extends GridLayout implements
         if (info == null) {
             // Use the current user owner information if enabled.
             final boolean ownerInfoEnabled = mLockPatternUtils.isOwnerInfoEnabled(
-                KeyguardUpdateMonitor.getCurrentUser());
+                    KeyguardUpdateMonitor.getCurrentUser());
             if (ownerInfoEnabled) {
                 info = mLockPatternUtils.getOwnerInfo(KeyguardUpdateMonitor.getCurrentUser());
             }
@@ -455,28 +373,6 @@ public class KeyguardStatusView extends GridLayout implements
     @Override
     public boolean hasOverlappingRendering() {
         return false;
-    }
-
-    private void refreshLockFont() {
-        int lockClockFont = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockClockFont() : 0;
-        mClockView.setTypeface(LOCK_FONTS[lockClockFont]);
-    }
-
-    private void refreshLockDateFont() {
-        int lockDateFont = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockDateFont() : 0;
-        mKeyguardSlice.setViewsTypeface(LOCK_FONTS[lockDateFont]);
-    }
-
-    public void refreshclocksize() {
-        int lockClockSize = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockClockSize() : 64;
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) lockClockSize, getContext().getResources().getDisplayMetrics()));
-    }
-
-    public void refreshdatesize() {
-        int lockDateSize = (UserHandle.getCallingUserId() == UserHandle.USER_OWNER) ? getLockDateSize() : 16;
-        mKeyguardSlice.setViewsTextSize(TypedValue.COMPLEX_UNIT_PX,
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) lockDateSize, getContext().getResources().getDisplayMetrics()));
     }
 
     // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
@@ -516,8 +412,9 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private void updateDark() {
+        boolean dark = mDarkAmount == 1;
         if (mLogoutView != null) {
-            mLogoutView.setAlpha((mDarkAmount == 1) ? 0 : 1);
+            mLogoutView.setAlpha(dark ? 0 : 1);
         }
 
         if (mOwnerInfo != null) {
@@ -542,7 +439,7 @@ public class KeyguardStatusView extends GridLayout implements
             // Calculate how much of it we should crop in order to have a smooth transition
             int collapsed = mOwnerInfo.getTop() - mOwnerInfo.getPaddingTop();
             int expanded = mOwnerInfo.getBottom() + mOwnerInfo.getPaddingBottom();
-            int toRemove = (int)((expanded - collapsed) * ratio);
+            int toRemove = (int) ((expanded - collapsed) * ratio);
             setBottom(getMeasuredHeight() - toRemove);
         }
     }
@@ -561,64 +458,42 @@ public class KeyguardStatusView extends GridLayout implements
             animate = false;
         }
         mKeyguardSlice.setPulsing(pulsing, animate);
-        if (mWeatherView != null) {
-            mWeatherView.setVisibility((mShowWeather && !mPulsing) ? View.VISIBLE : View.GONE);
-        }
         updateDozeVisibleViews();
     }
 
     private void updateDozeVisibleViews() {
-        for (View child: mVisibleInDoze) {
+        for (View child : mVisibleInDoze) {
             child.setAlpha(mDarkAmount == 1 && mPulsing ? 0.8f : 1);
         }
     }
 
     private boolean shouldShowLogout() {
-        return KeyguardUpdateMonitor.getInstance(mContext).isLogoutEnabled() &&
-            KeyguardUpdateMonitor.getCurrentUser() != UserHandle.USER_SYSTEM;
+        return KeyguardUpdateMonitor.getInstance(mContext).isLogoutEnabled()
+                && KeyguardUpdateMonitor.getCurrentUser() != UserHandle.USER_SYSTEM;
     }
 
     private void onLogoutClicked(View view) {
         int currentUserId = KeyguardUpdateMonitor.getCurrentUser();
         try {
             mIActivityManager.switchUser(UserHandle.USER_SYSTEM);
-            mIActivityManager.stopUser(currentUserId, true /*force*/ , null);
+            mIActivityManager.stopUser(currentUserId, true /*force*/, null);
         } catch (RemoteException re) {
             Log.e(TAG, "Failed to logout user", re);
         }
     }
 
-    private void updateSettings() {
-        final ContentResolver resolver = getContext().getContentResolver();
-        final Resources res = getContext().getResources();
-        mShowWeather = Settings.System.getIntForUser(resolver,
-            Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
-            UserHandle.USER_CURRENT) == 1;
-
-        if (mWeatherView != null) {
-            if (mShowWeather) {
-                mWeatherView.setVisibility(View.VISIBLE);
-                mWeatherView.enableUpdates();
-            }
-            if (!mShowWeather) {
-                mWeatherView.setVisibility(View.GONE);
-                mWeatherView.disableUpdates();
-            }
-        }
-    }
-
     private class ClipChildrenAnimationListener extends AnimatorListenerAdapter implements
-    ViewClippingUtil.ClippingParameters {
+            ViewClippingUtil.ClippingParameters {
 
         ClipChildrenAnimationListener() {
-            ViewClippingUtil.setClippingDeactivated(mClockView, true /* deactivated */ ,
-                this /* clippingParams */ );
+            ViewClippingUtil.setClippingDeactivated(mClockView, true /* deactivated */,
+                    this /* clippingParams */);
         }
 
         @Override
         public void onAnimationEnd(Animator animation) {
-            ViewClippingUtil.setClippingDeactivated(mClockView, false /* deactivated */ ,
-                this /* clippingParams */ );
+            ViewClippingUtil.setClippingDeactivated(mClockView, false /* deactivated */,
+                    this /* clippingParams */);
         }
 
         @Override
