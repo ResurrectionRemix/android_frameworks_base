@@ -63,7 +63,10 @@
    <string name="action_null">빈</string>
    <string name="default_string">기본값</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">시스템 UI 재시작 필요</string>
+   <string name="systemui_restart_message">모든 변경 사항을 적용하려면 시스템 UI를 다시 시작해야합니다. 지금 시스템 UI를 다시 시작하시겠습니까?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">전원 버튼을 길게 눌러 사용</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

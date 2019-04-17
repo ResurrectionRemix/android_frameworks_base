@@ -50,6 +50,7 @@
     <string name="quick_settings_screenrecord_mq_label">स्क्रीन रिकॉर्ड 720p</string>
     <string name="quick_settings_screenrecord_hq_label">स्क्रीन रिकॉर्ड 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">ध्वनि</string>
     <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">स्क्रीनशॉट मिटा दिये</string>

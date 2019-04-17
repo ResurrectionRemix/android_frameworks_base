@@ -28,7 +28,14 @@
    <!-- advanced reboot to bootloader. -->
    <!-- advanced reboot to recovery. -->
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Starta om systemet</string>
+   <string name="reboot_system_message">Startar om systemet\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Tona</string>
+   <string name="animation_default">Standard</string>
+   <string name="animation_translucent">Genomskinlig</string>
+   <string name="animation_random">Slumpmässiga</string>
+   <string name="action_null">Tom</string>
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Systemgränssnitt kräver omstart</string>
    <string name="systemui_restart_message">För att alla ändringar ska träda i kraft, krävs en SystemUI omstart. Starta om SystemUI nu?</string>

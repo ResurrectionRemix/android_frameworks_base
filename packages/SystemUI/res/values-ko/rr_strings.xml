@@ -50,7 +50,16 @@
     <string name="quick_settings_screenrecord_mq_label">화면 녹화 720p</string>
     <string name="quick_settings_screenrecord_hq_label">화면녹화 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">소리</string>
+    <string name="quick_settings_sound_ring">벨소리</string>
+    <string name="quick_settings_sound_vibrate">진동</string>
+    <string name="quick_settings_sound_dnd">방해 금지</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU 전보</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU 정보 꺼짐</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU 정보 켜짐</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">CPU 정보 꺼짐</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">CPU의 정보 켜짐</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">스크린샷 지워짐</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -172,6 +181,13 @@
     <string name="quick_settings_location_secondary_high_accuracy">높은 정확도</string>
     <string name="accessibility_quick_settings_location_high_accuracy">위치 모드: 높은 정확도</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">강제로 중지하시겠습니까?</string>
+    <string name="force_stop_dlg_text">강제로 앱을 종료하면 예기치 않은 오류가 발생할 수 있습니다.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">앱 종료</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">한손 조작 모드</string>
 </resources>

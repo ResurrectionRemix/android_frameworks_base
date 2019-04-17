@@ -24,17 +24,24 @@
     <string name="lte_off">LTE Av</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Skärmdump</string>
+    <string name="quick_settings_region_screenshot_label">Partiell skärmdump</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pikande notis är pausad i 1 minut.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Pikande notis är pausad i <xliff:g id="number">%d</xliff:g> minuter.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Skärmen spelas in</string>
+    <string name="screenrecord_notif_final_ticker">Skärminspelning lyckad</string>
     <!-- Screenrecord notification title -->
     <string name="screenrecord_notif_title">Spelar in skärmen</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Stoppa</string>
+    <string name="screenrecord_notif_completed">Skärminspelning lyckades</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">Visa pekaren</string>
     <string name="screenrecord_notif_pointer_off">Dölj pekaren</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Kunde inte spela in skärmen</string>
+    <string name="notification_channel_screenrecord">Skärminspelningar</string>
     <string name="screenrecord_hide_hint">Dölj ledtråd</string>
     <string name="screenrecord_show_hint">Visa ledtråd</string>
     <!-- Screenshot QS tile -->
@@ -43,6 +50,10 @@
     <string name="quick_settings_screenrecord_mq_label">Skärminspelning 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Skärminspelning 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Ljud</string>
+    <string name="quick_settings_sound_ring">Ring</string>
+    <string name="quick_settings_sound_vibrate">Vibration</string>
+    <string name="quick_settings_sound_dnd">Stör ej</string>
     <!-- CPUInfo tile -->
     <string name="quick_settings_cpuinfo_label">CPU Info</string>
     <string name="accessibility_quick_settings_cpuinfo_off">CPU Info av</string>
@@ -52,9 +63,14 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Skärmdump togs bort</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Snabbladdning (<xliff:g id="laddtid_återstående" exempel="4 timmar and 2 minuter">%s</xliff:g> tills fullt)</string>
+    <string name="keyguard_plugged_in_dash_charging">Snabbladdning</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower ansluten (<xliff:g id="charging_time_left">%s</xliff:g> tills fullt)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower Ansluten</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Kolumner</string>
+    <string name="qs_menu_item_columns_landscape">Landskapskolumner</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -65,6 +81,7 @@
     <string name="qs_menu_item_reset">Återställ</string>
     <string name="qs_menu_item_titles">Visa etiketter</string>
     <string name="qs_menu_item_rows">Rader</string>
+    <string name="qs_menu_item_rows_landscape">Liggande ikoner</string>
     <string name="qs_menu_item_rows_one">1</string>
     <string name="qs_menu_item_rows_two">2</string>
     <string name="qs_menu_item_rows_three">3</string>
@@ -73,6 +90,8 @@
     <string name="preview">Förhandsgranska</string>
     <string name="keycode">Tangentkod</string>
     <string name="no_home_title">Ingen hem-knapp hittades</string>
+    <string name="no_home_message">En hemknapp är nödvändig för att kunna navigera den här enheten. Var vänlig lägg till en hemknapp innan du sparar.</string>
+    <string name="clipboard_description">Urklipp tillåter objekt att bli dragna direkt till urklipp. Objekt kan även bli dragna direkt ifrån urklipp när urklipp är aktiverat.</string>
     <string name="start">Start</string>
     <string name="center">Centrera</string>
     <string name="end">Slut</string>
@@ -97,14 +116,33 @@
     <string name="quick_settings_smart_pixels">Smarta pixlar</string>
     <!-- On The Go -->
     <string name="onthego_notif_options">Alternativ</string>
+    <string name="onthego_service_toggle">Starta om tjänsten automatiskt</string>
+    <string name="onthego_channel_name">Allmänt</string>
+    <string name="omnijaws_service_error">Fel</string>
+    <string name="omnijaws_service_unkown">Ingen väder-data</string>
+    <string name="omnijaws_detail_header">Väder</string>
+    <string name="omnijaws_label_default">Väder</string>
+    <string name="omnijaws_current_text">Nu</string>
+    <string name="omnijaws_service_last_update">Senaste uppdatering:</string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">Spelläge</string>
     <string name="gaming_mode_dialog_title">Spelläge</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Spelläge på</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Spelläge av</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Starta om\u2026</string>
+    <string name="global_action_reboot_sub">System</string>
+    <string name="global_action_reboot_bootloader">Uppstartsladdare</string>
+    <string name="global_action_dismissable_dialog_text">Avancerad omstart är inaktiverat.\nVill du starta om\u003f</string>
+    <string name="global_action_dnaa">Visa inte igen</string>
+    <string name="global_action_settings">Inställningar</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Skärmdump</string>
+    <string name="global_action_screenrecord">Skärminspelning</string>
+    <string name="global_action_flashlight">Ficklampa</string>
     <!-- Advance location quick setting tile -->
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Tvinga avslut?</string>

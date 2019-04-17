@@ -16,7 +16,7 @@
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_fakePackageSignature">パッケージ署名を偽装</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_fakePackageSignature">アプリが別のアプリになりすます事を許可します。 悪意のあるアプリケーションがこれを利用してアプリの個人情報にアクセスする可能性があります。 慎重にこの許可を与えてください!</string>
+   <string name="permdesc_fakePackageSignature">アプリが別のアプリになりすます事を許可します。 悪意のあるアプリケーションがこれを利用してアプリの個人情報にアクセスする可能性があります。 慎重にこの許可を与えて下さい!</string>
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">クラッシュログ URL をコピーする</string>
    <string name="url_copy_success">URL を正常にコピーしました</string>

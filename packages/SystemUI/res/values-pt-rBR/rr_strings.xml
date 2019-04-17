@@ -37,13 +37,13 @@
     <string name="screenrecord_notif_stop">Parar</string>
     <string name="screenrecord_notif_completed">Tela gravada com sucesso</string>
     <!-- Screenrecord notification action: show/hide pointer -->
-    <string name="screenrecord_notif_pointer_on">Mostrar ponteiro</string>
+    <string name="screenrecord_notif_pointer_on">Exibir ponteiro</string>
     <string name="screenrecord_notif_pointer_off">Ocultar ponteiro</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Não foi possível gravar a tela</string>
     <string name="notification_channel_screenrecord">Gravações de tela</string>
     <string name="screenrecord_hide_hint">Esconder dicas</string>
-    <string name="screenrecord_show_hint">Mostrar dicas</string>
+    <string name="screenrecord_show_hint">Exibir dicas</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenrecord_label">Gravação de Tela</string>
     <string name="quick_settings_screenrecord_lq_label">Gravação de tela 480p</string>
@@ -79,7 +79,7 @@
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_columns_nine">9</string>
     <string name="qs_menu_item_reset">Redefinir</string>
-    <string name="qs_menu_item_titles">Mostrar rótulos</string>
+    <string name="qs_menu_item_titles">Exibir rótulos</string>
     <string name="qs_menu_item_rows">Linhas</string>
     <string name="qs_menu_item_rows_landscape">Linhas horizontais</string>
     <string name="qs_menu_item_rows_one">1</string>
@@ -108,7 +108,7 @@
     <string name="navbar_editor_title">Editor</string>
     <string name="navbar_editor_summary">Configurar barra de navegação</string>
     <!-- NavBar Tuner -->
-    <string name="menu_ime_always_show">Menu / Alternador de teclado (Sempre mostrar)</string>
+    <string name="menu_ime_always_show">Menu / Alternador de teclado (sempre exibir)</string>
     <string name="search">Pesquisar</string>
     <!-- SysUI Tuner -->
     <string name="statusbar_items_title">Ícone da barra de status</string>
@@ -117,7 +117,7 @@
     <string name="lockscreen_tuner_activity">Atalhos da tela de bloqueio</string>
     <string name="powernotif_tuner_activity">Notificações de energia</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">Mostrar 4G em vez de LTE</string>
+    <string name="show_fourg_title">Exibir 4G em vez de LTE</string>
     <string name="global_action_reboot_recovery">Recuperação</string>
     <string name="global_action_reboot">Reiniciar</string>
     <!-- Pie controls -->

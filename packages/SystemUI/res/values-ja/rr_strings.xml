@@ -27,12 +27,12 @@
     <string name="quick_settings_region_screenshot_label">範囲を選択してスクリーンショット</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 通知の表示は1分間一時停止します</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は <xliff:g id="number">%d</xliff:g> 分間停止します</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は<xliff:g id="number">%d</xliff:g>分間停止します</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">画面は録画されています</string>
     <string name="screenrecord_notif_final_ticker">画面を録画しました</string>
     <!-- Screenrecord notification title -->
-    <string name="screenrecord_notif_title">画面を録画中</string>
+    <string name="screenrecord_notif_title">画面録画中</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">停止</string>
     <string name="screenrecord_notif_completed">画面を録画しました</string>
@@ -51,9 +51,9 @@
     <string name="quick_settings_screenrecord_hq_label">画面録画 720p+</string>
     <!-- Sound QS Tile -->
     <string name="quick_settings_sound_label">音声</string>
-    <string name="quick_settings_sound_ring">着信</string>
+    <string name="quick_settings_sound_ring">鳴動</string>
     <string name="quick_settings_sound_vibrate">振動</string>
-    <string name="quick_settings_sound_dnd">マナーモード</string>
+    <string name="quick_settings_sound_dnd">サイレント</string>
     <!-- CPUInfo tile -->
     <string name="quick_settings_cpuinfo_label">CPU 情報</string>
     <string name="accessibility_quick_settings_cpuinfo_off">CPU 情報 OFF</string>
@@ -63,10 +63,10 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">急速充電中 (充電完了まで <xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>)</string>
+    <string name="keyguard_indication_dash_charging_time">急速充電中 (充電完了まで<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g>)</string>
     <string name="keyguard_plugged_in_dash_charging">急速充電中</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">急速充電中 (充電完了まで <xliff:g id="charging_time_left">%s</xliff:g>)</string>
+    <string name="keyguard_indication_turbo_power_time">急速充電中 (充電完了まで<xliff:g id="charging_time_left">%s</xliff:g>)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">急速充電中</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">列数</string>
@@ -90,7 +90,7 @@
     <string name="preview">プレビュー</string>
     <string name="keycode">キーコード</string>
     <string name="no_home_title">ホームボタンが見つかりません</string>
-    <string name="no_home_message">この端末を操作できるようにするにはホームボタンが必要です。保存する前にホームボタンを追加してください。</string>
+    <string name="no_home_message">この端末を操作できるようにするにはホームボタンが必要です。保存する前にホームボタンを追加して下さい。</string>
     <string name="clipboard_description">クリップボード機能ではクリップボードにアイテムを直接ドラッグできます。クリップボードにアイテムがある場合、直接そのアイテムをドラッグして取り出すこともできます。</string>
     <string name="keycode_description">キーコードボタンを利用すると、ナビゲーションバーにキーボードのキー機能を追加できるようになります。ボタンを押すと選択済みのキーボードのキーがエミュレートされます。まずボタン用にキーを選択し、次にボタン上の画像を選択する必要があります。</string>
     <string name="start">開始</string>
@@ -103,8 +103,8 @@
     <string name="save">保存</string>
     <string name="reset">リセット</string>
     <string name="select_keycode">キーボードのボタンの選択</string>
-    <string name="left">左側</string>
-    <string name="right">右側</string>
+    <string name="left">左</string>
+    <string name="right">右</string>
     <string name="navbar_editor_title">エディター</string>
     <string name="navbar_editor_summary">ナビゲーションバーを編集</string>
     <!-- NavBar Tuner -->
@@ -155,7 +155,7 @@
     <string name="gaming_mode_tile_toast">ゲームモード有効</string>
     <string name="gaming_mode_tile_toast_disabled">ゲームモード無効</string>
     <string name="gaming_mode_dialog_title">ゲームモード</string>
-    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、すべてのポップアップ通知が無効になり、ハードのキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると先の設定に戻されます。</string>
+    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、全てのポップアップ通知が無効になり、ハードキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると元の設定に戻されます。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->
