@@ -64,7 +64,6 @@ import android.content.ContentResolver;
 import com.android.systemui.omni.CurrentWeatherView;
 import android.provider.Settings;
 
-import android.widget.CustomAnalogClock;
 import android.text.Html;
 
 public class KeyguardStatusView extends GridLayout implements
@@ -588,6 +587,23 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT);
 
         setStyle();
+
+        final Resources res = getContext().getResources();
+        mShowWeather = Settings.System.getIntForUser(resolver,
+                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        if (mWeatherView != null) {
+            if (mShowWeather) {
+                mWeatherView.setVisibility(View.VISIBLE);
+                mWeatherView.enableUpdates();
+            }
+            if (!mShowWeather) {
+                mWeatherView.setVisibility(View.GONE);
+                mWeatherView.disableUpdates();
+            }
+	}
+
     }
 
     private void setStyle() {
@@ -665,7 +681,6 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void updateAll() {
         mKeyguardSlice.refresh();
-        mAnalogClockView.setDark(dark);
         mKeyguardSlice.updateSettings();
         updateVisibilities();
     }
@@ -782,24 +797,24 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 
-    private void updateSettings() {
-        final ContentResolver resolver = getContext().getContentResolver();
-        final Resources res = getContext().getResources();
-        mShowWeather = Settings.System.getIntForUser(resolver,
-                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
-                UserHandle.USER_CURRENT) == 1;
+//    private void updateSettings() {
+//        final ContentResolver resolver = getContext().getContentResolver();
+//        final Resources res = getContext().getResources();
+//        mShowWeather = Settings.System.getIntForUser(resolver,
+//                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+//                UserHandle.USER_CURRENT) == 1;
 
-        if (mWeatherView != null) {
-            if (mShowWeather) {
-                mWeatherView.setVisibility(View.VISIBLE);
-                mWeatherView.enableUpdates();
-            }
-            if (!mShowWeather) {
-                mWeatherView.setVisibility(View.GONE);
-                mWeatherView.disableUpdates();
-            }
-        }
-    }
+//        if (mWeatherView != null) {
+//            if (mShowWeather) {
+//                mWeatherView.setVisibility(View.VISIBLE);
+//                mWeatherView.enableUpdates();
+//            }
+//            if (!mShowWeather) {
+//                mWeatherView.setVisibility(View.GONE);
+//                mWeatherView.disableUpdates();
+//            }
+//        }
+//    }
 
     private class ClipChildrenAnimationListener extends AnimatorListenerAdapter implements
             ViewClippingUtil.ClippingParameters {
