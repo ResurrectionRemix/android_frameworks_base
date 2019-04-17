@@ -29,8 +29,35 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">C\'est</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Élevé</string>
+    <string name="text_clock_noon">Midi</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Vingt</string>
+    <string name="text_clock_tens_string_thirty">Trente</string>
+    <string name="text_clock_tens_string_forty">Quarante</string>
+    <string name="text_clock_tens_string_fifty">Cinquante</string>
+    <string name="text_clock_tens_string_sixty">Soixante</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Zéro</string>
+    <string name="text_clock_units_string_one">Un</string>
+    <string name="text_clock_units_string_two">Deux</string>
+    <string name="text_clock_units_string_three">Trois</string>
+    <string name="text_clock_units_string_four">Quatre</string>
+    <string name="text_clock_units_string_five">Cinq</string>
+    <string name="text_clock_units_string_six">Six</string>
+    <string name="text_clock_units_string_seven">Sept</string>
+    <string name="text_clock_units_string_eight">Huit</string>
+    <string name="text_clock_units_string_nine">Neuf</string>
+    <string name="text_clock_units_string_ten">Dix</string>
+    <string name="text_clock_units_string_eleven">Onze</string>
+    <string name="text_clock_units_string_twelve">Douze</string>
+    <string name="text_clock_units_string_thirteen">Treize</string>
+    <string name="text_clock_units_string_fourteen">Quatorze</string>
+    <string name="text_clock_units_string_fifteen">Quinze</string>
+    <string name="text_clock_units_string_sixteen">Seize</string>
+    <string name="text_clock_units_string_seventeen">Dix-sept</string>
     <!-- TensStringH -->
     <!-- UnitsStringH -->
 </resources>

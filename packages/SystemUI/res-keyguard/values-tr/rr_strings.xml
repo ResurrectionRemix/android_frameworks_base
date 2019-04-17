@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Saat</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Öğlenden Önce</string>
+    <string name="text_clock_noon">Öğlenden Sonra</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Yirmi</string>
+    <string name="text_clock_tens_string_thirty">Otuz</string>
+    <string name="text_clock_tens_string_forty">Kırk</string>
+    <string name="text_clock_tens_string_fifty">Elli</string>
+    <string name="text_clock_tens_string_sixty">Altmış</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Sıfır</string>
+    <string name="text_clock_units_string_one">Bir</string>
+    <string name="text_clock_units_string_two">İki</string>
+    <string name="text_clock_units_string_three">Üç</string>
+    <string name="text_clock_units_string_four">Dört</string>
+    <string name="text_clock_units_string_five">Beş</string>
+    <string name="text_clock_units_string_six">Altı</string>
+    <string name="text_clock_units_string_seven">Yedi</string>
+    <string name="text_clock_units_string_eight">Sekiz</string>
+    <string name="text_clock_units_string_nine">Dokuz</string>
+    <string name="text_clock_units_string_ten">On</string>
+    <string name="text_clock_units_string_eleven">On bir</string>
+    <string name="text_clock_units_string_twelve">On iki</string>
+    <string name="text_clock_units_string_thirteen">On üç</string>
+    <string name="text_clock_units_string_fourteen">On dört</string>
+    <string name="text_clock_units_string_fifteen">On beş</string>
+    <string name="text_clock_units_string_sixteen">On altı</string>
+    <string name="text_clock_units_string_seventeen">On yedi</string>
+    <string name="text_clock_units_string_eighteen">On sekiz</string>
+    <string name="text_clock_units_string_nineteen">On dokuz</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Yirmi</string>
+    <string name="text_clock_tens_string_h_thirty">Otuz</string>
+    <string name="text_clock_tens_string_h_forty">Kırk</string>
+    <string name="text_clock_tens_string_h_fifty">Elli</string>
+    <string name="text_clock_tens_string_h_sixty">Altmış</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">On iki</string>
+    <string name="text_clock_units_string_h_one">Bir</string>
+    <string name="text_clock_units_string_h_two">İki</string>
+    <string name="text_clock_units_string_h_three">Üç</string>
+    <string name="text_clock_units_string_h_four">Dört</string>
+    <string name="text_clock_units_string_h_five">Beş</string>
+    <string name="text_clock_units_string_h_six">Altı</string>
+    <string name="text_clock_units_string_h_seven">Yedi</string>
+    <string name="text_clock_units_string_h_eight">Sekiz</string>
+    <string name="text_clock_units_string_h_nine">Dokuz</string>
+    <string name="text_clock_units_string_h_ten">On</string>
+    <string name="text_clock_units_string_h_eleven">On bir</string>
+    <string name="text_clock_units_string_h_twelve">On iki</string>
+    <string name="text_clock_units_string_h_thirteen">On üç</string>
+    <string name="text_clock_units_string_h_fourteen">On dört</string>
+    <string name="text_clock_units_string_h_fifteen">Onbeş</string>
+    <string name="text_clock_units_string_h_sixteen">On altı</string>
+    <string name="text_clock_units_string_h_seventeen">On yedi</string>
+    <string name="text_clock_units_string_h_eighteen">On sekiz</string>
+    <string name="text_clock_units_string_h_nineteen">On dokuz</string>
 </resources>
