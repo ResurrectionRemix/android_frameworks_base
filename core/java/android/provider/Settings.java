@@ -5381,23 +5381,6 @@ public final class Settings {
         public static final String HIDE_LOCKSCREEN_STATUS_BAR = "hide_lockscreen_status_bar";
 
         /**
-         * Control the type of rotation which can be performed using the accelerometer
-         * if ACCELEROMETER_ROTATION is enabled.
-         * Value is a bitwise combination of
-         * 1 = 0 degrees (portrait)
-         * 2 = 90 degrees (left)
-         * 4 = 180 degrees (inverted portrait)
-         * 8 = 270 degrees (right)
-         * Setting to 0 is effectively orientation lock
-         * @hide
-         */
-        public static final String ACCELEROMETER_ROTATION_ANGLES = "accelerometer_rotation_angles";
-
-        /** @hide */
-        public static final Validator ACCELEROMETER_ROTATION_ANGLES_VALIDATOR =
-                NON_NEGATIVE_INTEGER_VALIDATOR;
-
-        /**
          * Whether to hide the lockscreen clock
          * @hide
          */
@@ -5860,8 +5843,6 @@ public final class Settings {
                     OMNI_STATUS_BAR_FILE_HEADER_IMAGE_VALIDATOR);
             VALIDATORS.put(NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE, NETWORK_TRAFFIC_EXPANDED_STATUS_BAR_STATE_VALIDATOR);
             VALIDATORS.put(FORCE_EXPANDED_NOTIFICATIONS,FORCE_EXPANDED_NOTIFICATIONS_VALIDATOR);
-            VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
-                    ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
         }
 
         /**
