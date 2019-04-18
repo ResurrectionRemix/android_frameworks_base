@@ -734,37 +734,41 @@ public class ScreenDecorations extends SystemUI implements Tunable,
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        mHandler.post(() -> {
-            if (SIZE.equals(key)) {
-                if (mOverlay == null) {
-                    if (TunerService.parseIntegerSwitch(newValue, false))
-                        setupDecorations();
-                    else
-                        return;
-                }
-                int size = mRoundedDefault;
-                int sizeTop = mRoundedDefaultTop;
-                int sizeBottom = mRoundedDefaultBottom;
-                if (newValue != null) {
-                    try {
-                        size = (int) (Integer.parseInt(newValue) * mDensity);
-                    } catch (Exception e) {
+        switch (key) {
+            case SIZE:
+                mHandler.post(() -> {
+                    if (mOverlay == null) {
+                        if (TunerService.parseIntegerSwitch(newValue, false))
+                            setupDecorations();
+                        else
+                            return;
                     }
-                }
+                    int size = mRoundedDefault;
+                    int sizeTop = mRoundedDefaultTop;
+                    int sizeBottom = mRoundedDefaultBottom;
+                    if (newValue != null) {
+                        try {
+                            size = (int) (Integer.parseInt(newValue) * mDensity);
+                        } catch (Exception e) {
+                        }
+                    }
 
-                if (sizeTop == 0) {
-                    sizeTop = size;
-                }
-                if (sizeBottom == 0) {
-                    sizeBottom = size;
-                }
-                updateWindowVisibilities();
-                setSize(mOverlay.findViewById(R.id.left), sizeTop);
-                setSize(mOverlay.findViewById(R.id.right), sizeTop);
-                setSize(mBottomOverlay.findViewById(R.id.left), sizeBottom);
-                setSize(mBottomOverlay.findViewById(R.id.right), sizeBottom);
-            }
-        });
+                    if (sizeTop == 0) {
+                        sizeTop = size;
+                    }
+                    if (sizeBottom == 0) {
+                        sizeBottom = size;
+                    }
+                    updateWindowVisibilities();
+                    setSize(mOverlay.findViewById(R.id.left), sizeTop);
+                    setSize(mOverlay.findViewById(R.id.right), sizeTop);
+                    setSize(mBottomOverlay.findViewById(R.id.left), sizeBottom);
+                    setSize(mBottomOverlay.findViewById(R.id.right), sizeBottom);
+                });
+                break;
+            default:
+                break;
+        }
     }
 
     private void setSize(View view, int pixelSize) {
