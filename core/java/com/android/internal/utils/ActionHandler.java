@@ -538,7 +538,11 @@ public class ActionHandler {
         } else if (action.equals(SYSTEMUI_TASK_NO_ACTION)) {
             return;
         } else if (action.equals(SYSTEMUI_TASK_KILL_PROCESS)) {
-            killProcess(context);
+            try {
+                killProcess(context);
+            } catch (RemoteException e) {
+                // Do nothing
+            }
             return;
         } else if (action.equals(SYSTEMUI_TASK_SCREENSHOT)) {
             sendCommandToWindowManager(new Intent(INTENT_SCREENSHOT));
@@ -957,118 +961,69 @@ public class ActionHandler {
         }
     }
 
-    public static void killProcess(Context context) {
+    private static boolean killProcess(Context context)
+            throws RemoteException {
         if (context.checkCallingOrSelfPermission(
-                android.Manifest.permission.FORCE_STOP_PACKAGES) == PackageManager.PERMISSION_GRANTED
-                && !isLockTaskOn()) {
-            try {
-                PackageManager packageManager = context.getPackageManager();
-                final Intent intent = new Intent(Intent.ACTION_MAIN);
-                String defaultHomePackage = "com.android.launcher";
-                intent.addCategory(Intent.CATEGORY_HOME);
-                final ResolveInfo res = packageManager.resolveActivity(intent, 0);
-                if (res.activityInfo != null
-                        && !res.activityInfo.packageName.equals("android")) {
-                    defaultHomePackage = res.activityInfo.packageName;
-                }
+                android.Manifest.permission.FORCE_STOP_PACKAGES) != PackageManager.PERMISSION_GRANTED
+                || isLockTaskOn())
+            return false;
+        try {
+            final Intent intent = new Intent(Intent.ACTION_MAIN);
+            String defaultHomePackage = "com.android.launcher";
+            intent.addCategory(Intent.CATEGORY_HOME);
+            final ResolveInfo res = context.getPackageManager().resolveActivity(intent, 0);
 
-                // Use UsageStats to determine foreground app
-                UsageStatsManager usageStatsManager = (UsageStatsManager) context
-                        .getSystemService(Context.USAGE_STATS_SERVICE);
-                long current = System.currentTimeMillis();
-                long past = current - (1000 * 60 * 60); // uses snapshot of usage over past 60
-                                                        // minutes
-
-                // Get the list, then sort it chronilogically so most recent usage is at start of
-                // list
-                List<UsageStats> recentApps = usageStatsManager.queryUsageStats(
-                        UsageStatsManager.INTERVAL_DAILY, past, current);
-                Collections.sort(recentApps, new Comparator<UsageStats>() {
-                    @Override
-                    public int compare(UsageStats lhs, UsageStats rhs) {
-                        long timeLHS = lhs.getLastTimeUsed();
-                        long timeRHS = rhs.getLastTimeUsed();
-                        if (timeLHS > timeRHS) {
-                            return -1;
-                        } else if (timeLHS < timeRHS) {
-                            return 1;
-                        }
-                        return 0;
-                    }
-                });
-
-                IActivityManager iam = ActivityManagerNative.getDefault();
-                // this may not be needed due to !isLockTaskOn() in entry if
-                // if (am.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) return;
-
-                // Look for most recent usagestat with lastevent == 1 and grab package name
-                // ...this seems to map to the UsageEvents.Event.MOVE_TO_FOREGROUND
-                String pkg = null;
-                for (int i = 0; i < recentApps.size(); i++) {
-                    UsageStats mostRecent = recentApps.get(i);
-                    if (mostRecent.mLastEvent == 1) {
-                        pkg = mostRecent.mPackageName;
-                        break;
-                    }
-                }
-
-                if (pkg != null && !pkg.equals("com.android.systemui")
-                        && !pkg.equals(defaultHomePackage) && !isPackageLiveWalls(context, pkg)) {
-
-                    // Restore home screen stack before killing the app
-                    Intent home = new Intent(Intent.ACTION_MAIN, null);
-                    home.addCategory(Intent.CATEGORY_HOME);
-                    home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                    context.startActivity(home);
-
-                    // Kill the app
-                    iam.forceStopPackage(pkg, UserHandle.USER_CURRENT);
-
-                    // Remove killed app from Recents
-                    final ParceledListSlice<ActivityManager.RecentTaskInfo> recentTasks = iam
-                            .getRecentTasks(ActivityManager.getMaxRecentTasksStatic(),
-                                    ActivityManager.RECENT_IGNORE_UNAVAILABLE,
-                                    UserHandle.CURRENT.getIdentifier());
-                    List<ActivityManager.RecentTaskInfo> recentList = recentTasks.getList();
-                    final int size = recentList.size();
-                    for (int i = 0; i < size; i++) {
-                        ActivityManager.RecentTaskInfo recentInfo = recentList.get(i);
-                        if (recentInfo.baseIntent.getComponent().getPackageName().equals(pkg)) {
-                            int taskid = recentInfo.persistentId;
-                            iam.removeTask(taskid);
-                        }
-                    }
-
-                    String pkgName;
-                    try {
-                        pkgName = (String) packageManager.getApplicationLabel(
-                                packageManager.getApplicationInfo(pkg,
-                                        PackageManager.GET_META_DATA));
-                    } catch (PackageManager.NameNotFoundException e) {
-                        // Just use pkg if issues getting appName
-                        pkgName = pkg;
-                    }
-
-                    Resources systemUIRes = ActionUtils.getResourcesForPackage(context,
-                            ActionUtils.PACKAGE_SYSTEMUI);
-                    int ident = systemUIRes.getIdentifier("app_killed_message", ActionUtils.STRING,
-                            ActionUtils.PACKAGE_SYSTEMUI);
-                    String toastMsg = systemUIRes.getString(ident, pkgName);
-                    Context ctx = getPackageContext(context, ActionUtils.PACKAGE_SYSTEMUI);
-                    Toast.makeText(ctx != null ? ctx : context, toastMsg, Toast.LENGTH_SHORT)
-                            .show();
-                    return;
-                } else {
-                    // make a "didnt kill anything" toast?
-                    return;
-                }
-            } catch (RemoteException remoteException) {
-                Log.d("ActionHandler", "Caller cannot kill processes, aborting");
+            if (res.activityInfo != null && !res.activityInfo.packageName.equals("android")) {
+                defaultHomePackage = res.activityInfo.packageName;
             }
-        } else {
-            Log.d("ActionHandler", "Caller cannot kill processes, aborting");
+
+            IActivityManager am = ActivityManagerNative.getDefault();
+            List<ActivityManager.RunningAppProcessInfo> apps = am.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo appInfo : apps) {
+                int uid = appInfo.uid;
+                // Make sure it's a foreground user application (not system,
+                // root, phone, etc.)
+                if (uid >= Process.FIRST_APPLICATION_UID && uid <= Process.LAST_APPLICATION_UID
+                        && appInfo.importance ==
+                        ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    if (appInfo.pkgList != null && (appInfo.pkgList.length > 0)) {
+                        for (String pkg : appInfo.pkgList) {
+                            if (!pkg.equals(ActionUtils.PACKAGE_SYSTEMUI)
+                                    && !pkg.equals(defaultHomePackage)) {
+                                am.forceStopPackage(pkg, UserHandle.USER_CURRENT);
+
+                                String pkgName;
+                                try {
+                                    PackageManager packageManager = context.getPackageManager();
+                                    pkgName = (String) packageManager.getApplicationLabel(
+                                        packageManager.getApplicationInfo(pkg,
+                                                PackageManager.GET_META_DATA));
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    // Just use pkg if issues getting appName
+                                    pkgName = pkg;
+                                }
+
+                                Resources systemUIRes = ActionUtils.getResourcesForPackage(context,
+                                        ActionUtils.PACKAGE_SYSTEMUI);
+                                int ident = systemUIRes.getIdentifier("app_killed_message", ActionUtils.STRING,
+                                        ActionUtils.PACKAGE_SYSTEMUI);
+                                String toastMsg = systemUIRes.getString(ident, pkgName);
+                                Context ctx = getPackageContext(context, ActionUtils.PACKAGE_SYSTEMUI);
+                                Toast.makeText(ctx != null ? ctx : context, toastMsg, Toast.LENGTH_SHORT)
+                                        .show();
+                                return true;
+                            }
+                        }
+                    } else {
+                        Process.killProcess(appInfo.pid);
+                        return true;
+                    }
+                }
+            }
+        } catch (RemoteException remoteException) {
+            // Do nothing; just let it go.
         }
+        return false;
     }
 
     public static Context getPackageContext(Context context, String packageName) {
