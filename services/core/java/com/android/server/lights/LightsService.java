@@ -65,7 +65,9 @@ public class LightsService extends SystemService {
                         return;
                     }
 
-                    if(fp.matches(".*(crown|star)[q2]*lte.*") ||
+                    if(SystemProperties.getInt("persist.sys.phh.samsung_backlight", 0) == 1 ||
+			            fp.matches(".*beyond.*lte.*") ||
+			            fp.matches(".*(crown|star)[q2]*lte.*") ||
 				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
                         int newBrightness = brightness * 100;
                         if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
