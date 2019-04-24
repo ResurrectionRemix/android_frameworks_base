@@ -22,7 +22,7 @@
     </declare-styleable>
 
     <!-- QS tiles Active, Inactive and Unavailable tint (Requires config_enable_qs_tile_tinting bool set to true) -->
-    <color name="qs_tiles_active_tint">@*android:color/primary_device_default_settings_light</color>
+    <color name="qs_tiles_active_tint">@*android:color/white</color>
     <color name="qs_tiles_inactive_tint">@*android:color/text_color_secondary</color>
     <color name="qs_tiles_unavailable_tint">@*android:color/text_color_secondary</color> <!-- keep in mind that the code adds 0.26 (light) or 0.30 (dark) alpha to this color. -->
      <!-- QS tiles background Active, Disable, and Inactive tint (Requires config_enable_qs_tile_tinting bool set to true) -->
