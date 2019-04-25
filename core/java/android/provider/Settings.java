@@ -6020,10 +6020,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
-
-        /** @hide */
-        private static final Validator NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
-
         /**
          * @hide
          */
