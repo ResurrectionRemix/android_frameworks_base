@@ -982,6 +982,16 @@ public class Resources {
             impl.getValue(id, value, true);
             if (value.type >= TypedValue.TYPE_FIRST_INT
                     && value.type <= TypedValue.TYPE_LAST_INT) {
+                if (id != 0) {
+                    try {
+                        String resName = getResourceName(id);
+                        if (AccentUtils.isResourceAccent(resName))
+                            value.data = AccentUtils.getNewAccentColor(value.data);
+                    } catch (NotFoundException ignored) {
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.getMessage());
+                    }
+                }
                 return value.data;
             } else if (value.type != TypedValue.TYPE_STRING) {
                 throw new NotFoundException("Resource ID #0x" + Integer.toHexString(id)

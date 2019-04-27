@@ -6552,6 +6552,15 @@ public final class Settings {
         private static final Validator HIDE_SMART_REPLIES_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Accent Color
+         * @hide
+         */
+        public static final String ACCENT_COLOR = "accent_color";
+
+        /** @hide */
+        private static final Validator ACCENT_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6743,6 +6752,7 @@ public final class Settings {
             NAVIGATION_HANDLE_WIDTH,
             QS_DATAUSAGE,
             HIDE_SMART_REPLIES,
+            ACCENT_COLOR
         };
 
         /**
@@ -6987,6 +6997,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
             PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
+            PRIVATE_SETTINGS.add(ACCENT_COLOR);
         }
 
         /**
@@ -7221,6 +7232,7 @@ public final class Settings {
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS_FORCE, DOZE_BRIGHTNESS_FORCE_VALIDATOR);
             VALIDATORS.put(HIDE_SMART_REPLIES, HIDE_SMART_REPLIES_VALIDATOR);
+            VALIDATORS.put(ACCENT_COLOR, ACCENT_COLOR_VALIDATOR);
         }
 
         /**
