@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">게이밍 모드 활성화됨</string>
     <string name="gaming_mode_tile_toast_disabled">게이밍 모드 비활성화됨</string>
     <string name="gaming_mode_dialog_title">게이밍 모드</string>
-    <string name="gaming_mode_dialog_message">게이밍 모드가 활성화되면 알림은 진동으로 설정되며 하드웨어 키는 비활성화 됩니다. 미디어 음량은 최대로 바뀌며 이 설정은 게이밍 모드를 비활성화할 때까지 유지됩니다.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">게이밍 모드 사용</string>
     <string name="accessibility_quick_settings_gaming_mode_off">게이밍 모드 사용 안함</string>
     <!-- Power Menu -->

@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Az idő:</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Éjfélkor</string>
+    <string name="text_clock_noon">Délben</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Húsz(on)</string>
+    <string name="text_clock_tens_string_thirty">Harminc</string>
+    <string name="text_clock_tens_string_forty">Negyven</string>
+    <string name="text_clock_tens_string_fifty">Ötven</string>
+    <string name="text_clock_tens_string_sixty">Hatvan</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Nulla</string>
+    <string name="text_clock_units_string_one">Egy</string>
+    <string name="text_clock_units_string_two">Kettő</string>
+    <string name="text_clock_units_string_three">Három</string>
+    <string name="text_clock_units_string_four">Négy</string>
+    <string name="text_clock_units_string_five">Öt</string>
+    <string name="text_clock_units_string_six">Hat</string>
+    <string name="text_clock_units_string_seven">Hét</string>
+    <string name="text_clock_units_string_eight">Nyolc</string>
+    <string name="text_clock_units_string_nine">Kilenc</string>
+    <string name="text_clock_units_string_ten">Tíz</string>
+    <string name="text_clock_units_string_eleven">Tizenegy</string>
+    <string name="text_clock_units_string_twelve">Tizenkettő</string>
+    <string name="text_clock_units_string_thirteen">Tizenhárom</string>
+    <string name="text_clock_units_string_fourteen">Tizennégy</string>
+    <string name="text_clock_units_string_fifteen">Tizenöt</string>
+    <string name="text_clock_units_string_sixteen">Tizenhat</string>
+    <string name="text_clock_units_string_seventeen">Tizenhét</string>
+    <string name="text_clock_units_string_eighteen">Tizennyolc</string>
+    <string name="text_clock_units_string_nineteen">Tizenkilenc</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Húsz(on)</string>
+    <string name="text_clock_tens_string_h_thirty">Harminc</string>
+    <string name="text_clock_tens_string_h_forty">Negyven</string>
+    <string name="text_clock_tens_string_h_fifty">Ötven</string>
+    <string name="text_clock_tens_string_h_sixty">Hatvan</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Tizenkettő</string>
+    <string name="text_clock_units_string_h_one">Egy</string>
+    <string name="text_clock_units_string_h_two">Kettő</string>
+    <string name="text_clock_units_string_h_three">Három</string>
+    <string name="text_clock_units_string_h_four">Négy</string>
+    <string name="text_clock_units_string_h_five">Öt</string>
+    <string name="text_clock_units_string_h_six">Hat</string>
+    <string name="text_clock_units_string_h_seven">Hét</string>
+    <string name="text_clock_units_string_h_eight">Nyolc</string>
+    <string name="text_clock_units_string_h_nine">Kilenc</string>
+    <string name="text_clock_units_string_h_ten">Tíz</string>
+    <string name="text_clock_units_string_h_eleven">Tizenegy</string>
+    <string name="text_clock_units_string_h_twelve">Tizenkettő</string>
+    <string name="text_clock_units_string_h_thirteen">Tizenhárom</string>
+    <string name="text_clock_units_string_h_fourteen">Tizennégy</string>
+    <string name="text_clock_units_string_h_fifteen">Tizenöt</string>
+    <string name="text_clock_units_string_h_sixteen">Tizenhat</string>
+    <string name="text_clock_units_string_h_seventeen">Tizenhét</string>
+    <string name="text_clock_units_string_h_eighteen">Tizennyolc</string>
+    <string name="text_clock_units_string_h_nineteen">Tizenkilenc</string>
 </resources>

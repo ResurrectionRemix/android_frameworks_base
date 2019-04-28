@@ -17,6 +17,8 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- Button that copies the url to the log of a crashed application -->
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">Afspiller Nu</string>
+   <string name="ambient_recognition_information">%1$s ved %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- Font service -->
@@ -24,9 +26,16 @@
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Genstart til bootloader</string>
    <!-- advanced reboot to recovery. -->
    <!-- advanced reboot system -->
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">Animation Falme</string>
+   <string name="animation_default">Standardindstilling</string>
+   <string name="animation_translucent">Gennemsigtig</string>
+   <string name="animation_random">Tilfældig</string>
+   <string name="action_null">Tom</string>
+   <string name="default_string">Standardindstilling</string>
    <!-- SystemUI Restart -->
    <!-- Pocket Lock -->
    <!-- Defines the sysfs attribute path used by pocket bridge

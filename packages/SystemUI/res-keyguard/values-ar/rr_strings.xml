@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">انها</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">مرتفع</string>
+    <string name="text_clock_noon">الظهر</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">عشرون</string>
+    <string name="text_clock_tens_string_thirty">ثلاثون</string>
+    <string name="text_clock_tens_string_forty">أربعون</string>
+    <string name="text_clock_tens_string_fifty">خمسون</string>
+    <string name="text_clock_tens_string_sixty">ستون</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">صفر</string>
+    <string name="text_clock_units_string_one">واحد</string>
+    <string name="text_clock_units_string_two">اثنان</string>
+    <string name="text_clock_units_string_three">ثلاثة</string>
+    <string name="text_clock_units_string_four">أربعة</string>
+    <string name="text_clock_units_string_five">خمسة</string>
+    <string name="text_clock_units_string_six">ستة</string>
+    <string name="text_clock_units_string_seven">سبعة</string>
+    <string name="text_clock_units_string_eight">ثمانية</string>
+    <string name="text_clock_units_string_nine">تسعة</string>
+    <string name="text_clock_units_string_ten">عشرة</string>
+    <string name="text_clock_units_string_eleven">أحد عشر</string>
+    <string name="text_clock_units_string_twelve">اثنا عشر</string>
+    <string name="text_clock_units_string_thirteen">ثلاثة عشر</string>
+    <string name="text_clock_units_string_fourteen">أربعة عشر</string>
+    <string name="text_clock_units_string_fifteen">خمسة عشر</string>
+    <string name="text_clock_units_string_sixteen">ستة عشر</string>
+    <string name="text_clock_units_string_seventeen">سبعة عشر</string>
+    <string name="text_clock_units_string_eighteen">ثمانية عشر</string>
+    <string name="text_clock_units_string_nineteen">تسعة عشر</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">عشرون</string>
+    <string name="text_clock_tens_string_h_thirty">ثلاثون</string>
+    <string name="text_clock_tens_string_h_forty">أربعين</string>
+    <string name="text_clock_tens_string_h_fifty">خمسون</string>
+    <string name="text_clock_tens_string_h_sixty">ستين</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">اثني عشر</string>
+    <string name="text_clock_units_string_h_one">واحد</string>
+    <string name="text_clock_units_string_h_two">اثنان</string>
+    <string name="text_clock_units_string_h_three">ثلاثة</string>
+    <string name="text_clock_units_string_h_four">أربعة</string>
+    <string name="text_clock_units_string_h_five">خمسة</string>
+    <string name="text_clock_units_string_h_six">ستة</string>
+    <string name="text_clock_units_string_h_seven">سبعة</string>
+    <string name="text_clock_units_string_h_eight">ثمانية</string>
+    <string name="text_clock_units_string_h_nine">تسعة</string>
+    <string name="text_clock_units_string_h_ten">عشرة</string>
+    <string name="text_clock_units_string_h_eleven">أحد عشر</string>
+    <string name="text_clock_units_string_h_twelve">اثنا عشر</string>
+    <string name="text_clock_units_string_h_thirteen">ثلاثة عشر</string>
+    <string name="text_clock_units_string_h_fourteen">أربعة عشر</string>
+    <string name="text_clock_units_string_h_fifteen">خمسة عشر</string>
+    <string name="text_clock_units_string_h_sixteen">ستة عشر</string>
+    <string name="text_clock_units_string_h_seventeen">سبعة عشر</string>
+    <string name="text_clock_units_string_h_eighteen">ثمانية عشر</string>
+    <string name="text_clock_units_string_h_nineteen">تسعة عشر</string>
 </resources>

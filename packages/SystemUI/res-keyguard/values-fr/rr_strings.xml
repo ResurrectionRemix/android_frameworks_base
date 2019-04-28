@@ -58,6 +58,33 @@
     <string name="text_clock_units_string_fifteen">Quinze</string>
     <string name="text_clock_units_string_sixteen">Seize</string>
     <string name="text_clock_units_string_seventeen">Dix-sept</string>
+    <string name="text_clock_units_string_eighteen">Dix-huit</string>
+    <string name="text_clock_units_string_nineteen">Dix-neuf</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Vingt</string>
+    <string name="text_clock_tens_string_h_thirty">Trente</string>
+    <string name="text_clock_tens_string_h_forty">Quarante</string>
+    <string name="text_clock_tens_string_h_fifty">Cinquante</string>
+    <string name="text_clock_tens_string_h_sixty">Soixante</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Douze</string>
+    <string name="text_clock_units_string_h_one">Un</string>
+    <string name="text_clock_units_string_h_two">Deux</string>
+    <string name="text_clock_units_string_h_three">Trois</string>
+    <string name="text_clock_units_string_h_four">Quatre</string>
+    <string name="text_clock_units_string_h_five">Cinq</string>
+    <string name="text_clock_units_string_h_six">Six</string>
+    <string name="text_clock_units_string_h_seven">Sept</string>
+    <string name="text_clock_units_string_h_eight">Huit</string>
+    <string name="text_clock_units_string_h_nine">Neuf</string>
+    <string name="text_clock_units_string_h_ten">Dix</string>
+    <string name="text_clock_units_string_h_eleven">Onze</string>
+    <string name="text_clock_units_string_h_twelve">Douze</string>
+    <string name="text_clock_units_string_h_thirteen">Treize</string>
+    <string name="text_clock_units_string_h_fourteen">Quatorze</string>
+    <string name="text_clock_units_string_h_fifteen">Quinze</string>
+    <string name="text_clock_units_string_h_sixteen">Seize</string>
+    <string name="text_clock_units_string_h_seventeen">Dix-sept</string>
+    <string name="text_clock_units_string_h_eighteen">Dix-huit</string>
+    <string name="text_clock_units_string_h_nineteen">Dix-neuf</string>
 </resources>

@@ -150,7 +150,6 @@
     <string name="gaming_mode_tile_toast">Λειτουργία παιχνιδιού ενεργή</string>
     <string name="gaming_mode_tile_toast_disabled">Λειτουργία παιχνιδιού ανενεργή</string>
     <string name="gaming_mode_dialog_title">Λειτουργία παιχνιδιού</string>
-    <string name="gaming_mode_dialog_message">Όταν είναι ενεργοποιημένη η λειτουργία παιχνιδιού, το κουδούνισμα θα αλλάξει σε δόνηση, θα απενεργοποιηθούν όλα τα αναδυόμενα μηνύματα και τα πλήκτρα επίσης. Η Ένταση ήχου πολυμέσων θα αυξηθεί στην μέγιστη τιμή. Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές μόλις εξέλθετε απο την λειτουργία παιχνιδιού.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Λειτουργία παιχνιδιού ενεργή</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Λειτουργία παιχνιδιού ανενεργή</string>
     <!-- Power Menu -->

@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Mode jeu activé</string>
     <string name="gaming_mode_tile_toast_disabled">Mode jeu désactivé</string>
     <string name="gaming_mode_dialog_title">Mode jeu</string>
-    <string name="gaming_mode_dialog_message">Lorsque le mode de jeu est activé, votre mode de sonnerie passe en vibreur, toutes les notifications flottantes seront désactivées ainsi que les boutons physiques. Le volume des médias sera porté à la valeur maximale. Tous les paramètre désactivés seront remis aux paramètres par défaut une fois le mode de jeu quitté.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Mode jeu actif</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mode jeu inactif</string>
     <!-- Power Menu -->

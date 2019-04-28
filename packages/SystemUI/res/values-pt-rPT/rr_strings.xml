@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Modo de Jogo ativado</string>
     <string name="gaming_mode_tile_toast_disabled">Modo de Jogo desativado</string>
     <string name="gaming_mode_dialog_title">Modo de Jogo</string>
-    <string name="gaming_mode_dialog_message">Quando o Modo de Jogo está ativado, as notificações do dispositivo passarão para o modo de vibração, todas as mensagens flutuantes serão desativadas e as teclas físicas serão desligadas. O volume será aumentado para o valor máximo. Todas as configurações desativadas serão redefinidas para os valores padrão assim que sair do Modo de Jogo.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Modo de Jogo ligado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo de Jogo desligado</string>
     <!-- Power Menu -->

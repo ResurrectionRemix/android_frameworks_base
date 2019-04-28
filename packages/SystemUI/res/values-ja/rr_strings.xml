@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">ゲームモード有効</string>
     <string name="gaming_mode_tile_toast_disabled">ゲームモード無効</string>
     <string name="gaming_mode_dialog_title">ゲームモード</string>
-    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、全てのポップアップ通知が無効になり、ハードキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると元の設定に戻されます。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->

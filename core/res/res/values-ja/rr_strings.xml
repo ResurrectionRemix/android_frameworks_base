@@ -22,7 +22,7 @@
    <string name="url_copy_success">URL を正常にコピーしました</string>
    <string name="url_copy_failed">dogbin へのログのアップロード中にエラーが発生しました</string>
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">再生中 </string>
+   <string name="ambient_recognition_notification">Now Playing</string>
    <string name="ambient_recognition_information">%1$s - %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">ナビゲーションバーエディターの制御</string>

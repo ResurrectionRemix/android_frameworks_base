@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Chế độ chơi game được bật</string>
     <string name="gaming_mode_tile_toast_disabled">Chế độ chơi game đã tắt</string>
     <string name="gaming_mode_dialog_title">Chế độ chơi game</string>
-    <string name="gaming_mode_dialog_message">Khi Chế độ chơi game được bật, chế độ chuông sẽ được đặt thành chế độ rung, tất cả các thông báo nổi sẽ bị vô hiệu và các phím cứng sẽ bị tắt. Âm lượng phương tiện sẽ được tăng lên mức tối đa. Tất cả các tính năng trên sẽ được khôi phục lại về mặc định khi bạn tắt Chế độ chơi game.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Chế độ chơi game bật</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Chế độ chơi game tắt</string>
     <!-- Power Menu -->
@@ -175,17 +174,17 @@
     <string name="global_action_flashlight">Đèn pin</string>
     <!-- Advance location quick setting tile -->
     <string name="quick_settings_location_secondary_battery_saving">Tiết kiệm pin</string>
-    <string name="accessibility_quick_settings_location_battery_saving">Báo cáo vị trí: chế độ tiết kiệm pin.</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Định vị: tiết kiệm pin.</string>
     <string name="quick_settings_location_secondary_gps_only">Chỉ các cảm biến</string>
-    <string name="accessibility_quick_settings_location_gps_only">Báo cáo vị trí: chế độ chỉ các cảm biến.</string>
-    <string name="quick_settings_location_secondary_high_accuracy">Độ chính xác cao</string>
-    <string name="accessibility_quick_settings_location_high_accuracy">Báo cáo vị trí: chế độ chính xác cao.</string>
+    <string name="accessibility_quick_settings_location_gps_only">Định vị: chỉ cảm biến.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Chính xác cao</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Định vị: chính xác cao.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Buộc dừng?</string>
     <string name="force_stop_dlg_text">Nếu bạn buộc dừng ứng dụng, nó có thể hoạt động không ổn định.</string>
     <string name="dlg_ok">@android:string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
-    <string name="kill">Đóng Ứng Dụng</string>
+    <string name="kill">Tắt ứng dụng</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->

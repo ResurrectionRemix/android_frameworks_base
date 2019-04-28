@@ -146,7 +146,6 @@
     <string name="gaming_mode_tile_toast">Herný režim povolený</string>
     <string name="gaming_mode_tile_toast_disabled">Herný režim zakázaný</string>
     <string name="gaming_mode_dialog_title">Herný režim</string>
-    <string name="gaming_mode_dialog_message">Ak je herný režim povolený, zvonenie sa zmení na vibrácie, všetky plávajúce správy budú deaktivované a hardvérové tlačidlá budú vypnuté. Hlasitosť médií sa zvýši na maximálnu hodnotu. Po ukončení herného režimu budú všetky deaktivované nastavenia obnovené na predvolené.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Herný režim zapnutý</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Herný režim vypnutý</string>
     <!-- Power Menu -->

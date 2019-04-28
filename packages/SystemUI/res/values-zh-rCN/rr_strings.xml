@@ -70,7 +70,7 @@
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已连接</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">列</string>
-    <string name="qs_menu_item_columns_landscape">列（横向）</string>
+    <string name="qs_menu_item_columns_landscape">列 (横向)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">游戏模式已启用</string>
     <string name="gaming_mode_tile_toast_disabled">游戏模式已禁用</string>
     <string name="gaming_mode_dialog_title">游戏模式</string>
-    <string name="gaming_mode_dialog_message">启用游戏模式后，您的铃声模式将变为振动模式，所有浮动消息将被禁用，硬件按键将被关闭。媒体音量将增加到最大值。退出游戏模式后，所有禁用的设置将重置为默认值。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">游戏模式开启</string>
     <string name="accessibility_quick_settings_gaming_mode_off">游戏模式关闭</string>
     <!-- Power Menu -->

@@ -31,7 +31,7 @@
 <resources>
     <string name="custom_text_clock_top_text_default">São</string>
     <string name="text_clock_zero_h_min">0\'</string>
-    <string name="text_clock_high">Alta</string>
+    <string name="text_clock_high">Alto</string>
     <string name="text_clock_noon">Meio-dia</string>
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">Vinte</string>
@@ -56,10 +56,10 @@
     <string name="text_clock_units_string_thirteen">Treze</string>
     <string name="text_clock_units_string_fourteen">Catorze</string>
     <string name="text_clock_units_string_fifteen">Quinze</string>
-    <string name="text_clock_units_string_sixteen">Dezasseis</string>
-    <string name="text_clock_units_string_seventeen">Dezassete</string>
+    <string name="text_clock_units_string_sixteen">Dezesseis</string>
+    <string name="text_clock_units_string_seventeen">Dezessete</string>
     <string name="text_clock_units_string_eighteen">Dezoito</string>
-    <string name="text_clock_units_string_nineteen">Dezanove</string>
+    <string name="text_clock_units_string_nineteen">Dezenove</string>
     <!-- TensStringH -->
     <string name="text_clock_tens_string_h_twenty">Vinte</string>
     <string name="text_clock_tens_string_h_thirty">Trinta</string>
@@ -81,10 +81,10 @@
     <string name="text_clock_units_string_h_eleven">Onze</string>
     <string name="text_clock_units_string_h_twelve">Doze</string>
     <string name="text_clock_units_string_h_thirteen">Treze</string>
-    <string name="text_clock_units_string_h_fourteen">Catorze</string>
+    <string name="text_clock_units_string_h_fourteen">Quatorze</string>
     <string name="text_clock_units_string_h_fifteen">Quinze</string>
-    <string name="text_clock_units_string_h_sixteen">Dezasseis</string>
-    <string name="text_clock_units_string_h_seventeen">Dezassete</string>
+    <string name="text_clock_units_string_h_sixteen">Dezesseis</string>
+    <string name="text_clock_units_string_h_seventeen">Dezessete</string>
     <string name="text_clock_units_string_h_eighteen">Dezoito</string>
-    <string name="text_clock_units_string_h_nineteen">Dezanove</string>
+    <string name="text_clock_units_string_h_nineteen">Dezenove</string>
 </resources>

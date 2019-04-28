@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Игровой режим включен</string>
     <string name="gaming_mode_tile_toast_disabled">Игровой режим выключен</string>
     <string name="gaming_mode_dialog_title">Игровой режим</string>
-    <string name="gaming_mode_dialog_message">Когда игровой режим включен, ваш режим звонка переключится в режим вибрации, все уведомления и аппаратные клавиши будут отключены. Громкость медиа будет увеличена до максимального уровня. Все отключенные настройки будут восстановлены после выхода из режима игры.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Включить игровой режим</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Выключить игровой режим</string>
     <!-- Power Menu -->

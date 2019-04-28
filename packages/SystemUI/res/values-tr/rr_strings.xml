@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Oyun modu etkin</string>
     <string name="gaming_mode_tile_toast_disabled">Oyun modu devre dışı</string>
     <string name="gaming_mode_dialog_title">Oyun Modu</string>
-    <string name="gaming_mode_dialog_message">Oyun modu etkinleştirildiğinde zil modunuz titreşim moduna geçer, tüm uyarı mesajları devre dışı bırakılır ve donanım tuşları kapatılır. Medya sesi maksimum değere yükseltilecektir. Oyun modundan çıktığınızda tüm ayarlar varsayılana sıfırlanacaktır.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Oyun modu açık</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Oyun modu kapalı</string>
     <!-- Power Menu -->

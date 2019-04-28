@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">遊戲模式已啟用</string>
     <string name="gaming_mode_tile_toast_disabled">遊戲模式已停用</string>
     <string name="gaming_mode_dialog_title">遊戲模式</string>
-    <string name="gaming_mode_dialog_message">當啟用遊戲模式，響鈴模式將被調整為震動模式，抬頭顯示及硬體導覽列將被停用。媒體音量會被調整至最大值。所有被更改的設定都會在離開遊戲模式後還原。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">遊戲模式已開啟</string>
     <string name="accessibility_quick_settings_gaming_mode_off">遊戲模式已關閉</string>
     <!-- Power Menu -->

@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">A Játékmód engedélyezve</string>
     <string name="gaming_mode_tile_toast_disabled">A Játékmód letiltva</string>
     <string name="gaming_mode_dialog_title">Játékmód</string>
-    <string name="gaming_mode_dialog_message">Amikor a Játékmód engedélyezett, a készülék csengésről rezgő hivásjelzésre vált, az összes felugró értesítés letiltásra kerül és a hardvergombok kikapcsolódnak. A média hangereje a maximumra állítódik. Minden beállítás gyári állapotba áll vissza, amint kilép a Játékmódból.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Játékmód be</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Játékmód ki</string>
     <!-- Power Menu -->

@@ -146,7 +146,6 @@
     <string name="gaming_mode_tile_toast">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_tile_toast_disabled">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_dialog_title">Mode Permainan</string>
-    <string name="gaming_mode_dialog_message">Ketika mode permainan dinyalakan, nada dering Anda akan diset dalam mode getar, semua notifikasi akan di nonaktifkan dan tombol fisik akan dimatikan. Volume media akan diset maksimal. Semua pengaturan akan akan diatur ulang ketika Anda menonaktifkan mode permainan.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Mode permainan nonaktif</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mode permainan aktif</string>
     <!-- Power Menu -->

@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">Spielmodus eingeschaltet</string>
     <string name="gaming_mode_tile_toast_disabled">Spielmodus ausgeschaltet</string>
     <string name="gaming_mode_dialog_title">Spielmodus</string>
-    <string name="gaming_mode_dialog_message">Wenn der Spielemodus eingeschaltet ist, wird der Klingelmodus auf Vibration geschaltet, alle Heads-Up Nachrichten und die Hardware-Tasten werden abgeschaltet. Die Medien-Lautstärke wird auf den Maximalwert erhöht. Alle abgeschalteten Einstellungen werden nach Abschalten des Spielemodus zurückgesetzt.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Spielmodus an</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Spielmodus aus</string>
     <!-- Power Menu -->

@@ -155,7 +155,6 @@
     <string name="gaming_mode_tile_toast">وضع الألعاب مفعل</string>
     <string name="gaming_mode_tile_toast_disabled">وضع الألعاب معطل</string>
     <string name="gaming_mode_dialog_title">وضع الألعاب</string>
-    <string name="gaming_mode_dialog_message">عندما يتم تمكين وضع الألعاب، سيتم تغيير صوت الجهاز الخاص بك لوضع الاهتزاز فقط، سيتم إيقاف كافة التنبيهات المنبثقة وسيتم إيقاف أزرار الجهاز. سيتم زيادة صوت الوسائط إلى الحد الأقصى. سيتم إعادة تعيين كافة الإعدادات المذكورة أعلاه بمجرد الخروج من \"وضع الألعاب\".</string>
     <string name="accessibility_quick_settings_gaming_mode_on">وضع الألعاب مفعل</string>
     <string name="accessibility_quick_settings_gaming_mode_off">وضع الألعاب معطل</string>
     <!-- Power Menu -->
