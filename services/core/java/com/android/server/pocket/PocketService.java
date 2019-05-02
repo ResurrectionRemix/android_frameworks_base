@@ -141,6 +141,9 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     private boolean mLightRegistered;
     private Sensor mLightSensor;
 
+    // Custom methods
+    private boolean mPocketLockVisible;
+
     public PocketService(Context context) {
         super(context);
         mContext = context;
@@ -205,6 +208,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         public static final int MSG_SENSOR_EVENT_LIGHT = 7;
         public static final int MSG_UNREGISTER_TIMEOUT = 8;
         public static final int MSG_SET_LISTEN_EXTERNAL = 9;
+        public static final int MSG_SET_POCKET_LOCK_VISIBLE = 10;
 
         public PocketHandler(Looper looper) {
             super(looper);
@@ -242,6 +246,9 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
                     break;
                 case MSG_SET_LISTEN_EXTERNAL:
                     handleSetListeningExternal(msg.arg1 != 0);
+                    break;
+                case MSG_SET_POCKET_LOCK_VISIBLE:
+                    handleSetPocketLockVisible(msg.arg1 != 0);
                     break;
                 default:
                     Slog.w(TAG, "Unknown message:" + msg.what);
@@ -333,6 +340,27 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
                     return false;
                 }
                 return PocketService.this.isDeviceInPocket();
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override // Binder call
+        public void setPocketLockVisible(final boolean visible) {
+            final Message msg = new Message();
+            msg.what = PocketHandler.MSG_SET_POCKET_LOCK_VISIBLE;
+            msg.arg1 = visible ? 1 : 0;
+            mHandler.sendMessage(msg);
+        }
+
+        @Override // Binder call
+        public boolean isPocketLockVisible() {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                if (!mSystemReady || !mSystemBooted) {
+                    return false;
+                }
+                return PocketService.this.isPocketLockVisible();
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
@@ -549,6 +577,14 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
                 }
             }
         }
+    }
+
+    private void handleSetPocketLockVisible(boolean visible) {
+        mPocketLockVisible = visible;
+    }
+
+    private boolean isPocketLockVisible() {
+        return mPocketLockVisible;
     }
 
     private void handleSetListeningExternal(boolean listen) {
