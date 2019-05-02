@@ -162,7 +162,8 @@ public class PocketLock {
     }
 
     private void removeView() {
-        if (mWindowManager != null && mAttached) {
+        if (mWindowManager != null && mAttached) {          
+            mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             mWindowManager.removeView(mView);
             mAnimating = false;
             mAttached = false;

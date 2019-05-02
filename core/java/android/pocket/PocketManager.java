@@ -204,6 +204,30 @@ public class PocketManager {
         }
     }
 
+    /** Custom methods **/
+
+    public void setPocketLockVisible(boolean visible) {
+        if (!visible){
+            if (DEBUG) Log.v(TAG, "Clearing pocket timer");
+            mHandler.removeCallbacks(mPocketLockTimeout);
+            mPocketViewTimerActive = false;
+        }
+        if (mService != null) try {
+            mService.setPocketLockVisible(visible);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Remote exception in setPocketLockVisible: ", e);
+        }
+    }
+
+    public boolean isPocketLockVisible() {
+        if (mService != null) try {
+            return mService.isPocketLockVisible();
+        } catch (RemoteException e) {
+            Log.w(TAG, "Remote exception in isPocketLockVisible: ", e);
+        }
+        return false;
+    }
+
     private PocketLockTimeout mPocketLockTimeout = new PocketLockTimeout();
 
 }

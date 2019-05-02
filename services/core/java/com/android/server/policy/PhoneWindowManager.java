@@ -2197,9 +2197,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         public void run() {
 	    if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SCREEN_SHOT_SHORTCUT_SWITCH, 1) == 1) {
+            if (!mPocketLockShowing){
             mScreenshotHelper.takeScreenshot(mScreenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(), mHandler);
+            }
             } else {
              Slog.d(TAG, "ScreenShot Shortcut Disabled");
 	        }
@@ -8113,12 +8115,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return;
         }
 
+        if (mPowerManager.isInteractive() && !isKeyguardShowingAndNotOccluded()){
+            return;
+        }
+
         if (DEBUG) {
             Log.d(TAG, "showPocketLock, animate=" + animate);
         }
 
         mPocketLock.show(animate);
         mPocketLockShowing = true;
+
+        mPocketManager.setPocketLockVisible(true);
     }
 
     /**
@@ -8140,6 +8148,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         mPocketLock.hide(animate);
         mPocketLockShowing = false;
+
+        mPocketManager.setPocketLockVisible(false);
     }
 
     private void handleHideBootMessage() {
