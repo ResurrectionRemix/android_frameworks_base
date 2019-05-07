@@ -1,10 +1,5 @@
 /*
- * Copyright (C) 2018 crDroid Android Project
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/rr/logo/LogoImageViewQuick.java
  * Copyright (C) 2018 rr
-=======
- * Copyright (C) 2018-2019 AICP
->>>>>>> bb5745bbf2b... fwb: logo: code cleanup:packages/SystemUI/src/com/android/systemui/aicp/logo/LogoImageViewQuick.java
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
