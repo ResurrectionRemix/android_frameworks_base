@@ -121,12 +121,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">פיקסלים חכמים</string>
     <string name="quick_settings_smart_pixels_on_power_save">הפעלה אוטומטית של פיקסלים חכמים</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_options">אפשרויות</string>
-    <string name="onthego_transparency">שקיפות</string>
-    <string name="onthego_front_camera">שימוש במצלמה קדמית</string>
-    <string name="onthego_service_toggle">הפעלת שירות מחדש אוטומטית</string>
-    <string name="onthego_channel_name">ראשי</string>
     <string name="omnijaws_service_error">שגיאה</string>
     <string name="omnijaws_service_unkown">אין נתוני מזג אוויר</string>
     <string name="omnijaws_service_error_long">שגיאה בטעינת נתוני מזג האויר</string>
@@ -158,4 +152,10 @@
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
+    <string name="onthego_notif_options">אפשרויות</string>
+    <string name="onthego_transparency">שקיפות</string>
+    <string name="onthego_front_camera">שימוש במצלמה קדמית</string>
+    <string name="onthego_service_toggle">הפעלת שירות מחדש אוטומטית</string>
+    <string name="onthego_channel_name">ראשי</string>
 </resources>

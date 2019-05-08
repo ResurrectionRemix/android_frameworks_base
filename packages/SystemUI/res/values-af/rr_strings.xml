@@ -43,7 +43,6 @@
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->
@@ -54,4 +53,5 @@
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
 </resources>

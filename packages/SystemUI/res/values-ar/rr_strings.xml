@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">الدقة الذكية</string>
     <string name="quick_settings_smart_pixels_on_power_save">تمكين الدقة الذكية تلقائياً</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">وضع On-The-Go مفعل</string>
-    <string name="onthego_notif_title">تم تفعيل وضع On-The-Go</string>
-    <string name="onthego_notif_stop">إيقاف</string>
-    <string name="onthego_notif_options">خيارات</string>
-    <string name="onthego_notif_error">غير قادر على بدء On-The-Go</string>
-    <string name="onthego_notif_restart">إعادة تشغيل On-The-Go</string>
-    <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
-    <string name="onthego_transparency">الشفافية</string>
-    <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
-    <string name="onthego_service_toggle">إعادة تشغيل الخدمة تلقائيا</string>
-    <string name="onthego_channel_name">الرئيسية</string>
-    <string name="global_action_onthego">وضع On-The-Go</string>
     <string name="omnijaws_service_error">خطأ</string>
     <string name="omnijaws_service_unkown">لا يوجد بيانات الطقس</string>
     <string name="omnijaws_service_error_long">خطأ في تحميل بيانات الطقس</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">وضع الألعاب مفعل</string>
     <string name="gaming_mode_tile_toast_disabled">وضع الألعاب معطل</string>
     <string name="gaming_mode_dialog_title">وضع الألعاب</string>
-    <string name="gaming_mode_dialog_message">عندما يتم تمكين وضع الألعاب، سيتم تغيير صوت الجهاز الخاص بك لوضع الاهتزاز فقط، سيتم إيقاف كافة التنبيهات المنبثقة وسيتم إيقاف أزرار الجهاز. سيتم زيادة صوت الوسائط إلى الحد الأقصى. سيتم إعادة تعيين كافة الإعدادات المذكورة أعلاه بمجرد الخروج من \"وضع الألعاب\".</string>
+    <string name="gaming_mode_dialog_message">عند تمكين وضع الألعاب ، سيتم تعطيل جميع الرسائل العلوية وسيتم إيقاف تشغيل مفاتيح الجهاز. سيتم إعادة تعيين جميع الإعدادات المعطلة إلى الوضع الافتراضي بمجرد خروجك من وضع الألعاب.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">وضع الألعاب مفعل</string>
     <string name="accessibility_quick_settings_gaming_mode_off">وضع الألعاب معطل</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">دائماً على الشاشة</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">وضع اليد الواحدة</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">وضع On-The-Go</string>
+    <string name="onthego_notif_ticker">وضع On-The-Go مفعل</string>
+    <string name="onthego_notif_title">تم تفعيل وضع On-The-Go</string>
+    <string name="onthego_notif_stop">إيقاف</string>
+    <string name="onthego_notif_options">خيارات</string>
+    <string name="onthego_notif_error">غير قادر على بدء On-The-Go</string>
+    <string name="onthego_notif_restart">إعادة تشغيل On-The-Go</string>
+    <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
+    <string name="onthego_transparency">الشفافية</string>
+    <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
+    <string name="onthego_service_toggle">إعادة تشغيل الخدمة تلقائيا</string>
+    <string name="onthego_channel_name">الرئيسية</string>
 </resources>

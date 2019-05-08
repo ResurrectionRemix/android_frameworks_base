@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">스마트 픽셀</string>
     <string name="quick_settings_smart_pixels_on_power_save">스마트 픽셀 자동으로 켜기</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go 모드 활성화됨</string>
-    <string name="onthego_notif_title">On-The-Go 모드가 활성화 되었습니다</string>
-    <string name="onthego_notif_stop">중지</string>
-    <string name="onthego_notif_options">옵션</string>
-    <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없습니다.</string>
-    <string name="onthego_notif_restart">On-The-Go 모드 다시 시작</string>
-    <string name="onthego_notif_camera_changed">카메라 모드 변경됨</string>
-    <string name="onthego_transparency">투명도</string>
-    <string name="onthego_front_camera">전면 카메라 사용</string>
-    <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
-    <string name="onthego_channel_name">메인</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">오류</string>
     <string name="omnijaws_service_unkown">날씨 데이터 없음</string>
     <string name="omnijaws_service_error_long">날씨 정보 불러오기 오류</string>
@@ -155,7 +142,6 @@
     <string name="gaming_mode_tile_toast">게이밍 모드 활성화됨</string>
     <string name="gaming_mode_tile_toast_disabled">게이밍 모드 비활성화됨</string>
     <string name="gaming_mode_dialog_title">게이밍 모드</string>
-    <string name="gaming_mode_dialog_message">게이밍 모드가 활성화되면 알림은 진동으로 설정되며 하드웨어 키는 비활성화 됩니다. 미디어 음량은 최대로 바뀌며 이 설정은 게이밍 모드를 비활성화할 때까지 유지됩니다.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">게이밍 모드 사용</string>
     <string name="accessibility_quick_settings_gaming_mode_off">게이밍 모드 사용 안함</string>
     <!-- Power Menu -->
@@ -190,4 +176,17 @@
     <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">한손 조작 모드</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go 모드 활성화됨</string>
+    <string name="onthego_notif_title">On-The-Go 모드가 활성화 되었습니다</string>
+    <string name="onthego_notif_stop">중지</string>
+    <string name="onthego_notif_options">옵션</string>
+    <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없습니다.</string>
+    <string name="onthego_notif_restart">On-The-Go 모드 다시 시작</string>
+    <string name="onthego_notif_camera_changed">카메라 모드 변경됨</string>
+    <string name="onthego_transparency">투명도</string>
+    <string name="onthego_front_camera">전면 카메라 사용</string>
+    <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
+    <string name="onthego_channel_name">메인</string>
 </resources>

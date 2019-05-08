@@ -29,7 +29,10 @@
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Meldingen zijn voor 1 minuut gedempt.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Meldingen zijn voor <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+    <string name="screenrecord_notif_final_ticker">Screen recorded successfully</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Recording screen</string>
     <!-- Screenrecord notification action: Stop -->
     <!-- Screenrecord notification action: show/hide pointer -->
     <!-- Screen record notification error title -->
@@ -46,7 +49,6 @@
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->
@@ -62,4 +64,5 @@
     <string name="kill">App Beëindigen</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
 </resources>

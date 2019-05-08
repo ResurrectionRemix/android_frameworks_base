@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Akıllı pikseller</string>
     <string name="quick_settings_smart_pixels_on_power_save">Otomatik olarak akıllı pikselleri etkinleştir</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Yürüme modu etkinleştirildi</string>
-    <string name="onthego_notif_title">Yürüme modu etkin</string>
-    <string name="onthego_notif_stop">Durdur</string>
-    <string name="onthego_notif_options">Seçenekler</string>
-    <string name="onthego_notif_error">Yürüme modu başlatılamıyor</string>
-    <string name="onthego_notif_restart">Yürüme modunu yeniden başlat</string>
-    <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
-    <string name="onthego_transparency">Şeffaflık</string>
-    <string name="onthego_front_camera">Ön kamerayı kullan</string>
-    <string name="onthego_service_toggle">Hizmeti otomatik olarak yeniden başlat</string>
-    <string name="onthego_channel_name">Ana</string>
-    <string name="global_action_onthego">Yürüme modu</string>
     <string name="omnijaws_service_error">Hata</string>
     <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
     <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Oyun modu etkin</string>
     <string name="gaming_mode_tile_toast_disabled">Oyun modu devre dışı</string>
     <string name="gaming_mode_dialog_title">Oyun Modu</string>
-    <string name="gaming_mode_dialog_message">Oyun modu etkinleştirildiğinde zil modunuz titreşim moduna geçer, tüm uyarı mesajları devre dışı bırakılır ve donanım tuşları kapatılır. Medya sesi maksimum değere yükseltilecektir. Oyun modundan çıktığınızda tüm ayarlar varsayılana sıfırlanacaktır.</string>
+    <string name="gaming_mode_dialog_message">Oyun modu etkinleştirildiğinde, tüm bildirim pencereleri mesajları devre dışı bırakılacak ve donanım tuşları kapatılacaktır. Oyun modundan çıktıktan sonra tüm devre dışı ayarlar varsayılan değerlere sıfırlanacaktır.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Oyun modu açık</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Oyun modu kapalı</string>
     <!-- Power Menu -->
@@ -190,4 +177,18 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Tek el modu</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">Yürüme modu</string>
+    <string name="onthego_notif_ticker">Yürüme modu etkinleştirildi</string>
+    <string name="onthego_notif_title">Yürüme modu etkin</string>
+    <string name="onthego_notif_stop">Durdur</string>
+    <string name="onthego_notif_options">Seçenekler</string>
+    <string name="onthego_notif_error">Yürüme modu başlatılamıyor</string>
+    <string name="onthego_notif_restart">Yürüme modunu yeniden başlat</string>
+    <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
+    <string name="onthego_transparency">Şeffaflık</string>
+    <string name="onthego_front_camera">Ön kamerayı kullan</string>
+    <string name="onthego_service_toggle">Hizmeti otomatik olarak yeniden başlat</string>
+    <string name="onthego_channel_name">Ana</string>
+    <string name="quick_settings_onthego_label">Yürüme modu</string>
 </resources>

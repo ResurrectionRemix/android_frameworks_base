@@ -89,8 +89,8 @@
     <!-- Navbar Tuner -->
     <string name="preview">Pré-visualizar</string>
     <string name="keycode">Código de tecla</string>
-    <string name="no_home_title">Sem botão de página inicial</string>
-    <string name="no_home_message">É necessário um botão de página inicial para navegar neste dispositivo. Adicione um botão de página inicial antes de guardar.</string>
+    <string name="no_home_title">Sem botão de Página Inicial</string>
+    <string name="no_home_message">É necessário um botão de Página Inicial para navegar neste dispositivo. Adicione um botão de Página Inicial antes de guardar.</string>
     <string name="clipboard_description">A Área de Transferência permite arrastar conteúdos diretamente para a área de transferência. Também é possível arrastar conteúdos diretamente para fora da mesma, quando aí se encontram.</string>
     <string name="keycode_description">Os códigos de tecla permitem adicionar teclas do teclado à Barra de navegação. Quando são pressionados, emulam a tecla selecionada. É necessário selecionar primeiro a tecla para o botão e depois a imagem a ser apresentada no mesmo.</string>
     <string name="start">Início</string>
@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Píxeis Inteligentes</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-ativação dos Píxeis Inteligentes</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go ativado</string>
-    <string name="onthego_notif_title">On-The-Go está ativado</string>
-    <string name="onthego_notif_stop">Parar</string>
-    <string name="onthego_notif_options">Opções</string>
-    <string name="onthego_notif_error">Impossível iniciar o On-The-Go</string>
-    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
-    <string name="onthego_transparency">Transparência</string>
-    <string name="onthego_front_camera">Usar câmara frontal</string>
-    <string name="onthego_service_toggle">Reiniciar serviço automaticamente</string>
-    <string name="onthego_channel_name">Principal</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Erro</string>
     <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
     <string name="omnijaws_service_error_long">Erro ao carregar as informações meteorológicas</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Modo de Jogo ativado</string>
     <string name="gaming_mode_tile_toast_disabled">Modo de Jogo desativado</string>
     <string name="gaming_mode_dialog_title">Modo de Jogo</string>
-    <string name="gaming_mode_dialog_message">Quando o Modo de Jogo está ativado, as notificações do dispositivo passarão para o modo de vibração, todas as mensagens flutuantes serão desativadas e as teclas físicas serão desligadas. O volume será aumentado para o valor máximo. Todas as configurações desativadas serão redefinidas para os valores padrão assim que sair do Modo de Jogo.</string>
+    <string name="gaming_mode_dialog_message">Quando o Modo de Jogo for ativado, todas as notificações flutuantes e os botões físicos serão desativados. Todas as definições desativadas serão redefinidas para o padrão assim que sair do Modo de Jogo.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Modo de Jogo ligado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo de Jogo desligado</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Modo de uma mão</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go ativado</string>
+    <string name="onthego_notif_title">On-The-Go está ativado</string>
+    <string name="onthego_notif_stop">Parar</string>
+    <string name="onthego_notif_options">Opções</string>
+    <string name="onthego_notif_error">Impossível iniciar o On-The-Go</string>
+    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
+    <string name="onthego_transparency">Transparência</string>
+    <string name="onthego_front_camera">Usar câmara frontal</string>
+    <string name="onthego_service_toggle">Reiniciar serviço automaticamente</string>
+    <string name="onthego_channel_name">Principal</string>
 </resources>

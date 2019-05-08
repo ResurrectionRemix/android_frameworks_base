@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Intelligens pixelek</string>
     <string name="quick_settings_smart_pixels_on_power_save">Intelligens pixelek automatikus engedélyezése</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Menet közben (On-The-Go) aktiválva</string>
-    <string name="onthego_notif_title">A Menet közben (On-The-Go) aktív</string>
-    <string name="onthego_notif_stop">Leállítás</string>
-    <string name="onthego_notif_options">Beállítások</string>
-    <string name="onthego_notif_error">Nem lehet elindítani a Menet közben (On-The-Go) módot</string>
-    <string name="onthego_notif_restart">A Menet közben (On-The-Go) mód újraindítása</string>
-    <string name="onthego_notif_camera_changed">A Kameramód megváltoztatva</string>
-    <string name="onthego_transparency">Átlátszóság</string>
-    <string name="onthego_front_camera">Az előlapi kamera használata</string>
-    <string name="onthego_service_toggle">Szolgáltatás automatikus újraindítása</string>
-    <string name="onthego_channel_name">Elsődleges</string>
-    <string name="global_action_onthego">Menet közben (On-The-Go)</string>
     <string name="omnijaws_service_error">Hiba</string>
     <string name="omnijaws_service_unkown">Nincsenek időjárási adatok</string>
     <string name="omnijaws_service_error_long">Hiba az időjárási adatok betöltésekor</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">A Játékmód engedélyezve</string>
     <string name="gaming_mode_tile_toast_disabled">A Játékmód letiltva</string>
     <string name="gaming_mode_dialog_title">Játékmód</string>
-    <string name="gaming_mode_dialog_message">Amikor a Játékmód engedélyezett, a készülék csengésről rezgő hivásjelzésre vált, az összes felugró értesítés letiltásra kerül és a hardvergombok kikapcsolódnak. A média hangereje a maximumra állítódik. Minden beállítás gyári állapotba áll vissza, amint kilép a Játékmódból.</string>
+    <string name="gaming_mode_dialog_message">Amikor a Játékmód be van kapcsolva, minden felugró értesítés letiltásra kerül és a hardveres gombok kikapcsolódnak. Természetesen a letiltott beállítások újra alaphelyzetbe állnak, amint kilép a Játékmódból.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Játékmód be</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Játékmód ki</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">Mindig bekapcsolt kijelző (AOD)</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Egykezes üzemmód</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">Menet közben (On-The-Go)</string>
+    <string name="onthego_notif_ticker">Menet közben (On-The-Go) aktiválva</string>
+    <string name="onthego_notif_title">A Menet közben (On-The-Go) aktív</string>
+    <string name="onthego_notif_stop">Leállítás</string>
+    <string name="onthego_notif_options">Beállítások</string>
+    <string name="onthego_notif_error">Nem lehet elindítani a Menet közben (On-The-Go) módot</string>
+    <string name="onthego_notif_restart">A Menet közben (On-The-Go) mód újraindítása</string>
+    <string name="onthego_notif_camera_changed">A Kameramód megváltoztatva</string>
+    <string name="onthego_transparency">Átlátszóság</string>
+    <string name="onthego_front_camera">Az előlapi kamera használata</string>
+    <string name="onthego_service_toggle">Szolgáltatás automatikus újraindítása</string>
+    <string name="onthego_channel_name">Elsődleges</string>
 </resources>

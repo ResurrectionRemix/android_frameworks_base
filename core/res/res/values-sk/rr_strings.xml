@@ -63,7 +63,10 @@
    <string name="action_null">Prázdne</string>
    <string name="default_string">Predvolené</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Vyžaduje sa reštart SystemUI</string>
+   <string name="systemui_restart_message">Aby sa všetky zmeny prejavili je potrebné reštartovať SystemUI. Reštartovať teraz?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Pre interakciu dlho stlačte tlačidlo Napájanie</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

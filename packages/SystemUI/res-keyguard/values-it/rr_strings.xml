@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Questo è</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Alto</string>
+    <string name="text_clock_noon">Mezzogiorno</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Venti</string>
+    <string name="text_clock_tens_string_thirty">Trenta</string>
+    <string name="text_clock_tens_string_forty">Quarta</string>
+    <string name="text_clock_tens_string_fifty">Cinquanta</string>
+    <string name="text_clock_tens_string_sixty">Sessanta</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Zero</string>
+    <string name="text_clock_units_string_one">Uno</string>
+    <string name="text_clock_units_string_two">Due</string>
+    <string name="text_clock_units_string_three">Tre</string>
+    <string name="text_clock_units_string_four">Quattro</string>
+    <string name="text_clock_units_string_five">Cinque</string>
+    <string name="text_clock_units_string_six">Sei</string>
+    <string name="text_clock_units_string_seven">Sette</string>
+    <string name="text_clock_units_string_eight">Otto</string>
+    <string name="text_clock_units_string_nine">Nove</string>
+    <string name="text_clock_units_string_ten">Dieci</string>
+    <string name="text_clock_units_string_eleven">Undici</string>
+    <string name="text_clock_units_string_twelve">Dodici</string>
+    <string name="text_clock_units_string_thirteen">Tredici</string>
+    <string name="text_clock_units_string_fourteen">Quattordici</string>
+    <string name="text_clock_units_string_fifteen">Quindici</string>
+    <string name="text_clock_units_string_sixteen">Sedici</string>
+    <string name="text_clock_units_string_seventeen">Diciassette</string>
+    <string name="text_clock_units_string_eighteen">Diciotto</string>
+    <string name="text_clock_units_string_nineteen">Diciannove</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Venti</string>
+    <string name="text_clock_tens_string_h_thirty">Trenta</string>
+    <string name="text_clock_tens_string_h_forty">Quarta</string>
+    <string name="text_clock_tens_string_h_fifty">Cinquanta</string>
+    <string name="text_clock_tens_string_h_sixty">Sessanta</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Dodici</string>
+    <string name="text_clock_units_string_h_one">Uno</string>
+    <string name="text_clock_units_string_h_two">Due</string>
+    <string name="text_clock_units_string_h_three">Tre</string>
+    <string name="text_clock_units_string_h_four">Quattro</string>
+    <string name="text_clock_units_string_h_five">Cinque</string>
+    <string name="text_clock_units_string_h_six">Sei</string>
+    <string name="text_clock_units_string_h_seven">Sette</string>
+    <string name="text_clock_units_string_h_eight">Otto</string>
+    <string name="text_clock_units_string_h_nine">Nove</string>
+    <string name="text_clock_units_string_h_ten">Dieci</string>
+    <string name="text_clock_units_string_h_eleven">Undici</string>
+    <string name="text_clock_units_string_h_twelve">Dodici</string>
+    <string name="text_clock_units_string_h_thirteen">Tredici</string>
+    <string name="text_clock_units_string_h_fourteen">Quattordici</string>
+    <string name="text_clock_units_string_h_fifteen">Quindici</string>
+    <string name="text_clock_units_string_h_sixteen">Sedici</string>
+    <string name="text_clock_units_string_h_seventeen">Diciassette</string>
+    <string name="text_clock_units_string_h_eighteen">Diciotto</string>
+    <string name="text_clock_units_string_h_nineteen">Diciannove</string>
 </resources>

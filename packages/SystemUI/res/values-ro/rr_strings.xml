@@ -119,8 +119,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Pixeli inteligenți</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-activare pixeli inteligenți</string>
-    <!-- On The Go -->
-    <string name="onthego_front_camera">Utilizare cameră frontală</string>
     <string name="omnijaws_service_error">Eroare</string>
     <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
     <string name="omnijaws_service_error_long">Eroare la încărcarea datelor meteo</string>
@@ -135,7 +133,6 @@
     <string name="gaming_mode_tile_toast">Mod pentru jocuri activat</string>
     <string name="gaming_mode_tile_toast_disabled">Mod pentru jocuri dezactivat</string>
     <string name="gaming_mode_dialog_title">Mod Joc</string>
-    <string name="gaming_mode_dialog_message">Când modul pentru jocuri este activat, telefonul va trece pe vibrații, toate notificările heads-up vor fi dezactivate și butoanele fizice vor fi dezactivate. Volumul media va fi dat la maxim. Toate setările vor reveni de indată ce ieșiți din modul pentru jocuri.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Mod pentru jocuri activat</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mod pentru jocuri dezactivat</string>
     <!-- Power Menu -->
@@ -149,4 +146,6 @@
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
+    <string name="onthego_front_camera">Utilizare cameră frontală</string>
 </resources>

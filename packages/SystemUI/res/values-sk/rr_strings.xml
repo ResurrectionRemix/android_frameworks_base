@@ -50,7 +50,16 @@
     <string name="quick_settings_screenrecord_mq_label">Záznam obrazovky 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Záznam obrazovky 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Zvuk</string>
+    <string name="quick_settings_sound_ring">Zvonenie</string>
+    <string name="quick_settings_sound_vibrate">Vibrácie</string>
+    <string name="quick_settings_sound_dnd">Nevyrušovať</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Informácie o CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informácie o CPU vypnuté</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informácie o CPU zapnuté</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Informácie o CPU boli vypnuté</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Informácie o CPU boli zapnuté</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Snímka obrazovky bola odstránená</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -119,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Povoliť Smart Pixels automaticky</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Režim na cestách aktivovaný</string>
-    <string name="onthego_notif_title">Režim na cestách je aktívny</string>
-    <string name="onthego_notif_stop">Zastaviť</string>
-    <string name="onthego_notif_options">Nastavenia</string>
-    <string name="onthego_notif_error">Nepodarilo sa spustiť Režim na cestách</string>
-    <string name="onthego_notif_restart">Reštartovať režim na cestách</string>
-    <string name="onthego_notif_camera_changed">Režim fotoaparátu bol zmenený</string>
-    <string name="onthego_transparency">Priehľadnosť</string>
-    <string name="onthego_front_camera">Použiť prednú kameru</string>
-    <string name="onthego_service_toggle">Automaticky reštartovať službu</string>
-    <string name="onthego_channel_name">Hlavné</string>
-    <string name="global_action_onthego">Režim na cestách</string>
     <string name="omnijaws_service_error">Chyba</string>
     <string name="omnijaws_service_unkown">Žiadne údaje o počasí</string>
     <string name="omnijaws_service_error_long">Chyba pri načítavaní údajov o počasí</string>
@@ -146,7 +142,6 @@
     <string name="gaming_mode_tile_toast">Herný režim povolený</string>
     <string name="gaming_mode_tile_toast_disabled">Herný režim zakázaný</string>
     <string name="gaming_mode_dialog_title">Herný režim</string>
-    <string name="gaming_mode_dialog_message">Ak je herný režim povolený, zvonenie sa zmení na vibrácie, všetky plávajúce správy budú deaktivované a hardvérové tlačidlá budú vypnuté. Hlasitosť médií sa zvýši na maximálnu hodnotu. Po ukončení herného režimu budú všetky deaktivované nastavenia obnovené na predvolené.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Herný režim zapnutý</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Herný režim vypnutý</string>
     <!-- Power Menu -->
@@ -172,6 +167,26 @@
     <string name="quick_settings_location_secondary_high_accuracy">Vysoká presnosť</string>
     <string name="accessibility_quick_settings_location_high_accuracy">Hlásenie polohy: vysoká presnosť.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Vynútiť zastavenie?</string>
+    <string name="force_stop_dlg_text">Ak vynútite zastavenie aplikácie, môže sa správať zvláštne.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Ukončiť aplikáciu</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Režim jednou rukou</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">Režim na cestách</string>
+    <string name="onthego_notif_ticker">Režim na cestách aktivovaný</string>
+    <string name="onthego_notif_title">Režim na cestách je aktívny</string>
+    <string name="onthego_notif_stop">Zastaviť</string>
+    <string name="onthego_notif_options">Nastavenia</string>
+    <string name="onthego_notif_error">Nepodarilo sa spustiť Režim na cestách</string>
+    <string name="onthego_notif_restart">Reštartovať režim na cestách</string>
+    <string name="onthego_notif_camera_changed">Režim fotoaparátu bol zmenený</string>
+    <string name="onthego_transparency">Priehľadnosť</string>
+    <string name="onthego_front_camera">Použiť prednú kameru</string>
+    <string name="onthego_service_toggle">Automaticky reštartovať službu</string>
+    <string name="onthego_channel_name">Hlavné</string>
 </resources>

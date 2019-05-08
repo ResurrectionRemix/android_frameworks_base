@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Píxeles inteligentes</string>
     <string name="quick_settings_smart_pixels_on_power_save">Habilitar automáticamente Smart Pixels</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activado</string>
-    <string name="onthego_notif_title">On-The-Go está activo</string>
-    <string name="onthego_notif_stop">Detener</string>
-    <string name="onthego_notif_options">Opciones</string>
-    <string name="onthego_notif_error">No ha sido posible iniciar On-The-Go</string>
-    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
-    <string name="onthego_transparency">Transparencia</string>
-    <string name="onthego_front_camera">Utilizar la cámara frontal</string>
-    <string name="onthego_service_toggle">Reiniciar el servicio automáticamente</string>
-    <string name="onthego_channel_name">Principal</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Error</string>
     <string name="omnijaws_service_unkown">No hay datos del clima</string>
     <string name="omnijaws_service_error_long">Error al cargar datos del clima</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Modo juego activado</string>
     <string name="gaming_mode_tile_toast_disabled">Modo juego desactivado</string>
     <string name="gaming_mode_dialog_title">Modo Juego</string>
-    <string name="gaming_mode_dialog_message">Cuando se activa el Modo Juego, el modo de timbre va a cambiar a vibración, las notificaciones flotantes van a ser desactivadas y las teclas de hardware se van a deshabilitar. El volumen multimedia se aumentará hasta el valor máximo. Todos los ajustes modificados van a volver a su valor por defecto una vez que salgas del Modo Juego.</string>
+    <string name="gaming_mode_dialog_message">Cuando el Modo Juego está habilitado, todas las notificaciones se desactivarán además las teclas de hardaware. Todas las configuraciones deshabilitas se resetearán una vez salgas del Modo Juego.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Modo juego activado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo juego desactivado</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Modo de una sola mano</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go activado</string>
+    <string name="onthego_notif_title">On-The-Go está activo</string>
+    <string name="onthego_notif_stop">Detener</string>
+    <string name="onthego_notif_options">Opciones</string>
+    <string name="onthego_notif_error">No ha sido posible iniciar On-The-Go</string>
+    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
+    <string name="onthego_transparency">Transparencia</string>
+    <string name="onthego_front_camera">Utilizar la cámara frontal</string>
+    <string name="onthego_service_toggle">Reiniciar el servicio automáticamente</string>
+    <string name="onthego_channel_name">Principal</string>
 </resources>

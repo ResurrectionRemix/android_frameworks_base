@@ -116,7 +116,6 @@
     <string name="pie_state_name">पाइ नियंत्रण</string>
     <string name="pie_state_summary">Use pie controls while in immersive mode</string>
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->
@@ -127,4 +126,5 @@
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
 </resources>

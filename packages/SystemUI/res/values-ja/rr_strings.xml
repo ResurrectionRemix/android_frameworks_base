@@ -106,7 +106,7 @@
     <string name="left">左</string>
     <string name="right">右</string>
     <string name="navbar_editor_title">エディター</string>
-    <string name="navbar_editor_summary">ナビゲーションバーを編集</string>
+    <string name="navbar_editor_summary">ナビゲーションバーの編集</string>
     <!-- NavBar Tuner -->
     <string name="menu_ime_always_show">メニュー/キーボード切り替え (常時表示)</string>
     <string name="search">検索</string>
@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
     <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効化</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">OTG が有効化されました</string>
-    <string name="onthego_notif_title">OTG が有効です</string>
-    <string name="onthego_notif_stop">停止</string>
-    <string name="onthego_notif_options">オプション</string>
-    <string name="onthego_notif_error">OTG を開始できません</string>
-    <string name="onthego_notif_restart">OTG を再起動</string>
-    <string name="onthego_notif_camera_changed">カメラモードが変更されました</string>
-    <string name="onthego_transparency">透明度</string>
-    <string name="onthego_front_camera">フロントカメラを使用</string>
-    <string name="onthego_service_toggle">自動でサービスを再起動する</string>
-    <string name="onthego_channel_name">メイン</string>
-    <string name="global_action_onthego">OTG</string>
     <string name="omnijaws_service_error">エラー</string>
     <string name="omnijaws_service_unkown">気象情報がありません</string>
     <string name="omnijaws_service_error_long">気象情報読み込みエラー</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">ゲームモード有効</string>
     <string name="gaming_mode_tile_toast_disabled">ゲームモード無効</string>
     <string name="gaming_mode_dialog_title">ゲームモード</string>
-    <string name="gaming_mode_dialog_message">ゲームモードを有効すると、着信モードが振動モードに変わり、全てのポップアップ通知が無効になり、ハードキーも無効になります。メディアの音量は最大値まで増加します。ゲームモードを終了すると元の設定に戻されます。</string>
+    <string name="gaming_mode_dialog_message">ゲームモードが有効になると、Heads Up メッセージは全て無効になりハードウェアキーは OFF になります。無効にした設定はゲームモードを終了すると全て規定値にリセットされます。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">ゲームモード有効</string>
     <string name="accessibility_quick_settings_gaming_mode_off">ゲームモード無効</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">片手モード</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">OTG</string>
+    <string name="onthego_notif_ticker">OTG が有効化されました</string>
+    <string name="onthego_notif_title">OTG が有効です</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">オプション</string>
+    <string name="onthego_notif_error">OTG を開始できません</string>
+    <string name="onthego_notif_restart">OTG を再起動</string>
+    <string name="onthego_notif_camera_changed">カメラモードが変更されました</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">フロントカメラを使用</string>
+    <string name="onthego_service_toggle">自動でサービスを再起動する</string>
+    <string name="onthego_channel_name">メイン</string>
 </resources>

@@ -123,19 +123,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Έξυπνα Πίξελ</string>
     <string name="quick_settings_smart_pixels_on_power_save">Αυτόματη ενεργοποίηση Έξυπνων Πίξελ</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Η λειτουργία On-The-Go ενεργοποιήθηκε</string>
-    <string name="onthego_notif_title">Η λειτουργία On-The-Go είναι ενεργή</string>
-    <string name="onthego_notif_stop">Παύση</string>
-    <string name="onthego_notif_options">Επιλογές</string>
-    <string name="onthego_notif_error">Αδυναμία εκκίνησης On-The-Go</string>
-    <string name="onthego_notif_restart">Επανεκκίνηση On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Η λειτουργία κάμερας άλλαξε</string>
-    <string name="onthego_transparency">Διαφάνεια</string>
-    <string name="onthego_front_camera">Χρησιμοποίησε τη μπροστινή κάμερα</string>
-    <string name="onthego_service_toggle">Αυτόματη επανεκκίνηση υπηρεσίας</string>
-    <string name="onthego_channel_name">Κύρια</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Σφάλμα</string>
     <string name="omnijaws_service_unkown">Δεν υπάρχουν δεδομένα καιρού</string>
     <string name="omnijaws_service_error_long">Σφάλμα κατά τη φόρτωση δεδομένων καιρού</string>
@@ -150,7 +137,6 @@
     <string name="gaming_mode_tile_toast">Λειτουργία παιχνιδιού ενεργή</string>
     <string name="gaming_mode_tile_toast_disabled">Λειτουργία παιχνιδιού ανενεργή</string>
     <string name="gaming_mode_dialog_title">Λειτουργία παιχνιδιού</string>
-    <string name="gaming_mode_dialog_message">Όταν είναι ενεργοποιημένη η λειτουργία παιχνιδιού, το κουδούνισμα θα αλλάξει σε δόνηση, θα απενεργοποιηθούν όλα τα αναδυόμενα μηνύματα και τα πλήκτρα επίσης. Η Ένταση ήχου πολυμέσων θα αυξηθεί στην μέγιστη τιμή. Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές μόλις εξέλθετε απο την λειτουργία παιχνιδιού.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Λειτουργία παιχνιδιού ενεργή</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Λειτουργία παιχνιδιού ανενεργή</string>
     <!-- Power Menu -->
@@ -185,4 +171,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Λειτουργία ενός χεριού</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">Η λειτουργία On-The-Go ενεργοποιήθηκε</string>
+    <string name="onthego_notif_title">Η λειτουργία On-The-Go είναι ενεργή</string>
+    <string name="onthego_notif_stop">Παύση</string>
+    <string name="onthego_notif_options">Επιλογές</string>
+    <string name="onthego_notif_error">Αδυναμία εκκίνησης On-The-Go</string>
+    <string name="onthego_notif_restart">Επανεκκίνηση On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Η λειτουργία κάμερας άλλαξε</string>
+    <string name="onthego_transparency">Διαφάνεια</string>
+    <string name="onthego_front_camera">Χρησιμοποίησε τη μπροστινή κάμερα</string>
+    <string name="onthego_service_toggle">Αυτόματη επανεκκίνηση υπηρεσίας</string>
+    <string name="onthego_channel_name">Κύρια</string>
 </resources>

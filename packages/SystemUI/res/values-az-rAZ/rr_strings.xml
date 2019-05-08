@@ -119,8 +119,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Ağıllı piksellər</string>
     <string name="quick_settings_smart_pixels_on_power_save">Avtomatik olaraq ağıllı pikselləri aktivləşdir</string>
-    <!-- On The Go -->
-    <string name="onthego_front_camera">Ön kameradan istifade et</string>
     <string name="omnijaws_service_error">Erro</string>
     <!-- Gaming Mode -->
     <!-- Power Menu -->
@@ -133,4 +131,6 @@
     <string name="force_stop_dlg_title">Məcburi dayandırılsın?</string>
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->
+    <!-- On The Go -->
+    <string name="onthego_front_camera">Ön kameradan istifade et</string>
 </resources>

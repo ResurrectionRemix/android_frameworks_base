@@ -70,7 +70,7 @@
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower 已连接</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">列</string>
-    <string name="qs_menu_item_columns_landscape">列（横向）</string>
+    <string name="qs_menu_item_columns_landscape">列 (横向)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">智能像素</string>
     <string name="quick_settings_smart_pixels_on_power_save">自动启用智能像素</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">行走模式已激活</string>
-    <string name="onthego_notif_title">正在使用行走模式</string>
-    <string name="onthego_notif_stop">停止</string>
-    <string name="onthego_notif_options">选项</string>
-    <string name="onthego_notif_error">无法启动行走模式</string>
-    <string name="onthego_notif_restart">重新启动行走模式</string>
-    <string name="onthego_notif_camera_changed">相机模式已更改</string>
-    <string name="onthego_transparency">透明度</string>
-    <string name="onthego_front_camera">使用前置摄像头</string>
-    <string name="onthego_service_toggle">自动重启服务</string>
-    <string name="onthego_channel_name">主要</string>
-    <string name="global_action_onthego">行走模式</string>
     <string name="omnijaws_service_error">错误</string>
     <string name="omnijaws_service_unkown">没有天气数据</string>
     <string name="omnijaws_service_error_long">加载天气数据时出错</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">游戏模式已启用</string>
     <string name="gaming_mode_tile_toast_disabled">游戏模式已禁用</string>
     <string name="gaming_mode_dialog_title">游戏模式</string>
-    <string name="gaming_mode_dialog_message">启用游戏模式后，您的铃声模式将变为振动模式，所有浮动消息将被禁用，硬件按键将被关闭。媒体音量将增加到最大值。退出游戏模式后，所有禁用的设置将重置为默认值。</string>
+    <string name="gaming_mode_dialog_message">当启用游戏模式时，所有浮动消息将被禁用，实体按键将被屏蔽。所有禁用的设置将在退出游戏模式后重置为默认设置。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">游戏模式开启</string>
     <string name="accessibility_quick_settings_gaming_mode_off">游戏模式关闭</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">息屏显示</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">单手模式</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">行走模式</string>
+    <string name="onthego_notif_ticker">行走模式已激活</string>
+    <string name="onthego_notif_title">正在使用行走模式</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">选项</string>
+    <string name="onthego_notif_error">无法启动行走模式</string>
+    <string name="onthego_notif_restart">重新启动行走模式</string>
+    <string name="onthego_notif_camera_changed">相机模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置摄像头</string>
+    <string name="onthego_service_toggle">自动重启服务</string>
+    <string name="onthego_channel_name">主要</string>
 </resources>

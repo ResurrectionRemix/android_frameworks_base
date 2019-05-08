@@ -50,7 +50,13 @@
     <string name="quick_settings_screenrecord_mq_label">Perekam layar 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Perekam layar 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Suara</string>
+    <string name="quick_settings_sound_ring">Dering</string>
+    <string name="quick_settings_sound_vibrate">Getar</string>
+    <string name="quick_settings_sound_dnd">Jangan ganggu</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Info CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Info CPU nonaktif</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -119,19 +125,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Pixel pintar</string>
     <string name="quick_settings_smart_pixels_on_power_save">Pixel pintar otomatis</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go diaktifkan</string>
-    <string name="onthego_notif_title">On-The-Go sedang aktif</string>
-    <string name="onthego_notif_stop">Hentikan</string>
-    <string name="onthego_notif_options">Opsi</string>
-    <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
-    <string name="onthego_notif_restart">Mulai ulang On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Mode kamera berubah</string>
-    <string name="onthego_transparency">Transparansi</string>
-    <string name="onthego_front_camera">Gunakan kamera depan</string>
-    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
-    <string name="onthego_channel_name">Utama</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Kesalahan</string>
     <string name="omnijaws_service_unkown">Tidak ada data cuaca</string>
     <string name="omnijaws_service_error_long">Kesalahan memuat data cuaca</string>
@@ -146,7 +139,6 @@
     <string name="gaming_mode_tile_toast">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_tile_toast_disabled">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_dialog_title">Mode Permainan</string>
-    <string name="gaming_mode_dialog_message">Ketika mode permainan dinyalakan, nada dering Anda akan diset dalam mode getar, semua notifikasi akan di nonaktifkan dan tombol fisik akan dimatikan. Volume media akan diset maksimal. Semua pengaturan akan akan diatur ulang ketika Anda menonaktifkan mode permainan.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Mode permainan nonaktif</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mode permainan aktif</string>
     <!-- Power Menu -->
@@ -181,4 +173,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Mode satu tangan</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go diaktifkan</string>
+    <string name="onthego_notif_title">On-The-Go sedang aktif</string>
+    <string name="onthego_notif_stop">Hentikan</string>
+    <string name="onthego_notif_options">Opsi</string>
+    <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
+    <string name="onthego_notif_restart">Mulai ulang On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Mode kamera berubah</string>
+    <string name="onthego_transparency">Transparansi</string>
+    <string name="onthego_front_camera">Gunakan kamera depan</string>
+    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
+    <string name="onthego_channel_name">Utama</string>
 </resources>

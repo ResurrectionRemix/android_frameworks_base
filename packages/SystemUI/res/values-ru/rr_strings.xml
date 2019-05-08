@@ -51,9 +51,9 @@
     <string name="quick_settings_screenrecord_hq_label">Запись экрана 720p+</string>
     <!-- Sound QS Tile -->
     <string name="quick_settings_sound_label">Звук</string>
-    <string name="quick_settings_sound_ring">Мелодия вызова</string>
+    <string name="quick_settings_sound_ring">Звонок</string>
     <string name="quick_settings_sound_vibrate">Вибрация</string>
-    <string name="quick_settings_sound_dnd">\"Не беспокоить\"</string>
+    <string name="quick_settings_sound_dnd">Не беспокоить</string>
     <!-- CPUInfo tile -->
     <string name="quick_settings_cpuinfo_label">Информация о ЦП</string>
     <string name="accessibility_quick_settings_cpuinfo_off">Информация о ЦП выключена</string>
@@ -94,7 +94,7 @@
     <string name="clipboard_description">С помощью этой кнопки можно копировать файлы в буфер обмена и извлекать их из него.</string>
     <string name="keycode_description">С помощью этой кнопки можно добавлять клавиши с клавиатуры в панель навигации. Необходимо нажать на клавишу или её изображение для соответствующей кнопки.</string>
     <string name="start">Запуск</string>
-    <string name="center">По-центру</string>
+    <string name="center">По центру</string>
     <string name="end">Завершить</string>
     <string name="space">Разделитель</string>
     <string name="menu_ime">Меню / Переключение раскладки</string>
@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Автоматическое включение Smart Pixels</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
-    <string name="onthego_notif_title">Режим «На ходу» активен</string>
-    <string name="onthego_notif_stop">Остановить</string>
-    <string name="onthego_notif_options">Параметры</string>
-    <string name="onthego_notif_error">Не удается включить режим \"на ходу\"</string>
-    <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
-    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
-    <string name="onthego_transparency">Прозрачность</string>
-    <string name="onthego_front_camera">Использовать фронтальную камеру</string>
-    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
-    <string name="onthego_channel_name">Главный</string>
-    <string name="global_action_onthego">Режим \"На ходу\"</string>
     <string name="omnijaws_service_error">Ошибка</string>
     <string name="omnijaws_service_unkown">Нет данных о погоде</string>
     <string name="omnijaws_service_error_long">Ошибка при загрузке данных о погоде</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Игровой режим включен</string>
     <string name="gaming_mode_tile_toast_disabled">Игровой режим выключен</string>
     <string name="gaming_mode_dialog_title">Игровой режим</string>
-    <string name="gaming_mode_dialog_message">Когда игровой режим включен, ваш режим звонка переключится в режим вибрации, все уведомления и аппаратные клавиши будут отключены. Громкость медиа будет увеличена до максимального уровня. Все отключенные настройки будут восстановлены после выхода из режима игры.</string>
+    <string name="gaming_mode_dialog_message">Когда игровой режим включен, всплывающие уведомления будут заблокированы, а кнопки под экраном — выключены. После выхода из игрового режима они будут возвращены в состояние по умолчанию.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Включить игровой режим</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Выключить игровой режим</string>
     <!-- Power Menu -->
@@ -176,10 +163,10 @@
     <!-- Advance location quick setting tile -->
     <string name="quick_settings_location_secondary_battery_saving">Экономия заряда батареи</string>
     <string name="accessibility_quick_settings_location_battery_saving">Определение местоположения: по координатам сети.</string>
-    <string name="quick_settings_location_secondary_gps_only">Только датчики Gps</string>
-    <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: только GPS.</string>
+    <string name="quick_settings_location_secondary_gps_only">Только по спутникам GPS</string>
+    <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: только по спутникам GPS.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Высокая точность</string>
-    <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: по всем источникам.</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: режим высокой точности.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Остановить принудительно?</string>
     <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">Always On Display</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Режим \"Управление одной рукой\"</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">Режим \"На ходу\"</string>
+    <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
+    <string name="onthego_notif_title">Режим «На ходу» активен</string>
+    <string name="onthego_notif_stop">Остановить</string>
+    <string name="onthego_notif_options">Параметры</string>
+    <string name="onthego_notif_error">Не удается включить режим \"на ходу\"</string>
+    <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
+    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использовать фронтальную камеру</string>
+    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
+    <string name="onthego_channel_name">Главный</string>
 </resources>

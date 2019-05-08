@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">智慧像素</string>
     <string name="quick_settings_smart_pixels_on_power_save">自動啟用智慧像素</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go 已啟動</string>
-    <string name="onthego_notif_title">On-The-Go 處於啟動狀態</string>
-    <string name="onthego_notif_stop">停止</string>
-    <string name="onthego_notif_options">選項</string>
-    <string name="onthego_notif_error">無法啟動 On-The-Go</string>
-    <string name="onthego_notif_restart">重新啟動 On-The-Go</string>
-    <string name="onthego_notif_camera_changed">相機模式已更改</string>
-    <string name="onthego_transparency">透明度</string>
-    <string name="onthego_front_camera">使用前置鏡頭</string>
-    <string name="onthego_service_toggle">自動重新啟動服務</string>
-    <string name="onthego_channel_name">主要</string>
-    <string name="global_action_onthego">行走模式</string>
     <string name="omnijaws_service_error">錯誤</string>
     <string name="omnijaws_service_unkown">沒有天氣資料</string>
     <string name="omnijaws_service_error_long">載入天氣資訊時錯誤</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">遊戲模式已啟用</string>
     <string name="gaming_mode_tile_toast_disabled">遊戲模式已停用</string>
     <string name="gaming_mode_dialog_title">遊戲模式</string>
-    <string name="gaming_mode_dialog_message">當啟用遊戲模式，響鈴模式將被調整為震動模式，抬頭顯示及硬體導覽列將被停用。媒體音量會被調整至最大值。所有被更改的設定都會在離開遊戲模式後還原。</string>
+    <string name="gaming_mode_dialog_message">當遊戲模式啟用時，會停用所有的浮動通知及硬體按鍵。而它們會在您退出遊戲模式時回到原始狀態。</string>
     <string name="accessibility_quick_settings_gaming_mode_on">遊戲模式已開啟</string>
     <string name="accessibility_quick_settings_gaming_mode_off">遊戲模式已關閉</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">單手模式</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">行走模式</string>
+    <string name="onthego_notif_ticker">On-The-Go 已啟動</string>
+    <string name="onthego_notif_title">On-The-Go 處於啟動狀態</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">選項</string>
+    <string name="onthego_notif_error">無法啟動 On-The-Go</string>
+    <string name="onthego_notif_restart">重新啟動 On-The-Go</string>
+    <string name="onthego_notif_camera_changed">相機模式已更改</string>
+    <string name="onthego_transparency">透明度</string>
+    <string name="onthego_front_camera">使用前置鏡頭</string>
+    <string name="onthego_service_toggle">自動重新啟動服務</string>
+    <string name="onthego_channel_name">主要</string>
 </resources>

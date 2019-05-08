@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">השעה</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">גבוה</string>
+    <string name="text_clock_noon">צהריים</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">עשרים</string>
+    <string name="text_clock_tens_string_thirty">שלושים</string>
+    <string name="text_clock_tens_string_forty">ארבעים</string>
+    <string name="text_clock_tens_string_fifty">חמישים</string>
+    <string name="text_clock_tens_string_sixty">שישים</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">אפס</string>
+    <string name="text_clock_units_string_one">אחת</string>
+    <string name="text_clock_units_string_two">שתיים</string>
+    <string name="text_clock_units_string_three">שלוש</string>
+    <string name="text_clock_units_string_four">ארבע</string>
+    <string name="text_clock_units_string_five">חמש</string>
+    <string name="text_clock_units_string_six">שש</string>
+    <string name="text_clock_units_string_seven">שבע</string>
+    <string name="text_clock_units_string_eight">שמונה</string>
+    <string name="text_clock_units_string_nine">תשע</string>
+    <string name="text_clock_units_string_ten">עשר</string>
+    <string name="text_clock_units_string_eleven">אחת עשרה</string>
+    <string name="text_clock_units_string_twelve">שתיים עשרה</string>
+    <string name="text_clock_units_string_thirteen">שלוש עשרה</string>
+    <string name="text_clock_units_string_fourteen">ארבע עשרה</string>
+    <string name="text_clock_units_string_fifteen">חמש עשרה</string>
+    <string name="text_clock_units_string_sixteen">שש עשרה</string>
+    <string name="text_clock_units_string_seventeen">שבע עשרה</string>
+    <string name="text_clock_units_string_eighteen">שמונה עשרה</string>
+    <string name="text_clock_units_string_nineteen">תשע עשרה</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">עשרים</string>
+    <string name="text_clock_tens_string_h_thirty">שלושים</string>
+    <string name="text_clock_tens_string_h_forty">ארבעים</string>
+    <string name="text_clock_tens_string_h_fifty">חמישים</string>
+    <string name="text_clock_tens_string_h_sixty">שישים</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">שתיים עשרה</string>
+    <string name="text_clock_units_string_h_one">אחת</string>
+    <string name="text_clock_units_string_h_two">שתיים</string>
+    <string name="text_clock_units_string_h_three">שלוש</string>
+    <string name="text_clock_units_string_h_four">ארבע</string>
+    <string name="text_clock_units_string_h_five">חמש</string>
+    <string name="text_clock_units_string_h_six">שש</string>
+    <string name="text_clock_units_string_h_seven">שבע</string>
+    <string name="text_clock_units_string_h_eight">שמונה</string>
+    <string name="text_clock_units_string_h_nine">תשע</string>
+    <string name="text_clock_units_string_h_ten">עשר</string>
+    <string name="text_clock_units_string_h_eleven">אחת עשרה</string>
+    <string name="text_clock_units_string_h_twelve">שתיים עשרה</string>
+    <string name="text_clock_units_string_h_thirteen">שלוש עשרה</string>
+    <string name="text_clock_units_string_h_fourteen">ארבע עשרה</string>
+    <string name="text_clock_units_string_h_fifteen">חמש עשרה</string>
+    <string name="text_clock_units_string_h_sixteen">שש עשרה</string>
+    <string name="text_clock_units_string_h_seventeen">שבע עשרה</string>
+    <string name="text_clock_units_string_h_eighteen">שמונה עשרה</string>
+    <string name="text_clock_units_string_h_nineteen">תשע עשרה</string>
 </resources>

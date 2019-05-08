@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Inteligentne pixele</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automatyczne włączanie inteligentnych pixeli</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
-    <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Ustawienia</string>
-    <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
-    <string name="onthego_notif_restart">Zrestartuj tryb \"W ruchu\"</string>
-    <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
-    <string name="onthego_transparency">Przezroczystość</string>
-    <string name="onthego_front_camera">Użyj przedniej kamery</string>
-    <string name="onthego_service_toggle">Automatycznie zrestartuj usługę</string>
-    <string name="onthego_channel_name">Główny</string>
-    <string name="global_action_onthego">W ruchu</string>
     <string name="omnijaws_service_error">Błąd</string>
     <string name="omnijaws_service_unkown">Brak danych o pogodzie</string>
     <string name="omnijaws_service_error_long">Błąd podczas ładowania danych o pogodzie</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Włączono Tryb grania</string>
     <string name="gaming_mode_tile_toast_disabled">Wyłączono Tryb grania</string>
     <string name="gaming_mode_dialog_title">Tryb grania</string>
-    <string name="gaming_mode_dialog_message">Gdy tryb grania jest włączony, tryb dzwonka zostanie zmieniony na tryb wibracji, zostaną wyłączone wszystkie wyskakujące powiadomienia, a klawisze zostaną wyłączone. Głośność multimediów zostanie zwiększona do maksymalnej wartości. Wszystkie wyłączone ustawienia zostaną zresetowane do domyślnych wartości po wyłączeniu trybu grania.</string>
+    <string name="gaming_mode_dialog_message">Kiedy tryb gry jest włączony, powiadomienia heads-up i klawisze sprzętowe zostaną wyłączone. Wszystkie wyłączone ustawienia będą przywrócone do domyślnych po wyłączeniu trybu gry.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Tryb grania włączony</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Tryb grania wyłączony</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">Tryb Always-On</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Tryb jednoręczny</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">W ruchu</string>
+    <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
+    <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Ustawienia</string>
+    <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
+    <string name="onthego_notif_restart">Zrestartuj tryb \"W ruchu\"</string>
+    <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
+    <string name="onthego_transparency">Przezroczystość</string>
+    <string name="onthego_front_camera">Użyj przedniej kamery</string>
+    <string name="onthego_service_toggle">Automatycznie zrestartuj usługę</string>
+    <string name="onthego_channel_name">Główny</string>
 </resources>

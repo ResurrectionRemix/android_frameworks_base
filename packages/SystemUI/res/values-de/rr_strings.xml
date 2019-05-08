@@ -118,7 +118,7 @@
     <string name="powernotif_tuner_activity">Energiestatus Benachrichtigungen</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">4G anstatt LTE anzeigen</string>
-    <string name="global_action_reboot_recovery">Wiederherstellung</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Neustart</string>
     <!-- Pie controls -->
     <string name="pie_state_name">Pie-Steuerung</string>
@@ -128,19 +128,6 @@
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smart pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Smart Pixels automatisch einschalten</string>
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go aktiviert</string>
-    <string name="onthego_notif_title">On-The-Go ist aktiv</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Optionen</string>
-    <string name="onthego_notif_error">On-The-Go Modus kann nicht gestartet werden</string>
-    <string name="onthego_notif_restart">On-The-Go Modus neu starten</string>
-    <string name="onthego_notif_camera_changed">Kameramodus geändert</string>
-    <string name="onthego_transparency">Transparenz</string>
-    <string name="onthego_front_camera">Frontkamera verwenden</string>
-    <string name="onthego_service_toggle">Dienst automatisch neu starten</string>
-    <string name="onthego_channel_name">Haupt</string>
-    <string name="global_action_onthego">On-The-Go</string>
     <string name="omnijaws_service_error">Fehler</string>
     <string name="omnijaws_service_unkown">Keine Wetterdaten</string>
     <string name="omnijaws_service_error_long">Fehler beim Laden der Wetterdaten</string>
@@ -155,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Spielmodus eingeschaltet</string>
     <string name="gaming_mode_tile_toast_disabled">Spielmodus ausgeschaltet</string>
     <string name="gaming_mode_dialog_title">Spielmodus</string>
-    <string name="gaming_mode_dialog_message">Wenn der Spielemodus eingeschaltet ist, wird der Klingelmodus auf Vibration geschaltet, alle Heads-Up Nachrichten und die Hardware-Tasten werden abgeschaltet. Die Medien-Lautstärke wird auf den Maximalwert erhöht. Alle abgeschalteten Einstellungen werden nach Abschalten des Spielemodus zurückgesetzt.</string>
+    <string name="gaming_mode_dialog_message">Wenn der Spielmodus aktiviert ist, werden alle Heads-up-Nachrichten und die Hardware Tasten deaktiviert. Alle Einstellungen werden nach dem Beenden des Spielemodus auf Standard zurückgesetzt.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Spielmodus an</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Spielmodus aus</string>
     <!-- Power Menu -->
@@ -190,4 +177,17 @@
     <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Eine-Hand Modus</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go aktiviert</string>
+    <string name="onthego_notif_title">On-The-Go ist aktiv</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Optionen</string>
+    <string name="onthego_notif_error">On-The-Go Modus kann nicht gestartet werden</string>
+    <string name="onthego_notif_restart">On-The-Go Modus neu starten</string>
+    <string name="onthego_notif_camera_changed">Kameramodus geändert</string>
+    <string name="onthego_transparency">Transparenz</string>
+    <string name="onthego_front_camera">Frontkamera verwenden</string>
+    <string name="onthego_service_toggle">Dienst automatisch neu starten</string>
+    <string name="onthego_channel_name">Haupt</string>
 </resources>

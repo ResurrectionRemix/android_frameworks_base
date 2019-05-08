@@ -50,7 +50,16 @@
     <string name="quick_settings_screenrecord_mq_label">Gravació de pantalla 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Gravació de pantalla 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">So</string>
+    <string name="quick_settings_sound_ring">Timbre</string>
+    <string name="quick_settings_sound_vibrate">Vibració</string>
+    <string name="quick_settings_sound_dnd">No molestar</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">Informació de CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informació de CPU la deshabilitada</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informació de la CPU habilitada</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Informació de la CPU desactivada</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Informació de la CPU activada</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Captura de pantalla eliminada</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -90,20 +99,57 @@
     <string name="space">Espaiador</string>
     <string name="menu_ime">Menú / Canvi de teclat</string>
     <string name="select_button">Tria un botó per afegir-lo</string>
+    <string name="add_button">Afegeix un botó</string>
+    <string name="save">Guardar</string>
+    <string name="reset">Restablr</string>
+    <string name="left">Esquerra</string>
+    <string name="right">Dreta</string>
+    <string name="navbar_editor_title">Editor</string>
+    <string name="navbar_editor_summary">Configura la barra de navegació</string>
     <!-- NavBar Tuner -->
+    <string name="search">Cerca</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Icona de la barra d\'estat</string>
+    <string name="statusbar_icons_blacklist">Icones de la barra d\'estat</string>
+    <string name="navbar_tuner_activity">Botons de la barra de navegació</string>
+    <string name="lockscreen_tuner_activity">Dreceres de la pantalla de bloqueig</string>
     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Mostra 4G en lloc de LTE</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
+    <string name="global_action_reboot">Reiniciar</string>
     <!-- Pie controls -->
+    <string name="pie_battery_level">"NIVELL DE BATERIA "</string>
     <!-- Smart pixels QS tile -->
-    <!-- On The Go -->
+    <string name="quick_settings_smart_pixels">Píxels intel·ligents</string>
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">Sense informació del clima</string>
+    <string name="omnijaws_service_error_long">Error al carregar la informació del clima</string>
+    <string name="omnijaws_detail_header">Clima</string>
     <!-- Gaming Mode -->
     <!-- Power Menu -->
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Captura de pantalla</string>
+    <string name="global_action_screenrecord">Gravació de pantalla</string>
+    <string name="global_action_flashlight">Llanterna</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Estalvi de bateria</string>
+    <string name="quick_settings_location_secondary_gps_only">Només sensors</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Alta precisió</string>
     <!-- Kill button in notification guts -->
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Atura l\'aplicació</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">Moda d\'una mà</string>
+    <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_stop">Aturar</string>
+    <string name="onthego_notif_options">Opcions</string>
+    <string name="onthego_transparency">Transparència</string>
+    <string name="onthego_channel_name">Principal</string>
 </resources>
