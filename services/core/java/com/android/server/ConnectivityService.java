@@ -4793,11 +4793,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else {
             updateProxy(newLp, oldLp, networkAgent);
         }
+
+        synchronized (networkAgent) {
+            networkAgent.linkProperties = newLp;
+        }
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
-            synchronized (networkAgent) {
-                networkAgent.linkProperties = newLp;
-            }
             notifyIfacesChangedForNetworkStats();
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
         }
