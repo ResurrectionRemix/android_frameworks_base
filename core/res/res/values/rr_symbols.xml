@@ -169,4 +169,13 @@
     <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
 
   <java-symbol type="color" name="bootleg_accent_gradient_end_color" />
+
+   <!-- Media notification seekbar control -->
+   <java-symbol type="id" name="notification_media_seekbar_container" />
+   <java-symbol type="layout" name="notification_material_media_seekbar" />
+   <java-symbol type="id" name="notification_media_progress" />
+   <java-symbol type="id" name="notification_media_progress_bar" />
+   <java-symbol type="id" name="notification_media_progress_time" />
+   <java-symbol type="id" name="notification_media_elapsed_time" />
+   <java-symbol type="id" name="notification_media_total_time" />
 </resources>
