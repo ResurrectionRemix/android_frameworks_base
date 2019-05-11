@@ -61,5 +61,10 @@
             style="@style/NotificationMediaActionContainer" >
             <!-- media buttons will be added here -->
         </LinearLayout>
+        <ViewStub
+            android:id="@+id/notification_media_seekbar_container" 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_alignParentBottom="true" />
     </LinearLayout>
 </com.android.internal.widget.MediaNotificationView>
