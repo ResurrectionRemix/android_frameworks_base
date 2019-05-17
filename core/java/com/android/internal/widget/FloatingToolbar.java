@@ -52,6 +52,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
+import android.view.View.OnAttachStateChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -445,6 +446,17 @@ public final class FloatingToolbar {
                     }
                 };
 
+        private final OnAttachStateChangeListener mOnAnchorRootDetachedListener =
+                    new OnAttachStateChangeListener() {
+                        @Override
+                        public void onViewAttachedToWindow(View v) {}
+
+                        @Override
+                        public void onViewDetachedFromWindow(View v) {
+                            cancelDismissAndHideAnimations();
+                        }
+                    };
+
         private boolean mOpenOverflowUpwards;  // Whether the overflow opens upwards or downwards.
         private boolean mIsOverflowOpen;
 
@@ -515,6 +527,7 @@ public final class FloatingToolbar {
                         public void onAnimationEnd(Animator animation) {
                             mPopupWindow.dismiss();
                             mContentContainer.removeAllViews();
+                            mParent.removeOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
                         }
                     });
             mHideAnimation = createExitAnimation(
@@ -524,6 +537,7 @@ public final class FloatingToolbar {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             mPopupWindow.dismiss();
+                            mParent.removeOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
                         }
                     });
         }
@@ -779,6 +793,7 @@ public final class FloatingToolbar {
          * Performs the "dismiss" animation on the floating popup.
          */
         private void runDismissAnimation() {
+            mParent.addOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
             mDismissAnimation.start();
         }
 
@@ -786,12 +801,14 @@ public final class FloatingToolbar {
          * Performs the "hide" animation on the floating popup.
          */
         private void runHideAnimation() {
+            mParent.addOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
             mHideAnimation.start();
         }
 
         private void cancelDismissAndHideAnimations() {
             mDismissAnimation.cancel();
             mHideAnimation.cancel();
+            mParent.removeOnAttachStateChangeListener(mOnAnchorRootDetachedListener);
         }
 
         private void cancelOverflowAnimations() {
