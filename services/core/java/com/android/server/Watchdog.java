@@ -76,6 +76,10 @@ public class Watchdog extends Thread {
     static final long DEFAULT_TIMEOUT = DB ? 10*1000 : 60*1000;
     static final long CHECK_INTERVAL = DEFAULT_TIMEOUT / 2;
 
+    // Watchdog was started early during boot. Bug: 129597207.
+    // The main thread can not finish running dexopt in time for eng build.
+    static final long DEBUG_TIMEOUT = Build.IS_ENG ? 4*DEFAULT_TIMEOUT : DEFAULT_TIMEOUT;
+
     // These are temporally ordered: larger values as lateness increases
     static final int COMPLETED = 0;
     static final int WAITING = 1;
@@ -312,7 +316,7 @@ public class Watchdog extends Thread {
         // Add checker for main thread.  We only do a quick check since there
         // can be UI running on the thread.
         mHandlerCheckers.add(new HandlerChecker(new Handler(Looper.getMainLooper()),
-                "main thread", DEFAULT_TIMEOUT));
+                "main thread", DEBUG_TIMEOUT));
         // Add checker for shared UI thread.
         mHandlerCheckers.add(new HandlerChecker(UiThread.getHandler(),
                 "ui thread", DEFAULT_TIMEOUT));
