@@ -69,6 +69,7 @@ android_library {
         "jsr330",
         "org.lineageos.platform.internal",
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
+        "airbnb-lottie",
     ],
     manifest: "AndroidManifest.xml",
     additional_manifests: ["LineageManifest.xml"],
@@ -129,6 +130,7 @@ android_library {
         "jsr330",
         "org.lineageos.platform.internal",
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
+        "airbnb-lottie",
     ],
     libs: [
         "android.test.runner",

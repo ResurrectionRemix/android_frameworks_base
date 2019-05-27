@@ -16,6 +16,7 @@
   -->
 
 <com.android.systemui.statusbar.phone.KeyguardBottomAreaView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/keyguard_bottom_area"
@@ -31,6 +32,16 @@
         android:layout_marginBottom="@dimen/keyguard_indication_margin_bottom"
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/charging_indication"
+            android:layout_width="@dimen/keyguard_charging_indication_width"
+            android:layout_height="@dimen/keyguard_charging_indication_height"
+            android:layout_gravity="center"
+            android:clickable="false"
+            app:lottie_fileName="keyguard_charging_indication.json"
+            app:lottie_loop="true"
+            android:visibility="gone" />
 
         <com.android.systemui.statusbar.phone.KeyguardIndicationTextView
             android:id="@+id/keyguard_indication_enterprise_disclosure"
