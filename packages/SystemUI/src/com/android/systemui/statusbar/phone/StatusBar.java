@@ -342,6 +342,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             "lineagesecure:" + LineageSettings.Secure.LOCKSCREEN_MEDIA_METADATA;
     private static final String LOCKSCREEN_ALBUMART_FILTER =
             Settings.Secure.LOCKSCREEN_ALBUMART_FILTER;
+    private static final String LOCKSCREEN_CHARGING_ANIMATION =
+            "system:" + Settings.System.LOCKSCREEN_CHARGING_ANIMATION;
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
     private static final String BANNER_ACTION_SETUP =
@@ -852,6 +854,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
 
         mPackageMonitor = new SmartPackageMonitor();
         tunerService.addTunable(this, LOCKSCREEN_ALBUMART_FILTER);
+        tunerService.addTunable(this, LOCKSCREEN_CHARGING_ANIMATION);
         mPackageMonitor.register(mContext, mHandler);
         mPackageMonitor.addListener(this);
 
@@ -6712,6 +6715,12 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 try {
                     mAlbumArtFilter = Integer.valueOf(newValue);
                 } catch (NumberFormatException ex) {}
+                break;
+            case LOCKSCREEN_CHARGING_ANIMATION:
+                boolean showChargingAnimation =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                if (mKeyguardIndicationController != null)
+                    mKeyguardIndicationController.updateChargingIndication(showChargingAnimation);
                 break;
             default:
                 break;
