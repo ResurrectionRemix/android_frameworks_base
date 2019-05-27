@@ -53,7 +53,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     android-slices-view \
     android-slices-builders \
     android-arch-core-runtime \
-    android-arch-lifecycle-extensions 
+    android-arch-lifecycle-extensions \
+    frameworks-support-lottie
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     SystemUI-tags \
