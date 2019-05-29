@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
     <string name="onthego_service_toggle">إعادة تشغيل الخدمة تلقائيا</string>
     <string name="onthego_channel_name">الرئيسية</string>
+    <string name="quick_settings_onthego_label">وضع المشي</string>
 </resources>

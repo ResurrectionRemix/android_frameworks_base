@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Det är</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Högt</string>
+    <string name="text_clock_noon">Mitt på dagen</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Tjugo</string>
+    <string name="text_clock_tens_string_thirty">Trettio</string>
+    <string name="text_clock_tens_string_forty">Fyrtio</string>
+    <string name="text_clock_tens_string_fifty">Femtio</string>
+    <string name="text_clock_tens_string_sixty">Sextio</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Noll</string>
+    <string name="text_clock_units_string_one">Ett</string>
+    <string name="text_clock_units_string_two">Två</string>
+    <string name="text_clock_units_string_three">Tre</string>
+    <string name="text_clock_units_string_four">Fyra</string>
+    <string name="text_clock_units_string_five">Fem</string>
+    <string name="text_clock_units_string_six">Sex</string>
+    <string name="text_clock_units_string_seven">Sju</string>
+    <string name="text_clock_units_string_eight">Åtta</string>
+    <string name="text_clock_units_string_nine">Nio</string>
+    <string name="text_clock_units_string_ten">Tio</string>
+    <string name="text_clock_units_string_eleven">Elva</string>
+    <string name="text_clock_units_string_twelve">Tolv</string>
+    <string name="text_clock_units_string_thirteen">Tretton</string>
+    <string name="text_clock_units_string_fourteen">Fjorton</string>
+    <string name="text_clock_units_string_fifteen">Femton</string>
+    <string name="text_clock_units_string_sixteen">Sexton</string>
+    <string name="text_clock_units_string_seventeen">Sjutton</string>
+    <string name="text_clock_units_string_eighteen">Arton</string>
+    <string name="text_clock_units_string_nineteen">Nitton</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Tjugo</string>
+    <string name="text_clock_tens_string_h_thirty">Trettio</string>
+    <string name="text_clock_tens_string_h_forty">Fyrtio</string>
+    <string name="text_clock_tens_string_h_fifty">Femtio</string>
+    <string name="text_clock_tens_string_h_sixty">Sextio</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Tolv</string>
+    <string name="text_clock_units_string_h_one">Ett</string>
+    <string name="text_clock_units_string_h_two">Två</string>
+    <string name="text_clock_units_string_h_three">Tre</string>
+    <string name="text_clock_units_string_h_four">Fyra</string>
+    <string name="text_clock_units_string_h_five">Fem</string>
+    <string name="text_clock_units_string_h_six">Sex</string>
+    <string name="text_clock_units_string_h_seven">Sju</string>
+    <string name="text_clock_units_string_h_eight">Åtta</string>
+    <string name="text_clock_units_string_h_nine">Nio</string>
+    <string name="text_clock_units_string_h_ten">Tio</string>
+    <string name="text_clock_units_string_h_eleven">Elva</string>
+    <string name="text_clock_units_string_h_twelve">Tolv</string>
+    <string name="text_clock_units_string_h_thirteen">Tretton</string>
+    <string name="text_clock_units_string_h_fourteen">Fjorton</string>
+    <string name="text_clock_units_string_h_fifteen">Femton</string>
+    <string name="text_clock_units_string_h_sixteen">Sexton</string>
+    <string name="text_clock_units_string_h_seventeen">Sjutton</string>
+    <string name="text_clock_units_string_h_eighteen">Arton</string>
+    <string name="text_clock_units_string_h_nineteen">Nitton</string>
 </resources>

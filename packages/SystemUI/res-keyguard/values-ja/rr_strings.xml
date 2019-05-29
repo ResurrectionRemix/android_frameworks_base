@@ -29,7 +29,7 @@
 	
 -->
 <resources>
-    <string name="custom_text_clock_top_text_default">これ</string>
+    <string name="custom_text_clock_top_text_default">ただ今</string>
     <string name="text_clock_zero_h_min">0\'</string>
     <string name="text_clock_high">高</string>
     <string name="text_clock_noon">正午</string>

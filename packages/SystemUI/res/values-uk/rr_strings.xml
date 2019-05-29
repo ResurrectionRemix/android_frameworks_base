@@ -142,6 +142,7 @@
     <string name="gaming_mode_tile_toast">Ігровий режим ввімкнено</string>
     <string name="gaming_mode_tile_toast_disabled">Ігровий режим вимк.</string>
     <string name="gaming_mode_dialog_title">Ігровий режим</string>
+    <string name="gaming_mode_dialog_message">Коли ігровий режим увімкнений, спливаючі повідомлення і апаратні кнопки будуть відключені. Всі відключені настройки будуть скинуті до значеннями за замовчуванням після виходу з ігрового режиму.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Ігровий режим увімк.</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Ігровий режим вимк.</string>
     <!-- Power Menu -->
@@ -189,4 +190,5 @@
     <string name="onthego_front_camera">Використовувати передню камеру</string>
     <string name="onthego_service_toggle">Автоматично перезапустити службу</string>
     <string name="onthego_channel_name">Основний</string>
+    <string name="quick_settings_onthego_label">Режим \"На ходу\"</string>
 </resources>

@@ -51,6 +51,7 @@
     <string name="quick_settings_screenrecord_hq_label">स्क्रीन रिकॉर्ड 720p+</string>
     <!-- Sound QS Tile -->
     <string name="quick_settings_sound_label">ध्वनि</string>
+    <string name="quick_settings_sound_ring">Ring</string>
     <!-- CPUInfo tile -->
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">स्क्रीनशॉट मिटा दिये</string>
@@ -123,6 +124,7 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_gps_only">Sensors Only</string>
     <!-- Kill button in notification guts -->
     <!-- AOD QS tile -->
     <!-- OneHand mode QS tile -->

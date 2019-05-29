@@ -19,7 +19,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
-    <string name="qs_lte_label">LTE</string>
+    <string name="qs_lte_label">LTE 网络</string>
     <string name="lte_on">LTE 开启 </string>
     <string name="lte_off">LTE 关闭</string>
     <!-- Screenshot QS tile -->
@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">使用前置摄像头</string>
     <string name="onthego_service_toggle">自动重启服务</string>
     <string name="onthego_channel_name">主要</string>
+    <string name="quick_settings_onthego_label">行走模式</string>
 </resources>

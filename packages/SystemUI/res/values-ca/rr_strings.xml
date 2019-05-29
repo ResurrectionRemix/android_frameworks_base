@@ -26,7 +26,7 @@
     <string name="quick_settings_screenshot_label">Captura de Pantalla</string>
     <string name="quick_settings_region_screenshot_label">Captura Parcial de Pantalla</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute">Notificacions Pospostes per 1 minut.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notificacions pospostes per 1 minut.</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • notificació "Peeking" estan dormint durant <xliff:g id="number">%d</xliff:g> minuts.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">La pantalla està sent gravada</string>

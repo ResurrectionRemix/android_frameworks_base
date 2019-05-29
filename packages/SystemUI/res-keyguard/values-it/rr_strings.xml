@@ -29,14 +29,14 @@
 	
 -->
 <resources>
-    <string name="custom_text_clock_top_text_default">Questo è</string>
-    <string name="text_clock_zero_h_min">0\'</string>
-    <string name="text_clock_high">Alto</string>
+    <string name="custom_text_clock_top_text_default">Sono le</string>
+    <string name="text_clock_zero_h_min">In Punto</string>
+    <string name="text_clock_high">Mezzanotte</string>
     <string name="text_clock_noon">Mezzogiorno</string>
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">Venti</string>
     <string name="text_clock_tens_string_thirty">Trenta</string>
-    <string name="text_clock_tens_string_forty">Quarta</string>
+    <string name="text_clock_tens_string_forty">Quaranta</string>
     <string name="text_clock_tens_string_fifty">Cinquanta</string>
     <string name="text_clock_tens_string_sixty">Sessanta</string>
     <!-- UnitsString -->
@@ -63,7 +63,7 @@
     <!-- TensStringH -->
     <string name="text_clock_tens_string_h_twenty">Venti</string>
     <string name="text_clock_tens_string_h_thirty">Trenta</string>
-    <string name="text_clock_tens_string_h_forty">Quarta</string>
+    <string name="text_clock_tens_string_h_forty">Quaranta</string>
     <string name="text_clock_tens_string_h_fifty">Cinquanta</string>
     <string name="text_clock_tens_string_h_sixty">Sessanta</string>
     <!-- UnitsStringH -->

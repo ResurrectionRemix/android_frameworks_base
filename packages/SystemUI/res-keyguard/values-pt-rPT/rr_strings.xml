@@ -30,12 +30,12 @@
 -->
 <resources>
     <string name="custom_text_clock_top_text_default">São</string>
-    <string name="text_clock_zero_h_min">Hora(s)</string>
-    <string name="text_clock_high">Meio</string>
-    <string name="text_clock_noon">Dia</string>
+    <string name="text_clock_zero_h_min"></string>
+    <string name="text_clock_high">Meio-dia</string>
+    <string name="text_clock_noon">em ponto</string>
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">e Vinte</string>
-    <string name="text_clock_tens_string_thirty">e Trinta</string>
+    <string name="text_clock_tens_string_thirty">e Meia</string>
     <string name="text_clock_tens_string_forty">e Quarenta</string>
     <string name="text_clock_tens_string_fifty">e Cinquenta</string>
     <string name="text_clock_tens_string_sixty">e Sessenta</string>
@@ -55,7 +55,7 @@
     <string name="text_clock_units_string_twelve">e Doze</string>
     <string name="text_clock_units_string_thirteen">e Treze</string>
     <string name="text_clock_units_string_fourteen">e Catorze</string>
-    <string name="text_clock_units_string_fifteen">e Quinze</string>
+    <string name="text_clock_units_string_fifteen">e Um Quarto</string>
     <string name="text_clock_units_string_sixteen">e Dezasseis</string>
     <string name="text_clock_units_string_seventeen">e Dezassete</string>
     <string name="text_clock_units_string_eighteen">e Dezoito</string>
@@ -67,7 +67,7 @@
     <string name="text_clock_tens_string_h_fifty">Cinquenta</string>
     <string name="text_clock_tens_string_h_sixty">Sessenta</string>
     <!-- UnitsStringH -->
-    <string name="text_clock_units_string_h_twelve_h">Meio-dia</string>
+    <string name="text_clock_units_string_h_twelve_h">Meia-noite</string>
     <string name="text_clock_units_string_h_one">Uma</string>
     <string name="text_clock_units_string_h_two">Duas</string>
     <string name="text_clock_units_string_h_three">Três</string>
@@ -79,7 +79,7 @@
     <string name="text_clock_units_string_h_nine">Nove</string>
     <string name="text_clock_units_string_h_ten">Dez</string>
     <string name="text_clock_units_string_h_eleven">Onze</string>
-    <string name="text_clock_units_string_h_twelve">Meia-noite</string>
+    <string name="text_clock_units_string_h_twelve">Meio-dia</string>
     <string name="text_clock_units_string_h_thirteen">Treze</string>
     <string name="text_clock_units_string_h_fourteen">Catorze</string>
     <string name="text_clock_units_string_h_fifteen">Quinze</string>

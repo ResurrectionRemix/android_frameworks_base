@@ -17,7 +17,7 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- Button that copies the url to the log of a crashed application -->
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">Nu spelas</string>
+   <string name="ambient_recognition_notification">Spelas nu</string>
    <string name="ambient_recognition_information">%1$s av %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -26,7 +26,10 @@
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">Starta om bootloader</string>
+   <string name="reboot_to_bootloader_message">Startar om till bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_message">Startar om till recovery\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Starta om systemet</string>
    <string name="reboot_system_message">Startar om systemet\u2026</string>
@@ -36,6 +39,7 @@
    <string name="animation_translucent">Genomskinlig</string>
    <string name="animation_random">Slumpmässiga</string>
    <string name="action_null">Tom</string>
+   <string name="default_string">Standard</string>
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Systemgränssnitt kräver omstart</string>
    <string name="systemui_restart_message">För att alla ändringar ska träda i kraft, krävs en SystemUI omstart. Starta om SystemUI nu?</string>

@@ -14,30 +14,59 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">Fup pakkesignatur</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">Tillader app\'en at udgive sig for en anden app. Ondsindede apps kan muligvis bruge dette til at tilgå privat data. Vær forsigtig med denne tilladelse!</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">Kopiér nedbrudslog-URL</string>
+   <string name="url_copy_success">URL kopieret</string>
+   <string name="url_copy_failed">Der opstod en fejl ved upload af logfilen til dogbin</string>
    <!-- Ambient play -->
    <string name="ambient_recognition_notification">Afspiller Nu</string>
    <string name="ambient_recognition_information">%1$s ved %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">kontrolnavigationsredigering</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">Tillader en applikation at kontrollere navigationsbjælkens redigeringsværktøj.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">tilgå skrifttypehåndtering</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">Tillader en applikation at tilgå skrifttypehåndteringen.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">Den skrifttype-pakke du har installeret, er ikke kompatibel på grund af manglende fonts.xml. Kontakt venligst pakkeudvikleren for hjælp.</string>
    <!-- advanced reboot to bootloader. -->
-   <string name="reboot_to_bootloader_title">Genstart til bootloader</string>
+   <string name="reboot_to_bootloader_title">Genstart til opstartslæser</string>
+   <string name="reboot_to_bootloader_message">Genstarter til opstartslæser\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">Genstart gendannelse</string>
+   <string name="reboot_to_recovery_message">Genstarter til gendannelse\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">Genstart System</string>
+   <string name="reboot_system_message">Genstarter system\u2026</string>
    <!-- AOKP custom system animations -->
-   <string name="animation_fade">Animation Falme</string>
-   <string name="animation_default">Standardindstilling</string>
-   <string name="animation_translucent">Gennemsigtig</string>
+   <string name="animation_fade">Overgang</string>
+   <string name="animation_slide_right">Stryg ind højre</string>
+   <string name="animation_slide_left">Stryg ind venstre</string>
+   <string name="animation_slide_right_no_fade">Stryg ind højre (Ingen overgang)</string>
+   <string name="animation_slide_left_no_fade">Stryg ind venstre (Ingen overgang)</string>
+   <string name="animation_slide_up">Stryg ind bund</string>
+   <string name="animation_slide_down">Stryg ind top</string>
+   <string name="animation_default">Standard</string>
+   <string name="animation_translucent">Semitransparent</string>
+   <string name="animation_grow_shrink">Voks ind (Top)</string>
+   <string name="animation_grow_shrink_center">Voks ind (Midten)</string>
+   <string name="animation_grow_shrink_bottom">Voks ind (Bund)</string>
+   <string name="animation_grow_shrink_left">Voks ind (Venstre)</string>
+   <string name="animation_grow_shrink_right">Voks ind (Højre)</string>
    <string name="animation_random">Tilfældig</string>
    <string name="action_null">Tom</string>
-   <string name="default_string">Standardindstilling</string>
+   <string name="default_string">Standard</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">Genstart af SystemUI kræves</string>
+   <string name="systemui_restart_message">En genstart af SystemUI er påkrævet, for at alle ændringer kan træde i kraft. Genstart SystemUI nu?</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">Tryk og hold nede på tænd-/slukknap for at interagere</string>
    <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

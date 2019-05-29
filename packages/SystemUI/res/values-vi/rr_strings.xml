@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">Sử dụng camera trước</string>
     <string name="onthego_service_toggle">Tự động khởi động lại dịch vụ</string>
     <string name="onthego_channel_name">Chính</string>
+    <string name="quick_settings_onthego_label">OTG</string>
 </resources>

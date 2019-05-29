@@ -30,9 +30,9 @@
 -->
 <resources>
     <string name="custom_text_clock_top_text_default">Saat</string>
-    <string name="text_clock_zero_h_min">0\'</string>
-    <string name="text_clock_high">Öğlenden Önce</string>
-    <string name="text_clock_noon">Öğlenden Sonra</string>
+    <string name="text_clock_zero_h_min">Sıfır</string>
+    <string name="text_clock_high">Öğleden Önce</string>
+    <string name="text_clock_noon">Öğleden Sonra</string>
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">Yirmi</string>
     <string name="text_clock_tens_string_thirty">Otuz</string>
@@ -82,7 +82,7 @@
     <string name="text_clock_units_string_h_twelve">On iki</string>
     <string name="text_clock_units_string_h_thirteen">On üç</string>
     <string name="text_clock_units_string_h_fourteen">On dört</string>
-    <string name="text_clock_units_string_h_fifteen">Onbeş</string>
+    <string name="text_clock_units_string_h_fifteen">On beş</string>
     <string name="text_clock_units_string_h_sixteen">On altı</string>
     <string name="text_clock_units_string_h_seventeen">On yedi</string>
     <string name="text_clock_units_string_h_eighteen">On sekiz</string>

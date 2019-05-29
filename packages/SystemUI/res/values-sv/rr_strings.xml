@@ -92,9 +92,12 @@
     <string name="no_home_title">Ingen hem-knapp hittades</string>
     <string name="no_home_message">En hemknapp är nödvändig för att kunna navigera den här enheten. Var vänlig lägg till en hemknapp innan du sparar.</string>
     <string name="clipboard_description">Urklipp tillåter objekt att bli dragna direkt till urklipp. Objekt kan även bli dragna direkt ifrån urklipp när urklipp är aktiverat.</string>
+    <string name="keycode_description">Med knappar för tangentkod kan tangenter läggas till i navigeringsfältet. När du trycker på dem efterliknar de den valda tangenten. Först måste du välja en tangent för knappen och därefter en bild som ska visas på knappen.</string>
     <string name="start">Start</string>
     <string name="center">Centrera</string>
     <string name="end">Slut</string>
+    <string name="space">Utfyllnad</string>
+    <string name="menu_ime">Byt mellan meny/tangentbord</string>
     <string name="select_button">Välj en knapp att lägga till</string>
     <string name="add_button">Lägg till knapp</string>
     <string name="save">Spara</string>
@@ -103,25 +106,40 @@
     <string name="left">Vänster</string>
     <string name="right">Höger</string>
     <string name="navbar_editor_title">Redigerare</string>
+    <string name="navbar_editor_summary">Konfigurera navigeringsfältet</string>
     <!-- NavBar Tuner -->
+    <string name="menu_ime_always_show">Meny / tangentbord ändrare (Visas alltid)</string>
     <string name="search">Sök</string>
     <!-- SysUI Tuner -->
+    <string name="statusbar_items_title">Statusfältsikon</string>
+    <string name="statusbar_icons_blacklist">Statusfältsikoner</string>
+    <string name="navbar_tuner_activity">Navigeringsfältsknappar</string>
+    <string name="lockscreen_tuner_activity">Låsskärmsgenvägar</string>
+    <string name="powernotif_tuner_activity">Ström-aviseringar</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Visa 4G istället för LTE</string>
     <string name="global_action_reboot_recovery">Återställning</string>
     <string name="global_action_reboot">Starta om</string>
     <!-- Pie controls -->
+    <string name="pie_state_name">Pie-kontroll</string>
     <string name="pie_battery_level">"BATTERINIVÅ "</string>
+    <string name="quick_settings_pie">Pie-kontroll</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smarta pixlar</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Automatiskt aktiverade smarta pixlar</string>
     <string name="omnijaws_service_error">Fel</string>
     <string name="omnijaws_service_unkown">Ingen väder-data</string>
+    <string name="omnijaws_service_error_long">Fel uppstod vid laddning av väder-data</string>
+    <string name="omnijaws_service_disabled">Tjänsten är inaktiverad</string>
     <string name="omnijaws_detail_header">Väder</string>
     <string name="omnijaws_label_default">Väder</string>
     <string name="omnijaws_current_text">Nu</string>
+    <string name="omnijaws_package_not_available">OmniJaws är inte tillgängligt</string>
     <string name="omnijaws_service_last_update">Senaste uppdatering:</string>
     <!-- Gaming Mode -->
     <string name="gaming_mode_tile_title">Spelläge</string>
+    <string name="gaming_mode_tile_toast">Spelläget aktiverat</string>
+    <string name="gaming_mode_tile_toast_disabled">Spelläget inaktiverat</string>
     <string name="gaming_mode_dialog_title">Spelläge</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Spelläge på</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Spelläge av</string>
@@ -129,6 +147,7 @@
     <string name="global_action_reboot_more">Starta om\u2026</string>
     <string name="global_action_reboot_sub">System</string>
     <string name="global_action_reboot_bootloader">Uppstartsladdare</string>
+    <string name="global_action_reboot_systemui">Systemets användargränssnitt</string>
     <string name="global_action_dismissable_dialog_text">Avancerad omstart är inaktiverat.\nVill du starta om\u003f</string>
     <string name="global_action_dnaa">Visa inte igen</string>
     <string name="global_action_settings">Inställningar</string>
@@ -140,6 +159,11 @@
     <string name="global_action_screenrecord">Skärminspelning</string>
     <string name="global_action_flashlight">Ficklampa</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Strömsparläge</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Platsrapportering: batterisparläge.</string>
+    <string name="quick_settings_location_secondary_gps_only">Endast sensorer</string>
+    <string name="accessibility_quick_settings_location_gps_only">Platsrapportering: endast sensorläge.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Hög noggrannhet</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Tvinga avslut?</string>
     <string name="force_stop_dlg_text">Om du tvingar appen att avslutas kanske den inte fungerar som den ska.</string>
@@ -151,7 +175,11 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Enhandsläge</string>
     <!-- On The Go -->
+    <string name="onthego_notif_stop">Stoppa</string>
     <string name="onthego_notif_options">Alternativ</string>
+    <string name="onthego_notif_camera_changed">Kameraläget ändrades</string>
+    <string name="onthego_transparency">Genomskinlighet</string>
+    <string name="onthego_front_camera">Använd främre kamera</string>
     <string name="onthego_service_toggle">Starta om tjänsten automatiskt</string>
     <string name="onthego_channel_name">Allmänt</string>
 </resources>

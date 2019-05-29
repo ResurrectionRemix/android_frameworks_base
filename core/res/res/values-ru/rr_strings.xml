@@ -39,8 +39,8 @@
    <string name="reboot_to_bootloader_title">Перезагрузиться в Fastboot</string>
    <string name="reboot_to_bootloader_message">Перезагрузка в режим fastboot\u2026</string>
    <!-- advanced reboot to recovery. -->
-   <string name="reboot_to_recovery_title">Перезагрузка в режим восстановления</string>
-   <string name="reboot_to_recovery_message">Перезагрузка в режим восстановления\u2026</string>
+   <string name="reboot_to_recovery_title">Перезагрузка в Recovery</string>
+   <string name="reboot_to_recovery_message">Перезагрузка в Recovery\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Перезапустить систему</string>
    <string name="reboot_system_message">Перезапуск\u2026</string>

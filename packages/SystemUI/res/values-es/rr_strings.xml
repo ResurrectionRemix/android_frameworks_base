@@ -51,7 +51,7 @@
     <string name="quick_settings_screenrecord_hq_label">Grabación a 720p+</string>
     <!-- Sound QS Tile -->
     <string name="quick_settings_sound_label">Sonido</string>
-    <string name="quick_settings_sound_ring">Sonido llamada</string>
+    <string name="quick_settings_sound_ring">Sonido de llamada</string>
     <string name="quick_settings_sound_vibrate">Vibrar</string>
     <string name="quick_settings_sound_dnd">No molestar</string>
     <!-- CPUInfo tile -->
@@ -63,14 +63,14 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Captura de pantalla borrada</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 horas y 2 minutos">%s</xliff:g> hasta completar)</string>
-    <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
+    <string name="keyguard_indication_dash_charging_time">Carga rápida (<xliff:g id="charging_time_left" example="4 horas y 2 minutos">%s</xliff:g> hasta completar)</string>
+    <string name="keyguard_plugged_in_dash_charging">Carga Rápida</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_turbo_power_time">TurboPower conectado (<xliff:g id="charging_time_left">%s</xliff:g> hasta completar)</string>
     <string name="keyguard_plugged_in_turbo_power_charging">TurboPower conectado</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Columnas</string>
-    <string name="qs_menu_item_columns_landscape">Vista de columnas</string>
+    <string name="qs_menu_item_columns_landscape">Columnas en apaisado</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -127,7 +127,7 @@
     <string name="quick_settings_pie">Controles Pie</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Píxeles inteligentes</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Habilitar automáticamente Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Activar automáticamente Smart Pixels</string>
     <string name="omnijaws_service_error">Error</string>
     <string name="omnijaws_service_unkown">No hay datos del clima</string>
     <string name="omnijaws_service_error_long">Error al cargar datos del clima</string>
@@ -138,18 +138,18 @@
     <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
     <string name="omnijaws_service_last_update">Última actualización:</string>
     <!-- Gaming Mode -->
-    <string name="gaming_mode_tile_title">Modo Juego</string>
-    <string name="gaming_mode_tile_toast">Modo juego activado</string>
-    <string name="gaming_mode_tile_toast_disabled">Modo juego desactivado</string>
-    <string name="gaming_mode_dialog_title">Modo Juego</string>
-    <string name="gaming_mode_dialog_message">Cuando el Modo Juego está habilitado, todas las notificaciones se desactivarán además las teclas de hardaware. Todas las configuraciones deshabilitas se resetearán una vez salgas del Modo Juego.</string>
+    <string name="gaming_mode_tile_title">Modo de juego</string>
+    <string name="gaming_mode_tile_toast">Modo de juego activado</string>
+    <string name="gaming_mode_tile_toast_disabled">Modo de juego desactivado</string>
+    <string name="gaming_mode_dialog_title">Modo de juego</string>
+    <string name="gaming_mode_dialog_message">Cuando el Modo Juego está activado, todas las notificaciones se desactivarán además de las teclas de hardware. Todas las configuraciones desactivadas se restablecerán una vez salgas del Modo Juego.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Modo juego activado</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Modo juego desactivado</string>
     <!-- Power Menu -->
     <string name="global_action_reboot_more">Reiniciar\u2026</string>
     <string name="global_action_reboot_sub">Sistema</string>
     <string name="global_action_reboot_bootloader">Bootloader</string>
-    <string name="global_action_reboot_systemui">Interfaz de Sistema</string>
+    <string name="global_action_reboot_systemui">Interfaz de sistema</string>
     <string name="global_action_dismissable_dialog_text">Reinicio avanzado esta desactivado.\nQuieres reiniciar\u003f</string>
     <string name="global_action_dnaa">No volver a mostrar</string>
     <string name="global_action_settings">Configuración</string>
@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">Utilizar la cámara frontal</string>
     <string name="onthego_service_toggle">Reiniciar el servicio automáticamente</string>
     <string name="onthego_channel_name">Principal</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

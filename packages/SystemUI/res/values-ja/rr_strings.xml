@@ -24,18 +24,18 @@
     <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">スクリーンショット</string>
-    <string name="quick_settings_region_screenshot_label">範囲を選択してスクリーンショット</string>
+    <string name="quick_settings_region_screenshot_label">範囲選択してスクリーンショット</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 通知の表示は1分間一時停止します</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は<xliff:g id="number">%d</xliff:g>分間停止します</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">画面は録画されています</string>
-    <string name="screenrecord_notif_final_ticker">画面を録画しました</string>
+    <string name="screenrecord_notif_final_ticker">画面の録画に成功しました</string>
     <!-- Screenrecord notification title -->
     <string name="screenrecord_notif_title">画面録画中</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">停止</string>
-    <string name="screenrecord_notif_completed">画面を録画しました</string>
+    <string name="screenrecord_notif_completed">画面の録画に成功しました</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">タップを表示</string>
     <string name="screenrecord_notif_pointer_off">タップを非表示</string>
@@ -106,7 +106,7 @@
     <string name="left">左</string>
     <string name="right">右</string>
     <string name="navbar_editor_title">エディター</string>
-    <string name="navbar_editor_summary">ナビゲーションバーの編集</string>
+    <string name="navbar_editor_summary">ナビゲーションバーを編集する</string>
     <!-- NavBar Tuner -->
     <string name="menu_ime_always_show">メニュー/キーボード切り替え (常時表示)</string>
     <string name="search">検索</string>
@@ -114,7 +114,7 @@
     <string name="statusbar_items_title">ステータスバーアイコン</string>
     <string name="statusbar_icons_blacklist">ステータスバーのアイコン</string>
     <string name="navbar_tuner_activity">ナビゲーションバーのボタン</string>
-    <string name="lockscreen_tuner_activity">ロック画面のショートカット</string>
+    <string name="lockscreen_tuner_activity">下部のショートカット</string>
     <string name="powernotif_tuner_activity">電源の通知</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">LTE の代わりに 4G を表示</string>
@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">フロントカメラを使用</string>
     <string name="onthego_service_toggle">自動でサービスを再起動する</string>
     <string name="onthego_channel_name">メイン</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

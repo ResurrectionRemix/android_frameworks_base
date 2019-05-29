@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">Frontkamera verwenden</string>
     <string name="onthego_service_toggle">Dienst automatisch neu starten</string>
     <string name="onthego_channel_name">Haupt</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

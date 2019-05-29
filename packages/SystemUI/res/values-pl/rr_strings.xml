@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">Użyj przedniej kamery</string>
     <string name="onthego_service_toggle">Automatycznie zrestartuj usługę</string>
     <string name="onthego_channel_name">Główny</string>
+    <string name="quick_settings_onthego_label">W ruchu</string>
 </resources>

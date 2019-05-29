@@ -19,35 +19,132 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE TIL </string>
+    <string name="lte_off">LTE FRA</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Skærmbillede</string>
+    <string name="quick_settings_region_screenshot_label">Delvist skærmbillede</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Smugkig-notifikationer tager en lur i 1 minut.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Smugkig-notifikationer tager en lur i <xliff:g id="number">%d</xliff:g> minutter.</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Skærm optages</string>
+    <string name="screenrecord_notif_final_ticker">Skærmoptagelse lykkedes</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Optager skærm</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+    <string name="screenrecord_notif_completed">Skærmoptagelse lykkedes</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Vis markør</string>
+    <string name="screenrecord_notif_pointer_off">Skjul markør</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Kan ikke optage skærm</string>
+    <string name="notification_channel_screenrecord">Skærmoptagelser</string>
+    <string name="screenrecord_hide_hint">Skjul råd</string>
+    <string name="screenrecord_show_hint">Vis råd</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Skærmoptagelse</string>
+    <string name="quick_settings_screenrecord_lq_label">Skærmoptagelse 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Skærmoptagelse 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Skærmoptagelse 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Lyd</string>
+    <string name="quick_settings_sound_ring">Ring</string>
+    <string name="quick_settings_sound_vibrate">Vibrér</string>
+    <string name="quick_settings_sound_dnd">Forstyr ikke</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU Info</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU Info fra</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU Info til</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">CPU Info slået fra</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">CPU Info slået til</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Skærmbillede slettet</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Spring-Opladning (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> indtil fuld)</string>
+    <string name="keyguard_plugged_in_dash_charging">Spring-Opladning</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower forbundet (<xliff:g id="charging_time_left">%s</xliff:g> indtil fuld)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower forbundet</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">Kolonner</string>
+    <string name="qs_menu_item_columns_landscape">Kolonner liggende</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_columns_nine">9</string>
+    <string name="qs_menu_item_reset">Nulstil</string>
+    <string name="qs_menu_item_titles">Vis etiketter</string>
+    <string name="qs_menu_item_rows">Rækker</string>
+    <string name="qs_menu_item_rows_landscape">Rækker liggende</string>
+    <string name="qs_menu_item_rows_one">1</string>
+    <string name="qs_menu_item_rows_two">2</string>
+    <string name="qs_menu_item_rows_three">3</string>
+    <string name="qs_menu_item_rows_four">4</string>
     <!-- Navbar Tuner -->
+    <string name="preview">Forhåndsvisning</string>
+    <string name="keycode">Tastekode</string>
+    <string name="no_home_title">Ingen hjem-knap fundet</string>
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->
     <!-- 4G LTE switch -->
     <!-- Pie controls -->
     <!-- Smart pixels QS tile -->
     <!-- Gaming Mode -->
+    <string name="gaming_mode_tile_toast_disabled">Spiltilstand deaktiveret</string>
+    <string name="gaming_mode_dialog_title">Spiltilstand</string>
+    <string name="gaming_mode_dialog_message">Når spiltilstand er aktiveret, vil alle opmærksomhedskrævende meddelelser blive deaktiveret, og hardware-knapper vil blive slået fra. Alle de deaktiverede indstillinger vil blive nulstillet til standard, når du forlader Spiltilstand.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Spiltilstand til</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Spiltilstand fra</string>
     <!-- Power Menu -->
+    <string name="global_action_reboot_more">Genstart\u2026</string>
+    <string name="global_action_reboot_sub">System</string>
+    <string name="global_action_reboot_bootloader">Opstartslæser</string>
+    <string name="global_action_reboot_systemui">SystemUI</string>
+    <string name="global_action_dismissable_dialog_text">Avanceret genstart er deaktiveret.\nØnsker du at genstarte\u003f</string>
+    <string name="global_action_dnaa">Vis ikke igen</string>
+    <string name="global_action_settings">Indstillinger</string>
     <!-- Global actions -->
     <!-- string name="global_action_restart_advanced">Advanced reboot</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string-->
+    <string name="global_action_screenshot">Skærmbillede</string>
+    <string name="global_action_screenrecord">Skærmoptagelse</string>
+    <string name="global_action_flashlight">Lommelygte</string>
     <!-- Advance location quick setting tile -->
+    <string name="quick_settings_location_secondary_battery_saving">Batteribesparelse</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Placeringsrapportering: Batteribesparelsestilstand.</string>
+    <string name="quick_settings_location_secondary_gps_only">Kun Sensorer</string>
+    <string name="accessibility_quick_settings_location_gps_only">Placeringsrapportering: Kun sensorer-tilstand.</string>
+    <string name="quick_settings_location_secondary_high_accuracy">Høj Nøjagtighed</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Placeringsrapportering: Høj nøjagtighed-tilstand.</string>
     <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Tving stop?</string>
+    <string name="force_stop_dlg_text">Hvis du tvinger en app til at stoppe, kan den opføre sig underligt.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Dræb App</string>
     <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
     <!-- OneHand mode QS tile -->
+    <string name="qs_onehand_label">EnHånd-tilstand</string>
     <!-- On The Go -->
+    <string name="global_action_onthego">På-Farten</string>
+    <string name="onthego_notif_ticker">På-Farten aktiveret</string>
+    <string name="onthego_notif_title">På-Farten er aktiv</string>
+    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_options">Valgmuligheder</string>
+    <string name="onthego_notif_error">Kan ikke starte \"På-Farten\"</string>
+    <string name="onthego_notif_restart">Genstart På-Farten</string>
+    <string name="onthego_notif_camera_changed">Kameratilstand ændret</string>
+    <string name="onthego_transparency">Gennemsigtighed</string>
+    <string name="onthego_front_camera">Brug frontkamera</string>
+    <string name="onthego_service_toggle">Genstart automatisk tjeneste</string>
+    <string name="onthego_channel_name">Primær</string>
+    <string name="quick_settings_onthego_label">På-Farten</string>
 </resources>

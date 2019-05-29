@@ -118,8 +118,8 @@
     <string name="powernotif_tuner_activity">Уведомления о состоянии питания</string>
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Показывать 4G вместо LTE</string>
-    <string name="global_action_reboot_recovery">Режим восстановления</string>
-    <string name="global_action_reboot">Перезагрузить</string>
+    <string name="global_action_reboot_recovery">Recovery</string>
+    <string name="global_action_reboot">Перезагрузка</string>
     <!-- Pie controls -->
     <string name="pie_state_name">Панель управления PIE</string>
     <string name="pie_state_summary">Использовать панель управления PIE в полноэкранном режиме</string>
@@ -142,14 +142,14 @@
     <string name="gaming_mode_tile_toast">Игровой режим включен</string>
     <string name="gaming_mode_tile_toast_disabled">Игровой режим выключен</string>
     <string name="gaming_mode_dialog_title">Игровой режим</string>
-    <string name="gaming_mode_dialog_message">Когда игровой режим включен, всплывающие уведомления будут заблокированы, а кнопки под экраном — выключены. После выхода из игрового режима они будут возвращены в состояние по умолчанию.</string>
+    <string name="gaming_mode_dialog_message">Когда игровой режим включен, всплывающие уведомления и аппаратные кнопки будут отключены. Все отключенные настройки будут сброшены к значениями по умолчанию после выхода из игрового режима.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Включить игровой режим</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Выключить игровой режим</string>
     <!-- Power Menu -->
     <string name="global_action_reboot_more">Перезагрузка\u2026</string>
     <string name="global_action_reboot_sub">Система</string>
     <string name="global_action_reboot_bootloader">Загрузчик</string>
-    <string name="global_action_reboot_systemui">Интерфейс системы</string>
+    <string name="global_action_reboot_systemui">Системный интерфейс</string>
     <string name="global_action_dismissable_dialog_text">Расширенная перезагрузка отключена.\nХотите перезагрузиться\u003f</string>
     <string name="global_action_dnaa">Больше не показывать</string>
     <string name="global_action_settings">Настройки</string>
@@ -178,16 +178,17 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Режим \"Управление одной рукой\"</string>
     <!-- On The Go -->
-    <string name="global_action_onthego">Режим \"На ходу\"</string>
+    <string name="global_action_onthego">Режим «На ходу»</string>
     <string name="onthego_notif_ticker">Режим «На ходу» включен</string>
     <string name="onthego_notif_title">Режим «На ходу» активен</string>
     <string name="onthego_notif_stop">Остановить</string>
     <string name="onthego_notif_options">Параметры</string>
-    <string name="onthego_notif_error">Не удается включить режим \"на ходу\"</string>
+    <string name="onthego_notif_error">Не удается включить режим «На ходу»</string>
     <string name="onthego_notif_restart">Перезапустить режим «На ходу»</string>
     <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
     <string name="onthego_transparency">Прозрачность</string>
     <string name="onthego_front_camera">Использовать фронтальную камеру</string>
     <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
     <string name="onthego_channel_name">Главный</string>
+    <string name="quick_settings_onthego_label">Режим «На ходу»</string>
 </resources>

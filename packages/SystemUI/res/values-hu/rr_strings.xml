@@ -190,4 +190,5 @@
     <string name="onthego_front_camera">Az előlapi kamera használata</string>
     <string name="onthego_service_toggle">Szolgáltatás automatikus újraindítása</string>
     <string name="onthego_channel_name">Elsődleges</string>
+    <string name="quick_settings_onthego_label">Menet közben (On-The-Go)</string>
 </resources>
