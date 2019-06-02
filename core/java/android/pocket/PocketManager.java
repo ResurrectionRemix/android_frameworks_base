@@ -148,7 +148,7 @@ public class PocketManager {
                 if (isPocketViewShowing) {
                     if (DEBUG) Log.v(TAG, "Setting pocket timer");
                     mHandler.removeCallbacks(mPocketLockTimeout); // remove any pending requests
-                    mHandler.postDelayed(mPocketLockTimeout, 10 * DateUtils.SECOND_IN_MILLIS);
+                    mHandler.postDelayed(mPocketLockTimeout, 3 * DateUtils.SECOND_IN_MILLIS);
                     mPocketViewTimerActive = true;
                 } else {
                     if (DEBUG) Log.v(TAG, "Clearing pocket timer");
