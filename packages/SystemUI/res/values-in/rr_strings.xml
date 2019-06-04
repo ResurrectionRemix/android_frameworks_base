@@ -57,6 +57,9 @@
     <!-- CPUInfo tile -->
     <string name="quick_settings_cpuinfo_label">Info CPU</string>
     <string name="accessibility_quick_settings_cpuinfo_off">Info CPU nonaktif</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Info CPU aktif</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">Info CPU dinonaktifkan</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">Info CPU diaktifkan</string>
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
@@ -139,6 +142,7 @@
     <string name="gaming_mode_tile_toast">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_tile_toast_disabled">Mode permainan dinonaktifkan</string>
     <string name="gaming_mode_dialog_title">Mode Permainan</string>
+    <string name="gaming_mode_dialog_message">Saat mode permainan diaktifkan, semua pesan utama akan dinonaktifkan dan tombol fisik akan dimatikan. Semua pengaturan yang dinonaktifkan akan diatur ulang ke default setelah Anda keluar dari Mode Permainan.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Mode permainan nonaktif</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Mode permainan aktif</string>
     <!-- Power Menu -->
@@ -186,4 +190,5 @@
     <string name="onthego_front_camera">Gunakan kamera depan</string>
     <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
     <string name="onthego_channel_name">Utama</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

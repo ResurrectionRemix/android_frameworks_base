@@ -142,6 +142,7 @@
     <string name="gaming_mode_tile_toast">게이밍 모드 활성화됨</string>
     <string name="gaming_mode_tile_toast_disabled">게이밍 모드 비활성화됨</string>
     <string name="gaming_mode_dialog_title">게이밍 모드</string>
+    <string name="gaming_mode_dialog_message">게이밍 모드가 켜져 있을 경우 모든 헤드업 알림이 꺼지며 하드웨어 키가 비활성화 됩니다. 게이밍 모드를 끄면 위 옵션들은 다시 켜집니다.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">게이밍 모드 사용</string>
     <string name="accessibility_quick_settings_gaming_mode_off">게이밍 모드 사용 안함</string>
     <!-- Power Menu -->
@@ -189,4 +190,5 @@
     <string name="onthego_front_camera">전면 카메라 사용</string>
     <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
     <string name="onthego_channel_name">메인</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

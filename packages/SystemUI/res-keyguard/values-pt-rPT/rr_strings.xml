@@ -30,12 +30,12 @@
 -->
 <resources>
     <string name="custom_text_clock_top_text_default">São</string>
-    <string name="text_clock_zero_h_min"></string>
+    <string name="text_clock_zero_h_min">&#8205;</string>
     <string name="text_clock_high">Meio-dia</string>
     <string name="text_clock_noon">em ponto</string>
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">e Vinte</string>
-    <string name="text_clock_tens_string_thirty">e Meia</string>
+    <string name="text_clock_tens_string_thirty">e Trinta</string>
     <string name="text_clock_tens_string_forty">e Quarenta</string>
     <string name="text_clock_tens_string_fifty">e Cinquenta</string>
     <string name="text_clock_tens_string_sixty">e Sessenta</string>

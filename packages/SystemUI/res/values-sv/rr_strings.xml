@@ -122,6 +122,7 @@
     <string name="global_action_reboot">Starta om</string>
     <!-- Pie controls -->
     <string name="pie_state_name">Pie-kontroll</string>
+    <string name="pie_state_summary">Använd pie-kontroller medan i omslutande läge</string>
     <string name="pie_battery_level">"BATTERINIVÅ "</string>
     <string name="quick_settings_pie">Pie-kontroll</string>
     <!-- Smart pixels QS tile -->
@@ -141,6 +142,7 @@
     <string name="gaming_mode_tile_toast">Spelläget aktiverat</string>
     <string name="gaming_mode_tile_toast_disabled">Spelläget inaktiverat</string>
     <string name="gaming_mode_dialog_title">Spelläge</string>
+    <string name="gaming_mode_dialog_message">När spelläget aktiveras kommer alla heads-up meddelanden inaktiveras och hårdvaruknappar att stängas av. Alla inaktiverade inställningar återställs till standardvärdet när du avslutar spelläget.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Spelläge på</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Spelläge av</string>
     <!-- Power Menu -->
@@ -164,6 +166,7 @@
     <string name="quick_settings_location_secondary_gps_only">Endast sensorer</string>
     <string name="accessibility_quick_settings_location_gps_only">Platsrapportering: endast sensorläge.</string>
     <string name="quick_settings_location_secondary_high_accuracy">Hög noggrannhet</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Platsrapportering: hög precision.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Tvinga avslut?</string>
     <string name="force_stop_dlg_text">Om du tvingar appen att avslutas kanske den inte fungerar som den ska.</string>
@@ -175,11 +178,17 @@
     <!-- OneHand mode QS tile -->
     <string name="qs_onehand_label">Enhandsläge</string>
     <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
+    <string name="onthego_notif_ticker">On-The-Go aktiverat</string>
+    <string name="onthego_notif_title">On-The-Go är aktivt</string>
     <string name="onthego_notif_stop">Stoppa</string>
     <string name="onthego_notif_options">Alternativ</string>
+    <string name="onthego_notif_error">Kan inte starta On-The-Go</string>
+    <string name="onthego_notif_restart">Starta om On-The-Go</string>
     <string name="onthego_notif_camera_changed">Kameraläget ändrades</string>
     <string name="onthego_transparency">Genomskinlighet</string>
     <string name="onthego_front_camera">Använd främre kamera</string>
     <string name="onthego_service_toggle">Starta om tjänsten automatiskt</string>
     <string name="onthego_channel_name">Allmänt</string>
+    <string name="quick_settings_onthego_label">On-The-Go</string>
 </resources>

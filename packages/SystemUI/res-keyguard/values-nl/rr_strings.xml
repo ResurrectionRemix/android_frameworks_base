@@ -29,8 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Het is</string>
+    <string name="text_clock_zero_h_min">0\'</string>
+    <string name="text_clock_high">Hoog</string>
+    <string name="text_clock_noon">Twaalf uur \'s middags</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Twintig</string>
+    <string name="text_clock_tens_string_thirty">Dertig</string>
+    <string name="text_clock_tens_string_forty">Veertig</string>
+    <string name="text_clock_tens_string_fifty">Vijftig</string>
+    <string name="text_clock_tens_string_sixty">Zestig</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Nul</string>
+    <string name="text_clock_units_string_one">Eén</string>
+    <string name="text_clock_units_string_two">Twee</string>
+    <string name="text_clock_units_string_three">Drie</string>
+    <string name="text_clock_units_string_four">Vier</string>
+    <string name="text_clock_units_string_five">Vijf</string>
+    <string name="text_clock_units_string_six">Zes</string>
+    <string name="text_clock_units_string_seven">Zeven</string>
+    <string name="text_clock_units_string_eight">Acht</string>
+    <string name="text_clock_units_string_nine">Negen</string>
+    <string name="text_clock_units_string_ten">Tien</string>
+    <string name="text_clock_units_string_eleven">Elf</string>
+    <string name="text_clock_units_string_twelve">Twaalf</string>
+    <string name="text_clock_units_string_thirteen">Dertien</string>
+    <string name="text_clock_units_string_fourteen">Veertien</string>
+    <string name="text_clock_units_string_fifteen">Vijftien</string>
+    <string name="text_clock_units_string_sixteen">Zestien</string>
+    <string name="text_clock_units_string_seventeen">Zeventien</string>
+    <string name="text_clock_units_string_eighteen">Achttien</string>
+    <string name="text_clock_units_string_nineteen">Negentien</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Twintig</string>
+    <string name="text_clock_tens_string_h_thirty">Dertig</string>
+    <string name="text_clock_tens_string_h_forty">Veertig</string>
+    <string name="text_clock_tens_string_h_fifty">Vijftig</string>
+    <string name="text_clock_tens_string_h_sixty">Zestig</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Twaalf</string>
+    <string name="text_clock_units_string_h_one">Eén</string>
+    <string name="text_clock_units_string_h_two">Twee</string>
+    <string name="text_clock_units_string_h_three">Drie</string>
+    <string name="text_clock_units_string_h_four">Vier</string>
+    <string name="text_clock_units_string_h_five">Vijf</string>
+    <string name="text_clock_units_string_h_six">Zes</string>
+    <string name="text_clock_units_string_h_seven">Zeven</string>
+    <string name="text_clock_units_string_h_eight">Acht</string>
+    <string name="text_clock_units_string_h_nine">Negen</string>
+    <string name="text_clock_units_string_h_ten">Tien</string>
+    <string name="text_clock_units_string_h_eleven">Elf</string>
+    <string name="text_clock_units_string_h_twelve">Twaalf</string>
+    <string name="text_clock_units_string_h_thirteen">Dertien</string>
+    <string name="text_clock_units_string_h_fourteen">Veertien</string>
+    <string name="text_clock_units_string_h_fifteen">Vijftien</string>
+    <string name="text_clock_units_string_h_sixteen">Zestien</string>
+    <string name="text_clock_units_string_h_seventeen">Zeventien</string>
+    <string name="text_clock_units_string_h_eighteen">Achttien</string>
+    <string name="text_clock_units_string_h_nineteen">Negentien</string>
 </resources>

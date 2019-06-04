@@ -29,6 +29,7 @@
 	
 -->
 <resources>
+    <string name="text_clock_high">Tinggi</string>
     <!-- TensString -->
     <!-- UnitsString -->
     <!-- TensStringH -->
