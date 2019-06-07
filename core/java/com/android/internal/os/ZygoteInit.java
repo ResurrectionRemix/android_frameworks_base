@@ -188,6 +188,11 @@ public class ZygoteInit {
         System.loadLibrary("android");
         System.loadLibrary("compiler_rt");
         System.loadLibrary("jnigraphics");
+        try {
+            System.loadLibrary("qti_performance");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e(TAG, "Couldn't load qti_performance");
+        }
     }
 
     native private static void nativePreloadAppProcessHALs();
