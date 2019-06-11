@@ -134,6 +134,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.AUDIO_PANEL_VIEW_VOICE;
     public static final String AUDIO_PANEL_VIEW_BT_SCO =
             "system:" + Settings.System.AUDIO_PANEL_VIEW_BT_SCO;
+    public static final String VOLUME_LINK_NOTIFICATION =
+            Settings.Secure.VOLUME_LINK_NOTIFICATION;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -186,12 +188,14 @@ public class VolumeDialogImpl implements VolumeDialog,
     // Volume panel placement left or right
     private boolean mVolumePanelOnLeft;
 
+    private boolean mVoiceCapable;
     private boolean mMediaShowing;
     private boolean mRingerShowing;
     private boolean mNotificationShowing;
     private boolean mAlarmShowing;
     private boolean mVoiceShowing;
     private boolean mBTSCOShowing;
+    private boolean mNotificationLinked;
 
     public VolumeDialogImpl(Context context) {
         mContext =
@@ -204,6 +208,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mShowActiveStreamOnly = showActiveStreamOnly();
         mHasSeenODICaptionsTooltip =
                 Prefs.getBoolean(context, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
+        mVoiceCapable = Util.isVoiceCapable(mContext);
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, VOLUME_PANEL_ON_LEFT);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_MEDIA);
@@ -212,6 +217,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_ALARM);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_VOICE);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
+        tunerService.addTunable(this, VOLUME_LINK_NOTIFICATION);
     }
 
     @Override
@@ -329,9 +335,11 @@ public class VolumeDialogImpl implements VolumeDialog,
             addRow(AudioManager.STREAM_MUSIC,
                     R.drawable.ic_volume_media, R.drawable.ic_volume_media_mute, true, true);
             if (!AudioSystem.isSingleVolume(mContext)) {
-                if (Util.isVoiceCapable(mContext)) {
+                if (mVoiceCapable) {
                     addRow(AudioManager.STREAM_RING, R.drawable.ic_volume_ringer,
                             R.drawable.ic_volume_ringer_mute, true, false);
+                    addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_notification,
+                            R.drawable.ic_volume_notification_mute, true, false);
                 } else {
                     addRow(AudioManager.STREAM_RING, R.drawable.ic_volume_notification,
                             R.drawable.ic_volume_notification_mute, true, false);
@@ -440,6 +448,10 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mNotificationLinked = notificationLinked;
                     triggerChange = true;
                 }
+                break;
+            case VOLUME_LINK_NOTIFICATION:
+                mNotificationLinked = TunerService.parseIntegerSwitch(newValue, true);
+                updateRowsH(getActiveRow());
                 break;
             default:
                 break;
@@ -928,8 +940,12 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (row.stream == AudioManager.STREAM_RING && mRingerShowing) {
             return true;
         }
-        if (row.stream == AudioManager.STREAM_NOTIFICATION && mNotificationShowing) {
-            return true;
+        if (mVoiceCapable && row.stream == AudioManager.STREAM_NOTIFICATION) {
+            if (mNotificationLinked)
+                return false;
+
+            if (mNotificationShowing)
+                return true;
         }
         if (row.stream == AudioManager.STREAM_ALARM && mAlarmShowing) {
             return true;
@@ -1122,10 +1138,6 @@ public class VolumeDialogImpl implements VolumeDialog,
             }
         }
 
-        if (Util.isVoiceCapable(mContext)) {
-            updateNotificationRowH();
-        }
-
         if (mActiveStream != state.activeStream) {
             mPrevActiveStream = mActiveStream;
             mActiveStream = state.activeStream;
@@ -1142,16 +1154,6 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     CharSequence composeWindowTitle() {
         return mContext.getString(R.string.volume_dialog_title, getStreamLabelH(getActiveRow().ss));
-    }
-
-    private void updateNotificationRowH() {
-        VolumeRow notificationRow = findRow(AudioManager.STREAM_NOTIFICATION);
-        if (notificationRow != null && mState.linkedNotification) {
-            removeRow(notificationRow);
-        } else if (notificationRow == null && !mState.linkedNotification) {
-            addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_notification,
-                    R.drawable.ic_volume_notification_mute, true, false);
-        }
     }
 
     private void updateVolumeRowH(VolumeRow row) {
