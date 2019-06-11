@@ -86,7 +86,7 @@ public class TunerServiceImpl extends TunerService {
             StatusBar.FORCE_SHOW_NAVBAR,
             StatusBar.SCREEN_BRIGHTNESS_MODE,
             StatusBar.STATUS_BAR_BRIGHTNESS_CONTROL,
-            VolumeDialogImpl.SETTING_VOLUME_PANEL_ON_LEFT,
+            VolumeDialogImpl.VOLUME_PANEL_ON_LEFT,
     };
 
     private final Observer mObserver = new Observer();

@@ -114,13 +114,13 @@ import java.util.List;
  * Methods ending in "H" must be called on the (ui) handler.
  */
 public class VolumeDialogImpl implements VolumeDialog,
-        ConfigurationController.ConfigurationListener {
+        ConfigurationController.ConfigurationListener, TunerService.Tunable {
     private static final String TAG = Util.logTag(VolumeDialogImpl.class);
 
     private static final long USER_ATTEMPT_GRACE_PERIOD = 1000;
     private static final int UPDATE_ANIMATION_DURATION = 80;
 
-    public static final String SETTING_VOLUME_PANEL_ON_LEFT =
+    public static final String VOLUME_PANEL_ON_LEFT =
             "lineagesecure:" + LineageSettings.Secure.VOLUME_PANEL_ON_LEFT;
     public static final String AUDIO_PANEL_VIEW_MEDIA =
             "system:" + Settings.System.AUDIO_PANEL_VIEW_MEDIA;
@@ -205,7 +205,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mHasSeenODICaptionsTooltip =
                 Prefs.getBoolean(context, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, SETTING_VOLUME_PANEL_ON_LEFT));
+        tunerService.addTunable(this, VOLUME_PANEL_ON_LEFT);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_MEDIA);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_RINGER);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_NOTIFICATION);
@@ -382,11 +382,10 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     private final VolumeDialogRunnable mVolumeDialogRunnable = new VolumeDialogRunnable();
 
-    private final TunerService.Tunable mTunable = new TunerService.Tunable() {
-        @Override
-        public void onTuningChanged(String key, String newValue) {
+    @Override
+    public void onTuningChanged(String key, String newValue) {
         switch (key) {
-            case SETTING_VOLUME_PANEL_ON_LEFT:
+            case VOLUME_PANEL_ON_LEFT:
                 final boolean volumePanelOnLeft = TunerService.parseIntegerSwitch(newValue, false);
                 if (mVolumePanelOnLeft != volumePanelOnLeft) {
                     mVolumePanelOnLeft = volumePanelOnLeft;
@@ -444,9 +443,9 @@ public class VolumeDialogImpl implements VolumeDialog,
                 break;
             default:
                 break;
-          }
+           }
         }
-    };
+    }
 
     protected ViewGroup getDialogView() {
         return mDialogView;
