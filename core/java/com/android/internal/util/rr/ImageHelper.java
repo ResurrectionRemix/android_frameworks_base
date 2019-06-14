@@ -2,7 +2,6 @@
 * Copyright (C) 2013 SlimRoms Project
 * Copyright (C) 2015 TeamEos Project
 * Copyright (C) 2015-2016 The DirtyUnicorns Project
-* Copyright (C) 2019 crDroid Android Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -56,9 +55,14 @@ import android.renderscript.Allocation;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.renderscript.RenderScript;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
+import android.view.Display;
+import android.view.SurfaceControl;
+import android.view.View;
+import android.view.WindowManager;
 
 public class ImageHelper {
     private static final int VECTOR_WIDTH = 512;
@@ -99,6 +103,24 @@ public class ImageHelper {
         return bitmap;
     }
 
+    public static Bitmap getColoredBitmap(Drawable d, int color) {
+        if (d == null) {
+            return null;
+        }
+        Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
+        Bitmap grayscaleBitmap = toGrayscale(colorBitmap);
+        Paint pp = new Paint();
+        pp.setAntiAlias(true);
+        PorterDuffColorFilter frontFilter =
+            new PorterDuffColorFilter(color, Mode.MULTIPLY);
+        pp.setColorFilter(frontFilter);
+        Canvas cc = new Canvas(grayscaleBitmap);
+        final Rect rect = new Rect(0, 0, grayscaleBitmap.getWidth(), grayscaleBitmap.getHeight());
+        cc.drawBitmap(grayscaleBitmap, rect, rect, pp);
+        return grayscaleBitmap;
+    }
+
+
     public static Drawable getResizedIconDrawable(Drawable source,
             Context context, int iconSizeId, float scaleFactor) {
         if (source == null) {
@@ -131,21 +153,33 @@ public class ImageHelper {
         return new BitmapDrawable(context.getResources(), scaledBitmap);
     }
 
-    public static Bitmap getColoredBitmap(Drawable d, int color) {
-        if (d == null) {
-            return null;
+    public static Bitmap screenshotSurface(Context context) {
+        WindowManager mWindowManager;
+        Display mDisplay;
+        DisplayMetrics mDisplayMetrics;
+        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = mWindowManager.getDefaultDisplay();
+        mDisplayMetrics = new DisplayMetrics();
+        mDisplay.getRealMetrics(mDisplayMetrics);
+        int displayHeight = mDisplayMetrics.heightPixels;
+        int displayWidth = mDisplayMetrics.widthPixels;
+        Rect displayRect = new Rect(0, 0, displayWidth, displayHeight);
+        int rot = mDisplay.getRotation();
+        Bitmap mScreenBitmap;
+        try {
+            mScreenBitmap = SurfaceControl.screenshot(displayRect, displayWidth, displayHeight, rot);
+            // Crop the screenshot to selected region
+            Bitmap swBitmap = mScreenBitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap cropped = Bitmap.createBitmap(swBitmap, Math.max(0, displayRect.left), Math.max(0, displayRect.top),
+                    displayRect.width(), displayRect.height());
+            swBitmap.recycle();
+            mScreenBitmap.recycle();
+            mScreenBitmap = cropped;
+            } catch (Exception e) {
+                Log.d ("Rebellion", "Screenshot service: FB is protected, falling back to an empty Bitmap");
+                mScreenBitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
         }
-        Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
-        Bitmap grayscaleBitmap = toGrayscale(colorBitmap);
-        Paint pp = new Paint();
-        pp.setAntiAlias(true);
-        PorterDuffColorFilter frontFilter =
-            new PorterDuffColorFilter(color, Mode.MULTIPLY);
-        pp.setColorFilter(frontFilter);
-        Canvas cc = new Canvas(grayscaleBitmap);
-        final Rect rect = new Rect(0, 0, grayscaleBitmap.getWidth(), grayscaleBitmap.getHeight());
-        cc.drawBitmap(grayscaleBitmap, rect, rect, pp);
-        return grayscaleBitmap;
+        return mScreenBitmap;
     }
 
     public static Bitmap toGrayscale(Bitmap bmpOriginal) {
@@ -172,39 +206,31 @@ public class ImageHelper {
         return bmpGrayscale;
     }
 
-    public static int dpToPx(Context context, int dp) {
-        return (int) ((dp * context.getResources().getDisplayMetrics().density) + 0.5);
-    }
-
-    public static Drawable resize(Context context, Drawable image, int size) {
+/*    public static Drawable resize(Context context, Drawable image, int size) {
         if (image == null || context == null) {
             return null;
         }
         if (image instanceof VectorDrawable) {
             return image;
         } else {
-            int newSize = dpToPx(context, size);
+            int newSize = ActionUtils.dpToPx(context, size);
             Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
             Bitmap scaledBitmap = Bitmap.createBitmap(newSize, newSize, Config.ARGB_8888);
-
             float ratioX = newSize / (float) bitmap.getWidth();
             float ratioY = newSize / (float) bitmap.getHeight();
             float middleX = newSize / 2.0f;
             float middleY = newSize / 2.0f;
-
             final Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
             paint.setAntiAlias(true);
-
             Matrix scaleMatrix = new Matrix();
             scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
             Canvas canvas = new Canvas(scaledBitmap);
             canvas.setMatrix(scaleMatrix);
             canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
                     middleY - bitmap.getHeight() / 2, paint);
             return new BitmapDrawable(context.getResources(), scaledBitmap);
         }
-    }
+    }*/
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
         if (bitmap == null) {
