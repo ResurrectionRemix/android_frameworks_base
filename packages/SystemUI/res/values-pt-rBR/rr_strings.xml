@@ -66,8 +66,8 @@
     <string name="keyguard_indication_dash_charging_time">Carregamento Rápido (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> até à carga máxima)</string>
     <string name="keyguard_plugged_in_dash_charging">Carregamento Rápido</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
-    <string name="keyguard_indication_turbo_power_time">TurboPower conectado (<xliff:g id="charging_time_left">%s</xliff:g> para conclusão)</string>
-    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower conectado</string>
+    <string name="keyguard_indication_turbo_power_time">TurboPower Conectado (<xliff:g id="charging_time_left">%s</xliff:g> para conclusão)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">TurboPower Conectado</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Colunas</string>
     <string name="qs_menu_item_columns_landscape">Colunas horizontais</string>

@@ -30,7 +30,7 @@
 -->
 <resources>
     <string name="custom_text_clock_top_text_default">Sono le</string>
-    <string name="text_clock_zero_h_min">In Punto</string>
+    <string name="text_clock_zero_h_min">E</string>
     <string name="text_clock_high">Mezzanotte</string>
     <string name="text_clock_noon">Mezzogiorno</string>
     <!-- TensString -->

@@ -121,10 +121,10 @@
     <string name="global_action_reboot_recovery">Återställning</string>
     <string name="global_action_reboot">Starta om</string>
     <!-- Pie controls -->
-    <string name="pie_state_name">Pie-kontroll</string>
+    <string name="pie_state_name">Paj - Kontroller</string>
     <string name="pie_state_summary">Använd pie-kontroller medan i omslutande läge</string>
     <string name="pie_battery_level">"BATTERINIVÅ "</string>
-    <string name="quick_settings_pie">Pie-kontroll</string>
+    <string name="quick_settings_pie">Paj - Kontroller</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">Smarta pixlar</string>
     <string name="quick_settings_smart_pixels_on_power_save">Automatiskt aktiverade smarta pixlar</string>
