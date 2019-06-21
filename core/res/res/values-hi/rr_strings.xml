@@ -36,17 +36,21 @@
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
    <string name="fontservice_incompatible_font">जो फौंट-पैकेज आपने प्रतिस्थापित किया है वह \'fonts.xml\' फाईल में/के अनुप्लब्ध होने के कारण असंयोज्य है। कृपया सहायता हेतु पैकेज-निर्माता से संपर्क करें ।</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">बूटलोडर रीबूट करें</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">रिबूट रिकवरी</string>
    <!-- advanced reboot system -->
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">धुंधला करें</string>
+   <string name="animation_default">पूर्व निर्धारित</string>
    <string name="animation_translucent">पारभासी</string>
    <string name="animation_grow_shrink">(उपर से/में) बढना</string>
    <string name="animation_grow_shrink_center">(मध्य से/में) बढना</string>
    <string name="animation_grow_shrink_bottom">(नीचे से/में) बढना</string>
    <string name="animation_grow_shrink_left">(बायें से/में) बढना</string>
    <string name="animation_grow_shrink_right">(दायें से / में) बढना</string>
+   <string name="animation_random">कोई भी</string>
+   <string name="default_string">पूर्व निर्धारित</string>
    <!-- SystemUI Restart -->
    <!-- Pocket Lock -->
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

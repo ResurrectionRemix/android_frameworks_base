@@ -97,7 +97,7 @@
     <string name="center">Giữa</string>
     <string name="end">Kết thúc</string>
     <string name="space">Ký tự cách</string>
-    <string name="menu_ime">Chuyển đổi bàn phím/Menu</string>
+    <string name="menu_ime">Chuyển đổi Bàn phím/Trình đơn</string>
     <string name="select_button">Chọn nút để thêm</string>
     <string name="add_button">Thêm nút</string>
     <string name="save">Lưu</string>
@@ -138,19 +138,19 @@
     <string name="omnijaws_package_not_available">OmniJaws không có sẵn</string>
     <string name="omnijaws_service_last_update">Lần cập nhật cuối:</string>
     <!-- Gaming Mode -->
-    <string name="gaming_mode_tile_title">Chế độ chơi game</string>
-    <string name="gaming_mode_tile_toast">Chế độ chơi game được bật</string>
-    <string name="gaming_mode_tile_toast_disabled">Chế độ chơi game đã tắt</string>
-    <string name="gaming_mode_dialog_title">Chế độ chơi game</string>
-    <string name="gaming_mode_dialog_message">Khi chế độ chơi trò chơi được bật, tất cả các tin nhắn bật lên sẽ bị tắt và các phím phần cứng sẽ bị tắt. Tất cả các cài đặt bị tắt sẽ được đặt lại về mặc định khi bạn thoát khỏi Chế độ chơi trò chơi.</string>
-    <string name="accessibility_quick_settings_gaming_mode_on">Chế độ chơi game bật</string>
-    <string name="accessibility_quick_settings_gaming_mode_off">Chế độ chơi game tắt</string>
+    <string name="gaming_mode_tile_title">Chế độ Trò chơi</string>
+    <string name="gaming_mode_tile_toast">Chế độ Trò chơi được bật</string>
+    <string name="gaming_mode_tile_toast_disabled">Chế độ Trò chơi đã tắt</string>
+    <string name="gaming_mode_dialog_title">Chế độ Trò chơi</string>
+    <string name="gaming_mode_dialog_message">Khi chế độ chơi trò chơi được bật, tất cả các tin nhắn bật lên sẽ bị tắt và các phím phần cứng sẽ bị tắt. Tất cả các cài đặt bị tắt sẽ được đặt lại về mặc định khi bạn thoát khỏi Chế độ Trò chơi.</string>
+    <string name="accessibility_quick_settings_gaming_mode_on">Chế độ Trò chơi bật</string>
+    <string name="accessibility_quick_settings_gaming_mode_off">Chế độ Trò chơi tắt</string>
     <!-- Power Menu -->
     <string name="global_action_reboot_more">Khởi động lại</string>
     <string name="global_action_reboot_sub">Hệ thống</string>
     <string name="global_action_reboot_bootloader">Trình nạp khởi động</string>
-    <string name="global_action_reboot_systemui">Giao diện người dùng</string>
-    <string name="global_action_dismissable_dialog_text">Khởi động lại nâng cao bị dừng. \nBạn có muốn khởi động lại\u003f</string>
+    <string name="global_action_reboot_systemui">Giao diện người dùng hệ thống</string>
+    <string name="global_action_dismissable_dialog_text">Khởi động lại nâng cao bị tắt. \nBạn có muốn khởi động lại\u003f</string>
     <string name="global_action_dnaa">Không hiển thị lại</string>
     <string name="global_action_settings">Cài đặt</string>
     <!-- Global actions -->
@@ -169,7 +169,7 @@
     <string name="accessibility_quick_settings_location_high_accuracy">Định vị: chính xác cao.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Buộc dừng?</string>
-    <string name="force_stop_dlg_text">Nếu bạn buộc dừng ứng dụng, nó có thể hoạt động không ổn định.</string>
+    <string name="force_stop_dlg_text">Nếu bạn buộc dừng một ứng dụng, nó có thể hoạt động không ổn định.</string>
     <string name="dlg_ok">@android:string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Tắt ứng dụng</string>

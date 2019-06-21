@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">Para que todas as alterações sejam efetivadas, uma reinicialização da Interface de Usuário do Sistema é necessária. Reiniciá-la agora?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Pressione e segure o botão power para interagir</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

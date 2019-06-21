@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">En genstart af SystemUI er påkrævet, for at alle ændringer kan træde i kraft. Genstart SystemUI nu?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Tryk og hold nede på tænd-/slukknap for at interagere</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

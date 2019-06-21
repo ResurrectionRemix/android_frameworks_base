@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">Per rendere effettive tutte le modifiche è necessario un riavvio della SystemUI. Riavviare la SystemUI ora?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Pressione prolungata del tasto accensione per interagire</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

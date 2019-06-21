@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">Aby se projevily všechny změny, je třeba restartovat SystemUI. Restartovat nyní?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Pro interakci stiskněte dlouze tlačítko napájení</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

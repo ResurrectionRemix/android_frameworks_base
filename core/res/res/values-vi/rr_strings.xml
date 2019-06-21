@@ -43,7 +43,7 @@
    <string name="reboot_to_recovery_message">Đang khởi động vào trình phục hồi\u2026</string>
    <!-- advanced reboot system -->
    <string name="reboot_system_title">Khởi động lại hệ thống</string>
-   <string name="reboot_system_message">Đang khởi động lại\u2026</string>
+   <string name="reboot_system_message">Đang khởi động lại hệ thống\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Mờ dần</string>
    <string name="animation_slide_right">Trượt sang phải</string>
@@ -63,10 +63,8 @@
    <string name="action_null">Trống</string>
    <string name="default_string">Mặc định</string>
    <!-- SystemUI Restart -->
-   <string name="systemui_restart_title">Phải khởi động lại giao diện hệ thống</string>
-   <string name="systemui_restart_message">Để những thay đổi có hiệu lực, SystemUI cần được khởi động lại. Khởi động lại SystemUI ngay?</string>
+   <string name="systemui_restart_title">Phải khởi động lại SystemUI</string>
+   <string name="systemui_restart_message">Để tất cả các thay đổi có hiệu lực, SystemUI cần được khởi động lại. Khởi động lại SystemUI ngay?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Nhấn giữ nút nguồn để tương tác</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

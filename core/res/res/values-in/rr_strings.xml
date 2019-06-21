@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">Untuk membuat perubahan, diperlukan memulai ulang SystemUI. Mulai ulang sekarang?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Tekan lama tombol daya untuk berinteraksi</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

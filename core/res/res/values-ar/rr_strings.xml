@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">لتكون كافة التغييرات نافذة المفعول، مطلوب إعادة تشغيل واجهة النظام. إعادة تشغيل واجهة النظام الآن؟</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">اضغط زر الطاقة مطولاً للتفاعل</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

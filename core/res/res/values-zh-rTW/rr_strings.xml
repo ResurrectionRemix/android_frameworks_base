@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">為了讓所有變更生效，我們需要重新啟動系統介面。是否現在重新啟動系統介面？</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">長按電源鍵進行互動</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

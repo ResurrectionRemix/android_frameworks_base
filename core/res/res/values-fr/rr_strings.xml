@@ -67,6 +67,4 @@
    <string name="systemui_restart_message">Afin que toutes les modifications soient prises en compte, un redémarrage de l’interface utilisateur est nécessaire. Voulez vous redémarrer l’interface utilisateur maintenant ?</string>
    <!-- Pocket Lock -->
    <string name="pocket_lock_message_long_press">Faites un appui long sur le bouton Marche/Arrêt pour interagir</string>
-   <!-- Defines the sysfs attribute path used by pocket bridge
-        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>
