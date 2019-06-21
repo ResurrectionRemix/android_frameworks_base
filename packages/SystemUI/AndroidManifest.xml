@@ -325,6 +325,7 @@
                   android:theme="@style/TunerSettings"
                   android:label="@string/system_ui_tuner"
                   android:process=":tuner"
+		  android:configChanges="orientation|screenSize"
                   android:parentActivityName="com.android.settings.rr.MainSettingsLayout"
                   android:exported="true">
         </activity>
