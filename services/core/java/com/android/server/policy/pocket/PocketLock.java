@@ -15,7 +15,6 @@
  */
 package com.android.server.policy.pocket;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Handler;
@@ -41,7 +40,6 @@ public class PocketLock {
     private View mHintContainer;
 
     private boolean mAttached;
-    private boolean mAnimating;
 
     /**
      * Creates pocket lock objects, inflate view and set layout parameters.
@@ -56,95 +54,28 @@ public class PocketLock {
                 com.android.internal.R.layout.pocket_lock_view_layout, null);
     }
 
-    public void show(final boolean animate) {
+    public void show() {
         final Runnable r = new Runnable() {
             @Override
             public void run() {
                 if (mAttached) {
                     return;
                 }
-
-                if (mAnimating) {
-                    mView.animate().cancel();
-                }
-
-                if (animate) {
-                    mView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-                    mView.animate().alpha(1.0f).setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animator) {
-                            mAnimating = true;
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animator) {
-                            mView.setLayerType(View.LAYER_TYPE_NONE, null);
-                            mAnimating = false;
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animator) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animator) {
-                        }
-                    }).withStartAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            mView.setAlpha(0.0f);
-                            addView();
-                        }
-                    }).start();
-                } else {
-                    mView.setAlpha(1.0f);
-                    addView();
-                }
+                addView();
             }
         };
 
         mHandler.post(r);
     }
 
-    public void hide(final boolean animate) {
+    public void hide() {
         final Runnable r = new Runnable() {
             @Override
             public void run() {
                 if (!mAttached) {
                     return;
                 }
-
-                if (mAnimating) {
-                    mView.animate().cancel();
-                }
-
-                if (animate) {
-                    mView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-                    mView.animate().alpha(0.0f).setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animator) {
-                            mAnimating = true;
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animator) {
-                            mView.setLayerType(View.LAYER_TYPE_NONE, null);
-                            mAnimating = false;
-                            removeView();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animator) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animator) {
-                        }
-                    }).start();
-                } else {
-                    removeView();
-                    mView.setAlpha(0.0f);
-                }
+                removeView();
             }
         };
 
@@ -165,7 +96,6 @@ public class PocketLock {
         if (mWindowManager != null && mAttached) {          
             mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             mWindowManager.removeView(mView);
-            mAnimating = false;
             mAttached = false;
         }
     }
