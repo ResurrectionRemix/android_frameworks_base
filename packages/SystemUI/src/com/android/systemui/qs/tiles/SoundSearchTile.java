@@ -31,12 +31,12 @@ import com.android.systemui.R;
 
 import javax.inject.Inject;
 
-public class SoundSearchTIle extends QSTileImpl<BooleanState> {
+public class SoundSearchTile extends QSTileImpl<BooleanState> {
 
     private final String soundSearchApp = "com.google.android.googlequicksearchbox";
 
     @Inject
-    public SoundSearchTIle(QSHost host) {
+    public SoundSearchTile(QSHost host) {
         super(host);
     }
 
@@ -90,7 +90,9 @@ public class SoundSearchTIle extends QSTileImpl<BooleanState> {
 
     @Override
     public BooleanState newTileState() {
-        return new BooleanState();
+        BooleanState state = new BooleanState();
+        state.handlesLongClick = false;
+        return state;
     }
 
     @Override
