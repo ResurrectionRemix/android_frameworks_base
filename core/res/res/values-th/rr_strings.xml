@@ -14,19 +14,57 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_fakePackageSignature">ได้ตรวจพบลายเซ็นปลอมในแพคเกจ</string>
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_fakePackageSignature">อนุญาติให้แอปเสมือนทำเป็นแอปอื่นที่แตกต่างจากเดิม แอปพลิเคชันที่เป็นอันตรายอาจสามารถใช้ข้อมูลนี้เพื่อเข้าถึงข้อมูลแอปพลิเคชันส่วนตัว อนุญาตใช้สิทธินี้ด้วยความระมัดระวัง</string>
    <!-- Button that copies the url to the log of a crashed application -->
+   <string name="aerr_copy">คัดลอก URL บันทึกข้อขัดข้อง</string>
+   <string name="url_copy_success">คัดลอก URL สำเร็จแล้ว</string>
+   <string name="url_copy_failed">เกิดข้อผิดพลาดขณะอัปโหลดบันทึกไปยัง dogbin</string>
    <!-- Ambient play -->
+   <string name="ambient_recognition_notification">กำลังเล่น</string>
+   <string name="ambient_recognition_information">%1$s โดย %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_toggleNavigationEditor">เครื่องมือแก้ไขตัวควบคุมการนำทาง</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_toggleNavigationEditor">อนุญาตให้แอปพลิเคชันควบคุมเครื่องมือแก้ไขแถบนำทาง</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permlab_accessFontManager">เข้าถึงตัวจัดการแบบอักษร</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+   <string name="permdesc_accessFontManager">อนุญาตให้แอปพลิเคชันเข้าถึงตัวจัดการแบบอักษร</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
+   <string name="fontservice_incompatible_font">แพ็คเกจแบบอักษรที่คุณติดตั้งเข้ากันไม่ได้ เนื่องจากไม่พบไฟล์ fonts.xml ในแพ็คเกจ โปรดติดต่อผู้พัฒนาแพ็คเกจเพื่อได้รับการแก้ไข</string>
    <!-- advanced reboot to bootloader. -->
+   <string name="reboot_to_bootloader_title">รีบูตไปยัง bootloader</string>
+   <string name="reboot_to_bootloader_message">กำลังเริ่มต้นใหม่ในโหมด bootloader\u2026</string>
    <!-- advanced reboot to recovery. -->
+   <string name="reboot_to_recovery_title">รีบูตไปยังโหมด Recovery</string>
+   <string name="reboot_to_recovery_message">กำลังเริ่มต้นใหม่ในโหมด Recovery\u2026</string>
    <!-- advanced reboot system -->
+   <string name="reboot_system_title">รีบูทระบบ</string>
+   <string name="reboot_system_message">กำลังรีบูตระบบใหม่\u2026</string>
    <!-- AOKP custom system animations -->
+   <string name="animation_fade">ค่อยๆ จาง</string>
+   <string name="animation_slide_right">เลื่อนไปทางขวา</string>
+   <string name="animation_slide_left">เลื่อนไปทางซ้าย</string>
+   <string name="animation_slide_right_no_fade">เลื่อนไปทางขวา (ไม่ค่อยๆ จาง)</string>
+   <string name="animation_slide_left_no_fade">เลื่อนเข้าซ้าย (ไม่จาง)</string>
+   <string name="animation_slide_up">เลื่อนลงด้านล่าง</string>
+   <string name="animation_slide_down">เลื่อนขึ้นด้านบน</string>
+   <string name="animation_default">ค่าเริ่มต้น</string>
+   <string name="animation_translucent">โปร่งแสง</string>
+   <string name="animation_grow_shrink">ขยายเข้า (บน)</string>
+   <string name="animation_grow_shrink_center">ขยายเข้า (กลาง)</string>
+   <string name="animation_grow_shrink_bottom">ขยายเข้า (ล่าง)</string>
+   <string name="animation_grow_shrink_left">ขยายเข้า (ซ้าย)</string>
+   <string name="animation_grow_shrink_right">ขยายเข้า (ขวา)</string>
+   <string name="animation_random">สุ่ม</string>
+   <string name="action_null">ว่างเปล่า</string>
+   <string name="default_string">ค่าเริ่มต้น</string>
    <!-- SystemUI Restart -->
+   <string name="systemui_restart_title">จำเป็นต้องเริ่มการทำงาน SystemUI ใหม่</string>
+   <string name="systemui_restart_message">เพื่อให้การเปลี่ยนแปลงทั้งหมดมีผลจำเป็นต้องเริ่มระบบใหม่ รีสตาร์ทตอนนี้เลยหรือไม่</string>
    <!-- Pocket Lock -->
+   <string name="pocket_lock_message_long_press">กดปุ่ม power ค้างไว้เพื่อทำงาน</string>
 </resources>

@@ -29,9 +29,62 @@
 	
 -->
 <resources>
+    <string name="custom_text_clock_top_text_default">Jam</string>
+    <string name="text_clock_zero_h_min">0\'</string>
     <string name="text_clock_high">Tinggi</string>
+    <string name="text_clock_noon">Tengah hari</string>
     <!-- TensString -->
+    <string name="text_clock_tens_string_twenty">Dua Puluh</string>
+    <string name="text_clock_tens_string_thirty">Tiga Puluh</string>
+    <string name="text_clock_tens_string_forty">Empat Puluh</string>
+    <string name="text_clock_tens_string_fifty">Lima Puluh</string>
+    <string name="text_clock_tens_string_sixty">Enam Puluh</string>
     <!-- UnitsString -->
+    <string name="text_clock_units_string_clock">Nol</string>
+    <string name="text_clock_units_string_one">Satu</string>
+    <string name="text_clock_units_string_two">Dua</string>
+    <string name="text_clock_units_string_three">Tiga</string>
+    <string name="text_clock_units_string_four">Empat</string>
+    <string name="text_clock_units_string_five">Lima</string>
+    <string name="text_clock_units_string_six">Enam</string>
+    <string name="text_clock_units_string_seven">Tujuh</string>
+    <string name="text_clock_units_string_eight">Delapan</string>
+    <string name="text_clock_units_string_nine">Sembilan</string>
+    <string name="text_clock_units_string_ten">Sepuluh</string>
+    <string name="text_clock_units_string_eleven">Sebelas</string>
+    <string name="text_clock_units_string_twelve">Dua Belas</string>
+    <string name="text_clock_units_string_thirteen">Tiga Belas</string>
+    <string name="text_clock_units_string_fourteen">Empat Belas</string>
+    <string name="text_clock_units_string_fifteen">Lima Belas</string>
+    <string name="text_clock_units_string_sixteen">Enam Belas</string>
+    <string name="text_clock_units_string_seventeen">Tujuh Belas</string>
+    <string name="text_clock_units_string_eighteen">Delapan Belas</string>
+    <string name="text_clock_units_string_nineteen">Sembilan Belas</string>
     <!-- TensStringH -->
+    <string name="text_clock_tens_string_h_twenty">Dua Puluh</string>
+    <string name="text_clock_tens_string_h_thirty">Tiga Puluh</string>
+    <string name="text_clock_tens_string_h_forty">Empat Puluh</string>
+    <string name="text_clock_tens_string_h_fifty">Lima Puluh</string>
+    <string name="text_clock_tens_string_h_sixty">Enam Puluh</string>
     <!-- UnitsStringH -->
+    <string name="text_clock_units_string_h_twelve_h">Dua Belas</string>
+    <string name="text_clock_units_string_h_one">Satu</string>
+    <string name="text_clock_units_string_h_two">Dua</string>
+    <string name="text_clock_units_string_h_three">Tiga</string>
+    <string name="text_clock_units_string_h_four">Empat</string>
+    <string name="text_clock_units_string_h_five">Lima</string>
+    <string name="text_clock_units_string_h_six">Enam</string>
+    <string name="text_clock_units_string_h_seven">Tujuh</string>
+    <string name="text_clock_units_string_h_eight">Delapan</string>
+    <string name="text_clock_units_string_h_nine">Sembilan</string>
+    <string name="text_clock_units_string_h_ten">Sepuluh</string>
+    <string name="text_clock_units_string_h_eleven">Sebelas</string>
+    <string name="text_clock_units_string_h_twelve">Dua Belas</string>
+    <string name="text_clock_units_string_h_thirteen">Tiga Belas</string>
+    <string name="text_clock_units_string_h_fourteen">Empat Belas</string>
+    <string name="text_clock_units_string_h_fifteen">Lima Belas</string>
+    <string name="text_clock_units_string_h_sixteen">Enam Belas</string>
+    <string name="text_clock_units_string_h_seventeen">Tujuh Belas</string>
+    <string name="text_clock_units_string_h_eighteen">Delapan Belas</string>
+    <string name="text_clock_units_string_h_nineteen">Sembilan Belas</string>
 </resources>

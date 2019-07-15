@@ -23,8 +23,8 @@
     <string name="lte_on">LTE ON</string>
     <string name="lte_off">LTE OFF</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">スクリーンショット</string>
-    <string name="quick_settings_region_screenshot_label">範囲選択してスクリーンショット</string>
+    <string name="quick_settings_screenshot_label">スクリーン\nショット</string>
+    <string name="quick_settings_region_screenshot_label">範囲選択</string>
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 通知の表示は1分間一時停止します</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - 通知の表示は<xliff:g id="number">%d</xliff:g>分間停止します</string>
@@ -111,7 +111,7 @@
     <string name="menu_ime_always_show">メニュー/キーボード切り替え (常時表示)</string>
     <string name="search">検索</string>
     <!-- SysUI Tuner -->
-    <string name="statusbar_items_title">ステータスバーアイコン</string>
+    <string name="statusbar_items_title">ステータスバーのアイコン</string>
     <string name="statusbar_icons_blacklist">ステータスバーのアイコン</string>
     <string name="navbar_tuner_activity">ナビゲーションバーのボタン</string>
     <string name="lockscreen_tuner_activity">下部のショートカット</string>
@@ -127,7 +127,7 @@
     <string name="quick_settings_pie">Pie コントロール</string>
     <!-- Smart pixels QS tile -->
     <string name="quick_settings_smart_pixels">スマートピクセル</string>
-    <string name="quick_settings_smart_pixels_on_power_save">スマートピクセルを自動的に有効化</string>
+    <string name="quick_settings_smart_pixels_on_power_save">自動有効</string>
     <string name="omnijaws_service_error">エラー</string>
     <string name="omnijaws_service_unkown">気象情報がありません</string>
     <string name="omnijaws_service_error_long">気象情報読み込みエラー</string>

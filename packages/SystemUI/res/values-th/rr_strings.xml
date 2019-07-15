@@ -24,19 +24,52 @@
     <string name="lte_off">LTE ปิด</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">ภาพหน้าจอ</string>
+    <string name="quick_settings_region_screenshot_label">ถ่ายภาพหน้าจอบางส่วน</string>
     <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - ปิดการใช้งานการแจ้งเตือนแบบ Peeking เป็นเวลา 1 นาที</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> -  ปิดการใช้งานการแจ้งเตือนแบบ Peeking เป็นเวลา <xliff:g id="number">%d</xliff:g> นาที</string>
     <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">กำลังบันทึกหน้าจอ</string>
+    <string name="screenrecord_notif_final_ticker">บันทึกหน้าจอสำเร็จ</string>
     <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">บันทึกหน้าจอ</string>
     <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">หยุด</string>
+    <string name="screenrecord_notif_completed">บันทึกหน้าจอสำเร็จ</string>
     <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">แสดงตำแหน่งการชี้</string>
+    <string name="screenrecord_notif_pointer_off">ซ่อนตำแหน่งการชี้</string>
     <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">ไม่สามารถบันทึกหน้าจอได้</string>
+    <string name="notification_channel_screenrecord">บันทึกวิดิโอหน้าจอ</string>
+    <string name="screenrecord_hide_hint">ซ่อนคำแนะนำ</string>
+    <string name="screenrecord_show_hint">แสดงคำแนะนำ</string>
     <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">บันทึกวิดิโอหน้าจอ</string>
+    <string name="quick_settings_screenrecord_lq_label">บันทึกวิดีโอหน้าจอ 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">บันทึกวิดีโอหน้าจอ 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">บันทึกวิดีโอหน้าจอ 720p+</string>
     <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">เสียง</string>
+    <string name="quick_settings_sound_ring">มีเสียง</string>
+    <string name="quick_settings_sound_vibrate">สั่น</string>
+    <string name="quick_settings_sound_dnd">ห้าม​รบกวน</string>
     <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">ข้อมูล CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">ปิดข้อมูล CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">เปิดข้อมูล CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_off">ปิดข้อมูล CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_changed_on">เปิดข้อมูล CPU</string>
     <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">ลบภาพถ่ายหน้าจอ</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time">Dash Charge (<xliff:g id="charging_time_left" ตัวอย่าง="4 ชั่วโมง กับ 2 นาที">%s</xliff:g> จนกระทั่งเต็ม)</string>
+    <string name="keyguard_plugged_in_dash_charging">การชาร์จเร็ว</string>
     <!-- Indication on the keyguard that is shown when the device is charging with a turbo power charger. Should match keyguard_plugged_in_turbo_power_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_turbo_power_time">TurboPower ได้ทำการเชื่อมต่อแล้ว (<xliff:g id="charging_time_left">%s</xliff:g> จะเต็ม)</string>
+    <string name="keyguard_plugged_in_turbo_power_charging">เชื่อมต่อ TurboPower แล้ว</string>
     <!-- QS Config -->
+    <string name="qs_menu_item_columns">คอลัมน์</string>
     <!-- Navbar Tuner -->
     <!-- NavBar Tuner -->
     <!-- SysUI Tuner -->

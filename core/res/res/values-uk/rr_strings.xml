@@ -18,7 +18,7 @@
    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permdesc_fakePackageSignature">Дозволяти програмі видавати себе за іншу програму. Небезпечні програми можуть отримати доступ до приватних даних користувача. Будьте обережні під час надання цього дозволу!</string>
    <!-- Button that copies the url to the log of a crashed application -->
-   <string name="aerr_copy">Копіювати URL звіту про помилку</string>
+   <string name="aerr_copy">Копіювати URL логу збою</string>
    <string name="url_copy_success">URL успішно скопійовано</string>
    <string name="url_copy_failed">Під час завантаження логу на сервіс dogbin відбулася помилка</string>
    <!-- Ambient play -->
