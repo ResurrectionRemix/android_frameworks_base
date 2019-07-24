@@ -101,6 +101,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.WeakHashMap;
 
 /**
  * Keeps track of device idleness and drives low power mode based on that.
@@ -815,8 +816,35 @@ public class DeviceIdleController extends SystemService
         private boolean mSmallBatteryDevice;
         private final KeyValueListParser mParser = new KeyValueListParser(',');
 
-        // Aggressive idle
-        private static final long AGGRESSIVE_WEIGHT = 3;
+        // Aggressive idle constants
+        private final WeakHashMap<String, Long> aggressiveConstants = new WeakHashMap<String, Long>() {{
+            put(KEY_LIGHT_IDLE_AFTER_INACTIVE_TIMEOUT, 180000L);
+            put(KEY_LIGHT_PRE_IDLE_TIMEOUT, 180000L);
+            put(KEY_LIGHT_IDLE_TIMEOUT, 300000L);
+            put(KEY_LIGHT_IDLE_FACTOR, 2L);
+            put(KEY_LIGHT_MAX_IDLE_TIMEOUT, 900000L);
+            put(KEY_LIGHT_IDLE_MAINTENANCE_MIN_BUDGET, 60000L);
+            put(KEY_LIGHT_IDLE_MAINTENANCE_MAX_BUDGET, 300000L);
+            put(KEY_MIN_LIGHT_MAINTENANCE_TIME, 5000L);
+            put(KEY_MIN_DEEP_MAINTENANCE_TIME, 30000L);
+            put(KEY_INACTIVE_TIMEOUT, 1800000L);
+            put(KEY_SENSING_TIMEOUT, 240000L);
+            put(KEY_LOCATING_TIMEOUT, 30000L);
+            put(KEY_LOCATION_ACCURACY, 20L);
+            put(KEY_MOTION_INACTIVE_TIMEOUT, 600000L);
+            put(KEY_IDLE_AFTER_INACTIVE_TIMEOUT, 1800000L);
+            put(KEY_IDLE_PENDING_TIMEOUT, 300000L);
+            put(KEY_MAX_IDLE_PENDING_TIMEOUT, 600000L);
+            put(KEY_IDLE_PENDING_FACTOR, 2L);
+            put(KEY_IDLE_TIMEOUT, 3600000L);
+            put(KEY_MAX_IDLE_TIMEOUT, 360000L);
+            put(KEY_IDLE_FACTOR, 2L);
+            put(KEY_MIN_TIME_TO_ALARM, 3600000L);
+            put(KEY_MAX_TEMP_APP_WHITELIST_DURATION, 300000L);
+            put(KEY_MMS_TEMP_APP_WHITELIST_DURATION, 60000L);
+            put(KEY_SMS_TEMP_APP_WHITELIST_DURATION, 20000L);
+            put(KEY_NOTIFICATION_WHITELIST_DURATION, 30000L);
+        }};
 
         public Constants(Handler handler, ContentResolver resolver) {
             super(handler);
@@ -837,11 +865,10 @@ public class DeviceIdleController extends SystemService
         }
 
         private long getDurationWeighted(String key, long defaultValue) {
-            long duration = mParser.getDurationMillis(key, defaultValue);
-
             if (mAggressiveIdle)
-                return duration / AGGRESSIVE_WEIGHT;
+                return aggressiveConstants.get(key);
 
+            long duration = mParser.getDurationMillis(key, defaultValue);
             return duration;
         }
 
@@ -923,7 +950,7 @@ public class DeviceIdleController extends SystemService
                         KEY_SMS_TEMP_APP_WHITELIST_DURATION, 20 * 1000L);
                 NOTIFICATION_WHITELIST_DURATION = getDurationWeighted(
                         KEY_NOTIFICATION_WHITELIST_DURATION, 30 * 1000L);
-                WAIT_FOR_UNLOCK = mParser.getBoolean(KEY_WAIT_FOR_UNLOCK, false);
+                WAIT_FOR_UNLOCK = mParser.getBoolean(KEY_WAIT_FOR_UNLOCK, mAggressiveIdle);
             }
         }
 
@@ -1053,7 +1080,7 @@ public class DeviceIdleController extends SystemService
                 handleMotionDetectedLocked(mConstants.INACTIVE_TIMEOUT, "non_stationary");
             }
         } else if ((result == AnyMotionDetector.RESULT_STATIONARY) || mAggressiveIdle) {
-            if (mState == STATE_SENSING) {
+            if (mState == STATE_SENSING || mAggressiveIdle) {
                 // If we are currently sensing, it is time to move to locating.
                 synchronized (this) {
                     mNotMoving = true;

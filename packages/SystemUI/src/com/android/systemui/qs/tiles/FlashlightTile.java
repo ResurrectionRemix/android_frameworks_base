@@ -35,7 +35,7 @@ import com.android.systemui.statusbar.policy.FlashlightController;
 public class FlashlightTile extends QSTileImpl<BooleanState> implements
         FlashlightController.FlashlightListener {
 
-    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_signal_flashlight);
+    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_flashlight);
     private final FlashlightController mFlashlightController;
 
     public FlashlightTile(QSHost host) {
