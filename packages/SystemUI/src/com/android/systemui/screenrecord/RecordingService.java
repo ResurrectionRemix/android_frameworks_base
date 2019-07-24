@@ -27,15 +27,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.drawable.Icon;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.MediaRecorder;
+import android.media.ThumbnailUtils;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Looper;
@@ -43,7 +44,6 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.Size;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.Gravity;
@@ -55,12 +55,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import com.android.systemui.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -89,6 +92,7 @@ public class RecordingService extends Service {
     private static final String ACTION_DELETE = "com.android.systemui.screenrecord.DELETE";
 
     private static final int TOTAL_NUM_TRACKS = 1;
+    private static final String RECORD_DIR = "Captures"; // TODO: use a translatable string
     private static final int VIDEO_BIT_RATE = 6000000;
     private static final int VIDEO_FRAME_RATE = 30;
     private static final int AUDIO_BIT_RATE = 16;
@@ -140,11 +144,11 @@ public class RecordingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "RecordingService is starting");
         if (intent == null) {
             return Service.START_NOT_STICKY;
         }
         String action = intent.getAction();
-        Log.d(TAG, "onStartCommand " + action);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -185,7 +189,41 @@ public class RecordingService extends Service {
 
             case ACTION_STOP:
                 stopRecording();
-                saveRecording(notificationManager);
+
+                String fileName = new SimpleDateFormat("'screen-'yyyyMMdd-HHmmss'.mp4'")
+                        .format(new Date());
+
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Video.Media.DISPLAY_NAME, fileName);
+                values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
+                values.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis());
+                values.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
+
+                ContentResolver resolver = getContentResolver();
+                Uri collectionUri = MediaStore.Video.Media.getContentUri(
+                        MediaStore.VOLUME_EXTERNAL_PRIMARY);
+                Uri itemUri = resolver.insert(collectionUri, values);
+
+                File recordDir = new File(getExternalFilesDir(Environment.DIRECTORY_MOVIES),
+                        RECORD_DIR);
+                recordDir.mkdirs();
+                Path path = new File(recordDir, fileName).toPath();
+                try {
+                    // Move file out of temp directory
+                    Files.move(mTempFile.toPath(), path);
+
+                    // Add to the mediastore
+                    OutputStream os = resolver.openOutputStream(itemUri, "w");
+                    Files.copy(path, os);
+                    os.close();
+
+                    Notification notification = createSaveNotification(itemUri, path);
+                    notificationManager.notify(NOTIFICATION_ID, notification);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, R.string.screenrecord_delete_error, Toast.LENGTH_LONG)
+                            .show();
+                }
                 break;
 
             case ACTION_PAUSE:
@@ -199,7 +237,8 @@ public class RecordingService extends Service {
                 break;
 
             case ACTION_SHARE:
-                Uri shareUri = Uri.parse(intent.getStringExtra(EXTRA_PATH));
+                File shareFile = new File(intent.getStringExtra(EXTRA_PATH));
+                Uri shareUri = FileProvider.getUriForFile(this, FILE_PROVIDER, shareFile);
 
                 Intent shareIntent = new Intent(Intent.ACTION_SEND)
                         .setType("video/mp4")
@@ -219,18 +258,20 @@ public class RecordingService extends Service {
                 // Close quick shade
                 sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
-                ContentResolver resolver = getContentResolver();
-                Uri uri = Uri.parse(intent.getStringExtra(EXTRA_PATH));
-                resolver.delete(uri, null, null);
+                File file = new File(intent.getStringExtra(EXTRA_PATH));
+                if (file.delete()) {
+                    Toast.makeText(
+                            this,
+                            R.string.screenrecord_delete_description,
+                            Toast.LENGTH_LONG).show();
 
-                Toast.makeText(
-                        this,
-                        R.string.screenrecord_delete_description,
-                        Toast.LENGTH_LONG).show();
-
-                // Remove notification
-                notificationManager.cancel(NOTIFICATION_ID);
-                Log.d(TAG, "Deleted recording " + uri);
+                    // Remove notification
+                    notificationManager.cancel(NOTIFICATION_ID);
+                } else {
+                    Log.e(TAG, "Error deleting screen recording!");
+                    Toast.makeText(this, R.string.screenrecord_delete_error, Toast.LENGTH_LONG)
+                            .show();
+                }
                 break;
         }
         return Service.START_STICKY;
@@ -258,9 +299,12 @@ public class RecordingService extends Service {
      */
     private void startRecording() {
         try {
-            mTempFile = File.createTempFile("temp", ".mp4");
-            Log.d(TAG, "Writing video output to: " + mTempFile.getAbsolutePath());
-
+            try {
+                mTempFile = File.createTempFile("temp", ".mp4");
+                Log.d(TAG, "Writing video output to: " + mTempFile.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             setTapsVisible(mShowTaps);
             if (mShowDot) {
                 showDot();
@@ -309,7 +353,6 @@ public class RecordingService extends Service {
 
             mMediaRecorder.start();
         } catch (IOException e) {
-            Log.e(TAG, "Error starting screen recording: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -329,7 +372,7 @@ public class RecordingService extends Service {
         notificationManager.createNotificationChannel(channel);
 
         mRecordingNotificationBuilder = new Notification.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_android)
+                .setSmallIcon(R.drawable.ic_screenrecord)
                 .setContentTitle(getResources().getString(R.string.screenrecord_name))
                 .setUsesChronometer(true)
                 .setOngoing(true);
@@ -346,17 +389,17 @@ public class RecordingService extends Service {
 
         mRecordingNotificationBuilder.setActions(
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android),
+                        Icon.createWithResource(this, R.drawable.ic_screenrecord),
                         getResources().getString(R.string.screenrecord_stop_label),
                         getStopPendingIntent())
                         .build(),
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android), pauseString,
+                        Icon.createWithResource(this, R.drawable.ic_screenrecord), pauseString,
                         PendingIntent.getService(this, REQUEST_CODE, pauseIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT))
                         .build(),
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android),
+                        Icon.createWithResource(this, R.drawable.ic_screenrecord),
                         getResources().getString(R.string.screenrecord_cancel_label),
                         PendingIntent
                                 .getService(this, REQUEST_CODE, getCancelIntent(this),
@@ -365,13 +408,15 @@ public class RecordingService extends Service {
         notificationManager.notify(NOTIFICATION_ID, mRecordingNotificationBuilder.build());
     }
 
-    private Notification createSaveNotification(Uri uri) {
+    private Notification createSaveNotification(Uri uri, Path path) {
+        Log.d(TAG, "Screen recording saved to " + uri.toString() + ", " + path.toString());
+
         Intent viewIntent = new Intent(Intent.ACTION_VIEW)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .setDataAndType(uri, "video/mp4");
 
         Notification.Action shareAction = new Notification.Action.Builder(
-                Icon.createWithResource(this, R.drawable.ic_android),
+                Icon.createWithResource(this, R.drawable.ic_screenrecord),
                 getResources().getString(R.string.screenrecord_share_label),
                 PendingIntent.getService(
                         this,
@@ -381,7 +426,7 @@ public class RecordingService extends Service {
                 .build();
 
         Notification.Action deleteAction = new Notification.Action.Builder(
-                Icon.createWithResource(this, R.drawable.ic_android),
+                Icon.createWithResource(this, R.drawable.ic_screenrecord),
                 getResources().getString(R.string.screenrecord_delete_label),
                 PendingIntent.getService(
                         this,
@@ -391,7 +436,7 @@ public class RecordingService extends Service {
                 .build();
 
         Notification.Builder builder = new Notification.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_android)
+                .setSmallIcon(R.drawable.ic_screenrecord)
                 .setContentTitle(getResources().getString(R.string.screenrecord_name))
                 .setContentText(getResources().getString(R.string.screenrecord_save_message))
                 .setContentIntent(PendingIntent.getActivity(
@@ -404,15 +449,8 @@ public class RecordingService extends Service {
                 .setAutoCancel(true);
 
         // Add thumbnail if available
-        Bitmap thumbnailBitmap = null;
-        try {
-            ContentResolver resolver = getContentResolver();
-            Size size = Point.convert(MediaStore.ThumbnailConstants.MINI_SIZE);
-            thumbnailBitmap = resolver.loadThumbnail(uri, size, null);
-        } catch (IOException e) {
-            Log.e(TAG, "Error creating thumbnail: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Bitmap thumbnailBitmap = ThumbnailUtils.createVideoThumbnail(path.toString(),
+                MediaStore.Video.Thumbnails.MINI_KIND);
         if (thumbnailBitmap != null) {
             Notification.BigPictureStyle pictureStyle = new Notification.BigPictureStyle()
                     .bigPicture(thumbnailBitmap)
@@ -437,38 +475,6 @@ public class RecordingService extends Service {
             mVirtualDisplay.release();
         } catch (Exception e) {}
         stopSelf();
-    }
-
-    private void saveRecording(NotificationManager notificationManager) {
-        String fileName = new SimpleDateFormat("'screen-'yyyyMMdd-HHmmss'.mp4'")
-                .format(new Date());
-
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Video.Media.DISPLAY_NAME, fileName);
-        values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
-        values.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis());
-        values.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
-
-        ContentResolver resolver = getContentResolver();
-        Uri collectionUri = MediaStore.Video.Media.getContentUri(
-                MediaStore.VOLUME_EXTERNAL_PRIMARY);
-        Uri itemUri = resolver.insert(collectionUri, values);
-
-        try {
-            // Add to the mediastore
-            OutputStream os = resolver.openOutputStream(itemUri, "w");
-            Files.copy(mTempFile.toPath(), os);
-            os.close();
-
-            Notification notification = createSaveNotification(itemUri);
-            notificationManager.notify(NOTIFICATION_ID, notification);
-
-            mTempFile.delete();
-        } catch (IOException e) {
-            Log.e(TAG, "Error saving screen recording: " + e.getMessage());
-            Toast.makeText(this, R.string.screenrecord_delete_error, Toast.LENGTH_LONG)
-                    .show();
-        }
     }
 
     private void setTapsVisible(boolean turnOn) {
@@ -572,3 +578,4 @@ public class RecordingService extends Service {
                 .putExtra(EXTRA_PATH, path);
     }
 }
+
