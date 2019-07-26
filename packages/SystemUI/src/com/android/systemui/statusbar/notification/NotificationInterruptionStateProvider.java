@@ -72,6 +72,8 @@ public class NotificationInterruptionStateProvider {
     protected boolean mUseHeadsUp = false;
     private boolean mDisableNotificationAlerts;
 
+    private boolean mLessBoringHeadsUp;
+
     public NotificationInterruptionStateProvider(Context context) {
         this(context,
                 (PowerManager) context.getSystemService(Context.POWER_SERVICE),
@@ -211,7 +213,7 @@ public class NotificationInterruptionStateProvider {
             return false;
         }
 
-        if (!canHeadsUpCommon(entry)) {
+        if (!canHeadsUpCommon(entry) || shouldSkipHeadsUp(sbn)) {
             return false;
         }
 
@@ -330,6 +332,18 @@ public class NotificationInterruptionStateProvider {
         }
 
         return true;
+    }
+
+    public void setUseLessBoringHeadsUp(boolean lessBoring) {
+        mLessBoringHeadsUp = lessBoring;
+    }
+
+    public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
+        boolean isImportantHeadsUp = false;
+        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
+                notificationPackageName.contains("messaging");
+        return !getShadeController().isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
     }
 
     /**
