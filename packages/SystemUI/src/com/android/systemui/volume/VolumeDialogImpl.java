@@ -61,6 +61,7 @@ import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -201,6 +202,8 @@ public class VolumeDialogImpl implements VolumeDialog,
     private int mTimeOutDesired, mTimeOut;
     private boolean mLeftVolumeRocker;
 
+    private boolean mHasAlertSlider;
+
     public VolumeDialogImpl(Context context) {
         mContext =
                 new ContextThemeWrapper(context, R.style.qs_theme);
@@ -224,6 +227,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, VOLUME_LINK_NOTIFICATION);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         mLeftVolumeRocker = mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide);
+        mHasAlertSlider = mContext.getResources().getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
     }
 
     @Override
@@ -333,7 +337,9 @@ public class VolumeDialogImpl implements VolumeDialog,
             mDialogView.removeView(mODICaptionsTooltipViewStub);
             mODICaptionsTooltipViewStub = null;
         }
-
+        if (mHasAlertSlider) {
+            mRinger.setVisibility(View.GONE);
+        }
         if(!isAudioPanelOnLeftSide()) {
             mRinger.setForegroundGravity(Gravity.RIGHT);
         } else {
