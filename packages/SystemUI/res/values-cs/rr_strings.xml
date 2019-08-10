@@ -20,14 +20,14 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE zap. </string>
-    <string name="lte_off">LTE vyp.</string>
+    <string name="lte_on">LTE ZAP. </string>
+    <string name="lte_off">LTE VYP.</string>
     <!-- Screenshot QS tile -->
     <string name="quick_settings_screenshot_label">Snímek obrazovky</string>
     <string name="quick_settings_region_screenshot_label">Částečný snímek obrazovky</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Plovoucí oznámení jsou odložena na dobu 1 minuty.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Plovoucí oznámení jsou odložena na dobu <xliff:g id="number">%d </xliff:g> minut.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> – Plovoucí oznámení jsou odložena po dobu 1 minuty.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> – Plovoucí oznámení jsou odložena po dobu <xliff:g id="number">%d </xliff:g> minut.</string>
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Obrazovka je zaznamenávána</string>
     <string name="screenrecord_notif_final_ticker">Obrazovka byla úspěšně zaznamenána</string>
@@ -40,7 +40,7 @@
     <string name="screenrecord_notif_pointer_on">Zobrazit ukazatel</string>
     <string name="screenrecord_notif_pointer_off">Skrýt ukazatel</string>
     <!-- Screen record notification error title -->
-    <string name="screenrecord_notif_error">Záznam obrazovky není možný</string>
+    <string name="screenrecord_notif_error">Nelze provést záznam obrazovky</string>
     <string name="notification_channel_screenrecord">Záznamy obrazovky</string>
     <string name="screenrecord_hide_hint">Skrýt nápovědu</string>
     <string name="screenrecord_show_hint">Zobrazit nápovědu</string>
@@ -56,8 +56,8 @@
     <string name="quick_settings_sound_dnd">Nerušit</string>
     <!-- CPUInfo tile -->
     <string name="quick_settings_cpuinfo_label">Informace o CPU</string>
-    <string name="accessibility_quick_settings_cpuinfo_off">Informace o CPU vypnuty</string>
-    <string name="accessibility_quick_settings_cpuinfo_on">Informace o CPU zapnuty</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informace o CPU vyp.</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informace o CPU zap.</string>
     <string name="accessibility_quick_settings_cpuinfo_changed_off">Informace o CPU byly vypnuty</string>
     <string name="accessibility_quick_settings_cpuinfo_changed_on">Informace o CPU byly zapnuty</string>
     <!-- Screenshot Delete Toast -->
@@ -89,10 +89,10 @@
     <!-- Navbar Tuner -->
     <string name="preview">Náhled</string>
     <string name="keycode">Klávesa</string>
-    <string name="no_home_title">Nebylo nalezeno tlačítko Domů</string>
-    <string name="no_home_message">K navigaci v zařízení je potřeba tlačítko Domů. Před uložením toto tlačítko přidejte.</string>
-    <string name="clipboard_description">Tlačítko Schránka umožňuje přetahovat položky přímo do schránky. Položky vložené do schránky lze také přetáhnout ven.</string>
-    <string name="keycode_description">Tlačítka Klávesa umožňují přidat na navigační panel klávesy z klávesnice. Když na ně klepnete, budou emulovat vybranou klávesu. K tlačítku je nejprve nutné přiřadit klávesu a poté přidat obrázek tlačítka.</string>
+    <string name="no_home_title">Nebylo nalezeno tlačítko „Domů“</string>
+    <string name="no_home_message">Pro navigaci v zařízení je potřeba mít nastavené tlačítko „Domů.“ Před uložením toto tlačítko přidejte.</string>
+    <string name="clipboard_description">Tlačítko „Schránka“ umožňuje přetahovat položky přímo do schránky. Položky vložené do schránky lze také přetáhnout ven.</string>
+    <string name="keycode_description">Tlačítka „Klávesa“ umožňují přidat na navigační panel klávesy z klávesnice. Když na ně klepnete, budou emulovat vybranou klávesu. K tlačítku je nejprve nutné přiřadit klávesu a poté obrázek, který na něm bude zobrazen.</string>
     <string name="start">Start</string>
     <string name="center">Uprostřed</string>
     <string name="end">Konec</string>
@@ -111,18 +111,18 @@
     <string name="menu_ime_always_show">Přepínač nabídky/klávesnice (vždy zobrazovat)</string>
     <string name="search">Hledat</string>
     <!-- SysUI Tuner -->
-    <string name="statusbar_items_title">Ikona ve stavové liště</string>
-    <string name="statusbar_icons_blacklist">Ikony ve stavové liště</string>
+    <string name="statusbar_items_title">Ikona na stavovém řádku</string>
+    <string name="statusbar_icons_blacklist">Ikony na stavovém řádku</string>
     <string name="navbar_tuner_activity">Tlačítka navigačního panelu</string>
-    <string name="lockscreen_tuner_activity">Zkratky na zamykací obrazovce</string>
+    <string name="lockscreen_tuner_activity">Zkratky na obrazovce uzamčení</string>
     <string name="powernotif_tuner_activity">Rozšířená oznámení</string>
     <!-- 4G LTE switch -->
-    <string name="show_fourg_title">Zobrazit 4G místo LTE</string>
+    <string name="show_fourg_title">Zobrazit 4G namísto LTE</string>
     <string name="global_action_reboot_recovery">Recovery</string>
     <string name="global_action_reboot">Restartovat</string>
     <!-- Pie controls -->
     <string name="pie_state_name">Ovládání Pie</string>
-    <string name="pie_state_summary">Použít prvky Pie v režimu přes celou obrazovku</string>
+    <string name="pie_state_summary">Použít ovládací prvky Pie v Pohlcujícím režimu</string>
     <string name="pie_battery_level">"ÚROVEŇ NABITÍ BATERIE "</string>
     <string name="quick_settings_pie">Ovládání Pie</string>
     <!-- Smart pixels QS tile -->
@@ -142,7 +142,7 @@
     <string name="gaming_mode_tile_toast">Herní režim povolen</string>
     <string name="gaming_mode_tile_toast_disabled">Herní režim zakázán</string>
     <string name="gaming_mode_dialog_title">Herní režim</string>
-    <string name="gaming_mode_dialog_message">Pokud je herní režim povolen, budou všechny zprávy plovoucích oznámení a hardwarová tlačítka vypnuty. Po ukončení herního režimu budou všechna vypnutá nastavení obnovena na výchozí.</string>
+    <string name="gaming_mode_dialog_message">Pokud je Herní režim povolen, budou všechny zprávy Plovoucích oznámení a hardwarová tlačítka vypnuty. Po ukončení Herního režimu budou všechna vypnutá nastavení obnovena na výchozí.</string>
     <string name="accessibility_quick_settings_gaming_mode_on">Herní režim zap.</string>
     <string name="accessibility_quick_settings_gaming_mode_off">Herní režim vyp.</string>
     <!-- Power Menu -->
@@ -174,21 +174,21 @@
     <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Ukončit aplikaci</string>
     <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_label">Vždy zapnutý displej</string>
     <!-- OneHand mode QS tile -->
-    <string name="qs_onehand_label">Režim jedné ruky</string>
+    <string name="qs_onehand_label">Ovládání jednou rukou</string>
     <!-- On The Go -->
-    <string name="global_action_onthego">On-The-Go</string>
-    <string name="onthego_notif_ticker">On-The-Go aktivováno</string>
-    <string name="onthego_notif_title">On-The-Go je aktivní</string>
-    <string name="onthego_notif_stop">Ukočit</string>
+    <string name="global_action_onthego">On‑The‑Go</string>
+    <string name="onthego_notif_ticker">On‑The‑Go aktivováno</string>
+    <string name="onthego_notif_title">On‑The‑Go je aktivní</string>
+    <string name="onthego_notif_stop">Ukončit</string>
     <string name="onthego_notif_options">Možnosti</string>
-    <string name="onthego_notif_error">On-The-Go nelze spustit</string>
-    <string name="onthego_notif_restart">Restartovat On-The-Go</string>
+    <string name="onthego_notif_error">On‑The‑Go nelze spustit</string>
+    <string name="onthego_notif_restart">Restartovat On‑The‑Go</string>
     <string name="onthego_notif_camera_changed">Režim fotoaparátu byl změněn</string>
     <string name="onthego_transparency">Průhlednost</string>
     <string name="onthego_front_camera">Použít přední fotoaparát</string>
     <string name="onthego_service_toggle">Automaticky restartovat službu</string>
     <string name="onthego_channel_name">Hlavní</string>
-    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="quick_settings_onthego_label">On‑The‑Go</string>
 </resources>

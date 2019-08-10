@@ -20,21 +20,21 @@
    <!-- Button that copies the url to the log of a crashed application -->
    <string name="aerr_copy">Kopírovat URL protokolu o selhání</string>
    <string name="url_copy_success">URL úspěšně zkopírována</string>
-   <string name="url_copy_failed">Při nahrávání protokolu o selhání došlo k chybě</string>
+   <string name="url_copy_failed">Při nahrávání protokolu o selhání na dogbin došlo k chybě</string>
    <!-- Ambient play -->
-   <string name="ambient_recognition_notification">Právě hraje</string>
+   <string name="ambient_recognition_notification">Co to hraje</string>
    <string name="ambient_recognition_information">%1$s od %2$s</string>
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
    <string name="permlab_toggleNavigationEditor">ovládání navigačního editoru</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_toggleNavigationEditor">Umožní aplikaci provádět změny v editoru navigačního panelu.</string>
+   <string name="permdesc_toggleNavigationEditor">Umožňuje aplikaci provádět změny v Editoru navigačního panelu.</string>
    <!-- Font service -->
    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permlab_accessFontManager">přístup ke správci písem</string>
+   <string name="permlab_accessFontManager">přístup ke Správci písem</string>
    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-   <string name="permdesc_accessFontManager">Umožňuje aplikaci přístup ke správci písem.</string>
+   <string name="permdesc_accessFontManager">Umožňuje aplikaci přístup ke Správci písem.</string>
    <!-- [CHAR LIMIT=NONE] Error when a package is installed but got the missing fonts.xml file, notifying the user why it isn't showing up. -->
-   <string name="fontservice_incompatible_font">Balíček písem, který jste nainstalovali, není kompatibilní kvůli chybějícím souboru fonts.xml. Pro podporu se obraťte se na vývojáře balíčku.</string>
+   <string name="fontservice_incompatible_font">Balíček písem, který jste nainstalovali, není kompatibilní kvůli chybějícímu souboru fonts.xml. Pro podporu se obraťte na vývojáře balíčku.</string>
    <!-- advanced reboot to bootloader. -->
    <string name="reboot_to_bootloader_title">Restartovat do bootloaderu</string>
    <string name="reboot_to_bootloader_message">Restartování do bootloaderu\u2026</string>
@@ -46,12 +46,12 @@
    <string name="reboot_system_message">Restartování systému\u2026</string>
    <!-- AOKP custom system animations -->
    <string name="animation_fade">Slábnutí</string>
-   <string name="animation_slide_right">Přejetí vpravo</string>
-   <string name="animation_slide_left">Přejetí vlevo</string>
-   <string name="animation_slide_right_no_fade">Přejetí vpravo (bez slábnutí)</string>
-   <string name="animation_slide_left_no_fade">Přejetí vlevo (bez slábnutí)</string>
-   <string name="animation_slide_up">Přejetí dolů</string>
-   <string name="animation_slide_down">Přejetí nahoru</string>
+   <string name="animation_slide_right">Posunutí vpravo</string>
+   <string name="animation_slide_left">Posunutí vlevo</string>
+   <string name="animation_slide_right_no_fade">Posunutí vpravo (bez slábnutí)</string>
+   <string name="animation_slide_left_no_fade">Posunutí vlevo (bez slábnutí)</string>
+   <string name="animation_slide_up">Posunutí dolů</string>
+   <string name="animation_slide_down">Posunutí nahoru</string>
    <string name="animation_default">Výchozí</string>
    <string name="animation_translucent">Průhlednost</string>
    <string name="animation_grow_shrink">Růst (nahoru)</string>
@@ -59,12 +59,12 @@
    <string name="animation_grow_shrink_bottom">Růst (dole)</string>
    <string name="animation_grow_shrink_left">Růst (zleva)</string>
    <string name="animation_grow_shrink_right">Růst (zprava)</string>
-   <string name="animation_random">Náhodně</string>
+   <string name="animation_random">Náhodná</string>
    <string name="action_null">Nic</string>
    <string name="default_string">Výchozí</string>
    <!-- SystemUI Restart -->
    <string name="systemui_restart_title">Je vyžadován restart SystemUI</string>
-   <string name="systemui_restart_message">Aby se projevily všechny změny, je třeba restartovat SystemUI. Restartovat nyní?</string>
+   <string name="systemui_restart_message">Aby se projevily všechny změny, je třeba restartovat SystemUI. Restartovat jej nyní?</string>
    <!-- Pocket Lock -->
-   <string name="pocket_lock_message_long_press">Pro interakci stiskněte dlouze tlačítko napájení</string>
+   <string name="pocket_lock_message_long_press">Pro interakci dlouze stiskněte tlačítko napájení</string>
 </resources>
