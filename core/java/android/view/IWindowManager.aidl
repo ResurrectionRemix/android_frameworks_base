@@ -644,4 +644,11 @@ interface IWindowManager
      * Send some ActionHandler commands to WindowManager.
      */
     void sendCustomAction(in Intent intent);
+
+    /**
+     * Long screenshot
+     * @hide
+     */
+    void takeOPScreenshot(int type);
+    void stopLongshotConnection();
 }
