@@ -7573,4 +7573,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void sendSkipTrackEventToStatusBar(int keyCode) {
         sendSystemKeyToStatusBar(keyCode);
     }
+
+    @Override
+    public void takeAlternativeScreenshot() {
+        mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+        mHandler.post(mScreenshotRunnable);
+    }
 }

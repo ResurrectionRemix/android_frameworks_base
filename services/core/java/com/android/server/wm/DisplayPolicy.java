@@ -3834,10 +3834,12 @@ public class DisplayPolicy {
      */
     public void takeScreenshot(int screenshotType) {
         if (mScreenshotHelper != null) {
+            String packageName = mFocusedWindow == null ? "" : mFocusedWindow.getAttrs().packageName;
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(),
-                    mHandler, null /* completionConsumer */);
+                    mHandler, null /* completionConsumer */,
+                    packageName);
         }
     }
 

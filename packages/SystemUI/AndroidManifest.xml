@@ -290,6 +290,9 @@
     <!-- Pulse -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!-- Asus Long screenshot -->
+    <uses-permission android:name="com.asus.stitchimage.permission.EXPORTED_FOR_ASUS_APPS"/>
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"

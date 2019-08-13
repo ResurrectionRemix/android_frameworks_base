@@ -476,7 +476,7 @@ class SaveImageInBackgroundTask extends AsyncTask<Void, Void, Void> {
 
         // Create an edit intent, if a specific package is provided as the editor, then launch
         // that directly
-        String editorPackage = context.getString(R.string.config_screenshotEditor);
+        String editorPackage = context.getString(R.string.config_stitchEditor);
         Intent editIntent = new Intent(Intent.ACTION_EDIT);
         if (!TextUtils.isEmpty(editorPackage)) {
             editIntent.setComponent(ComponentName.unflattenFromString(editorPackage));
