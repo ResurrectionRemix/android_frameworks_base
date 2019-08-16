@@ -79,6 +79,7 @@ applications that come with the platform
         <permission name="android.permission.BIND_APPWIDGET"/>
         <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS"/>
         <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
+        <permission name="android.permission.STATUS_BAR"/>
     </privapp-permissions>
 
     <privapp-permissions package="com.android.location.fused">
@@ -239,6 +240,7 @@ applications that come with the platform
 
     <privapp-permissions package="com.android.settings">
         <permission name="android.permission.ACCESS_CHECKIN_PROPERTIES"/>
+        <permission name="android.permission.ACCESS_FONT_MANAGER"/>
         <permission name="android.permission.ACCESS_NOTIFICATIONS"/>
         <permission name="android.permission.BACKUP"/>
         <permission name="android.permission.BATTERY_STATS"/>
@@ -257,6 +259,7 @@ applications that come with the platform
         <permission name="android.permission.MODIFY_PHONE_STATE"/>
         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
         <permission name="android.permission.MOVE_PACKAGE"/>
+        <permission name="android.permission.NAVIGATION_EDITOR"/>
         <permission name="android.permission.OVERRIDE_WIFI_CONFIG"/>
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.READ_SEARCH_INDEXABLES"/>
@@ -361,8 +364,10 @@ applications that come with the platform
         <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS"/>
         <permission name="android.permission.CONTROL_VPN"/>
         <permission name="android.permission.DUMP"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.GET_APP_OPS_STATS"/>
         <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.NAVIGATION_EDITOR"/>
         <permission name="android.permission.MANAGE_ACTIVITY_STACKS"/>
         <permission name="android.permission.MANAGE_USB"/>
         <permission name="android.permission.MANAGE_USERS"/>
@@ -372,6 +377,7 @@ applications that come with the platform
         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
         <permission name="android.permission.ONE_HANDED_MODE"/>
         <permission name="android.permission.OVERRIDE_WIFI_CONFIG"/>
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.REBOOT"/>
         <permission name="android.permission.RECOVERY"/>
         <permission name="android.permission.READ_DREAM_STATE"/>
