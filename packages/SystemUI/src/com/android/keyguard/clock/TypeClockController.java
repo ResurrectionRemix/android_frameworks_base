@@ -157,6 +157,11 @@ public class TypeClockController implements ClockPlugin {
     }
 
     @Override
+    public int getPreferredY(int totalHeight) {
+        return mClockPosition.getPreferredY();
+    }
+
+    @Override
     public void setStyle(Style style) {}
 
     @Override
@@ -186,6 +191,7 @@ public class TypeClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
+        mClockPosition.setDarkAmount(darkAmount);
         if (mDarkController != null) {
             mDarkController.setDarkAmount(darkAmount);
         }
