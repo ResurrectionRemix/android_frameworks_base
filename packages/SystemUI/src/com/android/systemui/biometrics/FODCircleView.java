@@ -77,17 +77,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private int mDreamingOffsetY;
 
-    private int mColor;
-    private int mColorBackground;
-
     private boolean mIsBouncer;
     private boolean mIsDreaming;
     private boolean mIsKeyguard;
     private boolean mIsShowing;
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
-
-    private float mCurrentDimAmount = 0.0f;
 
     private Handler mHandler;
 
@@ -158,14 +153,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         @Override
         public void onScreenTurnedOff() {
-            hide();
-        }
-
-        @Override
-        public void onScreenTurnedOn() {
-            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
-                show();
-            }
+            hideCircle();
         }
     };
 
@@ -174,8 +162,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     public FODCircleView(Context context) {
         super(context);
-
-        setScaleType(ScaleType.CENTER);
 
         IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
         if (daemon == null) {
@@ -193,11 +179,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         Resources res = context.getResources();
 
-        mColor = res.getColor(R.color.config_fodColor);
-        mColorBackground = res.getColor(R.color.config_fodColorBackground);
-
         mPaintFingerprint.setAntiAlias(true);
-        mPaintFingerprint.setColor(mColorBackground);
+        mPaintFingerprint.setColor(res.getColor(R.color.config_fodColor));
 
         mWindowManager = context.getSystemService(WindowManager.class);
 
@@ -226,8 +209,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
-        mPowerManager = context.getSystemService(PowerManager.class);
-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
 
         mPowerManager = context.getSystemService(PowerManager.class);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
@@ -241,8 +222,11 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
         super.onDraw(canvas);
+
+        if (mIsCircleShowing) {
+            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+        }
     }
 
     @Override
@@ -340,7 +324,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         updateAlpha();
         dispatchPress();
 
-        mPaintFingerprint.setColor(mColor);
         setImageDrawable(null);
         invalidate();
     }
@@ -348,7 +331,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     public void hideCircle() {
         mIsCircleShowing = false;
 
-        mPaintFingerprint.setColor(mColorBackground);
         setFODIcon();
         invalidate();
 
@@ -458,11 +440,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     }
 
     public void show() {
-        if (!mUpdateMonitor.isScreenOn()) {
-            // Keyguard is shown just after screen turning off
-            return;
-        }
-
         if (mIsBouncer) {
             // Ignore show calls when Keyguard pin screen is being shown
             return;
