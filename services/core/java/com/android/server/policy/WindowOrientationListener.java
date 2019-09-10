@@ -1094,6 +1094,10 @@ public abstract class WindowOrientationListener {
 
         public int evaluateRotationChangeLocked() {
             unscheduleRotationEvaluationLocked();
+            // omni: op6 sensor "crap"
+            if (mDesiredRotation > 3) {
+                return -1;
+            }
             if (mDesiredRotation == mProposedRotation) {
                 return -1;
             }
