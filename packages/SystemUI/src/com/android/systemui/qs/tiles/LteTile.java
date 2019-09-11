@@ -23,8 +23,8 @@ import android.service.quicksettings.Tile;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.content.ComponentName;
-import com.android.internal.telephony.DcParamObject;
 import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.RILConstants;
 import android.telephony.SubscriptionManager;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.PhoneFactory;
@@ -92,17 +92,17 @@ public class LteTile extends QSTileImpl<BooleanState> {
         state.icon = mIcon;
 
         switch (getCurrentPreferredNetworkMode()) {
-            case Phone.NT_MODE_GLOBAL:
-            case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
-            case Phone.NT_MODE_LTE_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_ONLY:
-            case Phone.NT_MODE_LTE_WCDMA:
-            case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_GSM:
-            case Phone.NT_MODE_LTE_TDSCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA:
+            case RILConstants.NETWORK_MODE_GLOBAL:
+            case RILConstants.NETWORK_MODE_LTE_CDMA_EVDO:
+            case RILConstants.NETWORK_MODE_LTE_GSM_WCDMA:
+            case RILConstants.NETWORK_MODE_LTE_ONLY:
+            case RILConstants.NETWORK_MODE_LTE_WCDMA:
+            case RILConstants.NETWORK_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
+            case RILConstants.NETWORK_MODE_LTE_TDSCDMA_GSM_WCDMA:
+            case RILConstants.NETWORK_MODE_LTE_TDSCDMA_WCDMA:
+            case RILConstants.NETWORK_MODE_LTE_TDSCDMA_GSM:
+            case RILConstants.NETWORK_MODE_LTE_TDSCDMA:
+            case RILConstants.NETWORK_MODE_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA:
                 state.slash.isSlashed = false;
                 state.label = mContext.getString(R.string.lte_on);
                 state.state = Tile.STATE_ACTIVE;
