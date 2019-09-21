@@ -16,6 +16,7 @@
 
 package com.android.systemui.biometrics;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Slog;
 import android.view.View;
@@ -24,18 +25,20 @@ import com.android.systemui.SystemUI;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.CommandQueue.Callbacks;
 
-import lineageos.app.LineageContextConstants;
 
 public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callbacks {
     private static final String TAG = "FODCircleViewImpl";
 
     private FODCircleView mFodCircleView;
 
+    private boolean mHasFod;
+
     @Override
     public void start() {
+        mHasFod = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_mHasFod);
         PackageManager packageManager = mContext.getPackageManager();
-        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT) ||
-                !packageManager.hasSystemFeature(LineageContextConstants.Features.FOD)) {
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT) || !mHasFod) {
             return;
         }
         getComponent(CommandQueue.class).addCallback(this);
