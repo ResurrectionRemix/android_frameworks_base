@@ -54,6 +54,7 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -1031,6 +1032,30 @@ public class KeyguardViewMediator extends SystemUI {
             // user sets a credential later.
             getLockPatternUtils().userPresent(KeyguardUpdateMonitor.getCurrentUser());
         }
+    }
+
+    private boolean isKeyguardDisabled(int userId) {
+        if (!mExternallyEnabled) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled externally");
+            return true;
+        }
+        if (mLockPatternUtils.isLockScreenDisabled(userId)) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by setting");
+            return true;
+        }
+        if (!StorageManager.isFileEncryptedNativeOrEmulated() ||
+                StorageManager.isUserKeyUnlocked(userId)) {
+            if (mProfileManager != null) {
+                Profile profile = mProfileManager.getActiveProfile();
+                if (profile != null) {
+                    if (profile.getScreenLockMode().getValue() == Profile.LockMode.DISABLE) {
+                        if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by profile");
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
