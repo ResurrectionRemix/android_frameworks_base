@@ -5816,6 +5816,13 @@ public final class Settings {
 
         private static final Validator AMBIENT_LIGHT_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
+
+        /** @hide */
+        public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
+
+        /** @hide */
+        private static final Validator BACK_GESTURE_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
         /**
          * @hide
          */
@@ -6019,6 +6026,7 @@ public final class Settings {
             QS_BACKGROUND_BLUR,
             QS_BACKGROUND_BLUR_ALPHA,
             QS_BACKGROUND_BLUR_INTENSITY,
+            BACK_GESTURE_HEIGHT,
         };
 
         /**
@@ -6238,6 +6246,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_LIGHT_CUSTOM_COLOR);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_DURATION);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_COUNT);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
         }
 
         /**
@@ -6446,6 +6455,7 @@ public final class Settings {
             VALIDATORS.put(QS_BACKGROUND_BLUR, QS_BACKGROUND_BLUR_VALIDATOR);
             VALIDATORS.put(QS_BACKGROUND_BLUR_ALPHA, QS_BACKGROUND_BLUR_ALPHA_VALIDATOR);
             VALIDATORS.put(QS_BACKGROUND_BLUR_INTENSITY, QS_BACKGROUND_BLUR_INTENSITY_VALIDATOR);
+            VALIDATORS.put(BACK_GESTURE_HEIGHT, BACK_GESTURE_HEIGHT_VALIDATOR);
         }
 
         /**
