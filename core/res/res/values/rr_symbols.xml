@@ -176,4 +176,11 @@
   <java-symbol type="string" name="config_bodyFontFamilyMedium" />
   <!-- Whether the device supports Smart Pixels -->
   <java-symbol type="bool" name="config_supportSmartPixels" />
+
+
+  <!-- Whether device has physical tri state switch -->
+  <java-symbol type="bool" name="config_hasAlertSlider" />
+
+  <!-- The location of the devices physical tri state switch -->
+  <java-symbol type="integer" name="config_alertSliderLocation" />
 </resources>

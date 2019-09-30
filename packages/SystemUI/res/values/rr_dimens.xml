@@ -87,4 +87,36 @@
     <dimen name="dismiss_all_button_margin_top">30dp</dimen>
     <dimen name="dismiss_all_button_width">55dp</dimen>
     <dimen name="dismiss_all_fab_src_size">24dp</dimen>
+
+    <!-- Tri-state UI -->
+    <dimen name="tri_state_down_dialog_padding_edge">8.0dip</dimen>
+    <dimen name="tri_state_down_dialog_padding_edge_deep">21.0px</dimen>
+    <dimen name="tri_state_down_dialog_position">423.0px</dimen>
+    <dimen name="tri_state_down_dialog_position_l">270.375px</dimen>
+    <dimen name="tri_state_middle_dialog_position">296.0px</dimen>
+    <dimen name="tri_state_middle_dialog_position_l">270.375px</dimen>
+    <dimen name="tri_state_up_dialog_position">165.0px</dimen>
+    <item type="dimen" name="tri_state_up_dialog_position_deep">@dimen/tri_state_down_dialog_padding_edge_deep</item>
+    <item type="dimen" name="tri_state_up_dialog_position_deep_land">@dimen/tri_state_down_dialog_padding_edge_deep</item>
+    <dimen name="tri_state_up_dialog_position_l">270.375px</dimen>
+    <dimen name="tri_state_dialog_elevation">2.0dip</dimen>
+    <dimen name="tri_state_dialog_icon_out_width">126.0px</dimen>
+    <dimen name="tri_state_dialog_icon_size">63.0px</dimen>
+    <dimen name="tri_state_dialog_inner_height">126.0px</dimen>
+    <dimen name="tri_state_dialog_padding">14.0px</dimen>
+    <dimen name="tri_state_dialog_text_size">34.125px</dimen>
+    <dimen name="tri_state_dialog_triangle_long">189.0px</dimen>
+    <dimen name="tri_state_dialog_triangle_short">63.0px</dimen>
+    <dimen name="tri_state_down_bottom_left_radius">63.0px</dimen>
+    <dimen name="tri_state_down_bottom_right_radius">63.0px</dimen>
+    <dimen name="tri_state_down_top_left_radius">63.0px</dimen>
+    <dimen name="tri_state_down_top_right_radius">0.0px</dimen>
+    <dimen name="tri_state_mid_bottom_left_radius">63.0px</dimen>
+    <dimen name="tri_state_mid_bottom_right_radius">63.0px</dimen>
+    <dimen name="tri_state_mid_top_left_radius">63.0px</dimen>
+    <dimen name="tri_state_mid_top_right_radius">63.0px</dimen>
+    <dimen name="tri_state_up_bottom_left_radius">63.0px</dimen>
+    <dimen name="tri_state_up_bottom_right_radius">0.0px</dimen>
+    <dimen name="tri_state_up_top_left_radius">63.0px</dimen>
+    <dimen name="tri_state_up_top_right_radius">63.0px</dimen>
 </resources>
