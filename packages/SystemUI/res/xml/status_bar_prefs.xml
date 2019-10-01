@@ -52,14 +52,19 @@
         android:icon="@drawable/tuner_bluetooth"
         android:title="@string/quick_settings_bluetooth_label" />
 
+    <!-- nfc -->
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="nfc"
         android:icon="@drawable/tuner_nfc"
         android:title="@string/status_bar_nfc" />
 
+    <com.android.systemui.tuner.StatusBarSwitch
+        android:key="data_saver"
+        android:icon="@drawable/rr_data_icon"
+        android:title="@string/status_bar_data_saver" />
+
     <!-- tty -->
     <!-- speakerphone -->
-
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="microphone"
         android:icon="@drawable/rr_mic_icon"
@@ -71,11 +76,20 @@
         android:title="@string/quick_settings_dnd_label" />
 
     <!-- mute -->
-
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="volume"
         android:icon="@drawable/tuner_volume"
         android:title="@*android:string/volume_unknown" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
+        android:key="vpn"
+        android:icon="@drawable/tuner_vpn"
+        android:title="@string/status_bar_vpn" />
+
+   <com.android.systemui.tuner.StatusBarSwitch
+        android:key="roaming"
+        android:title="@string/status_bar_roaming" 
+        android:icon="@drawable/tuner_roaming" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="wifi"

@@ -201,4 +201,13 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
 
+    <!-- Name of the data saver status bar icon. -->
+    <string name="status_bar_data_saver">Data saver</string>
+
+    <!-- Name of the vpn status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+
+    <!-- Name of the roaming status bar icon. -->
+    <string name="status_bar_roaming">Roaming</string>
+
 </resources>
