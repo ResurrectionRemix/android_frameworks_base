@@ -255,6 +255,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         mDialog.mPanelController.onDeviceLockStateChanged(locked);
                     }
                 });
+
+        // Use cameramanager to get notified of torch state changes
+        mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+        mCameraManager.registerTorchCallback(torchCallback, null);
     }
 
     /**
@@ -902,7 +906,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         };
     }
 
-
  private class ScreenRecordAction extends SinglePressAction implements LongPressAction {
     public ScreenRecordAction() {
         super(com.android.internal.R.drawable.ic_lock_screenrecord,
@@ -934,20 +937,33 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             }
         };
     }
+
+    private CameraManager mCameraManager;
+    CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
+        @Override
+        public void onTorchModeUnavailable(String cameraId) {
+            super.onTorchModeUnavailable(cameraId);
+        }
+
+        @Override
+        public void onTorchModeChanged(String cameraId, boolean enabled) {
+            super.onTorchModeChanged(cameraId, enabled);
+            mTorchEnabled = enabled;
+        }
+    };
+
     private Action getTorchToggleAction() {
         return new SinglePressAction(com.android.systemui.R.drawable.ic_lock_torch,
                 com.android.systemui.R.string.quick_settings_flashlight_label) {
 
             public void onPress() {
                 try {
-                    CameraManager cameraManager = (CameraManager)
-                            mContext.getSystemService(Context.CAMERA_SERVICE);
-                    for (final String cameraId : cameraManager.getCameraIdList()) {
+                    for (final String cameraId : mCameraManager.getCameraIdList()) {
                         CameraCharacteristics characteristics =
-                            cameraManager.getCameraCharacteristics(cameraId);
+                            mCameraManager.getCameraCharacteristics(cameraId);
                         int orient = characteristics.get(CameraCharacteristics.LENS_FACING);
                         if (orient == CameraCharacteristics.LENS_FACING_BACK) {
-                            cameraManager.setTorchMode(cameraId, !mTorchEnabled);
+                            mCameraManager.setTorchMode(cameraId, !mTorchEnabled);
                             mTorchEnabled = !mTorchEnabled;
                         }
                     }
