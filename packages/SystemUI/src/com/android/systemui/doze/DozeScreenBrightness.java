@@ -17,6 +17,7 @@
 package com.android.systemui.doze;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -59,6 +60,8 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     private boolean mScreenOff = false;
     private int mLastSensorValue = -1;
 
+    private int mDefaultPulseBrightness;
+
     /**
      * Debug value used for emulating various display brightness buckets:
      *
@@ -71,7 +74,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     public DozeScreenBrightness(Context context, DozeMachine.Service service,
             SensorManager sensorManager, Sensor lightSensor, DozeHost host,
             Handler handler, int defaultDozeBrightness, int[] sensorToBrightness,
-            int[] sensorToScrimOpacity, boolean debuggable) {
+            int[] sensorToScrimOpacity, boolean debuggable, int defaultPulseBrightness) {
         mContext = context;
         mDozeService = service;
         mSensorManager = sensorManager;
@@ -83,6 +86,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
         mDefaultDozeBrightness = defaultDozeBrightness;
         mSensorToBrightness = sensorToBrightness;
         mSensorToScrimOpacity = sensorToScrimOpacity;
+        mDefaultPulseBrightness = defaultPulseBrightness != -1 ? defaultPulseBrightness : defaultDozeBrightness;
 
         if (mDebuggable) {
             IntentFilter filter = new IntentFilter();
@@ -97,7 +101,9 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
         this(context, service, sensorManager, lightSensor, host, handler,
                 context.getResources().getInteger(
                         com.android.internal.R.integer.config_screenBrightnessDoze),
-                policy.screenBrightnessArray, policy.dimmingScrimArray, DEBUG_AOD_BRIGHTNESS);
+                policy.screenBrightnessArray, policy.dimmingScrimArray, DEBUG_AOD_BRIGHTNESS,
+                context.getResources().getInteger(
+                        com.android.internal.R.integer.config_screenBrightnessPulse));
     }
 
     @Override
@@ -107,6 +113,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
                 resetBrightnessToDefault();
                 break;
             case DOZE_AOD:
+                setBrightnessToValue(getDozeBrightnessValue());
                 setLightSensorEnabled(true);
                 // we dont have a brightness sensor so remove any font scrim
                 // set from prepareForGentleWakeUp right away
@@ -115,6 +122,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
                 }
                 break;
             case DOZE_REQUEST_PULSE:
+                setBrightnessToValue(getPuleBrightnessValue());
                 setLightSensorEnabled(true);
                 // we dont have a brightness sensor so remove any font scrim right away
                 if (!mRegistered) {
@@ -205,8 +213,24 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     }
 
     private void resetBrightnessToDefault() {
-        mDozeService.setDozeScreenBrightness(clampToUserSetting(mDefaultDozeBrightness));
+        mDozeService.setDozeScreenBrightness(clampToUserSetting(getDozeBrightnessValue()));
         mDozeHost.setAodDimmingScrim(0f);
+    }
+
+    private void setBrightnessToValue(int value) {
+        mDozeService.setDozeScreenBrightness(clampToUserSetting(value));
+    }
+
+    private int getDozeBrightnessValue() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_BRIGHTNESS, mDefaultDozeBrightness,
+                UserHandle.USER_CURRENT);
+    }
+
+    private int getPuleBrightnessValue() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_BRIGHTNESS, mDefaultPulseBrightness,
+                UserHandle.USER_CURRENT);
     }
 
     private int clampToUserSetting(int brightness) {
