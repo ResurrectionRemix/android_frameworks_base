@@ -614,7 +614,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
     }
 
     private void setScrimAlpha(ScrimView scrim, float alpha) {
-        if (DEBUG) Log.d(TAG, "setScrimAlpha " + getScrimName(scrim) + " " + alpha);
         if (alpha == 0f) {
             scrim.setClickable(false);
         } else {

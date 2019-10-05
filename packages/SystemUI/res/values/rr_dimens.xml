@@ -19,7 +19,6 @@
 
     <dimen name="screenrecord_dot_size">48dp</dimen>
 
-
     <!-- Network traffic monitor on quick statusbar header starting padding-->
     <dimen name="net_traffic_starting_padding">2dp</dimen>
 
