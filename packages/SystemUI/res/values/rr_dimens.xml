@@ -18,7 +18,8 @@
 <resources>
 
     <dimen name="screenrecord_dot_size">48dp</dimen>
-
+    <!-- Bottom margin size when fingerprint in display is active -->
+    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">30dp</dimen>
 
     <!-- Network traffic monitor on quick statusbar header starting padding-->
     <dimen name="net_traffic_starting_padding">2dp</dimen>
