@@ -18,7 +18,7 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     android:title="@string/systemui_tuner_navbar_title">
 
-    <com.android.systemui.tuner.RadioListPreference
+    <ListPreference
         android:key="layout"
         android:title="@string/nav_bar_layout"
         android:summary="%s"
@@ -26,47 +26,4 @@
         android:entries="@array/nav_bar_layouts"
         android:entryValues="@array/nav_bar_layouts_values" />
 
-    <!--<com.android.systemui.tuner.RadioListPreference
-        android:key="type_left"
-        android:title="@string/left_nav_bar_button_type"
-        android:persistent="false"
-        android:summary="%s"
-        android:entries="@array/nav_bar_buttons"
-        android:entryValues="@array/nav_bar_button_values" />
-
-    <Preference
-        android:key="keycode_left"
-        android:persistent="false"
-        android:title="@string/left_keycode" />
-
-    <com.android.systemui.tuner.RadioListPreference
-        android:key="icon_left"
-        android:persistent="false"
-        android:summary="%s"
-        android:title="@string/left_icon" />
-
-    <com.android.systemui.tuner.RadioListPreference
-        android:key="type_right"
-        android:title="@string/right_nav_bar_button_type"
-        android:summary="%s"
-        android:persistent="false"
-        android:entries="@array/nav_bar_buttons"
-        android:entryValues="@array/nav_bar_button_values" />
-
-    <Preference
-        android:key="keycode_right"
-        android:persistent="false"
-        android:title="@string/right_keycode" />
-
-    <com.android.systemui.tuner.RadioListPreference
-        android:key="icon_right"
-        android:persistent="false"
-        android:summary="%s"
-        android:title="@string/right_icon" />-->
-
-    <Preference
-        android:key="navbar_editor"
-        android:title="@string/navbar_editor_title"
-        android:summary="@string/navbar_editor_summary"
-        android:fragment="com.android.systemui.tuner.NavBarEditor" />
 </PreferenceScreen>

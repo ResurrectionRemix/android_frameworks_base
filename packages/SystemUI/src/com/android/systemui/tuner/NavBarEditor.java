@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.preference.PreferenceFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +78,7 @@ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.RIG
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.extractButton;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.extractSize;
 
-public class NavBarEditor extends TunerPreferenceFragment implements TunerService.Tunable {
+public class NavBarEditor extends PreferenceFragment implements TunerService.Tunable {
     private static final String TAG = "NavBarEditor";
     private static final int READ_REQUEST = 42;
 

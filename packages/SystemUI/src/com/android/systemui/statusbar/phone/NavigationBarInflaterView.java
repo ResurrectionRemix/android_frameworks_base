@@ -535,3 +535,4 @@ public class NavigationBarInflaterView extends FrameLayout
         return dp * context.getResources().getDisplayMetrics().density;
     }
 }
+
