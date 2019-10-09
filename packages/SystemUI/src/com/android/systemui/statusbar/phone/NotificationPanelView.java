@@ -1001,12 +1001,17 @@ public class NotificationPanelView extends PanelView implements
     }
 
     private boolean isQSEventBlocked() {
-        return mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser())
-            && !mStatusBarShownOnSecureKeyguard && mKeyguardOrShadeShowing;
+        if (!mKeyguardOrShadeShowing)
+            return false;
+
+        if (!mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser()))
+            return false;
+
+        return !mStatusBarShownOnSecureKeyguard;
     }
 
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled && !isQSEventBlocked();
+        mQsExpansionEnabled = qsExpansionEnabled;
         if (mQs == null) return;
         mQs.setHeaderClickable(mQsExpansionEnabled);
     }
@@ -1068,7 +1073,7 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void expandWithQs() {
-        if (mQsExpansionEnabled) {
+        if (mQsExpansionEnabled && !isQSEventBlocked()) {
             mQsExpandImmediate = true;
             mNotificationStackScroller.setShouldShowShelfOnly(true);
         }
@@ -1371,7 +1376,7 @@ public class NotificationPanelView extends PanelView implements
         final int action = event.getActionMasked();
         if (action == MotionEvent.ACTION_DOWN && getExpandedFraction() == 1f
                 && mBarState != StatusBarState.KEYGUARD && !mQsExpanded
-                && mQsExpansionEnabled) {
+                && mQsExpansionEnabled && !isQSEventBlocked()) {
 
             // Down in the empty area while fully expanded - go to QS.
             mQsTracking = true;
@@ -1394,7 +1399,7 @@ public class NotificationPanelView extends PanelView implements
             mConflictingQsExpansionGesture = false;
         }
         if (action == MotionEvent.ACTION_DOWN && isFullyCollapsed()
-                && mQsExpansionEnabled) {
+                && mQsExpansionEnabled && !isQSEventBlocked()) {
             mTwoFingerQsExpandPossible = true;
         }
         if (mTwoFingerQsExpandPossible && isOpenQsEvent(event)
@@ -1603,7 +1608,7 @@ public class NotificationPanelView extends PanelView implements
     @Override
     public void onOverscrollTopChanged(float amount, boolean isRubberbanded) {
         cancelQsAnimation();
-        if (!mQsExpansionEnabled) {
+        if (!mQsExpansionEnabled || isQSEventBlocked()) {
             amount = 0f;
         }
         float rounded = amount >= 1f ? amount : 0f;
@@ -2131,7 +2136,7 @@ public class NotificationPanelView extends PanelView implements
      */
     private boolean shouldQuickSettingsIntercept(float x, float y, float yDiff) {
         if (!mQsExpansionEnabled || mCollapsedOnDown
-                || (mKeyguardShowing && mKeyguardBypassController.getBypassEnabled())) {
+                || (mKeyguardShowing && mKeyguardBypassController.getBypassEnabled()) || isQSEventBlocked()) {
             return false;
         }
         View header = mKeyguardShowing || mQs == null ? mKeyguardStatusBar : mQs.getHeader();
@@ -2637,7 +2642,7 @@ public class NotificationPanelView extends PanelView implements
         if (mQsExpanded) {
             flingSettings(0 /* vel */, FLING_COLLAPSE, null /* onFinishRunnable */,
                     true /* isClick */);
-        } else if (mQsExpansionEnabled) {
+        } else if (mQsExpansionEnabled && !isQSEventBlocked()) {
             mLockscreenGestureLogger.write(MetricsEvent.ACTION_SHADE_QS_TAP, 0, 0);
             flingSettings(0 /* vel */, FLING_EXPAND, null /* onFinishRunnable */,
                     true /* isClick */);
