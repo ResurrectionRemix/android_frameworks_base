@@ -725,8 +725,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         return false;
     }
 
-  @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
-  public RemoteInputController.Delegate createDelegate() {
+    @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
+    public RemoteInputController.Delegate createDelegate() {
         return new RemoteInputController.Delegate() {
             public void setRemoteInputActive(NotificationEntry entry,
                     boolean remoteInputActive) {
