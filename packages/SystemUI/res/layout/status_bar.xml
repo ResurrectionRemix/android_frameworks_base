@@ -64,6 +64,7 @@
                 android:id="@+id/status_bar_left_side"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:paddingEnd="-8dp"
                 android:clipChildren="false"
             >
                 <ViewStub
