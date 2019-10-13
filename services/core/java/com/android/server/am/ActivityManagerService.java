@@ -16552,7 +16552,9 @@ public class ActivityManagerService extends IActivityManager.Stub
                         }
                         app.kill("excessive cpu " + cputimeUsed + " during " + uptimeSince
                                 + " dur=" + checkDur + " limit=" + cpuLimit, true);
-                        app.baseProcessTracker.reportExcessiveCpu(app.pkgList.mPkgList);
+                        if (app.baseProcessTracker != null) {
+                            app.baseProcessTracker.reportExcessiveCpu(app.pkgList.mPkgList);
+                        }
                         for (int ipkg = app.pkgList.size() - 1; ipkg >= 0; ipkg--) {
                             ProcessStats.ProcessStateHolder holder = app.pkgList.valueAt(ipkg);
                             StatsLog.write(StatsLog.EXCESSIVE_CPU_USAGE_REPORTED,
