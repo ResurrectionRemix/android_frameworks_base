@@ -14,6 +14,18 @@
      limitations under the License.
 -->
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="2.5dp"
-    android:insetRight="2.5dp"
-    android:drawable="@drawable/ic_volume_ringer_vibrate" />
+    android:insetLeft="1dp"
+    android:insetRight="1.5dp" >
+
+    <vector
+        android:height="19dp"
+        android:width="19dp"
+        android:viewportHeight="24.0"
+        android:viewportWidth="24.0">
+
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M1,9h2v6H1V9zM4,17h2V7H4V17zM21,9v6h2V9H21zM18,17h2V7h-2V17zM17,5.5v13c0,0.83 -0.67,1.5 -1.5,1.5h-7C7.67,20 7,19.33 7,18.5v-13C7,4.67 7.67,4 8.5,4h7C16.33,4 17,4.67 17,5.5zM15,6H9v12h6V6z"/>
+    </vector>
+</inset>
+
