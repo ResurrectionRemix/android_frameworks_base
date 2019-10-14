@@ -51,4 +51,6 @@
     <!-- Burn in protection -->
     <bool name="config_statusBarBurnInProtection">false</bool>
     <integer name="config_shift_interval">60</integer>
+
+    <integer name="config_maxVisibleStatusIconContainer">6</integer>
 </resources>
