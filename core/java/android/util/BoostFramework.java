@@ -116,6 +116,7 @@ public class BoostFramework {
         public static final int RESERVED_2 = 6;
         public static final int TYPE_SERVICE_START = 100;
         public static final int TYPE_START_PROC = 101;
+        public static final int TYPE_START_APP_FROM_BG = 102;
     };
 
     public class Draw {
