@@ -2642,6 +2642,8 @@ public final class Settings {
             MOVED_TO_GLOBAL.add(Settings.Global.SMS_SHORT_CODES_UPDATE_METADATA_URL);
             MOVED_TO_GLOBAL.add(Settings.Global.CERT_PIN_UPDATE_CONTENT_URL);
             MOVED_TO_GLOBAL.add(Settings.Global.CERT_PIN_UPDATE_METADATA_URL);
+            MOVED_TO_GLOBAL.add(Settings.Global.KEY_SMS_BREATH);
+            MOVED_TO_GLOBAL.add(Settings.Global.KEY_MISSED_CALL_BREATH);
         }
 
         /** @hide */
@@ -4451,6 +4453,24 @@ public final class Settings {
 
         /** @hide */
         public static final Validator LOCKSCREEN_DISABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * @deprecated Use {@link android.provider.Settings.Global#KEY_MISSED_CALL_BREATH} instead
+         * Give Missed call notifications a breathing effect
+         */
+        public static final String KEY_MISSED_CALL_BREATH = Global.KEY_MISSED_CALL_BREATH;
+
+        /**
+         * Give Voicemail notifications a breathing effect
+         * @hide
+         */
+        public static final String KEY_VOICEMAIL_BREATH = "voicemail_breath";
+
+        /**
+         * @deprecated Use {@link android.provider.Settings.Global#KEY_SMS_BREATH} instead
+         */
+        @Deprecated
+        public static final String KEY_SMS_BREATH = Global.KEY_SMS_BREATH;
 
         /**
          * @deprecated Use {@link android.provider.Settings.Global#LOW_BATTERY_SOUND}
@@ -12284,6 +12304,18 @@ public final class Settings {
         @UnsupportedAppUsage
         public static final String ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED =
                 "enable_accessibility_global_gesture_enabled";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
+
+        /**
+         * Give SMS notifications a breathing effect
+         * @hide
+         */
+        public static final String KEY_SMS_BREATH = "sms_breath";
 
         /**
          * Whether Airplane Mode is on.
