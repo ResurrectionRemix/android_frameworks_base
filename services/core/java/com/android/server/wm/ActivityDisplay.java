@@ -40,6 +40,8 @@ import static com.android.server.am.ActivityDisplayProto.RESUMED_ACTIVITY;
 import static com.android.server.am.ActivityDisplayProto.SINGLE_TASK_INSTANCE;
 import static com.android.server.am.ActivityDisplayProto.STACKS;
 import static com.android.server.wm.ActivityStack.ActivityState.RESUMED;
+import static com.android.server.wm.ActivityStack.ActivityState.DESTROYED;
+import static com.android.server.wm.ActivityStack.ActivityState.STOPPED;
 import static com.android.server.wm.ActivityStack.STACK_VISIBILITY_VISIBLE;
 import static com.android.server.wm.ActivityStackSupervisor.TAG_TASKS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_STACK;
@@ -65,6 +67,7 @@ import android.util.IntArray;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 import android.view.Display;
+import android.util.BoostFramework;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.am.EventLogTags;
@@ -84,6 +87,11 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
     static final int POSITION_TOP = Integer.MAX_VALUE;
     static final int POSITION_BOTTOM = Integer.MIN_VALUE;
 
+    public static boolean mPerfSendTapHint = false;
+    public static boolean mIsPerfBoostAcquired = false;
+    public static int mPerfHandle = -1;
+    public BoostFramework mPerfBoost = null;
+    public BoostFramework mUxPerf = null;
 
     /**
      * Counter for next free stack ID to use for dynamic activity stacks. Unique across displays.
@@ -594,6 +602,39 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
         return someActivityPaused;
     }
 
+    void acquireAppLaunchPerfLock(ActivityRecord r) {
+       /* Acquire perf lock during new app launch */
+       if (mPerfBoost == null) {
+           mPerfBoost = new BoostFramework();
+       }
+       if (mPerfBoost != null) {
+           mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V1);
+           mPerfSendTapHint = true;
+           mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V2);
+
+           if(mPerfBoost.perfGetFeedback(BoostFramework.VENDOR_FEEDBACK_WORKLOAD_TYPE, r.packageName) == BoostFramework.WorkloadType.GAME)
+           {
+               mPerfHandle = mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_GAME);
+           } else {
+               mPerfHandle = mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, r.packageName, -1, BoostFramework.Launch.BOOST_V3);
+           }
+           if (mPerfHandle > 0)
+               mIsPerfBoostAcquired = true;
+           // Start IOP
+           if(r.appInfo != null && r.appInfo.sourceDir != null) {
+               mPerfBoost.perfIOPrefetchStart(-1,r.packageName,
+                   r.appInfo.sourceDir.substring(0, r.appInfo.sourceDir.lastIndexOf('/')));
+           }
+       }
+   }
+
+   void acquireUxPerfLock(int opcode, String packageName) {
+        mUxPerf = new BoostFramework();
+        if (mUxPerf != null) {
+            mUxPerf.perfUXEngine_events(opcode, 0, packageName, 0);
+        }
+    }
+
     /**
      * Find task for putting the Activity in.
      */
@@ -617,6 +658,15 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
             // matches not on the specified display.
             if (mTmpFindTaskResult.mRecord != null) {
                 if (mTmpFindTaskResult.mIdealMatch) {
+                    if(mTmpFindTaskResult.mRecord.getState() == DESTROYED) {
+                        /*It's a new app launch */
+                        acquireAppLaunchPerfLock(r);
+                    }
+
+                    if(mTmpFindTaskResult.mRecord.getState() == STOPPED) {
+                        /*Warm launch */
+                        acquireUxPerfLock(BoostFramework.UXE_EVENT_SUB_LAUNCH, r.packageName);
+                    }
                     result.setTo(mTmpFindTaskResult);
                     return;
                 } else if (isPreferredDisplay) {
@@ -626,6 +676,11 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
                     result.setTo(mTmpFindTaskResult);
                 }
             }
+        }
+
+        /* Acquire perf lock *only* during new app launch */
+        if ((mTmpFindTaskResult.mRecord == null) || (mTmpFindTaskResult.mRecord.getState() == DESTROYED)) {
+            acquireAppLaunchPerfLock(r);
         }
     }
 

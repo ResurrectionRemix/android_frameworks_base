@@ -55,6 +55,7 @@ import android.util.SparseArray;
 import android.util.StatsLog;
 import android.util.TimeUtils;
 import android.util.proto.ProtoOutputStream;
+import android.util.BoostFramework;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.procstats.ProcessState;
@@ -784,6 +785,7 @@ class ProcessRecord implements WindowProcessListener {
     void kill(String reason, boolean noisy) {
         if (!killedByAm) {
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "kill");
+            BoostFramework ux_perf = new BoostFramework();
             if (mService != null && (noisy || info.uid == mService.mCurOomAdjUid)) {
                 mService.reportUidInfoMessageLocked(TAG,
                         "Killing " + toShortString() + " (adj " + setAdj + "): " + reason,
@@ -799,6 +801,12 @@ class ProcessRecord implements WindowProcessListener {
             if (!mPersistent) {
                 killed = true;
                 killedByAm = true;
+            }
+            if (ux_perf != null && !mService.mForceStopKill) {
+                ux_perf.perfUXEngine_events(BoostFramework.UXE_EVENT_KILL, 0, this.processName, 0);
+                ux_perf.perfHint(BoostFramework.VENDOR_HINT_KILL, this.processName, pid, 0);
+            } else {
+                mService.mForceStopKill = false;
             }
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
         }

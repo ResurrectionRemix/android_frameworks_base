@@ -132,7 +132,7 @@ import java.util.Set;
  * TODO: This class is mostly temporary to separate things out of ActivityStackSupervisor.java. The
  * intention is to have this merged with RootWindowContainer.java as part of unifying the hierarchy.
  */
-class RootActivityContainer extends ConfigurationContainer
+public class RootActivityContainer extends ConfigurationContainer
         implements DisplayManager.DisplayListener {
 
     private static final String TAG = TAG_WITH_CLASS_NAME ? "RootActivityContainer" : TAG_ATM;
@@ -690,7 +690,7 @@ class RootActivityContainer extends ConfigurationContainer
         return topActivityTokens;
     }
 
-    ActivityStack getTopDisplayFocusedStack() {
+    public ActivityStack getTopDisplayFocusedStack() {
         for (int i = mActivityDisplays.size() - 1; i >= 0; --i) {
             final ActivityStack focusedStack = mActivityDisplays.get(i).getFocusedStack();
             if (focusedStack != null) {

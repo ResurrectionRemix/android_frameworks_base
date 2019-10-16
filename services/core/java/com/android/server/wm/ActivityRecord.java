@@ -193,6 +193,7 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.storage.StorageManager;
 import android.service.voice.IVoiceInteractionSession;
+import android.util.BoostFramework;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.MergedConfiguration;
@@ -233,10 +234,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+import android.os.AsyncTask;
+
 /**
  * An entry in the history stack, representing an activity.
  */
-final class ActivityRecord extends ConfigurationContainer {
+public final class ActivityRecord extends ConfigurationContainer {
     private static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityRecord" : TAG_ATM;
     private static final String TAG_CONFIGURATION = TAG + POSTFIX_CONFIGURATION;
     private static final String TAG_SAVED_STATE = TAG + POSTFIX_SAVED_STATE;
@@ -275,7 +278,7 @@ final class ActivityRecord extends ConfigurationContainer {
     final ComponentName mActivityComponent;  // the intent component, or target of an alias.
     final String shortComponentName; // the short component name of the intent
     final String resolvedType; // as per original caller;
-    final String packageName; // the package implementing intent's component
+    public final String packageName; // the package implementing intent's component
     final String processName; // process where this component wants to run
     final String taskAffinity; // as per ActivityInfo.taskAffinity
     final boolean stateNotNeeded; // As per ActivityInfo.flags
@@ -296,6 +299,7 @@ final class ActivityRecord extends ConfigurationContainer {
     private int theme;              // resource identifier of activity's theme.
     private int realTheme;          // actual theme resource we will use, never 0.
     private int windowFlags;        // custom window flags for preview window.
+    public int perfActivityBoostHandler = -1; //perflock handler when activity is created.
     private TaskRecord task;        // the task this is in.
     private long createTime = System.currentTimeMillis();
     long lastVisibleTime;         // last time this activity became visible
@@ -344,6 +348,7 @@ final class ActivityRecord extends ConfigurationContainer {
     private boolean mDeferHidingClient; // If true we told WM to defer reporting to the client
                                         // process that it is hidden.
     boolean sleeping;       // have we told the activity to sleep?
+    public boolean launching;      // is activity launch in progress?
     boolean nowVisible;     // is this activity's window visible?
     boolean mDrawn;          // is this activity's window drawn?
     boolean mClientVisibilityDeferred;// was the visibility change message to client deferred?
@@ -396,6 +401,9 @@ final class ActivityRecord extends ConfigurationContainer {
 
     boolean pendingVoiceInteractionStart;   // Waiting for activity-invoked voice session
     IVoiceInteractionSession voiceSession;  // Voice interaction session for this activity
+
+    public BoostFramework mPerf = null;
+    public BoostFramework mPerf_iop = null;
 
     // A hint to override the window specified rotation animation, or -1
     // to use the window specified value. We use this so that
@@ -1078,6 +1086,9 @@ final class ActivityRecord extends ConfigurationContainer {
             // Gets launch display id from options. It returns INVALID_DISPLAY if not set.
             mHandoverLaunchDisplayId = options.getLaunchDisplayId();
         }
+
+        if (mPerf == null)
+            mPerf = new BoostFramework();
     }
 
     void setProcess(WindowProcessController proc) {
@@ -2378,6 +2389,15 @@ final class ActivityRecord extends ConfigurationContainer {
         }
     }
 
+    public int isAppInfoGame() {
+        int isGame = 0;
+        if (appInfo != null) {
+            isGame = (appInfo.category == ApplicationInfo.CATEGORY_GAME ||
+                      (appInfo.flags & ApplicationInfo.FLAG_IS_GAME) == ApplicationInfo.FLAG_IS_GAME) ? 1 : 0;
+        }
+        return isGame;
+    }
+
     /**
      * Called when the starting window for this container is drawn.
      */
@@ -2416,6 +2436,7 @@ final class ActivityRecord extends ConfigurationContainer {
             if (DEBUG_SWITCH) Log.v(TAG_SWITCH, "windowsVisibleLocked(): " + this);
             if (!nowVisible) {
                 nowVisible = true;
+                launching = false;
                 lastVisibleTime = SystemClock.uptimeMillis();
                 mAtmService.scheduleAppGcsLocked();
             }
@@ -2427,6 +2448,7 @@ final class ActivityRecord extends ConfigurationContainer {
         synchronized (mAtmService.mGlobalLock) {
             if (DEBUG_SWITCH) Log.v(TAG_SWITCH, "windowsGone(): " + this);
             nowVisible = false;
+            launching = false;
         }
     }
 

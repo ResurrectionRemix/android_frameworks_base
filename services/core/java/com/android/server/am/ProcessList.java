@@ -85,6 +85,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.StatsLog;
+import android.util.BoostFramework;
 import android.view.Display;
 
 import com.android.internal.annotations.GuardedBy;
@@ -384,6 +385,11 @@ public final class ProcessList {
      */
     final ArrayMap<AppZygote, ArrayList<ProcessRecord>> mAppZygoteProcesses =
             new ArrayMap<AppZygote, ArrayList<ProcessRecord>>();
+
+    /**
+     * BoostFramework Object
+     */
+    public static BoostFramework mPerfServiceStartHint = new BoostFramework();
 
     final class IsolatedUidRange {
         @VisibleForTesting
@@ -1832,6 +1838,13 @@ public final class ProcessList {
                         app.info.dataDir, invokeWith, app.info.packageName, zygotePolicyFlags,
                         isTopApp,
                         new String[]{PROC_START_SEQ_IDENT + app.startSeq});
+            }
+            if (mPerfServiceStartHint != null) {
+                if ((hostingRecord.getType() != null) && (hostingRecord.getType().equals("activity"))) {
+                    if (startResult != null) {
+                        mPerfServiceStartHint.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, app.processName, startResult.pid, BoostFramework.Launch.TYPE_START_PROC);
+                    }
+                }
             }
             checkSlow(startTime, "startProcess: returned from zygote!");
             return startResult;
