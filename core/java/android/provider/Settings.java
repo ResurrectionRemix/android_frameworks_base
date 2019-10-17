@@ -4749,6 +4749,16 @@ public final class Settings {
          */
         public static final String SCREENRECORD_SHOW_TAPS = "screenrecord_show_taps";
 
+
+        /**
+         * Whether footer #DerpFest text shows
+         * @hide
+         */
+        public static final String OMNI_FOOTER_TEXT_SHOW = "omni_footer_text_show";
+         /** @hide */
+        private static final Validator OMNI_FOOTER_TEXT_SHOW_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Whether to show the battery bar
          * @hide
