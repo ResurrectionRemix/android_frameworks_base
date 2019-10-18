@@ -418,6 +418,12 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
                 animationProperties = X_ANIMATION_PROPERTIES;
             }
 
+            // HACK: we dont want networktraffic to animate
+            if (icon.getSlot() == "networktraffic") {
+                animateVisibility = false;
+                animationProperties = null;
+            }
+
             icon.setVisibleState(visibleState, animateVisibility);
             if (animationProperties != null) {
                 animateTo(view, animationProperties);
