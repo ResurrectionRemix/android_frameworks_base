@@ -60,6 +60,7 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.settingslib.utils.ThreadUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.Dependency;
@@ -331,7 +332,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             float drawingDimAmount = mParams.dimAmount;
             if (!mSupportsAlwaysOnHbm) {
                 if (mCurrentDimAmount == 0.0f && drawingDimAmount > 0.0f) {
-                    dispatchPress();
+                    ThreadUtils.postOnBackgroundThread(() -> {
+                      dispatchPress();
+                    });
                     mCurrentDimAmount = drawingDimAmount;
                 } else if (mCurrentDimAmount > 0.0f && drawingDimAmount == 0.0f) {
                     mCurrentDimAmount = drawingDimAmount;
@@ -600,7 +603,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         if (!mSupportsAlwaysOnHbm) {
             setDim(true);
         } else {
-            dispatchPress();
+            ThreadUtils.postOnBackgroundThread(() -> {
+              dispatchPress();
+            });
             setColorFilter(Color.argb(0, 0, 0, 0), 
                      PorterDuff.Mode.SRC_ATOP);
         }
@@ -615,7 +620,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         setFODIcon();
         invalidate();
 
-        dispatchRelease();
+        ThreadUtils.postOnBackgroundThread(() -> {
+            dispatchRelease();
+        });
 
         if (!mSupportsAlwaysOnHbm) {
             setDim(false);
@@ -709,7 +716,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 .setDuration(FADE_ANIM_DURATION)
                 .withEndAction(() -> mFading = false)
                 .start();
-        dispatchShow();
+        ThreadUtils.postOnBackgroundThread(() -> {
+            dispatchShow();
+        });
         if (mSupportsAlwaysOnHbm) {
             Dependency.get(TunerService.class).addTunable(this, SCREEN_BRIGHTNESS);
             setDim(true);
@@ -743,7 +752,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 .start();
 
         hideCircle();
-        dispatchHide();
+        ThreadUtils.postOnBackgroundThread(() -> {
+            dispatchHide();
+        });
     }
 
     private void updateAlpha() {
