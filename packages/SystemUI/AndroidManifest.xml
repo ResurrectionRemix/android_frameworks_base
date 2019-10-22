@@ -263,6 +263,9 @@
     <permission android:name="com.breel.wallpapers.notifications"/>
     <uses-permission android:name="com.breel.wallpapers.notifications"/>
 
+    <!-- Sync tile -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Kill app from slim recents -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
@@ -680,6 +683,7 @@
         <provider
             android:name="com.android.keyguard.clock.ClockOptionsProvider"
             android:authorities="com.android.keyguard.clock"
+            android:enabled="true"
             android:exported="true"
             android:grantUriPermissions="true">
         </provider>

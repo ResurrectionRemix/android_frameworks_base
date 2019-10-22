@@ -51,6 +51,7 @@ import javax.inject.Named;
 public class KeyguardClockSwitch extends RelativeLayout {
 
     private static final String TAG = "KeyguardClockSwitch";
+    private static final boolean CUSTOM_CLOCKS_ENABLED = true;
 
     /**
      * Animation fraction when text is transitioned to/from bold.
