@@ -4944,6 +4944,10 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         EventLog.writeEvent(EventLogTags.AM_PROC_BOUND, app.userId, app.pid, app.processName);
 
+        if (mUxPerf != null && app.hostingRecord != null && "activity".equals(app.hostingRecord.getType())) {
+            mUxPerf.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, app.processName, app.pid, BoostFramework.Launch.TYPE_ATTACH_APPLICATION);
+        }
+
         app.curAdj = app.setAdj = app.verifiedAdj = ProcessList.INVALID_ADJ;
         mOomAdjuster.setAttachingSchedGroupLocked(app);
         app.forcingToImportant = null;
