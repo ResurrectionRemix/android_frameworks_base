@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2018 crDroid Android Project
- * Copyright (C) 2018 AICP
+ * Copyright (C) 2018 rr
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
 import com.android.systemui.tuner.TunerService;
 
-public class LogoImageView extends ImageView implements
+public class LogoImageViewQuick extends ImageView implements
         TunerService.Tunable {
 
     private Context mContext;
@@ -57,15 +57,15 @@ public class LogoImageView extends ImageView implements
     private static final String STATUS_BAR_LOGO_STYLE =
             "system:" + Settings.System.STATUS_BAR_LOGO_STYLE;
 
-    public LogoImageView(Context context) {
+    public LogoImageViewQuick(Context context) {
         this(context, null);
     }
 
-    public LogoImageView(Context context, AttributeSet attrs) {
+    public LogoImageViewQuick(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LogoImageView(Context context, AttributeSet attrs, int defStyle) {
+    public LogoImageViewQuick(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         mContext = context;
@@ -101,7 +101,7 @@ public class LogoImageView extends ImageView implements
 
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (mLogo && (mLogoPosition == 0 || mLogoPosition == 2) &&
+        if (mLogo && mLogoPosition == 2 &&
                 mLogoColor == 0xFFFFFFFF) {
             updateLogo();
         }
@@ -110,7 +110,7 @@ public class LogoImageView extends ImageView implements
     public void updateLogo() {
         Drawable drawable = null;
 
-        if (!mLogo || (mLogoPosition == 1 || mLogoPosition == 3)) {
+        if (!mLogo || mLogoPosition != 2) {
             setImageDrawable(null);
             setVisibility(View.GONE);
             return;
