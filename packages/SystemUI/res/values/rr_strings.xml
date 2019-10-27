@@ -20,4 +20,9 @@
 
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
+
+    <string name="screenrecord_stopdot_label">Show stop dot</string>
+        <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
+    <string name="global_action_screenshot_cust">"Screenshot/Rec"</string>
+
 </resources>
