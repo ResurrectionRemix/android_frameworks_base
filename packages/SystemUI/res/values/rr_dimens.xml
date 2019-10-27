@@ -160,4 +160,8 @@
     <dimen name="lock_clock_font_size_63">63dp</dimen>
     <dimen name="lock_clock_font_size_64">64dp</dimen>
     <dimen name="lock_clock_font_size_65">65dp</dimen>
+
+
+    <dimen name="qs_temperatur_icon_size">16sp</dimen>
+
 </resources>
