@@ -155,6 +155,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private PrivacyItemController mPrivacyItemController;
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
+    private static final String QS_BATTERY_MODE =
+            "system:" + Settings.System.QS_BATTERY_MODE;
+    public static final String STATUS_BAR_BATTERY_STYLE =
+            "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
 
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
@@ -259,9 +263,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
         // Don't need to worry about tuner settings for this icon
         mBatteryRemainingIcon.setIgnoreTunerUpdates(true);
-        // QS will always show the estimate, and BatteryMeterView handles the case where
-        // it's unavailable or charging
-        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
 
@@ -271,9 +273,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mContext.getMainExecutor(), mPropertyListener);
 
         Dependency.get(TunerService.class).addTunable(this,
+<<<<<<< HEAD
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
                 StatusBarIconController.ICON_BLACKLIST);
         updateSettings();
+=======
+                SHOW_QS_CLOCK,
+                QS_BATTERY_MODE,
+                STATUS_BAR_BATTERY_STYLE);
+>>>>>>> 563002993a3... Add battery styles and customizations for Android 10 [1/2]
     }
 
     private List<String> getIgnoredIconSlots() {
@@ -696,10 +704,46 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (StatusBarIconController.ICON_BLACKLIST.equals(key)) {
-            mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
-                    .contains("clock"));
+
         } else if (Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER.equals(key)) {
-            updateSettings();
+
+        }
+        switch (key) {
+            case ICON_BLACKLIST:
+                 mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
+                    .contains("clock"));
+                break;
+            case OMNI_STATUS_BAR_CUSTOM_HEADER:
+                updateSettings();
+                break;
+            case QS_BATTERY_MODE:
+                int showEstimate =
+                        TunerService.parseInteger(newValue, 1);
+                if (showEstimate == 0) {
+                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
+                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_OFF);
+                } else if (showEstimate == 1) {
+                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
+                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
+                } else if (showEstimate == 2) {
+                    mBatteryRemainingIcon.mShowBatteryPercent = 1;
+                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_OFF);
+                } else if (showEstimate == 3) {
+                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
+                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+                }
+                mBatteryRemainingIcon.updatePercentView();
+                mBatteryRemainingIcon.updateVisibility();
+                break;
+            case STATUS_BAR_BATTERY_STYLE:
+                mBatteryRemainingIcon.mBatteryStyle =
+                        TunerService.parseInteger(newValue, 0);
+                mBatteryRemainingIcon.updateBatteryStyle();
+                mBatteryRemainingIcon.updatePercentView();
+                mBatteryRemainingIcon.updateVisibility();
+                break;
+            default:
+                break;
         }
     }
 
