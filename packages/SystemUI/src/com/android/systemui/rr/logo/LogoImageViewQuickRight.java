@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.settingslib.Utils;
 import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.plugins.DarkIconDispatcher;
@@ -44,6 +45,7 @@ public class LogoImageViewQuickRight extends ImageView implements
     private boolean mAttached;
     private boolean mLogo;
     private int mLogoColor;
+    private boolean mLogoColorAccent;
     private int mLogoPosition;
     private int mLogoStyle;
     private int mTintColor = Color.WHITE;
@@ -52,6 +54,8 @@ public class LogoImageViewQuickRight extends ImageView implements
             "system:" + Settings.System.STATUS_BAR_LOGO;
     private static final String STATUS_BAR_LOGO_COLOR =
             "system:" + Settings.System.STATUS_BAR_LOGO_COLOR;
+    private static final String STATUS_BAR_LOGO_COLOR_ACCENT =
+            "system:" + Settings.System.STATUS_BAR_LOGO_COLOR_ACCENT;
     private static final String STATUS_BAR_LOGO_POSITION =
             "system:" + Settings.System.STATUS_BAR_LOGO_POSITION;
     private static final String STATUS_BAR_LOGO_STYLE =
@@ -84,6 +88,7 @@ public class LogoImageViewQuickRight extends ImageView implements
         Dependency.get(TunerService.class).addTunable(this,
                 STATUS_BAR_LOGO,
                 STATUS_BAR_LOGO_COLOR,
+                STATUS_BAR_LOGO_COLOR_ACCENT,
                 STATUS_BAR_LOGO_POSITION,
                 STATUS_BAR_LOGO_STYLE);
     }
@@ -190,16 +195,21 @@ public class LogoImageViewQuickRight extends ImageView implements
 
         clearColorFilter();
 
-        if (mLogoColor == 0xFFFFFFFF) {
-            drawable.setTint(mTintColor);
+        if (mLogoColorAccent == true) {
+            setColorFilter(Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent),PorterDuff.Mode.SRC_IN);
         } else {
-            setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
+            if (mLogoColor == 0xFFFFFFFF) {
+                drawable.setTint(mTintColor);
+            } else {
+                setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
+            }
         }
         setImageDrawable(drawable);
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
+        Drawable drawable = null;
         switch (key) {
             case STATUS_BAR_LOGO:
                 mLogo = newValue != null && Integer.parseInt(newValue) == 1;
@@ -207,6 +217,9 @@ public class LogoImageViewQuickRight extends ImageView implements
             case STATUS_BAR_LOGO_COLOR:
                 mLogoColor =
                         newValue == null ? 0xFFFFFFFF : Integer.parseInt(newValue);
+                break;
+            case STATUS_BAR_LOGO_COLOR_ACCENT:
+                mLogoColorAccent = !"0".equals(newValue) ? true : false;
                 break;
             case STATUS_BAR_LOGO_POSITION:
                 mLogoPosition =

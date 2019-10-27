@@ -4909,6 +4909,18 @@ public final class Settings {
         private static final Validator STATUS_BAR_LOGO_COLOR_VALIDATOR =
                 ANY_STRING_VALIDATOR;
 
+	/**
+         * Statusbar AICP logo accent color setting
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO_COLOR_ACCENT = "status_bar_logo_color_accent";
+
+        /** @hide */
+        private static final Validator STATUS_BAR_LOGO_COLOR_ACCENT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+
+
         /**
          * Position of Status bar AICP logo
          * 0 - Left (default)
@@ -5042,6 +5054,7 @@ public final class Settings {
             SHOW_LTE_FOURGEE,
             STATUS_BAR_LOGO,
             STATUS_BAR_LOGO_COLOR,
+            STATUS_BAR_LOGO_COLOR_ACCENT,
             STATUS_BAR_LOGO_POSITION,
             STATUS_BAR_LOGO_STYLE,
             // AICP Settings end
@@ -5193,6 +5206,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_LTE_FOURGEE);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_COLOR);
+            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_COLOR_ACCENT);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
             // AICP Settings end
@@ -5318,6 +5332,7 @@ public final class Settings {
             VALIDATORS.put(SHOW_LTE_FOURGEE,SHOW_LTE_FOURGEE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO, STATUS_BAR_LOGO_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_COLOR, STATUS_BAR_LOGO_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_LOGO_COLOR_ACCENT, STATUS_BAR_LOGO_COLOR_ACCENT_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_POSITION, STATUS_BAR_LOGO_POSITION_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_STYLE, STATUS_BAR_LOGO_STYLE_VALIDATOR);
             // AICP Settings end
