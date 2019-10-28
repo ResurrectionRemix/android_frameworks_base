@@ -1549,6 +1549,12 @@ public class ActivityManager {
     public static final int RECENT_IGNORE_UNAVAILABLE = 0x0002;
 
     /**
+     * Slim recents access to task list.
+     * @hide
+     */
+    public static final int SLIM_RECENTS = 0x0100;
+
+    /**
      * <p></p>Return a list of the tasks that the user has recently launched, with
      * the most recent being first and older ones after in order.
      *
