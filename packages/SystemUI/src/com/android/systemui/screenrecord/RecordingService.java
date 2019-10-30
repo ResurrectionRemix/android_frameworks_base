@@ -75,6 +75,7 @@ public class RecordingService extends Service {
     private static final String EXTRA_USE_AUDIO = "extra_useAudio";
     private static final String EXTRA_SHOW_TAPS = "extra_showTaps";
     private static final String EXTRA_SHOW_DOT = "extra_showDot";
+    private static final String EXTRA_LOW_QUALITY = "extra_lowQuality";
     private static final int REQUEST_CODE = 2;
 
     private static final String ACTION_START = "com.android.systemui.screenrecord.START";
@@ -90,6 +91,9 @@ public class RecordingService extends Service {
     private static final int VIDEO_FRAME_RATE = 30;
     private static final int AUDIO_BIT_RATE = 16;
     private static final int AUDIO_SAMPLE_RATE = 44100;
+    private static final int LOW_VIDEO_FRAME_RATE = 25;
+    private static final int LOW_VIDEO_BIT_RATE = 1500000;
+    private static final String FILE_PROVIDER = "com.android.systemui.fileprovider";
 
     private MediaProjectionManager mMediaProjectionManager;
     private MediaProjection mMediaProjection;
@@ -103,6 +107,7 @@ public class RecordingService extends Service {
     private boolean mShowDot;
     private boolean mIsDotAtRight;
     private boolean mDotShowing;
+    private boolean mLowQuality;
     private FrameLayout mFrameLayout;
     private LayoutInflater mInflater;
     private WindowManager mWindowManager;
@@ -120,14 +125,15 @@ public class RecordingService extends Service {
      * @param showTaps   True to make touches visible while recording
      */
     public static Intent getStartIntent(Context context, int resultCode, Intent data,
-            boolean useAudio, boolean showTaps, boolean showDot) {
+            boolean useAudio, boolean showTaps, boolean showDot, boolean lowQuality) {
         return new Intent(context, RecordingService.class)
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_RESULT_CODE, resultCode)
                 .putExtra(EXTRA_DATA, data)
                 .putExtra(EXTRA_USE_AUDIO, useAudio)
                 .putExtra(EXTRA_SHOW_TAPS, showTaps)
-                .putExtra(EXTRA_SHOW_DOT, showDot);
+                .putExtra(EXTRA_SHOW_DOT, showDot)
+                .putExtra(EXTRA_LOW_QUALITY, lowQuality);
     }
 
     @Override
@@ -147,6 +153,7 @@ public class RecordingService extends Service {
                 mUseAudio = intent.getBooleanExtra(EXTRA_USE_AUDIO, false);
                 mShowTaps = intent.getBooleanExtra(EXTRA_SHOW_TAPS, false);
                 mShowDot = intent.getBooleanExtra(EXTRA_SHOW_DOT, false);
+                mLowQuality = intent.getBooleanExtra(EXTRA_LOW_QUALITY, false);
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
                     mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
@@ -266,10 +273,10 @@ public class RecordingService extends Service {
             DisplayMetrics metrics = getResources().getDisplayMetrics();
             int screenWidth = metrics.widthPixels;
             int screenHeight = metrics.heightPixels;
-            mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.HEVC);
             mMediaRecorder.setVideoSize(screenWidth, screenHeight);
-            mMediaRecorder.setVideoFrameRate(VIDEO_FRAME_RATE);
-            mMediaRecorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
+            mMediaRecorder.setVideoFrameRate(mLowQuality ? LOW_VIDEO_FRAME_RATE : VIDEO_FRAME_RATE);
+            mMediaRecorder.setVideoEncodingBitRate(mLowQuality ? LOW_VIDEO_BIT_RATE : VIDEO_BIT_RATE);
 
             // Set up audio
             if (mUseAudio) {
