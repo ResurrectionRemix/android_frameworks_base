@@ -16,7 +16,6 @@
 
 cc_defaults {
     name: "viewcompiler_defaults",
-    defaults: ["libdexfile_static_defaults"],
     header_libs: [
         "libbase_headers",
     ],
@@ -29,6 +28,7 @@ cc_defaults {
         "liblog",
         "libutils",
         "libziparchive",
+        "libz",
     ],
     cppflags: ["-std=c++17"],
     target: {
@@ -77,7 +77,6 @@ cc_test_host {
     name: "view-compiler-tests",
     defaults: ["viewcompiler_defaults"],
     srcs: [
-        "dex_builder_test.cc",
         "layout_validation_test.cc",
         "util_test.cc",
     ],

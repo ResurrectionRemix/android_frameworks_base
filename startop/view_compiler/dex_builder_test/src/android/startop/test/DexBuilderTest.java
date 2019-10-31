@@ -14,8 +14,11 @@
 
 package android.startop.test;
 
+import android.content.Context;
+import androidx.test.InstrumentationRegistry;
 import dalvik.system.PathClassLoader;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,10 +27,10 @@ import java.lang.reflect.Method;
 
 // Adding tests here requires changes in several other places. See README.md in
 // the view_compiler directory for more information.
-public class DexBuilderTest {
+public final class DexBuilderTest {
   static ClassLoader loadDexFile(String filename) throws Exception {
     return new PathClassLoader("/data/local/tmp/dex-builder-test/" + filename,
-        ClassLoader.getSystemClassLoader());
+        DexBuilderTest.class.getClassLoader());
   }
 
   public void hello() {}
@@ -166,5 +169,45 @@ public class DexBuilderTest {
       }
     }
     Assert.assertTrue(castFailed);
+  }
+
+  @Test
+  public void readStaticField() throws Exception {
+    ClassLoader loader = loadDexFile("simple.dex");
+    Class clazz = loader.loadClass("android.startop.test.testcases.SimpleTests");
+    Method method = clazz.getMethod("readStaticField");
+    TestClass.staticInteger = 5;
+    Assert.assertEquals(5, method.invoke(null));
+  }
+
+  @Test
+  public void setStaticField() throws Exception {
+    ClassLoader loader = loadDexFile("simple.dex");
+    Class clazz = loader.loadClass("android.startop.test.testcases.SimpleTests");
+    Method method = clazz.getMethod("setStaticField");
+    TestClass.staticInteger = 5;
+    method.invoke(null);
+    Assert.assertEquals(7, TestClass.staticInteger);
+  }
+
+  @Test
+  public void readInstanceField() throws Exception {
+    ClassLoader loader = loadDexFile("simple.dex");
+    Class clazz = loader.loadClass("android.startop.test.testcases.SimpleTests");
+    Method method = clazz.getMethod("readInstanceField", TestClass.class);
+    TestClass obj = new TestClass();
+    obj.instanceField = 5;
+    Assert.assertEquals(5, method.invoke(null, obj));
+  }
+
+  @Test
+  public void setInstanceField() throws Exception {
+    ClassLoader loader = loadDexFile("simple.dex");
+    Class clazz = loader.loadClass("android.startop.test.testcases.SimpleTests");
+    Method method = clazz.getMethod("setInstanceField", TestClass.class);
+    TestClass obj = new TestClass();
+    obj.instanceField = 5;
+    method.invoke(null, obj);
+    Assert.assertEquals(7, obj.instanceField);
   }
 }
