@@ -4517,6 +4517,12 @@ public final class Settings {
          */
         public static final String AMBIENT_WAKE_GESTURES = "ambient_wake_gestures";
 
+        /** Whether to pulse ambient on new music tracks
+         *
+         * @hide
+         */
+        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
