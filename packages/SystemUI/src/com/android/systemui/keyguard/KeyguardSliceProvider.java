@@ -34,6 +34,7 @@ import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.notification.ZenModeConfig;
 import android.text.TextUtils;
@@ -130,6 +131,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
     protected boolean mDozing;
     private int mStatusBarState;
     private boolean mMediaIsVisible;
+    private boolean mPulseOnNewTracks;
+    private static final String PULSE_ACTION = "com.android.systemui.doze.pulse";
 
     /**
      * Receiver responsible for time ticking and updating the date format.
@@ -496,7 +499,17 @@ public class KeyguardSliceProvider extends SliceProvider implements
         mMediaTitle = title;
         mMediaArtist = artist;
         mMediaIsVisible = nextVisible;
+
         notifyChange();
+        // if AoD is disabled, the device is not already dozing and we get a new track, trigger an ambient pulse event
+        if (mPulseOnNewTracks && nextVisible && !mDozeParameters.getAlwaysOn() && mDozing) {
+            getContext().sendBroadcastAsUser(new Intent(PULSE_ACTION),
+                    new UserHandle(UserHandle.USER_CURRENT));
+        }
+    }
+
+    public void setPulseOnNewTracks(boolean enabled) {
+        mPulseOnNewTracks = enabled;
     }
 
     protected void notifyChange() {
