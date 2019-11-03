@@ -215,6 +215,8 @@
   <java-symbol type="integer" name="config_sysCPUTempMultiplier" />
   <java-symbol type="integer" name="config_sysBatteryTempMultiplier" />
 
+   <java-symbol type="integer" name="config_flashlightProximityTimeout" />
+
     <!-- Input policy constants  -->
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
     <java-symbol type="integer" name="config_doubleTapOnHomeKeyBehavior" />
