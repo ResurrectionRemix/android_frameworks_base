@@ -1085,6 +1085,12 @@ public class AudioSystem
      */
     public static native boolean isHapticPlaybackSupported();
 
+    /**
+     * Send audio HAL server process pids to native audioserver process for use
+     * when generating audio HAL servers tombstones
+     */
+    public static native int setAudioHalPids(int[] pids);
+
     // Items shared with audio service
 
     /**
