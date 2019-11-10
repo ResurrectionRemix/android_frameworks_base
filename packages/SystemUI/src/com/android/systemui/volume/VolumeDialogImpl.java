@@ -372,6 +372,16 @@ public class VolumeDialogImpl implements VolumeDialog,
         return mVolumePanelOnLeft ? -x : x;
     }
 
+    private class VolumeDialogRunnable implements Runnable {
+        @Override
+        public void run() {
+            // Trigger panel rebuild on next show
+            mConfigChanged = true;
+        }
+    }
+
+    private final VolumeDialogRunnable mVolumeDialogRunnable = new VolumeDialogRunnable();
+
     private final TunerService.Tunable mTunable = new TunerService.Tunable() {
         @Override
         public void onTuningChanged(String key, String newValue) {
@@ -380,29 +390,57 @@ public class VolumeDialogImpl implements VolumeDialog,
                 final boolean volumePanelOnLeft = TunerService.parseIntegerSwitch(newValue, false);
                 if (mVolumePanelOnLeft != volumePanelOnLeft) {
                     mVolumePanelOnLeft = volumePanelOnLeft;
-                    mHandler.post(() -> {
-                        // Trigger panel rebuild on next show
-                        mConfigChanged = true;
-                    });
+                    triggerChange = true;
                 }
                 break;
             case AUDIO_PANEL_VIEW_MEDIA:
-                mMediaShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean mediaShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mMediaShowing != mediaShowing) {
+                    mMediaShowing = mediaShowing;
+                    triggerChange = true;
+                }
                 break;
             case AUDIO_PANEL_VIEW_RINGER:
-                mRingerShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean ringerShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mRingerShowing != ringerShowing) {
+                    mRingerShowing = ringerShowing;
+                    triggerChange = true;
+                }
                 break;
             case AUDIO_PANEL_VIEW_NOTIFICATION:
-                mNotificationShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean notificationShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mNotificationShowing != notificationShowing) {
+                    mNotificationShowing = notificationShowing;
+                    triggerChange = true;
+                }
                 break;
             case AUDIO_PANEL_VIEW_ALARM:
-                mAlarmShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean alarmShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mAlarmShowing != alarmShowing) {
+                    mAlarmShowing = alarmShowing;
+                    triggerChange = true;
+                }
                 break;
             case AUDIO_PANEL_VIEW_VOICE:
-                mVoiceShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean voiceShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mVoiceShowing != voiceShowing) {
+                    mVoiceShowing = voiceShowing;
+                    triggerChange = true;
+                }
                 break;
             case AUDIO_PANEL_VIEW_BT_SCO:
-                mBTSCOShowing = TunerService.parseIntegerSwitch(newValue, false);
+                boolean BTSCOShowing = TunerService.parseIntegerSwitch(newValue, false);
+                if (mBTSCOShowing != BTSCOShowing) {
+                    mBTSCOShowing = BTSCOShowing;
+                    triggerChange = true;
+                }
+                break;
+            case VOLUME_LINK_NOTIFICATION:
+                boolean notificationLinked = TunerService.parseIntegerSwitch(newValue, true);
+                if (mNotificationLinked != notificationLinked) {
+                    mNotificationLinked = notificationLinked;
+                    triggerChange = true;
+                }
                 break;
             default:
                 break;
