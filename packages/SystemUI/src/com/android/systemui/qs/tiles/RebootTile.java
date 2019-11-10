@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.service.quicksettings.Tile;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
@@ -102,6 +103,7 @@ public class RebootTile extends QSTileImpl<BooleanState> {
             state.label = mContext.getString(R.string.quick_settings_reboot_label);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_reboot);
         }
+        state.state = Tile.STATE_INACTIVE;
     }
 
     @Override
