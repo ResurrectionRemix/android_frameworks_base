@@ -2857,6 +2857,7 @@
         <item>bugreport</item>
         <item>recovery</item>
         <item>screenshot</item>
+        <item>screenrecord</item>
     </string-array>
         <!--<item>emergency</item>-->
 
