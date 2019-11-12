@@ -31,32 +31,30 @@
         android:id="@+id/tri_state_layout"
         android:background="@drawable/dialog_tri_state_middle_bg"
         android:layout_width="wrap_content"
-        android:layout_height="126.0px"
-        android:translationZ="5.0px">
+        android:layout_height="48.0dip"
+        android:translationZ="@dimen/tri_state_dialog_elevation">
 
         <FrameLayout
-            android:layout_width="126.0px"
+            android:layout_width="54.0dip"
             android:layout_height="fill_parent">
 
             <ImageView
                 android:layout_gravity="center"
                 android:id="@+id/tri_state_icon"
-                android:layout_width="63.0px"
-                android:layout_height="63.0px" />
+                android:layout_marginLeft="2.0dip"
+                android:layout_width="@dimen/tri_state_dialog_icon_size"
+                android:layout_height="@dimen/tri_state_dialog_icon_size" />
         </FrameLayout>
 
         <TextView
-            android:textSize="34.125px"
-            android:textColor="#ffffffff"
             android:gravity="center_vertical"
             android:id="@+id/tri_state_text"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="slience"
             style="@style/TriStateUiText" />
 
         <FrameLayout
-            android:layout_width="63.0px"
+            android:layout_width="18.0dip"
             android:layout_height="fill_parent" />
     </LinearLayout>
 </LinearLayout>
