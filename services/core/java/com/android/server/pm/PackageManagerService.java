@@ -646,7 +646,7 @@ public class PackageManagerService extends IPackageManager.Stub
     final DisplayMetrics mMetrics;
     final int mDefParseFlags;
     final String[] mSeparateProcesses;
-    private static boolean mIsUpgrade;
+    final boolean mIsUpgrade;
     final boolean mIsPreNUpgrade;
     final boolean mIsPreNMR1Upgrade;
     final boolean mIsPreQUpgrade;
@@ -3680,7 +3680,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
         // Reconcile cache directories, keeping only what we'd actually use.
         for (File cacheDir : FileUtils.listFilesOrEmpty(cacheBaseDir)) {
-            if (!mIsUpgrade && Objects.equals(cacheName, cacheDir.getName())) {
+            if (Objects.equals(cacheName, cacheDir.getName())) {
                 Slog.d(TAG, "Keeping known cache " + cacheDir.getName());
             } else {
                 Slog.d(TAG, "Destroying unknown cache " + cacheDir.getName());
