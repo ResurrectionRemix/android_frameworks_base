@@ -551,8 +551,30 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
     private void finishUpdateMediaMetaData(boolean metaDataChanged, boolean allowEnterAnimation,
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
-        if (bmp != null) {
-            artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
+        if (bmp != null && (mShowMediaMetadata || !ENABLE_LOCKSCREEN_WALLPAPER)) {
+            switch (mAlbumArtFilter) {
+                case 0:
+                default:
+                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
+                    break;
+                case 1:
+                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                        ImageHelper.toGrayscale(bmp));
+                    break;
+                case 2:
+                    Drawable aw = new BitmapDrawable(mBackdropBack.getResources(), bmp);
+                    artworkDrawable = new BitmapDrawable(ImageHelper.getColoredBitmap(aw,
+                        mContext.getResources().getColor(R.color.accent_device_default_light)));
+                    break;
+                case 3:
+                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                        ImageHelper.getBlurredImage(mContext, bmp, 7.0f));
+                    break;
+                case 4:
+                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                        ImageHelper.getGrayscaleBlurredImage(mContext, bmp, 7.0f));
+                    break;
+            }
         }
         boolean hasMediaArtwork = artworkDrawable != null;
         boolean allowWhenShade = false;
@@ -758,22 +780,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
             if (manager == null || bitmaps.length == 0 || isCancelled()) {
                 return null;
             }
-
-            switch (manager.mAlbumArtFilter) {
-                case 0:
-                default:
-                    return bitmaps[0];
-                case 1:
-                    return ImageHelper.toGrayscale(bitmaps[0]);
-                case 2:
-                    Drawable aw = new BitmapDrawable(manager.mBackdropBack.getResources(), bitmaps[0]);
-                    return ImageHelper.getColoredBitmap(aw,
-                        manager.mContext.getResources().getColor(R.color.accent_device_default_light));
-                case 3:
-                    return ImageHelper.getBlurredImage(manager.mContext, bitmaps[0], 7.0f);
-                case 4:
-                    return ImageHelper.getGrayscaleBlurredImage(manager.mContext, bitmaps[0], 7.0f);
-            }
+            return manager.processArtwork(bitmaps[0]);
         }
 
         @Override
