@@ -51,22 +51,21 @@
             android:layout_height="48dp"
             android:textSize="16sp"
             android:text="@string/screenrecord_low_quality_label"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+            <Button
+                android:id="@+id/record_button"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/screenrecord_start_label"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored"
+            />
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end">
-        <Button
-            android:id="@+id/record_button"
-            android:gravity="right|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/screenrecord_start_label"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored"
-        />
-    </LinearLayout>
-
 </LinearLayout>
