@@ -59,6 +59,7 @@ import com.android.systemui.qs.tiles.VpnTile;
 import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
+import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.qs.tiles.SoundSearchTIle;
 
@@ -105,6 +106,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundSearchTIle> mSoundSearchTIleProvider;
     private final Provider<OnTheGoTile> mOnTheGoTileProvider;
     private final Provider<WeatherTile> mWeatherTileProvider;
+    private final Provider<DataSwitchTile> mDataSwitchTileProvider;
 
     private QSTileHost mHost;
 
@@ -142,6 +144,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundSearchTIle> soundSearchTIleProvider), 
             Provider<OnTheGoTile> onthegoTIleProvider),
             Provider<WeatherTile> weatherTIleProvider) {
+            Provider<DataSwitchTile> dataSwitchTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -175,6 +178,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundSearchTIleProvider = soundSearchTIleProvider;
         mOnTheGoTileProvider = onthegoTIleProvider;
         mWeatherTileProvider = weatherTIleProvider;
+        mDataSwitchTileProvider = dataSwitchTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -257,6 +261,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mOnTheGoTileProvider.get();
             case "weather":
                 return mWeatherTileProvider.get();
+            case "dataswitch":
+                return mDataSwitchTileProvider.get();
         }
 
         // Intent tiles.
