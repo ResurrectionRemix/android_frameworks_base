@@ -102,7 +102,8 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private static final String TAG = "ScreenDecorations";
 
     public static final String SIZE = "sysui_rounded_size";
-    public static final String PADDING = "sysui_rounded_content_padding";
+    public static final String PADDING = "sysui_qs_corner_content_padding";
+    public static final String SBPADDING = "sysui_rounded_content_padding";
     private static final boolean DEBUG_SCREENSHOT_ROUNDED_CORNERS =
             SystemProperties.getBoolean("debug.screenshot_rounded_corners", false);
     private static final boolean VERBOSE = false;
@@ -669,12 +670,12 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         StatusBar sb = getComponent(StatusBar.class);
         View statusBar = (sb != null ? sb.getStatusBarWindow() : null);
         if (statusBar != null) {
-            TunablePadding.addTunablePadding(statusBar.findViewById(R.id.keyguard_header), PADDING,
+            TunablePadding.addTunablePadding(statusBar.findViewById(R.id.keyguard_header), SBPADDING,
                     padding, FLAG_END);
 
             FragmentHostManager fragmentHostManager = FragmentHostManager.get(statusBar);
             fragmentHostManager.addTagListener(CollapsedStatusBarFragment.TAG,
-                    new TunablePaddingTagListener(padding, R.id.status_bar));
+                    new SBTunablePaddingTagListener(padding, R.id.status_bar));
             fragmentHostManager.addTagListener(QS.TAG,
                     new TunablePaddingTagListener(qsPadding, R.id.header));
         }
@@ -825,6 +826,31 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                 view = view.findViewById(mId);
             }
             mTunablePadding = TunablePadding.addTunablePadding(view, PADDING, mPadding,
+                    FLAG_START | FLAG_END);
+        }
+    }
+
+    static class SBTunablePaddingTagListener implements FragmentListener {
+
+        private final int mPadding;
+        private final int mId;
+        private TunablePadding mTunablePadding;
+
+        public SBTunablePaddingTagListener(int padding, int id) {
+            mPadding = padding;
+            mId = id;
+        }
+
+        @Override
+        public void onFragmentViewCreated(String tag, Fragment fragment) {
+            if (mTunablePadding != null) {
+                mTunablePadding.destroy();
+            }
+            View view = fragment.getView();
+            if (mId != 0) {
+                view = view.findViewById(mId);
+            }
+            mTunablePadding = TunablePadding.addTunablePadding(view, SBPADDING, mPadding,
                     FLAG_START | FLAG_END);
         }
     }
