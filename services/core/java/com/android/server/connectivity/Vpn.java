@@ -45,6 +45,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
+import android.net.InetAddresses;
 import android.net.INetworkManagementEventObserver;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -109,6 +110,7 @@ import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2173,6 +2175,17 @@ public class Vpn {
 
                 // Add a throw route for the VPN server endpoint, if one was specified.
                 String endpoint = parameters[5].isEmpty() ? mProfile.server : parameters[5];
+
+                if(!InetAddresses.isNumericAddress(endpoint)) {
+                    Log.i(TAG, "VPN Endpoint is not numeric. Converting to numeric");
+                    try {
+                        endpoint = InetAddress.getByName(endpoint).getHostAddress();
+                    } catch (UnknownHostException e) {
+                        Log.e(TAG, "Can't parse InetAddress from string: unknown host.");
+                        return;
+                    }
+                }
+
                 if (!endpoint.isEmpty()) {
                     try {
                         InetAddress addr = InetAddress.parseNumericAddress(endpoint);
