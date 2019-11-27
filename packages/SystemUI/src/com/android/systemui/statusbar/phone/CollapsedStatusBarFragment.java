@@ -499,16 +499,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void updateSettings(boolean animate) {
-        mShowCarrierLabel = Settings.System.getIntForUser(getContext().getContentResolver(),
+        mShowCarrierLabel = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
                 UserHandle.USER_CURRENT);
         setCarrierLabel(animate);
-        mTickerEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+        mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_TICKER, 0,
                 UserHandle.USER_CURRENT);
-        mShowWeather = Settings.System.getIntForUser(getContext().getContentResolver(),
+        mShowWeather = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0, UserHandle.USER_CURRENT);
-        mWeatherInHeaderView = Settings.System.getIntForUser(getContext().getContentResolver(),
+        mWeatherInHeaderView = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0, UserHandle.USER_CURRENT) == 1;
 
         initTickerView();

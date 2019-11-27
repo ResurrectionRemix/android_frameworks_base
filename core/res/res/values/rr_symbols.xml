@@ -206,4 +206,12 @@
   <java-symbol type="color" name="theme_generic_semi_transparent_color" />
 
   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+
+  <!-- System info -->
+  <java-symbol type="string" name="config_sysCPUTemp" />
+  <java-symbol type="string" name="config_sysBatteryTemp" />
+  <java-symbol type="string" name="config_sysGPUFreq" />
+  <java-symbol type="string" name="config_sysGPULoad" />
+  <java-symbol type="integer" name="config_sysCPUTempMultiplier" />
+  <java-symbol type="integer" name="config_sysBatteryTempMultiplier" />
 </resources>

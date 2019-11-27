@@ -103,4 +103,11 @@
         <item>com.Slack</item>
     </string-array>
 
+    <!-- System info -->
+    <string name="config_sysCPUTemp"></string>
+    <string name="config_sysBatteryTemp"></string>
+    <string name="config_sysGPUFreq"></string>
+    <string name="config_sysGPULoad"></string>
+    <integer name="config_sysCPUTempMultiplier">1</integer>
+    <integer name="config_sysBatteryTempMultiplier">1</integer>
 </resources>
