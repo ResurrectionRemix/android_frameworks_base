@@ -236,7 +236,7 @@ public class DemoStatusIcons extends StatusIconContainer implements DemoMode, Da
         Log.d(TAG, "addMobileView: ");
         StatusBarMobileView view = StatusBarMobileView.fromContext(mContext, state.slot);
 
-        view.applyMobileState(state);
+        view.applyMobileState(state, false);
         view.setStaticDrawableColor(mColor);
 
         // mobile always goes at the end
@@ -250,7 +250,7 @@ public class DemoStatusIcons extends StatusIconContainer implements DemoMode, Da
         for (int i = 0; i < mMobileViews.size(); i++) {
             StatusBarMobileView view = mMobileViews.get(i);
             if (view.getState().subId == state.subId) {
-                view.applyMobileState(state);
+                view.applyMobileState(state, false);
                 return;
             }
         }
