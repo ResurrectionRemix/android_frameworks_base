@@ -436,71 +436,37 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemInfoText.setVisibility(View.GONE);
         mSystemInfoIcon.setVisibility(View.GONE);
         if (mSystemInfoMode == 0) return;
-        boolean makeInfoVisible = false;
+        int defaultMultiplier = 1;
+        String systemInfoText = "";
         switch (mSystemInfoMode) {
             case 1:
-                if (getCPUTemp() != null) {
-                    mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
-                    mSystemInfoText.setText(getCPUTemp());
-                    makeInfoVisible = true;
-                }
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
+                systemInfoText = getSystemInfo(mSysCPUTemp, mSysCPUTempMultiplier, "\u2103", true);
                 break;
             case 2:
-                if (getBatteryTemp() != null) {
-                    mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
-                    mSystemInfoText.setText(getBatteryTemp());
-                    makeInfoVisible = true;
-                }
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
+                systemInfoText = getSystemInfo(mSysBatTemp, mSysBatTempMultiplier, "\u2103", true);
                 break;
             case 3:
-                if (getGPUClock() != null) {
-                    mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
-                    mSystemInfoText.setText(getGPUClock());
-                    makeInfoVisible = true;
-                }
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
+                systemInfoText = getSystemInfo(mSysGPUFreq, defaultMultiplier, "Mhz", true);
                 break;
             case 4:
-                if (getGPUBusy() != null) {
-                    mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
-                    mSystemInfoText.setText(getGPUBusy());
-                    makeInfoVisible = true;
-                }
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
+                systemInfoText = getSystemInfo(mSysGPULoad, defaultMultiplier, "", false);
                 break;
         }
-        if (makeInfoVisible) {
-            mSystemInfoText.setVisibility(View.VISIBLE);
+        if (systemInfoText != null && !systemInfoText.isEmpty()) {
+            mSystemInfoText.setText(systemInfoText);
             mSystemInfoIcon.setVisibility(View.VISIBLE);
+            mSystemInfoText.setVisibility(View.VISIBLE);
         }
     }
 
-    private String getBatteryTemp() {
-        if (!mSysBatTemp.isEmpty() && FileUtils.fileExists(mSysBatTemp)) {
-            String value = FileUtils.readOneLine(mSysBatTemp);
-            return String.format("%s", Integer.parseInt(value) / (mSysBatTempMultiplier > 1 ? mSysBatTempMultiplier : 1)) + "\u2103";
-        }
-        return null;
-
-    }
-
-    private String getCPUTemp() {
-        if (!mSysCPUTemp.isEmpty() && FileUtils.fileExists(mSysCPUTemp)) {
-            String value = FileUtils.readOneLine(mSysCPUTemp);
-            return String.format("%s", Integer.parseInt(value) / (mSysCPUTempMultiplier > 1 ? mSysCPUTempMultiplier : 1)) + "\u2103";
-        }
-        return null;
-    }
-
-    private String getGPUBusy() {
-        if (!mSysGPULoad.isEmpty() && FileUtils.fileExists(mSysGPULoad)) {
-            return FileUtils.readOneLine(mSysGPULoad);
-        }
-        return null;
-    }
-
-    private String getGPUClock() {
-        if (!mSysGPUFreq.isEmpty() && FileUtils.fileExists(mSysGPUFreq)) {
-            String value = FileUtils.readOneLine(mSysGPUFreq);
-            return String.format("%s", Integer.parseInt(value)) + " Mhz";
+    private String getSystemInfo(String sysPath, int multiplier, String unit, boolean returnFormatted) {
+        if (!sysPath.isEmpty() && FileUtils.fileExists(sysPath)) {
+            String value = FileUtils.readOneLine(sysPath);
+            return returnFormatted ? String.format("%s", Integer.parseInt(value) / multiplier) + unit : value;
         }
         return null;
     }
