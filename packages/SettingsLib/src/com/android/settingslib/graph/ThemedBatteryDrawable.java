@@ -233,6 +233,7 @@ public class ThemedBatteryDrawable extends Drawable {
             drawText = false;
         }
 
+        canvas.saveLayer(null, null);
         unifiedPath.reset();
         levelPath.reset();
         levelRect.set(fillRect);
@@ -271,7 +272,6 @@ public class ThemedBatteryDrawable extends Drawable {
             float clipTop = getBounds().bottom - getBounds().height() * fillFraction;
             canvas.clipRect(0f, clipTop, (float) getBounds().right, (float) getBounds().bottom);
             canvas.drawPath(unifiedPath, fillPaint);
-            canvas.restore();
             if (charging && opaqueBolt) {
                 canvas.drawPath(scaledBolt, fillPaint);
             } else if (drawText && pctOpaque) {
