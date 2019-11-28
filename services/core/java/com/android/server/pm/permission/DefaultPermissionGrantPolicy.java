@@ -192,6 +192,11 @@ public final class DefaultPermissionGrantPolicy {
         STORAGE_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
+    private static final Set<String> SUSPEND_APP_PERMISSIONS = new ArraySet<>();
+    static {
+        SUSPEND_APP_PERMISSIONS.add(Manifest.permission.SUSPEND_APPS);
+    }
+
     private static final int MSG_READ_DEFAULT_PERMISSION_EXCEPTIONS = 1;
 
     private static final String ACTION_TRACK = "com.android.fitness.TRACK";
@@ -390,6 +395,18 @@ public final class DefaultPermissionGrantPolicy {
                         ignoreSystemPackage, whitelistRestrictedPermissions, userId);
             }
         }
+    }
+
+    private boolean mWellbeingInstalled(String packageName) {
+       PackageManager mPm = mContext.getPackageManager();
+       boolean result = true;
+       try {
+           mPm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+       } catch (PackageManager.NameNotFoundException e) {
+           Log.i(TAG, "Wellbeing not installed.", e);
+           result = false;
+       }
+       return result;
     }
 
     private void grantDefaultSystemHandlerPermissions(int userId) {
@@ -605,6 +622,16 @@ public final class DefaultPermissionGrantPolicy {
         }
         grantPermissionsToPackage(browserPackage, userId, false /* ignoreSystemPackage */,
                 true /*whitelistRestrictedPermissions*/, ALWAYS_LOCATION_PERMISSIONS);
+
+        // Wellbeing
+        String WellbeingPackageName = "com.google.android.apps.wellbeing";
+        if (mWellbeingInstalled(WellbeingPackageName) != false) {
+        grantSystemFixedPermissionsToSystemPackage(
+                getDefaultProviderAuthorityPackage(WellbeingPackageName, userId),
+                userId, SUSPEND_APP_PERMISSIONS);
+        grantPermissionsToPackage(WellbeingPackageName, userId, false,
+                true, SUSPEND_APP_PERMISSIONS);
+        }
 
         // Voice interaction
         if (voiceInteractPackageNames != null) {
