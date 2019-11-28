@@ -3639,7 +3639,7 @@
          on the device.
          Example: "com.android.wellbeing"
      -->
-    <string name="config_defaultWellbeingPackage" translatable="false"></string>
+    <string name="config_defaultWellbeingPackage" translatable="false">com.google.android.apps.wellbeing</string>
 
     <!-- The component name for the default system attention service.
          This service must be trusted, as it can be activated without explicit consent of the user.
