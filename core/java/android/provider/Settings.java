@@ -4754,10 +4754,16 @@ public final class Settings {
          * Whether footer #DerpFest text shows
          * @hide
          */
-        public static final String OMNI_FOOTER_TEXT_SHOW = "omni_footer_text_show";
+        public static final String RR_FOOTER_TEXT_SHOW = "rr_footer_text_show";
          /** @hide */
-        private static final Validator OMNI_FOOTER_TEXT_SHOW_VALIDATOR =
+        private static final Validator RR_FOOTER_TEXT_SHOW_VALIDATOR =
                 BOOLEAN_VALIDATOR;
+
+        /**
+         * QS footer text
+         * @hide
+         */
+        public static final String RR_FOOTER_TEXT_STRING = "rr_footer_text_string";
 
         /**
          * Whether to show the battery bar
@@ -16955,11 +16961,11 @@ public final class Settings {
         private static final Validator POWER_BUTTON_VERY_LONG_PRESS_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
-        /**  
+        /**
          * AOKP Custom System Animations
          * @hide
-         */  
-        public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {  
+         */
+        public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {
                 "activity_open",
                 "activity_close",
                 "task_open",
@@ -16971,7 +16977,7 @@ public final class Settings {
                 "wallpaper_intra_open",
                 "wallpaper_intra_close",
                 "task_open_behind",
-        };  
+        };
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**

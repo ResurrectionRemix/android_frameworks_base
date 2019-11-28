@@ -186,13 +186,21 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         TextView v = findViewById(R.id.build);
         if (v == null) return;
         boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.OMNI_FOOTER_TEXT_SHOW, 0,
+                        Settings.System.RR_FOOTER_TEXT_SHOW, 0,
                         UserHandle.USER_CURRENT) == 1;
+        String text = Settings.System.getStringForUser(mContext.getContentResolver(),
+                        Settings.System.RR_FOOTER_TEXT_STRING,
+                        UserHandle.USER_CURRENT);
         if (isShow) {
-            v.setText("#Xtended");
-            v.setVisibility(View.VISIBLE);
+            if (text == null || text == "") {
+                v.setText("Resurrection Remix");
+                v.setVisibility(View.VISIBLE);
+            } else {
+                v.setText(text);
+                v.setVisibility(View.VISIBLE);
+            }
         } else {
-            v.setVisibility(View.GONE);
+              v.setVisibility(View.GONE);
         }
     }
 
@@ -281,7 +289,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         tunerService.addTunable(this, QS_SHOW_DRAG_HANDLE);
         tunerService.addTunable(this, QS_SHOW_AUTO_BRIGHTNESS_BUTTON);
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.OMNI_FOOTER_TEXT_SHOW), false,
+                Settings.System.getUriFor(Settings.System.RR_FOOTER_TEXT_SHOW), false,
+                mSettingsObserver, UserHandle.USER_ALL);
+
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.RR_FOOTER_TEXT_STRING), false,
                 mSettingsObserver, UserHandle.USER_ALL);
     }
 
