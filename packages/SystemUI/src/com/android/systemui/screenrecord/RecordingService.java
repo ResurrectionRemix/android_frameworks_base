@@ -36,6 +36,8 @@ import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -160,7 +162,10 @@ public class RecordingService extends Service {
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
                     mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
-                    startRecording();
+                    final Handler h = new Handler(Looper.getMainLooper());
+                    h.postDelayed(() -> {
+                        startRecording();
+                    }, 500);
                 }
                 break;
 
