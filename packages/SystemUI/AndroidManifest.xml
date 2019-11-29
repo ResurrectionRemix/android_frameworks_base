@@ -310,6 +310,7 @@
         </receiver>
 
         <activity android:name=".screenrecord.ScreenRecordDialog"
+            android:excludeFromRecents="true"
             android:theme="@style/ScreenRecord" />
         <service android:name=".screenrecord.RecordingService" />
 
