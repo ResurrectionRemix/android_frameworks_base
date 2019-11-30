@@ -6470,6 +6470,16 @@ public final class Settings {
 	     public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
 
         /**
+         * Whether to show VoLTE icon or not
+         * @hide
+         */
+        public static final String VOLTE_ICON_STYLE = "volte_icon_style";
+
+        /** @hide */
+        public static final Validator VOLTE_ICON_STYLE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+
+        /**
          * Show Weather on
          * 0 - Statusbar (default)
          * 1 - QS Header
@@ -7397,6 +7407,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ON_THE_GO_SERVICE_RESTART);
             PRIVATE_SETTINGS.add(ON_THE_GO_ALPHA);
             PRIVATE_SETTINGS.add(ON_THE_GO_CAMERA);
+            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_MENU);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_DIALOG_DIM);
             PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
@@ -7611,6 +7622,7 @@ public final class Settings {
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION,
                     PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR, STATUSBAR_BATTERY_BAR_VALIDATOR);

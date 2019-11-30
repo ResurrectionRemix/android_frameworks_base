@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.drawable.Drawable;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Handler;
@@ -109,6 +110,8 @@ public class MobileSignalController extends SignalController<
     private boolean mRoamingIconAllowed;
     private boolean mShowLteFourGee;
     private boolean mVoLTEicon;
+    // Volte Icon Style
+    private int mVoLTEstyle;
 
     private boolean mDataDisabledIcon;
 
@@ -202,6 +205,13 @@ public class MobileSignalController extends SignalController<
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_LTE_FOURGEE), false,
+	        this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+	            Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+		    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+	            Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
+		    this, UserHandle.USER_ALL);
                     this, UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.DATA_DISABLED_ICON),
@@ -247,6 +257,9 @@ public class MobileSignalController extends SignalController<
         mShowLteFourGee = Settings.System.getIntForUser(resolver,
                 Settings.System.SHOW_LTE_FOURGEE, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mVoLTEstyle = Settings.System.getIntForUser(resolver,
+                Settings.System.VOLTE_ICON_STYLE, 0,
+                UserHandle.USER_CURRENT);
         mDataDisabledIcon = Settings.System.getIntForUser(resolver,
                 Settings.System.DATA_DISABLED_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
@@ -256,6 +269,7 @@ public class MobileSignalController extends SignalController<
 
         mapIconSets();
         updateTelephony();
+        notifyListeners();
     }
 
     public void setConfiguration(Config config) {
@@ -445,7 +459,34 @@ public class MobileSignalController extends SignalController<
         }
         if ( (mCurrentState.voiceCapable || mCurrentState.videoCapable)
                 &&  mCurrentState.imsRegistered && mVoLTEicon) {
-            resId = R.drawable.volte;
+            switch(mVoLTEstyle) {
+                // VoLTE
+                case 1:
+                    resId = R.drawable.ic_volte1;
+                    break;
+                // OOS VoLTE
+                case 2:
+                    resId = R.drawable.ic_volte2;
+                    break;
+                // HD Icon
+                case 3:
+                    resId = R.drawable.ic_hd_volte;
+                    break;
+                case 4:
+                    resId = R.drawable.ic_volte3;
+                    break;
+                case 5:
+                    resId = R.drawable.ic_hd_volte4;
+                    break;
+                case 5:
+                    resId = R.drawable.ic_hd_volte5;
+                    break;
+ 	        //Vo
+                case 0:
+                default:
+                    resId = R.drawable.ic_volte;
+                    break;
+            }
         }
         return resId;
     }
