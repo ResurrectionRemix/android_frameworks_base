@@ -5567,21 +5567,27 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        }else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
-                mWindowManagerService != null) {
-            boolean forcedVisibility = mNeedsNavigationBar ||
-                    TunerService.parseIntegerSwitch(newValue, false);
-            boolean hasNavbar = getNavigationBarView() != null;
-            if (forcedVisibility) {
-                if (!hasNavbar) {
-                    mNavigationBarController.onDisplayReady(mDisplayId,
-                            mNavigationBarSystemUiVisibility);
+        }else if (FORCE_SHOW_NAVBAR.equals(key)) {
+                if (mDisplayId != Display.DEFAULT_DISPLAY ||
+                        mWindowManagerService == null)
+                    return;
+                boolean mNavbarVisible =
+                        TunerService.parseIntegerSwitch(newValue, Utils.hasNavbarByDefault(mContext));
+                boolean hasNavbar = getNavigationBarView() != null;
+                if (mNavbarVisible) {
+                    if (!hasNavbar) {
+                        try {
+                           mNavigationBarController.onDisplayReady(mDisplayId,
+                                   mNavigationBarSystemUiVisibility);
+                        } catch (Exception e) { }
+                    }
+                } else {
+                    if (hasNavbar) {
+                        try {
+                            mNavigationBarController.onDisplayRemoved(mDisplayId);
+                        } catch (Exception e) { }
+                    }
                 }
-            } else {
-                if (hasNavbar) {
-                    mNavigationBarController.onDisplayRemoved(mDisplayId);
-                }
-            }
         } else if (BERRY_DARK_STYLE.equals(key)) {
                 int darkStyle =
                         TunerService.parseInteger(newValue, 0);

@@ -652,7 +652,7 @@ public class DisplayPolicy {
         ContentResolver resolver = mContext.getContentResolver();
 
         mForceNavbar = LineageSettings.System.getIntForUser(resolver,
-                LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+                LineageSettings.System.FORCE_SHOW_NAVBAR, mHasNavigationBar ? 1 : 0,
                 UserHandle.USER_CURRENT);
     }
 
@@ -711,7 +711,7 @@ public class DisplayPolicy {
     }
 
     public boolean hasNavigationBar() {
-        return mHasNavigationBar || mForceNavbar == 1;
+        return mForceNavbar == 1;
     }
 
     public boolean hasStatusBar() {
