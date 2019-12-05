@@ -21,6 +21,9 @@
   <!-- Whether device has dash charging support -->
   <java-symbol type="bool" name="config_hasDashCharger" />
 
+  <!-- Whether device has warp charging support -->
+  <java-symbol type="bool" name="config_hasWarpCharger" />
+
     <!-- App error dialog -->
     <!--java-symbol type="id" name="aerr_copy" /-->
     <java-symbol type="string" name="url_copy_success" />
