@@ -33,4 +33,6 @@
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
 
+  <java-symbol type="array" name="config_customPermissionsList" />
+
 </resources>

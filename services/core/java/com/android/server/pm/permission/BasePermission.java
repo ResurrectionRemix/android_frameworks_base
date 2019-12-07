@@ -425,12 +425,10 @@ public final class BasePermission {
             throw new SecurityException("Package " + pkg.packageName
                     + " has not requested permission " + name);
         }
-        if (pkg.packageName != "com.google.android.apps.wellbeing") {
         if (!isRuntime() && !isDevelopment()) {
             throw new SecurityException("Permission " + name
                     + " requested by " + pkg.packageName + " is not a changeable permission type");
         }
-      }
     }
 
     private static BasePermission findPermissionTree(
