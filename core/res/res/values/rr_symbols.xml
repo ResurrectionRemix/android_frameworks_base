@@ -158,4 +158,7 @@
 
   <!-- Device has OnePlus haptic motor -->
   <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
+  <!-- Whether device supports variable refresh rate -->
+  <java-symbol type="bool" name="config_hasVariableRefreshRate" />
 </resources>

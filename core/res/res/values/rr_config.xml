@@ -51,4 +51,7 @@
          timing(the duration which the vibrator is expected to vibrate for). -->
     <bool name="config_hasOnePlusHapticMotor">false</bool>
 
+    <!-- Whether device supports variable refresh rate -->
+    <bool name="config_hasVariableRefreshRate">false</bool>
+
 </resources>
