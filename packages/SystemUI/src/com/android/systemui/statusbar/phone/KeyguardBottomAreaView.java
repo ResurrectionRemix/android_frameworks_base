@@ -969,7 +969,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void updateCameraIconColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_CAMERA_ICON_COLOR, 0x99FFFFFF);
+                Settings.System.LOCKSCREEN_CAMERA_ICON_COLOR, 0x00FFFFFF);
 
         if (mRightAffordanceView != null) {
                 mRightAffordanceView.setColorFilter(color);
@@ -979,7 +979,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void updatePhoneIconColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_PHONE_ICON_COLOR, 0x99FFFFFF);
+                Settings.System.LOCKSCREEN_PHONE_ICON_COLOR, 0x00FFFFFF);
 
         if (mLeftAffordanceView != null) {
             mLeftAffordanceView.setColorFilter(color);
