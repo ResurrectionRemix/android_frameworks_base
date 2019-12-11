@@ -33,7 +33,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private int mCellMarginTop;
     private boolean mListening;
-    protected int mMaxAllowedRows = 3;
+    //protected int mMaxAllowedRows = 3;
 
     public TileLayout(Context context) {
         this(context, null);
@@ -90,23 +90,34 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         final ContentResolver resolver = mContext.getContentResolver();
 
         int columns;
+        int rows;
         if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             columns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLUMNS_PORTRAIT, 4,
+                    UserHandle.USER_CURRENT);
+            rows = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_ROWS_PORTRAIT, 3,
                     UserHandle.USER_CURRENT);
         } else {
             columns = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLUMNS_LANDSCAPE, 4,
                     UserHandle.USER_CURRENT);
+            rows = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_ROWS_LANDSCAPE, 1,
+                        UserHandle.USER_CURRENT);
         }
         if (columns < 1) {
             columns = 1;
         }
+        if (rows < 1) {
+            rows = 1;
+        }
+
         mCellMarginHorizontal = res.getDimensionPixelSize(R.dimen.qs_tile_margin_horizontal);
         mCellMarginVertical= res.getDimensionPixelSize(R.dimen.qs_tile_margin_vertical);
         mCellMarginTop = res.getDimensionPixelSize(R.dimen.qs_tile_margin_top);
         mSidePadding = res.getDimensionPixelOffset(R.dimen.qs_tile_layout_margin_side);
-        mMaxAllowedRows = Math.max(1, getResources().getInteger(R.integer.quick_settings_max_rows));
+        //mMaxAllowedRows = Math.max(1, getResources().getInteger(R.integer.quick_settings_max_rows));
 
         if (Settings.System.getIntForUser(resolver,
                 Settings.System.QS_TILE_TITLE_VISIBILITY, 1,
@@ -119,10 +130,14 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
             record.tileView.textVisibility();
         }
 
-        if (mColumns != columns) {
+        // always update mRows value even if we only changed columns settings, because
+        // in the meantime mRows could have been changed in onMeasure
+        if (mColumns != columns || mRows != rows) {
             mColumns = columns;
+            mRows = rows;
             return true;
         }
+
         requestLayout();
         return false;
     }
@@ -161,7 +176,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     /**
      * Determines the maximum number of rows that can be shown based on height. Clips at a minimum
-     * of 1 and a maximum of mMaxAllowedRows.
+     * of 1.
      *
      * @param heightMeasureSpec Available height.
      * @param tilesCount Upper limit on the number of tiles to show. to prevent empty rows.
@@ -170,20 +185,6 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         final int availableHeight = MeasureSpec.getSize(heightMeasureSpec) - mCellMarginTop
                 + mCellMarginVertical;
         final int previousRows = mRows;
-        // we aren't introducing any delay due to the Settings provider call here, because PagedTileLayout.onMeasure
-        // calls updateMaxRows only if the panel height is changed or if updateResources has been triggered
-        if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mRows = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.QS_ROWS_PORTRAIT, 3,
-                    UserHandle.USER_CURRENT);
-        } else {
-            mRows = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.QS_ROWS_LANDSCAPE, 1,
-                        UserHandle.USER_CURRENT);
-        }
-        if (mRows < 1) {
-            mRows = 1;
-        }
         if (mRows > (tilesCount + mColumns - 1) / mColumns) {
             mRows = (tilesCount + mColumns - 1) / mColumns;
         }
