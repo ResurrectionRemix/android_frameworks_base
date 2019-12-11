@@ -2400,7 +2400,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_CURRENT);
             mSystemNavigationKeysEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED,
-                    0, UserHandle.USER_CURRENT) == 1;
+                    1, UserHandle.USER_CURRENT) == 1;
             mRingerToggleChord = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.VOLUME_HUSH_GESTURE, VOLUME_HUSH_OFF,
                     UserHandle.USER_CURRENT);
