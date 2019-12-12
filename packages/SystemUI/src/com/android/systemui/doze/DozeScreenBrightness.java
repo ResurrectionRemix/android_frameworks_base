@@ -116,6 +116,10 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
                 break;
             case DOZE_REQUEST_PULSE:
                 setLightSensorEnabled(true);
+                // we dont have a brightness sensor so remove any font scrim right away
+                if (!mRegistered) {
+                    mDozeHost.setAodDimmingScrim(0f);
+                }
                 break;
             case DOZE:
                 setLightSensorEnabled(false);
