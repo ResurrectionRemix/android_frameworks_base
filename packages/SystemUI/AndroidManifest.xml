@@ -260,6 +260,8 @@
     <protected-broadcast android:name="com.google.android.systemui.smartspace.EXPIRE_EVENT"/>
     <protected-broadcast android:name="com.google.android.systemui.smartspace.CLICK_EVENT"/>
 
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
