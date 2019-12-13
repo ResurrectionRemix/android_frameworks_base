@@ -24,6 +24,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Button;
@@ -48,11 +50,13 @@ import java.util.List;
  * thread, to later be accessed and modified on the (performance critical) UI thread.
  */
 public class InflatedSmartReplies {
+    private static Context mContext;
     private static final String TAG = "InflatedSmartReplies";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
     @Nullable private final SmartReplyView mSmartReplyView;
     @Nullable private final List<Button> mSmartSuggestionButtons;
     @NonNull private final SmartRepliesAndActions mSmartRepliesAndActions;
+    private static boolean mSmartReplyHide;
 
     private InflatedSmartReplies(
             @Nullable SmartReplyView smartReplyView,
@@ -86,6 +90,7 @@ public class InflatedSmartReplies {
             SmartReplyController smartReplyController,
             HeadsUpManager headsUpManager,
             SmartRepliesAndActions existingSmartRepliesAndActions) {
+        mContext = context;
         SmartRepliesAndActions newSmartRepliesAndActions =
                 chooseSmartRepliesAndActions(smartReplyConstants, entry);
         if (!shouldShowSmartReplyView(entry, newSmartRepliesAndActions)) {
@@ -158,6 +163,15 @@ public class InflatedSmartReplies {
         return true;
     }
 
+    private static void updateSmartReplyVisibility() {
+        mSmartReplyHide = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HIDE_SMART_REPLIES, 0, UserHandle.USER_CURRENT) != 0;
+    }
+
+    public void onSettingsChanged() {
+        updateSmartReplyVisibility();
+    }
+
     /**
      * Chose what smart replies and smart actions to display. App generated suggestions take
      * precedence. So if the app provides any smart replies, we don't show any
@@ -174,7 +188,8 @@ public class InflatedSmartReplies {
         Pair<RemoteInput, Notification.Action> freeformRemoteInputActionPair =
                 notification.findRemoteInputActionPair(true /* freeform */);
 
-        if (!smartReplyConstants.isEnabled()) {
+        updateSmartReplyVisibility();
+        if (!smartReplyConstants.isEnabled() || mSmartReplyHide) {
             if (DEBUG) {
                 Log.d(TAG, "Smart suggestions not enabled, not adding suggestions for "
                         + entry.notification.getKey());

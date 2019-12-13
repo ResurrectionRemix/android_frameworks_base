@@ -6543,6 +6543,15 @@ public final class Settings {
         public static final String SHOW_CLIPBOARD_TOAST = "show_clipboard_toast";
 
         /**
+         * Enable\Disable visibility of smart replies in notifications
+         * @hide
+         */
+        public static final String HIDE_SMART_REPLIES = "hide_smart_replies";
+
+        /** @hide */
+        private static final Validator HIDE_SMART_REPLIES_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6733,6 +6742,7 @@ public final class Settings {
             AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
             NAVIGATION_HANDLE_WIDTH,
             QS_DATAUSAGE,
+            HIDE_SMART_REPLIES,
         };
 
         /**
@@ -6976,6 +6986,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
+            PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
         }
 
         /**
@@ -7209,6 +7220,7 @@ public final class Settings {
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS_FORCE, DOZE_BRIGHTNESS_FORCE_VALIDATOR);
+            VALIDATORS.put(HIDE_SMART_REPLIES, HIDE_SMART_REPLIES_VALIDATOR);
         }
 
         /**
