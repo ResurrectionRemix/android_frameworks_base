@@ -80,7 +80,6 @@ public class TunerServiceImpl extends TunerService {
             Clock.STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
             Clock.STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION,
             STATUS_BAR_CLOCK,
-            NavigationBarView.NAVIGATION_BAR_MENU_ARROW_KEYS,
             NotificationPanelView.DOUBLE_TAP_SLEEP_GESTURE,
             NotificationPanelView.STATUS_BAR_QUICK_QS_PULLDOWN,
             QSTileHost.TILES_SETTING,

@@ -33,6 +33,7 @@ public class RotationContextButton extends ContextualButton implements
 
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
     private RotationButtonController mRotationButtonController;
+    private boolean mCanShow = true;
 
     public RotationContextButton(@IdRes int buttonResId, @DrawableRes int iconResId) {
         super(buttonResId, iconResId);
@@ -72,5 +73,21 @@ public class RotationContextButton extends ContextualButton implements
     public boolean acceptRotationProposal() {
         View currentView = getCurrentView();
         return currentView != null && currentView.isAttachedToWindow();
+    }
+
+    @Override
+    public boolean show() {
+        if (!mCanShow) {
+            return false;
+        }
+        return super.show();
+    }
+
+    @Override
+    public void setCanShowRotationButton(boolean canShow) {
+        mCanShow = canShow;
+        if (!mCanShow) {
+            hide();
+        }
     }
 }

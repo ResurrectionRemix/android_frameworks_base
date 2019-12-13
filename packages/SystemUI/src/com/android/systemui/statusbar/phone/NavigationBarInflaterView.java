@@ -21,6 +21,8 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -31,7 +33,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Space;
-
+import com.android.internal.util.rr.RRUtils;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
@@ -43,6 +45,7 @@ import com.android.systemui.tuner.TunerService;
 
 import java.util.Objects;
 
+import lineageos.providers.LineageSettings;
 public class NavigationBarInflaterView extends FrameLayout
         implements NavigationModeController.ModeChangedListener, TunerService.Tunable {
 
@@ -100,7 +103,11 @@ public class NavigationBarInflaterView extends FrameLayout
     private OverviewProxyService mOverviewProxyService;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
 
+    public static final String NAVIGATION_BAR_MENU_ARROW_KEYS =
+            "lineagesystem:" + LineageSettings.System.NAVIGATION_BAR_MENU_ARROW_KEYS;
+
     private boolean mInverseLayout;
+    private boolean mShowCursorKeys;
 
     public NavigationBarInflaterView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -139,7 +146,8 @@ public class NavigationBarInflaterView extends FrameLayout
 
     protected String getDefaultLayout() {
         final int defaultResource = QuickStepContract.isGesturalMode(mNavBarMode)
-                ? R.string.config_navBarLayoutHandle
+                ? (showDpadArrowKeys() ? R.string.config_navBarLayoutHandleArrows
+                : R.string.config_navBarLayoutHandle)
                 : mOverviewProxyService.shouldShowSwipeUpUI()
                         ? R.string.config_navBarLayoutQuickstep
                         : R.string.config_navBarLayout;
@@ -155,7 +163,7 @@ public class NavigationBarInflaterView extends FrameLayout
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS, NAV_BAR_INVERSE);
+        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS, NAV_BAR_INVERSE, NAVIGATION_BAR_MENU_ARROW_KEYS);
     }
 
     @Override
@@ -172,6 +180,9 @@ public class NavigationBarInflaterView extends FrameLayout
         } else if (NAV_BAR_INVERSE.equals(key)) {
             mInverseLayout = TunerService.parseIntegerSwitch(newValue, false);
             updateLayoutInversion();
+        }  else if (NAVIGATION_BAR_MENU_ARROW_KEYS.equals(key)) {
+            mShowCursorKeys = TunerService.parseIntegerSwitch(newValue, false);
+            onLikelyDefaultLayoutChange();
         }
         if (QuickStepContract.isGesturalMode(mNavBarMode)) {
             setNavigationBarLayout(newValue);
@@ -302,19 +313,6 @@ public class NavigationBarInflaterView extends FrameLayout
                 true /* landscape */, false /* start */);
 
         updateButtonDispatchersCurrentView();
-    }
-
-    private void updateLayoutInversion() {
-        if (mInverseLayout) {
-            Configuration config = mContext.getResources().getConfiguration();
-            if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-                setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            } else {
-                setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            }
-        } else {
-            setLayoutDirection(View.LAYOUT_DIRECTION_INHERIT);
-        }
     }
 
     private void addGravitySpacer(LinearLayout layout) {
@@ -517,12 +515,34 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private void clearAllChildren(ViewGroup group) {
         for (int i = 0; i < group.getChildCount(); i++) {
-            ((ViewGroup) group.getChildAt(i)).removeAllViews();
+            if (group.getChildAt(i).getId() != R.id.dpad_group) {
+                ((ViewGroup) group.getChildAt(i)).removeAllViews();
+            }
         }
     }
 
     private static float convertDpToPx(Context context, float dp) {
         return dp * context.getResources().getDisplayMetrics().density;
+    }
+
+    private void updateLayoutInversion() {
+        if (mInverseLayout) {
+            Configuration config = mContext.getResources().getConfiguration();
+            if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+                setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            } else {
+                setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+        } else {
+            setLayoutDirection(View.LAYOUT_DIRECTION_INHERIT);
+        }
+    }
+
+    private boolean showDpadArrowKeys() {
+        return  mShowCursorKeys && ((Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.NAVIGATION_BAR_IME_SPACE, 1, UserHandle.USER_CURRENT) != 0)
+                || (RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton")
+                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton")));
     }
 }
 
