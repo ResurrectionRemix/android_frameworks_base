@@ -19,8 +19,14 @@ package com.android.systemui.havoc;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.WallpaperColors;
+import android.app.WallpaperInfo;
+import android.app.WallpaperManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -30,6 +36,8 @@ import android.widget.RelativeLayout;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
+
+import androidx.palette.graphics.Palette;
 
 public class NotificationLightsView extends RelativeLayout {
     private static final boolean DEBUG = false;
@@ -86,8 +94,27 @@ public class NotificationLightsView extends RelativeLayout {
         int color = getDefaultNotificationLightsColor();
         boolean useAccent = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC, 1, UserHandle.USER_CURRENT) == 0;
+        boolean useWallColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_LIGHT_AUTO_COLOR, 0, UserHandle.USER_CURRENT) == 1;
         if (useAccent) {
             color = Utils.getColorAccentDefaultColor(getContext());
+        } else if (useWallColor) {
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
+                WallpaperInfo wallpaperInfo = wallpaperManager.getWallpaperInfo();
+                if (wallpaperInfo == null) { // if not a live wallpaper
+                    Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+                    Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+                    if (bitmap != null) { // if wallpaper is not blank
+                        Palette p = Palette.from(bitmap).generate();
+                        int wallColor = p.getDominantColor(color);
+                        if (color != wallColor)
+                            color = wallColor;
+                    }
+                }
+            } catch (Exception e) {
+                // Nothing to do
+            }
         }
         return color;
     }
