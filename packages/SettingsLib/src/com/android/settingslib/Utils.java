@@ -178,9 +178,19 @@ public class Utils {
     public static String getBatteryStatus(Resources res, Intent batteryChangedIntent) {
         int status = batteryChangedIntent.getIntExtra(BatteryManager.EXTRA_STATUS,
                 BatteryManager.BATTERY_STATUS_UNKNOWN);
+        boolean dashChargeStatus = batteryChangedIntent.getBooleanExtra(
+                BatteryManager.EXTRA_DASH_CHARGER, false);
+        boolean warpChargeStatus = batteryChangedIntent.getBooleanExtra(
+                BatteryManager.EXTRA_WARP_CHARGER, false);
         String statusString;
         if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-            statusString = res.getString(R.string.battery_info_status_charging);
+            if (dashChargeStatus) {
+                statusString = res.getString(R.string.battery_info_status_dash_charging);
+            } else if (warpChargeStatus) {
+                statusString = res.getString(R.string.battery_info_status_warp_charging);
+            } else {
+                statusString = res.getString(R.string.battery_info_status_charging);
+            }
         } else if (status == BatteryManager.BATTERY_STATUS_DISCHARGING) {
             statusString = res.getString(R.string.battery_info_status_discharging);
         } else if (status == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
