@@ -95,9 +95,6 @@ import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.phone.StatusBarWindowController;
 import com.android.systemui.util.InjectionInflationController;
 
-import lineageos.app.Profile;
-import lineageos.app.ProfileManager;
-
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -209,7 +206,6 @@ public class KeyguardViewMediator extends SystemUI {
 
     private AlarmManager mAlarmManager;
     private AudioManager mAudioManager;
-    private ProfileManager mProfileManager;
     private StatusBarManager mStatusBarManager;
     private final StatusBarWindowController mStatusBarWindowController =
             Dependency.get(StatusBarWindowController.class);
@@ -695,7 +691,6 @@ public class KeyguardViewMediator extends SystemUI {
         mShowKeyguardWakeLock = mPM.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "show keyguard");
         mShowKeyguardWakeLock.setReferenceCounted(false);
 
-        mProfileManager = ProfileManager.getInstance(mContext);
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SHUTDOWN);
         mContext.registerReceiver(mBroadcastReceiver, filter);
@@ -1030,7 +1025,7 @@ public class KeyguardViewMediator extends SystemUI {
     }
 
     private void maybeSendUserPresentBroadcast() {
-        if (mSystemReady && isKeyguardDisabled(
+        if (mSystemReady && mLockPatternUtils.isLockScreenDisabled(
                 KeyguardUpdateMonitor.getCurrentUser())) {
             // Lock screen is disabled because the user has set the preference to "None".
             // In this case, send out ACTION_USER_PRESENT here instead of in
@@ -1042,30 +1037,6 @@ public class KeyguardViewMediator extends SystemUI {
             // user sets a credential later.
             getLockPatternUtils().userPresent(KeyguardUpdateMonitor.getCurrentUser());
         }
-    }
-
-    private boolean isKeyguardDisabled(int userId) {
-        if (!mExternallyEnabled) {
-            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled externally");
-            return true;
-        }
-        if (mLockPatternUtils.isLockScreenDisabled(userId)) {
-            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by setting");
-            return true;
-        }
-        if (!StorageManager.isFileEncryptedNativeOrEmulated() ||
-                StorageManager.isUserKeyUnlocked(userId)) {
-            if (mProfileManager != null) {
-                Profile profile = mProfileManager.getActiveProfile();
-                if (profile != null) {
-                    if (profile.getScreenLockMode().getValue() == Profile.LockMode.DISABLE) {
-                        if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by profile");
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -1350,7 +1321,7 @@ public class KeyguardViewMediator extends SystemUI {
             }
 
             boolean forceShow = options != null && options.getBoolean(OPTION_FORCE_SHOW, false);
-            if (isKeyguardDisabled(KeyguardUpdateMonitor.getCurrentUser())
+            if (mLockPatternUtils.isLockScreenDisabled(KeyguardUpdateMonitor.getCurrentUser())
                     && !lockedOrMissing && !forceShow) {
                 if (DEBUG) Log.d(TAG, "doKeyguard: not showing because lockscreen is off");
                 setShowingLocked(false, mAodShowing);
