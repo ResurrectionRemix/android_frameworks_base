@@ -4689,6 +4689,16 @@ public final class Settings {
         /** @hide */
         private static final Validator PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR = ANY_STRING_VALIDATOR;
 
+
+        /**
+         * Wether to use color from wallpaper for Ambient edge light
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_AUTO_COLOR = "pulse_ambient_auto_color";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_AUTO_COLOR_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Wheter to play notification sound and vibration if screen is ON
          * 0 - never
@@ -5982,6 +5992,7 @@ public final class Settings {
             QS_BACKGROUND_BLUR_ALPHA,
             QS_BACKGROUND_BLUR_INTENSITY,
             PULSE_AMBIENT_LIGHT_COLOR,
+            PULSE_AMBIENT_AUTO_COLOR,
         };
 
         /**
@@ -6100,6 +6111,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCK_TO_APP_ENABLED);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_COLOR);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_AUTO_COLOR);
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
@@ -6404,6 +6416,7 @@ public final class Settings {
             VALIDATORS.put(QS_BACKGROUND_BLUR_INTENSITY, QS_BACKGROUND_BLUR_INTENSITY_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT, PULSE_AMBIENT_LIGHT_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_AUTO_COLOR, PULSE_AMBIENT_AUTO_COLOR_VALIDATOR);
         }
 
         /**
