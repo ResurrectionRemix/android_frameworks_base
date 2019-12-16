@@ -89,6 +89,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private Handler mHandler;
 
+    private PowerManager mPowerManager;
+    private PowerManager.WakeLock mWakeLock;
+
     private Timer mBurnInProtectionTimer;
     private WallpaperManager mWallManager;
     private int iconcolor = 0xFF3980FF;
@@ -120,8 +123,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
+                if (!mWakeLock.isHeld()) {
+                    mWakeLock.acquire();
+                }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
+                if (mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
             }
         }
 
@@ -221,6 +230,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
+        mPowerManager = context.getSystemService(PowerManager.class);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
+
         mPowerManager = context.getSystemService(PowerManager.class);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
 
