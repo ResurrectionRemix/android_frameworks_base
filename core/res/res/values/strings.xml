@@ -291,6 +291,8 @@
     <string name="wfc_mode_cellular_preferred_summary">Call over mobile network</string>
     <!-- WFC, summary for Wi-Fi Only -->
     <string name="wfc_mode_wifi_only_summary">Wi-Fi only</string>
+    <!-- WFC, summary for Ims Preferred -->
+    <string name="wfc_mode_ims_preferred_summary">Ims Preferred</string>
 
     <!--
         {0} is one of "bearerServiceCode*"

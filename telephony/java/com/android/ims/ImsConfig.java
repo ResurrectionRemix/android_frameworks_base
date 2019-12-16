@@ -547,6 +547,7 @@ public class ImsConfig {
         public static final int WIFI_ONLY = 0;
         public static final int CELLULAR_PREFERRED = 1;
         public static final int WIFI_PREFERRED = 2;
+        public static final int IMS_PREFERRED = 10;
     }
 
     public ImsConfig(IImsConfig iconfig) {

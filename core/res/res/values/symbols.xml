@@ -925,6 +925,7 @@
   <java-symbol type="string" name="wifi_calling_off_summary" />
   <java-symbol type="string" name="wfc_mode_wifi_preferred_summary" />
   <java-symbol type="string" name="wfc_mode_cellular_preferred_summary" />
+  <java-symbol type="string" name="wfc_mode_ims_preferred_summary" />
   <java-symbol type="string" name="wfc_mode_wifi_only_summary" />
   <java-symbol type="string" name="policydesc_disableCamera" />
   <java-symbol type="string" name="policydesc_encryptedStorage" />

@@ -600,6 +600,18 @@ public class CarrierConfigManager {
             "carrier_wfc_supports_wifi_only_bool";
 
     /**
+     * Flag specifying whether WFC over IMS supports the "ims preferred" option.  If false, the wifi
+     * calling settings will not include an option for "ims preferred".  If true, the wifi calling
+     * settings will include an option for "ims preferred"
+     * <p>
+     * By default, it is assumed that WFC does not support "ims preferred".
+     * @hide
+     */
+    public static final String KEY_CARRIER_WFC_SUPPORTS_IMS_PREFERRED_BOOL =
+            "carrier_wfc_supports_ims_preferred_bool";
+
+
+    /**
      * Default mode for WFC over IMS on home network:
      * <ul>
      *   <li>0: Wi-Fi only
@@ -3323,6 +3335,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_IGNORE_RESET_UT_CAPABILITY_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_WFC_SUPPORTS_WIFI_ONLY_BOOL, false);
+        sDefaults.putBoolean(KEY_CARRIER_WFC_SUPPORTS_IMS_PREFERRED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_WFC_IMS_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_WFC_IMS_ROAMING_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_PROMOTE_WFC_ON_CALL_FAIL_BOOL, false);
