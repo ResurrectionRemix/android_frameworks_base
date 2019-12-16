@@ -6065,6 +6065,20 @@ public final class Settings {
 	     public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
 
         /**
+         * Whether to blink flashlight for incoming calls
+         * 0 = Disabled (Default)
+         * 1 = Blink flashlight only in Ringer mode
+         * 2 = Blink flashlight only in DND mode
+         * 3 = Blink flashlight always regardless of ringer mode
+         * @hide
+         */
+        public static final String FLASHLIGHT_ON_CALL = "flashlight_on_call";
+        /** @hide */
+        private static final Validator FLASHLIGHT_ON_CALL_VALIDATOR =
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+
+
+        /**
          * Enable\Disable Bluetooth Battery bar
          * @hide
          */
@@ -6249,6 +6263,7 @@ public final class Settings {
             SCREEN_STATE_MOBILE_DATA,
             SCREEN_STATE_TWOG,
             SCREEN_STATE_THREEG,
+            FLASHLIGHT_ON_CALL,
         };
 
         /**
@@ -6479,6 +6494,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREEN_STATE_MOBILE_DATA);
             PRIVATE_SETTINGS.add(SCREEN_STATE_TWOG);
             PRIVATE_SETTINGS.add(SCREEN_STATE_THREEG);
+            PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
         }
 
         /**
@@ -6700,6 +6716,7 @@ public final class Settings {
             VALIDATORS.put(SCREEN_STATE_MOBILE_DATA, SCREEN_STATE_MOBILE_DATA_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_TWOG, SCREEN_STATE_TWOG_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_THREEG, SCREEN_STATE_THREEG_VALIDATOR);
+            VALIDATORS.put(FLASHLIGHT_ON_CALL, FLASHLIGHT_ON_CALL_VALIDATOR);
         }
 
         /**
