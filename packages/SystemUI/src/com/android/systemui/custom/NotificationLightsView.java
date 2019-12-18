@@ -21,6 +21,7 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
+import android.app.WallpaperInfo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -96,13 +97,16 @@ public class NotificationLightsView extends RelativeLayout {
                 UserHandle.USER_CURRENT) == 1) {
             try {
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
-                Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-                Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
-                if (bitmap != null) {
-                    Palette p = Palette.from(bitmap).generate();
-                    int wallColor = p.getDominantColor(color);
-                    if (color != wallColor)
-                        color = wallColor;
+                WallpaperInfo wallpaperInfo = wallpaperManager.getWallpaperInfo();
+                if (wallpaperInfo == null) { // if not a live wallpaper
+                    Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+                    Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+                    if (bitmap != null) { // if wallpaper is not blank
+                        Palette p = Palette.from(bitmap).generate();
+                        int wallColor = p.getDominantColor(color);
+                        if (color != wallColor)
+                            color = wallColor;
+                    }
                 }
             } catch (Exception e) {
                 // Nothing to do
