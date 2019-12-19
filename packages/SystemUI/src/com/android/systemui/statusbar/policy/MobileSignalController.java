@@ -199,7 +199,7 @@ public class MobileSignalController extends SignalController<
                   Settings.System.DATA_DISABLED_ICON),
                   false, this, UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+                  Settings.System.SHOW_VOLTE_ICON), false,
                   this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -1009,7 +1009,7 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).userSetup == userSetup
                     && ((MobileState) o).isDefault == isDefault
                     && ((MobileState) o).roaming == roaming
-                    && ((MobileState) o).defaultDataOff == defaultDataOff;
+                    && ((MobileState) o).defaultDataOff == defaultDataOff
                     && ((MobileState) o).isVolteRegistered == isVolteRegistered;
         }
     }
