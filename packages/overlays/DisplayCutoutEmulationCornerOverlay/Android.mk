@@ -1,3 +1,5 @@
+abc_device := $(patsubst %f,%,$(subst abc_,,$(TARGET_PRODUCT)))
+ifneq ($(filter crosshatch emulator,$(abc_device)),)
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
@@ -14,3 +16,4 @@ LOCAL_PACKAGE_NAME := DisplayCutoutEmulationCornerOverlay
 LOCAL_SDK_VERSION := current
 
 include $(BUILD_RRO_PACKAGE)
+endif
