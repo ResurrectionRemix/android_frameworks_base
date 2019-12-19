@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.systemui.custom;
+package com.android.systemui.rr;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
@@ -92,6 +92,9 @@ public class NotificationLightsView extends RelativeLayout {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
                 UserHandle.USER_CURRENT);
+        int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_DURATION, 2,
+                UserHandle.USER_CURRENT) * 1000;
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_AUTO_COLOR, 0,
                 UserHandle.USER_CURRENT) == 1) {
@@ -121,7 +124,7 @@ public class NotificationLightsView extends RelativeLayout {
         leftView.setColorFilter(color);
         rightView.setColorFilter(color);
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
-        mLightAnimator.setDuration(2000);
+        mLightAnimator.setDuration(duration);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 Log.e("NotificationLightsView", "onAnimationUpdate");
