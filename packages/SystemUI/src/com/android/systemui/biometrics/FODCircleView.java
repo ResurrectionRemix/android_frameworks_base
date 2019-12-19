@@ -125,14 +125,8 @@ public class FODCircleView extends ImageView implements OnTouchListener {
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-                if (!mWakeLock.isHeld()) {
-                    mWakeLock.acquire();
-                }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
-                if (mWakeLock.isHeld()) {
-                    mWakeLock.release();
-                }
             }
             if (mIsViewAdded) {
                 resetPosition();
@@ -289,6 +283,7 @@ public class FODCircleView extends ImageView implements OnTouchListener {
         // the HAL is expected (if supported) to set the screen brightness
         // to maximum / minimum immediately when called
         if (mIsInsideCircle) {
+          if (mIsDreaming) mWakeLock.acquire(300);
             if (mIsDreaming || mIsPulsing) {
                 setAlpha(1.0f);
             }
