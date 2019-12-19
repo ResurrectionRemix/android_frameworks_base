@@ -506,7 +506,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
                 mItems.add(getAssistAction());
             /*} else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
-                mItems.add(new RestartAction());*/
+                mItems.add(new RestartAction())
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
                 mItems.add(new ScreenshotAction());
             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
@@ -536,9 +536,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 if (!mEmergencyAffordanceManager.needsEmergencyAffordance()) {
                     mItems.add(new EmergencyDialerAction());
                 }
-            } else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
+            } /*else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
                 mItems.add(mShowAdvancedToggles);
-            } else if (GLOBAL_ACTION_KEY_ONTHEGO.equals(actionKey)) {
+            } */else if (GLOBAL_ACTION_KEY_ONTHEGO.equals(actionKey)) {
                 if (Settings.System.getIntForUser(mContext.getContentResolver(),
                         Settings.System.GLOBAL_ACTIONS_ONTHEGO, 0, getCurrentUser().id) == 1) {
                     mItems.add(getOnTheGoAction());
@@ -725,7 +725,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
     }
 
-    /*private final class RestartAction extends SinglePressAction implements LongPressAction {
+    private final class RestartAction extends SinglePressAction implements LongPressAction {
         private RestartAction() {
             super(R.drawable.ic_restart, R.string.global_action_restart);
         }
@@ -755,7 +755,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public void onPress() {
             mWindowManagerFuncs.reboot(false);
         }
-    }*/
+    }
 
     private class ScreenshotAction extends SinglePressAction implements LongPressAction {
         public ScreenshotAction() {
