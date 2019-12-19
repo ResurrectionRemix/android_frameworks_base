@@ -123,14 +123,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-                if (!mWakeLock.isHeld()) {
-                    mWakeLock.acquire();
-                }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
-                if (mWakeLock.isHeld()) {
-                    mWakeLock.release();
-                }
             }
         }
 
@@ -489,6 +483,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private void updateAlpha() {
         if (mIsCircleShowing) {
+            if (mIsDreaming) {
+                mWakeLock.acquire(300);
+            }
             setAlpha(1.0f);
         } else {
             setAlpha(mIsDreaming ? 0.5f : 1.0f);
