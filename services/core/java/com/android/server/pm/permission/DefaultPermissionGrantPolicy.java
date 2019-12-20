@@ -200,6 +200,7 @@ public final class DefaultPermissionGrantPolicy {
     private static final Set<String> WALLPAPER_PERMISSIONS = new ArraySet<>();
     static {
         WALLPAPER_PERMISSIONS.add(Manifest.permission.BIND_WALLPAPER);
+        WALLPAPER_PERMISSIONS.add(Manifest.permission.SET_WALLPAPER_COMPONENT);
     }
 
     private static final int MSG_READ_DEFAULT_PERMISSION_EXCEPTIONS = 1;
