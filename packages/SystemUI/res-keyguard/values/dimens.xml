@@ -100,6 +100,28 @@
 <dimen name="lock_date_font_size_24">24dp</dimen>
 <dimen name="lock_date_font_size_25">25dp</dimen>
 
+<!-- Typo clock font size parameters -->
+<dimen name="lock_clock_font_size_35">35dp</dimen>
+<dimen name="lock_clock_font_size_36">36dp</dimen>
+<dimen name="lock_clock_font_size_37">37dp</dimen>
+<dimen name="lock_clock_font_size_38">38dp</dimen>
+<dimen name="lock_clock_font_size_39">39dp</dimen>
+<dimen name="lock_clock_font_size_40">40dp</dimen>
+<dimen name="lock_clock_font_size_41">41dp</dimen>
+<dimen name="lock_clock_font_size_42">42dp</dimen>
+<dimen name="lock_clock_font_size_43">43dp</dimen>
+<dimen name="lock_clock_font_size_44">44dp</dimen>
+<dimen name="lock_clock_font_size_45">45dp</dimen>
+<dimen name="lock_clock_font_size_46">46dp</dimen>
+<dimen name="lock_clock_font_size_47">47dp</dimen>
+<dimen name="lock_clock_font_size_48">48dp</dimen>
+<dimen name="lock_clock_font_size_49">49dp</dimen>
+<dimen name="lock_clock_font_size_50">50dp</dimen>
+<dimen name="lock_clock_font_size_51">51dp</dimen>
+<dimen name="lock_clock_font_size_52">52dp</dimen>
+<dimen name="lock_clock_font_size_53">53dp</dimen>
+<dimen name="lock_clock_font_size_54">54dp</dimen>
+<dimen name="lock_clock_font_size_55">55dp</dimen>
 <!-- Lock clock font size parameters -->
 <dimen name="lock_clock_font_size_65">65dp</dimen>
 <dimen name="lock_clock_font_size_66">66dp</dimen>

@@ -12,7 +12,7 @@ public class AccentUtils {
 
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.rr.accent_color";
-    private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
+    private static final String GRADIENT_COLOR_PROP = "persist.sys.rr.gradientcolor";
 
     public static boolean isResourceDarkAccent(String resName) {
         return resName.contains("accent_device_default_dark");

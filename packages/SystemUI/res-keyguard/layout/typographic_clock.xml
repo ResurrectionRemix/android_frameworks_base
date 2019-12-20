@@ -22,5 +22,4 @@
     android:paddingStart="50dp"
     android:textAlignment="viewStart"
     style="@style/widget_big"
-    android:textSize="40dp"
     />

@@ -5886,6 +5886,20 @@ public final class Settings {
         public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
 
         /**
+         ** Change fonts for the system lockscreen clock widget
+         **
+         ** @hide
+         **/
+        public static final String CUSTOM_TEXT_CLOCK_FONTS = "custom_text_clock_fonts";
+
+        /**
+         * Change font size for the lockscreen text clock widget
+         *
+         * @hide
+         */
+        public static final String CUSTOM_TEXT_CLOCK_FONT_SIZE = "custom_text_clock_font_size";
+
+        /**
          * Change quick settings tiles animation style
          *
          * @hide
