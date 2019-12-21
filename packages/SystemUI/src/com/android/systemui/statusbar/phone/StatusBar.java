@@ -1961,10 +1961,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1270d026bc2... Allow to set QS panel columns and rows [1/2]
     /**
      * All changes to the status bar and notifications funnel through here and are batched.
      */

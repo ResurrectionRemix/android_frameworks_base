@@ -134,7 +134,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SyncTile> syncTileProvider,
             Provider<UsbTetherTile> usbTetherTileProvider,
             Provider<VolumeTile> volumeTileProvider,
-            Provider<VpnTile> vpnTileProvider),
+            Provider<VpnTile> vpnTileProvider,
             Provider<SoundSearchTIle> soundSearchTIleProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
