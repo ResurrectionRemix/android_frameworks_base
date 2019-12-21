@@ -700,8 +700,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mBubbleController.setExpandListener(mBubbleExpandListener);
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
         if (mSliceProvider != null) {
-            mSliceProvider.initDependencies(mMediaManager, mStatusBarStateController,
-                    mKeyguardBypassController, DozeParameters.getInstance(mContext));
+            mSliceProvider.initDependencies(mMediaManager, mStatusBarStateController);
         } else {
             Log.w(TAG, "Cannot init KeyguardSliceProvider dependencies");
         }

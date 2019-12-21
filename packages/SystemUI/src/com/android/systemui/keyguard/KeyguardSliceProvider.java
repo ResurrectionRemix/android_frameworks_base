@@ -500,7 +500,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
 
         notifyChange();
         // if AoD is disabled, the device is not already dozing and we get a new track, trigger an ambient pulse event
-        if (mPulseOnNewTracks && nextVisible && !mDozeParameters.getAlwaysOn() && mDozing) {
+        if (mPulseOnNewTracks && nextVisible && mDozing) {
             getContext().sendBroadcastAsUser(new Intent(PULSE_ACTION),
                     new UserHandle(UserHandle.USER_CURRENT));
         }

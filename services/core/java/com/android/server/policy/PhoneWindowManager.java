@@ -217,6 +217,7 @@ import com.android.internal.policy.IShortcutService;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.rr.Utils; //Error3
 import com.android.server.ExtconStateObserver;
 import com.android.server.ExtconUEventObserver;
 import com.android.server.GestureLauncherService;
@@ -724,6 +725,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_NOTIFY_USER_ACTIVITY = 26;
     private static final int MSG_RINGER_TOGGLE_CHORD = 27;
     private static final int MSG_MOVE_DISPLAY_TO_TOP = 28;
+    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 29; //Error 1
 
     // Lineage additions
     private static final int MSG_TOGGLE_TORCH = 100;
@@ -832,10 +834,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 case MSG_TOGGLE_TORCH:
                     toggleTorch();
                     break;
-                case MSG_CAMERA_LONG_PRESS:
+                case MSG_CAMERA_LONG_PRESS: {
                     KeyEvent event = (KeyEvent) msg.obj;
                     mIsLongPress = true;
                     break;
+		} //Error-2
                 case MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK: {
                     KeyEvent event = (KeyEvent) msg.obj;
                     dispatchMediaKeyWithWakeLockToAudioService(event);
