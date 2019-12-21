@@ -224,6 +224,17 @@ public class AmbientDisplayConfiguration {
                 Settings.System.PULSE_ON_NEW_TRACKS, 1, user) != 0; 
     }
 
+    // omni additions start
+    private boolean boolSettingSystem(String name, int user, int def) {
+        return Settings.System.getIntForUser(mContext.getContentResolver(), name, def, user) != 0;
+    }
+
+    /** {@hide} */
+    public boolean alwaysOnEnabledSetting(int user) {
+        boolean alwaysOnEnabled = boolSetting(Settings.Secure.DOZE_ALWAYS_ON, user, mAlwaysOnByDefault ? 1 : 0);
+        return alwaysOnEnabled && alwaysOnAvailable() && !accessibilityInversionEnabled(user);
+    }
+
     /** {@hide} */
     public boolean alwaysOnChargingEnabled(int user) {
         final boolean dozeOnChargeEnabled = boolSettingSystem(Settings.System.OMNI_DOZE_ON_CHARGE, user, 0);
