@@ -7071,7 +7071,12 @@ public final class Settings {
         public static final String SETTINGS_SPACER_STYLE = "settings_spacer_style";
 
         /**
-         * 
+         * Whether to disable notifications feedback gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_NOTIFICATIONS_FEEDBACK = "gaming_mode_notifications_feedback";
+
+        /**
          * @hide
          */
         public static final String SETTINGS_SPACER_FONT_STYLE = "settings_spacer_font_style";
