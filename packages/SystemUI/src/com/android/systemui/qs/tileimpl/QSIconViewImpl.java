@@ -22,12 +22,15 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.Configuration;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.Animatable2.AnimationCallback;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.provider.Settings.System;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -37,7 +40,7 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.State;
 import com.android.systemui.qs.AlphaControlledSignalTileView.AlphaControlledSlashImageView;
-
+import java.util.Random;
 import java.util.Objects;
 
 public class QSIconViewImpl extends QSIconView {
@@ -174,6 +177,16 @@ public class QSIconViewImpl extends QSIconView {
         return getColorForState(getContext(), state);
     }
 
+    public int randomColor() {
+        Random r = new Random();
+        float hsl[] = new float[3];
+        hsl[0] = r.nextInt(360);
+        hsl[1] = r.nextFloat();
+        hsl[2] = (isThemeDark(getContext()) ? 0.575f : 0.3f) + (r.nextFloat() * 0.125f);
+        return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
+    }
+
+
     private void animateGrayScale(int fromColor, int toColor, ImageView iv,
         final Runnable endRunnable) {
         if (iv instanceof AlphaControlledSlashImageView) {
@@ -181,10 +194,12 @@ public class QSIconViewImpl extends QSIconView {
                     .setFinalImageTintList(ColorStateList.valueOf(toColor));
         }
 
-        boolean useQSAccentTint = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT) == 1;
-
-        if (mAnimationEnabled && ValueAnimator.areAnimatorsEnabled()) {
+        int  useQSAccentTint = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
+        boolean setQsFromResources = System.getIntForUser(getContext().getContentResolver(),
+                     System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
+	
+	if (mAnimationEnabled && setQsFromResources && ValueAnimator.areAnimatorsEnabled()) {
             final float fromAlpha = Color.alpha(fromColor);
             final float toAlpha = Color.alpha(toColor);
             final float fromChannel = Color.red(fromColor);
@@ -197,8 +212,10 @@ public class QSIconViewImpl extends QSIconView {
                 int alpha = (int) (fromAlpha + (toAlpha - fromAlpha) * fraction);
                 int channel = (int) (fromChannel + (toChannel - fromChannel) * fraction);
 
-                if (useQSAccentTint) {
+                if (useQSAccentTint == 1) {
                     setTint(iv, toColor);
+                } if (useQSAccentTint == 2) {
+                    setTint(iv, randomColor());
                 } else {
                     setTint(iv, Color.argb(alpha, channel, channel, channel));
                 }
@@ -211,7 +228,11 @@ public class QSIconViewImpl extends QSIconView {
             });
             anim.start();
         } else {
-            setTint(iv, toColor);
+            if (useQSAccentTint == 2) {
+                setTint(iv, randomColor());
+            } else {
+                setTint(iv, toColor);
+            }
             endRunnable.run();
         }
     }
@@ -239,4 +260,16 @@ public class QSIconViewImpl extends QSIconView {
     protected final void layout(View child, int left, int top) {
         child.layout(left, top, left + child.getMeasuredWidth(), top + child.getMeasuredHeight());
     }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
+     }
+
 }

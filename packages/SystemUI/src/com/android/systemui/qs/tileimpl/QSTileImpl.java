@@ -29,7 +29,9 @@ import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.metrics.LogMaker;
 import android.os.Handler;
@@ -37,7 +39,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Vibrator;
 import android.os.UserHandle;
+import android.content.res.ColorUtils;
 import android.provider.Settings;
+import android.provider.Settings.System;
 import android.service.quicksettings.Tile;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
@@ -67,6 +71,8 @@ import com.android.systemui.qs.PagedTileLayout.TilePage;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.tuner.TunerService;
+
+import com.android.systemui.R;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -451,8 +457,28 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     public abstract CharSequence getTileLabel();
 
     public static int getColorForState(Context context, int state) {
-        boolean useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT) == 1;
+        int defaultColor = ColorUtils.genRandomQsColor();
+
+        boolean setQsFromWall = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_WALL, 0, UserHandle.USER_CURRENT) == 1;
+        boolean setQsFromResources = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
+        boolean setQsFromAccent = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_ACCENT, 1, UserHandle.USER_CURRENT) == 1;
+        int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
+
+        int qsBackGroundColor = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
+                System.QS_PANEL_BG_COLOR, defaultColor, UserHandle.USER_CURRENT));
+        int qsBackGroundColorWall = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
+                System.QS_PANEL_BG_COLOR_WALL, defaultColor, UserHandle.USER_CURRENT));
+
+        int qsTileStyle = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_STYLE, 0, UserHandle.USER_CURRENT);
+
+        boolean qsIconPrimary = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_ICON_PRIMARY, 0, UserHandle.USER_CURRENT) == 1;
+
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
                 return Utils.getDisabled(context,
@@ -460,16 +486,47 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
             case Tile.STATE_INACTIVE:
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
             case Tile.STATE_ACTIVE:
-                if (useQSAccentTint) {
-                    return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                if (setQsFromResources) {
+                    if (setQsUseNewTint == 2)
+                        return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                    else if (setQsUseNewTint == 1 && (qsTileStyle == 0 || qsTileStyle == 7 ||
+                            qsTileStyle == 9 || qsTileStyle == 10 || qsTileStyle == 12 || qsTileStyle == 13))
+                            return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                    else
+                        if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                                                       qsTileStyle == 12 || qsTileStyle == 13)
+                            return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                        else
+                            if (qsIconPrimary)
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                            else
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
                 } else {
-                    return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                     if (setQsFromAccent) {
+                        return context.getResources().getColor(R.color.accent_device_default_light);
+                     } else {
+                         if (setQsFromWall)
+                            return qsBackGroundColorWall;
+                         else
+                            return qsBackGroundColor;
+                     }
                 }
             default:
                 Log.e("QSTile", "Invalid state " + state);
                 return 0;
         }
     }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
+     }
 
     protected final class H extends Handler {
         private static final int ADD_CALLBACK = 1;

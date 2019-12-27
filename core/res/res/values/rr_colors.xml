@@ -21,6 +21,9 @@
     <!-- Themes -->
     <color name="theme_generic_semi_transparent_color">#EAFFFFFF</color>
 
+    <!-- QS Accent -->
+    <color name="qs_accent">@color/accent_device_default_light</color>
+
 </resources>
 
 

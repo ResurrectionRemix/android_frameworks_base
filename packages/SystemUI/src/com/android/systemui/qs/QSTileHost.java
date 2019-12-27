@@ -147,10 +147,7 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
     @Override
     public void onPluginDisconnected(QSFactory plugin) {
         mQsFactories.remove(plugin);
-        // Force remove and recreate of all tiles.
-        String value = mTunerService.getValue(TILES_SETTING);
-        onTuningChanged(TILES_SETTING, "");
-        onTuningChanged(TILES_SETTING, value);
+        reloadAllTiles();
     }
 
     @Override

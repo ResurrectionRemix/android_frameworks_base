@@ -67,6 +67,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.app.UiModeManager;
+import android.app.WallpaperColors;
 import android.app.WallpaperInfo;
 import android.app.WallpaperManager;
 import android.app.admin.DevicePolicyManager;
@@ -2255,6 +2256,24 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+	            Settings.System.QS_PANEL_BG_USE_WALL),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_BG_USE_FW),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.QS_PANEL_BG_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_BG_COLOR_WALL),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+	            Settings.System.QS_PANEL_BG_USE_ACCENT),
+	            false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_ICON_PRIMARY),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2271,7 +2290,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_HEADER_STYLE))) {
                 stockQSHeaderStyle();
                 updateQSHeaderStyle();
-	         } else {
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY)))  {
+                mQSPanel.getHost().reloadAllTiles();
+             } else {
               update();
             }
         }
@@ -2298,6 +2323,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setHideArrowForBackGesture();
             updateQsPanelResources();
             updateNavigationBar(getRegisterStatusBarResult(), false);
+            updateQSPanel();
         }
     }
 
@@ -4280,6 +4306,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             Dependency.get(ConfigurationController.class).notifyThemeChanged();
         }
         updateCorners();
+        updateQSPanel();
     }
 
     private void updateSwitchStyle() {
@@ -4308,6 +4335,26 @@ public class StatusBar extends SystemUI implements DemoMode,
         mUiOffloadThread.submit(() -> {
            ThemeAccentUtils.stockNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
         });
+    }
+    private void updateQSPanel() {
+        int userQsWallColorSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_WALL, 0, UserHandle.USER_CURRENT);
+        boolean setQsFromWall = userQsWallColorSetting == 1;
+        if (setQsFromWall) {
+            WallpaperColors systemColors = mColorExtractor
+                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            if (systemColors != null)
+            {
+                Color mColor = systemColors.getPrimaryColor();
+                int mColorInt = mColor.toArgb();
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_PANEL_BG_COLOR_WALL, mColorInt, UserHandle.USER_CURRENT);
+            } else {
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_PANEL_BG_COLOR_WALL, Color.WHITE, UserHandle.USER_CURRENT);
+            }
+
+        }
     }
 
     private void updateDozingState() {
