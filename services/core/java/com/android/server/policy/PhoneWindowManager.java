@@ -1498,8 +1498,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case LONG_PRESS_POWER_GLOBAL_ACTIONS:
                 mPowerKeyHandled = true;
-                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
-                        "Power - Long Press - Global Actions");
                 KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
                 boolean locked = km.inKeyguardRestrictedInputMode();
                 boolean globalActionsOnLockScreen = Settings.Global.getInt(
@@ -1507,6 +1505,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 if (locked && !globalActionsOnLockScreen) {
                     behavior = LONG_PRESS_POWER_NOTHING;
                 } else {
+                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
+                        "Power - Long Press - Global Actions");
                     showGlobalActionsInternal();
                 }
                 break;
@@ -1554,14 +1554,20 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void powerVeryLongPress() {
         switch (mVeryLongPressOnPowerBehavior) {
-        case VERY_LONG_PRESS_POWER_NOTHING:
-            break;
-        case VERY_LONG_PRESS_POWER_GLOBAL_ACTIONS:
-            mPowerKeyHandled = true;
-            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
-                    "Power - Very Long Press - Show Global Actions");
-            showGlobalActionsInternal();
-            break;
+            case VERY_LONG_PRESS_POWER_NOTHING:
+                break;
+            case VERY_LONG_PRESS_POWER_GLOBAL_ACTIONS:
+                mPowerKeyHandled = true;
+                KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+                boolean locked = km.inKeyguardRestrictedInputMode();
+                boolean globalActionsOnLockScreen = Settings.Global.getInt(
+                        mContext.getContentResolver(), Settings.Global.LOCKSCREEN_ENABLE_POWER_MENU, 1) != 0;
+                if (!locked || globalActionsOnLockScreen) {
+                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
+                        "Power - Very Long Press - Show Global Actions");
+                    showGlobalActionsInternal();
+                }
+                break;
         }
     }
 
