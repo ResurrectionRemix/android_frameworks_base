@@ -26,6 +26,6 @@
     <application android:label="@string/font_bariol_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="bariol,bariol-bold" />
+            android:value="bariol,bariol-semi-bold,bariol-bold" />
     </application>
 </manifest>

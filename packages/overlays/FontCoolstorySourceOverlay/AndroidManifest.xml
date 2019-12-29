@@ -26,6 +26,6 @@
     <application android:label="@string/font_coolstory_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="coolstory,coolstory-bold" />
+            android:value="coolstory,coolstory-semi-bold,coolstory-bold" />
     </application>
 </manifest>

@@ -26,6 +26,6 @@
     <application android:label="@string/font_lgsmartgothic_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="lgsmartgothic,lgsmartgothic-bold" />
+            android:value="lgsmartgothic,lgsmartgothic-semi-bold,lgsmartgothic-bold" />
     </application>
 </manifest>

@@ -26,6 +26,6 @@
     <application android:label="@string/font_amarante_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="amarante,amarante-bold" />
+            android:value="amarante,amarante-semi-bold,amarante-bold" />
     </application>
 </manifest>

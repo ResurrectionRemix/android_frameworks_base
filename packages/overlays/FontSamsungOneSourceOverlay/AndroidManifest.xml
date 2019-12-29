@@ -26,6 +26,6 @@
     <application android:label="@string/font_samsungone_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="samsungone,samsungone-bold" />
+            android:value="samsungone,samsungone-semi-bold,samsungone-bold" />
     </application>
 </manifest>

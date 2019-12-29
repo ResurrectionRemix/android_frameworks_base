@@ -26,6 +26,6 @@
     <application android:label="@string/font_oneplusslate_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="oneplusslate,oneplusslate-bold" />
+            android:value="oneplusslate,oneplusslate-semi-bold,oneplusslate-bold" />
     </application>
 </manifest>

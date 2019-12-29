@@ -78,7 +78,8 @@
     <family name="aclonica">
         <font weight="300" style="normal">Aclonica.ttf</font>
     </family>
-    <alias name="aclonica-bold" to="aclonica" weight="600" />
+    <alias name="aclonica-semi-bold" to="aclonica" weight="600" />
+    <alias name="aclonica-bold" to="aclonica" weight="700" />
     <alias name="times" to="aclonica" />
     <alias name="times new roman" to="aclonica" />
     <alias name="palatino" to="aclonica" />
@@ -91,7 +92,8 @@
     <family name="amarante">
         <font weight="300" style="normal">Amarante.ttf</font>
     </family>
-    <alias name="amarante-bold" to="amarante" weight="600" />
+    <alias name="amarante-semi-bold" to="amarante" weight="600" />
+    <alias name="amarante-bold" to="amarante" weight="700" />
     <alias name="times" to="amarante" />
     <alias name="times new roman" to="amarante" />
     <alias name="palatino" to="amarante" />
@@ -104,7 +106,8 @@
     <family name="bariol">
         <font weight="300" style="normal">Bariol-Regular.ttf</font>
     </family>
-    <alias name="bariol-bold" to="bariol" weight="600" />
+    <alias name="bariol-semi-bold" to="bariol" weight="600" />
+    <alias name="bariol-bold" to="bariol" weight="700" />
     <alias name="times" to="bariol" />
     <alias name="times new roman" to="bariol" />
     <alias name="palatino" to="bariol" />
@@ -117,7 +120,8 @@
     <family name="cagliostro">
         <font weight="300" style="normal">Cagliostro-Regular.ttf</font>
     </family>
-    <alias name="cagliostro-bold" to="cagliostro" weight="600" />
+    <alias name="cagliostro-semi-bold" to="cagliostro" weight="600" />
+    <alias name="cagliostro-bold" to="cagliostro" weight="700" />
     <alias name="times" to="cagliostro" />
     <alias name="times new roman" to="cagliostro" />
     <alias name="palatino" to="cagliostro" />
@@ -130,7 +134,8 @@
     <family name="coolstory">
         <font weight="300" style="normal">Coolstory-Regular.ttf</font>
     </family>
-    <alias name="coolstory-bold" to="coolstory" weight="600" />
+    <alias name="coolstory-semi-bold" to="coolstory" weight="600" />
+    <alias name="coolstory-bold" to="coolstory" weight="700" />
     <alias name="times" to="coolstory" />
     <alias name="times new roman" to="coolstory" />
     <alias name="palatino" to="coolstory" />
@@ -143,7 +148,8 @@
     <family name="lgsmartgothic">
         <font weight="300" style="normal">LGSmartGothic.ttf</font>
     </family>
-    <alias name="lgsmartgothic-bold" to="lgsmartgothic" weight="600" />
+    <alias name="lgsmartgothic-semi-bold" to="lgsmartgothic" weight="600" />
+    <alias name="lgsmartgothic-bold" to="lgsmartgothic" weight="700" />
     <alias name="times" to="lgsmartgothic" />
     <alias name="times new roman" to="lgsmartgothic" />
     <alias name="palatino" to="lgsmartgothic" />
@@ -156,7 +162,8 @@
     <family name="rosemary">
         <font weight="300" style="normal">Rosemary-Regular.ttf</font>
     </family>
-    <alias name="rosemary-bold" to="rosemary" weight="600" />
+    <alias name="rosemary-semi-bold" to="rosemary" weight="600" />
+    <alias name="rosemary-bold" to="rosemary" weight="700" />
     <alias name="times" to="rosemary" />
     <alias name="times new roman" to="rosemary" />
     <alias name="palatino" to="rosemary" />
@@ -169,7 +176,8 @@
     <family name="sonysketch">
         <font weight="300" style="normal">SonySketch.ttf</font>
     </family>
-    <alias name="sonysketch-bold" to="sonysketch" weight="600" />
+    <alias name="sonysketch-semi-bold" to="sonysketch" weight="600" />
+    <alias name="sonysketch-bold" to="sonysketch" weight="700" />
     <alias name="times" to="sonysketch" />
     <alias name="times new roman" to="sonysketch" />
     <alias name="palatino" to="sonysketch" />
@@ -182,7 +190,8 @@
     <family name="surfer">
         <font weight="300" style="normal">Surfer.ttf</font>
     </family>
-    <alias name="surfer-bold" to="surfer" weight="600" />
+    <alias name="surfer-semi-bold" to="surfer" weight="600" />
+    <alias name="surfer-bold" to="surfer" weight="700" />
     <alias name="times" to="surfer" />
     <alias name="times new roman" to="surfer" />
     <alias name="palatino" to="surfer" />
@@ -196,7 +205,8 @@
         <font weight="300" style="normal">SlateFromOP-Light.ttf</font>
         <font weight="400" style="normal">SlateFromOP-Regular.ttf</font>
     </family>
-    <alias name="oneplusslate-bold" to="oneplusslate" weight="600" />
+    <alias name="oneplusslate-semi-bold" to="oneplusslate" weight="600" />
+    <alias name="oneplusslate-bold" to="oneplusslate" weight="700" />
     <alias name="times" to="oneplusslate" />
     <alias name="times new roman" to="oneplusslate" />
     <alias name="palatino" to="oneplusslate" />
@@ -209,7 +219,8 @@
     <family name="samsungone">
         <font weight="400" style="normal">SamsungOne.ttf</font>
     </family>
-    <alias name="samsungone-bold" to="samsungone" weight="600" />
+    <alias name="samsungone-semi-bold" to="samsungone" weight="600" />
+    <alias name="samsungone-bold" to="samsungone" weight="700" />
     <alias name="times" to="samsungone" />
     <alias name="times new roman" to="samsungone" />
     <alias name="palatino" to="samsungone" />

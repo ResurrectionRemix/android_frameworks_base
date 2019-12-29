@@ -19,7 +19,7 @@
      <!-- Name of a font family to use for body text. -->
     <string name="config_bodyFontFamily" translatable="false">aclonica</string>
     <!-- Name of a font family to use for medium body text. -->
-    <string name="config_bodyFontFamilyMedium" translatable="false">aclonica</string>
+    <string name="config_bodyFontFamilyMedium" translatable="false">aclonica-semi-bold</string>
     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
     <string name="config_headlineFontFamily" translatable="false">aclonica</string>
     <!-- Name of the font family used for system surfaces where the font should use medium weight -->

@@ -26,6 +26,6 @@
     <application android:label="@string/font_surfer_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="surfer,surfer-bold" />
+            android:value="surfer,surfer-semi-bold,surfer-bold" />
     </application>
 </manifest>

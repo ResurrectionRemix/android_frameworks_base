@@ -26,6 +26,6 @@
     <application android:label="@string/font_cagliostro_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="cagliostro,cagliostro-bold" />
+            android:value="cagliostro,cagliostro-semi-bold,cagliostro-bold" />
     </application>
 </manifest>
