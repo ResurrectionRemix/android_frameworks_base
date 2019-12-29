@@ -192,6 +192,33 @@
     <alias name="fantasy" to="surfer" />
     <alias name="ITC Stone Serif" to="surfer" />
 
+    <family name="oneplusslate">
+        <font weight="300" style="normal">SlateFromOP-Light.ttf</font>
+        <font weight="400" style="normal">SlateFromOP-Regular.ttf</font>
+    </family>
+    <alias name="oneplusslate-bold" to="oneplusslate" weight="600" />
+    <alias name="times" to="oneplusslate" />
+    <alias name="times new roman" to="oneplusslate" />
+    <alias name="palatino" to="oneplusslate" />
+    <alias name="georgia" to="oneplusslate" />
+    <alias name="baskerville" to="oneplusslate" />
+    <alias name="goudy" to="oneplusslate" />
+    <alias name="fantasy" to="oneplusslate" />
+    <alias name="ITC Stone Serif" to="oneplusslate" />
+
+    <family name="samsungone">
+        <font weight="400" style="normal">SamsungOne.ttf</font>
+    </family>
+    <alias name="samsungone-bold" to="samsungone" weight="600" />
+    <alias name="times" to="samsungone" />
+    <alias name="times new roman" to="samsungone" />
+    <alias name="palatino" to="samsungone" />
+    <alias name="georgia" to="samsungone" />
+    <alias name="baskerville" to="samsungone" />
+    <alias name="goudy" to="samsungone" />
+    <alias name="fantasy" to="samsungone" />
+    <alias name="ITC Stone Serif" to="samsungone" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
