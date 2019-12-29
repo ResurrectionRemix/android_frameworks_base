@@ -16,6 +16,6 @@
  */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Headline / Body font Surfer overlay -->
-    <string name="font_surfer_source_overlay" translatable="false">Surfer</string>
+    <!-- Headline / Body font Comic Sans overlay -->
+    <string name="font_googlesans_source_overlay" translatable="false">Google Sans</string>
 </resources>

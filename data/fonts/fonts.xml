@@ -230,6 +230,34 @@
     <alias name="fantasy" to="samsungone" />
     <alias name="ITC Stone Serif" to="samsungone" />
 
+    <family name="comicsans">
+        <font weight="400" style="normal">Comic_Sans.ttf</font>
+    </family>
+    <alias name="comicsans-semi-bold" to="comicsans" weight="600" />
+    <alias name="comicsans-bold" to="comicsans" weight="700" />
+    <alias name="times" to="comicsans" />
+    <alias name="times new roman" to="comicsans" />
+    <alias name="palatino" to="comicsans" />
+    <alias name="georgia" to="comicsans" />
+    <alias name="baskerville" to="comicsans" />
+    <alias name="goudy" to="comicsans" />
+    <alias name="fantasy" to="comicsans" />
+    <alias name="ITC Stone Serif" to="comicsans" />
+
+    <family name="googlesans">
+        <font weight="400" style="normal">GoogleSans-Regular.ttf</font>
+    </family>
+    <alias name="googlesans-semi-bold" to="googlesans" weight="600" />
+    <alias name="googlesans-bold" to="googlesans" weight="700" />
+    <alias name="times" to="googlesans" />
+    <alias name="times new roman" to="googlesans" />
+    <alias name="palatino" to="googlesans" />
+    <alias name="georgia" to="googlesans" />
+    <alias name="baskerville" to="googlesans" />
+    <alias name="goudy" to="googlesans" />
+    <alias name="fantasy" to="googlesans" />
+    <alias name="ITC Stone Serif" to="googlesans" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>

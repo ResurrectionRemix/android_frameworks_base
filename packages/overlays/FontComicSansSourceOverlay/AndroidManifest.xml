@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Headline / Body font Surfer overlay -->
-    <string name="font_surfer_source_overlay" translatable="false">Surfer</string>
-</resources>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.theme.font.comicsans"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <overlay android:targetPackage="android"
+        android:category="android.theme.customization.font"
+        android:priority="1"/>
+
+    <application android:label="@string/font_comicsans_source_overlay" android:hasCode="false">
+        <meta-data
+            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+            android:value="comicsans,comicsans-semi-bold,comicsans-bold" />
+    </application>
+</manifest>
