@@ -16,17 +16,17 @@
 
 <resources>
 
-    <string name="font_family_display_4_material">sans-serif-light</string>
-    <string name="font_family_display_3_material">sans-serif</string>
-    <string name="font_family_display_2_material">sans-serif</string>
-    <string name="font_family_display_1_material">sans-serif</string>
-    <string name="font_family_headline_material">sans-serif</string>
-    <string name="font_family_title_material">sans-serif-medium</string>
-    <string name="font_family_subhead_material">sans-serif</string>
-    <string name="font_family_menu_material">sans-serif</string>
-    <string name="font_family_body_2_material">sans-serif-medium</string>
-    <string name="font_family_body_1_material">sans-serif</string>
-    <string name="font_family_caption_material">sans-serif</string>
-    <string name="font_family_button_material">sans-serif-medium</string>
+    <string name="font_family_display_4_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_display_3_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_display_2_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_display_1_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_headline_material">@string/config_headlineFontFamily</string>
+    <string name="font_family_title_material">@string/config_headlineFontFamilyMedium</string>
+    <string name="font_family_subhead_material">@string/config_headlineFontFamily</string>
+    <string name="font_family_menu_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_body_2_material">@string/config_bodyFontFamilyMedium</string>
+    <string name="font_family_body_1_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_caption_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_button_material">@string/config_headlineFontFamilyMedium</string>
 
 </resources>
