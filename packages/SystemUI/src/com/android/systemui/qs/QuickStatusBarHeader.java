@@ -156,8 +156,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
 
-    private static final String QS_BATTERY_MODE =
-            "system:" + Settings.System.QS_BATTERY_MODE;
+
+    private static final String SHOW_QS_CLOCK =
+            "system:" + Settings.System.SHOW_QS_CLOCK;
+    private static final String QS_SHOW_BATTERY_PERCENT =
+            "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
+    private static final String QS_SHOW_BATTERY_ESTIMATE =
+            "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
     public static final String STATUS_BAR_BATTERY_STYLE =
             "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
     private boolean mHideDragHandle;
@@ -269,7 +274,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
         // Don't need to worry about tuner settings for this icon
         mBatteryRemainingIcon.setIgnoreTunerUpdates(true);
-        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
 
@@ -281,9 +285,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         Dependency.get(TunerService.class).addTunable(this,
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
                 StatusBarIconController.ICON_BLACKLIST, QS_BATTERY_MODE,
-                STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK,
+                STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
+                QS_SHOW_BATTERY_ESTIMATE,
                 QSFooterImpl.QS_SHOW_DRAG_HANDLE);
-        updateSettings();
+        updateSettings();]
     }
 
     private List<String> getIgnoredIconSlots() {
@@ -723,22 +728,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER:
                 updateSettings();
                 break;
-            case QS_BATTERY_MODE:
-                int showEstimate =
-                        TunerService.parseInteger(newValue, 1);
-                if (showEstimate == 0) {
-                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
-                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_OFF);
-                } else if (showEstimate == 1) {
-                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
-                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
-                } else if (showEstimate == 2) {
-                    mBatteryRemainingIcon.mShowBatteryPercent = 1;
-                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_OFF);
-                } else if (showEstimate == 3) {
-                    mBatteryRemainingIcon.mShowBatteryPercent = 0;
-                    mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
-                }
+            case QS_SHOW_BATTERY_PERCENT:
+                mBatteryRemainingIcon.mShowBatteryPercent =
+                        TunerService.parseInteger(newValue, 2);
+                mBatteryRemainingIcon.updatePercentView();
+                mBatteryRemainingIcon.updateVisibility();
+                break;
+            case QS_SHOW_BATTERY_ESTIMATE:
+                mBatteryRemainingIcon.mShowBatteryEstimate =
+                        TunerService.parseInteger(newValue, 0);
                 mBatteryRemainingIcon.updatePercentView();
                 mBatteryRemainingIcon.updateVisibility();
                 break;
