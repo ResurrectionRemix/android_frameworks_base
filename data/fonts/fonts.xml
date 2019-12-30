@@ -329,6 +329,38 @@
     <alias name="fantasy" to="ubuntu" />
     <alias name="ITC Stone Serif" to="ubuntu" />
 
+    <family name="nokiapure">
+        <font weight="400" style="normal">Nokia_Pure.ttf</font>
+    </family>
+    <alias name="nokiapure-light" to="nokiapure" weight="300" />
+    <alias name="nokiapure-medium" to="nokiapure" weight="500" />
+    <alias name="nokiapure-semi-bold" to="nokiapure" weight="600" />
+    <alias name="nokiapure-bold" to="nokiapure" weight="700" />
+    <alias name="times" to="nokiapure" />
+    <alias name="times new roman" to="nokiapure" />
+    <alias name="palatino" to="nokiapure" />
+    <alias name="georgia" to="nokiapure" />
+    <alias name="baskerville" to="nokiapure" />
+    <alias name="goudy" to="nokiapure" />
+    <alias name="fantasy" to="nokiapure" />
+    <alias name="ITC Stone Serif" to="nokiapure" />
+
+    <family name="fifa2018">
+        <font weight="400" style="normal">Fifa_2018.ttf</font>
+    </family>
+    <alias name="fifa2018-light" to="fifa2018" weight="300" />
+    <alias name="fifa2018-medium" to="fifa2018" weight="500" />
+    <alias name="fifa2018-semi-bold" to="fifa2018" weight="600" />
+    <alias name="fifa2018-bold" to="fifa2018" weight="700" />
+    <alias name="times" to="fifa2018" />
+    <alias name="times new roman" to="fifa2018" />
+    <alias name="palatino" to="fifa2018" />
+    <alias name="georgia" to="fifa2018" />
+    <alias name="baskerville" to="fifa2018" />
+    <alias name="goudy" to="fifa2018" />
+    <alias name="fantasy" to="fifa2018" />
+    <alias name="ITC Stone Serif" to="fifa2018" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
