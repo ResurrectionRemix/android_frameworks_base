@@ -246,7 +246,14 @@
 
     <family name="googlesans">
         <font weight="400" style="normal">GoogleSans-Regular.ttf</font>
+        <font weight="400" style="italic">GoogleSans-Italic.ttf</font>
+        <font weight="500" style="normal">GoogleSans-Medium.ttf</font>
+        <font weight="500" style="italic">GoogleSans-MediumItalic.ttf</font>
+        <font weight="700" style="normal">GoogleSans-Bold.ttf</font>
+        <font weight="700" style="italic">GoogleSans-BoldItalic.ttf</font>
     </family>
+
+    <alias name="googlesans-medium" to="googlesans" weight="500" />
     <alias name="googlesans-semi-bold" to="googlesans" weight="600" />
     <alias name="googlesans-bold" to="googlesans" weight="700" />
     <alias name="times" to="googlesans" />
