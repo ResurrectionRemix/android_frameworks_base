@@ -107,7 +107,6 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
     private DragDownHelper mDragDownHelper;
     private NotificationStackScrollLayout mStackScrollLayout;
     private NotificationPanelView mNotificationPanel;
-    private View mBrightnessMirror;
     private LockIcon mLockIcon;
     private PhoneStatusBarView mStatusBarView;
     private PhoneStatusBarTransitions mBarTransitions;
@@ -304,10 +303,7 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
         super.onFinishInflate();
         mStackScrollLayout = findViewById(R.id.notification_stack_scroller);
         mNotificationPanel = findViewById(R.id.notification_panel);
-        mBrightnessMirror = findViewById(R.id.brightness_mirror);
         mLockIcon = findViewById(R.id.lock_icon);
-        mMaxBrightness = (ImageView) mBrightnessMirror.findViewById(R.id.brightness_right);
-        mMinBrightness = (ImageView) mBrightnessMirror.findViewById(R.id.brightness_left);
         mDismissAllButton = (ImageButton) findViewById(R.id.clear_notifications);
     }
 
@@ -320,13 +316,6 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
     @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
-        if (child.getId() == R.id.brightness_mirror) {
-            mBrightnessMirror = child;
-            mMaxBrightness = (ImageView) child.findViewById(R.id.brightness_right);
-            mMaxBrightness.setVisibility(!mShowBrightnessSideButtons ? GONE : VISIBLE);
-            mMinBrightness = (ImageView) child.findViewById(R.id.brightness_left);
-            mMinBrightness.setVisibility(!mShowBrightnessSideButtons ? GONE : VISIBLE);
-        }
     }
 
     /**
@@ -455,14 +444,6 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
         }
         mFalsingManager.onTouchEvent(ev, getWidth(), getHeight());
         mGestureDetector.onTouchEvent(ev);
-        if (mBrightnessMirror != null && mBrightnessMirror.getVisibility() == VISIBLE) {
-            // Disallow new pointers while the brightness mirror is visible. This is so that you
-            // can't touch anything other than the brightness slider while the mirror is showing
-            // and the rest of the panel is transparent.
-            if (ev.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
-                return false;
-            }
-        }
         if (isDown) {
             getStackScrollLayout().closeControlsIfOutsideTouch(ev);
         }
@@ -968,13 +949,6 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_BRIGHTNESS_SIDE_BUTTONS.equals(key)) {
-            if (mMaxBrightness != null || mMinBrightness != null) {
-                mShowBrightnessSideButtons = (newValue == null || Integer.parseInt(newValue) == 0) ? false : true;
-                mMaxBrightness.setVisibility(!mShowBrightnessSideButtons ? GONE : VISIBLE);
-                mMinBrightness.setVisibility(!mShowBrightnessSideButtons ? GONE : VISIBLE);
-            }
-        }
     }
 
    public void updateSettings() {

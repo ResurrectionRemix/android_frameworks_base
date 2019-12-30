@@ -79,8 +79,6 @@
         android:layout_height="match_parent"
         android:visibility="invisible" />
 
-    <include layout="@layout/brightness_mirror" />
-
     <com.android.systemui.statusbar.ScrimView
         android:id="@+id/scrim_in_front"
         android:layout_width="match_parent"

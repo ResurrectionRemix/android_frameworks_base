@@ -31,7 +31,6 @@ import android.widget.TextView;
 
 import com.android.settingslib.RestrictedLockUtils;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 
 public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
     private Listener mListener;
@@ -40,9 +39,6 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
     private CompoundButton mToggle;
     private ToggleSeekBar mSlider;
     private TextView mLabel;
-
-    private ToggleSliderView mMirror;
-    private BrightnessMirrorController mMirrorController;
 
     public ToggleSliderView(Context context) {
         this(context, null);
@@ -73,19 +69,6 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
         mSlider.setAccessibilityLabel(getContentDescription().toString());
 
         a.recycle();
-    }
-
-    public void setMirror(ToggleSliderView toggleSlider) {
-        mMirror = toggleSlider;
-        if (mMirror != null) {
-            mMirror.setChecked(mToggle.isChecked());
-            mMirror.setMax(mSlider.getMax());
-            mMirror.setValue(mSlider.getProgress());
-        }
-    }
-
-    public void setMirrorController(BrightnessMirrorController c) {
-        mMirrorController = c;
     }
 
     @Override
@@ -119,32 +102,16 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
     @Override
     public void setMax(int max) {
         mSlider.setMax(max);
-        if (mMirror != null) {
-            mMirror.setMax(max);
-        }
     }
 
     @Override
     public void setValue(int value) {
         mSlider.setProgress(value);
-        if (mMirror != null) {
-            mMirror.setValue(value);
-        }
     }
 
     @Override
     public int getValue() {
         return mSlider.getProgress();
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mMirror != null) {
-            MotionEvent copy = ev.copy();
-            mMirror.dispatchTouchEvent(copy);
-            copy.recycle();
-        }
-        return super.dispatchTouchEvent(ev);
     }
 
     private final OnCheckedChangeListener mCheckListener = new OnCheckedChangeListener() {
@@ -155,10 +122,6 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
             if (mListener != null) {
                 mListener.onChanged(
                         ToggleSliderView.this, mTracking, checked, mSlider.getProgress(), false);
-            }
-
-            if (mMirror != null) {
-                mMirror.mToggle.setChecked(checked);
             }
         }
     };
@@ -182,11 +145,6 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
             }
 
             mToggle.setChecked(false);
-
-            if (mMirrorController != null) {
-                mMirrorController.showMirror();
-                mMirrorController.setLocation((View) getParent());
-            }
         }
 
         @Override
@@ -197,11 +155,6 @@ public class ToggleSliderView extends RelativeLayout implements ToggleSlider {
                 mListener.onChanged(ToggleSliderView.this, mTracking, mToggle.isChecked(),
                         mSlider.getProgress(), true);
             }
-
-            if (mMirrorController != null) {
-                mMirrorController.hideMirror();
-            }
         }
     };
 }
-
