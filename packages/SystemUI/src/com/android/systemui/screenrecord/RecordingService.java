@@ -323,7 +323,7 @@ public class RecordingService extends Service {
         NotificationChannel channel = new NotificationChannel(
                 CHANNEL_ID,
                 getString(R.string.screenrecord_name),
-                NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager.IMPORTANCE_LOW);
         channel.setDescription(getString(R.string.screenrecord_channel_description));
         channel.enableVibration(true);
         NotificationManager notificationManager =
