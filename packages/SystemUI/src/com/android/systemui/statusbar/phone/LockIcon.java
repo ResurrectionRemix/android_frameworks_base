@@ -533,8 +533,9 @@ public class LockIcon extends KeyguardAffordanceView implements OnUserInfoChange
      * @param pulsing {@code true} when pulsing.
      */
     public void setPulsing(boolean pulsing) {
-        mPulsing = pulsing;
-        update();
+        /*mPulsing = pulsing;
+        update();*/
+        // do nothing, just behave like when aod dozing
     }
 
     /**
