@@ -230,7 +230,7 @@ class Optimizer {
 
     io::BigBufferInputStream manifest_buffer_in(&manifest_buffer);
     if (!io::CopyInputStreamToArchive(context_, &manifest_buffer_in, "AndroidManifest.xml",
-                                      ArchiveEntry::kCompress, writer)) {
+                                      0u, writer)) {
       return false;
     }
 
