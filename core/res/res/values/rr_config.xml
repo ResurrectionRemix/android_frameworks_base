@@ -23,6 +23,13 @@
         <item>com.android.wallpaper.livepicker</item>
     </string-array>
 
+
+    <!-- True if the notification's should dynamically tint the app icon and text -->
+    <bool name="config_allowNotificationIconTextTinting">true</bool>
+    <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
+         backgrounds -->
+    <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
+
     <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
     <string name="config_pocketBridgeSysfsInpocket"></string>

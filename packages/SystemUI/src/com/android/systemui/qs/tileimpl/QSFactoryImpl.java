@@ -17,7 +17,6 @@ package com.android.systemui.qs.tileimpl;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Provider;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
