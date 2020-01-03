@@ -41,6 +41,7 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -140,6 +141,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private boolean mIsReceivingNavBarColor = false;
     private boolean mInGesturalMode;
     private boolean mIsRoundedCornerMultipleRadius;
+    private boolean mCustomCutout;
 
     private CameraAvailabilityListener.CameraTransitionCallback mCameraTransitionCallback =
             new CameraAvailabilityListener.CameraTransitionCallback() {
@@ -409,6 +411,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     }
 
     private void setupDecorations() {
+        mCustomCutout = mContext.getResources().getBoolean(R.bool.config_customCutout);
         mOverlay = LayoutInflater.from(mContext)
                 .inflate(R.layout.rounded_corners, null);
         mCutoutTop = new DisplayCutoutView(mContext, true,
@@ -429,6 +432,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         mBottomOverlay.setForceDarkAllowed(false);
 
         updateViews();
+        initRoundCornerViews();
 
         mWindowManager.addView(mOverlay, getWindowLayoutParams());
         mWindowManager.addView(mBottomOverlay, getBottomLayoutParams());
@@ -603,24 +607,24 @@ public class ScreenDecorations extends SystemUI implements Tunable,
 
         if (mRotation == RotationUtils.ROTATION_NONE) {
             updateView(topLeft, Gravity.TOP | Gravity.LEFT, 0);
-            updateView(topRight, Gravity.TOP | Gravity.RIGHT, 90);
-            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, 270);
-            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, 180);
+            updateView(topRight, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 0 : 90);
+            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 0 : 270);
+            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 0 : 180);
         } else if (mRotation == RotationUtils.ROTATION_LANDSCAPE) {
             updateView(topLeft, Gravity.TOP | Gravity.LEFT, 0);
-            updateView(topRight, Gravity.BOTTOM | Gravity.LEFT, 270);
-            updateView(bottomLeft, Gravity.TOP | Gravity.RIGHT, 90);
-            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, 180);
+            updateView(topRight, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 180 : 270);
+            updateView(bottomLeft, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 180 : 90);
+            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 0 : 180);
         } else if (mRotation == RotationUtils.ROTATION_UPSIDE_DOWN) {
             updateView(topLeft, Gravity.BOTTOM | Gravity.LEFT, 270);
-            updateView(topRight, Gravity.BOTTOM | Gravity.RIGHT, 180);
-            updateView(bottomLeft, Gravity.TOP | Gravity.LEFT, 0);
+            updateView(topRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 270 : 180);
+            updateView(bottomLeft, Gravity.TOP | Gravity.LEFT, mCustomCutout ? 90 : 0);
             updateView(bottomRight, Gravity.TOP | Gravity.RIGHT, 90);
         } else if (mRotation == RotationUtils.ROTATION_SEASCAPE) {
             updateView(topLeft, Gravity.BOTTOM | Gravity.RIGHT, 180);
-            updateView(topRight, Gravity.TOP | Gravity.RIGHT, 90);
-            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, 270);
-            updateView(bottomRight, Gravity.TOP | Gravity.LEFT, 0);
+            updateView(topRight, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 0 : 90);
+            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 0 : 270);
+            updateView(bottomRight, Gravity.TOP | Gravity.LEFT, mCustomCutout ? 180 : 0);
         }
 
         updateAssistantHandleViews();
@@ -788,6 +792,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         switch (key) {
             case SIZE:
                 mHandler.post(() -> {
+                    if (mCustomCutout) return;
                     if (mOverlay == null) {
                         if (TunerService.parseIntegerSwitch(newValue, false))
                             setupDecorations();
@@ -826,6 +831,13 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         LayoutParams params = view.getLayoutParams();
         params.width = pixelSize;
         params.height = pixelSize;
+        view.setLayoutParams(params);
+    }
+
+    private void setSize(View view, int width, int height) {
+        LayoutParams params = view.getLayoutParams();
+        params.width = width;
+        params.height = height;
         view.setLayoutParams(params);
     }
 
@@ -1321,5 +1333,36 @@ public class ScreenDecorations extends SystemUI implements Tunable,
             }
             return true;
         }
+    }
+
+    private void initRoundCornerViews() {
+        if (!mCustomCutout) {
+            return;
+        }
+
+        Resources res = mContext.getResources();
+
+        int topWidth = res.getDimensionPixelSize(R.dimen.config_customCutoutTopWidth);
+        int topHeight = res.getDimensionPixelSize(R.dimen.config_customCutoutTopHeight);
+        int bottomWidth = res.getDimensionPixelSize(R.dimen.config_customCutoutBottomWidth);
+        int bottomHeight = res.getDimensionPixelSize(R.dimen.config_customCutoutBottomHeight);
+
+        ImageView topLeft = (ImageView) mOverlay.findViewById(R.id.left);
+        ImageView topRight = (ImageView) mOverlay.findViewById(R.id.right);
+        ImageView bottomLeft = (ImageView) mBottomOverlay.findViewById(R.id.left);
+        ImageView bottomRight = (ImageView) mBottomOverlay.findViewById(R.id.right);
+
+        topLeft.setImageResource(R.drawable.rounded_top);
+        topRight.setImageResource(R.drawable.rounded_top);
+        bottomLeft.setImageResource(R.drawable.rounded_bottom);
+        bottomRight.setImageResource(R.drawable.rounded_bottom);
+
+        setSize(topLeft, topWidth, topHeight);
+        setSize(topRight, topWidth, topHeight);
+        setSize(bottomLeft, bottomWidth, bottomHeight);
+        setSize(bottomRight, bottomWidth, bottomHeight);
+
+        topRight.setRotationY(180.0f);
+        bottomRight.setRotationY(180.0f);
     }
 }
