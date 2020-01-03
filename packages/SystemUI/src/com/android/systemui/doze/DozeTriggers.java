@@ -44,6 +44,7 @@ import com.android.internal.util.Preconditions;
 import com.android.systemui.Dependency;
 import com.android.systemui.dock.DockManager;
 import com.android.systemui.statusbar.phone.DozeParameters;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.util.Assert;
 import com.android.systemui.util.ProximitySensor;
 import com.android.systemui.util.wakelock.WakeLock;
@@ -82,6 +83,7 @@ public class DozeTriggers implements DozeMachine.Part {
     private final TriggerReceiver mBroadcastReceiver = new TriggerReceiver();
     private final DockEventListener mDockEventListener = new DockEventListener();
     private final DockManager mDockManager;
+    private final FlashlightController mFlashlightController;
 
     private long mNotificationPulseTime;
     private boolean mPulsePending;
@@ -106,6 +108,7 @@ public class DozeTriggers implements DozeMachine.Part {
                 dozeParameters.getPolicy());
         mUiModeManager = mContext.getSystemService(UiModeManager.class);
         mDockManager = dockManager;
+        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
     private void onNotification(Runnable onPulseSuppressedListener) {
@@ -352,6 +355,21 @@ public class DozeTriggers implements DozeMachine.Part {
         }
     }
 
+    private void toggleFlashlight() {
+        proximityCheckThenCall((result) -> {
+            if (result == ProximityCheck.RESULT_NEAR) {
+                // in pocket, abort pulse
+                return;
+            } else if (mFlashlightController != null) {
+                // not in pocket, toggle flashlight
+                mFlashlightController.initFlashLight();
+                if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
+                    mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+                }
+            }
+        }, false/*performedProxCheck*/, DozeLog.REASON_TOGGLE_FLASHLIGHT);
+    }
+
     private void requestPulse(final int reason, boolean performedProxCheck,
             Runnable onPulseSuppressedListener) {
         Assert.isMainThread();
@@ -583,6 +601,11 @@ public class DozeTriggers implements DozeMachine.Part {
             if (mDozeHost.isPowerSaveActive()) {
                 mMachine.requestState(DozeMachine.State.DOZE);
             }
+        }
+
+        @Override
+        public void wakeUpFromDoubleTap(int pulseReason) {
+            gentleWakeUp(pulseReason);
         }
     };
 }

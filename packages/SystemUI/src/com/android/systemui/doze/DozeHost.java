@@ -87,6 +87,8 @@ public interface DozeHost {
          * @param active whether power save is active or not
          */
         default void onPowerSaveChanged(boolean active) {}
+
+        default void wakeUpFromDoubleTap(int pulseReason) {}
     }
 
     interface PulseCallback {
