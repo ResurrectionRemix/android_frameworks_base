@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.StatsLog;
 import android.view.KeyEvent;
 import android.view.View;
@@ -58,6 +59,7 @@ import com.android.systemui.statusbar.phone.KeyguardBouncer.BouncerExpansionCall
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardMonitorImpl;
+import com.android.systemui.tuner.TunerService;
 
 import android.provider.Settings;
 
@@ -74,7 +76,7 @@ import androidx.annotation.VisibleForTesting;
  */
 public class StatusBarKeyguardViewManager implements RemoteInputController.Callback,
         StatusBarStateController.StateListener, ConfigurationController.ConfigurationListener,
-        PanelExpansionListener, NavigationModeController.ModeChangedListener {
+        PanelExpansionListener, NavigationModeController.ModeChangedListener, TunerService.Tunable {
 
     // When hiding the Keyguard with timing supplied from WindowManager, better be early than late.
     private static final long HIDE_TIMING_CORRECTION_MS = - 16 * 3;
@@ -91,6 +93,11 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private static final long KEYGUARD_DISMISS_DURATION_LOCKED = 2000;
 
     private static String TAG = "StatusBarKeyguardViewManager";
+
+    private static final String LOCKSCREEN_LOCK_ICON =
+            "system:" + Settings.System.LOCKSCREEN_LOCK_ICON;
+
+    private boolean mLockIcon;
 
     protected final Context mContext;
     private final StatusBarWindowController mStatusBarWindowController;
@@ -210,6 +217,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             mDockManager.addListener(mDockEventListener);
             mIsDocked = mDockManager.isDocked();
         }
+        Dependency.get(TunerService.class).addTunable(this, LOCKSCREEN_LOCK_ICON);
     }
 
     public void registerStatusBar(StatusBar statusBar,
@@ -233,6 +241,18 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         notificationPanelView.addExpansionListener(this);
         mBypassController = bypassController;
         mNotificationContainer = notificationContainer;
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case LOCKSCREEN_LOCK_ICON:
+                mLockIcon =
+                    TunerService.parseIntegerSwitch(newValue, true);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -827,6 +847,9 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         if (navBarVisible != lastNavBarVisible || mFirstUpdate) {
             updateNavigationBarVisibility(navBarVisible);
         }
+
+        mLockIconContainer.setVisibility(!mLockIcon || (mLastLockVisible && mDozing)
+                 ? View.GONE : View.VISIBLE);
 
         if (bouncerShowing != mLastBouncerShowing || mFirstUpdate) {
             mStatusBarWindowController.setBouncerShowing(bouncerShowing);
