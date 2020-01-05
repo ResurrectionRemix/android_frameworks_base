@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="font_family_display_4_material">@string/config_bodyFontFamily</string>
+    <string name="font_family_display_4_material">@string/config_lightFontFamily</string>
     <string name="font_family_display_3_material">@string/config_bodyFontFamily</string>
     <string name="font_family_display_2_material">@string/config_bodyFontFamily</string>
     <string name="font_family_display_1_material">@string/config_bodyFontFamily</string>
