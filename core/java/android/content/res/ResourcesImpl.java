@@ -659,6 +659,8 @@ public class ResourcesImpl {
                         String resName = getResourceName(id);
                         if (AccentUtils.isResourceAccent(resName))
                             value.data = AccentUtils.getNewAccentColor(value.data);
+                        if (AccentUtils.isResourceGradient(resName))
+                            value.data = AccentUtils.getNewGradientColor(value.data);
                     } catch (NotFoundException ignored) {
                     } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage());
@@ -1056,6 +1058,8 @@ public class ResourcesImpl {
                 String resName = getResourceName(id);
                 if (AccentUtils.isResourceAccent(resName))
                     value.data = AccentUtils.getNewAccentColor(value.data);
+                if (AccentUtils.isResourceGradient(resName))
+                    value.data = AccentUtils.getNewGradientColor(value.data);
             } catch (NotFoundException ignored) {
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage());
@@ -1107,6 +1111,8 @@ public class ResourcesImpl {
                 String resName = getResourceName(id);
                 if (AccentUtils.isResourceAccent(resName))
                     value.data = AccentUtils.getNewAccentColor(value.data);
+                if (AccentUtils.isResourceGradient(resName))
+                    value.data = AccentUtils.getNewGradientColor(value.data);
             } catch (NotFoundException ignored) {
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage());
