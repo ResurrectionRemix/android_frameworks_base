@@ -144,7 +144,10 @@ public abstract class ContentObserver {
      * @hide
      */
     public void onChange(boolean selfChange, Uri uri, int userId) {
-        onChange(selfChange, uri);
+	if(uri == null)
+	   onChange(selfChange);
+	else
+           onChange(selfChange, uri);
     }
 
     /**
