@@ -16,10 +16,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Gradient Shit -->
-    <color name="gradient_start_light">@color/accent_device_default_light</color>
-    <color name="gradient_start_dark">@color/accent_device_default_dark</color>
-    <color name="gradient_end_light">@color/accent_device_default_light</color>
-    <color name="gradient_end_dark">@color/accent_device_default_dark</color>
+    <color name="gradient_start">#ff1a73e8</color>
+    <color name="gradient_end">#ff1a73e8</color>
 
 </resources>
 
