@@ -152,16 +152,6 @@ public class TypeClockController implements ClockPlugin {
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return mClockPosition.getPreferredY();
-    }
-
-    @Override
-    public int getPreferredY(int totalHeight) {
-        return mClockPosition.getPreferredY();
-    }
-
-    @Override
     public void setStyle(Style style) {}
 
     @Override

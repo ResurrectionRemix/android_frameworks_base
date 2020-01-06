@@ -27,7 +27,10 @@
     <string name="clock_title_dot" translatable="false">Dot</string>
     <string name="clock_title_sneeky" translatable="false">Sneeky</string>
     <string name="clock_title_spidey" translatable="false">Spidey</string>
+    <string name="clock_title_bliss" translatable="false">Bliss</string>
     <string name="clock_title_custom_num" translatable="false">Custom-Num</string>
+    <string name="clock_title_aicp" translatable="false">Aicp</string>
+
     <string name="clock_title_two_line_digital" translatable="false">Vertical</string>
     <string name="clock_title_one_line_digital" translatable="false">Digital</string>
 </resources>

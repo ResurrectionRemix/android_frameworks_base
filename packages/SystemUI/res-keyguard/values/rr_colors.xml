@@ -23,6 +23,7 @@
     <color name="binary_clock_empty_dot_color">#ffffff</color>
     <color name="binary_clock_ambient_dot_color">#ffffff</color>
     <color name="binary_clock_ambient_empty_dot_color">#ffffff</color>
+
     <!-- Custom Analog clocks -->
     <color name="analog_clock_border_color">#212121</color>
     <color name="analog_clock_face_color">#FFFFFF</color>
