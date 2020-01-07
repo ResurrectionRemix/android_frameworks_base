@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Weather condition icon  -->
-    <dimen name="weather_icon_size">24dp</dimen>
-    <dimen name="header_font_size">20dp</dimen>
-    <dimen name="binary_clock_dot_size">8dp</dimen>
-    <dimen name="binary_clock_stroke_width">2dp</dimen>
     <dimen name="binary_clock_width">100dp</dimen>
     <dimen name="binary_clock_height">100dp</dimen>
+    <dimen name="weather_icon_size">24dp</dimen>
+    <dimen name="header_font_size">20dp</dimen>
+    <dimen name="custom_clock_width">100dp</dimen>
+    <dimen name="custom_clock_height">100dp</dimen>
+    <dimen name="custom_clock_preview_width">200dp</dimen>
+    <dimen name="custom_clock_preview_height">200dp</dimen>
+    <dimen name="binary_clock_width">90dp</dimen>
+    <dimen name="binary_clock_height">90dp</dimen>
+    <dimen name="analog_clock_width">90dp</dimen>
+    <dimen name="analog_clock_height">90dp</dimen>
 </resources>
