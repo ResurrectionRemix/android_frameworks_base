@@ -46,4 +46,9 @@
     <string name="config_smartChargingSuspendValue" translatable="false">0</string>
     <string name="config_smartChargingResumeValue" translatable="false">1</string>
 
+    <!-- OnePlus uses a proprietary vibrator hal to utilize the new powerful motor since the
+         OnePlus 7 Pro. This HAL expects a different format for the data instead of the usual (ms)
+         timing(the duration which the vibrator is expected to vibrate for). -->
+    <bool name="config_hasOnePlusHapticMotor">false</bool>
+
 </resources>
