@@ -148,4 +148,15 @@
     <dimen name="config_customCutoutTopHeight">0.0px</dimen>
     <dimen name="config_customCutoutBottomWidth">0.0px</dimen>
     <dimen name="config_customCutoutBottomHeight">0.0px</dimen>
+
+    <dimen name="lock_clock_font_size_56">56dp</dimen>
+    <dimen name="lock_clock_font_size_57">57dp</dimen>
+    <dimen name="lock_clock_font_size_58">58dp</dimen>
+    <dimen name="lock_clock_font_size_59">59dp</dimen>
+    <dimen name="lock_clock_font_size_60">60dp</dimen>
+    <dimen name="lock_clock_font_size_61">61dp</dimen>
+    <dimen name="lock_clock_font_size_62">62dp</dimen>
+    <dimen name="lock_clock_font_size_63">63dp</dimen>
+    <dimen name="lock_clock_font_size_64">64dp</dimen>
+    <dimen name="lock_clock_font_size_65">65dp</dimen>
 </resources>
