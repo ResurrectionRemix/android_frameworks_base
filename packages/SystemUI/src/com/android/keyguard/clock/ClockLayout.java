@@ -107,11 +107,5 @@ public class ClockLayout extends FrameLayout {
             mAnalogClock.setY(Math.max(0f, 0.5f * (getHeight() - mAnalogClock.getHeight()))
                     + ANALOG_CLOCK_SHIFT_FACTOR * offsetY);
         }
-
-        // Put the typographic clock part way down the screen.
-        if (mTypeClock != null) {
-            mTypeClock.setX(offsetX);
-            mTypeClock.setY(0.2f * getHeight() + offsetY);
-        }
     }
 }
