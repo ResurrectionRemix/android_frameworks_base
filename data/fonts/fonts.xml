@@ -265,6 +265,22 @@
     <alias name="fantasy" to="googlesans" />
     <alias name="ITC Stone Serif" to="googlesans" />
 
+    <family name="comfortaa">
+        <font weight="400" style="normal">Comfortaa.ttf</font>
+    </family>
+
+    <alias name="comfortaa-medium" to="comfortaa" weight="500" />
+    <alias name="comfortaa-semi-bold" to="comfortaa" weight="600" />
+    <alias name="comfortaa-bold" to="comfortaa" weight="700" />
+    <alias name="times" to="comfortaa" />
+    <alias name="times new roman" to="comfortaa" />
+    <alias name="palatino" to="comfortaa" />
+    <alias name="georgia" to="comfortaa" />
+    <alias name="baskerville" to="comfortaa" />
+    <alias name="goudy" to="comfortaa" />
+    <alias name="fantasy" to="comfortaa" />
+    <alias name="ITC Stone Serif" to="comfortaa" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
