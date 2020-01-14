@@ -92,6 +92,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
 
+    private float mCurrentDimAmount = 0.0f;
+
     private Handler mHandler;
 
     private PowerManager mPowerManager;
@@ -270,6 +272,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
                 FODCircleView.class.getSimpleName());
 
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
+        getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            float drawingDimAmount = mParams.dimAmount;
+            if (mCurrentDimAmount == 0.0f && drawingDimAmount > 0.0f) {
+                dispatchPress();
+                mCurrentDimAmount = drawingDimAmount;
+            } else if (mCurrentDimAmount > 0.0f && drawingDimAmount == 0.0f) {
+                mCurrentDimAmount = drawingDimAmount;
+            }
+        });
     }
 
     private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
@@ -336,17 +347,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             setImageResource(R.drawable.fod_icon_pressed_white);
         } else if (fodpressed == 2) {
             setImageDrawable(null);
-        }
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-        if (mIsCircleShowing) {
-            dispatchPress();
-        } else {
-            dispatchRelease();
         }
     }
 
@@ -464,6 +464,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         setWallpaperColor(true);
         invalidate();
+
+        dispatchRelease();
         setDim(false);
         updateAlpha();
 
