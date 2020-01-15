@@ -226,6 +226,9 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
      * be useful in a configuration change.
      */
     protected void initBackground() {
+        mNormalColor = mContext.getColor(R.color.notification_material_background_color);
+        mTintedRippleColor = mContext.getColor(R.color.notification_ripple_tinted_color);
+        mNormalRippleColor = mContext.getColor(R.color.notification_ripple_untinted_color);
         mBackgroundNormal.setCustomBackground(R.drawable.notification_material_bg);
         mBackgroundDimmed.setCustomBackground(R.drawable.notification_material_bg_dim);
     }
