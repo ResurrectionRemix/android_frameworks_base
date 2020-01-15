@@ -525,8 +525,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private int mMaxKeyguardNotifConfig;
 
    // status bar notification ticker
-    private int mTickerEnabled;
-    private Ticker mTicker;
+    public int mTickerEnabled;
+    public Ticker mTicker;
     private boolean mTicking;
     private int mTickerAnimationMode;
     private int mTickerTickDuration;
@@ -574,6 +574,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     private static ImageButton mDismissAllButton;
     protected static NotificationPanelView mStaticNotificationPanel;
     public static boolean mClearableNotifications;
+
+    public void resetTrackInfo() {
+        if (mTicker != null) {
+            mTicker.resetShownMediaMetadata();
+        }
+    }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     @VisibleForTesting
@@ -1289,6 +1295,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mHeadsUpManager, mStatusBarWindow, mStackScroller, mDozeScrimController,
                 mScrimController, mActivityLaunchAnimator, mDynamicPrivacyController,
                 mNotificationAlertingManager, rowBinder);
+        mPresenter.addCallback(this);
 
         mNotificationListController =
                 new NotificationListController(
@@ -1347,6 +1354,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mGutsManager = Dependency.get(NotificationGutsManager.class);
         mLockscreenUserManager = Dependency.get(NotificationLockscreenUserManager.class);
         mMediaManager = Dependency.get(NotificationMediaManager.class);
+        mMediaManager.addCallback(this);
         mNotificationInterruptionStateProvider =
                 Dependency.get(NotificationInterruptionStateProvider.class);
         mNotificationListener = Dependency.get(NotificationListener.class);

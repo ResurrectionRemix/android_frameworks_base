@@ -111,14 +111,13 @@ public class NotificationAlertingManager {
                     setNotificationShown(entry.notification);
                 }
             } else {
-                if (mStatusBar != null) {
+                entry.freeContentViewWhenSafe(FLAG_CONTENT_VIEW_HEADS_UP);
+                if (mStatusBar != null && mStatusBar.mTickerEnabled != 0) {
                     mStatusBar.tick(entry.notification, true, false, null, null);
-                } else {
-                    entry.freeContentViewWhenSafe(FLAG_CONTENT_VIEW_HEADS_UP);
                 }
             }
         } else {
-            if (mStatusBar != null) {
+            if (mStatusBar != null && mStatusBar.mTickerEnabled != 0) {
                 mStatusBar.tick(entry.notification, true, false, null, null);
             }
 	}

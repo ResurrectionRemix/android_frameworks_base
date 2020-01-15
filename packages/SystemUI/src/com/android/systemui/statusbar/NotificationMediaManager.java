@@ -156,6 +156,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
     private boolean mShowMediaMetadata;
 
     private int mAlbumArtFilter;
+    private StatusBar mStatusBar;
 
     private final DeviceConfig.OnPropertiesChangedListener mPropertiesChangedListener =
             new DeviceConfig.OnPropertiesChangedListener() {
@@ -183,11 +184,6 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
             if (state != null) {
                 if (!isPlaybackActive(state.getState())) {
                     clearCurrentMediaNotification();
-                }
-                StatusBar statusBar = SysUiServiceProvider.getComponent(mContext, StatusBar.class);
-                if (statusBar != null) {
-                    statusBar.getVisualizer().setPlaying(state.getState()
-                            == PlaybackState.STATE_PLAYING);
                 }
                 dispatchUpdateMediaMetaData(true /* changed */, true /* allowAnimation */);
             }
@@ -245,6 +241,10 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_MEDIA_METADATA,
                                       LOCKSCREEN_ALBUMART_FILTER);
+    }
+
+    public void addCallback(StatusBar statusBar) {
+        mStatusBar = statusBar;
     }
 
     @Override
@@ -489,11 +489,48 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         mMediaController = null;
     }
 
+    public void setMediaPlaying() {
+        if (mStatusBar == null) return;
+
+        if (mMediaController != null && (PlaybackState.STATE_PLAYING ==
+                getMediaControllerPlaybackState(mMediaController))) {
+            ArrayList<NotificationEntry> activeNotifications =
+                    mEntryManager.getNotificationData().getActiveNotifications();
+            int N = activeNotifications.size();
+            final String pkg = mMediaController.getPackageName();
+
+            for (int i = 0; i < N; i++) {
+                final NotificationEntry entry = activeNotifications.get(i);
+                if (entry.notification.getPackageName().equals(pkg)) {
+                    if (mStatusBar.mTickerEnabled == 2) {
+                        mHandler.postDelayed(() -> {
+                            mStatusBar.tick(entry.notification, true, true, mMediaMetadata, null);
+                        }, 500);
+                    }
+                    break;
+                }
+            }
+
+            if (mStatusBar.getVisualizer() != null) {
+                mStatusBar.getVisualizer().setPlaying(true);
+            }
+        } else {
+            if (mStatusBar.getVisualizer() != null) {
+                mStatusBar.getVisualizer().setPlaying(false);
+            }
+            mStatusBar.resetTrackInfo();
+        }
+    }
+
     /**
      * Refresh or remove lockscreen artwork from media metadata or the lockscreen wallpaper.
      */
     public void updateMediaMetaData(boolean metaDataChanged, boolean allowEnterAnimation) {
         Trace.beginSection("StatusBar#updateMediaMetaData");
+
+        // ensure visualizer is visible regardless of artwork
+        setMediaPlaying();
+
         if (!SHOW_LOCKSCREEN_MEDIA_ARTWORK) {
             Trace.endSection();
             return;
@@ -578,12 +615,15 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         }
         boolean hasMediaArtwork = artworkDrawable != null;
         boolean allowWhenShade = false;
+        BitmapDrawable lockDrawable = null;
+
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
             Bitmap lockWallpaper =
                     mLockscreenWallpaper != null ? mLockscreenWallpaper.getBitmap() : null;
             if (lockWallpaper != null) {
                 artworkDrawable = new LockscreenWallpaper.WallpaperDrawable(
                         mBackdropBack.getResources(), lockWallpaper);
+                lockDrawable = new BitmapDrawable(mBackdropBack.getResources(), lockWallpaper);
                 // We're in the SHADE mode on the SIM screen - yet we still need to show
                 // the lockscreen wallpaper in that mode.
                 allowWhenShade = mStatusBarStateController.getState() == KEYGUARD;
@@ -600,19 +640,12 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
             mScrimController.setHasBackdrop(hasArtwork);
         }
 
-        StatusBar statusBar = SysUiServiceProvider.getComponent(mContext, StatusBar.class);
-        if (statusBar != null &&
-                mStatusBarStateController.getState() != StatusBarState.SHADE) {
-            VisualizerView visualizerView = statusBar.getVisualizer();
-            if (!mKeyguardMonitor.isKeyguardFadingAway()) {
-                // ensure visualizer is visible
-                visualizerView.setPlaying(getMediaControllerPlaybackState(mMediaController) ==
-                        PlaybackState.STATE_PLAYING);
-            }
-
+        if (mStatusBar != null && mStatusBar.getVisualizer() != null) {
             if (hasMediaArtwork && (artworkDrawable instanceof BitmapDrawable)) {
                 // always use current backdrop to color eq
-                visualizerView.setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
+                mStatusBar.getVisualizer().setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
+            } else if (lockDrawable != null) {
+                mStatusBar.getVisualizer().setBitmap(((BitmapDrawable)lockDrawable).getBitmap());
             }
         }
 

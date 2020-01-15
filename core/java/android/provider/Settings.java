@@ -5426,9 +5426,6 @@ public final class Settings {
          */
         public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
 
-        /** @hide */
-        private static final Validator STATUS_BAR_SHOW_TICKER_VALIDATOR = BOOLEAN_VALIDATOR;
-
         /**
          * Ticker animation
          * 0: Fade animation
@@ -6451,7 +6448,6 @@ public final class Settings {
             LOCKSCREEN_MAX_NOTIF_CONFIG,
             STATUS_BAR_SHOW_CARRIER,
             CUSTOM_CARRIER_LABEL,
-            STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
             STATUS_BAR_TICKER_TICK_DURATION,
             PULSE_AMBIENT_LIGHT_WIDTH,
@@ -6688,7 +6684,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_MAX_NOTIF_CONFIG);
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_CARRIER);
             PRIVATE_SETTINGS.add(CUSTOM_CARRIER_LABEL);
-            PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_WIDTH);
@@ -6915,7 +6910,6 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_MAX_NOTIF_CONFIG, LOCKSCREEN_MAX_NOTIF_CONFIG_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_SHOW_CARRIER,STATUS_BAR_SHOW_CARRIER_VALIDATOR);
             VALIDATORS.put(CUSTOM_CARRIER_LABEL,CUSTOM_CARRIER_LABEL_VALIDATOR);
-            VALIDATORS.put(STATUS_BAR_SHOW_TICKER, STATUS_BAR_SHOW_TICKER_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_ANIMATION_MODE,
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
