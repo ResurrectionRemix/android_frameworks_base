@@ -234,7 +234,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Nullable
     private TouchAnimator createFooterAnimator() {
         return new TouchAnimator.Builder()
-                .addFloat(mActionsContainer, "alpha", 0, 1)
+                .addFloat(mActionsContainer, "alpha", 1, 1)
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
@@ -361,6 +361,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
         mMultiUserSwitch.setVisibility(showUserSwitcher() ? View.VISIBLE : View.INVISIBLE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
+        mSettingsButton.setVisibility(isSettingButtonEnabled() ? isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE : View.VISIBLE);
         mSettingsButton.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
@@ -386,6 +387,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mMultiUserSwitch.setQsPanel(qsPanel);
             mQsPanel.setFooterPageIndicator(mPageIndicator);
         }
+    }
+
+    public boolean isSettingButtonEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SETTING_BUTTON_TOGGLE, 0) == 1;
     }
 
     public boolean isRunningServicesEnabled() {
