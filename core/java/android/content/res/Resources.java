@@ -985,7 +985,9 @@ public class Resources {
                 if (id != 0) {
                     try {
                         String resName = getResourceName(id);
-                        if (AccentUtils.isResourceAccent(resName))
+                        if (AccentUtils.isResourceDarkAccent(resName)
+                            || AccentUtils.isResourceLightAccent(resName)
+                            || AccentUtils.isResourceGradientStart(resName))
                             value.data = AccentUtils.getNewAccentColor(value.data);
                         if (AccentUtils.isResourceGradient(resName))
                             value.data = AccentUtils.getNewGradientColor(value.data);

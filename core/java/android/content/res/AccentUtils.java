@@ -12,40 +12,33 @@ public class AccentUtils {
 
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.rr.accent_color";
-
-    private static ArrayList<String> gradientResources = new ArrayList<>(
-            Arrays.asList("gradient_end"));
     private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
-    static boolean isResourceAccent(String resName) {
-        return resName.contains("accent_device_default_light")
-                || resName.contains("accent_device_default_dark")
-                || resName.contains("material_pixel_blue_dark")
-                || resName.contains("material_pixel_blue_bright")
-                || resName.contains("colorAccent")
-                || resName.contains("omni_color5")
-                || resName.contains("omni_color4")
-                || resName.contains("dialer_theme_color")
-                || resName.contains("dialer_theme_color_dark")
-                || resName.contains("dialer_theme_color_20pct");
+    public static boolean isResourceDarkAccent(String resName) {
+        return resName.contains("accent_device_default_dark");
+    }
+
+    public static boolean isResourceLightAccent(String resName) {
+        return resName.contains("accent_device_default_light");
+    }
+
+    public static boolean isResourceGradientStart(String resName) {
+        return resName.contains("gradient_start");
     }
 
     static boolean isResourceGradient(String resName) {
-        for (String gr : gradientResources)
-            if (resName.contains(gr))
-                return true;
-        return false;
+        return resName.contains("gradient_end");
     }
 
     public static int getNewAccentColor(int defaultColor) {
-        return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
+        return getNewColor(defaultColor, ACCENT_COLOR_PROP);
     }
 
     public static int getNewGradientColor(int defaultColor) {
-        return getAccentColor(defaultColor, GRADIENT_COLOR_PROP);
+        return getNewColor(defaultColor, GRADIENT_COLOR_PROP);
     }
 
-    private static int getAccentColor(int defaultColor, String property) {
+    private static int getNewColor(int defaultColor, String property) {
         try {
             String colorValue = SystemProperties.get(property, "-1");
             return "-1".equals(colorValue)
