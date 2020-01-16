@@ -5538,6 +5538,25 @@ public final class Settings {
         private static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * FOD icon picker
+         * @hide
+         */
+        public static final String FOD_ICON = "fod_icon";
+        /** @hide */
+        private static final Validator FOD_ICON_VALIDATOR =
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 20);
+
+        /**
+         * FOD use wallpaper color
+         * @hide
+         */
+        public static final String FOD_ICON_WALLPAPER_COLOR = "fod_icon_wallpaper_color";
+        /** @hide */
+        private static final Validator FOD_ICON_WALLPAPER_COLOR_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5689,6 +5708,9 @@ public final class Settings {
             GAMING_MODE_NOTIFICATIONS,
             GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE,
             GAMING_MODE_DYNAMIC_STATE,
+
+            FOD_ICON,
+            FOD_ICON_WALLPAPER_COLOR,
             // AICP Settings end
         };
 
@@ -5898,6 +5920,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(GAMING_MODE_NOTIFICATIONS);
             PRIVATE_SETTINGS.add(GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE);
             PRIVATE_SETTINGS.add(GAMING_MODE_DYNAMIC_STATE);
+            PRIVATE_SETTINGS.add(FOD_ICON);
+            PRIVATE_SETTINGS.add(FOD_ICON_WALLPAPER_COLOR);
             // AICP Settings end
         }
 
@@ -6084,6 +6108,9 @@ public final class Settings {
             VALIDATORS.put(GAMING_MODE_NOTIFICATIONS, GAMING_MODE_NOTIFICATIONS_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE, GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_DYNAMIC_STATE, GAMING_MODE_DYNAMIC_STATE_VALIDATOR);
+            VALIDATORS.put(FOD_ICON, FOD_ICON_VALIDATOR);
+            VALIDATORS.put(FOD_ICON_WALLPAPER_COLOR,
+                    FOD_ICON_WALLPAPER_COLOR_VALIDATOR);
             // AICP Settings end
         }
 
