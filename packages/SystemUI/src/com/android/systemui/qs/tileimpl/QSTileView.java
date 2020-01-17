@@ -46,7 +46,7 @@ public class QSTileView extends QSTileBaseView {
     private ImageView mPadLock;
     private int mState;
     private ViewGroup mLabelContainer;
-    private View mExpandIndicator;
+    private ImageView mExpandIndicator;
     private View mExpandSpace;
     private ColorStateList mColorLabelDefault;
     private ColorStateList mColorLabelActive;
@@ -147,8 +147,10 @@ public class QSTileView extends QSTileBaseView {
 
         if (state.state == Tile.STATE_ACTIVE) {
             mLabel.setTextColor(mColorLabelActive);
+            mExpandIndicator.setImageTintList(mColorLabelActive);
         } else if (state.state == Tile.STATE_INACTIVE) {
             mLabel.setTextColor(mColorLabelDefault);
+            mExpandIndicator.setImageTintList(mColorLabelDefault);
         }
         boolean dualTarget = DUAL_TARGET_ALLOWED && state.dualTarget;
         mExpandIndicator.setVisibility(View.GONE);
