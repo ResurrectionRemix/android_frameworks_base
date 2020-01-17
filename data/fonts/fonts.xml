@@ -281,6 +281,54 @@
     <alias name="fantasy" to="comfortaa" />
     <alias name="ITC Stone Serif" to="comfortaa" />
 
+    <family name="exotwo">
+        <font weight="400" style="normal">Exotwo.ttf</font>
+    </family>
+
+    <alias name="exotwo-medium" to="exotwo" weight="500" />
+    <alias name="exotwo-semi-bold" to="exotwo" weight="600" />
+    <alias name="exotwo-bold" to="exotwo" weight="700" />
+    <alias name="times" to="exotwo" />
+    <alias name="times new roman" to="exotwo" />
+    <alias name="palatino" to="exotwo" />
+    <alias name="georgia" to="exotwo" />
+    <alias name="baskerville" to="exotwo" />
+    <alias name="goudy" to="exotwo" />
+    <alias name="fantasy" to="exotwo" />
+    <alias name="ITC Stone Serif" to="exotwo" />
+
+    <family name="storopia">
+        <font weight="400" style="normal">Storopia.ttf</font>
+    </family>
+
+    <alias name="storopia-medium" to="storopia" weight="500" />
+    <alias name="storopia-semi-bold" to="storopia" weight="600" />
+    <alias name="storopia-bold" to="storopia" weight="700" />
+    <alias name="times" to="storopia" />
+    <alias name="times new roman" to="storopia" />
+    <alias name="palatino" to="storopia" />
+    <alias name="georgia" to="storopia" />
+    <alias name="baskerville" to="storopia" />
+    <alias name="goudy" to="storopia" />
+    <alias name="fantasy" to="storopia" />
+    <alias name="ITC Stone Serif" to="storopia" />
+
+    <family name="ubuntu">
+        <font weight="400" style="normal">Ubuntu.ttf</font>
+    </family>
+
+    <alias name="ubuntu-medium" to="ubuntu" weight="500" />
+    <alias name="ubuntu-semi-bold" to="ubuntu" weight="600" />
+    <alias name="ubuntu-bold" to="ubuntu" weight="700" />
+    <alias name="times" to="ubuntu" />
+    <alias name="times new roman" to="ubuntu" />
+    <alias name="palatino" to="ubuntu" />
+    <alias name="georgia" to="ubuntu" />
+    <alias name="baskerville" to="ubuntu" />
+    <alias name="goudy" to="ubuntu" />
+    <alias name="fantasy" to="ubuntu" />
+    <alias name="ITC Stone Serif" to="ubuntu" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
