@@ -31,8 +31,8 @@ import java.util.Objects;
 
 public class SegmentedButtons extends LinearLayout {
     private static final int LABEL_RES_KEY = R.id.label;
-    private static final Typeface REGULAR = Typeface.create("sans-serif", Typeface.NORMAL);
-    private static final Typeface MEDIUM = Typeface.create("sans-serif-medium", Typeface.NORMAL);
+    private static final Typeface REGULAR = Typeface.create("@*android:string/config_bodyFontFamily", Typeface.NORMAL);
+    private static final Typeface MEDIUM = Typeface.create("@*android:string/config_headlineFontFamilyMedium", Typeface.NORMAL);
 
     private final Context mContext;
     protected final LayoutInflater mInflater;

@@ -27,7 +27,7 @@
     android:textSize="14sp"
     android:textColor="#FFFFFF"
     android:textAllCaps="true"
-    android:fontFamily="sans-serif-medium"
+    android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
     android:background="@drawable/recents_low_ram_stack_button_background"
     android:visibility="invisible"
     android:forceHasOverlappingRendering="false"

@@ -26,5 +26,5 @@
     android:drawableTint="?attr/wallpaperTextColor"
     android:textColor="?attr/wallpaperTextColor"
     android:text="@string/recents_empty_message"
-    android:fontFamily="sans-serif"
+    android:fontFamily="@*android:string/config_bodyFontFamily"
     android:visibility="gone" />

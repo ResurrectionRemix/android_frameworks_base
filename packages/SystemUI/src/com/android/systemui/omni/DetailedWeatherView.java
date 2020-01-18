@@ -269,7 +269,7 @@ public class DetailedWeatherView extends FrameLayout {
         final int imageWidth = image.getIntrinsicWidth();
         final int imageHeight = image.getIntrinsicHeight();
         final TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+        Typeface font = Typeface.create("@*android:string/config_bodyFontFamily", Typeface.NORMAL);
         textPaint.setTypeface(font);
         textPaint.setColor(getTintColor());
         textPaint.setTextAlign(Paint.Align.LEFT);

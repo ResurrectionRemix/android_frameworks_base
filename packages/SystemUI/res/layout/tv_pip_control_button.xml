@@ -46,7 +46,7 @@
         android:gravity="center"
         android:text="@string/pip_fullscreen"
         android:alpha="0"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@*android:string/config_bodyFontFamily"
         android:textSize="12sp"
         android:textColor="#EEEEEE"
         android:importantForAccessibility="no" />

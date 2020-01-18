@@ -30,7 +30,7 @@
         android:clipToPadding="false"
         android:focusable="true"
         android:background="@drawable/ripple_drawable"
-        systemui:activatedFontFamily="@*android:string/config_bodyFontFamilyMedium">
+        systemui:activatedFontFamily="@*android:string/config_headlineFontFamilyMedium">
 
     <com.android.systemui.statusbar.phone.UserAvatarView
             android:id="@+id/user_picture"
