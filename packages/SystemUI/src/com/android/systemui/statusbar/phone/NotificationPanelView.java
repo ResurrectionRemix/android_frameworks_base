@@ -700,6 +700,21 @@ public class NotificationPanelView extends PanelView implements
                         false);
         addView(mKeyguardStatusView, index);
 
+        index = indexOfChild(mKeyguardStatusBar);
+        removeView(mKeyguardStatusBar);
+        mKeyguardStatusBar = (KeyguardStatusBarView) mInjectionInflationController
+                .injectable(LayoutInflater.from(mContext)).inflate(
+                        R.layout.keyguard_status_bar,
+                        this,
+                        false);
+        addView(mKeyguardStatusBar, index);
+        if (mQs != null && mQs instanceof QSFragment) {
+            mKeyguardStatusBar.setQSPanel(((QSFragment) mQs).getQsPanel());
+        }
+        mKeyguardStatusBar.setAlpha(mBarState == StatusBarState.KEYGUARD ? 0f : 1f);
+        mKeyguardStatusBar.setVisibility(
+                mBarState == StatusBarState.KEYGUARD ? View.VISIBLE : View.INVISIBLE);
+
         // Re-associate the clock container with the keyguard clock switch.
         mBigClockContainer.removeAllViews();
         KeyguardClockSwitch keyguardClockSwitch = findViewById(R.id.keyguard_clock_container);
@@ -720,10 +735,6 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardIndicationController.setIndicationArea(mKeyguardBottomArea);
         onDozeAmountChanged(mStatusBarStateController.getDozeAmount(),
                 mStatusBarStateController.getInterpolatedDozeAmount());
-
-        if (mKeyguardStatusBar != null) {
-            mKeyguardStatusBar.onThemeChanged();
-        }
 
         setKeyguardStatusViewVisibility(mBarState, false, false);
         setKeyguardBottomAreaVisibility(mBarState, false);
