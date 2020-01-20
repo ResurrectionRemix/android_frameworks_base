@@ -3,4 +3,8 @@
     <!-- Weather condition icon  -->
     <dimen name="weather_icon_size">24dp</dimen>
     <dimen name="header_font_size">20dp</dimen>
+    <dimen name="binary_clock_dot_size">8dp</dimen>
+    <dimen name="binary_clock_stroke_width">2dp</dimen>
+    <dimen name="binary_clock_width">100dp</dimen>
+    <dimen name="binary_clock_height">100dp</dimen>
 </resources>
