@@ -5856,7 +5856,13 @@ public final class Settings {
         public static final String GESTURE_PILL_TOGGLE = "gesture_pill_toggle";
 
         /** @hide */
+
         private static final Validator GESTURE_PILL_TOGGLE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        public static final String BACK_GESTURE_BLOCK_IME = "back_gesture_block_ime";
+        /** @hide */
+        private static final Validator BACK_GESTURE_BLOCK_IME_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * helper setting to contain the current pulse reason so we can check
@@ -6037,6 +6043,7 @@ public final class Settings {
             QS_BACKGROUND_BLUR_INTENSITY,
             BACK_GESTURE_HEIGHT,
             GESTURE_PILL_TOGGLE,
+            BACK_GESTURE_BLOCK_IME,
             // AICP Settings end
         };
 
@@ -6259,6 +6266,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_COUNT);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_BLOCK_IME);
         }
 
         /**
@@ -6438,7 +6446,6 @@ public final class Settings {
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
                     STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
-<<<<<<< HEAD
             VALIDATORS.put(GAMING_MODE_ENABLED, GAMING_MODE_ENABLED_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_ACTIVE, GAMING_MODE_ACTIVE_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_VALUES, GAMING_MODE_VALUES_VALIDATOR);
@@ -6469,12 +6476,12 @@ public final class Settings {
             VALIDATORS.put(QS_BACKGROUND_BLUR_ALPHA, QS_BACKGROUND_BLUR_ALPHA_VALIDATOR);
             VALIDATORS.put(QS_BACKGROUND_BLUR_INTENSITY, QS_BACKGROUND_BLUR_INTENSITY_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_HEIGHT, BACK_GESTURE_HEIGHT_VALIDATOR);
-=======
             VALIDATORS.put(PULSE_AMBIENT_LIGHT, PULSE_AMBIENT_LIGHT_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
             VALIDATORS.put(GESTURE_PILL_TOGGLE, GESTURE_PILL_TOGGLE_VALIDATOR);
-            // AICP Settings end
->>>>>>> feb7daddb2b... base: overlays: Hide pill in full gestural nav mode [1/2]
+            VALIDATORS.put(NAVIGATION_BAR_ARROW_KEYS,
+                    NAVIGATION_BAR_ARROW_KEYS_VALIDATOR);
+            VALIDATORS.put(BACK_GESTURE_BLOCK_IME, BACK_GESTURE_BLOCK_IME_VALIDATOR);
         }
 
         /**
