@@ -1165,6 +1165,13 @@ public class StatusBar extends SystemUI implements DemoMode,
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
         mFlashlightController = Dependency.get(FlashlightController.class);
+    }
+
+    public void updateBlurAlpha() {
+        int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
+        int QSBlurAlpha = Math.round(255.0f *
+                mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
 
     }
 
@@ -2015,6 +2022,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_BLUR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_BLUR_ALPHA),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2034,6 +2044,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             setGamingModeActive();
             setGamingModeHeadsupToggle();
+            updateBlurAlpha();
             updateQSBlur();
             if (mCollapsedStatusBarFragment != null) {
                 mCollapsedStatusBarFragment.updateSettings(false);
