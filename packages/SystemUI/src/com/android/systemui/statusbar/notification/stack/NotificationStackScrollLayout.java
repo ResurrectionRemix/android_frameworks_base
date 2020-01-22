@@ -708,6 +708,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
 
         updateFooterView(showFooterView, showDismissView && !isDismissAllButtonEnabled());
 
+        StatusBar.setHasClearableNotifications(hasActiveClearableNotifications(ROWS_ALL));
+
         if (needsColorRefresh) {
             mBackgroundColor = mContext.getColor(R.color.recents_dismiss_all_background_color);
             mIconColor = mContext.getColor(R.color.recents_dismiss_all_icon_color);
