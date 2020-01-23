@@ -221,6 +221,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
         mPowerManager = context.getSystemService(PowerManager.class);
+
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
 
         updateCutoutFlags();
@@ -261,6 +262,17 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             setImageResource(R.drawable.fod_icon_pressed_white);
         } else if (fodpressed == 2) {
             setImageDrawable(null);
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (mIsCircleShowing) {
+            dispatchPress();
+        } else {
+            dispatchRelease();
         }
     }
 
@@ -354,10 +366,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mIsCircleShowing = true;
 
         setKeepScreenOn(true);
-        setFODIcon(false);
+
+        if (mIsDreaming) {
+            mWakeLock.acquire(500);
+        }
         setDim(true);
         updateAlpha();
-        dispatchPress();
 
         setFODPressedState();
         invalidate();
@@ -371,8 +385,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             mFODAnimation.setFODAnim();
         }
         invalidate();
-
-        dispatchRelease();
 
         setDim(false);
         updateAlpha();
@@ -504,9 +516,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private void updateAlpha() {
         if (mIsCircleShowing) {
-            if (mIsDreaming) {
-                mWakeLock.acquire(300);
-            }
             setAlpha(1.0f);
         } else {
             setAlpha(mIsDreaming ? 0.5f : 1.0f);
