@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright (C) 2019 CypherOS
+    Copyright (C) 2020 Paranoid Android
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,10 +21,10 @@
         <shape>
             <solid android:color="#ff1d1d1d" />
             <corners
-                android:topLeftRadius="@dimen/tri_state_up_top_left_radius"
-                android:topRightRadius="@dimen/tri_state_up_top_right_radius"
-                android:bottomLeftRadius="@dimen/tri_state_up_bottom_left_radius"
-                android:bottomRightRadius="@dimen/tri_state_up_bottom_right_radius" />
+                android:topLeftRadius="@dimen/right_tri_state_up_top_left_radius"
+                android:topRightRadius="@dimen/right_tri_state_up_top_right_radius"
+                android:bottomLeftRadius="@dimen/right_tri_state_up_bottom_left_radius"
+                android:bottomRightRadius="@dimen/right_tri_state_up_bottom_right_radius" />
         </shape>
     </item>
 </layer-list>

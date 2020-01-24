@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2019 CypherOS
- * Copyright 2014-2019 Paranoid Android
+ * Copyright (C) 2014-2020 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -356,7 +356,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                             if (mTriStateMode != MODE_VIBRATE) {
                                 if (mTriStateMode == MODE_NORMAL) {
                                     positionY2 = res.getDimensionPixelSize(R.dimen.tri_state_down_dialog_position) + res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
-                                    bg = R.drawable.dialog_tri_state_down_bg;
+                                    bg = isTsKeyRight ? R.drawable.right_dialog_tri_state_down_bg : R.drawable.left_dialog_tri_state_down_bg;
                                     break;
                                 }
                             }
@@ -365,7 +365,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
                             break;
                         }
                         positionY2 = res.getDimensionPixelSize(R.dimen.tri_state_up_dialog_position) + res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
-                        bg = R.drawable.dialog_tri_state_up_bg;
+                        bg = isTsKeyRight ? R.drawable.right_dialog_tri_state_up_bg : R.drawable.left_dialog_tri_state_up_bg;
                         break;
                 }
                 if (mTriStateMode != -1) {
