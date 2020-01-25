@@ -361,6 +361,38 @@
     <alias name="fantasy" to="fifa2018" />
     <alias name="ITC Stone Serif" to="fifa2018" />
 
+    <family name="cocon">
+        <font weight="400" style="normal">Cocon.ttf</font>
+    </family>
+    <alias name="cocon-light" to="cocon" weight="300" />
+    <alias name="cocon-medium" to="cocon" weight="500" />
+    <alias name="cocon-semi-bold" to="cocon" weight="600" />
+    <alias name="cocon-bold" to="cocon" weight="700" />
+    <alias name="times" to="cocon" />
+    <alias name="times new roman" to="cocon" />
+    <alias name="palatino" to="cocon" />
+    <alias name="georgia" to="cocon" />
+    <alias name="baskerville" to="cocon" />
+    <alias name="goudy" to="cocon" />
+    <alias name="fantasy" to="cocon" />
+    <alias name="ITC Stone Serif" to="cocon" />
+
+    <family name="quando">
+        <font weight="400" style="normal">Quando.ttf</font>
+    </family>
+    <alias name="quando-light" to="quando" weight="300" />
+    <alias name="quando-medium" to="quando" weight="500" />
+    <alias name="quando-semi-bold" to="quando" weight="600" />
+    <alias name="quando-bold" to="quando" weight="700" />
+    <alias name="times" to="quando" />
+    <alias name="times new roman" to="quando" />
+    <alias name="palatino" to="quando" />
+    <alias name="georgia" to="quando" />
+    <alias name="baskerville" to="quando" />
+    <alias name="goudy" to="quando" />
+    <alias name="fantasy" to="quando" />
+    <alias name="ITC Stone Serif" to="quando" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
