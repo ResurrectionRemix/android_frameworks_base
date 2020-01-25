@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Weather condition icon  -->
-    <dimen name="binary_clock_width">100dp</dimen>
-    <dimen name="binary_clock_height">100dp</dimen>
     <dimen name="weather_icon_size">24dp</dimen>
     <dimen name="header_font_size">20dp</dimen>
     <dimen name="custom_clock_width">120dp</dimen>
