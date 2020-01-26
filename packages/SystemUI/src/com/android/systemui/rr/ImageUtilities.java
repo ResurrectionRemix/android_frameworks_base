@@ -67,7 +67,7 @@ public class ImageUtilities {
     }
 
 /* blur routine */
-    public static Bitmap blurImage(Context context, Bitmap image) {
+    public static Bitmap blurImage(Context context, Bitmap image, int intensity) {
         float BITMAP_SCALE = 0.4f;
         float BLUR_RADIUS = 7.5f;
 
@@ -81,6 +81,9 @@ public class ImageUtilities {
         ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
         Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
         Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);  
+        if (intensity > 0 && intensity <= 100) {
+            BLUR_RADIUS = (float) intensity * 0.25f;
+        }
         theIntrinsic.setRadius(BLUR_RADIUS);
         theIntrinsic.setInput(tmpIn);
         theIntrinsic.forEach(tmpOut);

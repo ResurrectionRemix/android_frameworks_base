@@ -1167,12 +1167,50 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
-    public void updateBlurAlpha() {
-        int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
-        int QSBlurAlpha = Math.round(255.0f *
-                mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
+    private void adjustBrightness(int x) {
+        mBrightnessChanged = true;
+        float raw = ((float) x) / getDisplayWidth();
 
+        // Add a padding to the brightness control on both sides to
+        // make it easier to reach min/max brightness
+        float padded = Math.min(1.0f - BRIGHTNESS_CONTROL_PADDING,
+                Math.max(BRIGHTNESS_CONTROL_PADDING, raw));
+        float value = (padded - BRIGHTNESS_CONTROL_PADDING) /
+                (1 - (2.0f * BRIGHTNESS_CONTROL_PADDING));
+        if (mAutomaticBrightness) {
+            float adj = (2 * value) - 1;
+            adj = Math.max(adj, -1);
+            adj = Math.min(adj, 1);
+            final float val = adj;
+            mDisplayManager.setTemporaryAutoBrightnessAdjustment(val);
+            AsyncTask.execute(new Runnable() {
+                public void run() {
+                    Settings.System.putFloatForUser(mContext.getContentResolver(),
+                            Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, val,
+                            UserHandle.USER_CURRENT);
+                }
+            });
+        } else {
+            int newBrightness = mMinBrightness + (int) Math.round(value *
+                    (PowerManager.BRIGHTNESS_ON - mMinBrightness));
+            newBrightness = Math.min(newBrightness, PowerManager.BRIGHTNESS_ON);
+            newBrightness = Math.max(newBrightness, mMinBrightness);
+            final int val = newBrightness;
+            mDisplayManager.setTemporaryBrightness(val);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Settings.System.putIntForUser(mContext.getContentResolver(),
+                            Settings.System.SCREEN_BRIGHTNESS, val,
+                            UserHandle.USER_CURRENT);
+                }
+            });
+        }
+    }
+
+    private boolean isQSBlurEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_BLUR, 0) != 0;
     }
 
     protected QS createDefaultQSFragment() {
@@ -2025,6 +2063,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_BLUR_ALPHA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_BLUR_INTENSITY),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2044,7 +2085,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             setGamingModeActive();
             setGamingModeHeadsupToggle();
-            updateBlurAlpha();
             updateQSBlur();
             if (mCollapsedStatusBarFragment != null) {
                 mCollapsedStatusBarFragment.updateSettings(false);
@@ -2063,9 +2103,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.System.QS_BACKGROUND_BLUR, 0,
                 UserHandle.USER_CURRENT) == 1;
        if (!mQSBlurEnabled) {
-                    mQSBlurView.setVisibility(View.GONE);
-                } else {
-                    updateBlurVisibility();
+           mQSBlurView.setVisibility(View.GONE);
+       } else {
+           updateBlurVisibility();
        }
     }
 
@@ -5278,30 +5318,26 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void updateBlurVisibility() {
-        if (!mQSBlurEnabled) return;
+        int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
+        int QSBlurAlpha = Math.round(255.0f *
+                mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
+        int QSBlurIntensity = Settings.System.getInt(mContext.getContentResolver(),
+              Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
+        boolean enoughBlurData = (QSBlurAlpha > 0 && QSBlurIntensity > 0);
 
-        int QSBlurAlpha = Math.round(255.0f * mNotificationPanel.getExpandedFraction());
-
-        if (QSBlurAlpha > 0 && !dataupdated && !mIsKeyguard) {
-            DataUsageView.updateUsage();
-            dataupdated = true;
+        if (enoughBlurData && !blurperformed && !mIsKeyguard && isQSBlurEnabled()) {
+            Bitmap bittemp = ImageUtilities.blurImage(mContext, 
+                                ImageUtilities.screenshotSurface(mContext), QSBlurIntensity);
+            Drawable blurbackground = new BitmapDrawable(mContext.getResources(), bittemp);
+            blurperformed = true;
+            mQSBlurView.setBackgroundDrawable(blurbackground);
+        } else if (!enoughBlurData || mState == StatusBarState.KEYGUARD) {
+            blurperformed = false;
+            mQSBlurView.setBackgroundColor(Color.TRANSPARENT);
         }
-
-        if (QSBlurAlpha > 0 && !mIsKeyguard) {
-            if (!mQSBlurred) {
-                mQSBlurred = true;
-                Bitmap bittemp = ImageUtilities.blurImage(mContext, ImageUtilities.screenshotSurface(mContext));
-                Drawable qsBlurBackground = new BitmapDrawable(mContext.getResources(), bittemp);
-                mQSBlurView.setVisibility(View.VISIBLE);
-                mQSBlurView.setBackgroundDrawable(qsBlurBackground);
-            }
-            mQSBlurView.setAlpha(QSBlurAlpha);
-            mQSBlurView.getBackground().setAlpha(QSBlurAlpha);
-        } else if (QSBlurAlpha == 0 || mIsKeyguard) {
-            mQSBlurView.setVisibility(View.GONE);
-            mQSBlurred = false;
-            dataupdated = false;
-        }
+        mQSBlurView.setAlpha(QSBlurAlpha);
+        mQSBlurView.getBackground().setAlpha(QSBlurAlpha);
     }
 
     @Override
