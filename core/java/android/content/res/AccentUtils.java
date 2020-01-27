@@ -11,7 +11,7 @@ public class AccentUtils {
     private static final String TAG = "AccentUtils";
 
 
-    private static final String ACCENT_COLOR_PROP = "persist.sys.du.accent_color";
+    private static final String ACCENT_COLOR_PROP = "persist.sys.rr.accent_color";
 
     static boolean isResourceAccent(String resName) {
         return resName.contains("accent_device_default_light")
