@@ -5557,6 +5557,15 @@ public final class Settings {
 
 
         /**
+         * FOD recognizing animation
+         * @hide
+         */
+        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
+        /** @hide */
+        private static final Validator FOD_RECOGNIZING_ANIMATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5711,6 +5720,7 @@ public final class Settings {
 
             FOD_ICON,
             FOD_ICON_WALLPAPER_COLOR,
+            FOD_RECOGNIZING_ANIMATION,
             // AICP Settings end
         };
 
@@ -5922,6 +5932,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(GAMING_MODE_DYNAMIC_STATE);
             PRIVATE_SETTINGS.add(FOD_ICON);
             PRIVATE_SETTINGS.add(FOD_ICON_WALLPAPER_COLOR);
+            PRIVATE_SETTINGS.add(FOD_RECOGNIZING_ANIMATION);
             // AICP Settings end
         }
 
@@ -6111,6 +6122,7 @@ public final class Settings {
             VALIDATORS.put(FOD_ICON, FOD_ICON_VALIDATOR);
             VALIDATORS.put(FOD_ICON_WALLPAPER_COLOR,
                     FOD_ICON_WALLPAPER_COLOR_VALIDATOR);
+            VALIDATORS.put(FOD_RECOGNIZING_ANIMATION, FOD_RECOGNIZING_ANIMATION_VALIDATOR);
             // AICP Settings end
         }
 

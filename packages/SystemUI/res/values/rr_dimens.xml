@@ -36,4 +36,7 @@
     <dimen name="ticker_icon_end_margin">4dp</dimen>
     <dimen name="ticker_text_top_padding">2dp</dimen>
     <dimen name="ticker_text_end_padding">10dp</dimen>
+
+    <!-- FOD recognizing animation -->
+    <dimen name="fod_animation_size">280dp</dimen>
 </resources>
