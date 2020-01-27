@@ -14,15 +14,23 @@
      limitations under the License.
 -->
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="center_vertical|fill_horizontal"
-          android:start="4dp"
-          android:end="4dp">
-        <shape android:shape="rectangle"
-               android:tint="@color/switch_track_material">
-            <corners android:radius="7dp" />
-            <solid android:color="@color/white_disabled_material" />
-            <size android:height="14dp" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:visible="true" android:shape="rectangle" android:useLevel="false">
+        <gradient 
+            android:startColor="@color/gradient_start"
+            android:endColor="@color/gradient_end"
+            android:angle="45"/>
+            <corners android:radius="25dp" />
+            <size android:height="21dp" android:width="25dp" />
         </shape>
     </item>
-</layer-list>
+    <item android:state_checked="false">
+        <shape android:visible="true" android:shape="rectangle" android:useLevel="false"
+            android:tint="?attr/colorProgressBackgroundNormal">
+            <solid android:color="@color/white_disabled_material" />
+            <corners android:radius="25dp" />
+            <size android:height="21dp" android:width="25dp" />
+        </shape>
+    </item>
+</selector>

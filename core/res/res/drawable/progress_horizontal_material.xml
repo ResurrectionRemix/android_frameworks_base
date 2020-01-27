@@ -24,25 +24,16 @@
             <solid android:color="@color/white_disabled_material" />
         </shape>
     </item>
-    <item android:id="@id/secondaryProgress"
-          android:gravity="center_vertical|fill_horizontal">
-        <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle"
-                   android:tint="?attr/colorControlActivated">
-                <corners android:radius="?attr/progressBarCornerRadius" />
-                <size android:height="@dimen/progress_bar_height_material" />
-                <solid android:color="@color/white_disabled_material" />
-            </shape>
-        </scale>
-    </item>
     <item android:id="@id/progress"
           android:gravity="center_vertical|fill_horizontal">
         <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle"
-                   android:tint="?attr/colorControlActivated">
+            <shape android:shape="rectangle">
                 <corners android:radius="?attr/progressBarCornerRadius" />
                 <size android:height="@dimen/progress_bar_height_material" />
-                <solid android:color="@color/white" />
+                <gradient 
+                    android:startColor="@color/gradient_start"
+                    android:endColor="@color/gradient_end"
+                    android:angle="45"/>
             </shape>
         </scale>
     </item>
