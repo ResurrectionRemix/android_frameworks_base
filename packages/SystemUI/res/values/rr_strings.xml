@@ -26,6 +26,21 @@
         <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot_cust">Screenshot</string>
 
+   <!-- Screen record -->
+    <string name="screenrecord_dialog_title">Start recording with Screen recorder?</string>
+    <string name="screenrecord_dialog_summary">Screen recorder will have access to all of the information that\'s visible on your screen or played from your device while recording. This includes information such as photos, messages, and audio that you play.</string>
+    <string name="screenrecord_dialog_settings">Settings</string>
+    <string name="screenrecord_dialog_start">Start Recording</string>
+    <string name="screenrecord_dialog_cancel">Cancel</string>
+    <string name="screenrecord_audio_title">Record audio</string>
+    <string name="screenrecord_audio_summary">Record audio while recording</string>
+    <string name="screenrecord_taps_title">Show taps</string>
+    <string name="screenrecord_taps_summary">Show visual feedback while recording</string>
+    <string name="screenrecord_stopdot_title">Show stop dot</string>
+    <string name="screenrecord_stopdot_summary">Show a red dot to stop recording with a single tap. Longpress it to move it to the opposite side.</string>
+    <string name="screenrecord_low_quality_title">Low quality</string>
+    <string name="screenrecord_low_quality_summary">Record in a lower quality to save space on your device</string>
+
     <string name="global_action_restart_advanced">Advanced</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string>

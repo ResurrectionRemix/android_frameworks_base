@@ -352,7 +352,7 @@
 
         <activity android:name=".screenrecord.ScreenRecordDialog"
             android:excludeFromRecents="true"
-            android:theme="@style/ScreenRecord" />
+            android:theme="@style/ScreenRecordStyle" />
         <service android:name=".screenrecord.RecordingService" />
 
         <!-- started from PhoneWindowManager

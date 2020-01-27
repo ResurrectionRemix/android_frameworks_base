@@ -16,6 +16,11 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Screen recording -->
+    <style name="ScreenRecordStyle" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.MinWidth">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="Theme.SystemUI.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog" />
 
     <style name="Theme.SystemUI.Dialog.Alert" parent="@*android:style/Theme.DeviceDefault.Dialog.Alert" />

@@ -1,71 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clipChildren="false"
-              android:clipToPadding="false"
-              android:gravity="top"
-              android:minWidth="320dp"
-              android:orientation="vertical"
-              android:paddingTop="24dp"
-              android:paddingBottom="12dp"
-              android:paddingLeft="24dp"
-              android:paddingRight="12dp"
-              android:background="@drawable/rounded_bg_full">
+<!-- Copyright (C) 2020 The Dirty Unicorns Project
 
-    <LinearLayout
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:paddingTop="?android:attr/dialogPreferredPadding"
+    android:paddingBottom="8dp"
+    android:paddingStart="?android:attr/dialogPreferredPadding"
+    android:paddingEnd="?android:attr/dialogPreferredPadding">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/title"
-            android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
-            android:gravity="start|left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:textSize="20sp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:text="@string/screenrecord_name"/>
-        <Switch
-            android:id="@+id/checkbox_mic"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="16sp"
-            android:text="@string/screenrecord_mic_label"/>
-        <Switch
-            android:id="@+id/checkbox_taps"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="16sp"
-            android:text="@string/screenrecord_taps_label"/>
-        <Switch
-            android:id="@+id/checkbox_stopdot"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="16sp"
-            android:text="@string/screenrecord_stopdot_label"/>
-        <Switch
-            android:id="@+id/checkbox_low_quality"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="16sp"
-            android:text="@string/screenrecord_low_quality_label"/>
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="end">
-            <Button
-                android:id="@+id/record_button"
-                android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/screenrecord_start_label"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored"
-            />
+                android:layout_marginBottom="12dp"
+                android:gravity="start"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold"
+                android:text="@string/screenrecord_dialog_title" />
+
+            <TextView
+                android:id="@+id/summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="start"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:attr/textColorSecondary"
+                android:text="@string/screenrecord_dialog_summary" />
+
+            <TextView
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="start"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold"
+                android:text="@string/screenrecord_dialog_settings" />
+
+            <FrameLayout
+                android:id="@+id/record_voice_over_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_audio_title" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_audio_summary" />
+
+                </RelativeLayout>
+
+                <Switch
+                    android:id="@+id/switch_mic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/show_taps_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_taps_title" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_taps_summary" />
+
+                </RelativeLayout>
+
+                <Switch
+                    android:id="@+id/switch_taps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/show_stop_dot_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_stopdot_title" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_stopdot_summary" />
+
+                </RelativeLayout>
+
+                <Switch
+                    android:id="@+id/switch_stopdot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/low_quality_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_low_quality_title" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_low_quality_summary" />
+
+                </RelativeLayout>
+
+                <Switch
+                    android:id="@+id/switch_low_quality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/record_button"
+                    android:text="@string/screenrecord_dialog_cancel"
+                    style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored" />
+
+                <Button
+                    android:id="@+id/record_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/screenrecord_dialog_start"
+                    style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored" />
+
+            </RelativeLayout>
+
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>
