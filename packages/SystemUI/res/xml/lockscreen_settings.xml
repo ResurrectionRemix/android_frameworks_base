@@ -18,6 +18,11 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     android:title="@string/other">
 
+    <!-- Preview -->
+    <com.android.settingslib.widget.LayoutPreference
+        android:key="bottomshorcuts_preview"
+        android:layout="@layout/bottom_shortcuts_lay"
+        android:selectable="false"/>
 
     <Preference
         android:key="sysui_keyguard_left"

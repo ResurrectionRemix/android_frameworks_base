@@ -85,4 +85,6 @@
     <color name="volume_background_tint">#141414</color>
 
     <color name="divider_stroke_color">#434343</color>
+    <color name="keyguard_affordance_background_preview">#171717</color>
+    <color name="keyguard_affordance_background_preview_background">#242426</color>
 </resources>

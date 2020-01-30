@@ -209,5 +209,8 @@
     <color name="volume_background_tint">#f2f2f2</color>
     <color name="divider_stroke_color">#E0E0E0</color>
 
-   <color name="keyguard_affordance_background_color">#00000000</color>
+    <color name="keyguard_affordance_background_preview">#797979</color>
+    <color name="keyguard_affordance_background_preview_background">#f2f2f2</color>
+    <color name="keyguard_affordance_background_color">#00000000</color>
+
 </resources>
