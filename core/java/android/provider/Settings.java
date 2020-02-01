@@ -5420,6 +5420,93 @@ public final class Settings {
         private static final Validator STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+        /**
+         * Gaming mode master switch
+         * @hide
+         */
+        public static final String GAMING_MODE_ENABLED = "gaming_mode_enabled";
+        /** @hide */
+        private static final Validator GAMING_MODE_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Gaming mode active state - to disable via notification / tile
+         * @hide
+         */
+        public static final String GAMING_MODE_ACTIVE = "gaming_mode_active";
+        /** @hide */
+        private static final Validator GAMING_MODE_ACTIVE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Package name of apps for enabling Gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_VALUES = "gaming_mode_values";
+        /** @hide */
+       private static final Validator GAMING_MODE_VALUES_VALIDATOR =
+               ANY_STRING_VALIDATOR;
+
+        public static final String GAMING_MODE_DUMMY = "gaming_mode_dummy";
+        /** @hide */
+       private static final Validator GAMING_MODE_DUMMY_VALIDATOR =
+               ANY_STRING_VALIDATOR;
+
+        /**
+         * Whether to disable hardware keys in gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_HW_KEYS_TOGGLE = "gaming_mode_hw_keys_toggle";
+        /** @hide */
+        private static final Validator GAMING_MODE_HW_KEYS_TOGGLE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether to disable heads up gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_HEADSUP_TOGGLE = "gaming_mode_headsup_toggle";
+        /** @hide */
+        private static final Validator GAMING_MODE_HEADSUP_TOGGLE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Ringer in gaming mode (0:OFF, 1:Vibrate, 2:DND, 3:Silent)
+         * @hide
+         */
+        public static final String GAMING_MODE_RINGER_MODE = "gaming_mode_ringer_mode";
+        /** @hide */
+        private static final Validator GAMING_MODE_RINGER_MODE_VALIDATOR =
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+
+        /**
+         * Whether to show notifications/toasts (0:OFF, 1:notifications, 2:toasts, 3: all)
+         * @hide
+         */
+        public static final String GAMING_MODE_NOTIFICATIONS = "gaming_mode_notifications";
+        /** @hide */
+        private static final Validator GAMING_MODE_NOTIFICATIONS_VALIDATOR =
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+
+        /**
+         * Whether to lock brightness in gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE = "gaming_mode_manual_brightness_toggle";
+        /** @hide */
+        private static final Validator GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether to automatically enable the gaming mode
+         * if the launched app is a game
+         * @hide
+         */
+        public static final String GAMING_MODE_DYNAMIC_STATE = "gaming_mode_dynamic_state";
+        /** @hide */
+        private static final Validator GAMING_MODE_DYNAMIC_STATE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5591,7 +5678,17 @@ public final class Settings {
             CUSTOM_CARRIER_LABEL,
             STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
-            STATUS_BAR_TICKER_TICK_DURATION
+            STATUS_BAR_TICKER_TICK_DURATION,
+            GAMING_MODE_ENABLED,
+            GAMING_MODE_ACTIVE,
+            GAMING_MODE_VALUES,
+            GAMING_MODE_DUMMY,
+            GAMING_MODE_HW_KEYS_TOGGLE,
+            GAMING_MODE_HEADSUP_TOGGLE,
+            GAMING_MODE_RINGER_MODE,
+            GAMING_MODE_NOTIFICATIONS,
+            GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE,
+            GAMING_MODE_DYNAMIC_STATE,
             // AICP Settings end
         };
 
@@ -5791,6 +5888,16 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
+            PRIVATE_SETTINGS.add(GAMING_MODE_ENABLED);
+            PRIVATE_SETTINGS.add(GAMING_MODE_ACTIVE);
+            PRIVATE_SETTINGS.add(GAMING_MODE_VALUES);
+            PRIVATE_SETTINGS.add(GAMING_MODE_DUMMY);
+            PRIVATE_SETTINGS.add(GAMING_MODE_HW_KEYS_TOGGLE);
+            PRIVATE_SETTINGS.add(GAMING_MODE_HEADSUP_TOGGLE);
+            PRIVATE_SETTINGS.add(GAMING_MODE_RINGER_MODE);
+            PRIVATE_SETTINGS.add(GAMING_MODE_NOTIFICATIONS);
+            PRIVATE_SETTINGS.add(GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE);
+            PRIVATE_SETTINGS.add(GAMING_MODE_DYNAMIC_STATE);
             // AICP Settings end
         }
 
@@ -5967,6 +6074,16 @@ public final class Settings {
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
                     STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_ENABLED, GAMING_MODE_ENABLED_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_ACTIVE, GAMING_MODE_ACTIVE_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_VALUES, GAMING_MODE_VALUES_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_DUMMY, GAMING_MODE_DUMMY_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_HEADSUP_TOGGLE, GAMING_MODE_HEADSUP_TOGGLE_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_HW_KEYS_TOGGLE, GAMING_MODE_HW_KEYS_TOGGLE_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_RINGER_MODE, GAMING_MODE_RINGER_MODE_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_NOTIFICATIONS, GAMING_MODE_NOTIFICATIONS_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE, GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE_VALIDATOR);
+            VALIDATORS.put(GAMING_MODE_DYNAMIC_STATE, GAMING_MODE_DYNAMIC_STATE_VALIDATOR);
             // AICP Settings end
         }
 

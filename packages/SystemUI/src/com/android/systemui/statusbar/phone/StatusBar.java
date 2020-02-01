@@ -503,6 +503,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private final DisplayMetrics mDisplayMetrics = Dependency.get(DisplayMetrics.class);
 
+    private boolean mHeadsUpDisabled, mGamingModeActivated;
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
         ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
@@ -695,6 +696,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             };
     private ActivityIntentHelper mActivityIntentHelper;
     private ShadeController mShadeController;
+
     private KeyguardSliceProvider mSliceProvider;
 
     @Override
@@ -1988,6 +1990,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_TICKER_TICK_DURATION),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GAMING_MODE_ACTIVE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GAMING_MODE_HEADSUP_TOGGLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2016,6 +2024,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             setMaxKeyguardNotifConfig();
             updateTickerAnimation();
             updateTickerTickDuration();
+            setGamingModeActive();
+            setGamingModeHeadsupToggle();
         }
     }
 
@@ -5305,5 +5315,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
         mPresenter.setMaxAllowedNotifUser(mMaxKeyguardNotifConfig);
+    }
+
+    private void setGamingModeActive() {
+        mGamingModeActivated = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.GAMING_MODE_ACTIVE, 0, UserHandle.USER_CURRENT) == 1;
+        mNotificationInterruptionStateProvider.setGamingPeekMode(mGamingModeActivated && mHeadsUpDisabled);
+    }
+
+    private void setGamingModeHeadsupToggle() {
+        mHeadsUpDisabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.GAMING_MODE_HEADSUP_TOGGLE, 0, UserHandle.USER_CURRENT) == 1;
+        mNotificationInterruptionStateProvider.setGamingPeekMode(mGamingModeActivated && mHeadsUpDisabled);
     }
 }
