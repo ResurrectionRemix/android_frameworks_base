@@ -253,6 +253,11 @@
     <string name="megabytespersecond_short">MB/s</string>
     <string name="gigabytespersecond_short">GB/s</string>
 
+    <!-- Mono Tile-->
+    <string name="quick_settings_monotoggle_tile">Audio mode</string>
+    <string name="quick_settings_monotoggle_tile_mono">Mono audio</string>
+    <string name="quick_settings_monotoggle_tile_stereo">Stereo audio</string>
+
     <!-- Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in
          values/config.xml) and must be truncated.

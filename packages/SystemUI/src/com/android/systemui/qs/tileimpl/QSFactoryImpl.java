@@ -50,6 +50,7 @@ import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.MonoToggleTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
@@ -135,6 +136,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<AnimationsTile> mAnimationsTileProvider;
     private final Provider<ScreenStabilizationTile> mScreenStabilizationTileProvider;
     private final Provider<PulseTile> mPulseTileProvider;
+    private final Provider<MonoToggleTile> mMonoToggleTileProvider;
 
     private QSTileHost mHost;
 
@@ -186,7 +188,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ScreenRecordTile> screenRecordTileProvider,
             Provider<AnimationsTile> animationsTileProvider,
             Provider<ScreenStabilizationTile> screenStabilizationTileProvider,
-            Provider<PulseTile> pulseTileProvider) {
+            Provider<PulseTile> pulseTileProvider,
+            Provider<MonoToggleTile> monoToggleTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -235,6 +238,7 @@ public class QSFactoryImpl implements QSFactory {
         mAnimationsTileProvider = animationsTileProvider;
         mScreenStabilizationTileProvider = screenStabilizationTileProvider;
         mPulseTileProvider = pulseTileProvider;
+        mMonoToggleTileProvider = monoToggleTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -347,6 +351,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mScreenStabilizationTileProvider.get();
             case "pulse":
                 return mPulseTileProvider.get();
+            case "mono":
+                return mMonoToggleTileProvider.get();
         }
 
         // Intent tiles.
