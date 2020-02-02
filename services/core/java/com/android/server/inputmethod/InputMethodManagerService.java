@@ -223,7 +223,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
     private static final String TAG_TRY_SUPPRESSING_IME_SWITCHER = "TrySuppressingImeSwitcher";
 
     // Long screenshot
-    private static final long LONGSHOT_BLOCK_SHOWING_TIMEOUT = 1000;
+    private static final long LONGSHOT_BLOCK_SHOWING_TIMEOUT = 2000;
 
     /**
      * Binding flags for establishing connection to the {@link InputMethodService}.
