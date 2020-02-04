@@ -20,14 +20,14 @@
     android:id="@+id/tooltip_view"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <View
         android:id="@+id/arrow"
         android:layout_width="@dimen/volume_tool_tip_arrow_width"
         android:layout_height="@dimen/volume_tool_tip_arrow_height"
-        android:layout_marginBottom="@dimen/volume_tool_tip_arrow_margin_container"
-        android:layout_marginStart="@dimen/volume_tool_tip_arrow_margin_start"/>
+        android:layout_marginEnd="@dimen/volume_tool_tip_arrow_margin_container" />
 
     <LinearLayout
         android:layout_width="wrap_content"

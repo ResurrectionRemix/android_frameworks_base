@@ -416,7 +416,14 @@
 
 
     <style name="VolumeButtons" parent="@android:style/Widget.Material.Button.Borderless">
-        <item name="android:background">@drawable/btn_borderless_rect</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/rounded_ripple</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/volume_dialog_icon_padding</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:soundEffectsEnabled">false</item>
+        <item name="android:tint">?android:attr/colorControlNormal</item>
     </style>
 
     <style name="DockedDividerBackground">

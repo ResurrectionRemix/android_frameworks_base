@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"हटाउनुहोस्"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"प्रणालीको नेभिगेसन अद्यावधिक गरियो। परिवर्तन गर्न सेटिङमा जानुहोस्।"</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"प्रणालीको नेभिगेसन अद्यावधिक गर्न सेटिङमा जानुहोस्"</string>
+    <string name="media_output_title" msgid="115223550977351699">"मिडिया यसमा प्ले गर्नुहोस्"</string>
 </resources>

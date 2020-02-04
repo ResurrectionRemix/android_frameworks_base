@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Loại bỏ"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Đã cập nhật chế độ di chuyển trên hệ thống. Để thay đổi, hãy chuyển đến phần Cài đặt."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Chuyển đến phần Cài đặt để cập nhật chế độ di chuyển trên hệ thống"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Phát phương tiện tới"</string>
 </resources>

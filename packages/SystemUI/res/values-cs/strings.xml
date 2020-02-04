@@ -952,4 +952,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Zavřít"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Systémová navigace byla aktualizována. Chcete-li provést změny, přejděte do Nastavení."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Přejděte do Nastavení a aktualizujte systémovou navigaci"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Přehrávat média v"</string>
 </resources>

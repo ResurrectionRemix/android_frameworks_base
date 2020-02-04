@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Ignorar"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"A navegação no sistema foi atualizada. Para efetuar alterações, aceda às Definições."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Aceda às Definições para atualizar a navegação no sistema."</string>
+    <string name="media_output_title" msgid="115223550977351699">"Reproduzir multimédia em"</string>
 </resources>

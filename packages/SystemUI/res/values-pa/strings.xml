@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"ਖਾਰਜ ਕਰੋ"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"ਸਿਸਟਮ ਨੈਵੀਗੇਸ਼ਨ ਅੱਪਡੇਟ ਹੋ ਗਿਆ। ਤਬਦੀਲੀਆਂ ਕਰਨ ਲਈ, ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।"</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"ਸਿਸਟਮ ਨੈਵੀਗੇਸ਼ਨ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ"</string>
+    <string name="media_output_title" msgid="115223550977351699">"ਇਸ 'ਤੇ ਮੀਡੀਆ ਚਲਾਓ"</string>
 </resources>

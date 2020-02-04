@@ -952,4 +952,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Atmesti"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Sistemos naršymo funkcijos atnaujintos. Jei norite pakeisti, eikite į skiltį „Nustatymai“."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Eikite į skiltį „Nustatymai“, kad atnaujintumėte sistemos naršymo funkcijas"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Leisti mediją į"</string>
 </resources>

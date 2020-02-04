@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"關閉"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"系統導覽已更新。如需變更，請前往「設定」。"</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"前往「設定」更新系統導覽"</string>
+    <string name="media_output_title" msgid="115223550977351699">"播放媒體的裝置"</string>
 </resources>

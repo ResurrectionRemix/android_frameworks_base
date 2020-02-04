@@ -947,4 +947,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Одбаци"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Навигација система је ажурирана. Да бисте унели измене, идите у Подешавања."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Идите у Подешавања да бисте ажурирали навигацију система"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Пуштај медијски садржај на"</string>
 </resources>

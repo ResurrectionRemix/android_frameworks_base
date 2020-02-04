@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Cashisa"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Ukuzulazula kwesistimu kubuyekeziwe. Ukuze wenze ushintsho, hamba kokuthi Izilungiselelo."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Hamba kuzilungiselelo ukuze ubuyekeze ukuzulazula kwesistimu"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Dlala imidiya ku-"</string>
 </resources>

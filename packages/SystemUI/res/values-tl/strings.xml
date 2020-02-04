@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"I-dismiss"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Na-update na ang pag-navigate ng system. Para gumawa ng mga pagbabago, pumunta sa Mga Setting."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Pumunta sa Mga Setting para i-update ang pag-navigate sa system"</string>
+    <string name="media_output_title" msgid="115223550977351699">"I-play ang media sa"</string>
 </resources>

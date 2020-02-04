@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Dispensar"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Navegação no sistema atualizada. Se quiser alterá-la, acesse as configurações."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Acesse as configurações para atualizar a navegação no sistema"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Tocar mídia"</string>
 </resources>

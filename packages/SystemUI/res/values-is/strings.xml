@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Hunsa"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Kerfisstjórnun uppfærð. Þú getur breytt þessu í stillingunum."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Farðu í stillingar til að uppfæra kerfisstjórnun"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Spila efni í"</string>
 </resources>

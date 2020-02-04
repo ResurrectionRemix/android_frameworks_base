@@ -946,4 +946,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Schließen"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Systemsteuerungseinstellungen wurden angepasst. Änderungen kannst du in den Einstellungen vornehmen."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Gehe zu den Einstellungen, um die Systemsteuerung anzupassen"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Medien hier abspielen"</string>
 </resources>

@@ -13,139 +13,199 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License
   -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/volume_dialog_container"
-    android:layout_width="wrap_content"
+    android:id="@+id/volume_dialog"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="right"
-    android:layout_gravity="right"
+    android:layout_gravity="start"
     android:background="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="start"
+    android:minWidth="@dimen/volume_dialog_panel_width"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding"
+    android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_left_right"
+    android:paddingRight="@dimen/volume_dialog_panel_transparent_padding_left_right"
+    android:paddingTop="@dimen/volume_dialog_panel_transparent_padding"
     android:theme="@style/qs_theme">
 
-    <FrameLayout
-        android:id="@+id/volume_dialog"
-        android:minWidth="@dimen/volume_dialog_panel_width"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:layout_gravity="right"
-        android:background="@android:color/transparent"
-        android:paddingRight="@dimen/volume_dialog_panel_transparent_padding_horizontal"
-        android:paddingTop="@dimen/volume_dialog_panel_transparent_padding"
-        android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding"
-        android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_horizontal"
-        android:clipToPadding="false">
+        android:layout_marginBottom="@dimen/volume_dialog_spacer"
+        android:clipChildren="false"
+        android:gravity="start"
+        android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/ringer"
-            android:layout_width="@dimen/volume_dialog_ringer_size"
-            android:layout_height="@dimen/volume_dialog_ringer_size"
-            android:layout_marginBottom="@dimen/volume_dialog_spacer"
-            android:gravity="right"
-            android:layout_gravity="right"
-            android:translationZ="@dimen/volume_dialog_elevation"
-            android:clipToPadding="false"
-            android:background="@drawable/rounded_bg_full">
+            android:layout_width="@dimen/volume_dialog_panel_width"
+            android:layout_height="@dimen/volume_dialog_panel_width"
+            android:layout_marginEnd="@dimen/volume_dialog_spacer"
+            android:background="@drawable/rounded_volume_background"
+            android:elevation="@dimen/volume_dialog_elevation">
+
             <com.android.keyguard.AlphaOptimizedImageButton
                 android:id="@+id/ringer_icon"
                 style="@style/VolumeButtons"
-                android:background="@drawable/rounded_ripple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:padding="@dimen/volume_dialog_ringer_icon_padding"
-                android:tint="@color/accent_tint_color_selector"
-                android:layout_gravity="center"
-                android:soundEffectsEnabled="false" />
+                android:tint="?android:attr/colorAccent" />
 
-            <include layout="@layout/volume_dnd_icon"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginRight="@dimen/volume_dialog_stream_padding"
-                     android:layout_marginTop="6dp"/>
+            <include
+                layout="@layout/volume_dnd_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp" />
         </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/main"
-            android:layout_width="wrap_content"
-            android:minWidth="@dimen/volume_dialog_panel_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
-            android:gravity="right"
-            android:layout_gravity="right"
-            android:orientation="vertical"
-            android:translationZ="@dimen/volume_dialog_elevation"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:background="@drawable/rounded_bg_full" >
-            <LinearLayout
-                android:id="@+id/volume_dialog_rows"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="@dimen/volume_dialog_panel_width"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingRight="@dimen/volume_dialog_stream_padding"
-                android:paddingLeft="@dimen/volume_dialog_stream_padding">
-                <!-- volume rows added and removed here! :-) -->
-            </LinearLayout>
-            <FrameLayout
-                android:id="@+id/expandable_indicator_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_bg_bottom_background">
-                <com.android.systemui.statusbar.phone.ExpandableIndicator
-                    android:id="@+id/expandable_indicator"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:clipToPadding="false"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="right"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/accessibility_quick_settings_expand"
-                    android:padding="14dp"
-                    android:rotation="90" />
-            </FrameLayout>
+            android:id="@+id/expandable_indicator_container"
+            android:layout_width="@dimen/volume_dialog_panel_width"
+            android:layout_height="@dimen/volume_dialog_panel_width"
+            android:layout_marginEnd="@dimen/volume_dialog_row_spacer"
+            android:background="@drawable/rounded_volume_background"
+            android:elevation="@dimen/volume_dialog_elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.android.systemui.statusbar.phone.ExpandableIndicator
+                android:id="@+id/expandable_indicator"
+                style="@style/VolumeButtons"
+                android:layout_width="@dimen/volume_dialog_panel_width"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/accessibility_quick_settings_expand"
+                android:rotation="90" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/odi_captions"
-            android:layout_width="@dimen/volume_dialog_caption_size"
-            android:layout_height="@dimen/volume_dialog_caption_size"
-            android:layout_marginRight="68dp"
-            android:gravity="right"
-            android:layout_gravity="right"
-            android:clipToPadding="false"
-            android:translationZ="@dimen/volume_dialog_elevation"
-            android:background="@drawable/rounded_bg_full">
-            <com.android.systemui.volume.CaptionsToggleImageButton
-                android:id="@+id/odi_captions_icon"
-                android:src="@drawable/ic_volume_odi_captions_disabled"
+        <LinearLayout
+            android:id="@+id/media_button_view"
+            android:layout_width="@dimen/volume_dialog_panel_width"
+            android:layout_height="@dimen/volume_dialog_panel_width"
+            android:layout_marginEnd="@dimen/volume_dialog_spacer"
+            android:background="@drawable/rounded_volume_background"
+            android:elevation="@dimen/volume_dialog_elevation"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.android.keyguard.AlphaOptimizedImageButton
+                android:id="@+id/media_button"
                 style="@style/VolumeButtons"
-                android:background="@drawable/rounded_ripple"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tint="@color/caption_tint_color_selector"
-                android:layout_gravity="center"
-                android:soundEffectsEnabled="false"
-                sysui:optedOut="false"/>
-        </FrameLayout>
+                android:padding="13dp"
+                android:src="@drawable/ic_speaker_bluetooth" />
+        </LinearLayout>
 
-        <ViewStub
-            android:id="@+id/odi_captions_tooltip_stub"
-            android:inflatedId="@+id/odi_captions_tooltip_view"
-            android:layout="@layout/volume_tool_tip_view"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/volume_dialog_panel_width"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/odi_captions"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_volume_background"
+                android:elevation="@dimen/volume_dialog_elevation"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.android.systemui.volume.CaptionsToggleImageButton
+                    android:id="@+id/odi_captions_icon"
+                    style="@style/VolumeButtons"
+                    android:layout_width="@dimen/volume_dialog_panel_width"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_volume_odi_captions_disabled"
+                    sysui:optedOut="false" />
+            </LinearLayout>
+
+            <ViewStub
+                android:id="@+id/odi_captions_tooltip_stub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/volume_dialog_spacer"
+                android:inflatedId="@+id/odi_captions_tooltip_view"
+                android:layout="@layout/volume_tool_tip_view" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/volume_dialog_slider_height"
+        android:layout_marginTop="@dimen/volume_dialog_spacer"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:id="@+id/volume_dialog_rows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/volume_tool_tip_right_margin"
-            android:layout_marginTop="@dimen/volume_tool_tip_top_margin"
-            android:layout_gravity="right"/>
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:minWidth="@dimen/volume_dialog_panel_width"
+            android:orientation="horizontal">
+            <!-- volume rows added and removed here! :-) -->
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/media_output_scroller"
+            android:layout_width="182dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_volume_background"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:elevation="@dimen/volume_dialog_elevation"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.android.systemui.statusbar.AlphaOptimizedTextView
+                android:id="@+id/media_output_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:clickable="false"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="5dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="6dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="@string/media_output_title"
+                android:textColor="?android:attr/colorControlNormal"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/divider_stroke_color" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/media_output_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:gravity="top"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical">
+                    <!-- media output devices added and removed here -->
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
     </FrameLayout>
-
-</FrameLayout>
+</LinearLayout>

@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"ပယ်ရန်"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"စနစ်လမ်းညွှန်ခြင်း အပ်ဒိတ်လုပ်ပြီးပါပြီ။ အပြောင်းအလဲများ ပြုလုပ်ရန် \'ဆက်တင်များ\' သို့သွားပါ။"</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"စနစ်လမ်းညွှန်ခြင်း အပ်ဒိတ်လုပ်ရန် \'ဆက်တင်များ\' သို့သွားပါ"</string>
+    <string name="media_output_title" msgid="115223550977351699">"မီဒီယာကို အောက်ပါစက်တွင် ဖွင့်ရန်"</string>
 </resources>

@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Maak toe"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Stelselnavigasie is opgedateer. Gaan na Instellings toe om veranderinge te maak."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Gaan na Instellings toe om stelselnavigasie op te dateer"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Speel media na"</string>
 </resources>

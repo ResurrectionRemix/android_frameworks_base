@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Kapat"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Sistemde gezinme yöntemi güncellendi. Değişiklik yapmak için Ayarlar\'a gidin."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Sistemde gezinme yöntemini güncellemek için Ayarlar\'a gidin"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Medyayı oynatma yeri"</string>
 </resources>

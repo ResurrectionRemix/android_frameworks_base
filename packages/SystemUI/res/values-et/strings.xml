@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Loobu"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Süsteemis navigeerimine on värskendatud. Muutmiseks avage jaotis Seaded."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Süsteemi navigeerimise värskendamiseks avage jaotis Seaded"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Esita meedia seadmes"</string>
 </resources>

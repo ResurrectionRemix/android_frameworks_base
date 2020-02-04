@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"डिसमिस करा"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"सिस्टम नेव्हिगेशन अपडेट केले. बदल करण्यासाठी, सेटिंग्जवर जा."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"सिस्टम नेव्हिगेशन अपडेट करण्यासाठी सेटिंग्जवर जा"</string>
+    <string name="media_output_title" msgid="115223550977351699">"मीडिया प्‍ले करा"</string>
 </resources>

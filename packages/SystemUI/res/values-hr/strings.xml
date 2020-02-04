@@ -947,4 +947,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Odbaci"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Ažurirana je navigacija sustavom. Možete je promijeniti u Postavkama."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Navigaciju sustavom možete ažurirati u Postavkama"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Reproduciraj medije na"</string>
 </resources>

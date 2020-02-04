@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"رد کردن"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"پیمایش سیستم به‌روزرسانی شد. برای انجام تغییرات به «تنظیمات» بروید."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"برای به‌روزرسانی پیمایش سیستم، به «تنظیمات» بروید"</string>
+    <string name="media_output_title" msgid="115223550977351699">"پخش رسانه در"</string>
 </resources>

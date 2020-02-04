@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Cerrar"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Se ha actualizado la navegación del sistema. Para hacer cambios, ve a Ajustes."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Ve a Ajustes para actualizar la navegación del sistema"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Reproducir contenido multimedia en"</string>
 </resources>

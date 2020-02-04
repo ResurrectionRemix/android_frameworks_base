@@ -16,14 +16,13 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dnd_icon"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp">
 
     <ImageView
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:layout_gravity="right|top"
         android:src="@*android:drawable/ic_qs_dnd"
         android:tint="?android:attr/textColorTertiary"/>
 </FrameLayout>

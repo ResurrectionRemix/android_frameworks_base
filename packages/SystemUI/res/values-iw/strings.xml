@@ -952,4 +952,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"סגירה"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"הניווט במערכת עודכן. אפשר לערוך שינויים דרך ההגדרות."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"יש לעבור להגדרות כדי לעדכן את הניווט במערכת"</string>
+    <string name="media_output_title" msgid="115223550977351699">"הפעלת מדיה באמצעות"</string>
 </resources>

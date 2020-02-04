@@ -952,4 +952,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Закрыть"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Параметры навигации в системе обновлены. Чтобы изменить их, перейдите в настройки."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Чтобы обновить параметры навигации в системе, перейдите в настройки."</string>
+    <string name="media_output_title" msgid="115223550977351699">"Где воспроизводить"</string>
 </resources>

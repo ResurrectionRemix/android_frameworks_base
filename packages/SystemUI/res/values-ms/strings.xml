@@ -942,4 +942,5 @@
     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Ketepikan"</string>
     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Navigasi sistem dikemas kini. Untuk membuat perubahan, pergi ke Tetapan."</string>
     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Pergi ke Tetapan untuk mengemas kini navigasi sistem"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Mainkan media ke"</string>
 </resources>
