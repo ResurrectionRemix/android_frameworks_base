@@ -85,7 +85,7 @@
         <ImageButton 
             android:layout_gravity="bottom|center_vertical|center_horizontal|center"
             android:id="@+id/clear_notifications"
-            android:background="@drawable/floating_action_button"
+            android:background="@drawable/oos_dismiss_all_bcg"
             android:visibility="gone"
             android:layout_width="@dimen/dismiss_all_button_width"
             android:layout_height="@dimen/dismiss_all_button_height" 
