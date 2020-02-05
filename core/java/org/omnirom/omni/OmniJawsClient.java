@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.systemui.omni;
+package org.omnirom.omni;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -41,10 +41,8 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.android.systemui.R;
-
 public class OmniJawsClient {
-    private static final String TAG = "SystemUI:OmniJawsClient";
+    private static final String TAG = "OmniJawsClient";
     private static final boolean DEBUG = false;
     public static final String SERVICE_PACKAGE = "org.omnirom.omnijaws";
     public static final Uri WEATHER_URI

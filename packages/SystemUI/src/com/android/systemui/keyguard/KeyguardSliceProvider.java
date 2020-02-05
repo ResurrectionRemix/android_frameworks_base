@@ -71,7 +71,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import com.android.systemui.omni.OmniJawsClient;
+import org.omnirom.omni.OmniJawsClient;
 
 /**
  * Simple Slice provider that shows the current date.

@@ -47,13 +47,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.systemui.R;
-import com.android.systemui.omni.OmniJawsClient;
 import com.android.systemui.statusbar.phone.SettingsButton;
 import com.android.systemui.plugins.ActivityStarter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.omnirom.omni.OmniJawsClient;
 
 public class DetailedWeatherView extends FrameLayout {
 

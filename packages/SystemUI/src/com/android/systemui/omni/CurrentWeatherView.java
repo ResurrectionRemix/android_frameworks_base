@@ -60,6 +60,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.omnirom.omni.OmniJawsClient;
+
 public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.OmniJawsObserver {
 
     static final String TAG = "SystemUI:CurrentWeatherView";

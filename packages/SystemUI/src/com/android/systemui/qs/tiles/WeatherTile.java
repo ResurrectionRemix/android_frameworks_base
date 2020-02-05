@@ -45,7 +45,6 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.omni.DetailedWeatherView;
-import com.android.systemui.omni.OmniJawsClient;
 import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.QSDetailItems;
@@ -57,6 +56,8 @@ import javax.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.omnirom.omni.OmniJawsClient;
 
 public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsClient.OmniJawsObserver {
     private static final String TAG = "WeatherTile";
