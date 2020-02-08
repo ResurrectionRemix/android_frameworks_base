@@ -4988,6 +4988,10 @@
     <string name="floating_toolbar_close_overflow_description">Close overflow</string>
 
     <!-- Free style window strings -->
+    <!-- Accessibility text for the minimize window button -->
+    <string name="pip_button_text">Picture In Picture</string>
+    <!-- Accessibility text for the minimize window button -->
+    <string name="minimize_button_text">Minimize</string>
     <!-- Accessibility text for the maximize window button -->
     <string name="maximize_button_text">Maximize</string>
     <!-- Accessibility text for the close window button -->

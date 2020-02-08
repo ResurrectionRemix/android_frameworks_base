@@ -31,6 +31,24 @@
             android:focusable="false"
             android:descendantFocusability="blocksDescendants" >
         <Button
+                android:id="@+id/pip_window"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="5dp"
+                android:padding="4dp"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/pip_button_text"
+                android:background="@drawable/decor_pip_button_dark" />
+        <Button
+                android:id="@+id/minimize_window"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="5dp"
+                android:padding="4dp"
+                android:layout_gravity="center_vertical|end"
+                android:contentDescription="@string/minimize_button_text"
+                android:background="@drawable/decor_minimize_button_dark" />
+        <Button
                 android:id="@+id/maximize_window"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
