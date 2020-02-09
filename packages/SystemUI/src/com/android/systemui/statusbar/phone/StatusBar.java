@@ -334,8 +334,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
-    private static final String STATUS_BAR_CUSTOM_HEADER =
-            "system:" + Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER;
     private static final String BERRY_SWITCH_STYLE =
             "system:" + Settings.System.BERRY_SWITCH_STYLE;
     private static final String DISPLAY_CUTOUT_MODE =
@@ -843,7 +841,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
-        tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         tunerService.addTunable(this, BERRY_SWITCH_STYLE);
         tunerService.addTunable(this, SYSUI_ROUNDED_FWVALS);
         tunerService.addTunable(this, DISPLAY_CUTOUT_MODE);
@@ -5733,8 +5730,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        } else if (STATUS_BAR_CUSTOM_HEADER.equals(key)) {
-                    updateTheme();
         } else if (BERRY_SWITCH_STYLE.equals(key)) {
                 int switchStyle =
                         TunerService.parseInteger(newValue, 0);
