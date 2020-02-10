@@ -85,4 +85,7 @@
 
     <!-- -1 means use same as config_screenBrightnessDoze -->
     <integer name="config_screenBrightnessPulse">-1</integer>
+
+    <!-- SBC Dual Channel (SBC HD Audio) -->
+    <bool name="config_enableSBCDualChannelAudio">true</bool>
 </resources>

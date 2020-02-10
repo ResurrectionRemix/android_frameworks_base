@@ -193,4 +193,7 @@
 
   <!-- Pulse brightness -->
   <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
+  <!-- SBC Dual Channel (SBC HD Audio) -->
+  <java-symbol type="bool" name="config_enableSBCDualChannelAudio"/>
 </resources>
