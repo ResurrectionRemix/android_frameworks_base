@@ -40,6 +40,25 @@ public class FODAnimation extends ImageView {
     private WindowManager mWindowManager;
     private boolean mIsKeyguard;
 
+    private int mSelectedAnim;
+    private final int[] ANIMATION_STYLES = {
+        R.drawable.fod_miui_normal_recognizing_anim,
+        R.drawable.fod_miui_aod_recognizing_anim,
+        R.drawable.fod_miui_light_recognizing_anim,
+        R.drawable.fod_miui_pop_recognizing_anim,
+        R.drawable.fod_miui_pulse_recognizing_anim,
+        R.drawable.fod_miui_pulse_recognizing_white_anim,
+        R.drawable.fod_miui_rhythm_recognizing_anim,
+        R.drawable.fod_op_cosmos_recognizing_anim,
+        R.drawable.fod_op_mclaren_recognizing_anim,
+        R.drawable.fod_op_stripe_recognizing_anim,
+        R.drawable.fod_op_wave_recognizing_anim,
+        R.drawable.fod_pureview_dna_recognizing_anim,
+        R.drawable.fod_pureview_future_recognizing_anim,
+        R.drawable.fod_pureview_halo_ring_recognizing_anim,
+        R.drawable.fod_pureview_molecular_recognizing_anim
+    };
+
     public FODAnimation(Context context, int mPositionX, int mPositionY) {
         super(context);
 
@@ -58,49 +77,14 @@ public class FODAnimation extends ImageView {
         mAnimParams.y = mPositionY - (mAnimationSize / 2);
 
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        setFODAnim();
-        recognizingAnim = (AnimationDrawable) getBackground();
+        update();
     }
 
-    public int getFODAnim() {
-        return Settings.System.getInt(mContext.getContentResolver(),
+    public void update() {
+        mSelectedAnim = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ANIM, 0);
-    }
 
-    public void setFODAnim() {
-        int fodanim = getFODAnim();
-
-        if (fodanim == 0) {
-            this.setBackgroundResource(R.drawable.fod_miui_normal_recognizing_anim);
-        } else if (fodanim == 1) {
-            this.setBackgroundResource(R.drawable.fod_miui_aod_recognizing_anim);
-        } else if (fodanim == 2) {
-            this.setBackgroundResource(R.drawable.fod_miui_light_recognizing_anim);
-        } else if (fodanim == 3) {
-            this.setBackgroundResource(R.drawable.fod_miui_pop_recognizing_anim);
-        } else if (fodanim == 4) {
-            this.setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_anim);
-        } else if (fodanim == 5) {
-            this.setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_white_anim);
-        } else if (fodanim == 6) {
-            this.setBackgroundResource(R.drawable.fod_miui_rhythm_recognizing_anim);
-        } else if (fodanim == 7) {
-            this.setBackgroundResource(R.drawable.fod_op_cosmos_recognizing_anim);
-        } else if (fodanim == 8) {
-            this.setBackgroundResource(R.drawable.fod_op_mclaren_recognizing_anim);
-        } else if (fodanim == 9) {
-            this.setBackgroundResource(R.drawable.fod_op_stripe_recognizing_anim);
-        } else if (fodanim == 10) {
-            this.setBackgroundResource(R.drawable.fod_op_wave_recognizing_anim);
-        } else if (fodanim == 11) {
-            this.setBackgroundResource(R.drawable.fod_pureview_dna_recognizing_anim);
-        } else if (fodanim == 12) {
-            this.setBackgroundResource(R.drawable.fod_pureview_future_recognizing_anim);
-        } else if (fodanim == 13) {
-            this.setBackgroundResource(R.drawable.fod_pureview_halo_ring_recognizing_anim);
-        } else if (fodanim == 14) {
-            this.setBackgroundResource(R.drawable.fod_pureview_molecular_recognizing_anim);
-        }
+        setBackgroundResource(ANIMATION_STYLES[mSelectedAnim]);
         recognizingAnim = (AnimationDrawable) getBackground();
     }
 
