@@ -6149,6 +6149,10 @@ public class NotificationManagerService extends SystemService {
         if (record.sbn.isGroup() && record.getNotification().suppressAlertingDueToGrouping()) {
             return false;
         }
+        // check current user
+        if (!isNotificationForCurrentUser(record)) {
+            return false;
+        }
 
         return true;
     }
