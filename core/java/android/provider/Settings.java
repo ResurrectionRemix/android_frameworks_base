@@ -5805,49 +5805,16 @@ public final class Settings {
          * Whether to enable PULSE Edge lights
          * @hide
          */
-        public static final String PULSE_AMBIENT_LIGHT = "pulse_ambient_light";
-
-        private static final Validator PULSE_AMBIENT_LIGHT_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to enable Ambient Edge lights
-         * @hide
-         */
-        public static final String AMBIENT_NOTIFICATION_LIGHT_ENABLED = "ambient_notification_light_enabled";
-
-        private static final Validator AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to enable Ambient Edge lights
-         * @hide
-         */
         public static final String AMBIENT_NOTIFICATION_LIGHT = "ambient_notification_light";
 
         private static final Validator AMBIENT_NOTIFICATION_LIGHT_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Whether Ambient Edge lights are activated
          * @hide
          */
-        public static final String AMBIENT_NOTIFICATION_LIGHT_ACTIVATED = "ambient_notification_light_activated";
+        public static final String AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC = "ambient_notification_light_automatic";
 
-        private static final Validator AMBIENT_NOTIFICATION_LIGHT_ACTIVATED_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether hide everything on aod when  ambient lights are enabled
-         * @hide
-         */
-        public static final String AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD = "ambient_notification_light_hide_aod";
-
-        private static final Validator AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to use accent color for pulse
-         * @hide
-         */
-        public static final String AMBIENT_NOTIFICATION_LIGHT_ACCENT = "ambient_notification_light_accent";
-
-        private static final Validator AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR = BOOLEAN_VALIDATOR;
+        private static final Validator AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * helper setting to contain the current pulse reason so we can check
@@ -5919,12 +5886,8 @@ public final class Settings {
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
             ALARM_ALERT,
-            PULSE_AMBIENT_LIGHT,
             AMBIENT_NOTIFICATION_LIGHT,
-            AMBIENT_NOTIFICATION_LIGHT_ACTIVATED,
-            AMBIENT_NOTIFICATION_LIGHT_ENABLED,
-            AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
-            AMBIENT_NOTIFICATION_LIGHT_ACCENT,
+            AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC,
             NOTIFICATION_LIGHT_PULSE,
             STATUSBAR_BATTERY_BAR,
             STATUSBAR_BATTERY_BAR_LOCATION,
@@ -6240,6 +6203,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_STATUS_BAR_FILE_HEADER_IMAGE);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT);
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_ENABLED);
+            PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT);
+            PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC);
         }
 
         /**
@@ -6331,12 +6296,8 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_NETMASK, WIFI_STATIC_NETMASK_VALIDATOR);
             VALIDATORS.put(WIFI_STATIC_DNS1, WIFI_STATIC_DNS1_VALIDATOR);
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
-            VALIDATORS.put(PULSE_AMBIENT_LIGHT, PULSE_AMBIENT_LIGHT_VALIDATOR);
             VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT, AMBIENT_NOTIFICATION_LIGHT_VALIDATOR);
-            VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_ACTIVATED, AMBIENT_NOTIFICATION_LIGHT_ACTIVATED_VALIDATOR);
-            VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_ENABLED, AMBIENT_NOTIFICATION_LIGHT_ENABLED_VALIDATOR);
-            VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
-            VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_ACCENT, AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR);
+            VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC, AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
