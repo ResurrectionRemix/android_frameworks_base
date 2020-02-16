@@ -134,15 +134,12 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-        final Drawable mEnable = mContext.getDrawable(R.drawable.ic_screen_stabilization_enabled);
-        final Drawable mDisable = mContext.getDrawable(R.drawable.ic_screen_stabilization_disabled);
         state.value = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.STABILIZATION_ENABLE, 0) == 1);
         state.label = mContext.getString(R.string.quick_settings_stabilization_label);
+        state.icon = ResourceIcon.get(R.drawable.ic_screen_stabilization);
         if (state.value) {
-            state.icon = new DrawableIcon(mEnable);
             state.state = Tile.STATE_ACTIVE;
         } else {
-            state.icon = new DrawableIcon(mDisable);
             state.state = Tile.STATE_INACTIVE;
         }
         state.contentDescription = state.label;
