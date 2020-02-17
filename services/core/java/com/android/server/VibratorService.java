@@ -117,7 +117,7 @@ public class VibratorService extends IVibratorService.Stub
     private static final long[] ONEPLUS_DOUBLE_CLICK_EFFECT_FALLBACK_TIMINGS = { 0, 80, 20, 70 };
     private static final long ONEPLUS_EFFECT_HEAVY_CLICK = 7009997;
     private static final long ONEPLUS_EFFECT_TEXTURE_TICK = 900021;
-    private static final long ONEPLUS_EFFECT_TICK = 1100111;
+    private static final long ONEPLUS_EFFECT_TICK = 1100031;
     private static final long ONEPLUS_EFFECT_POP = 1100041;
     private static final long ONEPLUS_EFFECT_THUD = 3000003;
 
