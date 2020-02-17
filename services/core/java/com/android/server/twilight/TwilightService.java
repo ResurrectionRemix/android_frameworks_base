@@ -38,6 +38,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.server.SystemService;
 
 import java.util.Objects;
+import java.text.SimpleDateFormat;
 
 /**
  * Figures out whether it's twilight time based on the user's location.
@@ -70,6 +71,7 @@ public final class TwilightService extends SystemService
 
     @GuardedBy("mListeners")
     protected TwilightState mLastTwilightState;
+    private static final SimpleDateFormat mDateFormatFilter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public TwilightService(Context context) {
         super(context);
@@ -153,16 +155,30 @@ public final class TwilightService extends SystemService
     private void startListening() {
         Slog.d(TAG, "startListening");
 
+        if (!mLocationManager.isLocationEnabled()) {
+            Slog.d(TAG, "locations service is disabled");
+            return;
+        }
         // Start listening for location updates (default: low power, max 1h, min 10m).
         mLocationManager.requestLocationUpdates(
                 null /* default */, this, Looper.getMainLooper());
 
         // Request the device's location immediately if a previous location isn't available.
-        if (mLocationManager.getLastLocation() == null) {
-            if (mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        if (location == null) {
+            Slog.d(TAG, "requestSingleUpdate");
+            try {
                 mLocationManager.requestSingleUpdate(
                         LocationManager.NETWORK_PROVIDER, this, Looper.getMainLooper());
+            } catch (Exception e) {
+                Slog.e(TAG, "requestSingleUpdate", e);
             }
+        } else {
+            Slog.d(TAG, "getLastKnownLocation:"
+                    + " provider=" + location.getProvider()
+                    + " accuracy=" + location.getAccuracy()
+                    + " time=" + location.getTime());
+            mLastLocation = location;
         }
 
         // Update whenever the system clock is changed.
@@ -232,6 +248,7 @@ public final class TwilightService extends SystemService
         if (state != null) {
             final long triggerAtMillis = state.isNight()
                     ? state.sunriseTimeMillis() : state.sunsetTimeMillis();
+            Slog.d(TAG, "setAlarm " + mDateFormatFilter.format(triggerAtMillis));
             mAlarmManager.setExact(AlarmManager.RTC, triggerAtMillis, TAG, this, mHandler);
         }
     }
