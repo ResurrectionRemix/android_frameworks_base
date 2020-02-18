@@ -57,6 +57,7 @@ java_library_static {
         "netd_event_listener_interface-java",
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
         "faceunlock_utils",
+        "vendor.lineage.biometrics.fingerprint.inscreen-V1.1-java",
     ],
 }
 
