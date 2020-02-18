@@ -45,4 +45,6 @@ interface IColorDisplayManager {
 
     boolean isDisplayWhiteBalanceEnabled();
     boolean setDisplayWhiteBalanceEnabled(boolean enabled);
+    Time getNightDisplayAutoStartTime();
+    Time getNightDisplayAutoEndTime();
 }

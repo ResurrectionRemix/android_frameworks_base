@@ -339,6 +339,38 @@ public final class ColorDisplayManager {
     }
 
     /**
+     * Returns the local time when Night display will be automatically eactivated when using
+     * {@link #AUTO_MODE_TWILIGHT} or null if not
+     *
+     * @hide
+     */
+    public LocalTime getNightDisplayAutoStartTime() {
+        if (getNightDisplayAutoMode() == AUTO_MODE_TWILIGHT) {
+            Time t = mManager.getNightDisplayAutoStartTime();
+            if (t != null) {
+                return t.getLocalTime();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the local time when Night display will be automatically deactivated when using
+     * {@link #AUTO_MODE_TWILIGHT} or null if not
+     *
+     * @hide
+     */
+    public LocalTime getNightDisplayAutoEndTime() {
+        if (getNightDisplayAutoMode() == AUTO_MODE_TWILIGHT) {
+            Time t = mManager.getNightDisplayAutoEndTime();
+            if (t != null) {
+                return t.getLocalTime();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Sets the current display color mode.
      *
      * @hide
@@ -685,6 +717,22 @@ public final class ColorDisplayManager {
         int getTransformCapabilities() {
             try {
                 return mCdm.getTransformCapabilities();
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
+        Time getNightDisplayAutoStartTime() {
+            try {
+                return mCdm.getNightDisplayAutoStartTime();
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
+        Time getNightDisplayAutoEndTime() {
+            try {
+                return mCdm.getNightDisplayAutoEndTime();
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }

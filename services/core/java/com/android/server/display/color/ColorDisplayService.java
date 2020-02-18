@@ -87,6 +87,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
+import java.util.Calendar;
 
 /**
  * Controls the display's color transforms.
@@ -785,6 +786,28 @@ public final class ColorDisplayService extends SystemService {
                     R.integer.config_defaultNightDisplayCustomEndTime);
         }
         return new Time(LocalTime.ofSecondOfDay(endTimeValue / 1000));
+    }
+
+    private Time getNightDisplayAutoStartTimeInternal() {
+        TwilightManager mTwilightManager = getLocalService(TwilightManager.class);
+        TwilightState state = mTwilightManager.getLastTwilightState();
+        if (state != null) {
+            final Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(state.sunsetTimeMillis());
+            return new Time(LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+        }
+        return null;
+    }
+
+    private Time getNightDisplayAutoEndTimeInternal() {
+        TwilightManager mTwilightManager = getLocalService(TwilightManager.class);
+        TwilightState state = mTwilightManager.getLastTwilightState();
+        if (state != null) {
+            final Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(state.sunriseTimeMillis());
+            return new Time(LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+        }
+        return null;
     }
 
     private boolean setNightDisplayCustomEndTimeInternal(Time endTime) {
@@ -1714,6 +1737,26 @@ public final class ColorDisplayService extends SystemService {
             final long token = Binder.clearCallingIdentity();
             try {
                 dumpInternal(pw);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+        }
+
+        @Override
+        public Time getNightDisplayAutoStartTime() {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                return getNightDisplayAutoStartTimeInternal();
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+        }
+
+        @Override
+        public Time getNightDisplayAutoEndTime() {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                return getNightDisplayAutoEndTimeInternal();
             } finally {
                 Binder.restoreCallingIdentity(token);
             }
