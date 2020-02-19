@@ -510,7 +510,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
             mBrightnessMapper = BrightnessMappingStrategy.create(resources);
             if (mBrightnessMapper != null) {
-                mAutomaticBrightnessController = new AutomaticBrightnessController(this,
+                mAutomaticBrightnessController = new AutomaticBrightnessController(this, mContext,
                         handler.getLooper(), sensorManager, lightSensor, mBrightnessMapper,
                         lightSensorWarmUpTimeConfig, mScreenBrightnessRangeMinimum,
                         mScreenBrightnessRangeMaximum, dozeScaleFactor, lightSensorRate,
