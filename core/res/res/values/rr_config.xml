@@ -139,6 +139,10 @@
          config to 7. -->
     <integer name="config_deviceHardwareWakeKeys">64</integer>
 
+    <!-- Button brightness -->
+    <bool name="config_button_brightness_support">false</bool>
+    <integer name="config_button_brightness_default">128</integer>
+
     <!-- Control the behavior when the user long presses or double taps one of the below keys.
           0 - Nothing
           1 - Menu key
