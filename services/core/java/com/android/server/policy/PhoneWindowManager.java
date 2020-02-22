@@ -6870,9 +6870,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 triggerVirtualKeypress(KeyEvent.KEYCODE_MENU, false);
                 break;
             case NavbarUtilities.KEY_ACTION_BACK:
-            case NavbarUtilities.KEY_ACTION_IN_APP_SEARCH:
-                triggerVirtualKeypress(keyCode, false);
-                break;
             case NavbarUtilities.KEY_ACTION_APP_SWITCH:
                 toggleRecentApps();
                 break;
