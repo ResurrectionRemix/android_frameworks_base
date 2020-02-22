@@ -6901,25 +6901,31 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 NavbarUtilities.toggleSplitScreen();
                 break;
             case NavbarUtilities.KEY_ACTION_FLASHLIGHT:
-                toggleFlashLight();
+                ActionUtils.toggleFlashLight();
                 break;
             case NavbarUtilities.KEY_ACTION_CLEAR_NOTIFICATIONS:
-                toggleClearNotifications();
+                ActionUtils.toggleClearNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_VOLUME_PANEL:
-                toggleVolumePanel();
+                ActionUtils.toggleVolumePanel(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_SCREEN_OFF:
-                toggleScreenOff();
-                break;
-            case NavbarUtilities.KEY_ACTION_SCREENSHOT:
-                toggleScreenshot();
+                ActionUtils.toggleScreenOff(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_NOTIFICATIONS:
-                toggleNotifications();
+                ActionUtils.toggleNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_POWER_MENU:
                 triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
+                break;
+            case NavbarUtilities.KEY_ACTION_SCREENSHOT:
+                ActionUtils.takeScreenshot(true);
+                break;
+            case NavbarUtilities.KEY_ACTION_QS_PANEL:
+                ActionUtils.toggleQsPanel();
+                break;
+            case NavbarUtilities.KEY_ACTION_RINGER_MODES:
+                ActionUtils.toggleRingerModes(mContext);
                 break;
         }
     }
@@ -6976,41 +6982,5 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } catch (RemoteException|NullPointerException e) {
             // no-op
         }
-    }
-
-    // Flashlight
-    private void toggleFlashLight() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Flashlight toggle");
-        ActionUtils.toggleCameraFlash();
-    }
-
-    // Clear notifications
-    private void toggleClearNotifications() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Clear-all notifications");
-        ActionUtils.clearAllNotifications();
-    }
-
-    // Volume panel
-    private void toggleVolumePanel() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Volume panel");
-        ActionUtils.toggleVolumePanel(mContext);
-    }
-
-    // Screen off
-    private void toggleScreenOff() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Screen off");
-        ActionUtils.switchScreenOff(mContext);
-    }
-
-    // Screenshot
-    private void toggleScreenshot() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Screenshot");
-        ActionUtils.takeScreenshot(true);
-    }
-
-    // Notifications
-    private void toggleNotifications() {
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Notifications");
-        ActionUtils.toggleNotifications();
     }
 }
