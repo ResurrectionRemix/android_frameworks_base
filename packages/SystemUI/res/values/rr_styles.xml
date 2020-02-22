@@ -68,10 +68,6 @@
         <item name="android:padding">@dimen/volume_dialog_icon_padding_app</item>
         <item name="android:tint">?android:attr/colorControlNormal</item>
     </style>
-    <!-- Pure Tuner Theme-->
-    <style name="ExTunerSettings" parent="@android:style/Theme.DeviceDefault.Settings">
-        <item name="preferenceTheme">@style/TunerPreferenceTheme</item>
-    </style>
 
     <style name="CustomTunerSettings" parent="@android:style/Theme.DeviceDefault.Settings">
         <item name="android:windowActionBar">false</item>

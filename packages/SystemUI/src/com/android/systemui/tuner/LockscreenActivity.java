@@ -18,6 +18,7 @@ package com.android.systemui.tuner;
 import android.os.Bundle;
 import androidx.preference.PreferenceFragment;
 import com.android.systemui.Dependency;
+import com.android.systemui.SystemUIFactory;
 import com.android.systemui.tuner.TunerActivity;
 import com.android.systemui.R;
 
@@ -26,7 +27,7 @@ public class LockscreenActivity extends TunerActivity {
     private static final String TAG_TUNER = "tuner";
 
     protected void onCreate(Bundle savedInstanceState) {
-        Dependency.initDependencies(this);
+        Dependency.initDependencies(SystemUIFactory.getInstance().getRootComponent());
         super.onCreate(savedInstanceState);
 
         if (getFragmentManager().findFragmentByTag(TAG_TUNER) == null) {
