@@ -42,6 +42,7 @@ public class NavbarUtilities {
     public static final int KEY_ACTION_SCREEN_OFF = 11;
     public static final int KEY_ACTION_SCREENSHOT = 12;
     public static final int KEY_ACTION_NOTIFICATIONS = 13;
+    public static final int KEY_ACTION_POWER_MENU = 14;
 
     // Special values, used internal only.
     public static final int KEY_ACTION_HOME = 100;
@@ -128,6 +129,7 @@ public class NavbarUtilities {
             KEY_ACTION_SCREEN_OFF,
             KEY_ACTION_SCREENSHOT,
             KEY_ACTION_NOTIFICATIONS,
+            KEY_ACTION_POWER_MENU,
     };
 
     /**
