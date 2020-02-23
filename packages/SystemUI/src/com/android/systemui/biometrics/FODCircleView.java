@@ -160,6 +160,17 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private TypedArray mIconStyles;
     private boolean mBrightIcon;
 
+    private int mPressedIcon;
+    private final int[] PRESSED_STYLES = {
+        R.drawable.fod_icon_pressed_miui_cyan_light,
+        R.drawable.fod_icon_pressed_miui_white_light,
+        R.drawable.fod_icon_pressed_vivo_cyan,
+        R.drawable.fod_icon_pressed_vivo_cyan_shadow,
+        R.drawable.fod_icon_pressed_vivo_cyan_shadow_et713,
+        R.drawable.fod_icon_pressed_vivo_green,
+        R.drawable.fod_icon_pressed_vivo_yellow_shadow
+    };
+
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
         @Override
@@ -365,6 +376,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_ANIM_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FOD_PRESSED_STATE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -435,15 +449,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 	            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
             mParamsPressed.gravity = Gravity.TOP | Gravity.LEFT;
 
-            if (getFODPressedState() == 0) {
-                //canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
-                setImageResource(R.drawable.fod_icon_pressed);
-            } else if (getFODPressedState() == 1) {
-                //canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
-                setImageResource(R.drawable.fod_icon_pressed_white);
-            } else if (getFODPressedState() == 2) {
-                canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
-            }
+            setImageResource(PRESSED_STYLES[mPressedIcon]);
 
             if (!mViewPressedDisplayed && mIsShowing) {
                 mViewPressedDisplayed = true;
@@ -455,23 +461,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 mViewPressedDisplayed = false;
                 mWindowManager.removeView(mViewPressed);
             }
-        }
-    }
-
-    private int getFODPressedState() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_PRESSED_STATE, 2);
-    }
-
-    private void setFODPressedState() {
-        int fodpressed = getFODPressedState();
-
-        if (fodpressed == 0) {
-            setImageResource(R.drawable.fod_icon_pressed);
-        } else if (fodpressed == 1) {
-            setImageResource(R.drawable.fod_icon_pressed_white);
-        } else if (fodpressed == 2) {
-            setImageDrawable(null);
         }
     }
 
@@ -612,7 +601,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         }
         updateAlpha();
 
-        setFODPressedState();
+        setImageResource(PRESSED_STYLES[mPressedIcon]);
         invalidate();
     }
 
@@ -773,6 +762,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 Settings.System.FOD_ICON, 3);
         mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_BRIGHT_ICON, 0) == 1;
+        mPressedIcon = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_PRESSED_STATE, 0);
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
