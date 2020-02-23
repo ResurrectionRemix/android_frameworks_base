@@ -20,7 +20,7 @@
 <resources>
 
     <style name="widget_big_thin" parent="widget_big" >
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
 
 </resources>
