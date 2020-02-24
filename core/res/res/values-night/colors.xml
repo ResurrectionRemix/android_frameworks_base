@@ -27,7 +27,7 @@
     <color name="notification_default_color_dark">#ddffffff</color>
 
     <!-- The background color of a notification card. -->
-    <color name="notification_material_background_color">@color/black</color>
+    <color name="notification_material_background_color">@color/primary_dark_device_default_settings</color>
 
     <color name="chooser_row_divider">@color/list_divider_color_dark</color>
     <color name="chooser_gradient_background">@color/loading_gradient_background_color_dark</color>

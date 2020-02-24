@@ -49,6 +49,18 @@ easier.
          Type.DeviceDefault.Etc (for example, {@code Widget.DeviceDefault.Button} and
          {@code TextAppearance.DeviceDefault.Widget.PopupMenu.Large}).</p>
           -->
+    <style name="Theme.DeviceDefault.System" parent="Theme.DeviceDefault">
+        <!-- Color palette -->
+        <item name="colorPrimary">@color/primary_device_default_settings</item>
+        <item name="colorPrimaryDark">@color/primary_dark_device_default_settings</item>
+        <item name="colorSecondary">@color/secondary_device_default_settings</item>
+        <item name="colorAccent">@color/accent_device_default_dark</item>
+        <item name="colorError">@color/error_color_device_default_dark</item>
+        <item name="colorControlNormal">?attr/textColorPrimary</item>
+        <item name="alertDialogTheme">@style/Theme.DeviceDefault.Dialog.Alert</item>
+        <item name="forceDarkAllowed">false</item>
+    </style>
+
     <!-- DeviceDefault theme for a window that should look like the Settings app.  -->
     <style name="Theme.DeviceDefault.Settings" parent="Theme.DeviceDefault">
         <item name="windowLightStatusBar">false</item>
@@ -87,7 +99,7 @@ easier.
 
     <style name="Theme.DeviceDefault.Resolver" parent="Theme.DeviceDefault.ResolverCommon">
         <item name="windowLightNavigationBar">false</item>
-        <item name="colorBackgroundFloating">@android:color/GM2_grey_800</item>
+        <item name="colorBackgroundFloating">@color/primary_device_default_settings</item>
         <item name="textColorSecondary">@android:color/resolver_text_color_secondary_dark</item>
     </style>
 </resources>
