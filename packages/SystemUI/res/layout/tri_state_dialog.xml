@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright (C) 2019 CypherOS
+    Copyright (C) 2020 crDroid Android Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -23,7 +24,8 @@
     android:clipToPadding="false"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentTop="true">
+    android:layout_alignParentTop="true"
+    android:theme="@style/qs_theme">
 
     <LinearLayout
         android:layout_gravity="center|right"
@@ -43,7 +45,8 @@
                 android:id="@+id/tri_state_icon"
                 android:layout_marginLeft="2.0dip"
                 android:layout_width="@dimen/tri_state_dialog_icon_size"
-                android:layout_height="@dimen/tri_state_dialog_icon_size" />
+                android:layout_height="@dimen/tri_state_dialog_icon_size"
+                android:tint="@color/accent_tint_color_selector" />
         </FrameLayout>
 
         <TextView
@@ -51,7 +54,9 @@
             android:id="@+id/tri_state_text"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            style="@style/TriStateUiText" />
+            android:textSize="14.0sp"
+            android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <FrameLayout
             android:layout_width="18.0dip"
