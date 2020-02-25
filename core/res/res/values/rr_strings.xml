@@ -81,4 +81,9 @@
     <string name="app_clipboard_access_denied">%1$s tried to access the clipboard and was denied</string>
     <string name="app_clipboard_access_granted">%1$s tried to access the clipboard and was granted</string>
 
+    <!-- Popup camera dialog -->
+    <string name="popup_camera_dialog_message">Do you want to raise the front facing camera?</string>
+    <string name="popup_camera_dialog_no">No</string>
+    <string name="popup_camera_dialog_raise">Yes</string>
+
 </resources>

@@ -231,4 +231,7 @@
     <!-- Default fod pressed icon -->
     <integer name="config_pressed_fod_icon">4</integer>
 
+    <!-- Whether the device has a popup camera -->
+    <bool name="config_hasPopupCamera">false</bool>
+
 </resources>

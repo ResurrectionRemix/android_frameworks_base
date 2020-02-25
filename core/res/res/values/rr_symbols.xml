@@ -300,4 +300,10 @@
     <!-- Default fod pressed icon -->
     <java-symbol type="integer" name="config_pressed_fod_icon" />
 
+    <!-- Whether the device has a popup camera -->
+    <java-symbol type="bool" name="config_hasPopupCamera" />
+    <java-symbol type="string" name="popup_camera_dialog_message" />
+    <java-symbol type="string" name="popup_camera_dialog_no" />
+    <java-symbol type="string" name="popup_camera_dialog_raise" />
+
 </resources>
