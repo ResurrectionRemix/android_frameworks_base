@@ -52,9 +52,13 @@ public:
     virtual Status onReportServiceStatus(const String16& service, int32_t status);
     virtual Status onReportFinished();
     virtual Status onReportFailed();
+
+    int getExitCodeOrElse(int defaultCode);
+ private:
+    int mExitCode;
 };
 
-StatusListener::StatusListener()
+StatusListener::StatusListener(): mExitCode(-1)
 {
 }
 
@@ -89,7 +93,7 @@ StatusListener::onReportFinished()
 {
     fprintf(stderr, "done\n");
     ALOGD("done\n");
-    exit(0);
+    mExitCode = 0;
     return Status::ok();
 }
 
@@ -98,8 +102,13 @@ StatusListener::onReportFailed()
 {
     fprintf(stderr, "failed\n");
     ALOGD("failed\n");
-    exit(1);
+    mExitCode = 1;
     return Status::ok();
+}
+
+int
+StatusListener::getExitCodeOrElse(int defaultCode) {
+    return mExitCode == -1 ? defaultCode : mExitCode;
 }
 
 // ================================================================================
@@ -195,6 +204,19 @@ parse_receiver_arg(const string& arg, string* pkg, string* cls)
         *cls = (*pkg) + (*cls);
     }
     return true;
+}
+
+// ================================================================================
+static int
+stream_output(const int read_fd, const int write_fd) {
+    while (true) {
+        int amt = splice(read_fd, NULL, write_fd, NULL, 4096, 0);
+        if (amt < 0) {
+            return errno;
+        } else if (amt == 0) {
+            return 0;
+        }
+    }
 }
 
 // ================================================================================
@@ -356,20 +378,7 @@ main(int argc, char** argv)
         // Wait for the result and print out the data they send.
         //IPCThreadState::self()->joinThreadPool();
 
-        while (true) {
-            uint8_t buf[4096];
-            ssize_t amt = TEMP_FAILURE_RETRY(read(fds[0], buf, sizeof(buf)));
-            if (amt < 0) {
-                break;
-            } else if (amt == 0) {
-                break;
-            }
-
-            ssize_t wamt = TEMP_FAILURE_RETRY(write(STDOUT_FILENO, buf, amt));
-            if (wamt != amt) {
-                return errno;
-            }
-        }
+        return listener->getExitCodeOrElse(stream_output(fds[0], STDOUT_FILENO));
     } else {
         status = service->reportIncident(args);
         if (!status.isOk()) {
