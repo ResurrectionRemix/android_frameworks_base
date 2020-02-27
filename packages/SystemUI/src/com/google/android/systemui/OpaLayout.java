@@ -30,12 +30,12 @@ import android.widget.ImageView;
 
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
-import com.android.systemui.plugins.statusbar.phone.NavBarButtonProvider.ButtonInterface;
+import com.android.systemui.statusbar.phone.ButtonInterface;
 import com.android.systemui.statusbar.policy.KeyButtonView;
 import com.android.systemui.tuner.TunerService.Tunable;
 
 import com.android.systemui.Dependency;
-import com.android.systemui.OverviewProxyService;
+import com.android.systemui.recents.OverviewProxyService;
 
 import com.android.systemui.statusbar.phone.ShadowKeyDrawable;
 
