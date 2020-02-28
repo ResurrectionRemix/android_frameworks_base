@@ -1,153 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright (C) 2019-2020 The Evolution X Project
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
--->
-
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
-    <item android:drawable="@drawable/fod_op_cosmos_anim_00" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_01" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_02" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_03" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_04" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_05" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_06" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_07" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_08" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_09" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_10" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_11" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_12" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_13" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_14" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_15" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_16" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_17" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_18" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_19" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_20" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_21" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_22" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_23" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_24" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_25" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_26" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_27" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_28" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_29" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_30" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_31" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_32" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_33" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_34" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_35" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_36" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_37" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_38" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_39" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_40" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_41" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_42" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_43" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_44" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_45" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_46" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_47" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_48" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_49" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_50" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_51" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_52" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_53" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_54" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_55" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_56" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_57" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_58" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_59" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_60" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_61" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_62" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_63" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_64" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_65" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_66" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_67" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_68" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_69" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_70" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_71" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_72" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_73" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_74" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_75" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_76" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_77" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_78" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_79" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_80" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_81" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_82" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_83" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_84" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_85" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_86" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_87" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_88" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_89" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_90" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_91" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_92" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_93" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_94" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_95" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_96" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_97" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_98" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_99" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_100" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_101" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_102" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_103" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_104" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_105" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_106" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_107" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_108" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_109" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_110" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_111" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_112" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_113" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_114" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_115" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_116" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_117" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_118" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_119" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_120" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_121" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_122" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_123" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_124" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_125" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_126" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_127" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_128" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_129" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_130" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_131" android:duration="12" />
-    <item android:drawable="@drawable/fod_op_cosmos_anim_132" android:duration="12" />
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_00" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_01" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_02" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_03" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_04" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_05" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_06" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_07" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_08" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_09" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_10" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_11" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_12" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_13" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_14" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_15" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_16" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_17" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_18" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_19" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_20" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_21" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_22" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_23" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_24" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_25" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_26" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_27" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_28" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_29" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_31" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_32" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_33" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_34" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_35" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_36" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_37" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_38" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_39" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_40" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_41" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_42" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_43" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_cosmos_anim_44" />
 </animation-list>
