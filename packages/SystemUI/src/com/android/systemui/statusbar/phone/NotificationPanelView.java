@@ -3358,16 +3358,17 @@ public class NotificationPanelView extends PanelView implements
         if (mPulseLightsView != null) {
             if (mPulsing) {
                 ContentResolver resolver = mContext.getContentResolver();
+                ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotification(ROWS_HIGH_PRIORITY);
+                boolean activeNotif = row != null;
                 boolean pulseLights = Settings.System.getIntForUser(resolver,
                         Settings.System.AMBIENT_NOTIFICATION_LIGHT, 1, UserHandle.USER_CURRENT) != 0;
-                boolean pulseColorAutomatic = Settings.System.getIntForUser(resolver,
-                        Settings.System.AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC, 1, UserHandle.USER_CURRENT) != 0;
-                if (pulseLights && pulseColorAutomatic) {
+                int lightColor = Settings.System.getIntForUser(resolver,
+                        Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
+                if (pulseLights && lightColor == 0) {
                     int pulseColor = mPulseLightsView.getNotificationLightsColor();
-                    if (pulseColorAutomatic) {
-                        ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotification(ROWS_HIGH_PRIORITY);
+                    if (lightColor == 0 && activeNotif) {
                         int notificationColor = row.getStatusBarNotification().getNotification().color;
-                        if (notificationColor != Notification.COLOR_DEFAULT ) {
+                        if (notificationColor != Notification.COLOR_DEFAULT) {
                             pulseColor = notificationColor;
                         }
                     }
@@ -3397,8 +3398,10 @@ public class NotificationPanelView extends PanelView implements
         int pulseReason = Settings.System.getIntForUser(resolver,
                 Settings.System.PULSE_TRIGGER_REASON, DozeLog.PULSE_REASON_NONE, UserHandle.USER_CURRENT);
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
-        boolean pulseColorAutomatic = Settings.System.getIntForUser(resolver,
-                Settings.System.AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC, 1, UserHandle.USER_CURRENT) != 0;
+        boolean pulseForAll = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
+        int lightColor = Settings.System.getIntForUser(resolver,
+                Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
 
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
@@ -3410,13 +3413,13 @@ public class NotificationPanelView extends PanelView implements
         }
         if (DEBUG_PULSE_LIGHT) {
             Log.d(TAG, "setPulsing pulsing = " + pulsing + " pulseLights = " + pulseLights
-                    + " activeNotif = " + activeNotif + " pulseColorAutomatic = " + pulseColorAutomatic
+                    + " activeNotif = " + activeNotif + " lightColor = " + lightColor
                     + " mDozing = " + mDozing + " pulseReasonNotification = " + pulseReasonNotification);
         }
         if (mPulseLightsView != null) {
             int pulseColor = mPulseLightsView.getNotificationLightsColor();
             if (row != null) {
-                if (pulseColorAutomatic) {
+                if (lightColor == 0 && activeNotif) {
                     int notificationColor = row.getStatusBarNotification().getNotification().color;
                     if (notificationColor != Notification.COLOR_DEFAULT) {
                         pulseColor = notificationColor;

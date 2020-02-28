@@ -92,13 +92,13 @@ public class NotificationLightsView extends RelativeLayout {
 
     public int getNotificationLightsColor() {
         int color = getDefaultNotificationLightsColor();
-        boolean useAccent = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC, 1, UserHandle.USER_CURRENT) == 0;
-        boolean useWallColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.AMBIENT_LIGHT_AUTO_COLOR, 0, UserHandle.USER_CURRENT) == 1;
-        if (useAccent) {
-            color = Utils.getColorAccentDefaultColor(getContext());
-        } else if (useWallColor) {
+        int lightColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_COLOR, 0,
+                UserHandle.USER_CURRENT);
+        int customColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_CUSTOM_COLOR, getDefaultNotificationLightsColor(),
+                UserHandle.USER_CURRENT);
+        if (lightColor == 1) {
             try {
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
                 WallpaperInfo wallpaperInfo = wallpaperManager.getWallpaperInfo();
@@ -115,6 +115,12 @@ public class NotificationLightsView extends RelativeLayout {
             } catch (Exception e) {
                 // Nothing to do
             }
+        } else if (lightColor == 2) {
+            color = Utils.getColorAccentDefaultColor(getContext());
+        } else if (lightColor == 3) {
+            color = customColor;
+        } else {
+            color = 0xFFFFFFFF;
         }
         return color;
     }
