@@ -32,6 +32,7 @@ import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -3430,7 +3431,7 @@ public class NotificationPanelView extends PanelView implements
             }
             pulseColor |= 0xFF000000;
             if (mPulsing) {
-                if (activeNotif && pulseReasonNotification) {
+                if ((activeNotif && pulseReasonNotification) || pulseForAll) {
                     // show the bars if we have to
                     if (pulseLights) {
                         mPulseLightsView.animateNotificationWithColor(pulseColor);

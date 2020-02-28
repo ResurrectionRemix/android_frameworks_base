@@ -5826,16 +5826,24 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String AMBIENT_LIGHT_DURATION = "ambient_light_duration";
+        public static final String PULSE_AMBIENT_LIGHT_DURATION = "pulse_ambient_light_duration";
 
-        private static final Validator AMBIENT_LIGHT_DURATION_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
          * @hide
          */
-        public static final String AMBIENT_LIGHT_REPEAT_COUNT = "ambient_light_repeat_count";
+        public static final String PULSE_AMBIENT_LIGHT_REPEAT_COUNT = "pulse_ambient_light_repeat_count";
 
-        private static final Validator AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        private static final Validator PULSE_AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+
+        /**
+         * @hide
+         */
+        public static final String AMBIENT_LIGHT_PULSE_FOR_ALL = "ambient_light_pulse_for_all";
+
+        private static final Validator AMBIENT_LIGHT_PULSE_FOR_ALL_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
          * helper setting to contain the current pulse reason so we can check
@@ -5910,8 +5918,8 @@ public final class Settings {
             AMBIENT_NOTIFICATION_LIGHT,
             AMBIENT_LIGHT_COLOR,
             AMBIENT_LIGHT_CUSTOM_COLOR,
-            AMBIENT_LIGHT_DURATION,
-            AMBIENT_LIGHT_REPEAT_COUNT,
+            PULSE_AMBIENT_LIGHT_DURATION,
+            PULSE_AMBIENT_LIGHT_REPEAT_COUNT,
             NOTIFICATION_LIGHT_PULSE,
             STATUSBAR_BATTERY_BAR,
             STATUSBAR_BATTERY_BAR_LOCATION,
@@ -6225,13 +6233,11 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_STATUS_BAR_CUSTOM_HEADER_PROVIDER);
             PRIVATE_SETTINGS.add(OMNI_STATUS_BAR_CUSTOM_HEADER_IMAGE);
             PRIVATE_SETTINGS.add(OMNI_STATUS_BAR_FILE_HEADER_IMAGE);
-            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT);
-            PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_ENABLED);
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT);
             PRIVATE_SETTINGS.add(AMBIENT_LIGHT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_LIGHT_CUSTOM_COLOR);
-            PRIVATE_SETTINGS.add(AMBIENT_LIGHT_DURATION);
-            PRIVATE_SETTINGS.add(AMBIENT_LIGHT_REPEAT_COUNT);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_DURATION);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_COUNT);
         }
 
         /**
@@ -6326,8 +6332,8 @@ public final class Settings {
             VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT, AMBIENT_NOTIFICATION_LIGHT_VALIDATOR);
             VALIDATORS.put(AMBIENT_LIGHT_COLOR, AMBIENT_LIGHT_COLOR_VALIDATOR);
             VALIDATORS.put(AMBIENT_LIGHT_CUSTOM_COLOR, AMBIENT_LIGHT_CUSTOM_COLOR_VALIDATOR);
-            VALIDATORS.put(AMBIENT_LIGHT_DURATION, AMBIENT_LIGHT_DURATION_VALIDATOR);
-            VALIDATORS.put(AMBIENT_LIGHT_REPEAT_COUNT, AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_DURATION, PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_REPEAT_COUNT, PULSE_AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
