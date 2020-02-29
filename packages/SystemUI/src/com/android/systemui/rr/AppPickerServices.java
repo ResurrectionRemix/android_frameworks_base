@@ -1,4 +1,4 @@
-package com.android.systemui.havoc;
+package com.android.systemui.rr;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -320,5 +320,6 @@
     <string name="screen_pinning_toast_custom">To unpin this screen, touch &amp; hold Back button</string>
     <string name="screen_pinning_toast_recents_invisible_custom">To unpin this screen, touch &amp; hold Back button</string>
 
-
+    <!-- Long swipe gesture actions -->
+    <string name="app_picker_dialog_title">Select an app</string>
 </resources>

@@ -2291,6 +2291,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_GRADIENT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LONG_BACK_SWIPE_TIMEOUT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LEFT_LONG_BACK_SWIPE_ACTION),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2343,6 +2352,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateQsPanelResources();
             updateNavigationBar(getRegisterStatusBarResult(), false);
             updateQSPanel();
+            setGestureNavOptions();
         }
     }
 
@@ -4895,6 +4905,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         DataUsageView.updateUsage();
     }
 
+    private void setGestureNavOptions() {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setLongSwipeOptions();
+        }
+    }
+
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
     }
@@ -6162,5 +6178,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all qs header styles back to stock
     public void stockQSHeaderStyle() {
         ThemeAccentUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    private void setGestureNavOptions() {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setLongSwipeOptions();
+        }
     }
 }
