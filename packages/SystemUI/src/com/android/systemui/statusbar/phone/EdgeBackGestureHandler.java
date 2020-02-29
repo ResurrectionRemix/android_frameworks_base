@@ -496,7 +496,16 @@ public class EdgeBackGestureHandler implements DisplayListener {
             return true;
         }
 
-        boolean isInExcludedRegion = mExcludeRegion.contains(x, y);
+        /* if Launcher is showing and want to block back gesture, let's still trigger our custom
+        swipe actions at the very bottom of the screen, because we are cool */
+        boolean isInExcludedRegion = false;
+        if (mIsExtendedSwipe
+                || (mLeftLongSwipeAction != 0 && mIsOnLeftEdge)  || (mRightLongSwipeAction != 0 && !mIsOnLeftEdge)) {
+            isInExcludedRegion= mExcludeRegion.contains(x, y)
+                && y < ((mDisplaySize.y / 4) * 3);
+        } else {
+            isInExcludedRegion= mExcludeRegion.contains(x, y);
+        }
         if (isInExcludedRegion) {
             mOverviewProxyService.notifyBackAction(false /* completed */, -1, -1,
                     false /* isButton */, !mIsOnLeftEdge);
