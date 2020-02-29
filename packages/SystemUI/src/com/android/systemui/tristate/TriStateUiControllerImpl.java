@@ -264,13 +264,16 @@ public class TriStateUiControllerImpl implements TriStateUiController,
         mWindow = mDialog.getWindow();
         mWindow.requestFeature(Window.FEATURE_NO_TITLE);
         mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mWindow.clearFlags(LayoutParams.FLAG_DIM_BEHIND);
+        mWindow.clearFlags(LayoutParams.FLAG_DIM_BEHIND
+                | LayoutParams.FLAG_LAYOUT_INSET_DECOR);
         mWindow.addFlags(LayoutParams.FLAG_NOT_FOCUSABLE
                 | LayoutParams.FLAG_LAYOUT_IN_SCREEN
                 | LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        mWindow.setType(LayoutParams.TYPE_VOLUME_OVERLAY);
+        mWindow.setWindowAnimations(com.android.internal.R.style.Animation_Toast);
         mDialog.setCanceledOnTouchOutside(false);
         mWindowLayoutParams = mWindow.getAttributes();
         mWindowLayoutParams.type = mWindowType;
