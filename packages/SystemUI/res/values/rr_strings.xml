@@ -274,4 +274,7 @@
     <string name="stabilization_velocity_amplitude">Velocity Amplitude</string>
     <string name="stabilization_position_friction">Position Friction</string>
 
+    <string name="recents_app_killed">App killed</string>
+    <string name="nope_cant_kill">Launcher cannot be killed</string>
+
 </resources>

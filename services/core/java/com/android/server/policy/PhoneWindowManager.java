@@ -1983,11 +1983,44 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case LAST_APP:
                 ActionUtils.switchToLastApp(mContext, mCurrentUserId);
                 break;
-            case KEY_ACTION_NOTIFICATIONS:
-                toggleNotifications();
-                break;
             case SPLIT_SCREEN:
                 toggleSplitScreen();
+                break;
+            case KEY_ACTION_NOTIFICATIONS:
+                RRActionUtils.toggleNotifications();
+                break;
+            case KEY_ACTION_FLASHLIGHT:
+                RRActionUtils.toggleCameraFlash();
+                break;
+            case KEY_ACTION_CLEAR_NOTIFICATIONS:
+                RRActionUtils.clearAllNotifications();
+                break;
+            case KEY_ACTION_VOLUME_PANEL:
+                RRActionUtils.toggleVolumePanel(mContext);
+                break;
+            case KEY_ACTION_SCREEN_OFF:
+                RRActionUtils.switchScreenOff(mContext);
+                break;
+            case KEY_ACTION_POWER_MENU:
+                triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
+                break;
+            case KEY_ACTION_SCREENSHOT:
+                RRActionUtils.takeScreenshot(true);
+                break;
+            case KEY_ACTION_QS_PANEL:
+                RRActionUtils.toggleQsPanel();
+                break;
+            case KEY_ACTION_RINGER_MODES:
+                RRActionUtils.toggleRingerModes(mContext);
+                break;
+            case KEY_ACTION_KILL_APP:
+                RRActionUtils.killForegroundApp();
+                break;
+            case KEY_ACTION_SKIP_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case KEY_ACTION_PREVIOUS_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                 break;
             default:
                 break;
@@ -6924,18 +6957,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return false;
         }
         return am.isMusicActive();
-    }
-
-    // Toggle notifications panel
-    public void toggleNotifications() {
-        IStatusBarService service = getStatusBarService();
-        if (service != null) {
-            try {
-                service.togglePanel();
-            } catch (RemoteException e) {
-                // do nothing.
-            }
-        }
     }
 
      private void scheduleLongPressKeyEvent(KeyEvent origEvent, int keyCode) {
