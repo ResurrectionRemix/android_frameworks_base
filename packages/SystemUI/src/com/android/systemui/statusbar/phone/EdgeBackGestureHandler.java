@@ -208,6 +208,8 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private boolean mBlockNextEvent;
     private boolean mIsExtendedSwipe;
 
+    private final Vibrator mVibrator;
+
     public EdgeBackGestureHandler(Context context, OverviewProxyService overviewProxyService) {
         final Resources res = context.getResources();
         mContext = context;
@@ -232,7 +234,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         mIntentFilter.addDataScheme("package");
-
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mAssistManager = Dependency.get(AssistManager.class);
         mHandler = new Handler();
         setLongSwipeOptions();
@@ -663,6 +665,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
             mBlockNextEvent = true;
             mEdgePanel.resetOnDown();
             triggerAction(mIsOnLeftEdge);
+            mVibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 
