@@ -17,11 +17,15 @@
 package com.android.systemui.biometrics;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 
 import com.android.systemui.R;
+
+import com.aicp.gear.util.AicpContextConstants;
 
 /**
  * This class loads the view for the system-provided dialog. The view consists of:
@@ -31,10 +35,19 @@ import com.android.systemui.R;
 public class FingerprintDialogView extends BiometricDialogView {
 
     private static final String TAG = "FingerprintDialogView";
+    private final boolean mHasFodSupport;
 
     public FingerprintDialogView(Context context,
             DialogViewCallback callback) {
         super(context, callback);
+        PackageManager packageManager = context.getPackageManager();
+        mHasFodSupport = packageManager.hasSystemFeature(AicpContextConstants.Features.FOD);
+        if (mHasFodSupport){
+            int paddingTop = getResources().getDimensionPixelSize(R.dimen.fp_dialog_error_padding_top_fingerprint_in_display);
+            int paddingBottom = getResources().getDimensionPixelSize(R.dimen.fp_dialog_error_padding_bottom_fingerprint_in_display);
+            mErrorText.setPadding(0, paddingTop, 0, paddingBottom);
+            mBiometricIcon.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -61,6 +74,9 @@ public class FingerprintDialogView extends BiometricDialogView {
 
     @Override
     protected void updateIcon(int lastState, int newState) {
+        if (mHasFodSupport){
+            return;
+        }
         final Drawable icon = getAnimationForTransition(lastState, newState);
         if (icon == null) {
             Log.e(TAG, "Animation not found, " + lastState + " -> " + newState);
@@ -80,6 +96,9 @@ public class FingerprintDialogView extends BiometricDialogView {
     }
 
     protected boolean shouldAnimateForTransition(int oldState, int newState) {
+        if (mHasFodSupport){
+            return false;
+        }
         if (newState == STATE_ERROR) {
             return true;
         } else if (oldState == STATE_ERROR && newState == STATE_AUTHENTICATING) {
@@ -108,6 +127,9 @@ public class FingerprintDialogView extends BiometricDialogView {
     }
 
     protected Drawable getAnimationForTransition(int oldState, int newState) {
+        if (mHasFodSupport){
+            return null;
+        }
         int iconRes;
         if (newState == STATE_ERROR) {
             iconRes = R.drawable.fingerprint_dialog_fp_to_error;
