@@ -18,11 +18,13 @@ package com.android.systemui.statusbar.phone;
 
 import android.animation.ArgbEvaluator;
 import android.annotation.ColorInt;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -38,6 +40,7 @@ public class NavigationHandle extends View implements ButtonInterface {
     private @ColorInt final int mDarkColor;
     private final int mRadius;
     private final int mBottom;
+    private int mWidth;
 
     public NavigationHandle(Context context) {
         this(context, null);
@@ -45,9 +48,9 @@ public class NavigationHandle extends View implements ButtonInterface {
 
     public NavigationHandle(Context context, AttributeSet attr) {
         super(context, attr);
-        final Resources res = context.getResources();
-        mRadius = res.getDimensionPixelSize(R.dimen.navigation_handle_radius);
-        mBottom = res.getDimensionPixelSize(R.dimen.navigation_handle_bottom);
+        mContext = context;
+        mRadius = context.getResources().getDimensionPixelSize(R.dimen.navigation_handle_radius);
+        mBottom = context.getResources().getDimensionPixelSize(R.dimen.navigation_handle_bottom);
 
         final int dualToneDarkTheme = Utils.getThemeAttr(context, R.attr.darkIconTheme);
         final int dualToneLightTheme = Utils.getThemeAttr(context, R.attr.lightIconTheme);
@@ -66,9 +69,15 @@ public class NavigationHandle extends View implements ButtonInterface {
         // Draw that bar
         int navHeight = getHeight();
         int height = mRadius * 2;
-        int width = getWidth();
+        mWidth = getCustomWidth();
         int y = (navHeight - mBottom - height);
-        canvas.drawRoundRect(0, y, width, y + height, mRadius, mRadius, mPaint);
+        int padding = getCustomPadding();
+        canvas.drawRoundRect(padding, y, mWidth + padding, y + height, mRadius, mRadius, mPaint);
+    }
+
+    private int getCustomPadding() {
+        int basePadding = (int) (getWidth() / 2) - (int) (mWidth / 2);
+        return basePadding;
     }
 
     @Override
@@ -95,5 +104,19 @@ public class NavigationHandle extends View implements ButtonInterface {
 
     @Override
     public void setDelayTouchFeedback(boolean shouldDelay) {
+    }
+
+    private int getCustomWidth() {
+        /* 0: small (stock AOSP) */
+        int baseWidth = mContext.getResources().getDimensionPixelSize(R.dimen.navigation_home_handle_width);
+        int userSelection = Settings.System.getInt(mContext.getContentResolver(), Settings.System.NAVIGATION_HANDLE_WIDTH, 0);
+        if (userSelection == 3) {
+            baseWidth *= 2;
+        } else if (userSelection == 2) {
+            baseWidth *= (1 + (double) 2 / 3);
+        } else if (userSelection == 1) {
+            baseWidth *= (1 + (double) 1 / 3);
+        }
+        return baseWidth;
     }
 }
