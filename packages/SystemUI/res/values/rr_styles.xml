@@ -41,4 +41,13 @@
         <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
+
+    <!-- Pixel navbar -->
+    <style name="DotStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:alpha">@null</item>
+    </style>
 </resources>
