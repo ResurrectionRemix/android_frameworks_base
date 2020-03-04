@@ -1182,10 +1182,10 @@ public class Process {
      * @return true if this thread belongs to a process
      * @hide
      */
-    public static final boolean isThreadInProcess(int tid, int pid) {
+    public static final boolean isThreadInProcess(int pid, int tid) {
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
-            if (Os.access("/proc/" + tid + "/task/" + pid, OsConstants.F_OK)) {
+            if (Os.access("/proc/" + pid + "/task/" + tid, OsConstants.F_OK)) {
                 return true;
             } else {
                 return false;
