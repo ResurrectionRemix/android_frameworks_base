@@ -203,10 +203,11 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private Handler mHandler;
     private AssistManager mAssistManager;
     private int mTimeout = 3000; //ms
+    private int mBackSwipeType;
     private int mLeftLongSwipeAction;
     private int mRightLongSwipeAction;
     private boolean mBlockNextEvent;
-    private boolean mIsExtendedSwipe;
+    private boolean mBackHapticEnabled;
 
     private final Vibrator mVibrator;
 
@@ -501,7 +502,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         /* if Launcher is showing and want to block back gesture, let's still trigger our custom
         swipe actions at the very bottom of the screen, because we are cool */
         boolean isInExcludedRegion = false;
-        if (mIsExtendedSwipe
+        if (mBackSwipeType == 1
                 || (mLeftLongSwipeAction != 0 && mIsOnLeftEdge)  || (mRightLongSwipeAction != 0 && !mIsOnLeftEdge)) {
             isInExcludedRegion= mExcludeRegion.contains(x, y)
                 && y < ((mDisplaySize.y / 4) * 3);
@@ -542,7 +543,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mIsExtendedSwipe = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.BACK_SWIPE_EXTENDED, 0,
             UserHandle.USER_CURRENT) != 0;
-        mTImeout = Settings.System.getIntForUser(mContext.getContentResolver(),
+        mTimeout = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LONG_BACK_SWIPE_TIMEOUT, 2000,
             UserHandle.USER_CURRENT);
         mLeftLongSwipeAction = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -551,6 +552,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mRightLongSwipeAction = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.RIGHT_LONG_BACK_SWIPE_ACTION, 0,
             UserHandle.USER_CURRENT);
+        mBackHapticEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.BACK_GESTURE_HAPTIC, 1,
+            UserHandle.USER_CURRENT) == 1;
     }
 
     private void onMotionEvent(MotionEvent ev) {
@@ -598,8 +602,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
                     } else if (dx > dy && dx > mTouchSlop) {
                         mThresholdCrossed = true;
-                        if (!mIsExtendedSwipe && ((mLeftLongSwipeAction != 0 && mIsOnLeftEdge)
+                        if (mBackSwipeType == 0 && ((mLeftLongSwipeAction != 0 && mIsOnLeftEdge)
                                 || (mRightLongSwipeAction != 0 && !mIsOnLeftEdge))) {
+                            mHandler.postDelayed(mLongSwipeAction, (mTimeout - elapsedTime));
                         }
                         // Capture inputs
                         mInputMonitor.pilferPointers();
@@ -615,7 +620,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
             boolean isCancel = action == MotionEvent.ACTION_CANCEL;
             boolean isMove = action == MotionEvent.ACTION_MOVE;
 
-            if (isMove && mIsExtendedSwipe) {
+            if (isMove && mBackSwipeType == 1) {
                 float deltaX = Math.abs(ev.getX() - mDownPoint.x);
                 if (deltaX  > ((mDisplaySize.x / 4) * 3)) {
                     mLongSwipeAction.run();
@@ -665,7 +670,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
             mBlockNextEvent = true;
             mEdgePanel.resetOnDown();
             triggerAction(mIsOnLeftEdge);
-            mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK));
+            if (mBackHapticEnabled) {
+                mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK));
+            }
         }
     }
 

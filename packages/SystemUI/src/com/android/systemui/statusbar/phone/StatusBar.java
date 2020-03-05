@@ -2191,7 +2191,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_TILE_TITLE_VISIBILITY),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BACK_SWIPE_EXTENDED),
+                    Settings.System.BACK_SWIPE_TYPE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP),
@@ -4814,7 +4814,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mWakeUpTouchLocation = null;
             mVisualStabilityManager.setScreenOn(false);
             updateVisibleToUser();
-
             updateNotificationPanelTouchState();
             mStatusBarWindow.cancelCurrentTouch();
             if (mBurnInProtectionController != null) {

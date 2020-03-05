@@ -7534,7 +7534,7 @@ public final class Settings {
          * Gestures nav: whether to use extended swipe instead of timeout to trigger custom actions
          * @hide
          */
-        public static final String BACK_SWIPE_EXTENDED = "back_swipe_extended";
+        public static final String BACK_SWIPE_TYPE = "back_swipe_type";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
