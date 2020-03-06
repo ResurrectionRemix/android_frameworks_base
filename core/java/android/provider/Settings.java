@@ -7806,6 +7806,12 @@ public final class Settings {
         public static final String MUSIC_VOLUME_PANEL_DIALOG = "music_volume_panel_dialog";
 
         /**
+         * Switch between different navbar styles
+         * @hide
+         */
+        public static final String NAVBAR_STYLE = "navbar_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
