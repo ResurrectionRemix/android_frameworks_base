@@ -300,8 +300,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
-    private static final String LOCKSCREEN_CHARGING_ANIMATION =
-            "system:" + Settings.System.LOCKSCREEN_CHARGING_ANIMATION;
+    private static final String LOCKSCREEN_CHARGING_ANIMATION_STYLE =
+            "system:" + Settings.System.LOCKSCREEN_CHARGING_ANIMATION_STYLE;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -507,6 +507,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final DisplayMetrics mDisplayMetrics = Dependency.get(DisplayMetrics.class);
 
     private boolean mHeadsUpDisabled, mGamingModeActivated;
+    private int mChargingAnimation = 1;
+
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
         ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
@@ -766,7 +768,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
-        tunerService.addTunable(this, LOCKSCREEN_CHARGING_ANIMATION);
+        tunerService.addTunable(this, LOCKSCREEN_CHARGING_ANIMATION_STYLE);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
@@ -1017,6 +1019,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 SystemUIFactory.getInstance().createKeyguardIndicationController(mContext,
                         mStatusBarWindow.findViewById(R.id.keyguard_indication_area),
                         mStatusBarWindow.findViewById(R.id.lock_icon));
+        mKeyguardIndicationController.updateChargingIndication(mChargingAnimation);
         mNotificationPanel.setKeyguardIndicationController(mKeyguardIndicationController);
 
         mAmbientIndicationContainer = mStatusBarWindow.findViewById(
@@ -5259,11 +5262,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mNavigationBarController.onDisplayRemoved(mDisplayId);
                 }
             }
-        } else if (LOCKSCREEN_CHARGING_ANIMATION.equals(key)) {
-                boolean showChargingAnimation =
-                        TunerService.parseIntegerSwitch(newValue, true);
+        } else if (LOCKSCREEN_CHARGING_ANIMATION_STYLE.equals(key)) {
+                mChargingAnimation =
+                        TunerService.parseInteger(newValue, 1);
                 if (mKeyguardIndicationController != null)
-                    mKeyguardIndicationController.updateChargingIndication(showChargingAnimation);
+                    mKeyguardIndicationController.updateChargingIndication(mChargingAnimation);
         }
     }
 

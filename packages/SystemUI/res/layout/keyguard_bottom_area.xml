@@ -37,7 +37,7 @@
             android:id="@+id/charging_indication"
             android:layout_width="@dimen/keyguard_charging_indication_width"
             android:layout_height="@dimen/keyguard_charging_indication_height"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:clickable="false"
             app:lottie_fileName="keyguard_charging_indication.json"
             app:lottie_loop="true"

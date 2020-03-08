@@ -5432,10 +5432,13 @@ public final class Settings {
          * Package name of apps for enabling Gaming mode
          * @hide
          */
+
         public static final String GAMING_MODE_VALUES = "gaming_mode_values";
         /** @hide */
        private static final Validator GAMING_MODE_VALUES_VALIDATOR =
                ANY_STRING_VALIDATOR;
+
+        public static final String LOCKSCREEN_CHARGING_ANIMATION_STYLE = "lockscreen_charging_animation_style";
 
         public static final String GAMING_MODE_DUMMY = "gaming_mode_dummy";
         /** @hide */
