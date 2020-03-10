@@ -5883,6 +5883,12 @@ public final class Settings {
         public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
 
         /**
+         * Switch between different dark styles
+         * @hide
+         */
+        public static final String BERRY_DARK_STYLE = "berry_dark_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

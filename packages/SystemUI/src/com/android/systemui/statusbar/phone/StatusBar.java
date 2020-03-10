@@ -69,6 +69,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.om.IOverlayManager;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -146,6 +147,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.RegisterStatusBarResult;
+import com.android.internal.statusbar.ThemeAccentUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.statusbar.phone.Ticker;
 import com.android.systemui.statusbar.phone.TickerView;
@@ -306,6 +308,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
+    private static final String BERRY_DARK_STYLE =
+            "system:" + Settings.System.BERRY_DARK_STYLE;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -630,6 +634,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mWereIconsJustHidden;
     private boolean mBouncerWasShowingWhenHidden;
 
+    private int mDarkStyle;
+    private boolean mPowerSave;
+    private boolean mUseDarkTheme;
+    private IOverlayManager mOverlayManager;
+
     // Notifies StatusBarKeyguardViewManager every time the keyguard transition is over,
     // this animation is tied to the scrim for historic reasons.
     // TODO: notify when keyguard has faded away instead of the scrim.
@@ -745,6 +754,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             mBubbleController.setExpandListener(mBubbleExpandListener);
         }
 
+        mOverlayManager = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
         mUiModeManager = mContext.getSystemService(UiModeManager.class);
         mNotificationAlertingManager.setStatusBar(this);
         mKeyguardViewMediator = getComponent(KeyguardViewMediator.class);
@@ -779,6 +790,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
+        tunerService.addTunable(this, BERRY_DARK_STYLE);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
@@ -1041,8 +1053,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 @Override
                 public void onPowerSaveChanged(boolean isPowerSave) {
                     mHandler.post(mCheckBarModes);
-                    if (mDozeServiceHost != null) {
+                    if (mDozeServiceHost != null && mPowerSave != isPowerSave) {
                         mDozeServiceHost.firePowerSaveChanged(isPowerSave);
+                        mPowerSave = isPowerSave;
                     }
                 }
 
@@ -1405,6 +1418,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mBrightnessMirrorController != null) {
             mBrightnessMirrorController.onUiModeChanged();
         }
+        updateTheme();
     }
 
     protected void createUserSwitcher() {
@@ -3956,7 +3970,25 @@ public class StatusBar extends SystemUI implements DemoMode,
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
+        boolean useDarkTheme = (mContext.getResources().getConfiguration().uiMode
+                        & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
         haltTicker();
+
+        if (mUiModeManager != null && (mUseDarkTheme != useDarkTheme ||
+                mDarkStyle != ThemeAccentUtils.getDarkStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId()))) {
+            mUseDarkTheme = useDarkTheme;
+            if (mUseDarkTheme) {
+                mUiOffloadThread.submit(() -> {
+                    ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
+                                            mUseDarkTheme, mDarkStyle);
+                });
+            } else {
+                mUiOffloadThread.submit(() -> {
+                    ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
+                                            mUseDarkTheme, mDarkStyle);
+                });
+            }
+        }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
@@ -5378,7 +5410,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        } else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
+        }else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
                 mWindowManagerService != null) {
             boolean forcedVisibility = mNeedsNavigationBar ||
                     TunerService.parseIntegerSwitch(newValue, false);
@@ -5393,6 +5425,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mNavigationBarController.onDisplayRemoved(mDisplayId);
                 }
             }
+        } else if (BERRY_DARK_STYLE.equals(key)) {
+                int darkStyle =
+                        TunerService.parseInteger(newValue, 0);
+                if (mDarkStyle != darkStyle) {
+                    mDarkStyle = darkStyle;
+                    updateTheme();
+                }
         }
 
     }
