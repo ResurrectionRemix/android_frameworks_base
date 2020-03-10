@@ -348,6 +348,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".BootReceiver" androidprv:systemUserOnly="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service android:name=".ImageWallpaper"
                 android:permission="android.permission.BIND_WALLPAPER"
                 android:exported="true" />
@@ -715,5 +721,13 @@
             </intent-filter>
         </receiver>
 
+        <!-- FPS Info -->
+        <service android:name=".FPSInfoService"
+                android:exported="false" />
+        <receiver android:name=".BootReceiver" androidprv:systemUserOnly="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
