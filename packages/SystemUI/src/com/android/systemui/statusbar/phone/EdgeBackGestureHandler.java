@@ -209,12 +209,10 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private boolean mBlockNextEvent;
     private boolean mBackHapticEnabled;
 
-    private final Vibrator mVibrator;
 
     public EdgeBackGestureHandler(Context context, OverviewProxyService overviewProxyService) {
         final Resources res = context.getResources();
         mContext = context;
-        mVibrator = context.getSystemService(Vibrator.class);
         mDisplayId = context.getDisplayId();
         mMainExecutor = context.getMainExecutor();
         mWm = context.getSystemService(WindowManager.class);
@@ -540,9 +538,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
         if (mEdgePanel != null) {
             mEdgePanel.setExtendedSwipe();
         }
-        mIsExtendedSwipe = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.BACK_SWIPE_EXTENDED, 0,
-            UserHandle.USER_CURRENT) != 0;
         mTimeout = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LONG_BACK_SWIPE_TIMEOUT, 2000,
             UserHandle.USER_CURRENT);

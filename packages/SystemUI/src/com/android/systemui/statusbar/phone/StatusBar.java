@@ -2541,7 +2541,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             toggleFlashlight();
             return;
         }
-        mDozeServiceHost.toggleFlashlightProximityCheck();
+    }
+
+    private void toggleFlashlight() {
+        if (mFlashlightController != null) {
+            mFlashlightController.initFlashLight();
+            if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
+                mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+            }
+        }
     }
 
     void makeExpandedVisible(boolean force) {

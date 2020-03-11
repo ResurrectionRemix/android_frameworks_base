@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.MathUtils;
@@ -326,7 +327,6 @@ public class NavigationBarEdgePanel extends View {
         mSwipeThreshold = context.getResources()
                 .getDimension(R.dimen.navigation_edge_action_drag_threshold);
         setVisibility(GONE);
-
         setExtendedSwipe();
     }
 
