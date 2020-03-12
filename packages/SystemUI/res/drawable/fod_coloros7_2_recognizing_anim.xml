@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2019-2020 The Evolution X Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/fod_coloros7_2_anim00" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim01" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim02" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim03" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim04" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim05" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim06" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim07" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim08" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim09" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim10" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim11" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim12" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim13" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim14" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim15" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim16" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim17" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim18" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim19" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim20" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim21" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim22" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim23" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim24" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim25" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim26" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim27" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim28" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim29" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim30" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim31" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim32" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim33" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim34" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim35" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim36" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim37" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim38" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim39" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim40" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim41" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim42" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim43" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim44" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim45" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim46" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim47" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim48" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim49" android:duration="12" />
+    <item android:drawable="@drawable/fod_coloros7_2_anim50" android:duration="12" />
+</animation-list>

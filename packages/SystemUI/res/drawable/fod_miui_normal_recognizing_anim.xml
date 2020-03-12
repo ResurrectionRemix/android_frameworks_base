@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2019-2020 The Evolution X Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_1" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_2" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_3" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_4" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_5" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_6" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_7" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_8" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_9" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_10" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_11" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_12" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_13" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_14" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_15" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_16" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_17" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_18" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_19" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_20" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_21" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_22" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_23" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_24" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_25" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_26" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_27" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_28" android:duration="12" />
+    <item android:drawable="@drawable/gxzw_normal_recognizing_anim_29" android:duration="12" />
+</animation-list>

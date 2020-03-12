@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2019-2020 The Evolution X Project
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+         http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/fod_blue_firework_anim_00" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_01" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_02" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_03" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_04" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_05" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_06" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_07" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_08" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_09" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_10" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_11" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_12" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_13" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_14" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_15" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_16" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_17" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_18" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_19" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_20" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_21" android:duration="12" />
+    <item android:drawable="@drawable/fod_blue_firework_anim_22" android:duration="12" />
+</animation-list>
