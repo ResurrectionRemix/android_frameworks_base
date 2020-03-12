@@ -774,6 +774,8 @@ public class VibratorService extends IVibratorService.Stub
                 return;
             }
 
+            // XXX: AppOps is randomly rejecting vibration calls from SystemUI
+            /*
             final int mode = getAppOpMode(vib);
             if (mode != AppOpsManager.MODE_ALLOWED) {
                 if (mode == AppOpsManager.MODE_ERRORED) {
@@ -783,6 +785,8 @@ public class VibratorService extends IVibratorService.Stub
                 }
                 return;
             }
+            */
+
             applyVibrationIntensityScalingLocked(vib, intensity);
             startVibrationInnerLocked(vib);
         } finally {
