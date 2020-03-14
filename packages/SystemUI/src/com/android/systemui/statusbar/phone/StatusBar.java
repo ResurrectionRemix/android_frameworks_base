@@ -3363,6 +3363,18 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mViewHierarchyManager.updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
+
+        if (blurperformed) {
+            mNotificationPanel.setPanelAlpha(0, false);
+            mHandler.postDelayed(new Runnable() {
+                public void run() {
+                    drawBlurView();
+                    mNotificationPanel.setPanelAlphaFast(255, true);
+                }
+            }, Math.max(390, Math.round(455f * Settings.Global.getFloat(
+                    mContext.getContentResolver(),
+                    Settings.Global.TRANSITION_ANIMATION_SCALE, 1.0f))));
+        }
     }
 
     @Override
@@ -5379,28 +5391,34 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void updateBlurVisibility() {
-        if (!mQSBlurEnabled) return;
         int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
-        int QSBlurAlpha = Math.round(255.0f *
-                mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
-        int QSBlurIntensity = Settings.System.getInt(mContext.getContentResolver(),
-              Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 80); // defaulting to 7.5f radius
-        boolean enoughBlurData = (QSBlurAlpha > 0 && QSBlurIntensity > 0);
+        float QSBlurAlpha = mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0);
+        boolean enoughBlurData = (QSBlurAlpha > 0 && qsBlurIntensity() > 0);
 
-        if (enoughBlurData && !blurperformed && !mIsKeyguard) {
-            Bitmap bittemp = ImageUtilities.blurImage(mContext, 
-                                ImageUtilities.screenshotSurface(mContext), QSBlurIntensity);
-            Drawable blurbackground = new BitmapDrawable(mContext.getResources(), bittemp);
+        if (enoughBlurData && !blurperformed && !mIsKeyguard && mQSBlurEnabled) {
+            drawBlurView();
             blurperformed = true;
             mQSBlurView.setVisibility(View.VISIBLE);
-            mQSBlurView.setBackgroundDrawable(blurbackground);
         } else if (!enoughBlurData || mState == StatusBarState.KEYGUARD) {
             blurperformed = false;
-            mQSBlurView.setBackgroundColor(Color.TRANSPARENT);
+            mQSBlurView.setVisibility(View.GONE);
         }
         mQSBlurView.setAlpha(QSBlurAlpha);
-        mQSBlurView.getBackground().setAlpha(QSBlurAlpha);
+    }
+
+    private void drawBlurView() {
+        Bitmap surfaceBitmap = ImageUtilities.screenshotSurface(mContext);
+        if (surfaceBitmap == null) {
+            mQSBlurView.setImageDrawable(null);
+        } else {
+            mQSBlurView.setImageBitmap(ImageUtilities.blurImage(mContext, surfaceBitmap, qsBlurIntensity()));
+        }
+    }
+
+    private int qsBlurIntensity() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
     }
 
     @Override

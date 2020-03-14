@@ -25,6 +25,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <ImageView
+        android:id="@+id/qs_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        sysui:ignoreRightInset="true" />
+
     <com.android.systemui.statusbar.BackDropView
             android:id="@+id/backdrop"
             android:layout_width="match_parent"
@@ -59,12 +66,6 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         sysui:ignoreRightInset="true" />
-
-    <ImageView
-        android:id="@+id/qs_blur"
-        android:background="#000000"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/status_bar_container"
