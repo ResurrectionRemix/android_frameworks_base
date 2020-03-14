@@ -45,7 +45,7 @@
 
         <!-- width is set to "match_parent" to avoid extra layout calls -->
         <TextView android:id="@+id/notification_media_elapsed_time"
-            style="@style/Widget.DeviceDefault.Notification.Text"
+            style="@style/Widget.Material.Notification.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -54,7 +54,7 @@
         />
 
         <TextView android:id="@+id/notification_media_total_time"
-            style="@style/Widget.DeviceDefault.Notification.Text"
+            style="@style/Widget.Material.Notification.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
