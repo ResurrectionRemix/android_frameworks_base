@@ -425,6 +425,23 @@
     <alias name="fantasy" to="redressed" />
     <alias name="ITC Stone Serif" to="redressed" />
 
+    <family name="nunito">
+        <font weight="400" style="normal">Nunito-Regular.ttf</font>
+        <font weight="700" style="normal">Nunito-Bold.ttf</font>
+    </family>
+    <alias name="nunito-light" to="nunito" weight="300" />
+    <alias name="nunito-medium" to="nunito" weight="500" />
+    <alias name="nunito-semi-bold" to="nunito" weight="600" />
+    <alias name="nunito-bold" to="nunito" weight="700" />
+    <alias name="times" to="nunito" />
+    <alias name="times new roman" to="nunito" />
+    <alias name="palatino" to="nunito" />
+    <alias name="georgia" to="nunito" />
+    <alias name="baskerville" to="nunito" />
+    <alias name="goudy" to="nunito" />
+    <alias name="fantasy" to="nunito" />
+    <alias name="ITC Stone Serif" to="nunito" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>
