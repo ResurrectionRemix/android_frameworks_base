@@ -17,8 +17,14 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Screen recording -->
-    <style name="ScreenRecordStyle" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.MinWidth">
-        <item name="android:windowNoTitle">true</item>
+    <style name="ScreenRecordStyle" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+        <item name="colorAccent">@*android:color/accent_device_default_light</item>
+        <item name="android:windowAnimationStyle">@style/ScreenRecordAnimation.Window</item>
+    </style>
+
+    <style name="ScreenRecordAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
 
     <style name="Theme.SystemUI.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog" />

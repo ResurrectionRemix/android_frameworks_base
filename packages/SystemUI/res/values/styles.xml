@@ -576,18 +576,16 @@
     </style>
 
     <!-- Screen recording -->
-    <style name="ScreenRecordStyle" parent="@*android:style/Theme.DeviceDefault.Light.Dialog.MinWidth">
+    <style name="ScreenRecordStyle" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:colorBackgroundFloating">@*android:color/notification_material_background_color</item>
-        <item name="android:colorPrimary">@*android:color/primary_dark_device_default_settings</item>
-        <item name="android:colorPrimaryDark">@*android:color/primary_device_default_settings</item>
-        <item name="android:colorSecondary">@*android:color/secondary_device_default_settings_light</item>
-        <item name="android:colorAccent">@*android:color/accent_device_default_light</item>
-        <item name="android:colorControlNormal">@*android:color/accent_device_default_dark</item>
-        <item name="android:bottomRightRadius">@*android:dimen/config_dialogCornerRadius</item>
-        <item name="android:bottomLeftRadius">@*android:dimen/config_dialogCornerRadius</item>
-        <item name="android:topRightRadius">@*android:dimen/config_dialogCornerRadius</item>
-        <item name="android:topLeftRadius">@*android:dimen/config_dialogCornerRadius</item>
+        <item name="colorAccent">@*android:color/accent_device_default_light</item>
+        <item name="android:windowAnimationStyle">@style/ScreenRecordAnimation.Window</item>
+    </style>
+
+    <style name="ScreenRecordAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
 
     <!-- USB Contaminant dialog -->

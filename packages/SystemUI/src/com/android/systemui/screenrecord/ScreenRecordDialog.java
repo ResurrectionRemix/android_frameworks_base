@@ -26,6 +26,10 @@ import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -42,22 +46,22 @@ import static android.provider.Settings.System.SCREENRECORD_LOW_QUALITY;
  */
 public class ScreenRecordDialog extends Activity {
     private static final String TAG = "ScreenRecord";
-    
+
     private static final int REQUEST_CODE_PERMISSIONS = 201;
     private static final int REQUEST_CODE_PERMISSIONS_AUDIO = 202;
 
     private static final int REQUEST_CODE_VIDEO = 301;
     private static final int REQUEST_CODE_VIDEO_TAPS = 302;
     private static final int REQUEST_CODE_VIDEO_TAPS_DOT = 303;
-    private static final int REQUEST_CODE_VIDEO_DOT = 304;    
-    private static final int REQUEST_CODE_VIDEO_LOW = 305;   
+    private static final int REQUEST_CODE_VIDEO_DOT = 304;
+    private static final int REQUEST_CODE_VIDEO_LOW = 305;
     private static final int REQUEST_CODE_VIDEO_DOT_LOW = 306;
     private static final int REQUEST_CODE_VIDEO_TAPS_LOW = 307;
-    private static final int REQUEST_CODE_VIDEO_TAPS_DOT_LOW = 308;    
-    
+    private static final int REQUEST_CODE_VIDEO_TAPS_DOT_LOW = 308;
+
     private static final int REQUEST_CODE_VIDEO_AUDIO = 401;
     private static final int REQUEST_CODE_VIDEO_AUDIO_TAPS = 402;
-    private static final int REQUEST_CODE_VIDEO_AUDIO_DOT = 403;   
+    private static final int REQUEST_CODE_VIDEO_AUDIO_DOT = 403;
     private static final int REQUEST_CODE_VIDEO_AUDIO_TAPS_DOT = 404;
     private static final int REQUEST_CODE_VIDEO_AUDIO_LOW = 405;
     private static final int REQUEST_CODE_VIDEO_AUDIO_TAPS_LOW = 406;
@@ -74,57 +78,73 @@ public class ScreenRecordDialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_record_dialog);
 
+        Window window = getWindow();
+        assert window != null;
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
+        window.setAttributes(lp);
+
         final Switch micSwitch = findViewById(R.id.switch_mic);
         final Switch tapsSwitch = findViewById(R.id.switch_taps);
         final Switch dotSwitch = findViewById(R.id.switch_stopdot);
         final Switch qualitySwitch = findViewById(R.id.switch_low_quality);
-        
+
         initialCheckSwitch(micSwitch, SCREENRECORD_ENABLE_MIC);
         initialCheckSwitch(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         initialCheckSwitch(dotSwitch, SCREENRECORD_STOP_DOT);
         initialCheckSwitch(qualitySwitch, SCREENRECORD_LOW_QUALITY);
-        
+
         setSwitchListener(micSwitch, SCREENRECORD_ENABLE_MIC);
         setSwitchListener(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         setSwitchListener(dotSwitch, SCREENRECORD_STOP_DOT);
         setSwitchListener(qualitySwitch, SCREENRECORD_LOW_QUALITY);
 
         final Button recordButton = findViewById(R.id.record_button);
-        recordButton.setOnClickListener(v -> {
-            mUseAudio = micSwitch.isChecked();
-            mShowTaps = tapsSwitch.isChecked();
-            mShowDot = dotSwitch.isChecked();
-            mLowQuality = qualitySwitch.isChecked();
-            Log.d(TAG, "Record button clicked: audio " + mUseAudio + ", taps " + mShowTaps + ", dot " + mShowDot + ", quality " + mLowQuality);
+        recordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUseAudio = micSwitch.isChecked();
+                mShowTaps = tapsSwitch.isChecked();
+                mShowDot = dotSwitch.isChecked();
+                mLowQuality = qualitySwitch.isChecked();
+                Log.d(TAG, "Record button clicked: audio " + mUseAudio + ", taps " + mShowTaps + ", dot " + mShowDot + ", quality " + mLowQuality);
 
-            if (mUseAudio && checkSelfPermission(Manifest.permission.RECORD_AUDIO)
-                    != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Requesting permission for audio");
-                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                        REQUEST_CODE_PERMISSIONS_AUDIO);
-            } else {
-                requestScreenCapture();
+                if (mUseAudio && ScreenRecordDialog.this.checkSelfPermission(Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Requesting permission for audio");
+                    ScreenRecordDialog.this.requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                            REQUEST_CODE_PERMISSIONS_AUDIO);
+                } else {
+                    ScreenRecordDialog.this.requestScreenCapture();
+                }
             }
         });
         final Button cancelButton = findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(v -> {
-            finish();
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScreenRecordDialog.this.finish();
+            }
         });
     }
 
     private void initialCheckSwitch(Switch sw, String setting) {
         sw.setChecked(
                 Settings.System.getIntForUser(this.getContentResolver(),
-                setting, 0, UserHandle.USER_CURRENT) == 1);
+                        setting, 0, UserHandle.USER_CURRENT) == 1);
     }
-    
+
     private void setSwitchListener(Switch sw, String setting) {
         sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Settings.System.putIntForUser(this.getContentResolver(),
-            setting, isChecked ? 1 : 0, UserHandle.USER_CURRENT);
+                    setting, isChecked ? 1 : 0, UserHandle.USER_CURRENT);
         });
     }
-    
+
     private void requestScreenCapture() {
         MediaProjectionManager mediaProjectionManager = (MediaProjectionManager) getSystemService(
                 Context.MEDIA_PROJECTION_SERVICE);
@@ -135,21 +155,21 @@ public class ScreenRecordDialog extends Activity {
             if (mUseAudio) {
                 startActivityForResult(permissionIntent,
                         mShowTaps ? (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_TAPS_DOT_LOW : REQUEST_CODE_VIDEO_AUDIO_TAPS_LOW)
-                        : (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_DOT_LOW : REQUEST_CODE_VIDEO_AUDIO_LOW));
+                                : (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_DOT_LOW : REQUEST_CODE_VIDEO_AUDIO_LOW));
             } else {
                 startActivityForResult(permissionIntent,
                         mShowTaps ? (mShowDot ? REQUEST_CODE_VIDEO_TAPS_DOT_LOW : REQUEST_CODE_VIDEO_TAPS_LOW)
-                        : (mShowDot ? REQUEST_CODE_VIDEO_DOT_LOW : REQUEST_CODE_VIDEO_LOW));
+                                : (mShowDot ? REQUEST_CODE_VIDEO_DOT_LOW : REQUEST_CODE_VIDEO_LOW));
             }
         } else {
             if (mUseAudio) {
                 startActivityForResult(permissionIntent,
                         mShowTaps ? (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_TAPS_DOT : REQUEST_CODE_VIDEO_AUDIO_TAPS)
-                        : (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_DOT : REQUEST_CODE_VIDEO_AUDIO));
+                                : (mShowDot ? REQUEST_CODE_VIDEO_AUDIO_DOT : REQUEST_CODE_VIDEO_AUDIO));
             } else {
                 startActivityForResult(permissionIntent,
                         mShowTaps ? (mShowDot ? REQUEST_CODE_VIDEO_TAPS_DOT : REQUEST_CODE_VIDEO_TAPS)
-                        : (mShowDot ? REQUEST_CODE_VIDEO_DOT : REQUEST_CODE_VIDEO));
+                                : (mShowDot ? REQUEST_CODE_VIDEO_DOT : REQUEST_CODE_VIDEO));
             }
         }
     }
@@ -173,7 +193,7 @@ public class ScreenRecordDialog extends Activity {
                 || requestCode == REQUEST_CODE_VIDEO_TAPS_DOT_LOW
                 || requestCode == REQUEST_CODE_VIDEO_AUDIO_TAPS_DOT_LOW;
         mLowQuality = ((requestCode > 304 && requestCode < 309)
-                    || (requestCode > 404 && requestCode < 409));
+                || (requestCode > 404 && requestCode < 409));
         switch (requestCode) {
             case REQUEST_CODE_PERMISSIONS:
                 int permission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
