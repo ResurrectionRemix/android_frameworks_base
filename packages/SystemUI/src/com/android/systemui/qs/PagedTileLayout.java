@@ -290,6 +290,18 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         for (int i = 0; i < mPages.size(); i++) {
             changed |= mPages.get(i).updateResources();
         }
+
+        if (!changed) {
+            int row = mTiles.size() / getColumnCount();
+            if (mTiles.size() % getColumnCount() > 0) {
+                row += 1;
+            }
+
+            if (row < mPages.get(0).mRows) {
+                changed = true;
+            }
+        }
+
         if (changed) {
             mDistributeTiles = true;
             requestLayout();
