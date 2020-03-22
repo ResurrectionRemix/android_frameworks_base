@@ -10,4 +10,10 @@
     <color name="recents_dismiss_all_background_color_ripple">#a8a8a8</color>
     <color name="recents_dismiss_all_icon_color">#8a000000</color>
 
+    <!-- Color for the Assistant invocation lights -->
+    <color name="edge_light_blue">#4185f4</color>
+    <color name="edge_light_green">#3aa853</color>
+    <color name="edge_light_red">#ea4234</color>
+    <color name="edge_light_yellow">#fbbc06</color>
+
 </resources>
