@@ -39,4 +39,9 @@
         android:title="@string/lockscreen_unlock_right"
         sysui:defValue="true" />
 
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="sysui_keyguard_transition_animations"
+        android:title="@string/tuner_keyguard_transition_animations_title"
+        android:summary="@string/tuner_keyguard_transition_animations_summary"
+        sysui:defValue="true" />
 </PreferenceScreen>
