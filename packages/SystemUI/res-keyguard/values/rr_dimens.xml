@@ -2,4 +2,5 @@
 <resources>
     <!-- Weather condition icon  -->
     <dimen name="weather_icon_size">24dp</dimen>
+    <dimen name="header_font_size">20dp</dimen>
 </resources>
