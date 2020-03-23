@@ -24,7 +24,11 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 
+import com.android.internal.util.rr.DeviceUtils;
+
 public class StatusBarTuner extends PreferenceFragment {
+
+    private static final String KEY_NFC = "nfc";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -36,6 +40,10 @@ public class StatusBarTuner extends PreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.status_bar_prefs);
+
+        if (!DeviceUtils.deviceSupportsNfc(getContext())) {
+            getPreferenceScreen().removePreference(findPreference(KEY_NFC));
+        }
     }
 
     @Override

@@ -35,14 +35,11 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 import com.android.systemui.shared.plugins.PluginPrefs;
 
-import com.android.internal.util.rr.DeviceUtils;
-
 public class TunerFragment extends PreferenceFragment {
 
     private static final String TAG = "TunerFragment";
 
     private static final String KEY_BATTERY_PCT = "battery_pct";
-    private static final String KEY_NFC = "nfc";
     private static final String KEY_PLUGINS = "plugins";
     private static final CharSequence KEY_DOZE = "doze";
 
@@ -75,9 +72,6 @@ public class TunerFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.tuner_prefs);
         if (!PluginPrefs.hasPlugins(getContext())) {
             getPreferenceScreen().removePreference(findPreference(KEY_PLUGINS));
-        }
-        if (!DeviceUtils.deviceSupportsNfc(getContext())) {
-            getPreferenceScreen().removePreference(findPreference(KEY_NFC));
         }
         if (!alwaysOnAvailable()) {
             getPreferenceScreen().removePreference(findPreference(KEY_DOZE));
