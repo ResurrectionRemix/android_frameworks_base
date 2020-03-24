@@ -627,7 +627,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
                 com.android.internal.R.dimen.status_bar_height_portrait);
         boolean cutoutMasked = getContext().getResources().getBoolean(
                 com.android.internal.R.bool.config_maskMainBuiltInDisplayCutout);
-        if (mCutoutMasked != cutoutMasked){
+        if (mCutoutMasked != cutoutMasked) {
             mCutoutMasked = cutoutMasked;
             updatePosition();
         }
