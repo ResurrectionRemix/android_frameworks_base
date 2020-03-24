@@ -180,8 +180,13 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
 
     @Override
     public Intent getLongClickIntent() {
-        if (DEBUG) Log.d(TAG, "getLongClickIntent");
-        return mWeatherClient.getSettingsIntent();
+        return null;
+    }
+
+    @Override
+    public void handleLongClick() {
+        if (DEBUG) Log.d(TAG, "handleLongClick");
+        handleSecondaryClick();
     }
 
     @Override
