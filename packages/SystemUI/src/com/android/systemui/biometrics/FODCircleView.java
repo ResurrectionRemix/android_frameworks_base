@@ -19,6 +19,7 @@ package com.android.systemui.biometrics;
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.ContentResolver;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -50,6 +51,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import androidx.palette.graphics.Palette;
 
+import com.android.internal.widget.LockPatternUtils;
+import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
@@ -91,6 +94,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private PowerManager mPowerManager;
     private PowerManager.WakeLock mWakeLock;
+    private LockPatternUtils mLockPatternUtils;
 
     private Timer mBurnInProtectionTimer;
     private WallpaperManager mWallManager;
@@ -168,12 +172,11 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         @Override
         public void onKeyguardBouncerChanged(boolean isBouncer) {
             mIsBouncer = isBouncer;
-
             if (mUpdateMonitor.isFingerprintDetectionRunning()) {
                 final SecurityMode sec = mUpdateMonitor.getSecurityMode();
                 final boolean maybeShow = sec == SecurityMode.Pattern ||
                         sec == SecurityMode.PIN;
-                if (maybeShow || !mIsBouncer) {
+                if (isPinOrPattern(mUpdateMonitor.getCurrentUser()) || !mIsBouncer) {
                     show();
                 } else {
                     hide();
@@ -263,6 +266,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mCustomSettingsObserver.update();
         updatePosition();
         hide();
+
+        mLockPatternUtils = new LockPatternUtils(mContext);
 
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
@@ -603,6 +608,20 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         }
 
         mWindowManager.updateViewLayout(this, mParams);
+    }
+
+    private boolean isPinOrPattern(int userId) {
+        int passwordQuality = mLockPatternUtils.getActivePasswordQuality(userId);
+        switch (passwordQuality) {
+            // PIN
+            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+            case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+            // Pattern
+            case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+                return true;
+        }
+
+        return false;
     }
 
     private class BurnInProtectionTask extends TimerTask {
