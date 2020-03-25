@@ -65,4 +65,6 @@
     <!-- the padding on the start and the end of the statusbar -->
     <dimen name="status_bar_extra_padding">0dp</dimen>
 
+    <dimen name="keyguard_security_fod_view_margin">140dp</dimen>
+
 </resources>
