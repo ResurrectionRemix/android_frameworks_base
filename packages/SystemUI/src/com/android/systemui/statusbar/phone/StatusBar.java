@@ -517,7 +517,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mQSBlurEnabled;
     private boolean mQSBlurred;
 
-
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
         ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
