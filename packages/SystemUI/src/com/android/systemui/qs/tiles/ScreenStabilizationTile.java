@@ -84,7 +84,9 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
 
     @Override
     public BooleanState newTileState() {
-        return new BooleanState();
+        BooleanState state = new BooleanState();
+        state.handlesLongClick = false;
+        return state;
     }
 
     @Override
@@ -112,19 +114,21 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    protected void handleLongClick() {
-        showDetail(true);
-    }
-
-    @Override
     protected void handleClick() {
-        Settings.System.putInt(mResolver, Settings.System.STABILIZATION_ENABLE, (Settings.System.getInt(mResolver, Settings.System.STABILIZATION_ENABLE, 0) == 1) ? 0:1);
+        Settings.System.putInt(mResolver, Settings.System.STABILIZATION_ENABLE,
+            (Settings.System.getInt(mResolver, Settings.System.STABILIZATION_ENABLE,
+            0) == 1) ? 0:1);
         refreshState();
     }
 
     @Override
+    protected void handleLongClick() {
+        // Do nothing
+    }
+
+    @Override
     protected void handleSecondaryClick() {
-        handleLongClick();
+        showDetail(true);
     }
 
     @Override
@@ -136,8 +140,12 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         final Drawable mEnable = mContext.getDrawable(R.drawable.ic_screen_stabilization_enabled);
         final Drawable mDisable = mContext.getDrawable(R.drawable.ic_screen_stabilization_disabled);
-        state.value = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.STABILIZATION_ENABLE, 0) == 1);
+        state.value = Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.STABILIZATION_ENABLE, 0) == 1;
         state.label = mContext.getString(R.string.quick_settings_stabilization_label);
+        state.contentDescription = mContext.getString(R.string.quick_settings_stabilization_label);
+        state.dualTarget = true;
+        state.handlesLongClick = false;
         if (state.value) {
             state.icon = new DrawableIcon(mEnable);
             state.state = Tile.STATE_ACTIVE;
@@ -195,7 +203,8 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
 
         @Override
         public void setToggleState(boolean state) {
-            Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_ENABLE, state ? 1 : 0, UserHandle.USER_CURRENT);
+            Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_ENABLE,
+                    state ? 1 : 0, UserHandle.USER_CURRENT);
             refreshState();
             if (!state) {
                 showDetail(false);
@@ -218,9 +227,15 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
                 mPositionFriction.setOnSeekBarChangeListener(mSeekBarListener);
             }
 
-            refreshFloat(Settings.System.getFloatForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_FRICTION, 0.1f, UserHandle.USER_CURRENT), mVelocityFriction);
-            refreshFloat(Settings.System.getFloatForUser(mResolver, Settings.System.STABILIZATION_POSITION_FRICTION, 0.1f, UserHandle.USER_CURRENT), mPositionFriction);
-            refreshInt(Settings.System.getIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 8000, UserHandle.USER_CURRENT), mVelocityAmplitude);
+            refreshFloat(Settings.System.getFloatForUser(mResolver,
+                    Settings.System.STABILIZATION_VELOCITY_FRICTION, 0.1f, UserHandle.USER_CURRENT),
+                    mVelocityFriction);
+            refreshFloat(Settings.System.getFloatForUser(mResolver,
+                    Settings.System.STABILIZATION_POSITION_FRICTION, 0.1f, UserHandle.USER_CURRENT),
+                    mPositionFriction);
+            refreshInt(Settings.System.getIntForUser(mResolver,
+                    Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 8000, UserHandle.USER_CURRENT),
+                    mVelocityAmplitude);
 
             return view;
         }
@@ -261,7 +276,8 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
     }
 
     private void updateValuesFloat(int progress, boolean isPosition) {
-        final String key = isPosition ? Settings.System.STABILIZATION_POSITION_FRICTION : Settings.System.STABILIZATION_VELOCITY_FRICTION;
+        final String key = isPosition ? Settings.System.STABILIZATION_POSITION_FRICTION :
+                Settings.System.STABILIZATION_VELOCITY_FRICTION;
         switch (progress) {
             case 1:
                 Settings.System.putFloatForUser(mResolver, key, 0.01f, UserHandle.USER_CURRENT);
@@ -284,19 +300,24 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
     private void updateValuesInt(int progress) {
         switch (progress) {
             case 1:
-                Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 4000, UserHandle.USER_CURRENT);
+                Settings.System.putIntForUser(mResolver,
+                        Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 4000, UserHandle.USER_CURRENT);
                 break;
             case 2:
-                Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 6000, UserHandle.USER_CURRENT);
+                Settings.System.putIntForUser(mResolver,
+                        Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 6000, UserHandle.USER_CURRENT);
                 break;
             case 3:
-                Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 8000, UserHandle.USER_CURRENT);
+                Settings.System.putIntForUser(mResolver,
+                        Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 8000, UserHandle.USER_CURRENT);
                 break;
             case 4:
-                Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 10000, UserHandle.USER_CURRENT);
+                Settings.System.putIntForUser(mResolver,
+                        Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 10000, UserHandle.USER_CURRENT);
                 break;
             case 5:
-                Settings.System.putIntForUser(mResolver, Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 12000, UserHandle.USER_CURRENT);
+                Settings.System.putIntForUser(mResolver,
+                        Settings.System.STABILIZATION_VELOCITY_AMPLITUDE, 12000, UserHandle.USER_CURRENT);
                 break;
         }
     }
