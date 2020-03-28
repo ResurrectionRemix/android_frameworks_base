@@ -173,7 +173,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         @Override
         public void onBiometricHelp(int msgId, String helpString,
                 BiometricSourceType biometricSourceType) {
-            if (msgId == -1){ // Auth error
+            if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
+                    msgId == -1) { // Auth error
                 hideCircle();
                 mHandler.post(() -> mFODAnimation.hideFODanimation());
             }

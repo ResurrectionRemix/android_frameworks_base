@@ -730,8 +730,10 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                 @Override
                 public void onBiometricRunningStateChanged(boolean running,
                             BiometricSourceType biometricSourceType) {
-                    mIsFingerprintRunning = running;
-                    updateIndicationAreaPadding();
+                    if (biometricSourceType == BiometricSourceType.FINGERPRINT) {
+                        mIsFingerprintRunning = running;
+                        updateIndicationAreaPadding();
+                    }
                 }
             };
 
