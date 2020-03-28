@@ -670,7 +670,10 @@ class FODAnimation extends ImageView {
     public void showFODanimation() {
         if (mAnimParams != null && !mShowing && mIsKeyguard) {
             mShowing = true;
-            mWindowManager.addView(this, mAnimParams);
+            if (this.getWindowToken() == null){
+                mWindowManager.addView(this, mAnimParams);
+                mWindowManager.updateViewLayout(this, mAnimParams);
+            }
             recognizingAnim.start();
         }
     }
