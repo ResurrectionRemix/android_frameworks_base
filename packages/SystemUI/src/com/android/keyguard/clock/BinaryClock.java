@@ -173,8 +173,8 @@ public class BinaryClock extends View {
         mHour = mCalendar.get(is24 ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
         mMinutes = mCalendar.get(Calendar.MINUTE);
         setContentDescription(DateFormat.format(mDescFormat, mCalendar));
-
         calculateDotMatrix();
+        invalidate();
     }
 
     public void onTimeZoneChanged(TimeZone timeZone) {
@@ -192,11 +192,6 @@ public class BinaryClock extends View {
     public void setTintColor(int color) {
         mDotPaint.setColor(color);
         mEmptyDotPaint.setColor(color);
-        invalidate();
-    }
-
-    public void refreshTime() {
-        onTimeChanged();
         invalidate();
     }
 }
