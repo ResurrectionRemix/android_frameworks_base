@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.systemui.statusbar.NotificationListener;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.NotificationRemoteInputManager;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.row.NotificationContentInflater.InflationFlag;
@@ -48,6 +49,7 @@ public class NotificationAlertingManager {
     private final Lazy<ShadeController> mShadeController;
     private final NotificationInterruptionStateProvider mNotificationInterruptionStateProvider;
     private final NotificationListener mNotificationListener;
+    private final NotificationMediaManager mMediaManager;
 
     private HeadsUpManager mHeadsUpManager;
 
@@ -61,12 +63,14 @@ public class NotificationAlertingManager {
             VisualStabilityManager visualStabilityManager,
             Lazy<ShadeController> shadeController,
             NotificationInterruptionStateProvider notificationInterruptionStateProvider,
-            NotificationListener notificationListener) {
+            NotificationListener notificationListener,
+            NotificationMediaManager notificationMediaManager) {
         mRemoteInputManager = remoteInputManager;
         mVisualStabilityManager = visualStabilityManager;
         mShadeController = shadeController;
         mNotificationInterruptionStateProvider = notificationInterruptionStateProvider;
         mNotificationListener = notificationListener;
+        mMediaManager = notificationMediaManager;
 
         notificationEntryManager.addNotificationEntryListener(new NotificationEntryListener() {
             @Override
@@ -124,9 +128,10 @@ public class NotificationAlertingManager {
     }
 
     private void updateAlertState(NotificationEntry entry) {
-        boolean alertAgain = alertAgain(entry, entry.notification.getNotification());
         boolean shouldAlert;
         shouldAlert = mNotificationInterruptionStateProvider.shouldHeadsUp(entry);
+        boolean alertAgain = alertAgain(entry, entry.notification.getNotification())
+                || mMediaManager.isNewTrackNotification();
         final boolean wasAlerting = mHeadsUpManager.isAlerting(entry.key);
         if (wasAlerting) {
             if (shouldAlert) {

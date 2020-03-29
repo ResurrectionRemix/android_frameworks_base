@@ -75,7 +75,7 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.phone.StatusBarWindowController;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.tuner.TunerService;
-
+import android.text.TextUtils;
 import lineageos.providers.LineageSettings;
 import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.SysUiServiceProvider;
@@ -149,6 +149,12 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
     private MediaController mMediaController;
     private String mMediaNotificationKey;
     private MediaMetadata mMediaMetadata;
+
+    private String mForegroundPackage = "";
+    private boolean mMediaIsVisible;
+    private CharSequence mMediaTitle;
+    private CharSequence mMediaArtist;
+    private boolean mShowMediaHeadsup;
 
     private BackDropView mBackdrop;
     private ImageView mBackdropFront;
@@ -287,6 +293,47 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
 
     public void setUpWithPresenter(NotificationPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    public boolean isMediaPlayerNotification(NotificationEntry entry) {
+        mMediaIsVisible = isPlayingState(getMediaControllerPlaybackState(mMediaController));
+        return mShowMediaHeadsup
+                && entry.notification.getKey().equals(mMediaNotificationKey)
+                && mMediaIsVisible
+                // skip media heads up if the player is already in foreground
+                && !entry.notification.getPackageName().toLowerCase().equals(mForegroundPackage);
+    }
+
+    public boolean isNewTrackNotification() {
+        CharSequence title = null;
+        if (mMediaMetadata != null) {
+            title = mMediaMetadata.getText(MediaMetadata.METADATA_KEY_TITLE);
+            if (TextUtils.isEmpty(title)) {
+                title = mContext.getResources().getString(R.string.music_controls_no_title);
+            }
+        }
+        CharSequence artist = mMediaMetadata == null ? null : mMediaMetadata.getText(
+                MediaMetadata.METADATA_KEY_ARTIST);
+
+        // skip media heads up if we were already playing, and track info are unchanged
+        // (e.g. after pausing then playing again)
+        if (TextUtils.equals(title, mMediaTitle) && TextUtils.equals(artist, mMediaArtist)) {
+            return false;
+        }
+
+        mMediaTitle = title;
+        mMediaArtist = artist;
+        return mMediaIsVisible;
+    }
+
+    public void setRunningPackage(String packageName) {
+        mForegroundPackage = packageName.toLowerCase();
+    }
+
+    public void setMediaHeadsup() {
+        mShowMediaHeadsup = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SHOW_MEDIA_HEADS_UP, 0,
+                UserHandle.USER_CURRENT) != 0;
     }
 
     public void onNotificationRemoved(String key) {
