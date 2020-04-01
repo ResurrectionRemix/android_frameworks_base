@@ -1319,6 +1319,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             TextView messageView = (TextView) v.findViewById(R.id.message);
             messageView.setSelected(true); // necessary for marquee to work
 
+            TextView statusView = (TextView) v.findViewById(R.id.status);
+            final CharSequence status = getStatus();
+            if (!TextUtils.isEmpty(status)) {
+                statusView.setText(status);
+            } else {
+                statusView.setVisibility(View.GONE);
+            }
             if (mIcon != null) {
                 icon.setImageDrawable(mIcon);
                 icon.setScaleType(ScaleType.CENTER);
@@ -1404,27 +1411,31 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             willCreate();
 
             View v = inflater.inflate(com.android.systemui.R
-                    .layout.global_actions_grid_item, parent, false);
+                    .layout.global_actions_item, parent, false);
 
             ImageView icon = (ImageView) v.findViewById(R.id.icon);
             TextView messageView = (TextView) v.findViewById(R.id.message);
+            TextView statusView = (TextView) v.findViewById(R.id.status);
             final boolean enabled = isEnabled();
-            boolean on = ((mState == State.On) || (mState == State.TurningOn));
 
             if (messageView != null) {
-                messageView.setText(on ? mEnabledStatusMessageResId : mDisabledStatusMessageResId);
+                messageView.setText(mMessageResId);
                 messageView.setEnabled(enabled);
                 messageView.setSelected(true); // necessary for marquee to work
             }
 
+            boolean on = ((mState == State.On) || (mState == State.TurningOn));
             if (icon != null) {
                 icon.setImageDrawable(context.getDrawable(
                         (on ? mEnabledIconResId : mDisabledIconResid)));
                 icon.setEnabled(enabled);
             }
 
-            v.setEnabled(enabled);
+            if (statusView != null) {
+                statusView.setVisibility(View.GONE);
+            }
 
+            v.setEnabled(enabled);
             return v;
         }
 
