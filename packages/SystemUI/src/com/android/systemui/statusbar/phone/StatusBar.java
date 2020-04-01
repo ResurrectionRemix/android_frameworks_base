@@ -1530,7 +1530,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      * If the user switcher is simple then disable QS during setup because
      * the user intends to use the lock screen user switcher, QS in not needed.
      */
-    private void updateQsExpansionEnabled() {
+    public void updateQsExpansionEnabled() {
         final boolean expandEnabled = mDeviceProvisionedController.isDeviceProvisioned()
                 && (mUserSetup || mUserSwitcherController == null
                         || !mUserSwitcherController.isSimpleUserSwitcher())
