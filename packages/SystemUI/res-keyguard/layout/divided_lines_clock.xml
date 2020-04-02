@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.clock.ClockLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|top">
+    <FrameLayout
+         android:id="@+id/clock_view"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="120dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true">
+
+            <View
+                android:id="@+id/topLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_weight="1"
+                android:background="?attr/wallpaperTextColor" />
+
+            <TextClock
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:format12Hour="EEE, MMM d"
+                android:format24Hour="EEE, MMM d"
+                android:textColor="?attr/wallpaperTextColor"
+                android:theme="@style/TextAppearance.Keyguard"
+                android:fontFamily="@*android:string/config_bodyFontFamily"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                android:letterSpacing="0.25"
+                android:textAllCaps="true"
+                android:alpha="0.85"
+                android:paddingTop="15dp" />
+
+            <TextClock
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                style="@style/widget_big"
+                android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
+                android:letterSpacing="0.3"
+                android:textColor="?attr/wallpaperTextColor"
+                android:textSize="42sp" />
+
+            <View
+                android:id="@+id/bottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_weight="1"
+                android:background="?attr/wallpaperTextColor" />
+
+        </LinearLayout>
+    </FrameLayout>
+</com.android.keyguard.clock.ClockLayout>
