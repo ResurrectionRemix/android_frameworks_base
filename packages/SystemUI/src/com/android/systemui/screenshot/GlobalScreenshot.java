@@ -798,18 +798,43 @@ class GlobalScreenshot {
                 statusBarVisible, navBarVisible);
     }
 
+
     void takeScreenshot(Consumer<Uri> finisher, boolean statusBarVisible, boolean navBarVisible) {
         if (mScreenshotLayout.getParent() != null) {
             finisher.accept(null);
             return;
         }
 
-    void takeScreenshot(Runnable finisher, boolean statusBarVisible, boolean navBarVisible) {
-        mPartialShot = false;
         mDisplay.getRealMetrics(mDisplayMetrics);
         takeScreenshot(finisher, statusBarVisible, navBarVisible,
                 new Rect(0, 0, mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels));
     }
+    /**
+     * Takes a screenshot of the current display and shows an animation.
+     
+    private void takeScreenshot(Runnable finisher, boolean statusBarVisible, boolean navBarVisible,
+            Rect crop) {
+        int rot = mDisplay.getRotation();
+        int width = crop.width();
+        int height = crop.height();
+
+        // Take the screenshot
+        mScreenBitmap = SurfaceControl.screenshot(crop, width, height, rot);
+        if (mScreenBitmap == null) {
+            notifyScreenshotError(mContext, mNotificationManager,
+                    R.string.screenshot_failed_to_capture_text);
+            finisher.run();
+            return;
+        }
+
+        // Optimizations
+        mScreenBitmap.setHasAlpha(false);
+        mScreenBitmap.prepareToDraw();
+
+        // Start the post-screenshot animation
+        startAnimation(finisher, mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels,
+                statusBarVisible, navBarVisible);
+    } */
 
     void setBlockedGesturalNavigation(boolean blocked) {
         IStatusBarService service = IStatusBarService.Stub.asInterface(
@@ -843,50 +868,6 @@ class GlobalScreenshot {
                     mScreenshotLayout.post(() -> {
                         mCaptureButton.setVisibility(View.VISIBLE);
                     });
-        mPartialShotStarted = false;
-        mPartialShot = true;
-        ViewConfiguration vc = ViewConfiguration.get(mContext);
-        final int touchSlop = vc.getScaledTouchSlop();
-        mScreenshotSelectorView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ScreenshotSelectorView view = (ScreenshotSelectorView) v;
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mPartialShotStarted = true;
-                        mTouchDownX = event.getRawX();
-                        mTouchDownY = event.getRawY();
-                        view.startSelection((int) event.getX(), (int) event.getY());
-                        return true;
-                    case MotionEvent.ACTION_MOVE:
-                        view.updateSelection((int) event.getX(), (int) event.getY());
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        float x = event.getRawX();
-                        float y = event.getRawY();
-                        view.setVisibility(View.GONE);
-                        mWindowManager.removeView(mScreenshotLayout);
-                        if (Math.abs(mTouchDownX - x) > touchSlop ||
-                            Math.abs(mTouchDownY - y) > touchSlop) {
-                            final Rect rect = view.getSelectionRect();
-                            if (rect != null && !rect.isEmpty()) {
-                                // Need mScreenshotLayout to handle it after the view disappears
-                                mScreenshotLayout.post(new Runnable() {
-                                    public void run() {
-                                        takeScreenshot(finisher, statusBarVisible, navBarVisible,
-                                                rect);
-                                    }
-                                });
-                                view.stopSelection();
-                                return true;
-                            }
-                        }
-                        finisher.run();
-                        view.stopSelection();
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
-                        stopScreenshot();
-                        finisher.run();
                 }
             }
         });
