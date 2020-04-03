@@ -97,6 +97,77 @@ public class AdaptiveIcon extends LayerDrawable {
         mAdaptiveConstantState.mColor = color;
     }
 
+    /**
+     * Set background color for AICP theming.
+     * @hide
+     */
+    public void setBackgroundColorAicp(int color) {
+        // Keep mBackgroundColor for resetting
+        //mBackgroundColor = color;
+        Drawable bg = getDrawable(0);
+        // Remove background from non-AICP setBackgroundColor call
+        bg.clearColorFilter();
+        // Apply color
+        bg.setTint(color);
+        // Fix wellbeing-like icons
+        removeForegroundBackgroundAicp();
+    }
+
+    /**
+     * Set foreground color for AICP theming.
+     * @hide
+     */
+    public void setForegroundColorAicp(int color) {
+        Drawable fg = getDrawable(1);
+        // Workaround layer drawables containing background (looking at Digital Wellbeing)
+        if (fg instanceof LayerDrawable) {
+            LayerDrawable ld = (LayerDrawable) fg;
+            if (ld.getNumberOfLayers() == 2) {
+                fg = ld.getDrawable(1);
+            }
+        }
+        // Apply color
+        fg.setTint(color);
+    }
+
+    /**
+     * Try to remove background paths in the foreground drawable.
+     * Looking at you, Digital Wellbeing
+     * @hide
+     */
+    private void removeForegroundBackgroundAicp() {
+        Drawable fg = getDrawable(1);
+        if (fg instanceof LayerDrawable) {
+            LayerDrawable ld = (LayerDrawable) fg;
+            if (ld.getNumberOfLayers() == 2) {
+                ld.getDrawable(0).setTint(0);
+            }
+        }
+    }
+
+    /**
+     * Reset foreground and background color for AICP theming.
+     * @hide
+     */
+    public void resetColorsAicp() {
+        // Reset background color
+        Drawable bg = getDrawable(0);
+        bg.clearColorFilter();
+        bg.setTintList(null);
+        setBackgroundColor(mBackgroundColor);
+        // Reset foreground
+        Drawable fg = getDrawable(1);
+        if (fg instanceof LayerDrawable) {
+            LayerDrawable ld = (LayerDrawable) fg;
+            if (ld.getNumberOfLayers() == 2) {
+                fg = ld.getDrawable(1);
+                // Undo changes from removeForegroundBackgroundAicp
+                ld.getDrawable(0).setTintList(null);
+            }
+        }
+        fg.setTintList(null);
+    }
+
     @Override
     public ConstantState getConstantState() {
         return mAdaptiveConstantState;
