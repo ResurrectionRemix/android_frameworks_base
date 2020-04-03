@@ -1150,7 +1150,7 @@ public class NavigationBarView extends FrameLayout implements
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (NAVIGATION_BAR_MENU_ARROW_KEYS.equals(key)) {
-            mShowCursorKeys = TunerService.parseIntegerSwitch(newValue, false);
+            mShowCursorKeys = newValue != null && Integer.parseInt(newValue) != 0;
             setNavigationIconHints(mNavigationIconHints);
         }
     }
