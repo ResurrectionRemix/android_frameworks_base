@@ -96,7 +96,7 @@ import javax.inject.Named;
  */
 public class QuickStatusBarHeader extends RelativeLayout implements
         View.OnClickListener, NextAlarmController.NextAlarmChangeCallback,
-        ZenModeController.Callback {
+        ZenModeController.Callback, Tunable {
     private static final String TAG = "QuickStatusBarHeader";
     private static final boolean DEBUG = false;
 
@@ -491,8 +491,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         requestApplyInsets();
 
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, QSFooterImpl.QS_SHOW_DRAG_HANDLE,
-                                      StatusBarIconController.ICON_BLACKLIST);
+        tunerService.addTunable(this, StatusBarIconController.ICON_BLACKLIST);
     }
 
     @Override

@@ -35,6 +35,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.Display;
