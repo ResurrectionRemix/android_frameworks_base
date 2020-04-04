@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.aicp;
+package com.android.internal.util.rr;
 
 import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
 import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;

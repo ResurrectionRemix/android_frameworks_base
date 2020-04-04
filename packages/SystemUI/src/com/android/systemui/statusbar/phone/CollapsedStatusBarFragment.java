@@ -79,7 +79,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private CommandQueue mCommandQueue;
 
-    // AICP additions
+    // RR additions
     private View mBatteryBars[] = new View[2];
 
 
@@ -99,8 +99,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     };
 
     private final Handler mHandler = new Handler();
-    private class AicpSettingsObserver extends ContentObserver {
-        AicpSettingsObserver(Handler handler) {
+    private class RRSettingsObserver extends ContentObserver {
+        RRSettingsObserver(Handler handler) {
             super(handler);
         }
 
@@ -117,7 +117,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 
-    private AicpSettingsObserver mAicpSettingsObserver;
+    private RRSettingsObserver mRRSettingsObserver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,8 +158,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showClock(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
-        mAicpSettingsObserver = new AicpSettingsObserver(mHandler);
-        mAicpSettingsObserver.observe();
+        mRRSettingsObserver = new RRSettingsObserver(mHandler);
+        mRRSettingsObserver.observe();
     }
 
     @Override

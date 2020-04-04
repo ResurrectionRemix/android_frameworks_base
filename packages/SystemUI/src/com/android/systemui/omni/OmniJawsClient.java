@@ -86,10 +86,10 @@ public class OmniJawsClient {
     private static final String WEATHER_UPDATE = "org.omnirom.omnijaws.WEATHER_UPDATE";
     private static final String WEATHER_ERROR = "org.omnirom.omnijaws.WEATHER_ERROR";
 
-    private static final String AE_EXTRA_FRAGMENT_CLASS = "com.aicp.extras.extra.preference_fragment";
-    private static final String AE_SETTINGSACTIVITY = "com.aicp.extras.SettingsActivity";
-    private static final String SETTINGS_PACKAGE_NAME = "com.aicp.extras";
-    private static final String WEATHER_SETTINGS = "com.aicp.extras.fragments.Weather";
+    private static final String AE_EXTRA_FRAGMENT_CLASS = "com.android.settings.preference_fragment";
+    private static final String AE_SETTINGSACTIVITY = "com.android.settings.SettingsActivity";
+    private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
+    private static final String WEATHER_SETTINGS = "com.android.settings.fragments.Weather";
 
     private static final DecimalFormat sNoDigitsFormat = new DecimalFormat("0");
 

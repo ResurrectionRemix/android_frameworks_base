@@ -35,7 +35,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 import com.android.systemui.shared.plugins.PluginPrefs;
 
-import com.android.internal.util.aicp.DeviceUtils;
+import com.android.internal.util.rr.DeviceUtils;
 
 public class TunerFragment extends PreferenceFragment {
 

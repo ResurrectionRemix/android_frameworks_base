@@ -44,7 +44,7 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
-import com.aicp.gear.util.AicpUtils;
+import com.android.internal.util.rr.Utils;
 import com.android.systemui.statusbar.StatusBarIconView;
 
 import java.util.ArrayList;
