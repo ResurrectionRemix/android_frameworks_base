@@ -62,6 +62,59 @@
                 android:textColor="?android:attr/textColorSecondary"
                 android:text="@string/screenrecord_dialog_summary" />
 
+            <!-- Force low quality -->
+            <FrameLayout
+                android:id="@+id/video_bitrate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="?android:attr/dialogPreferredPadding"
+                android:paddingEnd="?android:attr/dialogPreferredPadding">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_video_bitrate_title" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_video_bitrate_summary" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/video_bitrate_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:src="@drawable/ic_screenrecord_low_quality" />
+
+                <Spinner
+                    android:id="@+id/spinner_video_bitrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:entries="@array/screen_video_quality_entries"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+            <!-- Audio Recording -->
             <FrameLayout
                 android:id="@+id/record_voice_over_layout"
                 android:layout_width="match_parent"
@@ -112,7 +165,7 @@
                     android:layout_gravity="top|end" />
 
             </FrameLayout>
-
+            <!-- Show taps in screen -->
             <FrameLayout
                 android:id="@+id/show_taps_layout"
                 android:layout_width="match_parent"
@@ -163,7 +216,7 @@
                     android:layout_gravity="top|end" />
 
             </FrameLayout>
-
+            <!-- Show dot for stop -->
             <FrameLayout
                 android:id="@+id/show_stop_dot_layout"
                 android:layout_width="match_parent"
@@ -209,57 +262,6 @@
 
                 <Switch
                     android:id="@+id/switch_stopdot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_gravity="top|end" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/low_quality_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="?android:attr/dialogPreferredPadding"
-                android:paddingEnd="?android:attr/dialogPreferredPadding">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="24dp">
-
-                    <TextView
-                        android:id="@android:id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:text="@string/screenrecord_low_quality_title" />
-
-                    <TextView
-                        android:id="@android:id/summary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@android:id/title"
-                        android:layout_alignStart="@android:id/title"
-                        android:layout_marginEnd="90dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:text="@string/screenrecord_low_quality_summary" />
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/low_quality_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|start"
-                    android:src="@drawable/ic_screenrecord_low_quality" />
-
-                <Switch
-                    android:id="@+id/switch_low_quality"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_gravity="top|end" />

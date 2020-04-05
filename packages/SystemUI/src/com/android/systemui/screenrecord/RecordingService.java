@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemProperties;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -77,7 +78,7 @@ public class RecordingService extends Service {
     private static final String EXTRA_USE_AUDIO = "extra_useAudio";
     private static final String EXTRA_SHOW_TAPS = "extra_showTaps";
     private static final String EXTRA_SHOW_DOT = "extra_showDot";
-    private static final String EXTRA_LOW_QUALITY = "extra_lowQuality";
+    private static final String EXTRA_VIDEO_BITRATE = "extra_videoBitrate";
     private static final int REQUEST_CODE = 2;
 
     private static final String ACTION_START = "com.android.systemui.screenrecord.START";
@@ -89,12 +90,10 @@ public class RecordingService extends Service {
     private static final String ACTION_DELETE = "com.android.systemui.screenrecord.DELETE";
 
     private static final int TOTAL_NUM_TRACKS = 1;
-    private static final int VIDEO_BIT_RATE = 6000000;
-    private static final int VIDEO_FRAME_RATE = 30;
     private static final int AUDIO_BIT_RATE = 16;
     private static final int AUDIO_SAMPLE_RATE = 44100;
-    private static final int LOW_VIDEO_FRAME_RATE = 25;
-    private static final int LOW_VIDEO_BIT_RATE = 1500000;
+
+    private static int VIDEO_BIT_RATE;
 
     private MediaProjectionManager mMediaProjectionManager;
     private MediaProjection mMediaProjection;
@@ -103,12 +102,13 @@ public class RecordingService extends Service {
     private MediaRecorder mMediaRecorder;
     private Notification.Builder mRecordingNotificationBuilder;
 
+    private boolean mIsLowRamEnabled;
     private boolean mUseAudio;
     private boolean mShowTaps;
     private boolean mShowDot;
     private boolean mIsDotAtRight;
     private boolean mDotShowing;
-    private boolean mLowQuality;
+    private int mVideoBitrateOpt;
     private FrameLayout mFrameLayout;
     private LayoutInflater mInflater;
     private WindowManager mWindowManager;
@@ -126,7 +126,7 @@ public class RecordingService extends Service {
      * @param showTaps   True to make touches visible while recording
      */
     public static Intent getStartIntent(Context context, int resultCode, Intent data,
-            boolean useAudio, boolean showTaps, boolean showDot, boolean lowQuality) {
+            boolean useAudio, boolean showTaps, boolean showDot, int vidBitrateOpt) {
         return new Intent(context, RecordingService.class)
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_RESULT_CODE, resultCode)
@@ -134,7 +134,7 @@ public class RecordingService extends Service {
                 .putExtra(EXTRA_USE_AUDIO, useAudio)
                 .putExtra(EXTRA_SHOW_TAPS, showTaps)
                 .putExtra(EXTRA_SHOW_DOT, showDot)
-                .putExtra(EXTRA_LOW_QUALITY, lowQuality);
+                .putExtra(EXTRA_VIDEO_BITRATE, vidBitrateOpt);
     }
 
     @Override
@@ -154,7 +154,30 @@ public class RecordingService extends Service {
                 mUseAudio = intent.getBooleanExtra(EXTRA_USE_AUDIO, false);
                 mShowTaps = intent.getBooleanExtra(EXTRA_SHOW_TAPS, false);
                 mShowDot = intent.getBooleanExtra(EXTRA_SHOW_DOT, false);
-                mLowQuality = intent.getBooleanExtra(EXTRA_LOW_QUALITY, false);
+                mVideoBitrateOpt = intent.getIntExtra(EXTRA_VIDEO_BITRATE, 2);
+                mIsLowRamEnabled = SystemProperties.get("ro.config.low_ram").equals("true");
+
+                switch (mVideoBitrateOpt) {
+                    case 1:
+                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 8388608 : 15728640;
+                        break;
+                    case 2:
+                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 6291456 : 10485760;
+                        break;
+                    case 3:
+                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 4194304 : 5242880;
+                        break;
+                    case 4:
+                        VIDEO_BIT_RATE = 1048576;
+                        break;
+                    case 0:
+                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 10485760 : 20971520;
+                        break;
+                    default:
+                        VIDEO_BIT_RATE = 6000000;
+                        break;
+                }
+
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
                     mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
@@ -283,8 +306,12 @@ public class RecordingService extends Service {
             int screenHeight = metrics.heightPixels;
             mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.HEVC);
             mMediaRecorder.setVideoSize(screenWidth, screenHeight);
-            mMediaRecorder.setVideoFrameRate(mLowQuality ? LOW_VIDEO_FRAME_RATE : VIDEO_FRAME_RATE);
-            mMediaRecorder.setVideoEncodingBitRate(mLowQuality ? LOW_VIDEO_BIT_RATE : VIDEO_BIT_RATE);
+            if (mVideoBitrateOpt > 2) {
+                mMediaRecorder.setVideoFrameRate(mIsLowRamEnabled ? 30 : 60);
+            } else {
+                mMediaRecorder.setVideoFrameRate(mIsLowRamEnabled ? 25 : 48);
+            }
+            mMediaRecorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
 
             // Set up audio
             if (mUseAudio) {

@@ -77,4 +77,22 @@
         <item>@drawable/fod_icon_invisible</item>
     </integer-array>
 
+
+    <!-- Video quality entries, Hardcoded because it's pointless to translate them --> 
+    <string-array name="screen_video_quality_entries" translatable="false"> 
+        <item>20Mbps</item> 
+        <item>15Mbps</item> 
+        <item>10Mbps</item> 
+        <item>5Mbps</item> 
+        <item>1Mbps</item> 
+    </string-array> 
+
+    <string-array name="screen_video_quality_go_entries" translatable="false"> 
+        <item>10Mbps</item> 
+        <item>8Mbps</item> 
+        <item>6Mbps</item> 
+        <item>4Mbps</item> 
+        <item>1Mbps</item> 
+    </string-array>
+
 </resources>

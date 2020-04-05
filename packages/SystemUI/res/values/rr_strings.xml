@@ -37,8 +37,7 @@
     <string name="screenrecord_taps_summary">Show visual feedback while recording</string>
     <string name="screenrecord_stopdot_title">Show stop dot</string>
     <string name="screenrecord_stopdot_summary">Show a red dot to stop recording with a single tap. Longpress it to move it to the opposite side.</string>
-    <string name="screenrecord_low_quality_title">Low quality</string>
-    <string name="screenrecord_low_quality_summary">Record in a lower quality to save space on your device</string>
+    <string name="screenrecord_video_bitrate_summary">Set the video bitrate for better video quality, at the cost of a bigger file.</string>
 
     <string name="global_action_restart_advanced">Advanced</string>
     <string name="global_action_restart_recovery">Recovery</string>

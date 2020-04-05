@@ -6481,6 +6481,12 @@ public final class Settings {
         public static final String DISPLAY_CUTOUT_MODE = "display_cutout_mode";
 
         /**
+         * Screenrecord: video bitrate
+         * @hide
+         */
+        public static final String SCREENRECORD_VIDEO_BITRATE = "screenrecord_video_bitrate";
+
+        /**
          * Control how to handle the display cutout
          * @hide
          */
