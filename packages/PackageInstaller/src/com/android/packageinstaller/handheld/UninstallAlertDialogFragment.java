@@ -77,7 +77,7 @@ public class UninstallAlertDialogFragment extends DialogFragment implements
             try {
                 stats = storageStatsManager.queryStatsForPackage(convert(volumes.get(i).getUuid()),
                         pkg, user);
-            } catch (PackageManager.NameNotFoundException | IOException e) {
+            } catch (PackageManager.NameNotFoundException | IOException | IllegalArgumentException e) {
                 Log.e(LOG_TAG, "Cannot determine amount of app data for " + pkg + " on "
                         + volumes.get(i) + " (user " + user + ")", e);
                 continue;
