@@ -32,6 +32,14 @@ import android.graphics.drawable.Icon;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.media.AudioAttributes;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaCodec;
+import android.media.MediaCodecInfo;
+import android.media.MediaFormat;
+import android.media.MediaMuxer;
+import android.media.AudioPlaybackCaptureConfiguration;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
@@ -48,9 +56,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.util.Size;
 import android.view.Surface;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -61,6 +69,7 @@ import com.android.systemui.R;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,7 +84,7 @@ public class RecordingService extends Service {
     private static final String EXTRA_RESULT_CODE = "extra_resultCode";
     private static final String EXTRA_DATA = "extra_data";
     private static final String EXTRA_PATH = "extra_path";
-    private static final String EXTRA_USE_AUDIO = "extra_useAudio";
+    private static final String EXTRA_AUDIO_SOURCE = "extra_audioSource";
     private static final String EXTRA_SHOW_TAPS = "extra_showTaps";
     private static final String EXTRA_SHOW_DOT = "extra_showDot";
     private static final String EXTRA_VIDEO_BITRATE = "extra_videoBitrate";
@@ -89,10 +98,12 @@ public class RecordingService extends Service {
     private static final String ACTION_SHARE = "com.android.systemui.screenrecord.SHARE";
     private static final String ACTION_DELETE = "com.android.systemui.screenrecord.DELETE";
 
-    private static final int TOTAL_NUM_TRACKS = 1;
-    private static final int AUDIO_BIT_RATE = 16;
+    private static final int AUDIO_BIT_RATE = 128000;
+    private static final int SAMPLES_PER_FRAME = 1024;
     private static final int AUDIO_SAMPLE_RATE = 44100;
-
+    private static int TOTAL_NUM_TRACKS = 1;
+    private static int AUDIO_CHANNEL_TYPE = AudioFormat.CHANNEL_IN_MONO;
+    private static int VIDEO_FRAME_RATE;
     private static int VIDEO_BIT_RATE;
 
     private MediaProjectionManager mMediaProjectionManager;
@@ -100,15 +111,32 @@ public class RecordingService extends Service {
     private Surface mInputSurface;
     private VirtualDisplay mVirtualDisplay;
     private MediaRecorder mMediaRecorder;
+    private MediaMuxer mMuxer;
+    private MediaCodec mVideoEncoder;
+    private MediaCodec mAudioEncoder;
+    private MediaCodec.BufferInfo mVideoBufferInfo;
+    private int mAudioBufferBytes;
+    private AudioRecord mInternalAudio;
+    private boolean mMuxerStarted = false;
+    private boolean mPausedRecording = false;
+    private boolean mAudioRecording;
+    private boolean mAudioEncoding;
+    private boolean mVideoEncoding;
+    private int videoTrackIndex = -1;
+    private int audioTrackIndex = -1;
+    private final Object mMuxerLock = new Object();
+    private final Object mAudioEncoderLock = new Object();
+    private final Object mWriteVideoLock = new Object();
+    private final Object mWriteAudioLock = new Object();
     private Notification.Builder mRecordingNotificationBuilder;
 
     private boolean mIsLowRamEnabled;
-    private boolean mUseAudio;
     private boolean mShowTaps;
     private boolean mShowDot;
     private boolean mIsDotAtRight;
     private boolean mDotShowing;
     private int mVideoBitrateOpt;
+    private int mAudioSourceOpt;
     private FrameLayout mFrameLayout;
     private LayoutInflater mInflater;
     private WindowManager mWindowManager;
@@ -126,12 +154,12 @@ public class RecordingService extends Service {
      * @param showTaps   True to make touches visible while recording
      */
     public static Intent getStartIntent(Context context, int resultCode, Intent data,
-            boolean useAudio, boolean showTaps, boolean showDot, int vidBitrateOpt) {
+            int audioSourceOpt, boolean showTaps, boolean showDot, int vidBitrateOpt) {
         return new Intent(context, RecordingService.class)
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_RESULT_CODE, resultCode)
                 .putExtra(EXTRA_DATA, data)
-                .putExtra(EXTRA_USE_AUDIO, useAudio)
+                .putExtra(EXTRA_AUDIO_SOURCE, audioSourceOpt)
                 .putExtra(EXTRA_SHOW_TAPS, showTaps)
                 .putExtra(EXTRA_SHOW_DOT, showDot)
                 .putExtra(EXTRA_VIDEO_BITRATE, vidBitrateOpt);
@@ -151,32 +179,10 @@ public class RecordingService extends Service {
         switch (action) {
             case ACTION_START:
                 int resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, Activity.RESULT_CANCELED);
-                mUseAudio = intent.getBooleanExtra(EXTRA_USE_AUDIO, false);
+                mAudioSourceOpt = intent.getIntExtra(EXTRA_AUDIO_SOURCE, 0 /* disabled*/);
                 mShowTaps = intent.getBooleanExtra(EXTRA_SHOW_TAPS, false);
                 mShowDot = intent.getBooleanExtra(EXTRA_SHOW_DOT, false);
                 mVideoBitrateOpt = intent.getIntExtra(EXTRA_VIDEO_BITRATE, 2);
-                mIsLowRamEnabled = SystemProperties.get("ro.config.low_ram").equals("true");
-
-                switch (mVideoBitrateOpt) {
-                    case 1:
-                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 8388608 : 15728640;
-                        break;
-                    case 2:
-                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 6291456 : 10485760;
-                        break;
-                    case 3:
-                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 4194304 : 5242880;
-                        break;
-                    case 4:
-                        VIDEO_BIT_RATE = 1048576;
-                        break;
-                    case 0:
-                        VIDEO_BIT_RATE = mIsLowRamEnabled ? 10485760 : 20971520;
-                        break;
-                    default:
-                        VIDEO_BIT_RATE = 6000000;
-                        break;
-                }
 
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
@@ -211,12 +217,20 @@ public class RecordingService extends Service {
                 break;
 
             case ACTION_PAUSE:
-                mMediaRecorder.pause();
+                if (mAudioSourceOpt != 1) {
+                    mMediaRecorder.pause();
+                } else {
+                    mPausedRecording = true;
+                }
                 setNotificationActions(true, notificationManager);
                 break;
 
             case ACTION_RESUME:
-                mMediaRecorder.resume();
+                if (mAudioSourceOpt != 1) {
+                    mMediaRecorder.resume();
+                } else {
+                    mPausedRecording = false;
+                }
                 setNotificationActions(false, notificationManager);
                 break;
 
@@ -286,46 +300,126 @@ public class RecordingService extends Service {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // Set initial resources
+            DisplayMetrics metrics = new DisplayMetrics();
+            mWindowManager.getDefaultDisplay().getRealMetrics(metrics);
+            int screenWidth = metrics.widthPixels;
+            int screenHeight = metrics.heightPixels;
+            mIsLowRamEnabled = SystemProperties.get("ro.config.low_ram").equals("true");
+
+            switch (mVideoBitrateOpt) {
+                case 1:
+                    VIDEO_BIT_RATE = mIsLowRamEnabled ? 8388608 : 15728640;
+                    break;
+                case 2:
+                    VIDEO_BIT_RATE = mIsLowRamEnabled ? 6291456 : 10485760;
+                    break;
+                case 3:
+                    VIDEO_BIT_RATE = mIsLowRamEnabled ? 4194304 : 5242880;
+                    break;
+                case 4:
+                    VIDEO_BIT_RATE = 1048576;
+                    break;
+                case 0:
+                    VIDEO_BIT_RATE = mIsLowRamEnabled ? 10485760 : 20971520;
+                    break;
+                default:
+                    VIDEO_BIT_RATE = 6000000;
+                    break;
+            }
+
+            if (mVideoBitrateOpt > 2) {
+                VIDEO_FRAME_RATE = mIsLowRamEnabled ? 30 : 60;
+                if (!mIsLowRamEnabled) {
+                    TOTAL_NUM_TRACKS = 2;
+                    AUDIO_CHANNEL_TYPE = AudioFormat.CHANNEL_IN_STEREO;
+                }
+            } else {
+                VIDEO_FRAME_RATE = mIsLowRamEnabled ? 25 : 48;
+                if (!mIsLowRamEnabled) {
+                    TOTAL_NUM_TRACKS = 1;
+                    AUDIO_CHANNEL_TYPE = AudioFormat.CHANNEL_IN_MONO;
+                }
+            }
+
             setTapsVisible(mShowTaps);
             if (mShowDot) {
                 showDot();
             }
 
-            // Set up media recorder
-            mMediaRecorder = new MediaRecorder();
-            if (mUseAudio) {
-                mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            }
-            mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
-            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            // Reving up those recorders
+            switch (mAudioSourceOpt) {
+                case 1:
+                    mVideoBufferInfo = new MediaCodec.BufferInfo();
+                    mAudioBufferBytes =  AudioRecord.getMinBufferSize(
+                        AUDIO_SAMPLE_RATE,
+                        AUDIO_CHANNEL_TYPE,
+                        AudioFormat.ENCODING_PCM_16BIT);
+                    // Preparing video encoder
+                    MediaFormat videoFormat = MediaFormat.createVideoFormat(mIsLowRamEnabled ? "video/avc" : "video/hevc", screenWidth, screenHeight);
+                    videoFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,
+                        MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+                    videoFormat.setInteger(MediaFormat.KEY_BIT_RATE, VIDEO_BIT_RATE);
+                    videoFormat.setInteger(MediaFormat.KEY_FRAME_RATE, VIDEO_FRAME_RATE);
+                    videoFormat.setInteger(MediaFormat.KEY_CAPTURE_RATE, VIDEO_FRAME_RATE);
+                    videoFormat.setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / VIDEO_FRAME_RATE);
+                    videoFormat.setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1);
+                    videoFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+                    mVideoEncoder = MediaCodec.createEncoderByType(mIsLowRamEnabled ? "video/avc" : "video/hevc");
+                    mVideoEncoder.configure(videoFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+                    // Preparing audio encoder
+                    MediaFormat mAudioFormat = MediaFormat.createAudioFormat("audio/mp4a-latm", AUDIO_SAMPLE_RATE, TOTAL_NUM_TRACKS);
+                    mAudioFormat.setInteger(MediaFormat.KEY_AAC_PROFILE, MediaCodecInfo.CodecProfileLevel.AACObjectLC);
+                    mAudioFormat.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 16384);
+                    mAudioFormat.setInteger(MediaFormat.KEY_BIT_RATE, AUDIO_BIT_RATE);
+                    mAudioEncoder = MediaCodec.createEncoderByType("audio/mp4a-latm");
+                    mAudioEncoder.configure(mAudioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+                    int bufferSize = SAMPLES_PER_FRAME * VIDEO_FRAME_RATE;
+                    if (bufferSize < mAudioBufferBytes)
+                        bufferSize = ((mAudioBufferBytes / SAMPLES_PER_FRAME) + 1) * SAMPLES_PER_FRAME * 2;
+                    mMuxer = new MediaMuxer(mTempFile.getAbsolutePath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+                    // Preparing internal recorder
+                    AudioPlaybackCaptureConfiguration internalAudioConfig = 
+                    new AudioPlaybackCaptureConfiguration.Builder(mMediaProjection)
+                        .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
+                        .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
+                        .addMatchingUsage(AudioAttributes.USAGE_GAME)
+                        .build();
+                    mInternalAudio = new AudioRecord.Builder()
+                        .setAudioFormat(
+                            new AudioFormat.Builder()
+                                .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                                .setSampleRate(AUDIO_SAMPLE_RATE)
+                                .setChannelMask(AUDIO_CHANNEL_TYPE)
+                                .build())
+                        .setAudioPlaybackCaptureConfig(internalAudioConfig)
+                        .build();
+                    mInputSurface = mVideoEncoder.createInputSurface();
+                    break;
 
-            // Set up video
-            DisplayMetrics metrics = new DisplayMetrics();
-            mWindowManager.getDefaultDisplay().getRealMetrics(metrics);
-            int screenWidth = metrics.widthPixels;
-            int screenHeight = metrics.heightPixels;
-            mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.HEVC);
-            mMediaRecorder.setVideoSize(screenWidth, screenHeight);
-            if (mVideoBitrateOpt > 2) {
-                mMediaRecorder.setVideoFrameRate(mIsLowRamEnabled ? 30 : 60);
-            } else {
-                mMediaRecorder.setVideoFrameRate(mIsLowRamEnabled ? 25 : 48);
+                default:
+                    mMediaRecorder = new MediaRecorder();
+                    if (mAudioSourceOpt == 2) mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+                    mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    mMediaRecorder.setVideoEncoder(mIsLowRamEnabled ? MediaRecorder.VideoEncoder.H264 : MediaRecorder.VideoEncoder.HEVC);
+                    mMediaRecorder.setVideoSize(screenWidth, screenHeight);
+                    mMediaRecorder.setVideoFrameRate(VIDEO_FRAME_RATE);
+                    mMediaRecorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
+                    if (mAudioSourceOpt == 2) {
+                        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                        mMediaRecorder.setAudioChannels(TOTAL_NUM_TRACKS);
+                        mMediaRecorder.setAudioEncodingBitRate(AUDIO_BIT_RATE);
+                        mMediaRecorder.setAudioSamplingRate(AUDIO_SAMPLE_RATE);
+                    }
+                    mMediaRecorder.setOutputFile(mTempFile);
+                    mMediaRecorder.prepare();
+                    mInputSurface = mMediaRecorder.getSurface();
+                    break;
             }
-            mMediaRecorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
-
-            // Set up audio
-            if (mUseAudio) {
-                mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                mMediaRecorder.setAudioChannels(TOTAL_NUM_TRACKS);
-                mMediaRecorder.setAudioEncodingBitRate(AUDIO_BIT_RATE);
-                mMediaRecorder.setAudioSamplingRate(AUDIO_SAMPLE_RATE);
-            }
-
-            mMediaRecorder.setOutputFile(mTempFile);
-            mMediaRecorder.prepare();
 
             // Create surface
-            mInputSurface = mMediaRecorder.getSurface();
             mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                     "Recording Display",
                     screenWidth,
@@ -336,7 +430,25 @@ public class RecordingService extends Service {
                     null,
                     null);
 
-            mMediaRecorder.start();
+            // Let's get ready to record now
+            switch (mAudioSourceOpt) {
+                case 1:
+                    // Start the encoders
+                    mVideoEncoder.start();
+                    new Thread(new VideoEncoderTask(), "VideoEncoderTask").start();
+                    mAudioEncoder.start();
+                    new Thread(new AudioEncoderTask(), "AudioEncoderTask").start();
+                    mInternalAudio.startRecording();
+                    mAudioRecording = true;
+                    new Thread(new AudioRecorderTask(), "AudioRecorderTask").start();
+                    break;
+
+                default:
+                    mMediaRecorder.start();
+                    break;
+            }
+
+            ///mMediaRecorder.start();
         } catch (IOException e) {
             Log.e(TAG, "Error starting screen recording: " + e.getMessage());
             e.printStackTrace();
@@ -457,19 +569,29 @@ public class RecordingService extends Service {
             stopDot();
         }
         try {
-            mMediaRecorder.stop();
-            mMediaRecorder.release();
-            mMediaRecorder = null;
-            mMediaProjection.stop();
-            mMediaProjection = null;
-            mInputSurface.release();
-            mVirtualDisplay.release();
+            switch (mAudioSourceOpt) {
+                case 1:
+                    mAudioRecording = false;
+                    mAudioEncoding = false;
+                    mVideoEncoding = false;
+                    break;
+
+                default:
+                    mMediaRecorder.stop();
+                    mMediaRecorder.release();
+                    mMediaRecorder = null;
+                    mMediaProjection.stop();
+                    mMediaProjection = null;
+                    mInputSurface.release();
+                    mVirtualDisplay.release();
+                    break;
+            }
         } catch (Exception e) {}
         stopSelf();
     }
 
     private void saveRecording(NotificationManager notificationManager) {
-        String fileName = new SimpleDateFormat("'screenrecord-'yyyyMMdd-HHmmss'.mp4'")
+        String fileName = new SimpleDateFormat("'ScreenRecord-'yyyyMMdd-HHmmss'.mp4'")
                 .format(new Date());
 
         ContentValues values = new ContentValues();
@@ -599,6 +721,235 @@ public class RecordingService extends Service {
     private static Intent getDeleteIntent(Context context, String path) {
         return new Intent(context, RecordingService.class).setAction(ACTION_DELETE)
                 .putExtra(EXTRA_PATH, path);
+    }
+
+    private class AudioRecorderTask implements Runnable {
+        ByteBuffer inputBuffer;
+        int readResult;
+
+        @Override
+        public void run() {
+            long audioPresentationTimeNs;
+            byte[] mTempBuffer = new byte[SAMPLES_PER_FRAME];
+            while (mAudioRecording) {
+                if (!mPausedRecording) {
+                    audioPresentationTimeNs = System.nanoTime();
+                    readResult = mInternalAudio.read(mTempBuffer, 0, SAMPLES_PER_FRAME);
+                    if(readResult == AudioRecord.ERROR_BAD_VALUE || readResult == AudioRecord.ERROR_INVALID_OPERATION) {
+                        continue;
+                    }
+                    // send current frame data to encoder
+                    try {
+                        synchronized (mAudioEncoderLock) {
+                            if (mAudioEncoding) {
+                                int inputBufferIndex = mAudioEncoder.dequeueInputBuffer(-1);
+                                if (inputBufferIndex >= 0) {
+                                    inputBuffer = mAudioEncoder.getInputBuffer(inputBufferIndex);
+                                    inputBuffer.clear();
+                                    inputBuffer.put(mTempBuffer);
+
+                                    mAudioEncoder.queueInputBuffer(inputBufferIndex, 0, mTempBuffer.length, audioPresentationTimeNs / 1000, 0);
+                                }
+                            }
+                        }
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+            }
+            // finished recording -> send it to the encoder
+            audioPresentationTimeNs = System.nanoTime();
+            readResult = mInternalAudio.read(mTempBuffer, 0, SAMPLES_PER_FRAME);
+            if (readResult == AudioRecord.ERROR_BAD_VALUE
+                || readResult == AudioRecord.ERROR_INVALID_OPERATION)
+            // send current frame data to encoder
+            try {
+                synchronized (mAudioEncoderLock) {
+                    if (mAudioEncoding) {
+                        int inputBufferIndex = mAudioEncoder.dequeueInputBuffer(-1);
+                        if (inputBufferIndex >= 0) {
+                            inputBuffer = mAudioEncoder.getInputBuffer(inputBufferIndex);
+                            inputBuffer.clear();
+                            inputBuffer.put(mTempBuffer);
+                            mAudioEncoder.queueInputBuffer(inputBufferIndex, 0, mTempBuffer.length, audioPresentationTimeNs / 1000, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
+                        }
+                    }
+                }
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            mInternalAudio.stop();
+            mInternalAudio.release();
+            mInternalAudio = null;
+        }
+    }
+
+    // Encoders tasks to do both screen capture and audio recording
+    private class VideoEncoderTask implements Runnable {
+        private MediaCodec.BufferInfo videoBufferInfo;
+
+        @Override
+        public void run(){
+            mVideoEncoding = true;
+            videoTrackIndex = -1;
+            videoBufferInfo = new MediaCodec.BufferInfo();
+            while(mVideoEncoding){
+                if (!mPausedRecording) {
+                    int bufferIndex = mVideoEncoder.dequeueOutputBuffer(videoBufferInfo, 10);
+                    if (bufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
+                        // nothing available yet
+                    } else if (bufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                        // should happen before receiving buffers, and should only happen once
+                        if (videoTrackIndex >= 0) {
+                            throw new RuntimeException("format changed twice");
+                        }
+                        synchronized (mMuxerLock) {
+                            videoTrackIndex = mMuxer.addTrack(mVideoEncoder.getOutputFormat());
+
+                            if (!mMuxerStarted && videoTrackIndex >= 0 && audioTrackIndex >= 0) {
+                                mMuxer.start();
+                                mMuxerStarted = true;
+                            }
+                        }
+                    } else if (bufferIndex < 0) {
+                        // not sure what's going on, ignore it
+                    } else {
+                        ByteBuffer videoData = mVideoEncoder.getOutputBuffer(bufferIndex);
+                        if (videoData == null) {
+                            throw new RuntimeException("couldn't fetch buffer at index " + bufferIndex);
+                        }
+                        if ((videoBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                            videoBufferInfo.size = 0;
+                        }
+                        if (videoBufferInfo.size != 0) {
+                            if (mMuxerStarted) {
+                                videoData.position(videoBufferInfo.offset);
+                                videoData.limit(videoBufferInfo.offset + videoBufferInfo.size);
+                                synchronized (mWriteVideoLock) {
+                                    if (mMuxerStarted) {
+                                        mMuxer.writeSampleData(videoTrackIndex, videoData, videoBufferInfo);
+                                    }
+                                }
+                            } else {
+                                // muxer not started
+                            }
+                        }
+                        mVideoEncoder.releaseOutputBuffer(bufferIndex, false);
+                        if ((videoBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                            mVideoEncoding = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            mVideoEncoder.stop();
+            mVideoEncoder.release();
+            mVideoEncoder = null;
+
+            if (mInputSurface != null) {
+                mInputSurface.release();
+                mInputSurface = null;
+            }
+            if (mMediaProjection != null) {
+                mMediaProjection.stop();
+                mMediaProjection = null;
+            }
+            synchronized (mWriteAudioLock) {
+                synchronized (mMuxerLock) {
+                    if (mMuxer != null) {
+                        if (mMuxerStarted) {
+                            mMuxer.stop();
+                        }
+                        mMuxer.release();
+                        mMuxer = null;
+                        mMuxerStarted = false;
+                    }
+                }
+            }
+        }
+    }
+
+    private class AudioEncoderTask implements Runnable {
+        private MediaCodec.BufferInfo audioBufferInfo;
+
+        @Override
+        public void run(){
+            mAudioEncoding = true;
+            audioTrackIndex = -1;
+            audioBufferInfo = new MediaCodec.BufferInfo();
+            while(mAudioEncoding){
+                if (!mPausedRecording) {
+                    int bufferIndex = mAudioEncoder.dequeueOutputBuffer(audioBufferInfo, 10);
+                    if (bufferIndex == MediaCodec.INFO_TRY_AGAIN_LATER) {
+                        // no output available yet
+                    } else if (bufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                        // should happen before receiving buffers, and should only happen once
+                        if (audioTrackIndex >= 0) {
+                            throw new RuntimeException("format changed twice");
+                        }
+                        synchronized (mMuxerLock) {
+                            audioTrackIndex = mMuxer.addTrack(mAudioEncoder.getOutputFormat());
+
+                            if (!mMuxerStarted && videoTrackIndex >= 0 && audioTrackIndex >= 0) {
+                                mMuxer.start();
+                                mMuxerStarted = true;
+                            }
+                        }
+                    } else if (bufferIndex < 0) {
+                        // let's ignore it
+                    } else {
+                        if (mMuxerStarted && audioTrackIndex >= 0) {
+                            ByteBuffer encodedData = mAudioEncoder.getOutputBuffer(bufferIndex);
+                            if (encodedData == null) {
+                                throw new RuntimeException("encoderOutputBuffer " + bufferIndex + " was null");
+                            }
+                            if ((audioBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                                // The codec config data was pulled out and fed to the muxer when we got
+                                // the INFO_OUTPUT_FORMAT_CHANGED status. Ignore it.
+                                audioBufferInfo.size = 0;
+                            }
+                            if (audioBufferInfo.size != 0) {
+                                if (mMuxerStarted) {
+                                    // adjust the ByteBuffer values to match BufferInfo (not needed?)
+                                    encodedData.position(audioBufferInfo.offset);
+                                    encodedData.limit(audioBufferInfo.offset + audioBufferInfo.size);
+                                    synchronized (mWriteAudioLock) {
+                                        if (mMuxerStarted) {
+                                            mMuxer.writeSampleData(audioTrackIndex, encodedData, audioBufferInfo);
+                                        }
+                                    }
+                                }
+                            }
+                            mAudioEncoder.releaseOutputBuffer(bufferIndex, false);
+                            if ((audioBufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                                // reached EOS
+                                mAudioEncoding = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            synchronized (mAudioEncoderLock) {
+                mAudioEncoder.stop();
+                mAudioEncoder.release();
+                mAudioEncoder = null;
+            }
+
+            synchronized (mWriteVideoLock) {
+                synchronized (mMuxerLock) {
+                    if (mMuxer != null) {
+                        if (mMuxerStarted) {
+                            mMuxer.stop();
+                        }
+                        mMuxer.release();
+                        mMuxer = null;
+                        mMuxerStarted = false;
+                    }
+                }
+            }
+        }
     }
 }
 

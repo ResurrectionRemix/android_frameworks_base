@@ -116,7 +116,7 @@
             </FrameLayout>
             <!-- Audio Recording -->
             <FrameLayout
-                android:id="@+id/record_voice_over_layout"
+                android:id="@+id/audio_source_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="?android:attr/dialogPreferredPadding"
@@ -158,8 +158,8 @@
                     android:layout_gravity="center|start"
                     android:src="@drawable/ic_screenrecord_audio" />
 
-                <Switch
-                    android:id="@+id/switch_mic"
+                <Spinner
+                    android:id="@+id/spinner_audio_source"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_gravity="top|end" />
