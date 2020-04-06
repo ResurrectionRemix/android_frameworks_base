@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.clock.ClockLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|top">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:gravity="center">
+
+        <TextClock
+            android:id="@+id/clockHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="4dp"
+            android:format12Hour="hh"
+            android:format24Hour="kk"
+            style="@style/widget_big"
+            android:textColor="?attr/wallpaperTextColor"
+            android:textSize="88sp" />
+
+        <TextClock
+            android:id="@+id/clockMinute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="4dp"
+            android:format12Hour="mm"
+            android:format24Hour="mm"
+            style="@style/widget_big"
+            android:textColor="?attr/wallpaperTextColor"
+            android:textSize="48sp" />
+
+    </LinearLayout>
+</com.android.keyguard.clock.ClockLayout>
