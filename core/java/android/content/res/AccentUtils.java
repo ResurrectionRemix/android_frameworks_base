@@ -18,6 +18,7 @@ public class AccentUtils {
                 || resName.contains("accent_device_default_dark")
                 || resName.contains("material_pixel_blue_dark")
                 || resName.contains("material_pixel_blue_bright")
+                || resName.contains("colorAccent")
                 || resName.contains("omni_color5")
                 || resName.contains("omni_color4")
                 || resName.contains("dialer_theme_color")
