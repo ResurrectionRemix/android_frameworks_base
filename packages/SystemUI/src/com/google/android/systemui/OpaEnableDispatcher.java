@@ -19,7 +19,7 @@ public class OpaEnableDispatcher {
 
     private void dispatchUnchecked(boolean z) {
         StatusBar statusBar = (StatusBar) ((SystemUIApplication) mContext.getApplicationContext()).getComponent(StatusBar.class);
-        if (statusBar != null) {
+        if (statusBar != null && statusBar.getNavigationBarView() != null) {
             ArrayList<View> views = statusBar.getNavigationBarView().getHomeButton().getViews();
             for (int i = 0; i < views.size(); i++) {
                 ((OpaLayout) views.get(i)).setOpaEnabled(z);
