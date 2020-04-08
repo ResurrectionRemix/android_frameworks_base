@@ -787,17 +787,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean showBeforeProvisioning() {
             return false;
         }
-
-        @Override
-        public boolean onLongPress() {
-            //if (FeatureFlagUtils.isEnabled(mContext, FeatureFlagUtils.SCREENRECORD_LONG_PRESS)) {
-                mDialog.dismiss();
-                mScreenRecordHelper.launchRecordPrompt();
-            /*} else {
-                onPress();
-            }*/
-            return true;
-        }
     }
 
     private Action getOnTheGoAction() {
@@ -827,6 +816,17 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             @Override
             public void onPress() {
                 TakeScreenRecord();
+            }
+
+            @Override
+            public boolean onLongPress() {
+            //if (FeatureFlagUtils.isEnabled(mContext, FeatureFlagUtils.SCREENRECORD_LONG_PRESS)) {
+                mDialog.dismiss();
+                mScreenRecordHelper.launchRecordPrompt();
+               /*} else {
+                onPress();
+               }*/
+               return true;
             }
 
             @Override
