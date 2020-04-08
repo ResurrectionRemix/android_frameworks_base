@@ -439,6 +439,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
+    private CollapsedStatusBarFragment mCollapsedStatusBarFragment;
 
     KeyguardIndicationController mKeyguardIndicationController;
 
@@ -943,6 +944,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 .addTagListener(CollapsedStatusBarFragment.TAG, (tag, fragment) -> {
                     CollapsedStatusBarFragment statusBarFragment =
                             (CollapsedStatusBarFragment) fragment;
+                    mCollapsedStatusBarFragment = (CollapsedStatusBarFragment) statusBarFragment;
                     statusBarFragment.initNotificationIconArea(mNotificationIconAreaController);
                     PhoneStatusBarView oldStatusBarView = mStatusBarView;
                     mStatusBarView = (PhoneStatusBarView) fragment.getView();
@@ -2014,6 +2016,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
 
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
         public void update() {
             setFpToDismissNotifications();
             setPulseOnNewTracks();
@@ -2025,6 +2033,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             setGamingModeActive();
             setGamingModeHeadsupToggle();
+            if (mCollapsedStatusBarFragment != null) {
+                mCollapsedStatusBarFragment.updateSettings(false);
+            }
         }
     }
 

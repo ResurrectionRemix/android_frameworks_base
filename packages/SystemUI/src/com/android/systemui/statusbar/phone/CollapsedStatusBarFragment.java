@@ -99,27 +99,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     };
 
-    private final Handler mHandler = new Handler();
-    private class RRSettingsObserver extends ContentObserver {
-        RRSettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = getContext().getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                          Settings.System.STATUS_BAR_SHOW_CARRIER),
-                          false, this, UserHandle.USER_ALL);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings(true);
-        }
-    }
-
-    private RRSettingsObserver mRRSettingsObserver;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,8 +138,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
-        mRRSettingsObserver = new RRSettingsObserver(mHandler);
-        mRRSettingsObserver.observe();
+        updateSettings(false);
     }
 
     @Override

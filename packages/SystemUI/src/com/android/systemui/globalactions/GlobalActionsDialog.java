@@ -530,7 +530,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_SCREENRECORD.equals(actionKey)) {
                 if (Settings.System.getIntForUser(mContext.getContentResolver(),
                         Settings.System.GLOBAL_ACTIONS_SCREENRECORD, 0, getCurrentUser().id) == 1) {
-                    mItems.add(getScreenRecordAction());
+                    mItems.add(new ScreenRecordAction());
                 }
             } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
                 if (!mEmergencyAffordanceManager.needsEmergencyAffordance()) {
@@ -783,6 +783,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             return true;
         }
 
+            @Override
+            public boolean onLongPress() {
+            return false;
+        }
+
         @Override
         public boolean showBeforeProvisioning() {
             return false;
@@ -810,9 +815,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         };
     }
 
-    private Action getScreenRecordAction() {
-        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_screenrecord,
-                com.android.systemui.R.string.global_action_screenrecord) {
+ private class ScreenRecordAction extends SinglePressAction implements LongPressAction {
+    public ScreenRecordAction() {
+        super(com.android.internal.R.drawable.ic_lock_screenrecord,
+                com.android.systemui.R.string.global_action_screenrecord);
+        }
             @Override
             public void onPress() {
                 TakeScreenRecord();
@@ -838,7 +845,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             public boolean showBeforeProvisioning() {
                 return true;
             }
-        };
     }
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {
