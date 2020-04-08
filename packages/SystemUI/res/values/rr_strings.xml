@@ -150,4 +150,7 @@
     <string name="tuner_show_drag_handle">Show drag handle</string>
     <string name="tuner_qs_long_press_action">Dont show panels on long press</string>
 
+    <!-- Alerting notification header label -->
+    <string name="notification_section_header_alerting">Alerting notifications</string>
+
 </resources>
