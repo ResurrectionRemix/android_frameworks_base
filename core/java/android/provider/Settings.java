@@ -5889,6 +5889,25 @@ public final class Settings {
         public static final String NOTIFICATION_HEADERS = "notification_headers";
 
         private static final Validator NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
+        /**
+         * Adaptive playback
+         * Automatically pause media when the volume is muted and
+         * will resume automatically when volume is restored.
+         *   0 = disabled
+         *   1 = enabled
+         * @hide
+         */
+        public static final String ADAPTIVE_PLAYBACK_ENABLED = "adaptive_playback_enabled";
+        /** @hide */
+        private static final Validator ADAPTIVE_PLAYBACK_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Adaptive playback's timeout in ms
+         * @hide
+         */
+        public static final String ADAPTIVE_PLAYBACK_TIMEOUT = "adaptive_playback_timeout";
+
 
         /**
          * Switch between different dark styles
@@ -6068,7 +6087,7 @@ public final class Settings {
             BACK_GESTURE_BLOCK_IME,
             NAVIGATION_HANDLE_WIDTH,
             NOTIFICATION_HEADERS,
-            // AICP Settings end
+            ADAPTIVE_PLAYBACK_ENABLED,
         };
 
         /**
@@ -6292,6 +6311,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_BLOCK_IME);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
+            PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
         }
 
         /**
@@ -6505,6 +6525,7 @@ public final class Settings {
             VALIDATORS.put(BACK_GESTURE_BLOCK_IME, BACK_GESTURE_BLOCK_IME_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
+            VALIDATORS.put(ADAPTIVE_PLAYBACK_ENABLED, ADAPTIVE_PLAYBACK_ENABLED_VALIDATOR);
         }
 
         /**
