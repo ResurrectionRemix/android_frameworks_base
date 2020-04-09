@@ -319,7 +319,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mIsCircleShowing = true;
 
         setKeepScreenOn(true);
-
+        setFODIcon();
         setDim(true);
         updateAlpha();
         dispatchPress();
