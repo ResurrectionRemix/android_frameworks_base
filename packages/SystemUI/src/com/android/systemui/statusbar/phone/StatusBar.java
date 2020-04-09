@@ -173,7 +173,7 @@ import com.android.systemui.bubbles.BubbleController;
 import com.android.systemui.charging.WirelessChargingAnimation;
 import com.android.systemui.classifier.FalsingLog;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
-import com.android.systemui.crdroid.ImageUtilities;
+import com.android.systemui.rr.ImageUtilities;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.doze.DozeReceiver;
@@ -305,8 +305,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
-    private static final String LOCKSCREEN_CHARGING_ANIMATION_STYLE =
-            "system:" + Settings.System.LOCKSCREEN_CHARGING_ANIMATION_STYLE;
     private static final String QS_BACKGROUND_BLUR =
             "system:" + Settings.System.QS_BACKGROUND_BLUR;
 
@@ -514,7 +512,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final DisplayMetrics mDisplayMetrics = Dependency.get(DisplayMetrics.class);
 
     private boolean mHeadsUpDisabled, mGamingModeActivated;
-    private int mChargingAnimation = 1;
 
     private ImageView mQSBlurView;
     private boolean mQSBlurEnabled;
@@ -913,7 +910,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
-        tunerService.addTunable(this, LOCKSCREEN_CHARGING_ANIMATION_STYLE);
         tunerService.addTunable(this, QS_BACKGROUND_BLUR);
     }
 
@@ -1033,7 +1029,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 SystemUIFactory.getInstance().createKeyguardIndicationController(mContext,
                         mStatusBarWindow.findViewById(R.id.keyguard_indication_area),
                         mStatusBarWindow.findViewById(R.id.lock_icon));
-        mKeyguardIndicationController.updateChargingIndication(mChargingAnimation);
         mNotificationPanel.setKeyguardIndicationController(mKeyguardIndicationController);
 
         mAmbientIndicationContainer = mStatusBarWindow.findViewById(
@@ -5298,9 +5293,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mNavigationBarController.onDisplayRemoved(mDisplayId);
                 }
             }
-        } else if (LOCKSCREEN_CHARGING_ANIMATION_STYLE.equals(key)) {
-                mChargingAnimation =
-                        TunerService.parseInteger(newValue, 1);
         } else if (QS_BACKGROUND_BLUR.equals(key)) {
                 mQSBlurEnabled =
                         TunerService.parseIntegerSwitch(newValue, false);

@@ -139,7 +139,7 @@ public class QSContainerImpl extends FrameLayout implements
                             .getUriFor(Settings.System.QS_PANEL_BG_ALPHA), false,
                     this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System
-                            .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW), false,
+                            .getUriFor(Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER_SHADOW), false,
                     this, UserHandle.USER_ALL);
         }
 
