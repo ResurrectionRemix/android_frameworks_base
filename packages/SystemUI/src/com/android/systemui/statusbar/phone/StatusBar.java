@@ -305,8 +305,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
-    private static final String QS_BACKGROUND_BLUR =
-            "system:" + Settings.System.QS_BACKGROUND_BLUR;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -776,7 +774,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
-        tunerService.addTunable(this, QS_BACKGROUND_BLUR);
 
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
@@ -2011,6 +2008,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GAMING_MODE_HEADSUP_TOGGLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_BLUR),
+                    false, this, UserHandle.USER_ALL);
+
         }
 
         @Override
@@ -2029,6 +2030,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             setGamingModeActive();
             setGamingModeHeadsupToggle();
+            updateQSBlur();
             if (mCollapsedStatusBarFragment != null) {
                 mCollapsedStatusBarFragment.updateSettings(false);
             }
@@ -2039,6 +2041,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFpDismissNotifications = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS, 0,
                 UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void updateQSBlur() {
+       mQSBlurEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_BLUR, 0,
+                UserHandle.USER_CURRENT) == 1;
+       if (!mQSBlurEnabled) {
+                    mQSBlurView.setVisibility(View.GONE);
+                } else {
+                    updateBlurVisibility();
+       }
     }
 
     private void setPulseOnNewTracks() {
@@ -5273,14 +5286,16 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (SCREEN_BRIGHTNESS_MODE.equals(key)) {
-            mAutomaticBrightness = newValue != null && Integer.parseInt(newValue)
-                    == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
+            try {
+                mAutomaticBrightness = newValue != null && Integer.parseInt(newValue)
+                        == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
+            } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
-            mBrightnessControl = newValue != null && Integer.parseInt(newValue) == 1;
+            mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
         } else if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
                 mWindowManagerService != null) {
             boolean forcedVisibility = mNeedsNavigationBar ||
-                    (newValue != null && Integer.parseInt(newValue) == 1);
+                    TunerService.parseIntegerSwitch(newValue, false);
             boolean hasNavbar = getNavigationBarView() != null;
             if (forcedVisibility) {
                 if (!hasNavbar) {
@@ -5292,14 +5307,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mNavigationBarController.onDisplayRemoved(mDisplayId);
                 }
             }
-        } else if (QS_BACKGROUND_BLUR.equals(key)) {
-                mQSBlurEnabled =
-                        TunerService.parseIntegerSwitch(newValue, false);
-                if (!mQSBlurEnabled) {
-                    mQSBlurView.setVisibility(View.GONE);
-                } else {
-                    updateBlurVisibility();
-                }
         }
     }
 
