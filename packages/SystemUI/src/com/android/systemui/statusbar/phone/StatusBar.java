@@ -2000,24 +2000,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.Secure.getUriFor(
-                    Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS))) {
-                setFpToDismissNotifications();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.PULSE_ON_NEW_TRACKS))) {
-                setPulseOnNewTracks();
-            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_PORTRAIT)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_LANDSCAPE)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_TITLE_VISIBILITY))) {
-                updateQsPanelResources();
-            }
-        }
-
-
-        @Override
         public void onChange(boolean selfChange) {
             update();
         }
