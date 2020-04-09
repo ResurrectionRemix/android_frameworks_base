@@ -102,7 +102,7 @@ class KeyguardBypassController {
      * @return false if we can not wake and unlock right now
      */
     fun onBiometricAuthenticated(biometricSourceType: BiometricSourceType): Boolean {
-        if (bypassEnabled) {
+        if (bypassEnabledBiometric) {
             val can = canBypass()
             if (!can && (isPulseExpanding || qSExpanded)) {
                 pendingUnlockType = biometricSourceType
@@ -125,7 +125,7 @@ class KeyguardBypassController {
      * If keyguard can be dismissed because of bypass.
      */
     fun canBypass(): Boolean {
-        if (bypassEnabled) {
+        if (bypassEnabledBiometric) {
             return when {
                 bouncerShowing -> true
                 statusBarStateController.state != StatusBarState.KEYGUARD -> false
@@ -141,7 +141,7 @@ class KeyguardBypassController {
      * If shorter animations should be played when unlocking.
      */
     fun canPlaySubtleWindowAnimations(): Boolean {
-        if (bypassEnabled) {
+        if (bypassEnabledBiometric) {
             return when {
                 statusBarStateController.state != StatusBarState.KEYGUARD -> false
                 qSExpanded -> false
@@ -158,7 +158,7 @@ class KeyguardBypassController {
     fun dump(pw: PrintWriter) {
         pw.println("KeyguardBypassController:")
         pw.print("  pendingUnlockType: "); pw.println(pendingUnlockType)
-        pw.print("  bypassEnabled: "); pw.println(bypassEnabled)
+        pw.print("  bypassEnabledBiometric: "); pw.println(bypassEnabledBiometric)
         pw.print("  canBypass: "); pw.println(canBypass())
         pw.print("  bouncerShowing: "); pw.println(bouncerShowing)
         pw.print("  isPulseExpanding: "); pw.println(isPulseExpanding)
