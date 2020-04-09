@@ -179,4 +179,9 @@ public class DefaultBoldClockController implements ClockPlugin {
     public boolean shouldShowStatusArea() {
         return true;
     }
+
+    @Override
+    public boolean shouldShowInBigContainer() {
+        return true;
+    }
 }
