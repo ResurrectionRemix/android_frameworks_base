@@ -440,7 +440,7 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback {
     private @WakeAndUnlockMode int calculateModeForPassiveAuth() {
         boolean unlockingAllowed = mUpdateMonitor.isUnlockingWithBiometricAllowed();
         boolean deviceDreaming = mUpdateMonitor.isDreaming();
-        boolean bypass = mKeyguardBypassController.getBypassEnabled();
+        boolean bypass = mKeyguardBypassController.getBypassEnabledBiometric();
 
         if (!mUpdateMonitor.isDeviceInteractive()) {
             if (!mStatusBarKeyguardViewManager.isShowing()) {

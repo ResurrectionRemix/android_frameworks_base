@@ -47,6 +47,8 @@ class KeyguardBypassController {
      * If face unlock dismisses the lock screen or keeps user on keyguard for the current user.
      */
     var bypassEnabled: Boolean = false
+
+    var bypassEnabledBiometric: Boolean = false
         get() = field && unlockMethodCache.isFaceAuthEnabled
         private set
 
@@ -88,7 +90,7 @@ class KeyguardBypassController {
                         com.android.internal.R.bool.config_faceAuthDismissesKeyguard)) 1 else 0
         tunerService.addTunable(object : TunerService.Tunable {
             override fun onTuningChanged(key: String?, newValue: String?) {
-                bypassEnabled = tunerService.getValue(key, dismissByDefault) != 0
+                bypassEnabledBiometric = tunerService.getValue(key, dismissByDefault) != 0
             }
         }, Settings.Secure.FACE_UNLOCK_DISMISSES_KEYGUARD)
         lockscreenUserManager.addUserChangedListener { pendingUnlockType = null }
