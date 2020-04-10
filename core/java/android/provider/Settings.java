@@ -6116,6 +6116,16 @@ public final class Settings {
 	     public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
 
         /**
+         * Gestures nav: whether show it or hide completely
+         * @hide
+         */
+        public static final String GESTURE_NAVBAR_SHOW = "gesture_navbar_show";
+
+        /** @hide */
+        private static final Validator GESTURE_NAVBAR_SHOW_VALIDATOR = BOOLEAN_VALIDATOR;
+
+
+        /**
          * Whether to blink flashlight for incoming calls
          * 0 = Disabled (Default)
          * 1 = Blink flashlight only in Ringer mode
@@ -6347,6 +6357,7 @@ public final class Settings {
             SCREEN_STATE_THREEG,
             FLASHLIGHT_ON_CALL,
             OMNI_DOZE_ON_CHARGE,
+            GESTURE_NAVBAR_SHOW,
         };
 
         /**
@@ -6581,6 +6592,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_LAYOUT);
+            PRIVATE_SETTINGS.add(GESTURE_NAVBAR_SHOW);
         }
 
         /**
@@ -6805,6 +6817,7 @@ public final class Settings {
             VALIDATORS.put(FLASHLIGHT_ON_CALL, FLASHLIGHT_ON_CALL_VALIDATOR);
             VALIDATORS.put(OMNI_DOZE_ON_CHARGE, OMNI_DOZE_ON_CHARGE_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_LAYOUT, PULSE_AMBIENT_LIGHT_LAYOUT_VALIDATOR);
+            VALIDATORS.put(GESTURE_NAVBAR_SHOW,GESTURE_NAVBAR_SHOW_VALIDATOR);
         }
 
         /**

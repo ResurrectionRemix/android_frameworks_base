@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.view.CompositionSamplingListener;
 import android.view.View;
 
+import com.android.internal.util.aicp.AicpUtils;
 import com.android.systemui.R;
 import com.android.systemui.shared.system.QuickStepContract;
 
@@ -79,7 +80,7 @@ public class NavBarTintController implements View.OnAttachStateChangeListener,
         mLightBarController = lightBarController;
 
         final Resources res = navigationBarView.getResources();
-        mNavBarHeight = res.getDimensionPixelSize(R.dimen.navigation_bar_height);
+        mNavBarHeight = AicpUtils.shouldShowGestureNav(navigationBarView.getContext()) ? res.getDimensionPixelSize(R.dimen.navigation_bar_height) : 0;
         mNavColorSampleMargin =
                 res.getDimensionPixelSize(R.dimen.navigation_handle_sample_horizontal_margin);
         mLuminanceThreshold = res.getFloat(R.dimen.navigation_luminance_threshold);
