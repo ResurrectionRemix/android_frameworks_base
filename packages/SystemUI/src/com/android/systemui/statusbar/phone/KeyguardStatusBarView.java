@@ -585,7 +585,7 @@ public class KeyguardStatusBarView extends RelativeLayout
             Animator fadeAnimator1 = null;
             if (mMultiUserSwitch.getVisibility() != View.GONE) {
                 mMultiUserSwitch.setAlpha(0f);
-                mMultiUserSwitch.setVisibility(View.VISIBLE);
+                mMultiUserSwitch.setVisibility(mHideContents ? View.INVISIBLE : View.VISIBLE);
                 fadeAnimator1 = ObjectAnimator.ofFloat(mMultiUserSwitch, "alpha", 0f, 1f);
                 fadeAnimator1.setDuration(500);
                 fadeAnimator1.setInterpolator(Interpolators.ALPHA_IN);
