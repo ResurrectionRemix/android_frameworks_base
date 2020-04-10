@@ -90,7 +90,6 @@
     <string name="navbar_editor_title">Editor</string>
     <string name="navbar_editor_summary">Configure navigaton bar</string>
     <!-- Stock Navbar -->
-    <string name="systemui_tuner_navbar_title">Stock settings</string>
     <string name="navbar_activity_title">Navigation bar</string>
 
     <!-- Kill button in notification guts -->
