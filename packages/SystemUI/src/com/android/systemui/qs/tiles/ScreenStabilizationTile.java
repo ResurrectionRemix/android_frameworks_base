@@ -147,7 +147,7 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.RESURRECTED
+        return MetricsEvent.RESURRECTED;
     }
 
     @Override
