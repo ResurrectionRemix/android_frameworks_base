@@ -48,7 +48,7 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".tuner.NavBarTuner"
+            android:name=".tuner.NavBarActivity"
             android:targetActivity=".tuner.TunerActivity"
             android:icon="@drawable/tuner"
             android:theme="@style/TunerSettings"
