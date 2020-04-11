@@ -273,15 +273,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mContext.getMainExecutor(), mPropertyListener);
 
         Dependency.get(TunerService.class).addTunable(this,
-<<<<<<< HEAD
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
-                StatusBarIconController.ICON_BLACKLIST);
-        updateSettings();
-=======
-                SHOW_QS_CLOCK,
-                QS_BATTERY_MODE,
+                StatusBarIconController.ICON_BLACKLIST, QS_BATTERY_MODE,
                 STATUS_BAR_BATTERY_STYLE);
->>>>>>> 563002993a3... Add battery styles and customizations for Android 10 [1/2]
+        updateSettings();
     }
 
     private List<String> getIgnoredIconSlots() {
@@ -703,17 +698,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (StatusBarIconController.ICON_BLACKLIST.equals(key)) {
-
-        } else if (Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER.equals(key)) {
-
-        }
         switch (key) {
-            case ICON_BLACKLIST:
+            case StatusBarIconController.ICON_BLACKLIST:
                  mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
                     .contains("clock"));
                 break;
-            case OMNI_STATUS_BAR_CUSTOM_HEADER:
+            case Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER:
                 updateSettings();
                 break;
             case QS_BATTERY_MODE:

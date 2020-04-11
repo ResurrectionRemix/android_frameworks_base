@@ -70,6 +70,7 @@ public class BootReceiver extends BroadcastReceiver {
                 mSettingsObserver = new SettingsObserver(mHandler);
                 mSettingsObserver.observe();
             }
+            ContentResolver res = context.getContentResolver();
             // Start the fps info overlay, if activated
             if (Settings.Global.getInt(res, Settings.Global.SHOW_FPS_OVERLAY, 0) != 0) {
                 Intent fpsinfo = new Intent(context, com.android.systemui.FPSInfoService.class);

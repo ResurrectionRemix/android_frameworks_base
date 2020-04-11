@@ -5501,7 +5501,7 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
  
-        public static final String SHOW_BATTERY_PERCENT = "dummy_show_battery_percent";
+        public static final String SHOW_BATTERY_PERCENT_DUMMY = "dummy_show_battery_percent";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
