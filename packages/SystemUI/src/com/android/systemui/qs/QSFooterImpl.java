@@ -258,7 +258,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         /*mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);
 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_SHOW_DRAG_HANDLE);

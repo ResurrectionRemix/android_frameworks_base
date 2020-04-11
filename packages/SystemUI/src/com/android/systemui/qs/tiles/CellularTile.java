@@ -38,6 +38,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.net.DataUsageController;
 import com.android.settingslib.net.DataUsageUtils;
+import com.android.systemui.Dependency;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
@@ -53,12 +54,14 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
+import com.android.systemui.tuner.TunerService;
 
 import javax.inject.Inject;
 
 /** Quick settings tile: Cellular **/
 public class CellularTile extends QSTileImpl<SignalState> {
     private static final String ENABLE_SETTINGS_DATA_PLAN = "enable.settings.data.plan";
+    private static final Intent MOBILE_SETTINGS_FULL = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
 
     private final NetworkController mController;
     private final DataUsageController mDataController;
@@ -103,6 +106,10 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
     @Override
     public Intent getLongClickIntent() {
+        if (Dependency.get(TunerService.class).getValue(
+                com.android.systemui.qs.QSPanel.QS_LONG_PRESS_ACTION, 0) == 1) {
+            return MOBILE_SETTINGS_FULL;
+        }
         return getCellularSettingIntent();
     }
 
@@ -339,7 +346,7 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
         @Override
         public Intent getSettingsIntent() {
-            return new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+            return MOBILE_SETTINGS_FULL;
         }
 
         @Override
