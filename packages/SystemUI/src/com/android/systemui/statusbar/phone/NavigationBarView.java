@@ -69,7 +69,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.aicp.AicpUtils;
+import com.android.internal.util.rr.RRUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.DockedStackExistsListener;
 import com.android.systemui.Interpolators;
@@ -284,7 +284,7 @@ public class NavigationBarView extends FrameLayout implements
         mLongClickableAccessibilityButton = false;
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
         boolean isGesturalMode = isGesturalMode(mNavBarMode);
-        mShowGestureNavbar = AicpUtils.shouldShowGestureNav(context);
+        mShowGestureNavbar = RRUtils.shouldShowGestureNav(context);
 
         // Set up the context group of buttons
         mContextualButtonGroup = new ContextualButtonGroup(R.id.menu_container);
@@ -1073,12 +1073,16 @@ public class NavigationBarView extends FrameLayout implements
                     : getResources().getDimensionPixelSize(
                             com.android.internal.R.dimen.navigation_bar_height);
             int finalHeight = mShowGestureNavbar ? height : 0;
-            int frameHeight = mShowGestureNavbar ? getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_frame_height) : 0;
+            int frameHeight = /*mShowGestureNavbar ? */getResources().getDimensionPixelSize(
+                    com.android.internal.R.dimen.navigation_bar_frame_height)/* : 0*/;
             mBarTransitions.setBackgroundFrame(new Rect(0, frameHeight - finalHeight, w, h));
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    public boolean showGestureNavbar() {
+        return mShowGestureNavbar;
     }
 
     private void notifyVerticalChangedListener(boolean newVertical) {

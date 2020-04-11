@@ -27,7 +27,6 @@ import android.os.Handler;
 import android.view.CompositionSamplingListener;
 import android.view.View;
 
-import com.android.internal.util.aicp.AicpUtils;
 import com.android.systemui.R;
 import com.android.systemui.shared.system.QuickStepContract;
 
@@ -80,7 +79,7 @@ public class NavBarTintController implements View.OnAttachStateChangeListener,
         mLightBarController = lightBarController;
 
         final Resources res = navigationBarView.getResources();
-        mNavBarHeight = AicpUtils.shouldShowGestureNav(navigationBarView.getContext()) ? res.getDimensionPixelSize(R.dimen.navigation_bar_height) : 0;
+        mNavBarHeight = navigationBarView.showGestureNavbar() ? res.getDimensionPixelSize(R.dimen.navigation_bar_height) : 0;
         mNavColorSampleMargin =
                 res.getDimensionPixelSize(R.dimen.navigation_handle_sample_horizontal_margin);
         mLuminanceThreshold = res.getFloat(R.dimen.navigation_luminance_threshold);
@@ -129,7 +128,7 @@ public class NavBarTintController implements View.OnAttachStateChangeListener,
         mSamplingBounds.setEmpty();
         // TODO: Extend this to 2/3 button layout as well
         View view = mNavigationBarView.getHomeHandle().getCurrentView();
-        if (view != null) {
+        if (mNavigationBarView.showGestureNavbar() && view != null) {
             int[] pos = new int[2];
             view.getLocationOnScreen(pos);
             Point displaySize = new Point();

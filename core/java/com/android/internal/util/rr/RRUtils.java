@@ -214,8 +214,6 @@ public class RRUtils {
 
     public static int getBlendColorForPercent(int fullColor, int emptyColor, boolean reversed,
                                               int percentage) {
-        // When changing implementation here, please update the same method in the
-        // AicpGear library's AicpUtils too
         float[] newColor = new float[3];
         float[] empty = new float[3];
         float[] full = new float[3];
@@ -304,7 +302,7 @@ public class RRUtils {
     private static IStatusBarService mStatusBarService = null;
 
     private static IStatusBarService getStatusBarService() {
-        synchronized (AicpUtils.class) {
+        synchronized (RRUtils.class) {
             if (mStatusBarService == null) {
                 mStatusBarService = IStatusBarService.Stub.asInterface(
                         ServiceManager.getService("statusbar"));
@@ -316,8 +314,8 @@ public class RRUtils {
     public static boolean shouldShowGestureNav(Context context) {
         boolean setNavbarHeight = Settings.System.getIntForUser(context.getContentResolver(),
             Settings.System.GESTURE_NAVBAR_SHOW, 1, UserHandle.USER_CURRENT) != 0;
-        boolean twoThreeButtonEnabled = AicpUtils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton") ||
-                AicpUtils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
+        boolean twoThreeButtonEnabled = RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton") ||
+                RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
         return setNavbarHeight || twoThreeButtonEnabled;
     }
 
