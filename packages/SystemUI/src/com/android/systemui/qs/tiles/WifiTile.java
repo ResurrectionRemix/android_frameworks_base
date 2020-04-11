@@ -327,7 +327,7 @@ public class WifiTile extends QSTileImpl<SignalState> {
         }
 
         public Intent getSettingsIntent() {
-            return WIFI_SETTINGS;
+            return new Intent(Settings.ACTION_WIFI_SETTINGS);
         }
 
         @Override

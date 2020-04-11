@@ -42,6 +42,10 @@
             android:title="@string/tuner_show_drag_handle"
             sysui:defValue="true" />
 
+        <com.android.systemui.tuner.TunerSwitch
+            android:key="qs_long_press_secondary"
+            android:title="@string/tuner_long_press_secondary"
+            sysui:defValue="false" />
     </PreferenceScreen>
 
     <Preference

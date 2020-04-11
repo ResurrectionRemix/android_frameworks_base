@@ -157,5 +157,6 @@
     <string name="tuner_brightness_position_bottom">Brightness slider on bottom</string>
     <string name="tuner_show_secure_title">Show security footer</string>
     <string name="tuner_show_drag_handle">Show drag handle</string>
+    <string name="tuner_long_press_secondary">Show details on long press</string>
 
 </resources>

@@ -345,7 +345,7 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
 
         @Override
         public Intent getSettingsIntent() {
-            return BLUETOOTH_SETTINGS;
+            return new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
         }
 
         @Override

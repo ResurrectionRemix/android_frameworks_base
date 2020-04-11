@@ -95,6 +95,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             "system:" + Settings.System.ANIM_TILE_INTERPOLATOR;
     public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
     public static final String QS_SHOW_SECURITY = "qs_show_secure";
+    public static final String QS_LONG_PRESS_SECONDARY = "qs_long_press_secondary";
 
     private static final String TAG = "QSPanel";
 
@@ -127,6 +128,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private BrightnessMirrorController mBrightnessMirrorController;
     private View mDivider;
     private int animStyle, animDuration, interpolatorType;
+    private boolean mDualTargetSecondary;
 
     public QSPanel(Context context) {
         this(context, null);
@@ -222,6 +224,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         tunerService.addTunable(this, ANIM_TILE_INTERPOLATOR);
         tunerService.addTunable(this, QS_BRIGHTNESS_POSITION_BOTTOM);
         tunerService.addTunable(this, QS_SHOW_SECURITY);
+        tunerService.addTunable(this, QS_LONG_PRESS_SECONDARY);
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -285,6 +288,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         }
         if (QS_SHOW_SECURITY.equals(key)) {
             mFooter.setForceHide(newValue != null && Integer.parseInt(newValue) == 0);
+        }
+        if (QS_LONG_PRESS_SECONDARY.equals(key)) {
+            mDualTargetSecondary = newValue != null && Integer.parseInt(newValue) == 1;
+            updateSettings();
         }
     }
 
@@ -857,7 +864,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             });
             v.setHideLabel(!mTileLayout.isShowTitles());
             if (t.isDualTarget()) {
-                if (!mTileLayout.isShowTitles()) {
+                if (mDualTargetSecondary && !mTileLayout.isShowTitles()) {
                     v.setOnLongClickListener(view -> {
                         t.secondaryClick();
                         return true;

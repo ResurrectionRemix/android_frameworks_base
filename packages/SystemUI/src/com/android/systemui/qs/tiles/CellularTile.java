@@ -339,7 +339,7 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
         @Override
         public Intent getSettingsIntent() {
-            return getCellularSettingIntent();
+            return new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
         }
 
         @Override
