@@ -159,6 +159,22 @@
     <alias name="fantasy" to="lgsmartgothic" />
     <alias name="ITC Stone Serif" to="lgsmartgothic" />
 
+    <family name="reemkufi">
+        <font weight="400" style="normal">ReemKufi.ttf</font>
+    </family>
+    <alias name="reemkufi-light" to="reemkufi" weight="300" />
+    <alias name="reemkufi-medium" to="reemkufi" weight="500" />
+    <alias name="reemkufi-semi-bold" to="reemkufi" weight="600" />
+    <alias name="reemkufi-bold" to="reemkufi" weight="700" />
+    <alias name="times" to="reemkufi" />
+    <alias name="times new roman" to="reemkufi" />
+    <alias name="palatino" to="reemkufi" />
+    <alias name="georgia" to="reemkufi" />
+    <alias name="baskerville" to="reemkufi" />
+    <alias name="goudy" to="reemkufi" />
+    <alias name="fantasy" to="reemkufi" />
+    <alias name="ITC Stone Serif" to="reemkufi" />
+
     <family name="rosemary">
         <font weight="300" style="normal">Rosemary-Regular.ttf</font>
     </family>
