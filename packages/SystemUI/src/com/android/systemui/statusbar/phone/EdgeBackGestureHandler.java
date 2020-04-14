@@ -514,7 +514,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK,
                             KeyEvent.FLAG_LONG_PRESS);
                 } else if (performAction) {
-                if (performAction) {
                     if (mEdgeHaptic) {
                         vibrateTick();
                     }
