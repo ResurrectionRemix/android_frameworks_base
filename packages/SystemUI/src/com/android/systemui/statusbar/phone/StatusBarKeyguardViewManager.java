@@ -58,6 +58,7 @@ import com.android.systemui.statusbar.phone.KeyguardBouncer.BouncerExpansionCall
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardMonitorImpl;
+import com.android.systemui.tuner.TunerService;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ import androidx.annotation.VisibleForTesting;
  */
 public class StatusBarKeyguardViewManager implements RemoteInputController.Callback,
         StatusBarStateController.StateListener, ConfigurationController.ConfigurationListener,
-        PanelExpansionListener, NavigationModeController.ModeChangedListener {
+        PanelExpansionListener, NavigationModeController.ModeChangedListener, TunerService.Tunable { {
 
     // When hiding the Keyguard with timing supplied from WindowManager, better be early than late.
     private static final long HIDE_TIMING_CORRECTION_MS = - 16 * 3;
@@ -89,6 +90,12 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private static final long KEYGUARD_DISMISS_DURATION_LOCKED = 2000;
 
     private static String TAG = "StatusBarKeyguardViewManager";
+
+    private static final String UNLOCK_WITHOUT_BOUNCER =
+            Settings.Secure.UNLOCK_WITHOUT_BOUNCER;
+
+    private boolean mLockIcon;
+    private boolean mUnlockWithoutBouncer;
 
     protected final Context mContext;
     private final StatusBarWindowController mStatusBarWindowController;
@@ -208,6 +215,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             mDockManager.addListener(mDockEventListener);
             mIsDocked = mDockManager.isDocked();
         }
+        Dependency.get(TunerService.class).addTunable(this, UNLOCK_WITHOUT_BOUNCER);
     }
 
     public void registerStatusBar(StatusBar statusBar,
@@ -227,10 +235,24 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         mBouncer = SystemUIFactory.getInstance().createKeyguardBouncer(mContext,
                 mViewMediatorCallback, mLockPatternUtils, container, dismissCallbackRegistry,
                 mExpansionCallback, falsingManager, bypassController);
+        mBouncer.setUnlockWithoutBouncer(mUnlockWithoutBouncer);
         mNotificationPanelView = notificationPanelView;
         notificationPanelView.addExpansionListener(this);
         mBypassController = bypassController;
         mNotificationContainer = notificationContainer;
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case UNLOCK_WITHOUT_BOUNCER:
+                mUnlockWithoutBouncer =
+                    TunerService.parseIntegerSwitch(newValue, false);
+                if (mBouncer != null) mBouncer.setUnlockWithoutBouncer(mUnlockWithoutBouncer);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
