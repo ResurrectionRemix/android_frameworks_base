@@ -1512,11 +1512,6 @@ public final class MultiClientInputMethodManagerService {
             }
         }
 
-        @Override
-        public boolean hideSoftInputForLongshot(int flags, ResultReceiver resultReceiver) {
-            return false;
-        }
-
         @BinderThread
         @Override
         public InputBindResult startInputOrWindowGainedFocus(

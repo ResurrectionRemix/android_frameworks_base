@@ -1120,12 +1120,6 @@ public interface WindowManager extends ViewManager {
         public static final int TYPE_SLIM_RECENTS = FIRST_SYSTEM_WINDOW+39;
 
         /**
-         * Window type: Long screenshot overlay
-         * @hide
-         */
-        public static final int TYPE_SYSTEM_LONGSHOT = FIRST_SYSTEM_WINDOW + 40;
-
-        /**
          * Window type: Fingerprint overlay
          * @hide
          */

@@ -132,7 +132,6 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.input.InputManager;
 import android.hardware.power.V1_0.PowerHint;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -405,8 +404,6 @@ public class DisplayPolicy {
     @NonNull private Insets mForwardedInsets = Insets.NONE;
 
     private RefreshRatePolicy mRefreshRatePolicy;
-
-    private int mDisplayRotation;
 
     // -------- PolicyHandler --------
     private static final int MSG_UPDATE_DREAMING_SLEEP_TOKEN = 1;
@@ -1610,7 +1607,6 @@ public class DisplayPolicy {
      */
     public void beginLayoutLw(DisplayFrames displayFrames, int uiMode) {
         displayFrames.onBeginLayout();
-        mDisplayRotation = displayFrames.mRotation;
         mSystemGestures.screenWidth = displayFrames.mUnrestricted.width();
         mSystemGestures.screenHeight = displayFrames.mUnrestricted.height();
 
@@ -3835,49 +3831,14 @@ public class DisplayPolicy {
      * @param screenshotType The type of screenshot, for example either
      *                       {@link WindowManager#TAKE_SCREENSHOT_FULLSCREEN} or
      *                       {@link WindowManager#TAKE_SCREENSHOT_SELECTED_REGION}
-     * @param dockMinimized Whether the Dock is minimized
      */
-    public void takeScreenshot(int screenshotType, boolean dockMinimized) {
+    public void takeScreenshot(int screenshotType) {
         if (mScreenshotHelper != null) {
-            boolean longshot;
-            boolean inMultiWindow = mFocusedWindow != null
-                    ? mFocusedWindow.inMultiWindowMode()
-                    : false;
-            if (screenshotType == WindowManager.TAKE_SCREENSHOT_SELECTED_REGION
-                    || mService.mPolicy.isKeyguardOccluded()
-                    || !mService.mPolicy.isUserSetupComplete()
-                    || !isDeviceProvisioned()
-                    || ((inMultiWindow && !dockMinimized) || mDisplayRotation != 0)) {
-                longshot = false;
-            } else {
-                longshot = true;
-            }
-            Bundle screenshotBundle = new Bundle();
-            screenshotBundle.putBoolean("longshot", longshot);
-            if (mFocusedWindow != null) {
-                screenshotBundle.putString("focusWindow", mFocusedWindow.getAttrs().packageName);
-            }
-            if (mFocusedWindow != null
-                    && (mFocusedWindow.getAttrs().flags & WindowManager.LayoutParams.FLAG_SECURE) != 0) {
-                mScreenshotHelper.notifyScreenshotCaptureError();
-                return;
-            }
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(),
-                    mHandler, longshot, screenshotBundle);
+                    mHandler, null /* completionConsumer */);
         }
-    }
-
-    public void stopLongshotConnection() {
-        if (mScreenshotHelper != null) {
-            mScreenshotHelper.stopLongshotConnection();
-        }
-    }
-
-    private boolean isDeviceProvisioned() {
-        return Settings.Global.getInt(
-                mContext.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0) != 0;
     }
 
     RefreshRatePolicy getRefreshRatePolicy() {
