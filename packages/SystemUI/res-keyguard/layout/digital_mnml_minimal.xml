@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.keyguard.clock.ClockLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|top">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextClock
+            android:id="@+id/clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/widget_vertical_padding_clock"
+            android:gravity="center"
+            android:textColor="?attr/wallpaperTextColor"
+            android:format12Hour="hh | mm | ss"
+            android:format24Hour="kk | mm | ss"
+            android:letterSpacing="0.1"
+            android:textSize="44sp" />
+
+        <TextClock
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/oronos_roundbg"
+            android:gravity="center"
+            android:textColor="#000"
+            android:paddingLeft="20dp"
+            android:paddingTop="12dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="12dp"
+            android:format12Hour="EEE"
+            android:format24Hour="EEE"
+            android:letterSpacing="0.2"
+            android:textAllCaps="true"
+            android:textSize="14sp" />
+    </LinearLayout>
+</com.android.keyguard.clock.ClockLayout>
