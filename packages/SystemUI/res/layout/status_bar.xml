@@ -161,7 +161,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:clipChildren="false"
-            android:gravity="center_horizontal|center_vertical"/>
+            android:gravity="center_horizontal|end"/>
 
         <com.android.keyguard.AlphaOptimizedLinearLayout android:id="@+id/system_icon_area"
             android:layout_width="0dp"
