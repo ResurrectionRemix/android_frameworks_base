@@ -2012,7 +2012,8 @@ public class SettingsProvider extends ContentProvider {
     private void enforceWritePermission(String permission) {
         if (getContext().checkCallingOrSelfPermission(permission)
                 != PackageManager.PERMISSION_GRANTED) {
-            throw new SecurityException("Permission denial: writing to settings requires:"
+            throw new SecurityException("Permission denial: " + resolveCallingPackage() 
+                    + " writing to settings requires:"
                     + permission);
         }
     }

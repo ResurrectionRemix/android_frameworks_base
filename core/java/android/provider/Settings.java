@@ -5779,6 +5779,10 @@ public final class Settings {
          */
         public static final String FP_SUCCESS_VIBRATE = "fp_success_vibrate";
 
+
+        /** @hide */
+        private static final Validator QS_BACKGROUND_BLUR_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * QS blur alpha
          * @hide
