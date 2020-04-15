@@ -71,6 +71,12 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
         mController.observe(getLifecycle(), mCallback);
     }
 
+
+    @Override
+    public boolean isDualTarget() {
+        return true;
+    }
+
     @Override
     public DetailAdapter getDetailAdapter() {
         return mDetailAdapter;

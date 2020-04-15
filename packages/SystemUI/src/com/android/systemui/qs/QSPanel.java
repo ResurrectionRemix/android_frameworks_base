@@ -150,10 +150,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                 R.layout.qs_paged_tile_layout, this, false);
         mTileLayout.setListening(mListening);
         addView((View) mTileLayout);
+        updateSettings();
 
         mQsTileRevealController = new QSTileRevealController(mContext, this,
                 (PagedTileLayout) mTileLayout);
-
         addDivider();
 
         mFooter = new QSSecurityFooter(this, context);
@@ -772,6 +772,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         default void setExpansion(float expansion) {}
 
         int getNumVisibleTiles();
+        void updateSettings();
+        int getNumColumns();
+        int getNumRows();
+        boolean isShowTitles();
     }
 
     private void setAnimationTile(QSTileView v) {
@@ -819,12 +823,29 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         }
     }
 
+
     private void configureTile(QSTile t, QSTileView v) {
         if (mTileLayout != null) {
-            v.setOnClickListener(view -> {
-                    t.click();
-                    setAnimationTile(v);
-            });
+            v.setHideLabel(!mTileLayout.isShowTitles());
+            if (t.isDualTarget()) {
+                if (!mTileLayout.isShowTitles()) {
+                    v.setOnLongClickListener(view -> {
+                        t.secondaryClick();
+                        return true;
+                    });
+                } else {
+                    v.setOnLongClickListener(view -> {
+                        t.longClick();
+                        return true;
+                    });
+                }
+            }
+        }
+    }
+
+    public void updateSettings() {
+        if (mTileLayout != null) {
+            mTileLayout.updateSettings();
         }
     }
 }
