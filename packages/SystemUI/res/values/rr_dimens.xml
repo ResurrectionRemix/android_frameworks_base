@@ -42,9 +42,6 @@
     <!-- FOD recognizing animation -->
     <dimen name="fod_animation_size">280dp</dimen>
 
-    <!-- Bottom margin size when fingerprint in display is active -->
-    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">30dp</dimen>
-
     <!-- Custom padding size on biometric dialog -->
     <dimen name="fp_dialog_error_padding_top">16dp</dimen>
     <dimen name="fp_dialog_error_padding_bottom">24dp</dimen>

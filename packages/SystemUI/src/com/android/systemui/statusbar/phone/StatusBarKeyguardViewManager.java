@@ -60,6 +60,8 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardMonitorImpl;
 import com.android.systemui.tuner.TunerService;
 
+import android.provider.Settings;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -73,7 +75,7 @@ import androidx.annotation.VisibleForTesting;
  */
 public class StatusBarKeyguardViewManager implements RemoteInputController.Callback,
         StatusBarStateController.StateListener, ConfigurationController.ConfigurationListener,
-        PanelExpansionListener, NavigationModeController.ModeChangedListener, TunerService.Tunable { {
+        PanelExpansionListener, NavigationModeController.ModeChangedListener, TunerService.Tunable {
 
     // When hiding the Keyguard with timing supplied from WindowManager, better be early than late.
     private static final long HIDE_TIMING_CORRECTION_MS = - 16 * 3;
