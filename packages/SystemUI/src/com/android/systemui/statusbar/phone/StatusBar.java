@@ -515,6 +515,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private ImageView mQSBlurView;
     private boolean mQSBlurEnabled;
     private boolean mQSBlurred;
+    private boolean blurperformed = false;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -1165,52 +1166,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
         mFlashlightController = Dependency.get(FlashlightController.class);
-    }
-
-    private void adjustBrightness(int x) {
-        mBrightnessChanged = true;
-        float raw = ((float) x) / getDisplayWidth();
-
-        // Add a padding to the brightness control on both sides to
-        // make it easier to reach min/max brightness
-        float padded = Math.min(1.0f - BRIGHTNESS_CONTROL_PADDING,
-                Math.max(BRIGHTNESS_CONTROL_PADDING, raw));
-        float value = (padded - BRIGHTNESS_CONTROL_PADDING) /
-                (1 - (2.0f * BRIGHTNESS_CONTROL_PADDING));
-        if (mAutomaticBrightness) {
-            float adj = (2 * value) - 1;
-            adj = Math.max(adj, -1);
-            adj = Math.min(adj, 1);
-            final float val = adj;
-            mDisplayManager.setTemporaryAutoBrightnessAdjustment(val);
-            AsyncTask.execute(new Runnable() {
-                public void run() {
-                    Settings.System.putFloatForUser(mContext.getContentResolver(),
-                            Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, val,
-                            UserHandle.USER_CURRENT);
-                }
-            });
-        } else {
-            int newBrightness = mMinBrightness + (int) Math.round(value *
-                    (PowerManager.BRIGHTNESS_ON - mMinBrightness));
-            newBrightness = Math.min(newBrightness, PowerManager.BRIGHTNESS_ON);
-            newBrightness = Math.max(newBrightness, mMinBrightness);
-            final int val = newBrightness;
-            mDisplayManager.setTemporaryBrightness(val);
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    Settings.System.putIntForUser(mContext.getContentResolver(),
-                            Settings.System.SCREEN_BRIGHTNESS, val,
-                            UserHandle.USER_CURRENT);
-                }
-            });
-        }
-    }
-
-    private boolean isQSBlurEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_BLUR, 0) != 0;
     }
 
     protected QS createDefaultQSFragment() {
@@ -5318,6 +5273,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void updateBlurVisibility() {
+        if (!mQSBlurEnabled) return;
         int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
         int QSBlurAlpha = Math.round(255.0f *
@@ -5326,11 +5282,12 @@ public class StatusBar extends SystemUI implements DemoMode,
               Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
         boolean enoughBlurData = (QSBlurAlpha > 0 && QSBlurIntensity > 0);
 
-        if (enoughBlurData && !blurperformed && !mIsKeyguard && isQSBlurEnabled()) {
+        if (enoughBlurData && !blurperformed && !mIsKeyguard) {
             Bitmap bittemp = ImageUtilities.blurImage(mContext, 
                                 ImageUtilities.screenshotSurface(mContext), QSBlurIntensity);
             Drawable blurbackground = new BitmapDrawable(mContext.getResources(), bittemp);
             blurperformed = true;
+            mQSBlurView.setVisibility(View.VISIBLE);
             mQSBlurView.setBackgroundDrawable(blurbackground);
         } else if (!enoughBlurData || mState == StatusBarState.KEYGUARD) {
             blurperformed = false;
