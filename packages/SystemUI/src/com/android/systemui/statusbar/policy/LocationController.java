@@ -21,7 +21,8 @@ import com.android.systemui.statusbar.policy.LocationController.LocationChangeCa
 public interface LocationController extends CallbackController<LocationChangeCallback> {
     boolean isLocationActive();
     boolean isLocationEnabled();
-    boolean setLocationEnabled(boolean enabled);
+    boolean setLocationEnabled(int mode);
+    int getCurrentMode();
     boolean setLocationMode(int mode);
     int getLocationCurrentState();
 

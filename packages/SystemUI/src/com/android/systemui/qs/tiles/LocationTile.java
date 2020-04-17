@@ -55,6 +55,11 @@ public class LocationTile extends QSTileImpl<BooleanState> {
     private static final Intent LOCATION_SETTINGS_INTENT =
             new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 
+    private static final int BATTERY_SAVING = Settings.Secure.LOCATION_MODE_BATTERY_SAVING;
+    private static final int SENSORS_ONLY = Settings.Secure.LOCATION_MODE_SENSORS_ONLY;
+    private static final int HIGH_ACCURACY = Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
+    private static final int OFF = Settings.Secure.LOCATION_MODE_OFF;
+
     private final LocationController mController;
     private final LocationDetailAdapter mDetailAdapter;
     private final KeyguardMonitor mKeyguard;
@@ -96,14 +101,24 @@ public class LocationTile extends QSTileImpl<BooleanState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        return null;
+    }
+
+    @Override
+    public void handleLongClick() {
+         handleSecondaryClick();
     }
 
     @Override
     protected void handleClick() {
-        final boolean wasEnabled = mState.value;
-        MetricsLogger.action(mContext, getMetricsCategory(), !wasEnabled);
-        mController.setLocationEnabled(!wasEnabled);
+        if (mKeyguard.isSecure() && mKeyguard.isShowing()) {
+            mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
+                mHost.openPanels();
+                switchMode();
+            });
+            return;
+        }
+        switchMode();
     }
 
     @Override
@@ -112,15 +127,29 @@ public class LocationTile extends QSTileImpl<BooleanState> {
             mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
                 final boolean wasEnabled = mState.value;
                 mHost.openPanels();
-                mController.setLocationEnabled(!wasEnabled);
+                switchMode();
             });
             return;
         }
-        final boolean wasEnabled = mState.value;
-        if (!wasEnabled) {
-            mController.setLocationEnabled(!wasEnabled);
-        }
+        switchMode();
         showDetail(true);
+    }
+
+    private void switchMode() {
+        int currentMode = mController.getCurrentMode();
+        if (currentMode == BATTERY_SAVING) {
+            //from battery saving to off
+            mController.setLocationEnabled(OFF);
+        } else if (currentMode == SENSORS_ONLY) {
+            //from sensor only to high precision
+            mController.setLocationEnabled(HIGH_ACCURACY);
+        } else if (currentMode == HIGH_ACCURACY) {
+            //from high precision to battery saving
+            mController.setLocationEnabled(BATTERY_SAVING);
+        } else {
+            //from off to sensor only
+            mController.setLocationEnabled(SENSORS_ONLY);
+        }
     }
 
     @Override
@@ -254,7 +283,7 @@ public class LocationTile extends QSTileImpl<BooleanState> {
         public void setToggleState(boolean state) {
             MetricsLogger.action(mContext, MetricsEvent.QS_DND_TOGGLE, state);
             if (!state) {
-                mController.setLocationEnabled(state);
+                switchMode();
                 showDetail(false);
             }
         }
