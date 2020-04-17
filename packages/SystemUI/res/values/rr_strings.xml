@@ -142,6 +142,7 @@
     <!-- SystemUI tuner -->
     <string name="systemui_tuner_navbar_title">Navigation bar</string>
 
+    <string name="quick_rr_tools_label">Configurations</string>
 
     <!-- FPS Info tile -->
     <string name="quick_settings_fpsinfo_label">FPS Info</string>

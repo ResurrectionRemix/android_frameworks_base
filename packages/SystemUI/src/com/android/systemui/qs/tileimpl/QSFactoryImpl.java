@@ -64,6 +64,7 @@ import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
+import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.qs.tiles.SoundSearchTIle;
 
@@ -115,6 +116,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<ScreenStabilizationTile> mScreenStabilizationTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
+    private final Provider<RRTile> mRRTileProvider;
 
     private QSTileHost mHost;
 
@@ -156,6 +158,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<GamingModeTile> gamingModeTileProvider,
             Provider<ScreenStabilizationTile> screenStabilizationTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
+            Provider<RRTile> rrTileProvider,
             Provider<AODTile> aodTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -195,6 +198,7 @@ public class QSFactoryImpl implements QSFactory {
         mGamingModeTileProvider = gamingModeTileProvider;
         mScreenStabilizationTileProvider = screenStabilizationTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
+        mRRTileProvider = rrTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -287,6 +291,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mScreenStabilizationTileProvider.get();
             case "fpsinfo":
                 return mFPSInfoTileProvider.get();
+            case "rr_tools":
+                return mRRTileProvider.get();
         }
 
         // Intent tiles.
