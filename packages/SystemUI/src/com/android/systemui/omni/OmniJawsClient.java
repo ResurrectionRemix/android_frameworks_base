@@ -85,11 +85,8 @@ public class OmniJawsClient {
 
     private static final String WEATHER_UPDATE = "org.omnirom.omnijaws.WEATHER_UPDATE";
     private static final String WEATHER_ERROR = "org.omnirom.omnijaws.WEATHER_ERROR";
-
-    private static final String AE_EXTRA_FRAGMENT_CLASS = "com.android.settings.preference_fragment";
-    private static final String AE_SETTINGSACTIVITY = "com.android.settings.SettingsActivity";
-    private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
-    private static final String WEATHER_SETTINGS = "com.android.settings.fragments.Weather";
+    private static final String = "com.adroid.settings"; 
+    private static final String = "com.android.settings.Settings$WeatherSettingsActivity";
 
     private static final DecimalFormat sNoDigitsFormat = new DecimalFormat("0");
 
@@ -248,8 +245,7 @@ public class OmniJawsClient {
     public Intent getSettingsIntent() {
         if (isOmniJawsServiceInstalled()) {
             Intent settings = new Intent(Intent.ACTION_MAIN);
-            settings.setClassName(SETTINGS_PACKAGE_NAME, AE_SETTINGSACTIVITY);
-            settings.putExtra(AE_EXTRA_FRAGMENT_CLASS, WEATHER_SETTINGS);
+            settings.setClassName(SETTINGS, RR_TOOLS);
             return settings;
         }
         return null;

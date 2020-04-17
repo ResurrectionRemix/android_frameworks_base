@@ -38,7 +38,7 @@ public class HeadsUpTile extends QSTileImpl<BooleanState> {
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_heads_up);
 
     private static final Intent NOTIFICATION_SETTINGS =
-            new Intent("android.settings.NOTIFICATION_SETTINGS");
+            new Intent("android.settings.RR_HEADS_UP");
 
     private final GlobalSetting mSetting;
 
