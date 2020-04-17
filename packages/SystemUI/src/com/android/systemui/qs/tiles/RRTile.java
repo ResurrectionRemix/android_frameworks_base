@@ -32,6 +32,8 @@ import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
+import javax.inject.Inject;
+
 public class RRTile extends QSTileImpl<BooleanState> {
     private boolean mListening;
     private final ActivityStarter mActivityStarter;
@@ -41,6 +43,7 @@ public class RRTile extends QSTileImpl<BooleanState> {
     private static final Intent RR_TOOLS = new Intent("android.settings.RR_TOOLS");
     private static final Intent OTA_INTENT = new Intent("android.settings.SYSTEM_UPDATE_SETTINGS");
 
+    @Inject
     public RRTile(QSHost host) {
         super(host);
         mActivityStarter = Dependency.get(ActivityStarter.class);
@@ -61,6 +64,11 @@ public class RRTile extends QSTileImpl<BooleanState> {
     @Override
     public Intent getLongClickIntent() {
         return OTA_INTENT;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return true;
     }
 
     @Override
