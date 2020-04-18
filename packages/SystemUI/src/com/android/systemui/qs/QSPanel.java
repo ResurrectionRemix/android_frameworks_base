@@ -826,6 +826,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     private void configureTile(QSTile t, QSTileView v) {
         if (mTileLayout != null) {
+            v.setOnClickListener(view -> {
+                    t.click();
+                    setAnimationTile(v);
+            });
             v.setHideLabel(!mTileLayout.isShowTitles());
             if (t.isDualTarget()) {
                 if (!mTileLayout.isShowTitles()) {
