@@ -397,6 +397,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 com.android.internal.R.dimen.status_bar_height);
         int qqsHeight = mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_quick_header_panel_height);
+        if (mHideDragHandle) {
+            qqsHeight -= mContext.getResources().getDimensionPixelSize(
+                    R.dimen.quick_qs_drag_handle_height);
+        }
         setMinimumHeight(sbHeight + qqsHeight);
     }
 
