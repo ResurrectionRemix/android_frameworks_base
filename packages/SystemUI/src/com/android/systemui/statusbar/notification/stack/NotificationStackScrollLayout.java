@@ -32,6 +32,7 @@ import android.animation.ValueAnimator;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -47,6 +48,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.ServiceManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -509,6 +511,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     private float mLastSentAppear;
     private float mLastSentExpandedHeight;
     private boolean mWillExpand;
+    private boolean needsColorRefresh = true;
+    private boolean mShowHeaders;
 
     @Inject
     public NotificationStackScrollLayout(
@@ -539,13 +543,17 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         mKeyguardBypassController = keyguardBypassController;
         mFalsingManager = falsingManager;
 
+        mShowHeaders = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.NOTIFICATION_HEADERS, 1, UserHandle.USER_CURRENT) == 1;
+
         mSectionsManager =
                 new NotificationSectionsManager(
                         this,
                         activityStarter,
                         statusBarStateController,
                         configurationController,
-                        NotificationUtils.useNewInterruptionModel(context));
+                        NotificationUtils.useNewInterruptionModel(context),
+                        mShowHeaders);
         mSectionsManager.initialize(LayoutInflater.from(context));
 
         mAmbientState = new AmbientState(context, mSectionsManager, mHeadsUpManager);
@@ -5470,7 +5478,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
 
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
     public void manageNotifications(View v) {
-        Intent intent = new Intent(Settings.ACTION_ALL_APPS_NOTIFICATION_SETTINGS);
+        Intent intent = new Intent(mShowHeaders ? Settings.ACTION_ALL_APPS_NOTIFICATION_SETTINGS :
+                Settings.ACTION_NOTIFICATION_SETTINGS);
         mStatusBar.startActivity(intent, true, true, Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }
 
