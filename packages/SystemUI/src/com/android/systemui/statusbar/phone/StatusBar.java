@@ -2044,6 +2044,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mCollapsedStatusBarFragment != null) {
                 mCollapsedStatusBarFragment.updateSettings(false);
             }
+            updateDataUsage();
         }
     }
 
@@ -3686,6 +3687,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public void showKeyguardImpl() {
         mIsKeyguard = true;
+        updateDataUsage();
         updateBlurVisibility();
         if (mKeyguardMonitor != null && mKeyguardMonitor.isLaunchTransitionFadingAway()) {
             mNotificationPanel.animate().cancel();
@@ -5269,6 +5271,16 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void startAssist(Bundle args) {
         if (mAssistManager != null) {
             mAssistManager.startAssist(args);
+        }
+    }
+
+    public void updateDataUsage() {
+        if (!dataupdated && !mIsKeyguard) {
+            DataUsageView.updateUsage();
+            dataupdated = true;
+        }
+        if (mIsKeyguard) {
+            dataupdated = false;
         }
     }
 
