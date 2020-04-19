@@ -2059,7 +2059,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void updateQSBlur() {
        mQSBlurEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_BLUR, 0,
+                Settings.System.QS_BACKGROUND_BLUR, 1,
                 UserHandle.USER_CURRENT) == 1;
        if (!mQSBlurEnabled) {
            mQSBlurView.setVisibility(View.GONE);
@@ -5294,7 +5294,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         int QSBlurAlpha = Math.round(255.0f *
                 mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
         int QSBlurIntensity = Settings.System.getInt(mContext.getContentResolver(),
-              Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
+              Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 80); // defaulting to 7.5f radius
         boolean enoughBlurData = (QSBlurAlpha > 0 && QSBlurIntensity > 0);
 
         if (enoughBlurData && !blurperformed && !mIsKeyguard) {
