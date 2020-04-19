@@ -3942,7 +3942,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         int contentPadding = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.SYSUI_ROUNDED_CONTENT_PADDING, contentPaddingRes, UserHandle.USER_CURRENT);
         int sbPadding = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.SYSUI_STATUS_BAR_PADDING, contentPaddingRes, UserHandle.USER_CURRENT);
+                Settings.Secure.SYSUI_STATUS_BAR_PADDING, sbPaddingRes, UserHandle.USER_CURRENT);
 
         return (cornerRadiusRes == cornerRadius) && (contentPaddingRes == contentPadding) &&
                 (sbPaddingRes == sbPadding);
