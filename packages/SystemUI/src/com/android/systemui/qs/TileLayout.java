@@ -214,6 +214,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     public void updateSettings() {
         final Resources res = mContext.getResources();
         int defaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        int defaultColumnsLand = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns_land));
         int defaultRows = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         int defaultRowsLandscape = Math.min(2, res.getInteger(R.integer.quick_settings_max_rows));
         boolean isPortrait = res.getConfiguration().orientation
@@ -222,7 +223,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
                 mContext.getContentResolver(), Settings.System.QS_COLUMNS_PORTRAIT, defaultColumns,
                 UserHandle.USER_CURRENT);
         int columnsLandscape = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.QS_COLUMNS_LANDSCAPE, defaultColumns,
+                mContext.getContentResolver(), Settings.System.QS_COLUMNS_LANDSCAPE, defaultColumnsLand,
                 UserHandle.USER_CURRENT);
         int rows = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.QS_ROWS_PORTRAIT, defaultRows,
