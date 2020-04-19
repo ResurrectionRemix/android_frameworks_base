@@ -24,6 +24,7 @@ import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.MathUtils;
 import android.util.Slog;
@@ -96,7 +97,7 @@ public class KeyguardBouncer {
     private boolean mIsAnimatingAway;
     private boolean mIsScrimmed;
     private ViewGroup mLockIconContainer;
-    private boolean mUnlockWithoutBouncer;
+    private boolean mUnlockWithoutBouncer = false;
 
     public static final int UNLOCK_SEQUENCE_DEFAULT = 0;
     public static final int UNLOCK_SEQUENCE_BOUNCER_FIRST = 1;
@@ -178,7 +179,8 @@ public class KeyguardBouncer {
             Slog.w(TAG, "User can't dismiss keyguard: " + activeUserId + " != " + keyguardUserId);
         }
 
-        if (mUnlockWithoutBouncer && mKeyguardUpdateMonitor.isUnlockingWithBiometricAllowed()) {
+        if (mUnlockWithoutBouncer) {
+            mUnlockWithoutBouncer = false;
             return;
         }
 
@@ -296,13 +298,12 @@ public class KeyguardBouncer {
         mShowingSoon = false;
     }
 
-    public void setUnlockWithoutBouncer(boolean unlockWithoutBouncer) {
-        mUnlockWithoutBouncer = unlockWithoutBouncer;
-    }
-
     public void showWithDismissAction(OnDismissAction r, Runnable cancelAction) {
         ensureView();
         mKeyguardView.setOnDismissAction(r, cancelAction);
+        mUnlockWithoutBouncer = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.UNLOCK_WITHOUT_BOUNCER, 0) != 0
+                && mKeyguardUpdateMonitor.isUnlockingWithBiometricAllowed();
         show(false /* resetSecuritySelection */);
     }
 
