@@ -23,12 +23,10 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.hardware.camera2.params.HighSpeedVideoConfiguration;
 import android.hardware.camera2.utils.SurfaceUtils;
 import android.os.Handler;
 import android.os.ConditionVariable;
 import android.util.Range;
-import android.util.Size;
 import android.view.Surface;
 
 import java.util.ArrayList;
@@ -88,7 +86,10 @@ public class CameraConstrainedHighSpeedCaptureSessionImpl
                 mCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
         SurfaceUtils.checkConstrainedHighSpeedSurfaces(outputSurfaces, fpsRange, config);
 
-        int requestListSize = getHighSpeedRequestListSize(fpsRange, outputSurfaces);
+        // Request list size: to limit the preview to 30fps, need use maxFps/30; to maximize
+        // the preview frame rate, should use maxBatch size for that high speed stream
+        // configuration. We choose the former for now.
+        int requestListSize = fpsRange.getUpper() / 30;
         List<CaptureRequest> requestList = new ArrayList<CaptureRequest>();
 
         // Prepare the Request builders: need carry over the request controls.
@@ -165,34 +166,6 @@ public class CameraConstrainedHighSpeedCaptureSessionImpl
             }
         }
         return true;
-    }
-
-    private int getHighSpeedRequestListSize(Range<Integer> fpsRange, Collection<Surface> surfaces) {
-        int requestListSize = 0;
-
-        for (Surface surface : surfaces) {
-
-            if (SurfaceUtils.isSurfaceForHwVideoEncoder(surface)) {
-                Size surfaceSize = SurfaceUtils.getSurfaceSize(surface);
-                HighSpeedVideoConfiguration[] highSpeedVideoConfigurations =
-                    mCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_HIGH_SPEED_VIDEO_CONFIGURATIONS);
-
-                // Get the batchsize for matching FPS & video size
-                for (HighSpeedVideoConfiguration config : highSpeedVideoConfigurations) {
-                    if (config.getSize().equals(surfaceSize) && config.getFpsRange().equals(fpsRange)) {
-                        requestListSize = config.getBatchSizeMax();
-                        break;
-                     }
-                }
-                break;
-            }
-        }
-
-        if (requestListSize == 0) {
-            // If cant' find the matching batch size,  limit the preview to 30fps.
-            requestListSize = fpsRange.getUpper() / 30;
-        }
-        return requestListSize;
     }
 
     @Override
