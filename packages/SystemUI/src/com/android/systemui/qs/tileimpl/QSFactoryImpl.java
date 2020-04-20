@@ -49,6 +49,7 @@ import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
+import com.android.systemui.qs.tiles.PowerShareTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
 import com.android.systemui.qs.tiles.ReadingModeTile;
 import com.android.systemui.qs.tiles.OnTheGoTile;
@@ -103,6 +104,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<LiveDisplayTile> mLiveDisplayTileProvider;
     private final Provider<AODTile> mAODTileProvider;
+    private final Provider<PowerShareTile> mPowerShareTileProvider;
     private final Provider<ProfilesTile> mProfilesTileProvider;
     private final Provider<ReadingModeTile> mReadingModeTileProvider;
     private final Provider<SyncTile> mSyncTileProvider;
@@ -145,6 +147,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CaffeineTile> caffeineTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<LiveDisplayTile> liveDisplayTileProvider,
+            Provider<PowerShareTile> powerShareTileProvider,
             Provider<ProfilesTile> profilesTileProvider,
             Provider<ReadingModeTile> readingModeTileProvider,
             Provider<SyncTile> syncTileProvider,
@@ -185,6 +188,7 @@ public class QSFactoryImpl implements QSFactory {
         mHeadsUpTileProvider = headsUpTileProvider;
         mLiveDisplayTileProvider = liveDisplayTileProvider;
         mAODTileProvider = aodTileProvider;
+        mPowerShareTileProvider = powerShareTileProvider;
         mProfilesTileProvider = profilesTileProvider;
         mReadingModeTileProvider = readingModeTileProvider;
         mSyncTileProvider = syncTileProvider;
@@ -265,6 +269,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mLiveDisplayTileProvider.get();
             case "aod":
                 return mAODTileProvider.get();
+            case "powershare":
+                return mPowerShareTileProvider.get();
             case "profiles":
                 return mProfilesTileProvider.get();
             case "reading_mode":

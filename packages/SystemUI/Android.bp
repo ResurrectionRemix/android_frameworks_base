@@ -70,6 +70,7 @@ android_library {
         "org.lineageos.platform.internal",
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
         "airbnb-lottie",
+        "vendor.lineage.powershare-V1.0-java",
     ],
     manifest: "AndroidManifest.xml",
     additional_manifests: ["LineageManifest.xml"],
