@@ -161,6 +161,7 @@
 
   <!-- Whether device supports variable refresh rate -->
   <java-symbol type="bool" name="config_hasVariableRefreshRate" />
+  <java-symbol type="integer" name="config_defaultVariableRefreshRateSetting" />
 
   <!-- Enable face auth when swiping security view -->
   <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
