@@ -41,9 +41,6 @@
          near events -->
     <bool name="doze_brightness_sensor_reports_proximity" translatable="false">true</bool>
 
-    <!-- Allow devices to use unordinary cutout overlays -->
-    <bool name="config_customCutout">false</bool>
-
     <!-- Enable face auth only when swiping security view -->
     <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
 
