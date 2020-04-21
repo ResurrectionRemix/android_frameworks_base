@@ -55,7 +55,6 @@ import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
-import com.android.systemui.qs.tiles.ScreenStabilizationTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
@@ -114,7 +113,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<WeatherTile> mWeatherTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<GamingModeTile> mGamingModeTileProvider;
-    private final Provider<ScreenStabilizationTile> mScreenStabilizationTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
     private final Provider<RRTile> mRRTileProvider;
 
@@ -156,7 +154,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<WeatherTile> weatherTIleProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<GamingModeTile> gamingModeTileProvider,
-            Provider<ScreenStabilizationTile> screenStabilizationTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<RRTile> rrTileProvider,
             Provider<AODTile> aodTileProvider) {
@@ -196,7 +193,6 @@ public class QSFactoryImpl implements QSFactory {
         mWeatherTileProvider = weatherTIleProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mGamingModeTileProvider = gamingModeTileProvider;
-        mScreenStabilizationTileProvider = screenStabilizationTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mRRTileProvider = rrTileProvider;
     }
@@ -287,8 +283,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mDataSwitchTileProvider.get();
             case "gaming":
                 return mGamingModeTileProvider.get();
-            case "screenstabilization":
-                return mScreenStabilizationTileProvider.get();
             case "fpsinfo":
                 return mFPSInfoTileProvider.get();
             case "rr_tools":
