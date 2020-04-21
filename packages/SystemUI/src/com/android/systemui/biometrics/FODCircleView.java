@@ -52,6 +52,7 @@ import androidx.palette.graphics.Palette;
 
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -168,10 +169,17 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         public void onKeyguardBouncerChanged(boolean isBouncer) {
             mIsBouncer = isBouncer;
 
-            if (isBouncer) {
+            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
+                final SecurityMode sec = mUpdateMonitor.getSecurityMode();
+                final boolean maybeShow = sec == SecurityMode.Pattern ||
+                        sec == SecurityMode.PIN;
+                if (maybeShow || !mIsBouncer) {
+                    show();
+                } else {
+                    hide();
+                }
+            } else {
                 hide();
-            } else if (mIsKeyguard && mUpdateMonitor.isFingerprintDetectionRunning()) {
-                show();
             }
         }
 
@@ -183,7 +191,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         @Override
         public void onScreenTurnedOff() {
-            hideCircle();
+            hide();
+        }
+
+        @Override
+        public void onScreenTurnedOn() {
+            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
+                show();
+            }
         }
 
         @Override
@@ -252,13 +267,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
-        mPowerManager = context.getSystemService(PowerManager.class);
-
-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
-
         updateCutoutFlags();
 
         Dependency.get(ConfigurationController.class).addCallback(this);
+        mPowerManager = context.getSystemService(PowerManager.class);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                FODCircleView.class.getSimpleName());
 
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
     }
@@ -435,10 +449,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         setKeepScreenOn(true);
 
         if (mIsDreaming) {
-            mWakeLock.acquire(500);
+            mWakeLock.acquire(300);
         }
-        setWallpaperColor(false);
 
+        setWallpaperColor(false);
         setDim(true);
         updateAlpha();
 
@@ -463,7 +477,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) != 0;
     }
-
 
     private void setWallpaperColor(boolean applyColor) {
         if (useWallpaperColor() && applyColor) {
@@ -504,6 +517,11 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     }
 
     public void show() {
+        if (!mUpdateMonitor.isScreenOn()) {
+            // Keyguard is shown just after screen turning off
+            return;
+        }
+
         if (mIsBouncer) {
             // Ignore show calls when Keyguard pin screen is being shown
             return;
@@ -641,3 +659,4 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         }
     }
 }
+
