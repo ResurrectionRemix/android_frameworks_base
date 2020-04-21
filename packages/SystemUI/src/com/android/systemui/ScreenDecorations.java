@@ -655,15 +655,13 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         // screen decorations overlay.
         int padding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.rounded_corner_content_padding);
-        int qsPadding = mContext.getResources().getDimensionPixelSize(
-                R.dimen.qs_corner_content_padding);
-        if (padding != 0 || qsPadding != 0) {
-            setupStatusBarPadding(padding, qsPadding);
+        if (padding != 0) {
+            setupStatusBarPadding(padding);
         }
 
     }
 
-    private void setupStatusBarPadding(int padding, int qsPadding) {
+    private void setupStatusBarPadding(int padding) {
         // Add some padding to all the content near the edge of the screen.
         StatusBar sb = getComponent(StatusBar.class);
         View statusBar = (sb != null ? sb.getStatusBarWindow() : null);
@@ -677,7 +675,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     new TunablePaddingTagListener(padding, R.id.status_bar));
 */
             fragmentHostManager.addTagListener(QS.TAG,
-                    new TunablePaddingTagListener(qsPadding, R.id.header));
+                    new TunablePaddingTagListener(padding, R.id.header));
         }
     }
 
