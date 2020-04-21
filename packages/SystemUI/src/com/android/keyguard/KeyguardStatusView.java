@@ -459,6 +459,9 @@ public class KeyguardStatusView extends GridLayout implements
             return;
         }
         mPulsing = pulsing;
+        if (mWeatherView != null) {
+            mWeatherView.setVisibility((mShowWeather && mOmniStyle && !mPulsing) ? View.VISIBLE : View.GONE);
+        }
     }
 
     private boolean shouldShowLogout() {
