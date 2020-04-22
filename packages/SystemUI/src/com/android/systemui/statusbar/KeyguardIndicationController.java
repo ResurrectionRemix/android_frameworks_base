@@ -566,7 +566,7 @@ public class KeyguardIndicationController implements StateListener,
     private boolean isIndidicatorAllowedDoze() {
         mDozeChargeIndicator = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.CHARING_INDICATOR_DOZE, 0, UserHandle.USER_CURRENT) == 1;
-        boolean result = mDozing && show;
+        boolean result = mDozing && mDozeChargeIndicator;
         return result;
     }
 
