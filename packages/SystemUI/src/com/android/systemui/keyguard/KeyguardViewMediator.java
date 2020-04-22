@@ -19,6 +19,8 @@ package com.android.systemui.keyguard;
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 
 import static com.android.internal.telephony.IccCardConstants.State.ABSENT;
+import static com.android.internal.telephony.IccCardConstants.State.READY;
+import static com.android.internal.telephony.IccCardConstants.State.NOT_READY;
 import static com.android.internal.telephony.IccCardConstants.State.PIN_REQUIRED;
 import static com.android.internal.telephony.IccCardConstants.State.PUK_REQUIRED;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.SOME_AUTH_REQUIRED_AFTER_USER_REQUEST;
@@ -285,6 +287,7 @@ public class KeyguardViewMediator extends SystemUI {
      * Index is the slotId - in case of multiple SIM cards.
      */
     private final SparseArray<IccCardConstants.State> mLastSimStates = new SparseArray<>();
+    private static SparseArray<IccCardConstants.State> mUnlockTrackSimStates = new SparseArray<>();
 
     private boolean mDeviceInteractive;
     private boolean mGoingToSleep;
@@ -448,6 +451,16 @@ public class KeyguardViewMediator extends SystemUI {
                 IccCardConstants.State lastState = mLastSimStates.get(slotId);
                 simWasLocked = (lastState == PIN_REQUIRED || lastState == PUK_REQUIRED);
                 mLastSimStates.append(slotId, simState);
+
+                if(simState == READY){
+                    mUnlockTrackSimStates.put(slotId, simState);
+                }
+                IccCardConstants.State currentState = mUnlockTrackSimStates.get(slotId);
+                if(currentState == READY){
+                    if(simState != PIN_REQUIRED && simState != PUK_REQUIRED){
+                        mUnlockTrackSimStates.put(slotId, simState);
+                    }
+                }
             }
 
             switch (simState) {
@@ -1202,6 +1215,10 @@ public class KeyguardViewMediator extends SystemUI {
         Message msg = mHandler.obtainMessage(SET_OCCLUDED, isOccluded ? 1 : 0, animate ? 1 : 0);
         mHandler.sendMessage(msg);
         Trace.endSection();
+    }
+
+    public static IccCardConstants.State getUnlockTrackSimState(int slotId) {
+        return mUnlockTrackSimStates.get(slotId);
     }
 
     public boolean isHiding() {

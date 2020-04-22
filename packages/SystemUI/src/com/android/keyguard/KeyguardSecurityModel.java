@@ -19,8 +19,10 @@ import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.telephony.SubscriptionManager;
 
-import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
+
+import com.android.systemui.keyguard.KeyguardViewMediator;
 
 public class KeyguardSecurityModel {
 
@@ -57,13 +59,13 @@ public class KeyguardSecurityModel {
     SecurityMode getSecurityMode(int userId) {
         KeyguardUpdateMonitor monitor = KeyguardUpdateMonitor.getInstance(mContext);
 
-        if (mIsPukScreenAvailable && SubscriptionManager.isValidSubscriptionId(
-                monitor.getNextSubIdForState(IccCardConstants.State.PUK_REQUIRED))) {
+        int subId = monitor.getUnlockedSubIdForState(State.PUK_REQUIRED);
+        if (mIsPukScreenAvailable && SubscriptionManager.isValidSubscriptionId(subId)) {
             return SecurityMode.SimPuk;
         }
 
-        if (SubscriptionManager.isValidSubscriptionId(
-                monitor.getNextSubIdForState(IccCardConstants.State.PIN_REQUIRED))) {
+        subId = monitor.getUnlockedSubIdForState(State.PIN_REQUIRED);
+        if (SubscriptionManager.isValidSubscriptionId((subId))) {
             return SecurityMode.SimPin;
         }
 

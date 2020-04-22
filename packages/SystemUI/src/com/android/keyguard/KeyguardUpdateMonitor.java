@@ -105,6 +105,7 @@ import com.android.systemui.R;
 import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.shared.system.TaskStackChangeListener;
 import com.android.systemui.statusbar.phone.KeyguardBypassController;
+import com.android.systemui.keyguard.KeyguardViewMediator;
 
 import com.google.android.collect.Lists;
 
@@ -2704,6 +2705,28 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
             if (state == getSimState(id) && bestSlotId > slotId ) {
                 resultId = id;
                 bestSlotId = slotId;
+            }
+        }
+        return resultId;
+    }
+
+
+    /**
+     * Find the Unlocked SubscriptionId for a SIM in the given state,
+     * @param state
+     * @return subid or {@link SubscriptionManager#INVALID_SUBSCRIPTION_ID} if none found
+     */
+    public int getUnlockedSubIdForState(State state) {
+        List<SubscriptionInfo> list = getSubscriptionInfo(false /* forceReload */);
+        int resultId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+        for (int i = 0; i < list.size(); i++) {
+            final SubscriptionInfo info = list.get(i);
+            final int id = info.getSubscriptionId();
+            int slotId = SubscriptionManager.getSlotIndex(id);
+            if (state == getSimState(id)
+                    && KeyguardViewMediator.getUnlockTrackSimState(slotId) != State.READY) {
+                resultId = id;
+                break;
             }
         }
         return resultId;
