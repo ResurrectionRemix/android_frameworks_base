@@ -143,6 +143,7 @@ public class KeyguardIndicationController implements StateListener,
     private int mBatteryLevel;
     private float mTemperature;
     private String mMessageToShowOnScreenOn;
+    private boolean mDozeChargeIndicator;
 
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback;
 
@@ -562,8 +563,15 @@ public class KeyguardIndicationController implements StateListener,
         }
     }
 
+    private boolean isIndidicatorAllowedDoze() {
+        mDozeChargeIndicator = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.CHARING_INDICATOR_DOZE, 0, UserHandle.USER_CURRENT) == 1;
+        boolean result = mDozing && show;
+        return result;
+    }
+
     private void updateChargingIndication() {
-        if (mChargingIndication > 0 && mPowerPluggedIn) {
+        if (mChargingIndication > 0 && isIndidicatorAllowedDoze() && mPowerPluggedIn) {
             mChargingIndicationView.setVisibility(View.VISIBLE);
             if (hasActiveInDisplayFp()) {
                 if (mFODPositionY != 0) {

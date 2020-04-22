@@ -5440,6 +5440,9 @@ public final class Settings {
 
         public static final String LOCKSCREEN_CHARGING_ANIMATION_STYLE = "lockscreen_charging_animation_style";
 
+        /** @hide */
+        public static final String CHARING_INDICATOR_DOZE = "lockscreen_charging_indicator_doze";
+
         public static final String GAMING_MODE_DUMMY = "gaming_mode_dummy";
         /** @hide */
        private static final Validator GAMING_MODE_DUMMY_VALIDATOR =
