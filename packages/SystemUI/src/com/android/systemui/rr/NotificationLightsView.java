@@ -44,11 +44,31 @@ import androidx.palette.graphics.Palette;
 import com.android.systemui.R;
 
 public class NotificationLightsView extends RelativeLayout {
-
+    private static final boolean DEBUG = false;
+    private static final String TAG = "NotificationLightsView";
     private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
     private boolean mPulsing;
     private WallpaperManager mWallManager;
+    private ImageView mLeftView;
+    private ImageView mRightView;
+
+    private AnimatorUpdateListener mAnimatorUpdateListener = new AnimatorUpdateListener() {
+        public void onAnimationUpdate(ValueAnimator animation) {
+            if (DEBUG) Log.d(TAG, "onAnimationUpdate");
+            float progress = ((Float) animation.getAnimatedValue()).floatValue();
+            mLeftView.setScaleY(progress);
+            mRightView.setScaleY(progress);
+            float alpha = 1.0f;
+            if (progress <= 0.3f) {
+                alpha = progress / 0.3f;
+            } else if (progress >= 1.0f) {
+                alpha = 2.0f - progress;
+            }
+            mLeftView.setAlpha(alpha);
+            mRightView.setAlpha(alpha);
+        }
+    };
 
     public NotificationLightsView(Context context) {
         this(context, null);
@@ -65,6 +85,7 @@ public class NotificationLightsView extends RelativeLayout {
     public NotificationLightsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         Log.e("NotificationLightsView", "new");
+        mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
     }
 
     private Runnable mLightUpdate = new Runnable() {
@@ -92,12 +113,6 @@ public class NotificationLightsView extends RelativeLayout {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
                 UserHandle.USER_CURRENT);
-        int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_DURATION, 2,
-                UserHandle.USER_CURRENT) * 1000;
-        int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_REPEAT_COUNT, 0,
-                UserHandle.USER_CURRENT);
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_AUTO_COLOR, 0,
                 UserHandle.USER_CURRENT) == 1) {
@@ -122,36 +137,31 @@ public class NotificationLightsView extends RelativeLayout {
         sb.append("animateNotification color ");
         sb.append(Integer.toHexString(color));
         Log.e("NotificationLightsView", sb.toString());
-        ImageView leftView = (ImageView) findViewById(R.id.notification_animation_left);
-        ImageView rightView = (ImageView) findViewById(R.id.notification_animation_right);
-        leftView.setColorFilter(color);
-        rightView.setColorFilter(color);
-        mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
-        mLightAnimator.setDuration(duration);
-        if (!mLightAnimator.isRunning()) {
+        if (mLeftView == null) {
+            mLeftView = (ImageView) findViewById(R.id.notification_animation_left);
+        }
+        if (mRightView == null) {
+            mRightView = (ImageView) findViewById(R.id.notification_animation_right);
+        }
+        mLeftView.setColorFilter(color);
+        mRightView.setColorFilter(color);
+       if (!mLightAnimator.isRunning()) {
+            if (DEBUG) Log.d(TAG, "start");
+            int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.AMBIENT_LIGHT_REPEAT_COUNT, 0,
+                    UserHandle.USER_CURRENT);
+            int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.AMBIENT_LIGHT_DURATION, 2,
+                    UserHandle.USER_CURRENT) * 1000;
+            mLightAnimator.setDuration(duration);
+            mLightAnimator.setRepeatMode(ValueAnimator.RESTART);
             if (repeat == 0) {
                 mLightAnimator.setRepeatCount(ValueAnimator.INFINITE);
             } else {
-                mLightAnimator.setRepeatCount(repeat);
+                mLightAnimator.setRepeatCount(repeat - 1);
             }
+            mLightAnimator.addUpdateListener(mAnimatorUpdateListener);
+            mLightAnimator.start();
         }
-        mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Log.e("NotificationLightsView", "onAnimationUpdate");
-                float progress = ((Float) animation.getAnimatedValue()).floatValue();
-                leftView.setScaleY(progress);
-                rightView.setScaleY(progress);
-                float alpha = 1.0f;
-                if (progress <= 0.3f) {
-                    alpha = progress / 0.3f;
-                } else if (progress >= 1.0f) {
-                    alpha = 2.0f - progress;
-                }
-                leftView.setAlpha(alpha);
-                rightView.setAlpha(alpha);
-            }
-        });
-        Log.e("NotificationLightsView", "start");
-        mLightAnimator.start();
     }
 }
