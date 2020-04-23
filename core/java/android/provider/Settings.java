@@ -5829,6 +5829,11 @@ public final class Settings {
          */
         public static final String REFRESH_RATE_SETTING = "refresh_rate_setting";
 
+       /**
+         * @hide
+         */
+        public static final String AMBIENT_LIGHT_REPEAT_COUNT = "ambient_light_repeat_count";
+
         /**
          * @hide
          */
@@ -5899,13 +5904,7 @@ public final class Settings {
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
             ALARM_ALERT,
-<<<<<<< HEAD
-=======
-            AMBIENT_NOTIFICATION_LIGHT,
-            AMBIENT_NOTIFICATION_LIGHT_AUTOMATIC,
-            AMBIENT_LIGHT_AUTO_COLOR,
             AMBIENT_LIGHT_DURATION,
->>>>>>> 3b45feb2783... SystemUI: Allow changing duration of ambient edge light [1/2]
             NOTIFICATION_LIGHT_PULSE,
             STATUSBAR_BATTERY_BAR,
             STATUSBAR_BATTERY_BAR_LOCATION,
@@ -6195,7 +6194,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_MEDIA_BLUR);
             PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
-<<<<<<< HEAD
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
