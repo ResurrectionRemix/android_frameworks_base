@@ -180,6 +180,13 @@ public class BatteryManager {
 
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * boolean value to detect fast charging
+     * {@hide}
+     */
+    public static final String EXTRA_VOOC_CHARGER = "vooc_charger";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * boolean value to indicate OEM fast charging
      * {@hide}
      */

@@ -28,4 +28,12 @@
 
     <!-- Battery use screen. Battery status shown in chart label when charging from a warp source.  -->
     <string name="battery_info_status_warp_charging">Warp charging</string>
+
+    <!-- Label for estimated remaining duration of VOOC battery charging -->
+    <string name="power_remaining_vooc_charging_duration_only">VOOC charging (<xliff:g id="time">%1$s</xliff:g> left until full)</string>
+
+    <!-- Battery use screen. Battery status shown in chart label when charging from a VOOC source.  -->
+    <string name="battery_info_status_vooc_charging">VOOC charging</string>
+    <string name="battery_info_status_vooc_charging_lower">vooc charging</string>
+
 </resources>
