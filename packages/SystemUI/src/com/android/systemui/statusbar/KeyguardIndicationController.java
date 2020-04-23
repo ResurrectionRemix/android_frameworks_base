@@ -566,8 +566,7 @@ public class KeyguardIndicationController implements StateListener,
     private boolean isIndidicatorAllowedDoze() {
         mDozeChargeIndicator = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.CHARING_INDICATOR_DOZE, 0, UserHandle.USER_CURRENT) == 1;
-        boolean result = mDozing && mDozeChargeIndicator;
-        return result;
+        return mDozeChargeIndicator;
     }
 
     private void updateChargingIndication() {
@@ -575,11 +574,20 @@ public class KeyguardIndicationController implements StateListener,
             if (mDozing) {
                 if(isIndidicatorAllowedDoze() && mChargingIndicationView != null){
                    mChargingIndicationView.setVisibility(View.VISIBLE);
+                   updateChargingIndicatorPos();
                  } else {
                    mChargingIndicationView.setVisibility(View.GONE);
                  }
+            } else {
+                mChargingIndicationView.setVisibility(View.VISIBLE);
+                updateChargingIndicatorPos();
             }
-            mChargingIndicationView.setVisibility(View.VISIBLE);
+        } else {
+            mChargingIndicationView.setVisibility(View.GONE);
+        }
+    }
+
+   private void updateChargingIndicatorPos() {
             if (hasActiveInDisplayFp()) {
                 if (mFODPositionY != 0) {
                     // Get screen height
@@ -612,9 +620,6 @@ public class KeyguardIndicationController implements StateListener,
                 }
             }
             mChargingIndicationView.playAnimation();
-        } else {
-            mChargingIndicationView.setVisibility(View.GONE);
-        }
     }
 
     private boolean hasActiveInDisplayFp() {
