@@ -459,7 +459,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener, H
             mWakeLock.acquire(300);
         }
 
-        setWallpaperColor(false);
+        //setWallpaperColor(false);
         updateAlpha();
 
         setImageResource(R.drawable.fod_icon_pressed);
@@ -471,13 +471,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener, H
         mIsCircleShowing = false;
 
         setImageResource(ICON_STYLES[mSelectedIcon]);
-        setWallpaperColor(true);
-        invalidate();
+        //setWallpaperColor(true);
         setColorFilter(Color.argb(mCurDim,0,0,0),
                 PorterDuff.Mode.SRC_ATOP);
         invalidate();
-
-        dispatchRelease();
         updateAlpha();
 
         setKeepScreenOn(false);
