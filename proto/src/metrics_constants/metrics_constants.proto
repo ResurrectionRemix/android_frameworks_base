@@ -7431,7 +7431,7 @@ message MetricsEvent {
     // END OF AOSP CONSTANTS
 
     // RR
-    RESURRECTED = 4000;
+    RESURRECTED = 420;
 
     // Panel for Mobile Data
     PANEL_MOBILE_DATA = 2002;
