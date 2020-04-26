@@ -21,26 +21,31 @@
 
     <Preference
         android:key="sysui_keyguard_left"
+        android:icon="@drawable/rr_left_sc_icon"
         android:title="@string/lockscreen_shortcut_left"
         android:fragment="com.android.systemui.tuner.ShortcutPicker" />
 
     <com.android.systemui.tuner.TunerSwitch
         android:key="sysui_keyguard_left_unlock"
+        android:icon="@drawable/rr_unlock_icon"
         android:title="@string/lockscreen_unlock_left"
         sysui:defValue="true" />
 
     <Preference
         android:key="sysui_keyguard_right"
         android:title="@string/lockscreen_shortcut_right" 
+        android:icon="@drawable/rr_right_sc_icon"
         android:fragment="com.android.systemui.tuner.ShortcutPicker" />
 
     <com.android.systemui.tuner.TunerSwitch
         android:key="sysui_keyguard_right_unlock"
         android:title="@string/lockscreen_unlock_right"
+        android:icon="@drawable/rr_unlock_icon"
         sysui:defValue="true" />
 
     <com.android.systemui.tuner.TunerSwitch
         android:key="sysui_keyguard_transition_animations"
+        android:icon="@drawable/rr_animations_icon"
         android:title="@string/tuner_keyguard_transition_animations_title"
         android:summary="@string/tuner_keyguard_transition_animations_summary"
         sysui:defValue="true" />

@@ -20,14 +20,17 @@
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="rotate"
+        android:icon="@drawable/tuner"
         android:title="@string/status_bar_settings_auto_rotation" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="headset"
+        android:icon="@drawable/tuner_headset"
         android:title="@string/headset" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="managed_profile"
+        android:icon="@drawable/rr_profiles_icon"
         android:title="@string/status_bar_work" />
 
     <!-- ime -->
@@ -36,18 +39,22 @@
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="cast"
+        android:icon="@drawable/tuner_cast"
         android:title="@string/quick_settings_cast_title" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="hotspot"
+        android:icon="@drawable/tuner_hotspot"
         android:title="@string/quick_settings_hotspot_label" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="bluetooth"
+        android:icon="@drawable/tuner_bluetooth"
         android:title="@string/quick_settings_bluetooth_label" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="nfc"
+        android:icon="@drawable/tuner_nfc"
         android:title="@string/status_bar_nfc" />
 
     <!-- tty -->
@@ -55,57 +62,69 @@
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="microphone"
+        android:icon="@drawable/rr_mic_icon"
         android:title="@string/status_bar_microphone" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="zen"
+        android:icon="@drawable/tuner_zen"
         android:title="@string/quick_settings_dnd_label" />
 
     <!-- mute -->
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="volume"
+        android:icon="@drawable/tuner_volume"
         android:title="@*android:string/volume_unknown" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="wifi"
+        android:icon="@drawable/tuner_wifi"
         android:title="@string/quick_settings_wifi_label" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="ethernet"
+        android:icon="@drawable/tuner_eth"
         android:title="@string/status_bar_ethernet" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="mobile"
+        android:icon="@drawable/tuner_signal"
         android:title="@string/quick_settings_cellular_detail_title" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="airplane"
+        android:icon="@drawable/tuner_airplane"
         android:title="@string/status_bar_airplane" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="location"
+        android:icon="@drawable/tuner_location"
         android:title="@string/status_bar_location" />
 
     <!-- other weird signal stuff -->
 
-    <com.android.systemui.tuner.BatteryPreference
+    <!--com.android.systemui.tuner.BatteryPreference
         android:title="@string/battery"
+        android:icon="@drawable/rr_position_icon"
         android:summary="%s"
-        android:entries="@array/battery_options" />
+        android:entries="@array/battery_options" /-->
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="alarm_clock"
+        android:icon="@drawable/rr_clock_icon"
         android:title="@string/status_bar_alarm" />
 
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="camera"
+        android:icon="@drawable/tuner_camera"
         android:title="@string/status_bar_camera" />
 
     <!-- secure -->
 
     <com.android.systemui.tuner.TunerSwitch
         android:key="low_priority"
+        android:icon="@drawable/tuner_low_priority"
         android:title="@string/tuner_low_priority"
         sysui:defValue="false" />
 

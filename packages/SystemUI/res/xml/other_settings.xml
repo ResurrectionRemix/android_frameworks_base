@@ -21,6 +21,7 @@
     <!-- importance -->
     <Preference
             android:key="power_notification_controls"
+            android:icon="@drawable/rr_power_notif_icon"
             android:title="@string/tuner_full_importance_settings"
             android:fragment="com.android.systemui.tuner.PowerNotificationControlsFragment"/>
 

@@ -3,5 +3,5 @@
 
     <!-- Custom Carrier Label -->
     <color name="status_bar_carrier_color">#FFFFFFFF</color>
-
+    <color name="rr_config_icon_tint">?android:attr/colorControlNormal</color>
 </resources>

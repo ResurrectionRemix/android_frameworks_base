@@ -20,6 +20,7 @@
 
     <ListPreference
         android:key="layout"
+        android:icon="@drawable/rr_position_icon"
         android:title="@string/nav_bar_layout"
         android:summary="%s"
         android:persistent="false"
