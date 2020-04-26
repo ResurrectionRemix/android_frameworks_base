@@ -8,8 +8,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center">
+        android:layout_above="@id/date"
+        android:gravity="center_horizontal">
 
         <TextClock
             android:id="@+id/clockHour"
@@ -22,7 +22,7 @@
             android:format24Hour="kk"
             style="@style/widget_big"
             android:textColor="?attr/wallpaperTextColor"
-            android:textSize="108sp" />
+            android:textSize="88sp" />
 
         <TextClock
             android:id="@+id/clockMinute"
@@ -34,7 +34,7 @@
             android:format24Hour="mm"
             style="@style/widget_big"
             android:textColor="?attr/wallpaperTextColor"
-            android:textSize="56sp" />
+            android:textSize="48sp" />
 
     </LinearLayout>
 
