@@ -35,9 +35,10 @@
         <item name="android:textColor">@color/status_bar_carrier_color</item>
     </style>
 
-<!-- Status bar notification ticker -->
+    <!-- Status bar notification ticker -->
     <style name="TextAppearance.StatusBar.PhoneTicker" parent="@*android:style/TextAppearance.StatusBar">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
 </resources>
