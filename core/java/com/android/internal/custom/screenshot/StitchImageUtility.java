@@ -52,7 +52,7 @@ public class StitchImageUtility {
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(STITCHIMAGE_APP_PACKAGE_NAME, STITCHIMAGE_OVERLAY_SERVICE_CLASS));
                 intent.putExtra(EXTRA_KEY_STITCHIMAGE_SETTINGS_CALLFROM, EXTRA_VALUE_STITCHIMAGE_SETTINGS_CALLFROM_ASUSSETTINGS);
-                mContext.startService(intent);
+                mContext.startServiceAsUser(intent, UserHandle.CURRENT);
                 playScreenshotSound();
                 return true;
             } catch (Exception e) {
