@@ -5824,6 +5824,12 @@ public final class Settings {
         private static final Validator BACK_GESTURE_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * FOD pressed state
+         * @hide
+         */
+        public static final String FOD_PRESSED_STATE = "fod_pressed_state";
+
+        /**
          * @hide
          */
         public static final String AMBIENT_LIGHT_CUSTOM_COLOR = "ambient_light_custom_color";

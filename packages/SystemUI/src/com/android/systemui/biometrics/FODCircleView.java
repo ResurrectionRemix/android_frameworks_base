@@ -16,10 +16,9 @@
 
 package com.android.systemui.biometrics;
 
-import android.app.WallpaperColors;
 import android.app.WallpaperManager;
-import android.content.ContentResolver;
 import android.app.admin.DevicePolicyManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -55,7 +54,6 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
-import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -94,6 +92,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private PowerManager mPowerManager;
     private PowerManager.WakeLock mWakeLock;
+
     private LockPatternUtils mLockPatternUtils;
 
     private Timer mBurnInProtectionTimer;
@@ -173,10 +172,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         public void onKeyguardBouncerChanged(boolean isBouncer) {
             mIsBouncer = isBouncer;
             if (mUpdateMonitor.isFingerprintDetectionRunning()) {
-                final SecurityMode sec = mUpdateMonitor.getSecurityMode();
-                final boolean maybeShow = sec == SecurityMode.Pattern ||
-                        sec == SecurityMode.PIN;
-                if (isPinOrPattern(mUpdateMonitor.getCurrentUser()) || !mIsBouncer) {
+                if (isPinOrPattern(mUpdateMonitor.getCurrentUser()) || !isBouncer) {
                     show();
                 } else {
                     hide();
@@ -320,7 +316,32 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         super.onDraw(canvas);
 
         if (mIsCircleShowing) {
-            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+            if (getFODPressedState() == 0) {
+                //canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+                setImageResource(R.drawable.fod_icon_pressed);
+            } else if (getFODPressedState() == 1) {
+                //canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+                setImageResource(R.drawable.fod_icon_pressed_white);
+            } else if (getFODPressedState() == 2) {
+                canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+            }
+        }
+    }
+
+    private int getFODPressedState() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_PRESSED_STATE, 0);
+    }
+
+    private void setFODPressedState() {
+        int fodpressed = getFODPressedState();
+
+        if (fodpressed == 0) {
+            setImageResource(R.drawable.fod_icon_pressed);
+        } else if (fodpressed == 1) {
+            setImageResource(R.drawable.fod_icon_pressed_white);
+        } else if (fodpressed == 2) {
+            setImageDrawable(null);
         }
     }
 
@@ -431,11 +452,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         if (mIsDreaming) {
             mWakeLock.acquire(300);
         }
+
         setWallpaperColor(false);
         setDim(true);
         updateAlpha();
 
-        setImageDrawable(null);
+        setFODPressedState();
         invalidate();
     }
 
@@ -527,7 +549,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         if (mIsCircleShowing) {
             setAlpha(1.0f);
         } else {
-            setAlpha(mIsDreaming ? 0.75f : 1.0f);
+            setAlpha(mIsDreaming ? 0.5f : 1.0f);
         }
     }
 
