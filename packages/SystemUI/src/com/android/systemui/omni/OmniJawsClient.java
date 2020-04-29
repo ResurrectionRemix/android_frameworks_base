@@ -85,7 +85,7 @@ public class OmniJawsClient {
 
     private static final String WEATHER_UPDATE = "org.omnirom.omnijaws.WEATHER_UPDATE";
     private static final String WEATHER_ERROR = "org.omnirom.omnijaws.WEATHER_ERROR";
-    private static final String SETTINGS = "com.adroid.settings"; 
+    private static final String SETTINGS = "com.android.settings"; 
     private static final String RR_TOOLS = "com.android.settings.Settings$WeatherSettingsActivity";
 
     private static final DecimalFormat sNoDigitsFormat = new DecimalFormat("0");
