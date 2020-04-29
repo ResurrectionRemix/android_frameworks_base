@@ -92,19 +92,45 @@
     <!-- SBC Dual Channel (SBC HD Audio) -->
     <bool name="config_enableSBCDualChannelAudio">true</bool>
 
-    <!-- Any package that has one of the package names defined below will be prevented
+  <!-- Any package that has one of the package names defined below will be prevented
          from using specific sensors in order to stop battery drain -->
-    <string-array name="config_blockPackagesSensorDrain">
-        <item>com.whatsapp</item>
-        <item>com.gbwhatsapp</item>
-        <item>com.yowhatsapp</item>
-        <item>com.whatsapp.plus</item>
-        <item>org.telegram.messenger</item>
-        <item>org.telegram.messenger.plus</item>
-        <item>com.snapchat.android</item>
-        <item>com.facebook.orca</item>
-        <item>com.Slack</item>
-    </string-array>
+  <string-array name="config_blockPackagesSensorDrain">
+        <item>com.whatsapp</item>   
+        <item>com.gbwhatsapp</item>   
+        <item>com.yowhatsapp</item>   
+        <item>com.whatsapp.plus</item>   
+        <item>org.telegram.messenger</item>   
+        <item>org.telegram.messenger.plus</item>  
+        <item>com.netease.cloudmusic</item>   
+        <item>fm.xiami.main</item>   
+        <item>com.tencent.weread</item>   
+        <item>com.netease.snailread</item>   
+        <item>com.tencent.mm</item>   
+        <item>com.baidu.browser.apps</item>   
+        <item>com.tencent.tim</item>   
+        <item>org.thunderdog.challegram</item> 
+        <item>com.snapchat.android</item>   
+        <item>com.facebook.orca</item>   
+        <item>com.Slack</item>   
+        <item>tugapower.codeaurora.browser</item>   
+        <item>org.mozilla.firefox</item>   
+        <item>com.android.chrome</item>   
+        <item>com.amazon.mShop.android.shopping</item>   
+        <item>com.google.android.inputmethod.latin</item>   
+        <item>com.google.android.apps.plus</item>   
+        <item>com.google.android.apps.maps</item>   
+        <item>ru.ok.android</item>   
+        <item>com.instagram.android.MainTabActivity</item> 
+        <item>com.facebook.orca</item> 
+        <item>com.facebook.orca.StartScreenActivity</item> 
+        <item>com.spotify.music</item> 
+        <item>com.spotify.music.MainActivity</item>
+        <item>com.android.vending</item>   
+        <item>com.trtf.blue</item>   
+        <item>com.truecaller</item>
+        <item>com.gaana</item>
+        <item>com.facebook.katana.LoginActivity</item> 
+  </string-array>
 
     <!-- System info -->
     <string name="config_sysCPUTemp"></string>
