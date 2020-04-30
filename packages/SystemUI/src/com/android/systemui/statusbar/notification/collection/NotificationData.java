@@ -185,6 +185,20 @@ public class NotificationData {
         return mEntries.get(key);
     }
 
+    public ArrayList<NotificationEntry> getAllNotificationsForPackage(String pkg) {
+        synchronized (mEntries) {
+            final int len = mEntries.size();
+            ArrayList<NotificationEntry> filtered = new ArrayList<>(len);
+            for (int i = 0; i < len; i++) {
+                NotificationEntry entry = mEntries.valueAt(i);
+                if (pkg.equals(entry.notification.getPackageName())) {
+                    filtered.add(entry);
+                }
+            }
+            return filtered;
+        }
+    }
+
     public void add(NotificationEntry entry) {
         synchronized (mEntries) {
             mEntries.put(entry.notification.getKey(), entry);

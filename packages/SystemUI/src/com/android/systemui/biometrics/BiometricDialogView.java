@@ -17,10 +17,13 @@
 package com.android.systemui.biometrics;
 
 import static android.view.accessibility.AccessibilityEvent.CONTENT_CHANGE_TYPE_SUBTREE;
+import static android.view.Gravity.CENTER;
+import static android.view.Gravity.START;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -101,6 +104,7 @@ public abstract class BiometricDialogView extends LinearLayout {
     protected final TextView mSubtitleText;
     protected final TextView mDescriptionText;
     protected final ImageView mBiometricIcon;
+    protected final ImageView mAppIcon;
     protected final TextView mErrorText;
     protected final Button mPositiveButton;
     protected final Button mNegativeButton;
@@ -115,6 +119,7 @@ public abstract class BiometricDialogView extends LinearLayout {
     private boolean mAnimatingAway;
     private boolean mWasForceRemoved;
     private boolean mSkipIntro;
+    protected boolean mAppLockDialog;
     private boolean mIsFingerprint;
     private boolean mIsFace;
     protected boolean mRequireConfirmation;
@@ -145,7 +150,6 @@ public abstract class BiometricDialogView extends LinearLayout {
                     .translationY(0)
                     .setDuration(ANIMATION_DURATION_SHOW)
                     .setInterpolator(mLinearOutSlowIn)
-                    .withLayer()
                     .withEndAction(() -> onDialogAnimatedIn())
                     .start();
         }
@@ -221,6 +225,25 @@ public abstract class BiometricDialogView extends LinearLayout {
         mNegativeButton = mLayout.findViewById(R.id.button2);
         mPositiveButton = mLayout.findViewById(R.id.button1);
         mTryAgainButton = mLayout.findViewById(R.id.button_try_again);
+
+        mAppIcon = new ImageView(context);
+        final int iconDim = getResources().getDimensionPixelSize(
+                    R.dimen.applock_icon_dimension);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(iconDim, iconDim);
+        lp.gravity = CENTER;
+        lp.topMargin = -iconDim/2;
+        lp.bottomMargin = iconDim/4;
+        mAppIcon.setLayoutParams(lp);
+        mAppIcon.setVisibility(View.GONE);
+        mDialog.addView(mAppIcon, 0);
+        ((ViewGroup) mDialog.getParent()).setClipChildren(false);
+        ((ViewGroup) mDialog.getParent().getParent()).setClipChildren(false);
+        ((ViewGroup) mDialog.getParent().getParent().getParent()).setClipChildren(false);
+
+        lp = (LinearLayout.LayoutParams) mDialog.getLayoutParams();
+        lp.leftMargin = 0;
+        lp.bottomMargin = 0;
+        lp.rightMargin = 0;
 
         mBiometricIcon.setContentDescription(
                 getResources().getString(getIconDescriptionResourceId()));
@@ -336,10 +359,33 @@ public abstract class BiometricDialogView extends LinearLayout {
             updateState(mState);
         }
 
-        CharSequence titleText = mBundle.getCharSequence(BiometricPrompt.KEY_TITLE);
-
-        mTitleText.setVisibility(View.VISIBLE);
-        mTitleText.setText(titleText);
+        final CharSequence applockPackage = mBundle.getCharSequence(BiometricPrompt.KEY_APPLOCK_PKG);
+        final CharSequence titleText = mBundle.getCharSequence(BiometricPrompt.KEY_TITLE);
+        if (TextUtils.isEmpty(applockPackage)) {
+            mAppLockDialog = false;
+            mTitleText.setVisibility(View.VISIBLE);
+            mTitleText.setText(titleText);
+            mAppIcon.setVisibility(View.GONE);
+            mDescriptionText.setGravity(START);
+        } else {
+            mAppLockDialog = true;
+            ApplicationInfo aInfo = null;
+            try {
+                aInfo = mPackageManager.getApplicationInfoAsUser(applockPackage.toString(), 0, mUserId);
+            } catch(PackageManager.NameNotFoundException e) {
+            }
+            Drawable icon = (aInfo == null) ? null : mPackageManager.getApplicationIcon(aInfo);
+            if (icon == null) {
+                mTitleText.setVisibility(View.VISIBLE);
+                mTitleText.setText("Unlock " + titleText.toString());
+                mAppIcon.setVisibility(View.GONE);
+            } else {
+                mTitleText.setVisibility(View.GONE);
+                mAppIcon.setVisibility(View.VISIBLE);
+                mAppIcon.setImageDrawable(icon);
+            }
+            mDescriptionText.setGravity(CENTER);
+        }
 
         final CharSequence subtitleText = mBundle.getCharSequence(BiometricPrompt.KEY_SUBTITLE);
         if (TextUtils.isEmpty(subtitleText)) {
@@ -350,13 +396,18 @@ public abstract class BiometricDialogView extends LinearLayout {
             mSubtitleText.setText(subtitleText);
         }
 
-        final CharSequence descriptionText =
+        CharSequence descriptionText =
                 mBundle.getCharSequence(BiometricPrompt.KEY_DESCRIPTION);
         if (TextUtils.isEmpty(descriptionText)) {
             mDescriptionText.setVisibility(View.GONE);
             announceAccessibilityEvent();
         } else {
             mDescriptionText.setVisibility(View.VISIBLE);
+            if (mAppLockDialog) {
+                final CharSequence negText = mBundle.getCharSequence(BiometricPrompt.KEY_NEGATIVE_TEXT);
+                descriptionText += getResources().getString(R.string.applock_locked) + "\n"
+                        + negText + getResources().getString(getDescriptionTextId());
+            }
             mDescriptionText.setText(descriptionText);
         }
 
@@ -383,8 +434,18 @@ public abstract class BiometricDialogView extends LinearLayout {
         mSkipIntro = false;
     }
 
+    private int getDescriptionTextId() {
+        if (mIsFingerprint && mIsFace) {
+            return R.string.applock_fingerprint_face;
+        } else if (mIsFace) {
+            return R.string.applock_face;
+        } else {
+            return R.string.applock_fingerprint;
+        }
+    }
+
     protected int getAnimatingAwayDuration() {
-        return ANIMATION_DURATION_AWAY;
+        return (int) ((mAppLockDialog ? 1.3f : 1f ) * (float) ANIMATION_DURATION_AWAY);
     }
 
     public void setFaceAndFingerprint(boolean isFace, boolean isFingerprint) {
@@ -436,7 +497,6 @@ public abstract class BiometricDialogView extends LinearLayout {
                         .translationY(mAnimationTranslationOffset)
                         .setDuration(getAnimatingAwayDuration())
                         .setInterpolator(mLinearOutSlowIn)
-                        .withLayer()
                         .withEndAction(endActionRunnable)
                         .start();
             }

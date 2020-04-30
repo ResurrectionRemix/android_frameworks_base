@@ -3608,6 +3608,21 @@ public final class Settings {
         public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
         /**
+         * Indicates whether we should only show the app lock view when the device is woken up
+         * Or always.
+         * @hide
+         */
+        public static final String APP_LOCK_SHOW_ONLY_ON_WAKE = "app_lock_show_only_on_wake";
+
+        
+        /**
+         * Indicates whether we should only show the app lock view when the device is woken up
+         * Or always.
+         * @hide
+         */
+        public static final String APP_LOCK_HIDE_NOTIFICATIONS = "app_lock_hide_notifications";
+
+        /**
          * Control whether to enable adaptive sleep mode.
          * @hide
          */

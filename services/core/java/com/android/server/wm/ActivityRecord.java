@@ -115,6 +115,7 @@ import static com.android.server.wm.ActivityStack.LAUNCH_TICK_MSG;
 import static com.android.server.wm.ActivityStack.PAUSE_TIMEOUT_MSG;
 import static com.android.server.wm.ActivityStack.STACK_VISIBILITY_VISIBLE;
 import static com.android.server.wm.ActivityStack.STOP_TIMEOUT_MSG;
+import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_APPLOCK;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_CONFIGURATION;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_FOCUS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_SAVED_STATE;
@@ -122,6 +123,7 @@ import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_STATES;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_SWITCH;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_TRANSITION;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_VISIBILITY;
+import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_APPLOCK;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_CONFIGURATION;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_FOCUS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_SAVED_STATE;
@@ -249,6 +251,7 @@ public final class ActivityRecord extends ConfigurationContainer {
     private static final String TAG_SWITCH = TAG + POSTFIX_SWITCH;
     private static final String TAG_VISIBILITY = TAG + POSTFIX_VISIBILITY;
     private static final String TAG_FOCUS = TAG + POSTFIX_FOCUS;
+    private static final String TAG_APPLOCK = TAG + POSTFIX_APPLOCK;
     // TODO(b/67864419): Remove once recents component is overridden
     private static final String LEGACY_RECENTS_PACKAGE_NAME = "com.android.systemui.recents";
 
@@ -284,6 +287,7 @@ public final class ActivityRecord extends ConfigurationContainer {
     final String processName; // process where this component wants to run
     final String taskAffinity; // as per ActivityInfo.taskAffinity
     final boolean stateNotNeeded; // As per ActivityInfo.flags
+    boolean isAppLocked;
     boolean fullscreen; // The activity is opaque and fills the entire space of this task.
     // TODO: See if it possible to combine this with the fullscreen field.
     final boolean hasWallpaper; // Has a wallpaper window as a background.
@@ -302,6 +306,7 @@ public final class ActivityRecord extends ConfigurationContainer {
     private int realTheme;          // actual theme resource we will use, never 0.
     private int windowFlags;        // custom window flags for preview window.
     public int perfActivityBoostHandler = -1; //perflock handler when activity is created.
+    private int mResizeMode = -1;
     private TaskRecord task;        // the task this is in.
     private long createTime = System.currentTimeMillis();
     long lastVisibleTime;         // last time this activity became visible
@@ -1042,6 +1047,7 @@ public final class ActivityRecord extends ConfigurationContainer {
 
         packageName = aInfo.applicationInfo.packageName;
         launchMode = aInfo.launchMode;
+        isAppLocked = mAtmService.isAppLocked(packageName);
 
         Entry ent = AttributeCache.instance().get(packageName,
                 realTheme, com.android.internal.R.styleable.Window, mUserId);
@@ -1285,6 +1291,16 @@ public final class ActivityRecord extends ConfigurationContainer {
         return sourceRecord != null && sourceRecord.isResolverOrDelegateActivity();
     }
 
+    boolean getIsAppLocked() {
+        isAppLocked = mAtmService.isAppLocked(packageName);
+        if (isAppLocked) {
+            info.resizeMode = RESIZE_MODE_UNRESIZEABLE;
+        } else {
+            info.resizeMode = mResizeMode;
+        }
+        return isAppLocked;
+    }
+
     /**
      * @return whether the given package name can launch an assist activity.
      */
@@ -1316,6 +1332,12 @@ public final class ActivityRecord extends ConfigurationContainer {
         } else if (options != null && options.getLaunchActivityType() == ACTIVITY_TYPE_ASSISTANT
                 && canLaunchAssistActivity(launchedFromPackage)) {
             activityType = ACTIVITY_TYPE_ASSISTANT;
+        }
+        if (mResizeMode == -1){
+            mResizeMode = info.resizeMode;
+        }
+        if (getIsAppLocked()) {
+            info.resizeMode = RESIZE_MODE_UNRESIZEABLE;
         }
         setActivityType(activityType);
     }
