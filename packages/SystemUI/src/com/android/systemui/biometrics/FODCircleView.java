@@ -523,8 +523,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             return;
         }
 
-        if (mIsBouncer) {
-            // Ignore show calls when Keyguard pin screen is being shown
+        if (mIsBouncer && !isPinOrPattern(mUpdateMonitor.getCurrentUser())) {
+            // Ignore show calls when Keyguard password screen is being shown
             return;
         }
 
