@@ -507,6 +507,9 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
             if (isUp) {
                 boolean performAction = mEdgePanel.shouldTriggerBack();
                 boolean performLongSwipe = mEdgePanel.shouldTriggerLongSwipe();
+                if (mEdgeHaptic && (performAction || performLongSwipe)) {
+                    vibrateTick();
+                }
                 if (performLongSwipe) {
                     // Perform long swipe action
                     sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK,
