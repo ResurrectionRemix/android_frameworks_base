@@ -36,6 +36,7 @@ public class ScreenStateService extends Service  {
 
     private static final String TAG = "ScreenStateService";
     private BroadcastReceiver mPowerKeyReceiver;
+    private ThreeGToggle mThreeGToggle;
     private TwoGToggle mTwoGToggle;
     private GpsToggle mGpsToggle;
     private MobileDataToggle mMobileDataToggle;
@@ -107,6 +108,8 @@ public class ScreenStateService extends Service  {
         scrOffHandler = new Handler();
 
         fAllToggles = new ArrayList<ScreenStateToggle>();
+        mThreeGToggle = new ThreeGToggle(mContext);
+        fAllToggles.add(mThreeGToggle);
         mTwoGToggle = new TwoGToggle(mContext);
         fAllToggles.add(mTwoGToggle);
         mGpsToggle = new GpsToggle(mContext);

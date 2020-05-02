@@ -2054,4 +2054,11 @@ interface ITelephony {
      * @hide
      */
      void toggle2G(boolean on);
+
+    /**
+     * Toggle between 2G and 3G (NT_MODE_GSM_UMTS)
+     * @param boolean to turn on and off 3G
+     * @hide
+     */
+     void toggle3G(boolean on);
 }
