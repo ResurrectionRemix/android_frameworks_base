@@ -460,6 +460,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         mIconStyles = mContext.getResources().obtainTypedArray(R.array.fod_icon_resources);
         setImageResource(mIconStyles.getResourceId(mSelectedIcon, -1));
+        this.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         setWallpaperColor(true);
         invalidate();
