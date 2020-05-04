@@ -92,7 +92,7 @@ public class FODAnimation extends ImageView {
     }
 
     public void showFODanimation() {
-        if (mAnimParams != null && !mShowing && (mIsDreaming || mIsKeyguard)) {
+        if (mAnimParams != null && !mShowing && mIsKeyguard) {
             mShowing = true;
             if (this.getWindowToken() == null){
                 mWindowManager.addView(this, mAnimParams);

@@ -357,7 +357,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
             showCircle();
-            if (mIsRecognizingAnimEnabled) {
+            if (mIsRecognizingAnimEnabled && !mIsDreaming) {
                 mHandler.post(() -> mFODAnimation.showFODanimation());
             }
             return true;
