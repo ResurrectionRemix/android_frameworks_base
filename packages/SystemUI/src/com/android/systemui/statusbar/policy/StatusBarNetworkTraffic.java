@@ -36,7 +36,9 @@ import org.lineageos.internal.statusbar.NetworkTraffic;
 import lineageos.providers.LineageSettings;
 
 /** @hide */
-public class StatusBarNetworkTraffic extends NetworkTraffic implements StatusIconDisplayable {
+public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkReceiver,
+        StatusIconDisplayable {
+
 
     public static final String SLOT = "networktraffic";
 
@@ -54,18 +56,6 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements StatusIco
 
     public StatusBarNetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 
     @Override
