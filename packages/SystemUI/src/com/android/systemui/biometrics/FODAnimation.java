@@ -44,13 +44,13 @@ public class FODAnimation extends ImageView {
     private int mSelectedAnim;
     private TypedArray mAnimationStyles;
     private int mAnimationStylesCount;
+    private boolean mIsDreaming;
 
     public FODAnimation(Context context, int mPositionX, int mPositionY) {
         super(context);
 
         mContext = context;
         mWindowManager = mContext.getSystemService(WindowManager.class);
-
         mAnimationSize = mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size);
         mAnimParams.height = mAnimationSize;
         mAnimParams.width = mAnimationSize;
@@ -87,8 +87,12 @@ public class FODAnimation extends ImageView {
         mIsKeyguard = state;
     }
 
+    public void setDreamingAnimation(boolean dreaming) {
+         mIsDreaming = dreaming;
+    }
+
     public void showFODanimation() {
-        if (mAnimParams != null && !mShowing && mIsKeyguard) {
+        if (mAnimParams != null && !mShowing && (mIsDreaming || mIsKeyguard)) {
             mShowing = true;
             if (this.getWindowToken() == null){
                 mWindowManager.addView(this, mAnimParams);
