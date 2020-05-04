@@ -35,5 +35,6 @@
         <item>@drawable/fod_coloros7_1_recognizing_anim</item>
         <item>@drawable/fod_coloros7_2_recognizing_anim</item>
         <item>@drawable/fod_op_ripple_recognizing_anim</item>
+        <item>@drawable/fod_op_energy_recognizing_anim</item>
     </integer-array>
 </resources>
