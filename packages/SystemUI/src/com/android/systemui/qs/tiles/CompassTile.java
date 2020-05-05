@@ -26,7 +26,7 @@ import android.hardware.SensorManager;
 import android.widget.ImageView;
 
 import android.service.quicksettings.Tile;
-import com.android.internal.util.aicp.DeviceUtils;
+import com.android.internal.util.rr.DeviceUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 import com.android.systemui.R;
@@ -34,6 +34,8 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+
+import javax.inject.Inject;
 
 public class CompassTile extends QSTileImpl<BooleanState> implements SensorEventListener {
     private final static float ALPHA = 0.97f;
@@ -50,6 +52,7 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
     private ImageView mImage;
     private boolean mListeningSensors;
 
+    @Inject
     public CompassTile(QSHost host) {
         super(host);
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);

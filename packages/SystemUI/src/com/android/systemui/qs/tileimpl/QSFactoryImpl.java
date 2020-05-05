@@ -58,7 +58,7 @@ import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
-import com.android.systemui.qs.tiles.SoundSearchTile;
+import com.android.systemui.qs.tiles.SoundSearchTIle;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
@@ -170,11 +170,11 @@ public class QSFactoryImpl implements QSFactory {
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<RRTile> rrTileProvider,
             Provider<AODTile> aodTileProvider,
-            Provider<SmartPixelsTile> smartPixelsTileProvider),
-            Provider<SoundTile> soundTileProvider),
-            Provider<MusicTile> musicTileProvider),
-            Provider<RebootTile> rebootTileProvider),
-            Provider<CompassTile> compassTileProvider){
+            Provider<SmartPixelsTile> smartPixelsTileProvider,
+            Provider<SoundTile> soundTileProvider,
+            Provider<MusicTile> musicTileProvider,
+            Provider<RebootTile> rebootTileProvider,
+            Provider<CompassTile> compassTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;

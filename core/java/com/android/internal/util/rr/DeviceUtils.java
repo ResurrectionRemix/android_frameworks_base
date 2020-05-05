@@ -26,6 +26,8 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.WifiDisplayStatus;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.nfc.NfcAdapter;
 import android.provider.Settings;
@@ -94,6 +96,12 @@ public class DeviceUtils {
     public static boolean deviceSupportsVibrator(Context ctx) {
         Vibrator vibrator = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
         return vibrator.hasVibrator();
+    }
+
+    public static boolean deviceSupportsCompass(Context ctx) {
+        SensorManager sm = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
+        return sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null
+                && sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null;
     }
 
     public static boolean deviceSupportsTorch(Context context) {
