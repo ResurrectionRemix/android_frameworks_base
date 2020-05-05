@@ -26,11 +26,10 @@
     android:id="@+id/keyguard_pattern_view"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
     androidprv:layout_maxWidth="@dimen/keyguard_security_width"
-    androidprv:layout_maxHeight="@dimen/keyguard_security_height"
     android:gravity="center_horizontal">
 
     <FrameLayout
@@ -61,13 +60,20 @@
                 android:clipChildren="false"
                 android:clipToPadding="false" />
 
-          <include layout="@layout/keyguard_eca"
-              android:id="@+id/keyguard_selector_fade_container"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:layout_gravity="bottom|center_horizontal"
-              android:gravity="center_horizontal" />
+            <View
+                android:id="@+id/fod_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/keyguard_security_fod_view_margin"
+                android:layout_gravity="bottom"
+                android:visibility="gone" />
+
+            <include layout="@layout/keyguard_eca"
+                android:id="@+id/keyguard_selector_fade_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="center_horizontal" />
         </LinearLayout>
     </FrameLayout>
 

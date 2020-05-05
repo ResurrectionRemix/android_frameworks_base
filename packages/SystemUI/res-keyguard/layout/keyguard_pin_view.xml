@@ -22,17 +22,15 @@
         xmlns:androidprv="http://schemas.android.com/apk/res-auto"
         android:id="@+id/keyguard_pin_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         androidprv:layout_maxWidth="@dimen/keyguard_security_width"
-        androidprv:layout_maxHeight="@dimen/keyguard_security_max_height"
         android:orientation="vertical"
         >
     <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/keyguard_security_height"
             android:orientation="vertical"
-            android:layout_weight="1"
             android:layoutDirection="ltr"
             >
         <com.android.keyguard.AlphaOptimizedRelativeLayout
@@ -192,6 +190,14 @@
                     />
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/fod_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyguard_security_fod_view_margin"
+        android:layout_gravity="bottom"
+        android:visibility="gone" />
+
     <include layout="@layout/keyguard_eca"
              android:id="@+id/keyguard_selector_fade_container"
              android:layout_width="match_parent"

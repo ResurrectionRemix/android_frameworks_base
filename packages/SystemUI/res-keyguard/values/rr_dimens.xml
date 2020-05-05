@@ -154,4 +154,8 @@
     <dimen name="widget_date_accent_box_padding_ver">6dp</dimen>
     <dimen name="q_nowplay_pill_padding_hor">17.0sp</dimen>
     <dimen name="q_nowplay_pill_padding_ver">8.0sp</dimen>
+
+    <!-- The margin between Emergency Carrier area and pattern/pin
+         view to incorporate the FOD icon -->
+    <dimen name="keyguard_security_fod_view_margin">140dp</dimen>
 </resources>
