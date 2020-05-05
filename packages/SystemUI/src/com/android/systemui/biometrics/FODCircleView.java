@@ -83,6 +83,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
+    private boolean mIsPulsing;
     private boolean mIsKeyguard;
     private boolean mIsShowing;
     private boolean mIsCircleShowing;
@@ -190,6 +191,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             super.onBiometricAuthenticated(userId, biometricSourceType);
             mIsAuthenticated = true;
         }
+
+        @Override
+        public void onPulsing(boolean pulsing) {
+            super.onPulsing(pulsing);
+            mIsPulsing = pulsing;
+	        if (mIsPulsing) {
+               mIsDreaming = false;
+	        }
+        } 
 
         @Override
         public void onScreenTurnedOff() {
@@ -357,7 +367,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
             showCircle();
-            if (mIsRecognizingAnimEnabled && !mIsDreaming) {
+            if (mIsRecognizingAnimEnabled && (!mIsDreaming || mIsPulsing)) {
                 mHandler.post(() -> mFODAnimation.showFODanimation());
             }
             return true;
