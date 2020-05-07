@@ -4,4 +4,8 @@
     <!-- Custom Carrier Label -->
     <color name="status_bar_carrier_color">#FFFFFFFF</color>
     <color name="rr_config_icon_tint">?android:attr/colorControlNormal</color>
+
+    <!-- Dismiss all icon -->
+    <color name="recents_dismiss_all_background_color">@android:color/white</color>
+    <color name="recents_dismiss_all_icon_color">#8a000000</color>
 </resources>
