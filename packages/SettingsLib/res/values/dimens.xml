@@ -87,7 +87,7 @@
     <dimen name="zen_mode_condition_detail_bottom_padding">4dp</dimen>
 
     <!-- SignalDrawable -->
-    <dimen name="signal_icon_size">14dp</dimen>
+    <dimen name="signal_icon_size">15dp</dimen>
 
     <!-- Size of nearby icon -->
     <dimen name="bt_nearby_icon_size">24dp</dimen>
