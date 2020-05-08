@@ -18,6 +18,7 @@ package com.android.systemui.settings;
 
 import static com.android.settingslib.display.BrightnessUtils.GAMMA_SPACE_MAX;
 import static com.android.systemui.qs.QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS;
+import static com.android.systemui.qs.QSPanel.QS_AUTO_BRIGHTNESS_POS;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -71,8 +72,9 @@ public class BrightnessDialog extends Activity implements Tunable {
         setContentView(brightnessView);
 
         final ImageView icon = findViewById(R.id.brightness_icon);
+        final ImageView iconleft = findViewById(R.id.brightness_icon_left);
         final ToggleSliderView slider = findViewById(R.id.brightness_slider);
-        mBrightnessController = new BrightnessController(this, icon, slider);
+        mBrightnessController = new BrightnessController(this, icon, iconleft, slider);
 
         mMinBrightness = brightnessView.findViewById(R.id.brightness_left);
         mMinBrightness.setOnClickListener(new View.OnClickListener() {

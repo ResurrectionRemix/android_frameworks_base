@@ -4599,6 +4599,13 @@ public final class Settings {
         public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
+         * Whether to display qs brightness icon on left or right
+         * @hide
+         */
+
+      public static final String QS_AUTO_BRIGHTNESS_POS = "qs_auto_icon_pos";
+
+        /**
          * Screenrecord: enable mic
          * @hide
          */

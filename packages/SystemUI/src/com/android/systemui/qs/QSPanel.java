@@ -101,6 +101,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
     public static final String QS_SHOW_SECURITY = "qs_show_secure";
     public static final String QS_LONG_PRESS_ACTION = "qs_long_press_action";
+    public static final String QS_AUTO_BRIGHTNESS_POS =
+            "system:" + Settings.System.QS_AUTO_BRIGHTNESS_POS;
 
     private static final String TAG = "QSPanel";
 
@@ -135,7 +137,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     private BrightnessMirrorController mBrightnessMirrorController;
     private View mDivider;
-    private int animStyle, animDuration, interpolatorType;
+    private int animStyle, animDuration, interpolatorType, mPosition;
     private boolean mDualTargetSecondary;
 
     // omni
@@ -190,6 +192,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         updateResources();
 
         mBrightnessController = new BrightnessController(getContext(),
+                findViewById(R.id.brightness_icon_left),
                 findViewById(R.id.brightness_icon),
                 findViewById(R.id.brightness_slider));
 
@@ -295,6 +298,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         tunerService.addTunable(this, QS_BRIGHTNESS_POSITION_BOTTOM);
         tunerService.addTunable(this, QS_SHOW_SECURITY);
         tunerService.addTunable(this, QS_LONG_PRESS_ACTION);
+        tunerService.addTunable(this, QS_AUTO_BRIGHTNESS_POS);
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -325,14 +329,23 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         setTiles(mHost.getTiles());
     }
 
-    private void updateAutoViewVisibilityForTuningValue(View view, @Nullable String newValue) {
+    private void updateAutoViewVisibilityForTuningValue(View view, int pos, @Nullable String newValue) {
+        if (pos == 0) {
+            view = findViewById(R.id.brightness_icon);
+        } else if (pos == 1) {
+            view = findViewById(R.id.brightness_icon_left);
+        }
         view.setVisibility(TunerService.parseIntegerSwitch(newValue, true) ? VISIBLE : GONE);
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (QS_SHOW_AUTO_BRIGHTNESS.equals(key) && mIsAutomaticBrightnessAvailable) {
-            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, newValue);
+            mPosition = TunerService.parseInteger(newValue, 0);
+            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mPosition, newValue);
+        } else if (QS_AUTO_BRIGHTNESS_POS.equals(key) && mIsAutomaticBrightnessAvailable) {
+            mPosition = TunerService.parseInteger(newValue, 0);
+            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mPosition, newValue);
         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             updateViewVisibilityForTuningValue(newValue);
         } else if (ANIM_TILE_STYLE.equals(key)) {
