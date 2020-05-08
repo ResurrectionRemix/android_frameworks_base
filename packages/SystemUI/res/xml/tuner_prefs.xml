@@ -40,6 +40,11 @@
             android:title="@string/tuner_show_brightness_side_buttons"
             sysui:defValue="false" />
 
+       <com.android.systemui.tuner.TunerSwitch
+            android:key="qs_show_auto_brightness_button"
+            android:title="@string/tuner_show_brightness_mode"
+            sysui:defValue="false" />
+
         <com.android.systemui.tuner.TunerSwitch
             android:key="qs_show_secure"
             android:icon="@drawable/rr_footer_icon"
