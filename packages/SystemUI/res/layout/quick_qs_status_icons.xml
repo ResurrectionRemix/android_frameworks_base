@@ -18,7 +18,7 @@
     xmlns:systemui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/quick_qs_status_icons"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/qs_header_tooltip_height"
     android:paddingTop="@dimen/qs_header_top_padding"
     android:paddingBottom="@dimen/qs_header_bottom_padding"
     android:paddingStart="@dimen/status_bar_padding_start"
