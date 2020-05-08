@@ -110,6 +110,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     protected final View mBrightnessView;
     protected final ImageView mAutoBrightnessView;
+    protected final ImageView mLeftAutoBrightnessView;
     private final H mHandler = new H();
     private final MetricsLogger mMetricsLogger = Dependency.get(MetricsLogger.class);
     private final QSTileRevealController mQsTileRevealController;
@@ -243,6 +244,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         mDumpController = dumpController;
 
         mAutoBrightnessView = findViewById(R.id.brightness_icon);
+        mLeftAutoBrightnessView = findViewById(R.id.brightness_icon_left);
 
         mIsAutomaticBrightnessAvailable = getResources().getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
@@ -289,7 +291,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, QS_SHOW_AUTO_BRIGHTNESS);
         tunerService.addTunable(this, QS_SHOW_BRIGHTNESS_SLIDER);
         tunerService.addTunable(this, ANIM_TILE_STYLE);
         tunerService.addTunable(this, ANIM_TILE_DURATION);
@@ -329,23 +330,26 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         setTiles(mHost.getTiles());
     }
 
-    private void updateAutoViewVisibilityForTuningValue(View view, int pos, @Nullable String newValue) {
-        if (pos == 0) {
-            view = findViewById(R.id.brightness_icon);
-        } else if (pos == 1) {
-            view = findViewById(R.id.brightness_icon_left);
-        }
-        view.setVisibility(TunerService.parseIntegerSwitch(newValue, true) ? VISIBLE : GONE);
+    private void updateAutoViewVisibilityForTuningValue(View view,View leftview, int pos) {
+    try {
+            if (pos == 0) {
+                view.setVisibility(View.GONE);
+                leftview.setVisibility(View.GONE);
+            } else if (pos == 1) {
+                view.setVisibility(View.GONE);
+                leftview.setVisibility(View.VISIBLE);
+            } else if (pos == 2) {
+                view.setVisibility(View.VISIBLE);
+                leftview.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {}
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_AUTO_BRIGHTNESS.equals(key) && mIsAutomaticBrightnessAvailable) {
+         if (QS_AUTO_BRIGHTNESS_POS.equals(key) && mIsAutomaticBrightnessAvailable) {
             mPosition = TunerService.parseInteger(newValue, 0);
-            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mPosition, newValue);
-        } else if (QS_AUTO_BRIGHTNESS_POS.equals(key) && mIsAutomaticBrightnessAvailable) {
-            mPosition = TunerService.parseInteger(newValue, 0);
-            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mPosition, newValue);
+            updateAutoViewVisibilityForTuningValue(mAutoBrightnessView, mLeftAutoBrightnessView, mPosition);
         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             updateViewVisibilityForTuningValue(newValue);
         } else if (ANIM_TILE_STYLE.equals(key)) {
