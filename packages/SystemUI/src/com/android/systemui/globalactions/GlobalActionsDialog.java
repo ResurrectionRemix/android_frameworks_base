@@ -834,7 +834,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
             @Override
             public void onPress() {
-                TakeScreenRecord();
+                mScreenRecordHelper.launchRecordPrompt();
             }
 
             @Override
