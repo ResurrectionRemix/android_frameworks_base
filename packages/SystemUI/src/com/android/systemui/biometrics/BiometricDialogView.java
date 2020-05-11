@@ -115,6 +115,8 @@ public abstract class BiometricDialogView extends LinearLayout {
     private boolean mAnimatingAway;
     private boolean mWasForceRemoved;
     private boolean mSkipIntro;
+    private boolean mIsFingerprint;
+    private boolean mIsFace;
     protected boolean mRequireConfirmation;
     private int mUserId; // used to determine if we should show work background
     private final boolean mHasFod;
@@ -381,6 +383,15 @@ public abstract class BiometricDialogView extends LinearLayout {
         mSkipIntro = false;
     }
 
+    protected int getAnimatingAwayDuration() {
+        return ANIMATION_DURATION_AWAY;
+    }
+
+    public void setFaceAndFingerprint(boolean isFace, boolean isFingerprint) {
+        mIsFace = isFace;
+        mIsFingerprint = isFingerprint;
+    }
+
     private void setDismissesDialog(View v) {
         v.setClickable(true);
         v.setOnClickListener(v1 -> {
@@ -417,13 +428,13 @@ public abstract class BiometricDialogView extends LinearLayout {
             public void run() {
                 mLayout.animate()
                         .alpha(0f)
-                        .setDuration(ANIMATION_DURATION_AWAY)
+                        .setDuration(getAnimatingAwayDuration())
                         .setInterpolator(mLinearOutSlowIn)
                         .withLayer()
                         .start();
                 mDialog.animate()
                         .translationY(mAnimationTranslationOffset)
-                        .setDuration(ANIMATION_DURATION_AWAY)
+                        .setDuration(getAnimatingAwayDuration())
                         .setInterpolator(mLinearOutSlowIn)
                         .withLayer()
                         .withEndAction(endActionRunnable)
