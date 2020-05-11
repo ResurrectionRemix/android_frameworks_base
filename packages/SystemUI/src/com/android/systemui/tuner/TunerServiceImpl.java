@@ -38,6 +38,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.systemui.DemoMode;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.settings.CurrentUserTracker;
+import com.android.systemui.statusbar.phone.ClockController;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.phone.EdgeBackGestureHandler;
 import com.android.systemui.statusbar.phone.NavigationBarView;
@@ -58,6 +59,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import static android.provider.Settings.Secure.STATUS_BAR_CLOCK;
 
 /**
  */
@@ -74,7 +76,7 @@ public class TunerServiceImpl extends TunerService {
             Clock.STATUS_BAR_CLOCK_AUTO_HIDE,
             Clock.STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
             Clock.STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION,
-            ClockController.STATUS_BAR_CLOCK,
+            STATUS_BAR_CLOCK,
             NavigationBarView.NAVIGATION_BAR_MENU_ARROW_KEYS,
             NotificationPanelView.DOUBLE_TAP_SLEEP_GESTURE,
             NotificationPanelView.STATUS_BAR_QUICK_QS_PULLDOWN,

@@ -743,6 +743,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mHideDragHandle = newValue != null && Integer.parseInt(newValue) == 0;
             updateResources();
                 break;
+            case SHOW_QS_CLOCK:
+                boolean showClock =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                mClockView.setClockVisibleByUser(showClock);
+                break;
             default:
                 break;
         }
@@ -753,7 +758,5 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateStatusbarProperties() {
         boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
         mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
-        mClockView.setClockVisibleByUser(newValue == null ? true :
-                Integer.valueOf(newValue) != 0);
     }
 }

@@ -67,6 +67,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.provider.Settings;
+
 /**
  * Digital clock for the status bar.
  */
@@ -127,7 +129,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private boolean mClockAutoHide;
     private int mHideDuration = HIDE_DURATION, mShowDuration = SHOW_DURATION;
     private Handler mHandler = new Handler();
-    private boolean mQsHeader;
 
     public static final String STATUS_BAR_CLOCK_AUTO_HIDE =
             "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
@@ -309,10 +310,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         }
 
         super.setVisibility(visibility);
-    }
-
-    public void setQsHeader() {
-        mQsHeader = true;
     }
 
     public void setClockVisibleByUser(boolean visible) {
