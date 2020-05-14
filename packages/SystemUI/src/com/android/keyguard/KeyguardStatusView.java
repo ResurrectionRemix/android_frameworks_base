@@ -210,7 +210,6 @@ public class KeyguardStatusView extends GridLayout implements
         mKeyguardSlice = findViewById(R.id.keyguard_status_area);
 
         mWeatherView = (CurrentWeatherView) findViewById(R.id.weather_container);
-        updateSettings();
 
         mTextColor = mClockView.getCurrentTextColor();
 
@@ -467,7 +466,11 @@ public class KeyguardStatusView extends GridLayout implements
         mPulsing = pulsing;
         mPulsingAllowed = mPulsing && mPulseWeather;
         if (mWeatherView != null) {
-            mWeatherView.setVisibility((mShowWeather && mOmniStyle && mPulsingAllowed ) ? View.VISIBLE : View.GONE);
+            if (mShowWeather && mOmniStyle && mPulsingAllowed) {
+                mWeatherView.setVisibility(View.VISIBLE);
+            } else if (mShowWeather && mOmniStyle && mPulsing) {
+                mWeatherView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -512,5 +515,4 @@ public class KeyguardStatusView extends GridLayout implements
             }
         }
     }
-
 }
