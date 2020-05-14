@@ -343,7 +343,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private int getFODPressedState() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_PRESSED_STATE, 0);
+                Settings.System.FOD_PRESSED_STATE, 2);
     }
 
     private void setFODPressedState() {
