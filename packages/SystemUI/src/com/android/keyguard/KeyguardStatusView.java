@@ -75,6 +75,8 @@ public class KeyguardStatusView extends GridLayout implements
     private CurrentWeatherView mWeatherView;
     private boolean mShowWeather;
     private boolean mOmniStyle;
+    private boolean mPulsingAllowed = false;
+    private boolean mPulseWeather;
 
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
@@ -463,8 +465,9 @@ public class KeyguardStatusView extends GridLayout implements
             return;
         }
         mPulsing = pulsing;
+        mPulsingAllowed = mPulsing && mPulseWeather;
         if (mWeatherView != null) {
-            mWeatherView.setVisibility((mShowWeather && mOmniStyle && !mPulsing) ? View.VISIBLE : View.GONE);
+            mWeatherView.setVisibility((mShowWeather && mOmniStyle && mPulsingAllowed ) ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -488,6 +491,10 @@ public class KeyguardStatusView extends GridLayout implements
         final Resources res = getContext().getResources();
         mShowWeather = Settings.System.getIntForUser(resolver,
                 Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        mPulseWeather = Settings.System.getIntForUser(resolver,
+                Settings.System.LS_WEATHER_PULSING, 0,
                 UserHandle.USER_CURRENT) == 1;
 
         mOmniStyle = Settings.System.getIntForUser(resolver,

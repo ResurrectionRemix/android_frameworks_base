@@ -3706,6 +3706,13 @@ public final class Settings {
         private static final Validator VIBRATION_INTENSITY_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
 
+
+        /**
+        * Weather to show weather on ambient display
+        * @hide
+        */
+        public static final String LS_WEATHER_PULSING = "ls_weather_pulsing";
+
         /**
          * Ringer volume. This is used internally, changing this value will not
          * change the volume. See AudioManager.
