@@ -4695,12 +4695,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 // Don't allow key events from hw keys when navbar is enabled.
                 return 0;
-            } else if (!interactive) {
-                if (DEBUG_INPUT) {
-                    Log.d(TAG, "interceptKeyBeforeQueueing(): key policy: screen not interactive, discard hw event.");
-                }
-                // Ensure nav keys are handled on full interactive screen only.
-                return 0;
             } else if (interactive) {
                 if (!down) {
                     // Make sure we consume hw key events properly. Discard them
