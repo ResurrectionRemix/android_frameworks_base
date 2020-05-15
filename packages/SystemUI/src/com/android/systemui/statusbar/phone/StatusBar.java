@@ -313,6 +313,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
     private static final String BERRY_DARK_STYLE =
             "system:" + Settings.System.BERRY_DARK_STYLE;
+    private static final String STATUS_BAR_CUSTOM_HEADER =
+            "system:" + Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -799,7 +801,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
         tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
         tunerService.addTunable(this, BERRY_DARK_STYLE);
-
+        tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -5517,6 +5519,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mDarkStyle = darkStyle;
                     updateTheme();
                 }
+        } else if (STATUS_BAR_CUSTOM_HEADER.equals(key)) {
+                    updateTheme();
         }
 
     }
