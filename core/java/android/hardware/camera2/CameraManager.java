@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
+import android.app.ActivityThread;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.CameraInfo;
@@ -44,6 +45,8 @@ import android.util.Log;
 import android.util.Size;
 import android.view.Display;
 import android.view.WindowManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
