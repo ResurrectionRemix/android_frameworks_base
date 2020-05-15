@@ -136,9 +136,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-                if (mFODAnimation != null) {
-                    mFODAnimation.setDreamingAnimation(dreaming);
-                }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
             }
