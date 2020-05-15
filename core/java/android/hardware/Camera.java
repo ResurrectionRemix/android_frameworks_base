@@ -300,17 +300,27 @@ public class Camera {
         /* Force to expose only two cameras
          * if the package name does not falls in this bucket
          */
-        String packageList = SystemProperties.get("vendor.camera.aux.packagelist", "");
-        String packageBlacklist = SystemProperties.get("vendor.camera.aux.packageblacklist", "");
-        if (!packageList.isEmpty()) {
+        String packageList = SystemProperties.get("vendor.camera.aux.packagelist");
+        String packageBlacklist = SystemProperties.get("vendor.camera.aux.packageblacklist");
+        if (packageList.length() > 0) {
+            TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
+            splitter.setString(packageList);
             exposeAuxCamera = false;
-            if (Arrays.asList(packageList.split(",")).contains(packageName)) {
-                exposeAuxCamera = true;
+            for (String str : splitter) {
+                if (packageName.equals(str)) {
+                    exposeAuxCamera = true;
+                    break;
+                }
             }
-        } else if (!packageBlacklist.isEmpty()) {
+        } else if (packageBlacklist.length() > 0) {
+            TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
+            splitter.setString(packageBlacklist);
             exposeAuxCamera = true;
-            if (Arrays.asList(packageBlacklist.split(",")).contains(packageName)) {
-                exposeAuxCamera = false;
+            for (String str : splitter) {
+                if (packageName.equals(str)) {
+                    exposeAuxCamera = false;
+                    break;
+                }
             }
         }
         int numberOfCameras = _getNumberOfCameras();
