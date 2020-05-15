@@ -52,7 +52,7 @@
 
     <integer-array name="fod_icon_resources">
         <item>@drawable/fod_icon_default</item>
-        <item>@drawable/fod_icon_default_2</item>
+        <item>@drawable/fod_icon_default_1</item>
         <item>@drawable/fod_icon_default_2</item>
         <item>@drawable/fod_icon_default_3</item>
         <item>@drawable/fod_icon_default_4</item>
