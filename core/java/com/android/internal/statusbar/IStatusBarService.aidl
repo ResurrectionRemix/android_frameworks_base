@@ -121,4 +121,6 @@ interface IStatusBarService
      * RR
      */
     void toggleCameraFlash();
+    void killForegroundApp();
+    void screenPinningStateChanged(boolean enabled);
 }

@@ -39,6 +39,7 @@ import android.view.WindowManagerGlobal;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.settingslib.bluetooth.LocalBluetoothManager;
+import com.android.systemui.navigation.pulse.PulseControllerImpl;
 import com.android.systemui.plugins.PluginInitializerImpl;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.shared.plugins.PluginManagerImpl;
@@ -51,6 +52,7 @@ import com.android.systemui.statusbar.phone.ConfigurationControllerImpl;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DataSaverController;
 import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.util.leak.LeakDetector;
 
 import javax.inject.Named;
@@ -211,5 +213,12 @@ public class DependencyProvider {
     @Provides
     public PackageManagerWrapper providePackageManagerWrapper() {
         return PackageManagerWrapper.getInstance();
+    }
+
+    @Singleton
+    @Provides
+    public PulseController providePulseController(Context context,
+            @Named(MAIN_HANDLER_NAME) Handler mainHandler) {
+        return new PulseControllerImpl(context, mainHandler);
     }
 }

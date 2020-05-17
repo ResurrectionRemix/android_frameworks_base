@@ -268,6 +268,17 @@ interface IAudioService {
 
     int getAllowedCapturePolicy();
 
+    /**
+     * Internal api to protect Pulse
+     * @hide
+     */
+    void setVisualizerLocked(boolean doLock);
+
+    /**
+     * @hide
+     */
+    boolean isVisualizerLocked(String callingPackage);
+
     // WARNING: read warning at top of file, new methods that need to be used by native
     // code via IAudioManager.h need to be added to the top section.
 }

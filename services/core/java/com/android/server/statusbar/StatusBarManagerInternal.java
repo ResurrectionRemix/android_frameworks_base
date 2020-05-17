@@ -113,4 +113,9 @@ public interface StatusBarManagerInternal {
      * Notifies System UI whether the recents animation is running.
      */
     void onRecentsAnimationStateChanged(boolean running);
+
+    /**
+     * Window manager notifies SystemUI of navigation bar "left in landscape" changes
+     */
+    void leftInLandscapeChanged(boolean isLeft);
 }

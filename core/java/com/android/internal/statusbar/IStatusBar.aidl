@@ -183,4 +183,6 @@ oneway interface IStatusBar
      * ABC
      */
     void toggleCameraFlash();
+    void screenPinningStateChanged(boolean enabled);
+    void leftInLandscapeChanged(boolean isLeft);
 }
