@@ -5406,6 +5406,16 @@ public final class Settings {
         private static final Validator STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+       /**
+         * Width of Ambient edge light in px
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT_WIDTH = "pulse_ambient_light_width";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_WIDTH_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
         /**
          * Gaming mode master switch
          * @hide
@@ -5428,7 +5438,6 @@ public final class Settings {
          * Package name of apps for enabling Gaming mode
          * @hide
          */
-
         public static final String GAMING_MODE_VALUES = "gaming_mode_values";
         /** @hide */
        private static final Validator GAMING_MODE_VALUES_VALIDATOR =
@@ -6157,6 +6166,7 @@ public final class Settings {
             STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
             STATUS_BAR_TICKER_TICK_DURATION,
+            PULSE_AMBIENT_LIGHT_WIDTH,
             GAMING_MODE_ENABLED,
             GAMING_MODE_ACTIVE,
             GAMING_MODE_VALUES,
@@ -6380,6 +6390,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_WIDTH);
             PRIVATE_SETTINGS.add(GAMING_MODE_ENABLED);
             PRIVATE_SETTINGS.add(GAMING_MODE_ACTIVE);
             PRIVATE_SETTINGS.add(GAMING_MODE_VALUES);
@@ -6588,6 +6599,7 @@ public final class Settings {
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
                     STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_WIDTH, PULSE_AMBIENT_LIGHT_WIDTH_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_ENABLED, GAMING_MODE_ENABLED_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_ACTIVE, GAMING_MODE_ACTIVE_VALIDATOR);
             VALIDATORS.put(GAMING_MODE_VALUES, GAMING_MODE_VALUES_VALIDATOR);

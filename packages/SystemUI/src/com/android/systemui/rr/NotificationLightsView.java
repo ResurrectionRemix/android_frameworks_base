@@ -130,6 +130,9 @@ public class NotificationLightsView extends RelativeLayout {
     }
 
     public void animateNotificationWithColor(int color) {
+        int width = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_WIDTH, 125,
+                UserHandle.USER_CURRENT);
         if (mLeftView == null) {
             mLeftView = (ImageView) findViewById(R.id.notification_animation_left);
         }
@@ -138,6 +141,8 @@ public class NotificationLightsView extends RelativeLayout {
         }
         mLeftView.setColorFilter(color);
         mRightView.setColorFilter(color);
+        mLeftView.getLayoutParams().width = width;
+        mRightView.getLayoutParams().width = width;
         if (!mLightAnimator.isRunning()) {
             if (DEBUG) Log.d(TAG, "start");
             int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
