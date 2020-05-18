@@ -32,6 +32,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.hardware.biometrics.BiometricSourceType;
+import android.hardware.display.DisplayManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -103,6 +104,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private boolean mIsShowing;
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
+    private final DisplayManager mDisplayManager;
 
     private float mCurrentDimAmount = 0.0f;
 
@@ -299,6 +301,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 }
             }
         });
+        mDisplayManager = context.getSystemService(DisplayManager.class);
     }
 
     private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
@@ -472,9 +475,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void switchHbm(boolean enable) {
         if (mShouldBoostBrightness) {
             if (enable) {
-                mParams.screenBrightness = 1.0f;
+                mDisplayManager.setTemporaryBrightness(255);
             } else {
-                mParams.screenBrightness = 0.0f;
+                mDisplayManager.setTemporaryBrightness(-1);
             }
             mWindowManager.updateViewLayout(this, mParams);
         }
