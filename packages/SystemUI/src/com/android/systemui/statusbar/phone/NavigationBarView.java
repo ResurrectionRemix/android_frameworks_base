@@ -144,6 +144,7 @@ public class NavigationBarView extends FrameLayout implements
     private boolean mDockedStackExists;
     private boolean mImeVisible;
     private boolean mShowGestureNavbar;
+    private boolean isButtonMode;
 
     private final SparseArray<ButtonDispatcher> mButtonDispatchers = new SparseArray<>();
     private final ContextualButtonGroup mContextualButtonGroup;
@@ -286,6 +287,8 @@ public class NavigationBarView extends FrameLayout implements
         mNavBarMode = Dependency.get(NavigationModeController.class).addListener(this);
         boolean isGesturalMode = isGesturalMode(mNavBarMode);
         mShowGestureNavbar = RRUtils.shouldShowGestureNav(context);
+        isButtonMode = RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton")
+                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
 
         // Set up the context group of buttons
         mContextualButtonGroup = new ContextualButtonGroup(R.id.menu_container);
@@ -674,6 +677,10 @@ public class NavigationBarView extends FrameLayout implements
             // With gestural mode enabled, ensure that cursor keys are not shown if IME is visible
             showCursorKeys &= !mImeVisible;
         }
+        // right arrow overrules ime in 3 button mode cause there is not enough space
+        if ((QuickStepContract.isLegacyMode(mNavBarMode) && showDpadArrowKeys()) || (!showIMESpace() && !isButtonMode)) {
+            mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, false);
+        }
         final int cursorKeyVisibility = showCursorKeys ? View.VISIBLE : View.INVISIBLE;
 
         getCursorLeftButton().setVisibility(cursorKeyVisibility);
@@ -705,7 +712,7 @@ public class NavigationBarView extends FrameLayout implements
         } else if (pinningActive) {
             disableBack = disableRecent = false;
         }
-        if (pinningActive && isGesturalMode(mNavBarMode)){
+        if ((pinningActive && isGesturalMode(mNavBarMode)) || (!showIMESpace() && !isButtonMode)){
             disableBack = true;
         }
 
@@ -1090,8 +1097,10 @@ public class NavigationBarView extends FrameLayout implements
                     : getResources().getDimensionPixelSize(
                             com.android.internal.R.dimen.navigation_bar_height);
             int finalHeight = mShowGestureNavbar ? height : 0;
-            int frameHeight = showIMESpace() ? getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_frame_height) : 0;
+            int frameHeight = showIMESpace() || isButtonMode ? getResources().getDimensionPixelSize(
+                    com.android.internal.R.dimen.navigation_bar_frame_height) : mShowGestureNavbar ?
+                            getResources().getDimensionPixelSize(
+                                    com.android.internal.R.dimen.navigation_bar_height) : 0;
             mBarTransitions.setBackgroundFrame(new Rect(0, frameHeight - finalHeight, w, h));
         }
 
@@ -1302,9 +1311,14 @@ public class NavigationBarView extends FrameLayout implements
                 Settings.System.NAVIGATION_BAR_IME_SPACE, 1, UserHandle.USER_CURRENT) != 0;
     }
 
-
     public void updateBackGestureHaptic() {
         mEdgeBackGestureHandler.setStateForBackGestureHaptic();
+    }
+
+    private boolean showDpadArrowKeys() {
+        return ((LineageSettings.System.getIntForUser(getContext().getContentResolver(),
+                LineageSettings.System.NAVIGATION_BAR_MENU_ARROW_KEYS, 0, UserHandle.USER_CURRENT) != 0)
+                && (showIMESpace() || isButtonMode));
     }
 
 }
