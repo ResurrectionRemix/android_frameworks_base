@@ -102,6 +102,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private int mHbmOffDelay;
     private int mHbmOnDelay;
     private boolean mSupportsAlwaysOnHbm;
+    private boolean mNeedsHBMonBrightnessChange;
     private boolean mIsBouncer;
     private boolean mIsDreaming;
     private boolean mIsPulsing;
@@ -270,6 +271,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             mPositionY = daemon.getPositionY();
             mSize = daemon.getSize();
             if (daemon_v1_1 != null) {
+                mNeedsHBMonBrightnessChange = daemon_v1_1.needsHBMonBrightnessChange();
                 mSupportsAlwaysOnHbm = daemon_v1_1.supportsAlwaysOnHBM();
                 mHbmOnDelay = daemon_v1_1.getHbmOnDelay();
                 mHbmOffDelay = daemon_v1_1.getHbmOffDelay();
@@ -375,6 +377,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void onTuningChanged(String key, String newValue) {
         mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
         setDim(true);
+        if (mNeedsHBMonBrightnessChange) {
+            switchHbm(true);
+        }
     }
 
     @Override
