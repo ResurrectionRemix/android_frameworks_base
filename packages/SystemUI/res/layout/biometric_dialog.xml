@@ -106,7 +106,7 @@
                             android:layout_width="@dimen/biometric_dialog_biometric_icon_size"
                             android:layout_height="@dimen/biometric_dialog_biometric_icon_size"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="48dp"
+                            android:layout_marginTop="24dp"
                             android:scaleType="fitXY" />
 
                         <TextView
