@@ -194,4 +194,8 @@
     <string name="tuner_show_brightness_mode">Show auto brightness icon in footer</string>
     <string name="tuner_show_brightness_side_buttons">Show brightness slider side buttons</string>
 
+    <!-- FOD View -->
+    <string name="fod_view_title" translatable="false">Fingerprint on display</string>
+    <string name="fod_view_pressed_title" translatable="false">Fingerprint on display.touched</string>
+
 </resources>
