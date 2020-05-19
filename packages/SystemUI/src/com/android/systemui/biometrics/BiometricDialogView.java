@@ -369,7 +369,7 @@ public abstract class BiometricDialogView extends LinearLayout {
             mDialog.setAlpha(1.0f);
             mDialog.setTranslationY(0);
             mLayout.setAlpha(1.0f);
-            mCompletedAnimatingIn = true;
+            onDialogAnimatedIn();
         } else {
             // Dim the background and slide the dialog up
             mDialog.setTranslationY(mAnimationTranslationOffset);
