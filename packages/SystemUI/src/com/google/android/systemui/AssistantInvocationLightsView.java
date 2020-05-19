@@ -7,6 +7,7 @@ import android.util.MathUtils;
 import com.android.systemui.R;
 import com.android.systemui.assist.ui.CornerPathRenderer;
 import com.android.systemui.assist.ui.InvocationLightsView;
+import com.android.systemui.assist.ui.PathSpecCornerPathRenderer;
 import com.android.systemui.assist.ui.PerimeterPathGuide;
 
 public class AssistantInvocationLightsView extends InvocationLightsView {
@@ -62,6 +63,6 @@ public class AssistantInvocationLightsView extends InvocationLightsView {
 
     @Override
     public CornerPathRenderer createCornerPathRenderer(Context context) {
-        return super.createCornerPathRenderer(context);
+        return new PathSpecCornerPathRenderer(context);
     }
 }
