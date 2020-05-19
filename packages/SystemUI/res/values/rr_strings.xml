@@ -95,6 +95,8 @@
     <string name="right">Right</string>
     <string name="navbar_editor_title">Editor</string>
     <string name="navbar_editor_summary">Configure navigaton bar</string>
+    <string name="tuner_keyguard_show_assistant_handle_title">Show assistant handles</string>
+    <string name="tuner_keyguard_show_assistant_handle_summary">Show assistant handles on screen edges</string>
     <!-- Stock Navbar -->
     <string name="navbar_activity_title">Navigation bar</string>
     <string name="tuner_status_bar_bg_transparency">Transparent status bar background</string>

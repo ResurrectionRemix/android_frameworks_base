@@ -121,6 +121,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private static final boolean DEBUG_SCREENSHOT_ROUNDED_CORNERS =
             SystemProperties.getBoolean("debug.screenshot_rounded_corners", false);
     private static final boolean VERBOSE = false;
+    public static final String SHOW_ASSISTANT_HANDLE = "sysui_keyguard_show_assistant_handle";
 
     private static final String DISPLAY_CUTOUT_MODE =
             "system:" + Settings.System.DISPLAY_CUTOUT_MODE;
@@ -179,6 +180,8 @@ public class ScreenDecorations extends SystemUI implements Tunable,
             mCutoutBottom.setShowProtection(false);
         }
     };
+
+    private boolean mAssistHintDisable;
 
     /**
      * Converts a set of {@link Rect}s into a {@link Region}
@@ -302,7 +305,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
             return;
         }
 
-        if (mAssistHintBlocked && visible) {
+        if ((mAssistHintBlocked || mAssistHintDisable) && visible) {
             if (VERBOSE) {
                 Log.v(TAG, "Assist hint blocked, cannot make it visible");
             }
@@ -384,6 +387,9 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                 () -> Dependency.get(TunerService.class).addTunable(this, CUTOUT));
         Dependency.get(Dependency.MAIN_HANDLER).post(
                 () -> Dependency.get(TunerService.class).addTunable(this, DISPLAY_CUTOUT_MODE));
+        Dependency.get(Dependency.MAIN_HANDLER).post(
+                () -> Dependency.get(TunerService.class).addTunable(this, SHOW_ASSISTANT_HANDLE));
+
 
         if (hasRoundedCorners() || shouldDrawCutout() || shouldHostHandles()) {
             setupDecorations();
@@ -873,6 +879,12 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     mCutoutTop.setShowCutout(mShowTopCutout && mImmerseModeSetting == 0);
                 });
                 if (mCustomCutout && mImmerseModeSetting == 0) setupDecorations();
+                break;
+            case SHOW_ASSISTANT_HANDLE:
+                mAssistHintDisable = newValue != null && Integer.parseInt(newValue) == 0;
+                if (mAssistHintVisible && mAssistHintDisable) {
+                    hideAssistHandles();
+                }
                 break;
             default:
                 break;
