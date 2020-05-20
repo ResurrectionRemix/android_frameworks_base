@@ -538,7 +538,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             setDim(true);
         } else {
             dispatchPress();
-            setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+            setColorFilter(Color.argb(0, 0, 0, 0), 
+                     PorterDuff.Mode.SRC_ATOP);
         }
         updateAlpha();
 
@@ -561,6 +562,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         if (!mSupportsAlwaysOnHbm) {
             setDim(false);
         } else {
+            if (mNoDim) {
+                mCurDim = CalculateBrightnessDim(mCurDim);
+            }
             setColorFilter(Color.argb(mCurDim, 0, 0, 0),
                     PorterDuff.Mode.SRC_ATOP);
             invalidate();
@@ -781,6 +785,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             if (!mNoDim) {
                 mParams.dimAmount = dimAmount / 255.0f;
             }
+            if (mNoDim) {
+                dimAmount = CalculateBrightnessDim(dimAmount);
+            }
             if (mSupportsAlwaysOnHbm) {
                 mCurDim = dimAmount;
                 setColorFilter(Color.argb(dimAmount, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
@@ -805,6 +812,16 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         return false;
     }
+
+   public int CalculateBrightnessDim(int dim) {
+    // Since we use this value only for colorfilter 
+    // on no dim devices, lets not allow to it to fully tint 
+    // the icon black
+      if (dim == 255) {
+          dim = dim - 20;
+      }
+      return dim;
+   }
 
     private class BurnInProtectionTask extends TimerTask {
         @Override
