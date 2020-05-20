@@ -135,6 +135,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
     private int mSelectedIcon;
     private TypedArray mIconStyles;
+    private boolean mBrightIcon;
 
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
@@ -330,6 +331,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_ANIM),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FOD_BRIGHT_ICON),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -564,8 +568,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             if (mNoDim) {
                 mCurDim = CalculateBrightnessDim(mCurDim);
             }
-            setColorFilter(Color.argb(mCurDim, 0, 0, 0),
-                    PorterDuff.Mode.SRC_ATOP);
+            if (mBrightIcon) {
+                setColorFilter(Color.argb(0, 0, 0, 0),
+                   PorterDuff.Mode.SRC_ATOP); 
+            } else {
+                setColorFilter(Color.argb(mCurDim, 0, 0, 0),
+                   PorterDuff.Mode.SRC_ATOP); 
+            }
             invalidate();
         }
         updateAlpha();
@@ -685,6 +694,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 Settings.System.FOD_RECOGNIZING_ANIMATION, 0) != 0;
         mSelectedIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ICON, 3);
+        mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_BRIGHT_ICON, 0) == 1;
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
@@ -799,7 +810,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             }
             if (mSupportsAlwaysOnHbm) {
                 mCurDim = dimAmount;
-                setColorFilter(Color.argb(dimAmount, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+                if (mBrightIcon) {
+                    setColorFilter(Color.argb(0, 0, 0, 0), 
+                        PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    setColorFilter(Color.argb(dimAmount, 0, 0, 0), 
+                        PorterDuff.Mode.SRC_ATOP);
+                }
             }
         } else {
             mParams.dimAmount = 0.0f;

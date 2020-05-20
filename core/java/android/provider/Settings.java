@@ -5702,6 +5702,12 @@ public final class Settings {
          */
         public static final String FOD_ANIM = "fod_anim";
 
+        /**
+         * FOD constant bright icon
+         * @hide
+         */
+        public static final String FOD_BRIGHT_ICON = "fod_bright_icon";
+
          /**
          * Whether the phone vibrates on disconnect
          * @hide
