@@ -33,6 +33,7 @@
         <item name="android:textSize">@dimen/status_bar_carrier_height</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/status_bar_carrier_color</item>
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
 
     <!-- Status bar notification ticker -->
