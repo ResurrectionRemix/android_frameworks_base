@@ -40,8 +40,13 @@ public class GpsToggle extends ScreenStateToggle {
         return mDoAction;
     }
 
+    private boolean isActionsEnabled() {
+        return Settings.Global.getInt(mContext.getContentResolver(), 
+            Settings.Global.START_SCREEN_STATE_SERVICE, 0) == 1;
+    }
+
     protected boolean doScreenOffAction(){
-        if (isGpsEnabled() != 0){
+        if (isGpsEnabled() != 0 && isActionsEnabled()) {
             mDoAction = true;
         } else {
             mDoAction = false;

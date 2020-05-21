@@ -49,12 +49,17 @@ public class ThreeGToggle extends ScreenStateToggle {
             return false;
     }
 
+    private boolean isActionsEnabled() {
+        return Settings.Global.getInt(mContext.getContentResolver(), 
+            Settings.Global.START_SCREEN_STATE_SERVICE, 0) == 1;
+    }
+
     protected boolean doScreenOnAction(){
         return mDoAction;
     }
 
     protected boolean doScreenOffAction(){
-        if (isNotThreeGMode()){
+        if (isNotThreeGMode() && isActionsEnabled()){
             mDoAction = true;
         } else {
             mDoAction = false;

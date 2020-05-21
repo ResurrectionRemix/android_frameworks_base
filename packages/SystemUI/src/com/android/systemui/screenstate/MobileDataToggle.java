@@ -45,12 +45,17 @@ public class MobileDataToggle extends ScreenStateToggle {
     }
 
     protected boolean doScreenOffAction(){
-        if (isMobileDataEnabled()){
+        if (isMobileDataEnabled() && isActionsEnabled()){
             mDoAction = true;
         } else {
             mDoAction = false;
         }
         return mDoAction;
+    }
+
+    private boolean isActionsEnabled() {
+        return Settings.Global.getInt(mContext.getContentResolver(), 
+            Settings.Global.START_SCREEN_STATE_SERVICE, 0) == 1;
     }
 
     private boolean isMobileDataEnabled(){
