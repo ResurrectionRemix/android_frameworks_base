@@ -5417,6 +5417,17 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+         * Direction of repeat animations of Ambient edge light
+         * 0 is restart
+         * 1 is reverse
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION = "pulse_ambient_light_repeat_direction";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Gaming mode master switch
          * @hide
          */
@@ -6089,6 +6100,7 @@ public final class Settings {
             AMBIENT_LIGHT_CUSTOM_COLOR,
             PULSE_AMBIENT_LIGHT_DURATION,
             PULSE_AMBIENT_LIGHT_REPEAT_COUNT,
+            PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION,
             NOTIFICATION_LIGHT_PULSE,
             STATUSBAR_BATTERY_BAR,
             STATUSBAR_BATTERY_BAR_LOCATION,
@@ -6415,6 +6427,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_LIGHT_CUSTOM_COLOR);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_DURATION);
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_COUNT);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_BLOCK_IME);
@@ -6516,6 +6529,8 @@ public final class Settings {
             VALIDATORS.put(AMBIENT_LIGHT_CUSTOM_COLOR, AMBIENT_LIGHT_CUSTOM_COLOR_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_DURATION, PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_REPEAT_COUNT, PULSE_AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION,
+                    PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
