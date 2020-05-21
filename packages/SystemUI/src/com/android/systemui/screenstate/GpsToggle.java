@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.android.systemui.screenstate;
-
+import android.app.ActivityManager;
 import android.content.Context;
 import android.location.LocationManager;
 import android.provider.Settings;
@@ -41,7 +41,7 @@ public class GpsToggle extends ScreenStateToggle {
     }
 
     protected boolean doScreenOffAction(){
-        if (isGpsEnabled()){
+        if (isGpsEnabled() != 0){
             mDoAction = true;
         } else {
             mDoAction = false;
@@ -49,19 +49,18 @@ public class GpsToggle extends ScreenStateToggle {
         return mDoAction;
     }
 
-    private boolean isGpsEnabled(){
+    private int isGpsEnabled(){
         // TODO: check if gps is available on this device?
-        return Settings.Secure.isLocationProviderEnabled(
-                mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
-
+          return Settings.Secure.getIntForUser(mContext.getContentResolver(), Settings.Secure.LOCATION_MODE,
+                Settings.Secure.LOCATION_MODE_OFF, ActivityManager.getCurrentUser());
     }
 
     protected Runnable getScreenOffAction(){
         return new Runnable() {
             @Override
             public void run() {
-                Settings.Secure.setLocationProviderEnabled(mContext.getContentResolver(),
-                        LocationManager.GPS_PROVIDER, false);
+                Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                Settings.Secure.LOCATION_MODE, 0, ActivityManager.getCurrentUser());
                 Log.d(TAG, "gps = false");
             }
         };
@@ -70,8 +69,8 @@ public class GpsToggle extends ScreenStateToggle {
         return new Runnable() {
             @Override
             public void run() {
-                Settings.Secure.setLocationProviderEnabled(mContext.getContentResolver(),
-                        LocationManager.GPS_PROVIDER, true);
+                Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                Settings.Secure.LOCATION_MODE, 3, ActivityManager.getCurrentUser());
                 Log.d(TAG, "gps = true");
             }
         };
