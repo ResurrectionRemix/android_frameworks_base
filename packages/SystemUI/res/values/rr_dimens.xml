@@ -53,6 +53,10 @@
     <dimen name="qs_header_image_side_margin">4dp</dimen>
     <dimen name="qs_header_image_bottom_margin">4dp</dimen>
 
+    <!-- Edge light notification width -->
+    <dimen name="left_edgeLightNotificationWidth">125px</dimen>
+    <dimen name="right_edgeLightNotificationWidth">125px</dimen>
+
     <!-- Pixel navbar -->
     <dimen name="halo_diameter">22dp</dimen>
     <dimen name="opa_diamond_translation">16dp</dimen>
