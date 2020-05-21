@@ -254,6 +254,34 @@ public class NetworkStatsHistory implements Parcelable {
     }
 
     /**
+     * Safely multiple a value by a rational.
+     * <p>
+     * Internally it uses integer-based math whenever possible, but switches
+     * over to double-based math if values would overflow.
+     */
+    public static long multiplySafe(long value, long num, long den) {
+        if (den == 0) den = 1;
+        long x = value;
+        long y = num;
+
+        // Logic shamelessly borrowed from Math.multiplyExact()
+        long r = x * y;
+        long ax = Math.abs(x);
+        long ay = Math.abs(y);
+        if (((ax | ay) >>> 31 != 0)) {
+            // Some bits greater than 2^31 that might cause overflow
+            // Check the result using the divide operator
+            // and check for the special case of Long.MIN_VALUE * -1
+            if (((y != 0) && (r / y != x)) ||
+                    (x == Long.MIN_VALUE && y == -1)) {
+                // Use double math to avoid overflowing
+                return (long) (((double) num / den) * value);
+            }
+        }
+        return r / den;
+    }
+
+    /**
      * Return index of bucket that contains or is immediately before the
      * requested time.
      */
@@ -364,11 +392,11 @@ public class NetworkStatsHistory implements Parcelable {
             if (overlap <= 0) continue;
 
             // integer math each time is faster than floating point
-            final long fracRxBytes = rxBytes * overlap / duration;
-            final long fracRxPackets = rxPackets * overlap / duration;
-            final long fracTxBytes = txBytes * overlap / duration;
-            final long fracTxPackets = txPackets * overlap / duration;
-            final long fracOperations = operations * overlap / duration;
+            final long fracRxBytes = multiplySafe(rxBytes, overlap, duration);
+            final long fracRxPackets = multiplySafe(rxPackets, overlap, duration);
+            final long fracTxBytes = multiplySafe(txBytes, overlap, duration);
+            final long fracTxPackets = multiplySafe(txPackets, overlap, duration);
+            final long fracOperations = multiplySafe(operations, overlap, duration);
 
             addLong(activeTime, i, overlap);
             addLong(this.rxBytes, i, fracRxBytes); rxBytes -= fracRxBytes;
@@ -568,12 +596,18 @@ public class NetworkStatsHistory implements Parcelable {
             if (overlap <= 0) continue;
 
             // integer math each time is faster than floating point
-            if (activeTime != null) entry.activeTime += activeTime[i] * overlap / bucketDuration;
-            if (rxBytes != null) entry.rxBytes += rxBytes[i] * overlap / bucketDuration;
-            if (rxPackets != null) entry.rxPackets += rxPackets[i] * overlap / bucketDuration;
-            if (txBytes != null) entry.txBytes += txBytes[i] * overlap / bucketDuration;
-            if (txPackets != null) entry.txPackets += txPackets[i] * overlap / bucketDuration;
-            if (operations != null) entry.operations += operations[i] * overlap / bucketDuration;
+            if (activeTime != null)
+                entry.activeTime += multiplySafe(activeTime[i], overlap, bucketDuration);
+            if (rxBytes != null)
+                entry.rxBytes += multiplySafe(rxBytes[i], overlap, bucketDuration);
+            if (rxPackets != null)
+                entry.rxPackets += multiplySafe(rxPackets[i], overlap, bucketDuration);
+            if (txBytes != null)
+                entry.txBytes += multiplySafe(txBytes[i], overlap, bucketDuration);
+            if (txPackets != null)
+                entry.txPackets += multiplySafe(txPackets[i], overlap, bucketDuration);
+            if (operations != null)
+                entry.operations += multiplySafe(operations[i], overlap, bucketDuration);
         }
         return entry;
     }
