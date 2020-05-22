@@ -44,7 +44,7 @@ import com.android.systemui.shared.system.ActivityManagerWrapper;
 
 import static com.android.systemui.statusbar.phone.StatusBar.SYSTEM_DIALOG_REASON_SCREENSHOT;
 import static android.provider.Settings.System.SCREENRECORD_VIDEO_BITRATE;
-import static android.provider.Settings.System.SCREENRECORD_AUDIO_SOURCE;
+import static android.provider.Settings.System.SCREENRECORD_AUDIO_OPT;
 import static android.provider.Settings.System.SCREENRECORD_SHOW_TAPS;
 import static android.provider.Settings.System.SCREENRECORD_STOP_DOT;
 
@@ -103,20 +103,24 @@ public class ScreenRecordDialog extends Activity {
         bitrateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bitrateSpinner.setAdapter(bitrateAdapter);
 
+        // Check if the device supports internal audio recording
+        boolean intAudioEnabled = getResources().getBoolean(R.bool.config_recorderInternalAudio);
+
         ArrayAdapter<CharSequence> audioSourceAdapter = ArrayAdapter.createFromResource(this,
-            R.array.screen_audio_recording_entries, android.R.layout.simple_spinner_item);
+            intAudioEnabled ? R.array.screen_audio_recording_entries : R.array.screen_audio_recording_nointernal_entries,
+            android.R.layout.simple_spinner_item);
         audioSourceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         audioSourceSpinner.setAdapter(audioSourceAdapter);
 
         initialCheckSpinner(bitrateSpinner, SCREENRECORD_VIDEO_BITRATE, 2 /* average option */);
-        initialCheckSpinner(audioSourceSpinner, SCREENRECORD_AUDIO_SOURCE, 0 /* disabled */);
+        initialCheckSpinner(audioSourceSpinner, SCREENRECORD_AUDIO_OPT, 0 /* disabled */);
         initialCheckSwitch(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         initialCheckSwitch(dotSwitch, SCREENRECORD_STOP_DOT);
 
         setSwitchListener(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         setSwitchListener(dotSwitch, SCREENRECORD_STOP_DOT);
         setSpinnerListener(bitrateSpinner, SCREENRECORD_VIDEO_BITRATE);
-        setSpinnerListener(audioSourceSpinner, SCREENRECORD_AUDIO_SOURCE);
+        setSpinnerListener(audioSourceSpinner, SCREENRECORD_AUDIO_OPT);
 
         final Button recordButton = findViewById(R.id.record_button);
         recordButton.setOnClickListener(new View.OnClickListener() {

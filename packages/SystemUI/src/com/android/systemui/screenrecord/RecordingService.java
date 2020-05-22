@@ -217,7 +217,7 @@ public class RecordingService extends Service {
                 break;
 
             case ACTION_PAUSE:
-                if (mAudioSourceOpt != 1) {
+                if (mAudioSourceOpt != 2) {
                     mMediaRecorder.pause();
                 } else {
                     mPausedRecording = true;
@@ -226,7 +226,7 @@ public class RecordingService extends Service {
                 break;
 
             case ACTION_RESUME:
-                if (mAudioSourceOpt != 1) {
+                if (mAudioSourceOpt != 2) {
                     mMediaRecorder.resume();
                 } else {
                     mPausedRecording = false;
@@ -354,7 +354,7 @@ public class RecordingService extends Service {
             // Reving up those recorders
             boolean useOldEncoder = mIsLowRamEnabled || !useH265;
             switch (mAudioSourceOpt) {
-                case 1:
+                case 2:
                     mVideoBufferInfo = new MediaCodec.BufferInfo();
                     mAudioBufferBytes =  AudioRecord.getMinBufferSize(
                         AUDIO_SAMPLE_RATE,
@@ -404,14 +404,14 @@ public class RecordingService extends Service {
 
                 default:
                     mMediaRecorder = new MediaRecorder();
-                    if (mAudioSourceOpt == 2) mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    if (mAudioSourceOpt == 1) mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
                     mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                     mMediaRecorder.setVideoEncoder(useOldEncoder ? MediaRecorder.VideoEncoder.H264 : MediaRecorder.VideoEncoder.HEVC);
                     mMediaRecorder.setVideoSize(screenWidth, screenHeight);
                     mMediaRecorder.setVideoFrameRate(VIDEO_FRAME_RATE);
                     mMediaRecorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
-                    if (mAudioSourceOpt == 2) {
+                    if (mAudioSourceOpt == 1) {
                         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                         mMediaRecorder.setAudioChannels(TOTAL_NUM_TRACKS);
                         mMediaRecorder.setAudioEncodingBitRate(AUDIO_BIT_RATE);
@@ -436,7 +436,7 @@ public class RecordingService extends Service {
 
             // Let's get ready to record now
             switch (mAudioSourceOpt) {
-                case 1:
+                case 2:
                     // Start the encoders
                     mVideoEncoder.start();
                     new Thread(new VideoEncoderTask(), "VideoEncoderTask").start();
@@ -574,7 +574,7 @@ public class RecordingService extends Service {
         }
         try {
             switch (mAudioSourceOpt) {
-                case 1:
+                case 2:
                     mAudioRecording = false;
                     mAudioEncoding = false;
                     mVideoEncoding = false;

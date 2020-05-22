@@ -6803,7 +6803,7 @@ public final class Settings {
          * Screenrecord: audio source
          * @hide
          */
-        public static final String SCREENRECORD_AUDIO_SOURCE = "screenrecord_audio_source";
+        public static final String SCREENRECORD_AUDIO_OPT = "screenrecord_audio_opt";
 
         /**
          * SBC HD priority - whether to use dual channel for SBC by default

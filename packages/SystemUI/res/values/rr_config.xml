@@ -69,4 +69,7 @@
 
     <!-- The CPU temperature divider, if needed -->
     <integer name="config_cpuTempDivider" translatable="false">1</integer>
+
+    <!-- Device supports internal audio recording -->
+    <bool name="config_recorderInternalAudio">true</bool>
 </resources>
