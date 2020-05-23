@@ -1,4 +1,5 @@
 package com.android.systemui.statusbar.info;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
@@ -29,10 +30,10 @@ public class DataUsageView extends TextView {
     }
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!isDataUsageEnabled() && this.getText().toString() != "") {
+        if ((isDataUsageEnabled() == 0) && this.getText().toString() != "") {
             setText("");
         }
-        if (isDataUsageEnabled()) {
+        if (isDataUsageEnabled() != 0) {
             if(shouldUpdateData) {
                 shouldUpdateData = false;
                 AsyncTask.execute(new Runnable() {
@@ -52,13 +53,15 @@ public class DataUsageView extends TextView {
         DataUsageController mobileDataController = new DataUsageController(mContext);
         mobileDataController.setSubscriptionId(
             SubscriptionManager.getDefaultDataSubscriptionId());
-        final DataUsageController.DataUsageInfo info = mobileDataController.getDataUsageInfo();
+        final DataUsageController.DataUsageInfo info = isDataUsageEnabled() == 1 ?
+                mobileDataController.getDailyDataUsageInfo()
+                : mobileDataController.getDataUsageInfo();
         formatedinfo = formatDataUsage(info.usageLevel) + " ";
         shouldUpdateDataTextView = true;
     }
-    public boolean isDataUsageEnabled() {
+    public int isDataUsageEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_DATAUSAGE, 0) != 0;
+                Settings.System.QS_DATAUSAGE, 0);
     }
     public static void updateUsage() {
         shouldUpdateData = true;

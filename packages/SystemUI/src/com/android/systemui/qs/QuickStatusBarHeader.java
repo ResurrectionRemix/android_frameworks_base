@@ -517,7 +517,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private void updateDataUsageView() {
-        if (mDataUsageView.isDataUsageEnabled())
+        if (mDataUsageView.isDataUsageEnabled() != 0)
             mDataUsageView.setVisibility(View.VISIBLE);
         else
             mDataUsageView.setVisibility(View.GONE);
