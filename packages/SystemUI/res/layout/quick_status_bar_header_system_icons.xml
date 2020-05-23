@@ -69,12 +69,11 @@
         android:id="@+id/data_sim_usage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical|end"
-        android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
-        android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-        android:text="" />
+        android:singleLine="true"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
