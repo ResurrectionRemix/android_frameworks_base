@@ -4850,6 +4850,41 @@ public final class Settings {
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 100);
 
         /**
+         * Statusbar battery %
+         * 0: Hide the battery percentage
+         * 1: Display the battery percentage inside the icon
+         * 2: Display the battery percentage next to the icon
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+
+        /**
+         * Show battery percentage when charging
+         * @hide
+         */
+        public static final String STATUS_BAR_BATTERY_TEXT_CHARGING = "status_bar_battery_text_charging";
+
+
+        /**
+         * Dim amount around power/reboot menu dialogs
+         * @hide
+         */
+        public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
+        /**
+         * QS battery style
+         * @hide
+         */
+        public static final String QS_BATTERY_STYLE = "qs_battery_style";
+
+        /**
+         * QS battery location
+         * 0: QS Panel
+         * 1: Quick Statusbar
+         * @hide
+         */
+        public static final String QS_BATTERY_LOCATION = "qs_battery_location";
+
+        /**
          * QS battery %
          * 0: Hide the battery percentage
          * 1: Display the battery percentage inside the icon
@@ -4866,12 +4901,6 @@ public final class Settings {
          */
         public static final String QS_SHOW_BATTERY_ESTIMATE = "qs_show_battery_estimate";
 
-
-        /**
-         * Dim amount around power/reboot menu dialogs
-         * @hide
-         */
-        public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
 
         /** @hide */
         private static final Validator TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR =
@@ -5792,21 +5821,6 @@ public final class Settings {
          * @hide
          */
         public static final String QS_BATTERY_MODE = "qs_battery_mode";
-
-        /**
-          * SStatusbar Battery %
-          * 0: Hide the battery percentage
-          * 1: Display the battery percentage inside the icon
-          * 2: Display the battery percentage next to the icon
-          * @hide
-          */
-        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
-
-        /**
-         * Show battery percentage when charging
-         * @hide
-         */
-        public static final String STATUS_BAR_BATTERY_TEXT_CHARGING = "status_bar_battery_text_charging";
 
         /**
          * Whether to enable or disable vibration on succesful fingerprint auth
