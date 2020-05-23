@@ -85,6 +85,7 @@ final class UiModeManagerService extends SystemService {
     private static final String SYSTEM_PROPERTY_DEVICE_THEME = "persist.sys.theme";
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.rr.accent_color";
+    private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
     final Object mLock = new Object();
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
@@ -293,6 +294,10 @@ final class UiModeManagerService extends SystemService {
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(System.getUriFor(System.ACCENT_COLOR))) {
                 applyAccentColor();
+            } else if (uri.equals(System.getUriFor(System.GRADIENT_COLOR_PROP))) {
+                final String gradientColor = System.getStringForUser(
+                        getContext().getContentResolver(), System.GRADIENT_COLOR_PROP, 0);
+                SystemProperties.set(GRADIENT_COLOR_PROP, gradientColor);
             }
         }
     };
@@ -383,6 +388,8 @@ final class UiModeManagerService extends SystemService {
                 false, mDarkThemeObserver, 0);
         context.getContentResolver().registerContentObserver(System.getUriFor(System.ACCENT_COLOR),
                 false, mAccentObserver, UserHandle.USER_ALL);
+        context.getContentResolver().registerContentObserver(System.getUriFor(System.GRADIENT_COLOR_PROP),
+                false, mAccentObserver, 0);
         mHandler.post(() -> updateSystemProperties());
     }
 

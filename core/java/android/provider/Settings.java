@@ -6628,6 +6628,12 @@ public final class Settings {
         private static final Validator ACCENT_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Gradient color
+         * @hide
+         */
+        public static final String GRADIENT_COLOR_PROP = "gradient_color_prop";
+
+        /**
          * Whether to use gesture anywhere feature.
          * @hide
          */
@@ -6815,6 +6821,11 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_ICON_COLOR = "lock_screen_weather_icon_color";
+
+        /**
+         * @hide
+         */
+        public static final String QS_NEW_BG_ENABLED = "qs_new_bg_enabled";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

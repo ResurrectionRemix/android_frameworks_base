@@ -70,6 +70,8 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mQsDisabled;
 
     // omni additions start
+    private Drawable mQsBackGroundNew;
+    private boolean mQsBgNewEnabled;
     private boolean mHeaderImageEnabled;
     private ImageView mBackgroundImage;
     private StatusBarHeaderMachine mStatusBarHeaderMachine;
@@ -110,10 +112,11 @@ public class QSContainerImpl extends FrameLayout implements
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         mSideMargins = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
+        mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+        mQsBackGroundNew = getContext().getDrawable(R.drawable.qs_background_primary_new);
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
         mForceHideQsStatusBar = mContext.getResources().getBoolean(R.bool.qs_status_bar_hidden);
-        mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         updateResources();
         updateSettings();
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -167,6 +170,9 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_BG_RGB_DURATION), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NEW_BG_ENABLED), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -184,6 +190,7 @@ public class QSContainerImpl extends FrameLayout implements
             mIsAlpha = true;
         } else {
             mIsAlpha = false;
+
         }
 
         mBackground.getBackground().setAlpha(mQsBackgroundAlpha);
@@ -199,6 +206,8 @@ public class QSContainerImpl extends FrameLayout implements
         mQsDiscoDuration = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_RGB_DURATION, 5,
                 UserHandle.USER_CURRENT);
+        mQsBgNewEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_NEW_BG_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
        setQsBackground();
    }
 
@@ -208,8 +217,11 @@ public class QSContainerImpl extends FrameLayout implements
            updateAlpha();
        } else {
            stopDiscoMode();
-           mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-           mBackground.setBackground(mQsBackGround);
+           if (!mQsBgNewEnabled) {
+               mBackground.setBackground(mQsBackGround);
+           } else {
+               mBackground.setBackground(mQsBackGroundNew); 
+           }
            updateGradientbackground();
            updateAlpha();
        }

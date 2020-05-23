@@ -123,6 +123,7 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfoColor();
                 refreshOwnerInfoSize();
                 refreshOwnerInfoFont();
+	        }
         }
 
         @Override
@@ -151,7 +152,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfoColor();
             refreshOwnerInfoSize();
             refreshOwnerInfoFont();
-	}
+	    }
 
         @Override
         public void onLogoutEnabledChanged() {

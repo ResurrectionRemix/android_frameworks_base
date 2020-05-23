@@ -147,6 +147,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.AUDIO_PANEL_VIEW_TIMEOUT;
     public static final String RINGER_VOLUME_PANEL =
             "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
+    public static final String GRADIENT =
+            "system:" + Settings.System.QS_NEW_BG_ENABLED;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -256,6 +258,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         tunerService.addTunable(this, RINGER_VOLUME_PANEL);
+        tunerService.addTunable(this, GRADIENT);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -549,6 +552,13 @@ public class VolumeDialogImpl implements VolumeDialog,
                 boolean ShowRinger = TunerService.parseIntegerSwitch(newValue, true);
                 if (mShowRinger != ShowRinger) {
                     mShowRinger = ShowRinger;
+                    triggerChange = true;
+                }
+                break;
+            case GRADIENT:
+                boolean Gradient = TunerService.parseIntegerSwitch(newValue, true);
+                if (mGradient != Gradient) {
+                    mGradient = Gradient;
                     triggerChange = true;
                 }
                 break;
@@ -1816,8 +1826,11 @@ public class VolumeDialogImpl implements VolumeDialog,
                         SLIDER_PROGRESS_ALPHA_DARK : SLIDER_PROGRESS_ALPHA);
         final ColorStateList progressTint = useActiveColoring ? null : tint;
         if (tint == row.cachedTint) return;
-        //row.slider.setProgressTintList(tint);
-        row.slider.setProgressTintList(progressTint);
+        if (!mGradient) {
+            row.slider.setProgressTintList(tint);
+        } else {
+           row.slider.setProgressTintList(progressTint);
+        }
         row.cachedTint = tint;
     }
 
