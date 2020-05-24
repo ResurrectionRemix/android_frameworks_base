@@ -48,6 +48,9 @@ public class BootReceiver extends BroadcastReceiver {
             mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.START_SCREEN_STATE_SERVICE),
                     false, this);
+            mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.REFRESH_RATE_SETTING),
+                    false, this);
             update();
         }
 
@@ -69,6 +72,47 @@ public class BootReceiver extends BroadcastReceiver {
             } else {
                 mContext.stopService(screenState);
             }
+            updateRefreshRate();
+        }
+    }
+
+    private void updateRefreshRate() {
+        boolean hasVariableRefreshRate =
+            mContext.getResources().getBoolean(com.android.internal.R.bool.config_hasVariableRefreshRate);
+
+        if (!hasVariableRefreshRate) return;
+
+        peakRate = mContext.getResources().getInteger(com.android.internal.R.integer.config_defaultPeakRefreshRate);
+        int defVarRateSetting = mContext.getResources().getInteger(com.android.internal.R.integer.config_defaultVariableRefreshRateSetting);
+        int mVarRateSetting = Settings.Global.getInt(mContext.getContentResolver(),
+             Settings.Global.REFRESH_RATE_SETTING, defVarRateSetting);
+
+        switch (mVarRateSetting) {
+            case 0: // automatic - system default
+            default:
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, peakRate);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 0);
+                break;
+            case 1: // min rate 60Hz
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, 60);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 60);
+                break;
+            case 2: // max rate 90Hz
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, 90);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 90);
+                break;
+            case 3: // max rate 120 Hz
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, 120);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 120);
+                break;
         }
     }
 
@@ -86,13 +130,13 @@ public class BootReceiver extends BroadcastReceiver {
                 Intent fpsinfo = new Intent(context, com.android.systemui.FPSInfoService.class);
                 context.startService(fpsinfo);
             }
-
             // start the screen state service if activated
             if (Settings.Global.getInt(res, Settings.Global.START_SCREEN_STATE_SERVICE, 0) != 0) {
                 Intent screenstate = new Intent(context, com.android.systemui.screenstate.ScreenStateService.class);
                 context.startService(screenstate);
             }
 
+            updateRefreshRate();
         } catch (Exception e) {
             Log.e(TAG, "Can't start custom services", e);
         }

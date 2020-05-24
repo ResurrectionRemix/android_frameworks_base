@@ -160,8 +160,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private int mStatusBarBatteryStyle, mQSBatteryStyle;
 
-    private static final String SHOW_QS_CLOCK =
-            "system:" + Settings.System.SHOW_QS_CLOCK;
     private static final String QS_SHOW_BATTERY_PERCENT =
             "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
     private static final String QS_SHOW_BATTERY_ESTIMATE =
@@ -293,7 +291,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         Dependency.get(TunerService.class).addTunable(this,
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
-                StatusBarIconController.ICON_BLACKLIST, QS_BATTERY_MODE,
+                StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE);

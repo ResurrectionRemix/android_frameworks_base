@@ -115,7 +115,6 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         mOut = findViewById(R.id.mobile_out);
         mInoutContainer = findViewById(R.id.inout_container);
         mVolte = findViewById(R.id.mobile_volte);
-        mMobileImsImageView = findViewById(R.id.ims_hd);
         mMobileSignalType = findViewById(R.id.mobile_signal_type);
         mMobileTypeSmall = findViewById(R.id.mobile_type_small);
 
@@ -322,7 +321,6 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         mMobileType.setImageTintList(list);
         mMobileRoaming.setImageTintList(list);
         mVolte.setImageTintList(list);
-        mMobileImsImageView.setImageTintList(list);
         mMobileTypeSmall.setImageTintList(list);
         mDotView.setDecorColor(color);
     }
