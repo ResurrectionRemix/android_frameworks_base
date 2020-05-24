@@ -53,6 +53,7 @@ public class AmbientDisplayConfiguration {
                 || pickupGestureEnabled(user)
                 || tapGestureEnabled(user)
                 || doubleTapGestureEnabled(user)
+                || isAmbientGestureEnabled(user)
                 || isAmbientTickerEnabled(user);
     }
 
