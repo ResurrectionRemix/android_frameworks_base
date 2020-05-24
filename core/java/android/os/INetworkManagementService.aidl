@@ -368,7 +368,7 @@ interface INetworkManagementService
     void addInterfaceToNetwork(String iface, int netId);
 
     /**
-     * Remove an interface from a network.
+     * Remove an Interface from a network.
      */
     void removeInterfaceFromNetwork(String iface, int netId);
 
@@ -401,9 +401,4 @@ interface INetworkManagementService
     void setAllowOnlyVpnForUids(boolean enable, in UidRange[] uidRanges);
 
     boolean isNetworkRestricted(int uid);
-
-    /**
-     * Restrict UID from accessing a network interface
-     */
-    void restrictAppOnInterface(String key, int uid, boolean restrict);
 }
