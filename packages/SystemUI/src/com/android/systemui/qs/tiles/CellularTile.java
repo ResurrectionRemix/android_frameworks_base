@@ -37,6 +37,7 @@ import android.widget.Switch;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.net.DataUsageController;
+import com.android.systemui.Dependency;
 import com.android.settingslib.net.DataUsageUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Prefs;
@@ -368,8 +369,18 @@ public class CellularTile extends QSTileImpl<SignalState> {
             final DataUsageController.DataUsageInfo info = mDataController.getDataUsageInfo(
                     DataUsageUtils.getMobileTemplate(mContext,
                             SubscriptionManager.getDefaultDataSubscriptionId()));
+            DataUsageController mobileDataController = new DataUsageController(mContext);
+            mobileDataController.setSubscriptionId(
+                    SubscriptionManager.getDefaultDataSubscriptionId());
+            int defaultSubId = SubscriptionManager.getDefaultDataSubscriptionId();
+            if (defaultSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+                info_dialy = mDataController.getDailyDataUsageInfo();
+            } else {
+                info_dialy = mDataController.getDailyDataUsageInfo(
+                        DataUsageUtils.getMobileTemplate(mContext, defaultSubId));
+            }
             if (info == null) return v;
-            v.bind(info);
+            v.bind(info, info_dialy);
             v.findViewById(R.id.roaming_text).setVisibility(mSignalCallback.mInfo.roaming
                     ? View.VISIBLE : View.INVISIBLE);
             return v;

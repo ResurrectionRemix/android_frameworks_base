@@ -59,15 +59,18 @@ public class DataUsageDetailView extends LinearLayout {
         FontSizeUtils.updateFontSize(this, R.id.usage_period_text, R.dimen.qs_data_usage_text_size);
         FontSizeUtils.updateFontSize(this, R.id.usage_info_bottom_text,
                 R.dimen.qs_data_usage_text_size);
+        FontSizeUtils.updateFontSize(this, R.id.daily_usage_title, R.dimen.qs_data_usage_text_size);
+        FontSizeUtils.updateFontSize(this, R.id.daily_usage_text, R.dimen.qs_data_usage_usage_text_size);
     }
 
-    public void bind(DataUsageController.DataUsageInfo info) {
+    public void bind(DataUsageController.DataUsageInfo info, DataUsageController.DataUsageInfo info_daily) {
         final Resources res = mContext.getResources();
         final int titleId;
         final long bytes;
         ColorStateList usageColorState = null;
         final String top;
         String bottom = null;
+        final long dailyBytes = info_daily.usageLevel;
         if (info.usageLevel < info.warningLevel || info.limitLevel <= 0) {
             // under warning, or no limit
             titleId = R.string.quick_settings_cellular_detail_data_usage;
@@ -119,6 +122,11 @@ public class DataUsageDetailView extends LinearLayout {
         if (!showLevel) {
             infoTop.setVisibility(View.GONE);
         }
+        final TextView daily_usage_title = findViewById(R.id.daily_usage_title);
+        daily_usage_title.setText(R.string.daily_data_usage_title);
+        final TextView daily_usage = findViewById(R.id.daily_usage_text);
+        daily_usage.setText(formatDataUsage(dailyBytes));
+        daily_usage.setTextColor(usageColorState);
 
     }
 
