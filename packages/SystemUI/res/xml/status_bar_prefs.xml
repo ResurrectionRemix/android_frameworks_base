@@ -86,11 +86,6 @@
         android:icon="@drawable/tuner_vpn"
         android:title="@string/status_bar_vpn" />
 
-   <com.android.systemui.tuner.StatusBarSwitch
-        android:key="roaming"
-        android:title="@string/status_bar_roaming" 
-        android:icon="@drawable/tuner_roaming" />
-
     <com.android.systemui.tuner.StatusBarSwitch
         android:key="wifi"
         android:icon="@drawable/tuner_wifi"
