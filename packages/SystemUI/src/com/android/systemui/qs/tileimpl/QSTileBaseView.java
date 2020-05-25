@@ -40,6 +40,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.Switch;
 
 import com.android.settingslib.Utils;
@@ -47,6 +48,8 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
+
+import android.provider.Settings;
 
 public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
@@ -83,23 +86,31 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         int size = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
         addView(mIconFrame, new LayoutParams(size, size));
         mBg = new ImageView(getContext());
-        if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
-            Path path = new Path(PathParser.createPathFromPathData(
-                    context.getResources().getString(ICON_MASK_ID)));
-            float pathSize = AdaptiveIconDrawable.MASK_SIZE;
-            PathShape p = new PathShape(path, pathSize, pathSize);
-            ShapeDrawable d = new ShapeDrawable(p);
-            d.setTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-            int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
-            d.setIntrinsicHeight(bgSize);
-            d.setIntrinsicWidth(bgSize);
-            mBg.setImageDrawable(d);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
-            mIconFrame.addView(mBg, lp);
-            mBg.setLayoutParams(lp);
-        } else {
-            mBg.setImageResource(R.drawable.ic_qs_circle);
-            mIconFrame.addView(mBg);
+         int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
+                 Settings.System.QS_TILE_STYLE, 0);
+        if (qsTileStyle == 0) {
+            if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
+                Path path = new Path(PathParser.createPathFromPathData(
+                            context.getResources().getString(ICON_MASK_ID)));
+                float pathSize = AdaptiveIconDrawable.MASK_SIZE;
+                PathShape p = new PathShape(path, pathSize, pathSize);
+                ShapeDrawable d = new ShapeDrawable(p);
+                d.setTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+                int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
+                d.setIntrinsicHeight(bgSize);
+                d.setIntrinsicWidth(bgSize);
+                mBg.setImageDrawable(d);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
+                mIconFrame.addView(mBg, lp);
+                mBg.setLayoutParams(lp);
+             } else {
+                mBg.setImageResource(R.drawable.ic_qs_circle);
+                mIconFrame.addView(mBg);
+             }
+        }  else {
+               mBg.setScaleType(ScaleType.FIT_CENTER);
+               mBg.setImageResource(R.drawable.ic_qs_circle);
+               mIconFrame.addView(mBg);
         }
         mIcon = icon;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
