@@ -221,7 +221,6 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mBTSCOShowing;
     private boolean mNotificationLinked;
     private int mTimeOutDesired, mTimeOut;
-    private boolean mLeftVolumeRocker;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -258,7 +257,6 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
         tunerService.addTunable(this, VOLUME_LINK_NOTIFICATION);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
-        mLeftVolumeRocker = mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -2123,7 +2121,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     }
 
     private boolean isAudioPanelOnLeftSide() {
-        return mLeftVolumeRocker;
+        return mVolumePanelOnLeft;
     }
 
     private static class VolumeRow {

@@ -440,7 +440,8 @@ public class DozeTriggers implements DozeMachine.Part {
 
         public void check() {
             Preconditions.checkState(!mFinished && !mRegistered);
-            Sensor sensor = DozeSensors.findBrightnessSensorForProximity(mContext, mSensorManager);
+            Sensor sensor = DozeSensors.findSensorWithType(mSensorManager,
+                    mContext.getString(R.string.doze_brightness_sensor_type));
             mUsingBrightnessSensor = sensor != null;
             if (sensor == null) {
                 sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
