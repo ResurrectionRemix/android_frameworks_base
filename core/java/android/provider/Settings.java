@@ -4518,6 +4518,9 @@ public final class Settings {
          * @hide
          */
         public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+       /** @hide */
+        private static final Validator SCREENSHOT_SHUTTER_SOUND_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
@@ -6266,6 +6269,7 @@ public final class Settings {
             HEADS_UP_NOTIFICATION_SNOOZE,
             HEADS_UP_TIMEOUT,
             LESS_BORING_HEADS_UP,
+            SCREENSHOT_SHUTTER_SOUND,
             CHOOSER_ACTIVITY_BLACKLIST,
             HEADS_UP_BLACKLIST_VALUES,
             OMNIJAWS_WEATHER_ICON_PACK,
@@ -6496,6 +6500,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_NOTIFICATION_SNOOZE);
             PRIVATE_SETTINGS.add(HEADS_UP_TIMEOUT);
             PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
+            PRIVATE_SETTINGS.add(SCREENSHOT_SHUTTER_SOUND);
             PRIVATE_SETTINGS.add(CHOOSER_ACTIVITY_BLACKLIST);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
@@ -6713,6 +6718,7 @@ public final class Settings {
             VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
             VALIDATORS.put(HEADS_UP_TIMEOUT,HEADS_UP_TIMEOUT_VALIDATOR);
             VALIDATORS.put(LESS_BORING_HEADS_UP, LESS_BORING_HEADS_UP_VALIDATOR);
+            VALIDATORS.put(SCREENSHOT_SHUTTER_SOUND, SCREENSHOT_SHUTTER_SOUND_VALIDATOR);
             VALIDATORS.put(CHOOSER_ACTIVITY_BLACKLIST, CHOOSER_ACTIVITY_BLACKLIST_VALIDATOR);
             VALIDATORS.put(HEADS_UP_BLACKLIST_VALUES, HEADS_UP_BLACKLIST_VALUES_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK,OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
