@@ -23,7 +23,6 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:gravity="start"
-    android:minWidth="@dimen/volume_dialog_panel_width"
     android:orientation="vertical"
     android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding"
     android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_left_right"
@@ -52,6 +51,7 @@
                 style="@style/VolumeButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="16dp"
                 android:tint="?android:attr/colorAccent" />
 
             <include
@@ -156,7 +156,7 @@
 
         <LinearLayout
             android:id="@+id/media_output_scroller"
-            android:layout_width="182dp"
+            android:layout_width="@dimen/volume_dialog_media_width"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_volume_background"
             android:clipChildren="false"

@@ -399,10 +399,11 @@
 
     <dimen name="volume_dialog_panel_transparent_padding_left_right">8dp</dimen>
     <dimen name="volume_dialog_panel_transparent_padding">20dp</dimen>
-    <dimen name="volume_dialog_panel_width">58dp</dimen>
-    <dimen name="volume_dialog_slider_height">210dp</dimen>
-    <dimen name="volume_dialog_icon_padding">14dp</dimen>
+    <dimen name="volume_dialog_panel_width">54dp</dimen>
+    <dimen name="volume_dialog_slider_height">185dp</dimen>
+    <dimen name="volume_dialog_icon_padding">13dp</dimen>
     <dimen name="volume_dialog_tap_target_size">@dimen/volume_dialog_panel_width</dimen>
+    <dimen name="volume_dialog_media_width">170dp</dimen>
     <dimen name="volume_dialog_spacer">4dp</dimen>
     <dimen name="volume_dialog_button_height">45dp</dimen>
     <dimen name="volume_dialog_row_icon_size">24dp</dimen>

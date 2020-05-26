@@ -21,8 +21,6 @@
     android:background="@android:color/transparent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:gravity="start"
-    android:minWidth="@dimen/volume_dialog_panel_width"
     android:orientation="vertical"
     android:paddingBottom="@dimen/volume_dialog_panel_transparent_padding"
     android:paddingLeft="@dimen/volume_dialog_panel_transparent_padding_left_right"
@@ -33,8 +31,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/volume_dialog_spacer"
         android:clipToPadding="false"
+        android:clipChildren="false"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -49,7 +47,7 @@
                 style="@style/VolumeButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="17dp"
+                android:padding="16dp"
                 android:tint="?android:attr/colorAccent" />
 
             <include
@@ -83,7 +81,7 @@
 
         <LinearLayout
             android:id="@+id/media_output_scroller"
-            android:layout_width="182dp"
+            android:layout_width="@dimen/volume_dialog_media_width"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_volume_background"
             android:clickable="false"
@@ -186,7 +184,7 @@
                 android:layout_width="@dimen/volume_dialog_panel_width"
                 android:layout_height="@dimen/volume_dialog_button_height"
                 android:background="@drawable/ripple_drawable_20dp"
-                android:padding="11dp"
+                android:padding="10dp"
                 android:src="@drawable/ic_speaker_bluetooth" />
         </LinearLayout>
 
