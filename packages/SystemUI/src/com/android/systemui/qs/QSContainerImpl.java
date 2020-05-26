@@ -77,7 +77,8 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mForceHideQsStatusBar;
     private boolean mIsAlpha;
     private boolean mStatusBarBgTransparent;
-    private static final String QS_STATUS_BAR_BG_TRANSPARENCY =  "qs_status_bar_bg_transparency";
+    private static final String QS_STATUS_BAR_BG_TRANSPARENCY =              
+          "system:" + Settings.System.QS_STATUS_BAR_BG_TRANSPARENCY;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);

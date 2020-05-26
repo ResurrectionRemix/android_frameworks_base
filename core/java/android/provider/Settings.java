@@ -6063,6 +6063,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * Whether to show lock icon on lockscreen
+         * @hide
+         */
+        public static final String QS_STATUS_BAR_BG_TRANSPARENCY = "qs_header_transparency";
+
+        /**
          * @hide
          */
         public static final String SCREEN_STATE_TWOG = "screen_state_twog";
