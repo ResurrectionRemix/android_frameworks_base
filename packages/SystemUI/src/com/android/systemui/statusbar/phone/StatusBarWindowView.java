@@ -964,5 +964,13 @@ public class StatusBarWindowView extends FrameLayout implements Tunable {
             }
         }
     }
+
+   public void updateSettings() {
+        boolean pulseAmbientLightEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_NOTIFICATION_LIGHT, 0, UserHandle.USER_CURRENT) == 1;
+        if (mNotificationPanel != null) {
+            mNotificationPanel.setPulseAmbientLight(pulseAmbientLightEnabled);
+        }
+   }
 }
 

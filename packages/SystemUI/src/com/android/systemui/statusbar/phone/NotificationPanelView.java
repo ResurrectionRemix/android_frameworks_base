@@ -352,6 +352,7 @@ public class NotificationPanelView extends PanelView implements
     private String mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_AFFORDANCE;
 
     private NotificationLightsView mPulseLightsView;
+    private boolean mPulseLights;
     private boolean mStatusBarShownOnSecureKeyguard;
 
     private Runnable mHeadsUpExistenceChangedRunnable = new Runnable() {
@@ -3409,35 +3410,6 @@ public class NotificationPanelView extends PanelView implements
         positionClockAndNotifications();
     }
 
-    public void updateAmbientPulse() {
-        if (mPulseLightsView != null) {
-            if (mPulsing) {
-                ContentResolver resolver = mContext.getContentResolver();
-                ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotification(ROWS_HIGH_PRIORITY);
-                boolean activeNotif = row != null;
-                boolean pulseLights = Settings.System.getIntForUser(resolver,
-                        Settings.System.AMBIENT_NOTIFICATION_LIGHT, 1, UserHandle.USER_CURRENT) != 0;
-                int lightColor = Settings.System.getIntForUser(resolver,
-                        Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
-                if (pulseLights && lightColor == 0) {
-                    int pulseColor = mPulseLightsView.getNotificationLightsColor();
-                    if (lightColor == 0 && activeNotif) {
-                        int notificationColor = row.getStatusBarNotification().getNotification().color;
-                        if (notificationColor != Notification.COLOR_DEFAULT) {
-                            pulseColor = notificationColor;
-                        }
-                    }
-                    pulseColor |= 0xFF000000;
-                    mPulseLightsView.animateNotificationWithColor(pulseColor);
-                    mPulseLightsView.setVisibility(View.VISIBLE);
-                }
-            } else {
-                mPulseLightsView.endAnimation();
-                mPulseLightsView.setVisibility(View.GONE);
-            }
-        }
-    }
-
     public void setPulsing(boolean pulsing) {
         mPulsing = pulsing;
         DozeParameters dozeParameters = DozeParameters.getInstance(mContext);
@@ -3445,14 +3417,14 @@ public class NotificationPanelView extends PanelView implements
                 && dozeParameters.getAlwaysOn();
 
         ContentResolver resolver = mContext.getContentResolver();
-        boolean pulseLights = Settings.System.getIntForUser(resolver,
-                Settings.System.AMBIENT_NOTIFICATION_LIGHT, 1, UserHandle.USER_CURRENT) != 0;
 
         ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotification(ROWS_HIGH_PRIORITY);
         boolean activeNotif = row != null;
         int pulseReason = Settings.System.getIntForUser(resolver,
                 Settings.System.PULSE_TRIGGER_REASON, DozeLog.PULSE_REASON_NONE, UserHandle.USER_CURRENT);
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
+        boolean pulseForAll = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
         int lightColor = Settings.System.getIntForUser(resolver,
                 Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
 
@@ -3464,12 +3436,7 @@ public class NotificationPanelView extends PanelView implements
         if (!mPulsing && !mDozing) {
             mAnimateNextPositionUpdate = false;
         }
-        if (DEBUG_PULSE_LIGHT) {
-            Log.d(TAG, "setPulsing pulsing = " + pulsing + " pulseLights = " + pulseLights
-                    + " activeNotif = " + activeNotif + " lightColor = " + lightColor
-                    + " mDozing = " + mDozing + " pulseReasonNotification = " + pulseReasonNotification);
-        }
-        if (mPulseLightsView != null) {
+        if ((mPulseLightsView != null) && mPulseLights) {
             int pulseColor = mPulseLightsView.getNotificationLightsColor();
             if (row != null) {
                 if (lightColor == 0) {
@@ -3481,10 +3448,27 @@ public class NotificationPanelView extends PanelView implements
                     pulseColor = mPulseLightsView.getNotificationLightsColor();
                 }
             }
-            mPulseLightsView.setVisibility(mPulsing ? View.VISIBLE : View.GONE);
             if (mPulsing) {
-                mPulseLightsView.animateNotificationWithColor(pulseColor);
-                mPulseLightsView.setPulsing(pulsing);
+                if (activeNotif && pulseReasonNotification) {
+                    if (mPulseLights) {
+                        mPulseLightsView.animateNotificationWithColor(pulseColor);
+                        mPulseLightsView.setPulsing(pulsing);
+                        mPulseLightsView.setVisibility(View.VISIBLE);
+                     } else {
+                        // bars can still be visible as leftover
+                        // but we dont want them here
+                        mPulseLightsView.setVisibility(View.GONE);
+                        mPulseLightsView.stopAnimateNotification();
+                    }
+                } else if (pulseForAll) {
+                    mPulseLightsView.animateNotification();
+                    mPulseLightsView.setVisibility(View.VISIBLE);
+                }
+            }  else {
+              try {
+                  mPulseLightsView.stopAnimateNotification();
+              } catch (Exception e) {
+              }
             }
         }
 
@@ -3676,6 +3660,11 @@ public class NotificationPanelView extends PanelView implements
 
     public void setOnReinflationListener(Runnable onReinflationListener) {
         mOnReinflationListener = onReinflationListener;
+    }
+
+
+    public void setPulseAmbientLight(boolean pulseAmbientLights) {
+        mPulseLights = pulseAmbientLights;
     }
 
 }

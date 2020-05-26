@@ -84,6 +84,13 @@ public class NotificationLightsView extends RelativeLayout {
         mPulsing = pulsing;
     }
 
+    public void stopAnimateNotification() {
+        if (mLightAnimator != null) {
+            mLightAnimator.end();
+            mLightAnimator = null;
+        }
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -168,7 +175,12 @@ public class NotificationLightsView extends RelativeLayout {
         rightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
         mLightAnimator.setDuration(duration);
-        mLightAnimator.setRepeatCount(repeat);
+        mLightAnimator.setDuration(duration);
+        if (repeat == 0) {
+            mLightAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        } else {
+            mLightAnimator.setRepeatCount(repeat - 1);
+        }
         mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -190,7 +202,7 @@ public class NotificationLightsView extends RelativeLayout {
                 rightViewFaded.setAlpha(alpha);
             }
         });
-        Log.e("NotificationLightsView", "start");
+       if (DEBUG) Log.d(TAG, "start");
         mLightAnimator.start();
     }
 }

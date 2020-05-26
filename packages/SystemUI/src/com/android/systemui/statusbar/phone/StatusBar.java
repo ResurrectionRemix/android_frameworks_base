@@ -2133,6 +2133,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.AMBIENT_NOTIFICATION_LIGHT),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2142,6 +2145,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         public void update() {
+            if (mStatusBarWindow != null) {
+                mStatusBarWindow.updateSettings();
+            }
             setFpToDismissNotifications();
             setPulseOnNewTracks();
             updateQsPanelResources();
