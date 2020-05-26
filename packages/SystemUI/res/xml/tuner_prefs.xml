@@ -64,12 +64,6 @@
             android:title="@string/tuner_qs_long_press_action"
             sysui:defValue="false" />
 
-        <com.android.systemui.tuner.TunerSwitch
-            android:key="qs_status_bar_bg_transparency"
-            android:icon="@drawable/rr_blur_icon"
-            android:title="@string/tuner_status_bar_bg_transparency"
-            sysui:defValue="false" />
-
     </PreferenceScreen>
 
     <Preference
