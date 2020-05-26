@@ -23,24 +23,47 @@
     android:orientation="vertical"
     android:layout_centerVertical="true">
 
-    <ImageView
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:layout_gravity="right"
-        android:id="@+id/notification_animation_right"
-        android:scaleType="fitXY"
-        android:layout_width="@dimen/right_edgeLightNotificationWidth"
-        android:layout_height="match_parent"
-        android:src="@drawable/light_pulse_right"/>
+    <!-- Solid -->
      <ImageView
         android:layout_alignParentLeft="true"
         android:gravity="left"
         android:layout_gravity="left"
-        android:id="@+id/notification_animation_left"
+        android:id="@+id/notification_animation_left_solid"
         android:scaleType="fitXY"
-        android:layout_width="@dimen/left_edgeLightNotificationWidth"
+        android:layout_width="125px"
         android:layout_height="match_parent"
-        android:src="@drawable/light_pulse_left"/>
+        android:src="@drawable/ambient_light_pulse_left_solid"/>
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:id="@+id/notification_animation_right_solid"
+        android:scaleType="fitXY"
+        android:layout_width="125px"
+        android:layout_height="match_parent"
+        android:src="@drawable/ambient_light_pulse_right_solid"/>
+
+    <!-- Faded -->
+    <ImageView
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:layout_gravity="left"
+        android:id="@+id/notification_animation_left_faded"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/aod_notification_light_left_faded"/>
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:id="@+id/notification_animation_right_faded"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/aod_notification_light_right_faded"/>
 
 </com.android.systemui.rr.NotificationLightsView>
 

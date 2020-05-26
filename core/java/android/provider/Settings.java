@@ -5463,6 +5463,16 @@ public final class Settings {
         private static final Validator PULSE_AMBIENT_LIGHT_WIDTH_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+
+        /**
+         * Ambient Edge Light Layout
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT_LAYOUT = "pulse_ambient_light_layout";
+
+        /** @hide */
+        private static final Validator PULSE_AMBIENT_LIGHT_LAYOUT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
         /**
          * Direction of repeat animations of Ambient edge light
          * 0 is restart
@@ -6214,6 +6224,7 @@ public final class Settings {
             AMBIENT_LIGHT_CUSTOM_COLOR,
             PULSE_AMBIENT_LIGHT_DURATION,
             PULSE_AMBIENT_LIGHT_REPEAT_COUNT,
+            PULSE_AMBIENT_LIGHT_LAYOUT,
             PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION,
             NOTIFICATION_LIGHT_PULSE,
             STATUSBAR_BATTERY_BAR,
@@ -6560,6 +6571,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
             PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
+            PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_LAYOUT);
         }
 
         /**
@@ -6783,6 +6795,7 @@ public final class Settings {
             VALIDATORS.put(SCREEN_STATE_THREEG, SCREEN_STATE_THREEG_VALIDATOR);
             VALIDATORS.put(FLASHLIGHT_ON_CALL, FLASHLIGHT_ON_CALL_VALIDATOR);
             VALIDATORS.put(OMNI_DOZE_ON_CHARGE, OMNI_DOZE_ON_CHARGE_VALIDATOR);
+            VALIDATORS.put(PULSE_AMBIENT_LIGHT_LAYOUT, PULSE_AMBIENT_LIGHT_LAYOUT_VALIDATOR);
         }
 
         /**

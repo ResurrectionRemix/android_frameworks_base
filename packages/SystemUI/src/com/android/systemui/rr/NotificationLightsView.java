@@ -24,6 +24,7 @@ import android.app.WallpaperInfo;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -31,6 +32,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -149,12 +151,21 @@ public class NotificationLightsView extends RelativeLayout {
         int width = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_WIDTH, 125,
                 UserHandle.USER_CURRENT);
-        ImageView leftView = (ImageView) findViewById(R.id.notification_animation_left);
-        ImageView rightView = (ImageView) findViewById(R.id.notification_animation_right);
-        leftView.setColorFilter(color);
-        rightView.setColorFilter(color);
-        leftView.getLayoutParams().width = width;
-        rightView.getLayoutParams().width = width;
+        int layout = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_LAYOUT, 0,
+                UserHandle.USER_CURRENT);
+        ImageView leftViewSolid = (ImageView) findViewById(R.id.notification_animation_left_solid);
+        ImageView leftViewFaded = (ImageView) findViewById(R.id.notification_animation_left_faded);
+        leftViewSolid.setColorFilter(color);
+        leftViewFaded.setColorFilter(color);
+        leftViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
+        leftViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
+        ImageView rightViewSolid = (ImageView) findViewById(R.id.notification_animation_right_solid);
+        ImageView rightViewFaded = (ImageView) findViewById(R.id.notification_animation_right_faded);
+        rightViewSolid.setColorFilter(color);
+        rightViewFaded.setColorFilter(color);
+        rightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
+        rightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
         mLightAnimator.setDuration(duration);
         mLightAnimator.setRepeatCount(repeat);
@@ -163,16 +174,20 @@ public class NotificationLightsView extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 Log.e("NotificationLightsView", "onAnimationUpdate");
                 float progress = ((Float) animation.getAnimatedValue()).floatValue();
-                leftView.setScaleY(progress);
-                rightView.setScaleY(progress);
+                leftViewSolid.setScaleY(progress);
+                leftViewFaded.setScaleY(progress);
+                rightViewSolid.setScaleY(progress);
+                rightViewFaded.setScaleY(progress);
                 float alpha = 1.0f;
                 if (progress <= 0.3f) {
                     alpha = progress / 0.3f;
                 } else if (progress >= 1.0f) {
                     alpha = 2.0f - progress;
                 }
-                leftView.setAlpha(alpha);
-                rightView.setAlpha(alpha);
+                leftViewSolid.setAlpha(alpha);
+                leftViewFaded.setAlpha(alpha);
+                rightViewSolid.setAlpha(alpha);
+                rightViewFaded.setAlpha(alpha);
             }
         });
         Log.e("NotificationLightsView", "start");
