@@ -18,7 +18,6 @@
 <com.android.systemui.statusbar.notification.stack.SectionHeaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@*android:color/notification_material_background_color"
     android:layout_height="@dimen/notification_section_header_height"
     >
 
