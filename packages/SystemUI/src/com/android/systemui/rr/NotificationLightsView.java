@@ -165,12 +165,16 @@ public class NotificationLightsView extends RelativeLayout {
         ImageView leftViewFaded = (ImageView) findViewById(R.id.notification_animation_left_faded);
         leftViewSolid.setColorFilter(color);
         leftViewFaded.setColorFilter(color);
+        leftViewSolid.getLayoutParams().width = width;
+        leftViewFaded.getLayoutParams().width = width;
         leftViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         leftViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         ImageView rightViewSolid = (ImageView) findViewById(R.id.notification_animation_right_solid);
         ImageView rightViewFaded = (ImageView) findViewById(R.id.notification_animation_right_faded);
         rightViewSolid.setColorFilter(color);
         rightViewFaded.setColorFilter(color);
+        rightViewSolid.getLayoutParams().width = width;
+        rightViewFaded.getLayoutParams().width = width;
         rightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         rightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
