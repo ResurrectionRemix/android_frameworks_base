@@ -175,6 +175,26 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private static final String SHOW_QS_CLOCK =
             "system:" + Settings.System.SHOW_QS_CLOCK;
 
+    private RRSettingsObserver mRRSettingsObserver = new RRSettingsObserver(mHandler);
+
+    private class RRSettingsObserver extends ContentObserver {
+        RRSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER), false,
+                    this, UserHandle.USER_ALL);
+            }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
     private boolean mForceHideQsStatusBar;
 
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
@@ -222,6 +242,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mPrivacyItemController = privacyItemController;
         mDualToneHandler = new DualToneHandler(
                 new ContextThemeWrapper(context, R.style.QSHeaderTheme));
+        mRRSettingsObserver.observe();
     }
 
     @Override
@@ -290,7 +311,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mContext.getMainExecutor(), mPropertyListener);
 
         Dependency.get(TunerService.class).addTunable(this,
-                Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER,
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE,
@@ -744,9 +764,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case StatusBarIconController.ICON_BLACKLIST:
                  mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(newValue)
                     .contains("clock"));
-                break;
-            case Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER:
-                updateSettings();
                 break;
             case QS_SHOW_BATTERY_PERCENT:
                 mBatteryRemainingIcon.mShowBatteryPercent =
