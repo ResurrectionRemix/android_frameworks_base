@@ -240,11 +240,10 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
             if (maxDeviceState > state) {
                 state = maxDeviceState;
             }
-            if (device.isConnected()) {
+            if (state == BluetoothProfile.STATE_CONNECTED) {
                 mConnectedDevices.add(device);
             }
         }
-
         if (mConnectedDevices.isEmpty() && state == BluetoothAdapter.STATE_CONNECTED) {
             // If somehow we think we are connected, but have no connected devices, we aren't
             // connected.
