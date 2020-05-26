@@ -3242,9 +3242,6 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     public void onViewAdded(View child) {
         super.onViewAdded(child);
         onViewAddedInternal((ExpandableView) child);
-        if (child instanceof ExpandableNotificationRow) {
-            mNotificationPanel.updateAmbientPulse();
-        }
     }
 
     @ShadeViewRefactor(RefactorComponent.STATE_RESOLVER)

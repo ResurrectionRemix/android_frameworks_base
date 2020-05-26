@@ -3453,8 +3453,6 @@ public class NotificationPanelView extends PanelView implements
         int pulseReason = Settings.System.getIntForUser(resolver,
                 Settings.System.PULSE_TRIGGER_REASON, DozeLog.PULSE_REASON_NONE, UserHandle.USER_CURRENT);
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
-        boolean pulseForAll = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
         int lightColor = Settings.System.getIntForUser(resolver,
                 Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
 
@@ -3474,7 +3472,7 @@ public class NotificationPanelView extends PanelView implements
         if (mPulseLightsView != null) {
             int pulseColor = mPulseLightsView.getNotificationLightsColor();
             if (row != null) {
-                if (lightColor == 0 && activeNotif) {
+                if (lightColor == 0) {
                     int notificationColor = row.getStatusBarNotification().getNotification().color;
                     if (notificationColor != Notification.COLOR_DEFAULT) {
                         pulseColor = notificationColor;
@@ -3483,23 +3481,10 @@ public class NotificationPanelView extends PanelView implements
                     pulseColor = mPulseLightsView.getNotificationLightsColor();
                 }
             }
-            pulseColor |= 0xFF000000;
+            mPulseLightsView.setVisibility(mPulsing ? View.VISIBLE : View.GONE);
             if (mPulsing) {
-                if ((activeNotif && pulseReasonNotification) || pulseForAll) {
-                    // show the bars if we have to
-                    if (pulseLights) {
-                        mPulseLightsView.animateNotificationWithColor(pulseColor);
-                        mPulseLightsView.setVisibility(View.VISIBLE);
-                    } else {
-                        // bars can still be visible as leftover
-                        // but we dont want them here
-                        mPulseLightsView.endAnimation();
-                        mPulseLightsView.setVisibility(View.GONE);
-                    }
-                }
-            } else {
-                mPulseLightsView.endAnimation();
-                mPulseLightsView.setVisibility(View.GONE);
+                mPulseLightsView.animateNotificationWithColor(pulseColor);
+                mPulseLightsView.setPulsing(pulsing);
             }
         }
 

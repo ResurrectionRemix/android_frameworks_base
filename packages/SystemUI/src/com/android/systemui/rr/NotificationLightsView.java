@@ -42,26 +42,11 @@ import androidx.palette.graphics.Palette;
 public class NotificationLightsView extends RelativeLayout {
     private static final boolean DEBUG = false;
     private static final String TAG = "NotificationLightsView";
-
+    private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
-    private ImageView mLeftView;
-    private ImageView mRightView;
-    private AnimatorUpdateListener mAnimatorUpdateListener = new AnimatorUpdateListener() {
-        public void onAnimationUpdate(ValueAnimator animation) {
-            if (DEBUG) Log.d(TAG, "onAnimationUpdate");
-            float progress = ((Float) animation.getAnimatedValue()).floatValue();
-            mLeftView.setScaleY(progress);
-            mRightView.setScaleY(progress);
-            float alpha = 1.0f;
-            if (progress <= 0.3f) {
-                alpha = progress / 0.3f;
-            } else if (progress >= 1.0f) {
-                alpha = 2.0f - progress;
-            }
-            mLeftView.setAlpha(alpha);
-            mRightView.setAlpha(alpha);
-        }
-    };
+    private boolean mPulsing;
+    private WallpaperManager mWallManager;
+    private int color;
 
     public NotificationLightsView(Context context) {
         this(context, null);
@@ -79,6 +64,28 @@ public class NotificationLightsView extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         if (DEBUG) Log.d(TAG, "new");
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
+    }
+
+
+    private Runnable mLightUpdate = new Runnable() {
+        @Override
+        public void run() {
+            Log.e("NotificationLightsView", "run");
+            animateNotification();
+        }
+    };
+
+    public void setPulsing(boolean pulsing) {
+        if (mPulsing == pulsing) {
+            return;
+        }
+        mPulsing = pulsing;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        Log.e("NotificationLightsView", "draw");
     }
 
     public void animateNotification() {
@@ -130,40 +137,45 @@ public class NotificationLightsView extends RelativeLayout {
     }
 
     public void animateNotificationWithColor(int color) {
+        int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_DURATION, 2,
+                UserHandle.USER_CURRENT) * 1000;
+        int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_COUNT, 0,
+                UserHandle.USER_CURRENT);
+        boolean directionIsRestart = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION, 0,
+                UserHandle.USER_CURRENT) != 1;
         int width = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_WIDTH, 125,
                 UserHandle.USER_CURRENT);
-        if (mLeftView == null) {
-            mLeftView = (ImageView) findViewById(R.id.notification_animation_left);
-        }
-        if (mRightView == null) {
-            mRightView = (ImageView) findViewById(R.id.notification_animation_right);
-        }
-        mLeftView.setColorFilter(color);
-        mRightView.setColorFilter(color);
-        mLeftView.getLayoutParams().width = width;
-        mRightView.getLayoutParams().width = width;
-        if (!mLightAnimator.isRunning()) {
-            if (DEBUG) Log.d(TAG, "start");
-            int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_COUNT, 0,
-                    UserHandle.USER_CURRENT);
-            boolean directionIsRestart = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION, 0,
-                UserHandle.USER_CURRENT) != 1;
-            int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.PULSE_AMBIENT_LIGHT_DURATION, 2,
-                    UserHandle.USER_CURRENT) * 1000;
-            mLightAnimator.setDuration(duration);
-            mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
-            if (repeat == 0) {
-                mLightAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            } else {
-                mLightAnimator.setRepeatCount(repeat - 1);
+        ImageView leftView = (ImageView) findViewById(R.id.notification_animation_left);
+        ImageView rightView = (ImageView) findViewById(R.id.notification_animation_right);
+        leftView.setColorFilter(color);
+        rightView.setColorFilter(color);
+        leftView.getLayoutParams().width = width;
+        rightView.getLayoutParams().width = width;
+        mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
+        mLightAnimator.setDuration(duration);
+        mLightAnimator.setRepeatCount(repeat);
+        mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
+        mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Log.e("NotificationLightsView", "onAnimationUpdate");
+                float progress = ((Float) animation.getAnimatedValue()).floatValue();
+                leftView.setScaleY(progress);
+                rightView.setScaleY(progress);
+                float alpha = 1.0f;
+                if (progress <= 0.3f) {
+                    alpha = progress / 0.3f;
+                } else if (progress >= 1.0f) {
+                    alpha = 2.0f - progress;
+                }
+                leftView.setAlpha(alpha);
+                rightView.setAlpha(alpha);
             }
-            mLightAnimator.addUpdateListener(mAnimatorUpdateListener);
-            mLightAnimator.start();
-        }
+        });
+        Log.e("NotificationLightsView", "start");
+        mLightAnimator.start();
     }
-
 }
