@@ -1005,7 +1005,7 @@ class GlobalScreenshot {
             @Override
             public void run() {
                 if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.SCREENSHOT_SHUTTER_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
+                        Settings.System.SCREENSHOT_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
                     if (mScreenshotSound != null) {
                         mScreenshotSound.play();
                     }

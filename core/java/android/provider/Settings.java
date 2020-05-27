@@ -6066,6 +6066,13 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * Screenshod sound enable, This is the noise made when taking a screesnhot
+         * Defaults to 1 - sounds enabled
+         * @hide
+         */
+        public static final String SCREENSHOT_SOUND = "screenshot_sound";
+
+        /**
          * Whether to show lock icon on lockscreen
          * @hide
          */
