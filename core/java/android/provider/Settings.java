@@ -4672,10 +4672,6 @@ public final class Settings {
         private static final Validator STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
-        /***************************
-         * AICP System Settings end
-         ***************************/
-
         /**
          * Screenrecord: show stop dot
          * @hide
@@ -4944,7 +4940,7 @@ public final class Settings {
         public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
          /**
-         * Statusbar AICP logo
+         * Statusbar RR logo
          * @hide
          */
         public static final String STATUS_BAR_LOGO = "status_bar_logo";
@@ -4954,7 +4950,7 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-         * Statusbar AICP logo color setting
+         * Statusbar RR logo color setting
          * @hide
          */
         public static final String STATUS_BAR_LOGO_COLOR = "status_bar_logo_color";
@@ -4964,7 +4960,7 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
 	/**
-         * Statusbar AICP logo accent color setting
+         * Statusbar RR logo accent color setting
          * @hide
          */
         public static final String STATUS_BAR_LOGO_COLOR_ACCENT = "status_bar_logo_color_accent";
@@ -4976,7 +4972,7 @@ public final class Settings {
 
 
         /**
-         * Position of Status bar AICP logo
+         * Position of Status bar RR logo
          * 0 - Left (default)
          * 1 - Right
          * @hide
@@ -4988,7 +4984,7 @@ public final class Settings {
               ANY_STRING_VALIDATOR;
 
         /**
-         * Statusbar AICP logo custom style
+         * Statusbar RR logo custom style
          * @hide
          */
         public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
@@ -5080,10 +5076,10 @@ public final class Settings {
         * 1: KeyguardSlice Style
         * @hide
         */
-        public static final String AICP_LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
+        public static final String LOCKSCREEN_WEATHER_STYLE = "lockscreen_weather_style";
 
         /** @hide */
-        private static final Validator AICP_LOCKSCREEN_WEATHER_STYLE_VALIDATOR =
+        private static final Validator LOCKSCREEN_WEATHER_STYLE_VALIDATOR =
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
@@ -6330,7 +6326,7 @@ public final class Settings {
             HEADS_UP_BLACKLIST_VALUES,
             OMNIJAWS_WEATHER_ICON_PACK,
             OMNI_LOCKSCREEN_WEATHER_ENABLED,
-            AICP_LOCKSCREEN_WEATHER_STYLE,
+            LOCKSCREEN_WEATHER_STYLE,
             TOAST_ANIMATION,
             USE_SLIM_RECENTS,
             RECENTS_MAX_APPS,
@@ -6565,7 +6561,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
-            PRIVATE_SETTINGS.add(AICP_LOCKSCREEN_WEATHER_STYLE);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_STYLE);
             PRIVATE_SETTINGS.add(TOAST_ANIMATION);
             PRIVATE_SETTINGS.add(USE_SLIM_RECENTS);
             PRIVATE_SETTINGS.add(RECENTS_MAX_APPS);
@@ -6651,7 +6647,7 @@ public final class Settings {
         }
 
         /**
-         * These are all public system and private Aicp settings
+         * These are all public system and private >RR settings
          *
          * All settings in {@link SETTINGS_TO_BACKUP} array *must* have a non-null validator,
          * otherwise they won't be restored.
@@ -6789,7 +6785,7 @@ public final class Settings {
             VALIDATORS.put(HEADS_UP_BLACKLIST_VALUES, HEADS_UP_BLACKLIST_VALUES_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK,OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
             VALIDATORS.put(OMNI_LOCKSCREEN_WEATHER_ENABLED,OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
-            VALIDATORS.put(AICP_LOCKSCREEN_WEATHER_STYLE,AICP_LOCKSCREEN_WEATHER_STYLE_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_WEATHER_STYLE,LOCKSCREEN_WEATHER_STYLE_VALIDATOR);
             VALIDATORS.put(TOAST_ANIMATION,TOAST_ANIMATION_VALIDATOR);
             VALIDATORS.put(USE_SLIM_RECENTS, USE_SLIM_RECENTS_VALIDATOR);
             VALIDATORS.put(RECENTS_MAX_APPS, RECENTS_MAX_APPS_VALIDATOR);
@@ -11150,9 +11146,6 @@ public final class Settings {
 
         private static final Validator VOLUME_LINK_NOTIFICATION_VALIDATOR = BOOLEAN_VALIDATOR;
 
-        /*****************************
-         * AICP Secure Settings end
-         *****************************/
 
         /**
          * Whether the Reboot button should be shown in the power menu.

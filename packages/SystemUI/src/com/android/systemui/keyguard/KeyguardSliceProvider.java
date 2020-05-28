@@ -378,7 +378,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
                     false, this, UserHandle.USER_ALL);
 
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE),
+                    Settings.System.LOCKSCREEN_WEATHER_STYLE),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -391,7 +391,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.OMNIJAWS_WEATHER_ICON_PACK))) {
                 queryAndUpdateWeather();
                 mContentResolver.notifyChange(mSliceUri, null /* observer */);
-            } else if (uri.equals(Settings.System.getUriFor(Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE))) {
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_WEATHER_STYLE))) {
                 updateLockscreenWeatherStyle();
                 mContentResolver.notifyChange(mSliceUri, null /* observer */);
             }
@@ -402,7 +402,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
         }
 
         public void updateLockscreenWeatherStyle() {
-            mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE, 0, UserHandle.USER_CURRENT) != 0;
+            mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.LOCKSCREEN_WEATHER_STYLE, 0, UserHandle.USER_CURRENT) != 0;
         }
     }
 
