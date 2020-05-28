@@ -15,7 +15,14 @@ public class AccentUtils {
 
     static boolean isResourceAccent(String resName) {
         return resName.contains("accent_device_default_light")
-                || resName.contains("accent_device_default_dark");
+                || resName.contains("accent_device_default_dark")
+                || resName.contains("material_pixel_blue_dark")
+                || resName.contains("material_pixel_blue_bright")
+                || resName.contains("omni_color5")
+                || resName.contains("omni_color4")
+                || resName.contains("dialer_theme_color")
+                || resName.contains("dialer_theme_color_dark")
+                || resName.contains("dialer_theme_color_20pct");
     }
 
     public static int getNewAccentColor(int defaultColor) {
