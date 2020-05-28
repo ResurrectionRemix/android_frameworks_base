@@ -39,6 +39,7 @@ import android.pocket.IPocketCallback;
 import android.pocket.PocketConstants;
 import android.pocket.PocketManager;
 import android.provider.Settings.System;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 
@@ -65,6 +66,17 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
 
     private static final String TAG = PocketService.class.getSimpleName();
     private static final boolean DEBUG = PocketConstants.DEBUG;
+
+    /**
+     * Wheater we don't have yet a valid vendor sensor event or pocket service not running.
+     */
+    private static final int VENDOR_SENSOR_UNKNOWN = 0;
+
+    /**
+     * Vendor sensor has been registered, onSensorChanged() has been called and we have a
+     * valid event value from Vendor pocket sensor.
+     */
+    private static final int VENDOR_SENSOR_IN_POCKET = 1;
 
     /**
      * The rate proximity sensor events are delivered at.
@@ -141,6 +153,13 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     private boolean mLightRegistered;
     private Sensor mLightSensor;
 
+    // vendor sensor
+    private int mVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+    private int mLastVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+    private String mVendorPocketSensor;
+    private boolean mVendorSensorRegistered;
+    private Sensor mVendorSensor;
+
     // Custom methods
     private boolean mPocketLockVisible;
 
@@ -151,6 +170,8 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         handlerThread.start();
         mHandler = new PocketHandler(handlerThread.getLooper());
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        mVendorPocketSensor = mContext.getResources().getString(
+                        com.android.internal.R.string.config_pocketJudgeVendorSensorName);
         mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         if (mProximitySensor != null) {
             mProximityMaxRange = mProximitySensor.getMaximumRange();
@@ -159,6 +180,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         if (mLightSensor != null) {
             mLightMaxRange = mLightSensor.getMaximumRange();
         }
+        mVendorSensor = getSensor(mSensorManager, mVendorPocketSensor);
         mObserver = new PocketObserver(mHandler);
         mObserver.onChange(true);
         mObserver.register();
@@ -209,6 +231,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         public static final int MSG_UNREGISTER_TIMEOUT = 8;
         public static final int MSG_SET_LISTEN_EXTERNAL = 9;
         public static final int MSG_SET_POCKET_LOCK_VISIBLE = 10;
+        public static final int MSG_SENSOR_EVENT_VENDOR = 11;
 
         public PocketHandler(Looper looper) {
             super(looper);
@@ -240,6 +263,9 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
                     break;
                 case MSG_SENSOR_EVENT_LIGHT:
                     handleLightSensorEvent((SensorEvent) msg.obj);
+                    break;
+                case MSG_SENSOR_EVENT_VENDOR:
+                    handleVendorSensorEvent((SensorEvent) msg.obj);
                     break;
                 case MSG_UNREGISTER_TIMEOUT:
                     handleUnregisterTimeout();
@@ -412,7 +438,24 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         public void onAccuracyChanged(Sensor sensor, int i) { }
     };
 
+    private final SensorEventListener mVendorSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            final Message msg = new Message();
+            msg.what = PocketHandler.MSG_SENSOR_EVENT_VENDOR;
+            msg.obj = sensorEvent;
+            mHandler.sendMessage(msg);
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) { }
+    };
+
     private boolean isDeviceInPocket() {
+        if (mVendorSensorState != VENDOR_SENSOR_UNKNOWN) {
+            return mVendorSensorState == VENDOR_SENSOR_IN_POCKET;
+        }
+
         if (mLightState != LIGHT_UNKNOWN) {
             return mProximityState == PROXIMITY_POSITIVE
                     && mLightState == LIGHT_POCKET;
@@ -443,16 +486,52 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     }
 
     private void registerSensorListeners() {
+        startListeningForVendorSensor();
         startListeningForProximity();
         startListeningForLight();
     }
 
     private void unregisterSensorListeners() {
+        stopListeningForVendorSensor();
         stopListeningForProximity();
         stopListeningForLight();
     }
 
+    private void startListeningForVendorSensor() {
+        if (DEBUG) {
+            Log.d(TAG, "startListeningForVendorSensor()");
+        }
+
+        if (mVendorSensor == null) {
+            Log.d(TAG, "Cannot detect Vendor pocket sensor, sensor is NULL");
+            return;
+        }
+
+        if (!mVendorSensorRegistered) {
+            mSensorManager.registerListener(mVendorSensorListener, mVendorSensor,
+                    SensorManager.SENSOR_DELAY_NORMAL, mHandler);
+            mVendorSensorRegistered = true;
+        }
+    }
+
+    private void stopListeningForVendorSensor() {
+        if (DEBUG) {
+            Log.d(TAG, "stopListeningForVendorSensor()");
+        }
+
+        if (mVendorSensorRegistered) {
+            mVendorSensorState = mLastVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+            mSensorManager.unregisterListener(mVendorSensorListener);
+            mVendorSensorRegistered = false;
+        }
+    }
+
     private void startListeningForProximity() {
+
+        if (mVendorSensor != null) {
+            return;
+        }
+
         if (DEBUG) {
             Log.d(TAG, "startListeningForProximity()");
         }
@@ -486,6 +565,11 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     }
 
     private void startListeningForLight() {
+
+        if (mVendorSensor != null) {
+            return;
+        }
+
         if (DEBUG) {
             Log.d(TAG, "startListeningForLight()");
         }
@@ -521,8 +605,10 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     private void handleSystemReady() {
         if (DEBUG) {
             Log.d(TAG, "onBootPhase(): PHASE_SYSTEM_SERVICES_READY");
+            Log.d(TAG, "onBootPhase(): VENDOR_SENSOR: " +  mVendorPocketSensor);
         }
         mSystemReady = true;
+
         if (mPending) {
             final Message msg = new Message();
             msg.what = PocketHandler.MSG_INTERACTIVE_CHANGED;
@@ -634,6 +720,42 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         update();
     }
 
+    private void handleVendorSensorEvent(SensorEvent sensorEvent) {
+        final boolean isDeviceInPocket = isDeviceInPocket();
+
+        mLastVendorSensorState = mVendorSensorState;
+
+        if (DEBUG) {
+            final String sensorEventToString = sensorEvent != null ? sensorEvent.toString() : "NULL";
+            Log.d(TAG, "VENDOR_SENSOR: onSensorChanged(), sensorEvent =" + sensorEventToString);
+        }
+
+        try {
+            if (sensorEvent == null) {
+                if (DEBUG) Log.d(TAG, "Event is null!");
+                mVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+            } else if (sensorEvent.values == null || sensorEvent.values.length == 0) {
+                if (DEBUG) Log.d(TAG, "Event has no values! event.values null ? " + (sensorEvent.values == null));
+                mVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+            } else {
+                final boolean isVendorPocket = sensorEvent.values[0] == 1.0;
+                if (DEBUG) {
+                    final long time = SystemClock.uptimeMillis();
+                    Log.d(TAG, "Event: time=" + time + ", value=" + sensorEvent.values[0]
+                            + ", isInPocket=" + isVendorPocket);
+                }
+                mVendorSensorState = isVendorPocket ? VENDOR_SENSOR_IN_POCKET : VENDOR_SENSOR_UNKNOWN;
+            }
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Event: something went wrong, exception caught, e = " + e);
+            mVendorSensorState = VENDOR_SENSOR_UNKNOWN;
+        } finally {
+            if (isDeviceInPocket != isDeviceInPocket()) {
+                dispatchCallbacks();
+            }
+        }
+   }
+
     private void handleLightSensorEvent(SensorEvent sensorEvent) {
         final boolean isDeviceInPocket = isDeviceInPocket();
 
@@ -714,6 +836,15 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         unregisterSensorListeners();
     }
 
+    private static Sensor getSensor(SensorManager sm, String type) {
+        for (Sensor sensor : sm.getSensorList(Sensor.TYPE_ALL)) {
+            if (type.equals(sensor.getStringType())) {
+                return sensor;
+            }
+        }
+        return null;
+    }
+
     private void dispatchCallbacks() {
         final boolean isDeviceInPocket = isDeviceInPocket();
         if (mInteractive) {
@@ -742,6 +873,9 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
             dump.put("lastLightState", mLastLightState);
             dump.put("lightRegistered", mLightRegistered);
             dump.put("lightMaxRange", mLightMaxRange);
+            dump.put("VendorSensorState", mVendorSensorState);
+            dump.put("lastVendorSensorState", mLastVendorSensorState);
+            dump.put("VendorSensorRegistered", mVendorSensorRegistered);
         } catch (JSONException e) {
             Slog.e(TAG, "dump formatting failure", e);
         } finally {
