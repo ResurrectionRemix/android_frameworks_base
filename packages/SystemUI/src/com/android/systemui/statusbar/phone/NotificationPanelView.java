@@ -353,6 +353,8 @@ public class NotificationPanelView extends PanelView implements
 
     private NotificationLightsView mPulseLightsView;
     private boolean mPulseLights;
+    private boolean mAmbientLights;
+    private int mLightColor;
     private boolean mStatusBarShownOnSecureKeyguard;
 
     private Runnable mHeadsUpExistenceChangedRunnable = new Runnable() {
@@ -3397,6 +3399,11 @@ public class NotificationPanelView extends PanelView implements
                 || mBarState == StatusBarState.SHADE_LOCKED) {
             updateDozingVisibilities(animate);
         }
+
+        if (mPulseLightsView != null) {
+            updatePulseLightState(dozing);
+        }
+
         final float dozeAmount = dozing ? 1 : 0;
         mStatusBarStateController.setDozeAmount(dozeAmount, animate);
     }
@@ -3425,8 +3432,6 @@ public class NotificationPanelView extends PanelView implements
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
         boolean pulseForAll = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
-        int lightColor = Settings.System.getIntForUser(resolver,
-                Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
 
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
@@ -3437,9 +3442,9 @@ public class NotificationPanelView extends PanelView implements
             mAnimateNextPositionUpdate = false;
         }
         if ((mPulseLightsView != null) && mPulseLights) {
-            int pulseColor = mPulseLightsView.getNotificationLightsColor();
+            int pulseColor = getPulseColor();
             if (row != null) {
-                if (lightColor == 0) {
+                if (mLightColor == 0) {
                     int notificationColor = row.getStatusBarNotification().getNotification().color;
                     if (notificationColor != Notification.COLOR_DEFAULT) {
                         pulseColor = notificationColor;
@@ -3465,15 +3470,46 @@ public class NotificationPanelView extends PanelView implements
                     mPulseLightsView.setVisibility(View.VISIBLE);
                 }
             }  else {
-              try {
-                  mPulseLightsView.stopAnimateNotification();
-              } catch (Exception e) {
-              }
+               stopNotificationPulse();
             }
         }
 
         mNotificationStackScroller.setPulsing(pulsing, animatePulse);
         mKeyguardStatusView.setPulsing(pulsing);
+    }
+
+    public void stopNotificationPulse() {
+        try {
+             mPulseLightsView.stopAnimateNotification();
+         } catch (Exception e) {
+         }
+    }
+
+    private void updatePulseLightState(boolean dozing) {
+        if (!mAmbientLights || !mPulseLights || !dozing) {
+            if (mPulseLightsView != null) {
+                mPulseLightsView.setVisibility(View.GONE);
+            }
+            stopNotificationPulse();
+            return;
+        }
+        if (mPulseLightsView != null) {
+           if (mPulseLights && mAmbientLights) {
+               if (dozing) {
+                   mPulseLightsView.animateNotificationWithColor(getPulseColor());
+                   mPulseLightsView.setVisibility(View.VISIBLE);
+               } else {
+                   mPulseLightsView.setVisibility(View.GONE);
+                   stopNotificationPulse(); 
+               }
+           } else {
+             stopNotificationPulse();
+           }
+        }
+    }
+
+    public int getPulseColor() {
+        return mPulseLightsView.getNotificationLightsColor();
     }
 
     public void setAmbientIndicationBottomPadding(int ambientIndicationBottomPadding) {
@@ -3667,4 +3703,11 @@ public class NotificationPanelView extends PanelView implements
         mPulseLights = pulseAmbientLights;
     }
 
+    public void setPulseAmbientLightColor(int color) {
+        mLightColor = color;
+    }
+
+    public void setPulseAmbientLightAod(boolean enabled) {
+        mAmbientLights = enabled;
+    }
 }

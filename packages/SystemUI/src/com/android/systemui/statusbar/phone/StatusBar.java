@@ -2141,6 +2141,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.AMBIENT_NOTIFICATION_LIGHT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.AMBIENT_LIGHT_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
