@@ -295,15 +295,13 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
                             ViewGroup.LayoutParams.WRAP_CONTENT));
             }
         }
-        // Show / hide status area
-        mKeyguardStatusArea.setVisibility(plugin.shouldShowStatusArea() ? View.VISIBLE : View.GONE);
 
-        View bigClockView = plugin.getBigClockView();
-        if (bigClockView != null && mBigClockContainer != null) {
-            mBigClockContainer.addView(bigClockView);
-            updateBigClockVisibility();
+
+
+        // Hide default clock.
+        if (!plugin.shouldShowStatusArea()) {
+            mKeyguardStatusArea.setVisibility(View.GONE);
         }
-
         // Initialize plugin parameters.
         mClockPlugin = plugin;
         mClockPlugin.setStyle(getPaint().getStyle());
