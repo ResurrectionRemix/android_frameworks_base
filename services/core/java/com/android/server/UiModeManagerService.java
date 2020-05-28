@@ -84,8 +84,8 @@ final class UiModeManagerService extends SystemService {
     private static final boolean ENABLE_LAUNCH_DESK_DOCK_APP = true;
     private static final String SYSTEM_PROPERTY_DEVICE_THEME = "persist.sys.theme";
 
-    private static final String ACCENT_COLOR_PROP = "persist.sys.rr.accent_color";
-    private static final String GRADIENT_COLOR_PROP = "persist.sys.rr.gradientcolor";
+    private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
+    private static final String GRADIENT_COLOR_PROP = "persist.sys.theme.gradientcolor";
 
     final Object mLock = new Object();
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
