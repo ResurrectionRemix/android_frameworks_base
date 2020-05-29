@@ -2008,7 +2008,7 @@ public final class PowerManagerService extends SystemService
             if (mSmartChargingResetStats) {
                 try {
                      mBatteryStats.resetStatistics();
-                } catch (RemoteException e) {
+                } catch (Exception e) {
                          Slog.e(TAG, "failed to reset battery statistics");
                 }
             }
