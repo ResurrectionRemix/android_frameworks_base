@@ -151,6 +151,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new DefaultBoldClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new AnalogClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new TypeClockAltController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new BinaryClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new BubbleClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new CustomNumClockController(res, layoutInflater, colorExtractor));
