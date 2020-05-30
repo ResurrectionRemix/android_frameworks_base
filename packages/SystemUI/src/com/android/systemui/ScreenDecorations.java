@@ -768,9 +768,6 @@ public class ScreenDecorations extends SystemUI implements Tunable,
 
     private WindowManager.LayoutParams getBottomLayoutParams() {
         WindowManager.LayoutParams lp = getWindowLayoutParams();
-        // we dont need that for the assistant handles
-        lp.privateFlags &= ~WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
-
         lp.setTitle("ScreenDecorOverlayBottom");
         if (mRotation == RotationUtils.ROTATION_SEASCAPE
                 || mRotation == RotationUtils.ROTATION_UPSIDE_DOWN) {
