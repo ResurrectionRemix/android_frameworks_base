@@ -71,13 +71,8 @@ public class TypeClockAltController implements ClockPlugin {
     /**
      * Custom clock shown on AOD screen and behind stack scroller on lock.
      */
-    private View mView;
     private TypographicClock mTypeClock;
-
-    /**
-     * Small clock shown on lock screen above stack scroller.
-     */
-    private TypographicClock mLockClock;
+    private ClockLayout mBigClockView;
 
     /**
      * Controller for transition into dark state.
@@ -103,22 +98,14 @@ public class TypeClockAltController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = mLayoutInflater.inflate(R.layout.type_clock_alt, null);
-        mTypeClock = mView.findViewById(R.id.type_clock);
-
-        // For now, this view is used to hide the default digital clock.
-        // Need better transition to lock screen.
-        mLockClock = (TypographicClock) mLayoutInflater.inflate(R.layout.typographic_clock_alt, null);
-        mLockClock.setVisibility(View.GONE);
-
-        mDarkController = new CrossFadeDarkController(mView, mLockClock);
+        mBigClockView  = (ClockLayout) mLayoutInflater.inflate(R.layout.type_clock_alt, null);
+        mTypeClock = mBigClockView.findViewById(R.id.type_clock);
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mTypeClock = null;
-        mLockClock = null;
         mDarkController = null;
     }
 
@@ -156,18 +143,18 @@ public class TypeClockAltController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mLockClock == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mLockClock;
+        return mBigClockView;
     }
 
     @Override
     public View getBigClockView() {
-        if (mView == null) {
+        if (mBigClockView  == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView ;
     }
 
     @Override
@@ -181,12 +168,8 @@ public class TypeClockAltController implements ClockPlugin {
     }
 
     @Override
-    public void setStyle(Style style) {}
-
-    @Override
     public void setTextColor(int color) {
         mTypeClock.setTextColor(color);
-        mLockClock.setTextColor(color);
     }
 
     @Override
@@ -196,13 +179,11 @@ public class TypeClockAltController implements ClockPlugin {
         }
         final int color = colorPalette[Math.max(0, colorPalette.length - 5)];
         mTypeClock.setClockColor(color);
-        mLockClock.setClockColor(color);
     }
 
     @Override
     public void onTimeTick() {
         mTypeClock.onTimeChanged();
-        mLockClock.onTimeChanged();
     }
 
     @Override
@@ -216,7 +197,6 @@ public class TypeClockAltController implements ClockPlugin {
     @Override
     public void onTimeZoneChanged(TimeZone timeZone) {
         mTypeClock.onTimeZoneChanged(timeZone);
-        mLockClock.onTimeZoneChanged(timeZone);
     }
 
     @Override
