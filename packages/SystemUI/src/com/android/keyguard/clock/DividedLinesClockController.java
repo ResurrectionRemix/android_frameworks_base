@@ -104,7 +104,6 @@ public class DividedLinesClockController implements ClockPlugin {
         mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.divided_lines_clock, null);
         mClock = mBigClockView.findViewById(R.id.clock);
-        mClock.setFormat12Hour("h:mm");
         onTimeTick();
     }
 
