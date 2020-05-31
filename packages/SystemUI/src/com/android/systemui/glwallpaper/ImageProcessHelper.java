@@ -136,6 +136,7 @@ class ImageProcessHelper {
                 for (int col = 0; col < width; col++) {
                     int pixel = grayscale.getPixel(col, row);
                     int y = Color.red(pixel) + Color.green(pixel) + Color.blue(pixel);
+                    if (y > 255) y = 255;
                     histogram[y]++;
                 }
             }
