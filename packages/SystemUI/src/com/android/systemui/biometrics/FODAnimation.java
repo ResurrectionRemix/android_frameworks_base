@@ -81,8 +81,8 @@ public class FODAnimation extends ImageView {
         recognizingAnim = (AnimationDrawable) getBackground();
     }
 
-    public void updateParams(int mDreamingOffsetY) {
-        mAnimParams.y = mDreamingOffsetY - (mAnimationSize / 2) + mAnimationOffset;
+    public void updateParams(int positionY) {
+        mAnimParams.y = positionY - (mAnimationSize / 2) + mAnimationOffset;
     }
 
     public void setAnimationKeyguard(boolean state) {
