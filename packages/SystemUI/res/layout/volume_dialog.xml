@@ -47,8 +47,8 @@
                 style="@style/VolumeButtons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="?android:attr/colorAccent" />
+                android:padding="17dp"
+                android:tint="@*android:color/gradient_end" />
 
             <include
                 layout="@layout/volume_dnd_icon"

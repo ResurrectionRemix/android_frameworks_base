@@ -12,7 +12,10 @@
                     <shape android:shape="rectangle">
                         <corners android:radius="?android:attr/dialogCornerRadius" />
                         <size android:height="@dimen/volume_dialog_panel_width" />
-                        <solid android:color="?android:attr/colorAccent" />
+                        <gradient
+                           android:startColor="@*android:color/gradient_start"
+                           android:endColor="@*android:color/gradient_end"
+                           android:angle="45"/>
                     </shape>
                 </item>
             </selector>

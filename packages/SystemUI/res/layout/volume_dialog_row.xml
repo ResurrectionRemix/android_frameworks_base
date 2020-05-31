@@ -59,7 +59,7 @@
                 android:layoutDirection="ltr"
                 android:scaleType="fitCenter"
                 android:soundEffectsEnabled="false"
-                android:tint="?android:attr/colorAccent" />
+                android:tint="@*android:color/gradient_end" />
 
             <com.android.systemui.statusbar.AlphaOptimizedTextView
                 android:id="@+id/volume_row_header"
@@ -73,7 +73,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.Volume.Header"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="@*android:color/gradient_end"
                 android:textStyle="bold" />
         </LinearLayout>
     </FrameLayout>
