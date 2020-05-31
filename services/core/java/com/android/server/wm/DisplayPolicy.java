@@ -3834,7 +3834,10 @@ public class DisplayPolicy {
      */
     public void takeScreenshot(int screenshotType) {
         if (mScreenshotHelper != null) {
-            String packageName = mFocusedWindow == null ? "" : mFocusedWindow.getAttrs().packageName;
+            final boolean fullShot = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.LONG_SCREENSHOT_TYPE, 1, UserHandle.USER_CURRENT) == 1;
+            String packageName = fullShot ? "com.android.systemui" :
+                    (mFocusedWindow == null ? "" : mFocusedWindow.getAttrs().packageName);
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(),

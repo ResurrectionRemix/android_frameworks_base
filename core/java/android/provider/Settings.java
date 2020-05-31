@@ -6809,6 +6809,12 @@ public final class Settings {
         public static final String SCREENSHOT_TYPE = "screenshot_type";
 
         /**
+         * Whether to use long screenshot
+         * @hide
+         */
+        public static final String LONG_SCREENSHOT_TYPE = "long_screenshot_type";
+
+        /**
          * 0 - fullscreen
          * 1 - partial
          * @hide
