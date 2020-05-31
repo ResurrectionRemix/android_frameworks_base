@@ -18,6 +18,7 @@
 package com.android.keyguard.clock;
 
 import android.app.WallpaperManager;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -75,6 +76,7 @@ public class MNMLBoxClockController implements ClockPlugin {
      */
     private TextView mClock;
     private TextView mDate;
+    private TextView mDateDay;
 
     /**
      * Time and calendars to check the date
@@ -82,6 +84,8 @@ public class MNMLBoxClockController implements ClockPlugin {
     private final Calendar mTime = Calendar.getInstance(TimeZone.getDefault());
     private String mDescFormat;
     private TimeZone mTimeZone;
+
+    private final Context mContext;
 
     /**
      * Create a DefaultClockController instance.
@@ -92,9 +96,23 @@ public class MNMLBoxClockController implements ClockPlugin {
      */
     public MNMLBoxClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor) {
+        this(res, inflater, colorExtractor, null);
+    }
+
+    /**
+     * Create a DefaultClockController instance.
+     *
+     * @param res Resources contains title and thumbnail.
+     * @param inflater Inflater used to inflate custom clock views.
+     * @param colorExtractor Extracts accent color from wallpaper.
+     * @param context A context.
+     */
+    public MNMLBoxClockController(Resources res, LayoutInflater inflater,
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -102,7 +120,7 @@ public class MNMLBoxClockController implements ClockPlugin {
                 .inflate(R.layout.digital_mnml_box, null);
         mClock = mBigClockView.findViewById(R.id.clock);
         mDate = mBigClockView.findViewById(R.id.bigDate);
-        onTimeTick();
+        mDateDay = mBigClockView.findViewById(R.id.bigDateDay);
     }
 
     @Override
@@ -110,6 +128,7 @@ public class MNMLBoxClockController implements ClockPlugin {
         mBigClockView = null;
         mClock = null;
         mDate = null;
+        mDateDay = null;
     }
 
     @Override
@@ -175,6 +194,8 @@ public class MNMLBoxClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         mClock.setTextColor(color);
+        mDate.setTextColor(color);
+        mDateDay.setTextColor(color);
     }
 
     @Override
@@ -182,17 +203,6 @@ public class MNMLBoxClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-        mTime.setTimeInMillis(System.currentTimeMillis());
-        final int hour = mTime.get(Calendar.HOUR) % 12;
-        // lazy and ugly workaround for the it's string
-        String typeHeader = mResources.getQuantityText(
-                R.plurals.type_clock_header, hour).toString();
-        typeHeader = typeHeader.replaceAll("\\n", "");
-        SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
-        mClock.setText(typeHeader.substring(0, typeHeader.indexOf("^")) + " " + timeformat.format(mTime.getInstance().getTimeInMillis()));
-        DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEMMMMd", Locale.getDefault());
-        dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-        mDate.setText(dateFormat.format(mTime.getInstance().getTimeInMillis()));
     }
 
     @Override

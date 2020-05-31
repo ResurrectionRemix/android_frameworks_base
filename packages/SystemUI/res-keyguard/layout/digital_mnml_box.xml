@@ -5,29 +5,46 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|top">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:background="#9a000000"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <TextClock
             android:id="@+id/clock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/widget_vertical_padding_clock"
             android:alpha="0.75"
-            android:letterSpacing="0.05"
+            android:letterSpacing="0.1"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:format12Hour="@string/keyguard_widget_12_hours_format"
+            android:format24Hour="@string/keyguard_widget_24_hours_format"/>
 
-        <TextView
+        <TextClock
             android:id="@+id/bigDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.20"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            android:format12Hour="EEEE, MMMM"
+            android:format24Hour="EEEE, MMMM"/>
+
+        <TextClock
+            android:id="@+id/bigDateDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:letterSpacing="0.20"
             android:textColor="#fff"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            android:format12Hour="d"
+            android:format24Hour="d"/>
+
     </LinearLayout>
 </com.android.keyguard.clock.ClockLayout>
