@@ -223,6 +223,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mBTSCOShowing;
     private int mTimeOutDesired, mTimeOut;
     private boolean mShowRinger;
+    private boolean mGradient;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/widget_vertical_padding_clock"
             android:alpha="0.75"
-            android:letterSpacing="0.1"
+            android:letterSpacing="0.05"
             android:textColor="#fff"
             android:textSize="20sp"
             android:format12Hour="@string/keyguard_widget_12_hours_format"
@@ -45,6 +45,5 @@
             android:textSize="32sp"
             android:format12Hour="d"
             android:format24Hour="d"/>
-
     </LinearLayout>
 </com.android.keyguard.clock.ClockLayout>

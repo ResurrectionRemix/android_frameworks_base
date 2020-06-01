@@ -134,12 +134,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private Handler mHandler = new Handler();
 
     private int mClockFontStyle = FONT_NORMAL;
+    public static final int FONT_NORMAL = 0;
     public int DEFAULT_CLOCK_SIZE = 14;
     public int DEFAULT_CLOCK_COLOR = 0xffffffff;
     private int mClockColor = 0xffffffff;
-    protected int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
-    protected int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
-    protected int mClockStyle = STYLE_CLOCK_LEFT;
     private int mClockSize = 14;
 
     public static final String STATUS_BAR_CLOCK_AUTO_HIDE =

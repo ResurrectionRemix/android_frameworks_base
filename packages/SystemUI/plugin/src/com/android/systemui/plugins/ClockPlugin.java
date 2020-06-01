@@ -15,6 +15,7 @@ package com.android.systemui.plugins;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
 import android.view.View;
 
 import com.android.systemui.plugins.annotations.ProvidesInterface;
@@ -98,6 +99,11 @@ public interface ClockPlugin extends Plugin {
      * @param color A color value.
      */
     void setTextColor(int color);
+
+    /**
+     * Set font for type clock.
+     */
+    default void setTypeface(Typeface tf) {};
 
     /**
      * Sets the color palette for the clock face.

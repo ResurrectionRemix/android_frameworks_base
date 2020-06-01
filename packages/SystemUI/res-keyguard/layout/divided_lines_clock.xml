@@ -58,10 +58,7 @@
                 android:layout_weight="1"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                style="@style/widget_big"
-                android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
                 android:letterSpacing="0.3"
-                android:textColor="?attr/wallpaperTextColor"
                 android:textSize="42sp" />
 
             <View

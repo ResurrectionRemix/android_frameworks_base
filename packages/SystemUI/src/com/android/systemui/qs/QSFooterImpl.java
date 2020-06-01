@@ -37,6 +37,7 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -69,7 +70,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 public class QSFooterImpl extends FrameLayout implements QSFooter,
-        OnClickListener, OnUserInfoChangedListener, Tunable {
+        OnClickListener,  OnLongClickListener, OnUserInfoChangedListener, Tunable {
 
     private static final String TAG = "QSFooterImpl";
     public static final String QS_SHOW_DRAG_HANDLE = "qs_show_drag_handle";
@@ -152,6 +153,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsButton = findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
+        mSettingsButton.setOnLongClickListener(this);
 
         mRunningServicesButton = findViewById(R.id.running_services_button);
         mRunningServicesButton.setOnClickListener(this);
@@ -443,7 +445,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
-            startXtensionsActivity();
+            startRRActivity();
         }
         return false;
     }
@@ -452,6 +454,13 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         Intent intent = new Intent();
         intent.setClassName("com.android.settings",
                 "com.android.settings.Settings$DevRunningServicesActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startRRActivity() {
+        Intent intent = new Intent();
+        intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$MainSettingsLayoutActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 

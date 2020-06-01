@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
 import android.icu.text.DateFormat;
 import android.icu.text.DisplayContext;
 import android.text.Html;
@@ -196,6 +197,11 @@ public class MNMLBoxClockController implements ClockPlugin {
         mClock.setTextColor(color);
         mDate.setTextColor(color);
         mDateDay.setTextColor(color);
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
     }
 
     @Override

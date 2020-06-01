@@ -268,6 +268,9 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
         if (mClockViewBold != null) {
             mClockViewBold.setTextColor(color);
         }
+        if (mClockPlugin != null) {
+            mClockPlugin.setTextColor(color);
+        }
     }
 
     private void setClockPlugin(ClockPlugin plugin) {
@@ -377,9 +380,7 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
      * It will also update plugin setTextColor if plugin is connected.
      */
     public void setTextColor(int color) {
-        if (mClockPlugin != null) {
-            mClockPlugin.setTextColor(color);
-        }
+        updateClockColor();
     }
 
     public void setShowCurrentUserTime(boolean showCurrentUserTime) {

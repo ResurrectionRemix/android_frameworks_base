@@ -35,6 +35,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.os.Handler;
+import android.os.UserHandle;
 import androidx.core.graphics.ColorUtils;
 import android.text.TextPaint;
 import android.text.format.DateFormat;
@@ -52,6 +53,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.systemui.R;
 import com.android.settingslib.Utils;
+
+import android.provider.Settings;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -170,7 +170,7 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_BG_RGB_DURATION), false,
                     this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_NEW_BG_ENABLED), false, this,
                     UserHandle.USER_ALL);
         }
