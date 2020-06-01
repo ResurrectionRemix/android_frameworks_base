@@ -6070,6 +6070,9 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
+        /** @hide */
+        private static final Validator QS_DATAUSAGE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
         /**
          * Screenshod sound enable, This is the noise made when taking a screesnhot
          * Defaults to 1 - sounds enabled
@@ -6416,6 +6419,7 @@ public final class Settings {
             AUTO_BRIGHTNESS_MIN_VALUE,
             AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD,
             NAVIGATION_HANDLE_WIDTH,
+            QS_DATAUSAGE,
         };
 
         /**
@@ -6656,6 +6660,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AUTO_BRIGHTNESS_MIN_VALUE);
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
+            PRIVATE_SETTINGS.add(QS_DATAUSAGE);
         }
 
         /**
@@ -6886,6 +6891,7 @@ public final class Settings {
             VALIDATORS.put(AUTO_BRIGHTNESS_MIN_VALUE, AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR);
             VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
+            VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
         }
 
         /**
