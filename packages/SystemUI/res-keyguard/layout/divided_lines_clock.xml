@@ -14,8 +14,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_alignParentTop="true">
@@ -24,6 +22,8 @@
                 android:id="@+id/topLine"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:layout_weight="1"
@@ -31,7 +31,7 @@
 
             <TextClock
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
@@ -49,22 +49,27 @@
 
             <TextClock
                 android:id="@+id/clock"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:format12Hour="hh:mm"
-                android:format24Hour="kk:mm"    
+                android:format24Hour="kk:mm"
                 android:layout_weight="1"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
+                style="@style/widget_big"
+                android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
                 android:letterSpacing="0.3"
+                android:textColor="?attr/wallpaperTextColor"
                 android:textSize="42sp" />
 
             <View
                 android:id="@+id/bottomLine"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:layout_weight="1"
