@@ -400,7 +400,6 @@ public class SamsungHighlightClockController implements ClockPlugin {
         previewTime.setLineSpacing(0, 0.8f);
         previewTime.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
         previewTime.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
-        onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }

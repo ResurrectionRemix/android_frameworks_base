@@ -144,7 +144,6 @@ public class SfunyClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }

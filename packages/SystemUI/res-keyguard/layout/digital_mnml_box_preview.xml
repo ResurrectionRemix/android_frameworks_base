@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@id/dummyLine"
+        android:gravity="center_horizontal"
+        android:background="#9a393a3c"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextClock
+            android:id="@+id/clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/widget_vertical_padding_clock"
+            android:alpha="0.75"
+            android:letterSpacing="0.1"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:format12Hour="@string/keyguard_widget_12_hours_format"
+            android:format24Hour="@string/keyguard_widget_24_hours_format"/>
+
+        <TextClock
+            android:id="@+id/bigDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.20"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            android:format12Hour="EEEE, MMMM"
+            android:format24Hour="EEEE, MMMM"/>
+
+        <TextClock
+            android:id="@+id/bigDateDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.20"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            android:format12Hour="d"
+            android:format24Hour="d"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dummyLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="1"
+        android:background="#00000000" />
+
+</RelativeLayout>
