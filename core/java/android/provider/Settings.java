@@ -5943,14 +5943,6 @@ public final class Settings {
         /** @hide */
         private static final Validator BACK_GESTURE_BLOCK_IME_VALIDATOR =
                 BOOLEAN_VALIDATOR;
-        /** Width of the navigation handle.
-         *  @hide
-         */
-        public static final String NAVIGATION_HANDLE_WIDTH = "navigation_handle_width";
-
-        /** @hide */
-        private static final Validator NAVIGATION_HANDLE_WIDTH_VALIDATOR = ANY_INTEGER_VALIDATOR;
-
 
         /**
          * helper setting to contain the current pulse reason so we can check
@@ -6390,7 +6382,6 @@ public final class Settings {
             QS_BACKGROUND_BLUR_INTENSITY,
             BACK_GESTURE_HEIGHT,
             BACK_GESTURE_BLOCK_IME,
-            NAVIGATION_HANDLE_WIDTH,
             NOTIFICATION_HEADERS,
             ADAPTIVE_PLAYBACK_ENABLED,
             SCREEN_STATE_GPS,
@@ -6629,7 +6620,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
             PRIVATE_SETTINGS.add(BACK_GESTURE_BLOCK_IME);
-            PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
             PRIVATE_SETTINGS.add(ADAPTIVE_PLAYBACK_ENABLED);
             PRIVATE_SETTINGS.add(SCREEN_STATE_GPS);
             PRIVATE_SETTINGS.add(SCREEN_STATE_MOBILE_DATA);
@@ -6859,7 +6849,6 @@ public final class Settings {
             VALIDATORS.put(QS_BACKGROUND_BLUR_INTENSITY, QS_BACKGROUND_BLUR_INTENSITY_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_HEIGHT, BACK_GESTURE_HEIGHT_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_BLOCK_IME, BACK_GESTURE_BLOCK_IME_VALIDATOR);
-            VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(ADAPTIVE_PLAYBACK_ENABLED, ADAPTIVE_PLAYBACK_ENABLED_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_GPS, SCREEN_STATE_GPS_VALIDATOR);
