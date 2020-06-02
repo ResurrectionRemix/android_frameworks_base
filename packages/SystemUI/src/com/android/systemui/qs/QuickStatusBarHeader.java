@@ -484,10 +484,17 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
 
         if (mIsQuickQsBrightnessEnabled) {
-            qqsHeight += mContext.getResources().getDimensionPixelSize(
-                    R.dimen.brightness_mirror_height)
-                    + mContext.getResources().getDimensionPixelSize(
-                    R.dimen.qs_tile_margin_top);
+           if (!mHeaderImageEnabled) {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top);
+           } else {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight;
+           }
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
@@ -963,7 +970,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
     }
 
-
     // Update color schemes in landscape to use wallpaperTextColor
     private void updateStatusbarProperties() {
         boolean shouldUseWallpaperTextColor = (mLandscape || mForceHideQsStatusBar) && !mHeaderImageEnabled;
@@ -974,11 +980,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateIconPos() {
         boolean available = resources.getBoolean(
                  com.android.internal.R.bool.config_automatic_brightness_available);
-            mQuickQsBrightness.setVisibility(View.VISIBLE);
-            mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
-            mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
-        } else {
-            mQuickQsBrightness.setVisibility(View.GONE);
         if (!available) return;
         if (mIsQsAutoBrightnessEnabled == 0) {
             mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);
