@@ -684,6 +684,5 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
     public void setQsHeader() {
         mQsHeader = true;
-        setClockVisibleByUser(Integer.parseInt("1") != 0);
     }
 }
