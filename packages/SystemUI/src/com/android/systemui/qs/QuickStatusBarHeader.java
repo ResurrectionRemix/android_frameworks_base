@@ -16,6 +16,7 @@ package com.android.systemui.qs;
 
 import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 
+import static android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
 import static com.android.systemui.util.InjectionInflationController.VIEW_CONTEXT;
 
 import android.annotation.ColorInt;
@@ -175,6 +176,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private BrightnessController mBrightnessController;
     private boolean mIsQuickQsBrightnessEnabled;
     private int mIsQsAutoBrightnessEnabled;
+    private boolean mBrightnessButton;
+    private ImageView mMinBrightness;
+    private ImageView mMaxBrightness;
 
     private PrivacyItemController mPrivacyItemController;
 
@@ -279,6 +283,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mIconManager = new TintedIconManager(iconContainer);
 
         mQuickQsBrightness = findViewById(R.id.quick_qs_brightness_bar);
+        mMinBrightness = mQuickQsBrightness.findViewById(R.id.brightness_left);
+        mMaxBrightness = mQuickQsBrightness.findViewById(R.id.brightness_right);
+        mMinBrightness.setOnClickListener(this::onClick);
+        mMaxBrightness.setOnClickListener(this::onClick);
+        ImageView brightnessIcon = (ImageView) mQuickQsBrightness.findViewById(R.id.brightness_icon);
+        brightnessIcon.setVisibility(View.VISIBLE);
         mBrightnessController = new BrightnessController(getContext(),
                 mQuickQsBrightness.findViewById(R.id.brightness_icon),
                 mQuickQsBrightness.findViewById(R.id.brightness_icon_left),
@@ -346,7 +356,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE,
-                Settings.System.QS_DATAUSAGE, QS_SHOW_AUTO_BRIGHTNESS, 
+                Settings.System.QS_DATAUSAGE, QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_BUTTONS, 
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE, QS_SHOW_BRIGHTNESS_SLIDER);
         updateSettings();
     }
@@ -510,7 +520,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                             - resources.getDimensionPixelSize(R.dimen.status_bar_padding_end),
                     0);
             mQuickQsBrightness.setLayoutParams(lpQuickQsBrightness);
+            mQuickQsBrightness.setVisibility(View.VISIBLE);
+            mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
+            mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             updateIconPos();
+       } else {
+            mQuickQsBrightness.setVisibility(View.GONE);
+        }
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) getLayoutParams();
         if (mQsDisabled) {
@@ -747,6 +763,27 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Settings.ACTION_SOUND_SETTINGS), 0);
         }
+        } else if (v == mMinBrightness) {
+            final ContentResolver resolver = getContext().getContentResolver();
+            int currentValue = Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREEN_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
+            int brightness = currentValue - 2;
+            if (currentValue != 0) {
+                int math = Math.max(0, brightness);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.SCREEN_BRIGHTNESS, math, UserHandle.USER_CURRENT);
+            }
+        } else if (v == mMaxBrightness) {
+            final ContentResolver resolver = getContext().getContentResolver();
+            int currentValue = Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREEN_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
+            int brightness = currentValue + 2;
+            if (currentValue != 255) {
+                int math = Math.min(255, brightness);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.SCREEN_BRIGHTNESS, math, UserHandle.USER_CURRENT);
+            }
+        }
     }
 
     @Override
@@ -916,6 +953,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                         TunerService.parseInteger(newValue, 0);
                 updateResources();
                 break;
+            case QSPanel.QS_SHOW_BRIGHTNESS_BUTTONS:
+                mBrightnessButton =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateResources();
+                break;
             default:
                 break;
         }
@@ -932,6 +974,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateIconPos() {
         boolean available = resources.getBoolean(
                  com.android.internal.R.bool.config_automatic_brightness_available);
+            mQuickQsBrightness.setVisibility(View.VISIBLE);
+            mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
+            mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
+        } else {
+            mQuickQsBrightness.setVisibility(View.GONE);
         if (!available) return;
         if (mIsQsAutoBrightnessEnabled == 0) {
             mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);

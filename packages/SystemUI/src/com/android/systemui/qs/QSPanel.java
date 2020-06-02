@@ -247,7 +247,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     }
 
     private void addQSPanel() {
-        if (mBrightnessSlider == 1) {
+        if (mBrightnessSlider == 1 || mBrightnessSlider == 3) {
             addView(mBrightnessView);
             addView((View) mTileLayout);
         } else {
