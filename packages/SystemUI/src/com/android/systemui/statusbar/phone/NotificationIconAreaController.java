@@ -1,5 +1,6 @@
 package com.android.systemui.statusbar.phone;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.Function;
 
+import com.android.systemui.tuner.TunerService;
+
 /**
  * A controller for the space in the status bar to the left of the system icons. This area is
  * normally reserved for notifications.
@@ -45,11 +48,23 @@ public class NotificationIconAreaController implements DarkReceiver,
         NotificationWakeUpCoordinator.WakeUpListener {
 
     public static final String HIGH_PRIORITY = "high_priority";
+    public static final String LOW_PRIORITY = "low_priority";
     private static final long AOD_ICONS_APPEAR_DURATION = 200;
 
     private final ContrastColorUtil mContrastColorUtil;
     private final NotificationEntryManager mEntryManager;
     private final Runnable mUpdateStatusBarIcons = this::updateStatusBarIcons;
+    private final TunerService.Tunable mTunable = new TunerService.Tunable() {
+        @Override
+        public void onTuningChanged(String key, String newValue) {
+            if (key.equals(LOW_PRIORITY)) {
+                mShowLowPriority = "1".equals(newValue);
+                if (mNotificationScrollLayout != null) {
+                    updateStatusBarIcons();
+                }
+            }
+        }
+    };
     private final StatusBarStateController mStatusBarStateController;
     private final NotificationMediaManager mMediaManager;
     private final NotificationWakeUpCoordinator mWakeUpCoordinator;
@@ -73,6 +88,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     private ViewGroup mNotificationScrollLayout;
     private Context mContext;
     private int mAodIconAppearTranslation;
+    private boolean mShowLowPriority;
 
     private boolean mAnimationsEnabled;
     private int mAodIconTint;
@@ -89,6 +105,7 @@ public class NotificationIconAreaController implements DarkReceiver,
         mContrastColorUtil = ContrastColorUtil.getInstance(context);
         mContext = context;
         mEntryManager = Dependency.get(NotificationEntryManager.class);
+        Dependency.get(TunerService.class).addTunable(mTunable, LOW_PRIORITY);
         mStatusBarStateController = statusBarStateController;
         mStatusBarStateController.addCallback(this);
         mMediaManager = notificationMediaManager;
@@ -231,7 +248,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     }
 
     protected boolean shouldShowNotificationIcon(NotificationEntry entry,
-            boolean showAmbient, boolean hideDismissed,
+            boolean showAmbient, boolean showLowPriority, boolean hideDismissed,
             boolean hideRepliedMessages, boolean hideCurrentMedia, boolean hideCenteredIcon,
             boolean hidePulsing, boolean onlyShowCenteredIcon) {
 
@@ -289,6 +306,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     private void updateShelfIcons() {
         updateIconsForLayout(entry -> entry.expandedIcon, mShelfIcons,
                 true /* showAmbient */,
+                mShowLowPriority,
                 false /* hideDismissed */,
                 false /* hideRepliedMessages */,
                 false /* hideCurrentMedia */,
@@ -300,6 +318,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     public void updateStatusBarIcons() {
         updateIconsForLayout(entry -> entry.icon, mNotificationIcons,
                 false /* showAmbient */,
+                false,
                 true /* hideDismissed */,
                 true /* hideRepliedMessages */,
                 false /* hideCurrentMedia */,
@@ -311,6 +330,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     private void updateCenterIcon() {
         updateIconsForLayout(entry -> entry.centeredIcon, mCenteredIcon,
                 false /* showAmbient */,
+                false,
                 false /* hideDismissed */,
                 false /* hideRepliedMessages */,
                 false /* hideCurrentMedia */,
@@ -322,6 +342,7 @@ public class NotificationIconAreaController implements DarkReceiver,
     public void updateAodNotificationIcons() {
         updateIconsForLayout(entry -> entry.aodIcon, mAodIcons,
                 false /* showAmbient */,
+                false,
                 true /* hideDismissed */,
                 true /* hideRepliedMessages */,
                 true /* hideCurrentMedia */,
@@ -341,7 +362,7 @@ public class NotificationIconAreaController implements DarkReceiver,
      * @param hidePulsing should pulsing notifications be hidden
      */
     private void updateIconsForLayout(Function<NotificationEntry, StatusBarIconView> function,
-            NotificationIconContainer hostLayout, boolean showAmbient,
+            NotificationIconContainer hostLayout, boolean showAmbient, boolean showLowPriority,
             boolean hideDismissed, boolean hideRepliedMessages, boolean hideCurrentMedia,
             boolean hideCenteredIcon, boolean hidePulsing, boolean onlyShowCenteredIcon) {
         ArrayList<StatusBarIconView> toShow = new ArrayList<>(
@@ -352,7 +373,7 @@ public class NotificationIconAreaController implements DarkReceiver,
             View view = mNotificationScrollLayout.getChildAt(i);
             if (view instanceof ExpandableNotificationRow) {
                 NotificationEntry ent = ((ExpandableNotificationRow) view).getEntry();
-                if (shouldShowNotificationIcon(ent, showAmbient, hideDismissed,
+                if (shouldShowNotificationIcon(ent, showAmbient, showLowPriority, hideDismissed,
                         hideRepliedMessages, hideCurrentMedia, hideCenteredIcon, hidePulsing,
                         onlyShowCenteredIcon)) {
                     StatusBarIconView iconView = function.apply(ent);
