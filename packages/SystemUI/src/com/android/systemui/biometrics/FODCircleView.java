@@ -167,6 +167,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         R.drawable.fod_icon_pressed_vivo_green,
         R.drawable.fod_icon_pressed_vivo_yellow_shadow
     };
+    private int mDefaultPressedIcon;
 
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
@@ -327,6 +328,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         mLockPatternUtils = new LockPatternUtils(mContext);
 
+        mDefaultPressedIcon = res.getInteger(com.android.internal.R.
+             integer.config_pressed_fod_icon);
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
@@ -741,7 +744,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_BRIGHT_ICON, 0) == 1;
         mPressedIcon = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_PRESSED_STATE, 4);
+                Settings.System.FOD_PRESSED_STATE, mDefaultPressedIcon);
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
