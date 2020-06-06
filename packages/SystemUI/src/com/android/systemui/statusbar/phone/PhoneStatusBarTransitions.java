@@ -29,18 +29,18 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private static final float ICON_ALPHA_WHEN_LIGHTS_OUT_BATTERY_CLOCK = 0.5f;
     private static final float ICON_ALPHA_WHEN_LIGHTS_OUT_NON_BATTERY_CLOCK = 0;
 
-    private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
-    private View mLeftSide, mStatusIcons, mBattery, mClock, mStatusBarLogo, mStatusBarLogoRight;
+    private View mLeftSide, mStatusIcons, mLeftSide, mBattery, mClock, mStatusBarLogo, mStatusBarLogoRight;
     private View mWeatherTextView, mWeatherImageView;
     private View mBatteryBars[] = new View[2];
-
     private Animator mCurrentAnimation;
 
-    public PhoneStatusBarTransitions(PhoneStatusBarView view) {
-        super(view, R.drawable.status_background);
-        mView = view;
-        final Resources res = mView.getContext().getResources();
+    /**
+     * @param backgroundView view to apply the background drawable
+     */
+    public PhoneStatusBarTransitions(PhoneStatusBarView statusBarView, View backgroundView) {
+        super(backgroundView, R.drawable.status_background);
+        final Resources res = statusBarView.getContext().getResources();
         mIconAlphaWhenOpaque = res.getFraction(R.dimen.status_bar_icon_drawing_alpha, 1, 1);
     }
 
@@ -54,6 +54,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mWeatherTextView = mView.findViewById(R.id.weather_temp);
         mWeatherImageView = mView.findViewById(R.id.weather_image);
         mStatusBarLogoRight = mView.findViewById(R.id.statusbar_logo_right);
+        mLeftSide = statusBarView.findViewById(R.id.status_bar_left_side);
         applyModeBackground(-1, getMode(), false /*animate*/);
         applyMode(getMode(), false /*animate*/);
     }

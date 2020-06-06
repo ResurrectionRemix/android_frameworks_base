@@ -65,5 +65,4 @@
             android:visibility="gone"/>
 
     </com.android.keyguard.AlphaOptimizedLinearLayout>
-
 </LinearLayout>
