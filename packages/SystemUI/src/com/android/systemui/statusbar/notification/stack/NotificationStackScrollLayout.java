@@ -21,7 +21,6 @@ import static com.android.systemui.statusbar.notification.ActivityLaunchAnimator
 import static com.android.systemui.statusbar.notification.stack.StackScrollAlgorithm.ANCHOR_SCROLLING;
 import static com.android.systemui.statusbar.notification.stack.StackStateAnimator.ANIMATION_DURATION_SWIPE;
 import static com.android.systemui.statusbar.phone.NotificationIconAreaController.HIGH_PRIORITY;
-import static com.android.systemui.statusbar.phone.NotificationIconAreaController.LOW_PRIORITY;
 import static com.android.systemui.util.InjectionInflationController.VIEW_CONTEXT;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -33,7 +32,6 @@ import android.animation.ValueAnimator;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -199,7 +197,6 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     private final Paint mBackgroundPaint = new Paint();
     private boolean mShouldDrawNotificationBackground;
     private boolean mHighPriorityBeforeSpeedBump;
-    private boolean mLowPriorityBeforeSpeedBump;
     private final boolean mAllowLongPress;
     private boolean mDismissRtl;
 
@@ -609,10 +606,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
             } else if (key.equals(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED)) {
                 mShouldDrawNotificationBackground = !"1".equals(newValue);
                 setWillNotDraw(!mShouldDrawNotificationBackground && onKeyguard());
-            } else if (key.equals(LOW_PRIORITY)) {
-                mLowPriorityBeforeSpeedBump = "1".equals(newValue);
             }
-        }, HIGH_PRIORITY, LOW_PRIORITY, Settings.Secure.NOTIFICATION_DISMISS_RTL,
+        }, HIGH_PRIORITY, Settings.Secure.NOTIFICATION_DISMISS_RTL,
                 LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED);
 
         mEntryManager.addNotificationEntryListener(new NotificationEntryListener() {
@@ -5856,10 +5851,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
             boolean beforeSpeedBump;
             if (mHighPriorityBeforeSpeedBump) {
                 beforeSpeedBump = row.getEntry().isTopBucket();
-            } else if (mLowPriorityBeforeSpeedBump) {
-                beforeSpeedBump = !mEntryManager.getNotificationData().isAmbient(
-                        row.getStatusBarNotification().getKey());
-            }  else {
+            } else {
                 beforeSpeedBump = !row.getEntry().ambient;
             }
             if (beforeSpeedBump) {

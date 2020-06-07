@@ -128,13 +128,4 @@
         android:key="camera"
         android:icon="@drawable/tuner_camera"
         android:title="@string/status_bar_camera" />
-
-    <!-- secure -->
-
-    <com.android.systemui.tuner.TunerSwitch
-        android:key="low_priority"
-        android:icon="@drawable/tuner_low_priority"
-        android:title="@string/tuner_low_priority"
-        sysui:defValue="false" />
-
 </PreferenceScreen>
