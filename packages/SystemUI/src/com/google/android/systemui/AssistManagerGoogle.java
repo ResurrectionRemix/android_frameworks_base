@@ -16,9 +16,11 @@ import com.android.internal.app.AssistUtils;
 import com.android.internal.app.IVoiceInteractionSessionListener;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.assist.AssistManager;
 import com.android.systemui.assist.AssistHandleBehaviorController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
+import com.android.systemui.recents.OverviewProxyService;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -49,8 +51,9 @@ public class AssistManagerGoogle extends AssistManager {
     }
 
     @Inject
-    public AssistManagerGoogle(DeviceProvisionedController deviceProvisionedController, Context context, AssistUtils assistUtils, AssistHandleBehaviorController handleController) {
-        super(deviceProvisionedController, context, assistUtils, handleController);
+    public AssistManagerGoogle(DeviceProvisionedController deviceProvisionedController, Context context, AssistUtils assistUtils, 
+           AssistHandleBehaviorController handleController, ConfigurationController configurationController, OverviewProxyService overviewProxyService) {
+        super(deviceProvisionedController, context, assistUtils, handleController, configurationController, overviewProxyService);
         mContentResolver = context.getContentResolver();
         mOpaEnableDispatcher = new OpaEnableDispatcher(context);
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUserSwitchCallback);
