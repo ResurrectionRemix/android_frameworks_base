@@ -99,6 +99,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     };
     private final int MSG_HBM_OFF = 1001;
     private final int MSG_HBM_ON = 1002;
+    private static final int FADE_ANIM_DURATION = 250;
 
     private final int mPositionX;
     private final int mPositionY;
@@ -128,6 +129,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private boolean mViewPressedDisplayed = false;
     private final ImageView mViewPressed;
 
+    private boolean mFading;
     private boolean mIsBouncer;
     private boolean mIsDreaming;
     private boolean mIsPulsing;
@@ -530,6 +532,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     }
 
     public void dispatchPress() {
+        if (mFading) return;
         IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
         try {
             daemon.onPress();
@@ -588,10 +591,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     }
 
     public void showCircle() {
-        if (mIsAuthenticated) {
+        if (mIsAuthenticated || mFading) {
             return;
         }
-
         mIsCircleShowing = true;
 
         setKeepScreenOn(true);
@@ -706,13 +708,20 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         updatePosition();
 
+        setVisibility(View.VISIBLE);
+        animate().withStartAction(() -> mFading = true)
+                .alpha(1)
+                .setDuration(FADE_ANIM_DURATION)
+                .withEndAction(() -> mFading = false)
+                .start();
         dispatchShow();
         if (mSupportsAlwaysOnHbm) {
             Dependency.get(TunerService.class).addTunable(this, SCREEN_BRIGHTNESS);
             setDim(true);
             mHandler.sendEmptyMessageDelayed(MSG_HBM_ON, mHbmOnDelay);
         }
-        setVisibility(View.VISIBLE);
+
+        dispatchShow();
     }
 
     public void hide() {
@@ -731,7 +740,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             setDim(false);
             Dependency.get(TunerService.class).removeTunable(this);
         }
-        setVisibility(View.GONE);
+        animate().withStartAction(() -> mFading = true)
+                .alpha(0)
+                .setDuration(FADE_ANIM_DURATION)
+                .withEndAction(() -> {
+                    setVisibility(View.GONE);
+                    mFading = false;
+                })
+                .start();
+
         hideCircle();
         dispatchHide();
     }
