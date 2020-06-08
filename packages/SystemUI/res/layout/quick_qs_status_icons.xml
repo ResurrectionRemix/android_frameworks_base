@@ -52,7 +52,6 @@
         android:id="@+id/batteryRemainingIcon"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
-        systemui:textAppearance="@style/TextAppearance.QS.Status"
-        android:paddingEnd="2dp" />
+        systemui:textAppearance="@style/TextAppearance.QS.Status" />
 
 </LinearLayout>
