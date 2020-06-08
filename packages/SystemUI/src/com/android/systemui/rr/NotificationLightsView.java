@@ -219,7 +219,7 @@ public class NotificationLightsView extends RelativeLayout {
         mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-                Log.e("NotificationLightsView", "onAnimationUpdate");
+               // Log.e("NotificationLightsView", "onAnimationUpdate");
                 float progress = ((Float) animation.getAnimatedValue()).floatValue();
                 leftViewSolid.setScaleY(progress);
                 leftViewFaded.setScaleY(progress);
