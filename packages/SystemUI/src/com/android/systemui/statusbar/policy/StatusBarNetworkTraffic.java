@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 crDroid Android Project
+ * Copyright (C) 2019-2020 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,18 +22,13 @@ import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.provider.Settings;
 import android.util.AttributeSet;
-import android.view.View;
 
-import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
 import org.lineageos.internal.statusbar.NetworkTraffic;
-
-import lineageos.providers.LineageSettings;
 
 /** @hide */
 public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkReceiver,
@@ -45,6 +40,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
     private int mVisibleState = -1;
     private boolean mSystemIconVisible = true;
     private boolean mColorIsStatic;
+    private int newTint;
 
     public StatusBarNetworkTraffic(Context context) {
         super(context);
@@ -63,15 +59,15 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
         if (mColorIsStatic) {
             return;
         }
-        mIconTint = DarkIconDispatcher.getTint(area, this, tint);
-        if (mAttached) updateVisibility();
+        newTint = DarkIconDispatcher.getTint(area, this, tint);
+        checkUpdateTrafficDrawable();
     }
 
     @Override
     public void setStaticDrawableColor(int color) {
         mColorIsStatic = true;
-        mIconTint = color;
-        if (mAttached) updateVisibility();
+        newTint = color;
+        checkUpdateTrafficDrawable();
     }
 
     @Override
@@ -114,15 +110,30 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
     }
 
     @Override
-    protected void updateVisibility() {
-        boolean enabled = mIsActive && mSystemIconVisible
-                        && !blank.contentEquals(getText()) && (mLocation == 1);
-        if (enabled) {
-            setVisibility(VISIBLE);
+    protected void updateViews() {
+        if (isIconVisible() && mScreenOn) {
+            updateViewState();
         } else {
-            setText(blank);
-            setVisibility(GONE);
+            clearHandlerCallbacks();
+            updateVisibility();
         }
-        updateTrafficDrawable(enabled);
+    }
+
+    @Override
+    protected void updateVisibility() {
+        boolean enabled = mIsActive && mSystemIconVisible && isIconVisible() && mScreenOn;
+        if (enabled != mVisible) {
+            mVisible = enabled;
+            setVisibility(mVisible ? VISIBLE : GONE);
+            checkUpdateTrafficDrawable();
+        }
+    }
+
+    private void checkUpdateTrafficDrawable() {
+        // Wait for icon to be visible and tint to be changed
+        if (mVisible && mIconTint != newTint) {
+            mIconTint = newTint;
+            updateTrafficDrawable();
+        }
     }
 }
