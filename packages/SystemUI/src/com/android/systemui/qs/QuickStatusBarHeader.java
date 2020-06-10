@@ -203,27 +203,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private boolean mForceHideQsStatusBar;
 
-    protected ContentResolver mContentResolver;
-
-    private class AicpSettingsObserver extends ContentObserver {
-        AicpSettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = getContext().getContentResolver();
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.QS_DATAUSAGE), false,
-                    this, UserHandle.USER_ALL);
-            }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-    private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
-
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -344,6 +323,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE,
+                Settings.System.QS_DATAUSAGE,
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
@@ -523,7 +503,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private void updateDataUsageView() {
-        if (mDataUsageView.isDataUsageEnabled() != 0)
+        if (mDataUsageView.isDataUsageEnabled() != 0) {
             mDataUsageView.setVisibility(View.VISIBLE);
         } else {
             mDataUsageView.setVisibility(View.GONE);
@@ -861,6 +841,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 boolean showClock =
                         TunerService.parseIntegerSwitch(newValue, true);
                 mClockView.setClockVisibleByUser(showClock);
+                break;
+            case Settings.System.QS_DATAUSAGE:
+                 updateSettings();
                 break;
             default:
                 break;
