@@ -20,7 +20,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Suffix added to a number to signify size in bytes. -->
     <string name="byteShort">B</string>
-    <!-- Suffix added to a number to signify size in kilobytes (1000 bytes).
+    <!-- Suffix added to a number to signify size in kilobytes (1000 bytes).r
         If you retain the Latin script for the localization, please use the lowercase
         'k', as it signifies 1000 bytes as opposed to 1024 bytes. -->
     <string name="kilobyteShort">kB</string>
@@ -4999,6 +4999,7 @@
     <string name="floating_toolbar_close_overflow_description">Close overflow</string>
 
     <!-- Free style window strings -->
+    <string name="back_button_text">Back</string>
     <!-- Accessibility text for the minimize window button -->
     <string name="pip_button_text">Picture In Picture</string>
     <!-- Accessibility text for the minimize window button -->

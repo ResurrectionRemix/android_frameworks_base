@@ -31,6 +31,20 @@
             android:focusable="false"
             android:descendantFocusability="blocksDescendants" >
         <Button
+            android:id="@+id/back_window"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:layout_gravity="center_vertical|start"
+            android:contentDescription="@string/back_button_text"
+            android:background="@drawable/decor_back_button_dark" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent" />
+        <Button
                 android:id="@+id/pip_window"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
