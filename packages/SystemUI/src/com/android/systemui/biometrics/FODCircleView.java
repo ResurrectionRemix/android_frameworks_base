@@ -720,8 +720,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             setDim(true);
             mHandler.sendEmptyMessageDelayed(MSG_HBM_ON, mHbmOnDelay);
         }
-
-        dispatchShow();
     }
 
     public void hide() {
