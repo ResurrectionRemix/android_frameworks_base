@@ -165,6 +165,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
+                updatePosition();
             }
         }
 
