@@ -141,4 +141,5 @@
     <!-- FOD recognizing animation -->
     <dimen name="fod_animation_size">280dp</dimen>
 
+    <dimen name="data_usage_padding_start">4dp</dimen>
 </resources>

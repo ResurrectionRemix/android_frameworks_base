@@ -41,6 +41,33 @@
         android:textAppearance="@style/TextAppearance.QS.Status"
         systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm" />
 
+    <LinearLayout
+        android:id="@+id/daily_data_usage_layout"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="4dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/data_usage_padding_start"
+        android:gravity="center_vertical|end"
+        android:clipChildren="false" >
+
+        <ImageView
+            android:id="@+id/daily_data_usage_icon"
+            android:layout_height="@dimen/status_bar_icon_drawing_size"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_data_saver_off"
+            android:visibility="gone" />
+
+        <com.android.systemui.statusbar.info.DataUsageView
+            android:id="@+id/data_sim_usage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|end"
+            android:textAppearance="@style/TextAppearance.QS.Status"
+            android:singleLine="true"
+            android:visibility="gone" />
+    </LinearLayout>
+
     <com.android.systemui.statusbar.phone.StatusIconContainer
         android:id="@+id/statusIcons"
         android:layout_width="0dp"
