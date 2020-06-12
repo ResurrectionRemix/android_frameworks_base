@@ -658,7 +658,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         setVisibility(View.VISIBLE);
         animate().withStartAction(() -> mFading = true)
-                .alpha(1)
+                .alpha(mIsDreaming ? 0.5f : 1.0f)
                 .setDuration(FADE_ANIM_DURATION)
                 .withEndAction(() -> mFading = false)
                 .start();
