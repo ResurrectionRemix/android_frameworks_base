@@ -40,7 +40,6 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
     private int mVisibleState = -1;
     private boolean mSystemIconVisible = true;
     private boolean mColorIsStatic;
-    private int newTint;
 
     public StatusBarNetworkTraffic(Context context) {
         super(context);
@@ -121,7 +120,8 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     protected void updateVisibility() {
-        boolean enabled = mIsActive && mSystemIconVisible && isIconVisible() && mScreenOn;
+        boolean enabled = mIsActive && mSystemIconVisible && isIconVisible() && mScreenOn
+            &&  getText() != "";
         if (enabled != mVisible) {
             mVisible = enabled;
             setVisibility(mVisible ? VISIBLE : GONE);
