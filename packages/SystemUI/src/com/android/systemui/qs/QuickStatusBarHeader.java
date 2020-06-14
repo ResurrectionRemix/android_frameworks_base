@@ -305,6 +305,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDataUsageImage = findViewById(R.id.daily_data_usage_icon);
         mDataUsageView = findViewById(R.id.data_sim_usage);
 
+        // Set the correct tint for the data uasgae icons so they contrast
+        mDataUsageImage.setImageTintList(ColorStateList.valueOf(fillColor));
+
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
         mBatteryIcon = findViewById(R.id.batteryIcon);
@@ -505,6 +508,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateDataUsageView() {
         if (mDataUsageView.isDataUsageEnabled() != 0) {
             mDataUsageView.setVisibility(View.VISIBLE);
+            mDataUsageImage.setVisibility(View.VISIBLE);
+            mDataUsageLayout.setVisibility(View.VISIBLE);
         } else {
             mDataUsageView.setVisibility(View.GONE);
             mDataUsageImage.setVisibility(View.GONE);
