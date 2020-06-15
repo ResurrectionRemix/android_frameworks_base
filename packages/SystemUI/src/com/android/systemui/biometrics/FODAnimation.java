@@ -26,7 +26,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
+import android.provider.Settings;
 import com.android.systemui.R;
 
 public class FODAnimation extends ImageView {
@@ -94,7 +94,10 @@ public class FODAnimation extends ImageView {
     }
 
     public void showFODanimation() {
-        if (mAnimParams != null && !mShowing && mIsKeyguard) {
+        boolean keyguardAnim = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_ANIM_KEYGUARD, 0) == 1;
+        boolean allow = keyguardAnim || mIsKeyguard;
+        if (mAnimParams != null && !mShowing && allow) {
             mShowing = true;
             if (this.getWindowToken() == null){
                 mWindowManager.addView(this, mAnimParams);

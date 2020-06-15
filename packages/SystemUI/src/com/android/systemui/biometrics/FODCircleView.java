@@ -138,7 +138,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private int mSelectedIcon;
     private TypedArray mIconStyles;
     private boolean mBrightIcon;
-    private boolean mKeyguardAnim;
 
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
@@ -175,7 +174,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             updateStyle();
             updatePosition();
             if (mFODAnimation != null) {
-                mFODAnimation.setAnimationKeyguard(mIsKeyguard || mKeyguardAnim);
+                mFODAnimation.setAnimationKeyguard(mIsKeyguard);
             }
         }
 
@@ -353,9 +352,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 updateStyle();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_BRIGHT_ICON))) {
-                updateStyle();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.FOD_ANIM_KEYGUARD))) {
                 updateStyle();
             }
         }
@@ -721,8 +717,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 Settings.System.FOD_ICON, 3);
         mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_BRIGHT_ICON, 0) == 1;
-        mKeyguardAnim = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_ANIM_KEYGUARD, 0) == 1;
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
