@@ -325,8 +325,11 @@ public class RRUtils {
     }
 
     public static boolean shouldShowGestureNav(Context context) {
-        boolean setNavbarHeight = Settings.System.getIntForUser(context.getContentResolver(),
-            Settings.System.GESTURE_NAVBAR_SHOW, 1, UserHandle.USER_CURRENT) != 0;
+        int navbarHeight = Settings.System.getIntForUser(context.getContentResolver(),
+            Settings.System.NAVIGATION_HANDLE_HEIGHT, 1, UserHandle.USER_CURRENT);
+        int navbarWidth = Settings.System.getIntForUser(context.getContentResolver(),
+            Settings.System.NAVIGATION_HANDLE_WIDTH, 1, UserHandle.USER_CURRENT);
+        boolean setNavbarHeight = ((navbarWidth != 0 && navbarHeight != 0) ? true : false);
         boolean twoThreeButtonEnabled = RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.twobutton") ||
                 RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
         return setNavbarHeight || twoThreeButtonEnabled;
