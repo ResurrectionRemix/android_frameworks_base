@@ -3497,6 +3497,9 @@ public class NotificationPanelView extends PanelView implements
     }
 
     private void updatePulseLightState(boolean dozing) {
+        if (!mAmbientLights) {
+            return;
+        }
         if (!mAmbientLights || !mPulseLights || !dozing) {
             if (mPulseLightsView != null) {
                 mPulseLightsView.setVisibility(View.GONE);
