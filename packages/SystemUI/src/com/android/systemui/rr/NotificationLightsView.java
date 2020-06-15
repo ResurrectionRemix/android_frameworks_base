@@ -103,9 +103,7 @@ public class NotificationLightsView extends RelativeLayout {
 
     public int getNotificationLightsColor() {
         int color = getDefaultNotificationLightsColor();
-        int lightColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_COLOR, 0,
-                UserHandle.USER_CURRENT);
+        int lightColor = getlightColor();
         int customColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_CUSTOM_COLOR, getDefaultNotificationLightsColor(),
                 UserHandle.USER_CURRENT);
@@ -135,7 +133,9 @@ public class NotificationLightsView extends RelativeLayout {
             color = customColor;
         } else if (lightColor == 4) {
             color = mixColors(customColor, blend);
-        }  else {
+        } else if (lightColor == 5) {
+            color = randomColor();
+        }   else {
             color = 0xFFFFFFFF;
         }
         return color;
@@ -150,6 +150,12 @@ public class NotificationLightsView extends RelativeLayout {
         mLightAnimator.removeAllUpdateListeners();
     }
 
+    public int randomColor() {
+        int red = (int) (0xff * Math.random());
+        int green = (int) (0xff * Math.random());
+        int blue = (int) (0xff * Math.random());
+        return Color.argb(255, red, green, blue);
+    }
 
     private int mixColors(int color1, int color2) {
         int[] rgb1 = colorToRgb(color1);
@@ -176,6 +182,12 @@ public class NotificationLightsView extends RelativeLayout {
         return (int)Math.min((val1 + val2), 255f);
     }
 
+    public int getlightColor() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_COLOR, 0,
+                UserHandle.USER_CURRENT);
+    }
+
     public void animateNotificationWithColor(int color) {
         int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_DURATION, 2,
@@ -192,18 +204,29 @@ public class NotificationLightsView extends RelativeLayout {
         int layout = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_LAYOUT, 0,
                 UserHandle.USER_CURRENT);
+        int lightcolor = getlightColor();
         ImageView leftViewSolid = (ImageView) findViewById(R.id.notification_animation_left_solid);
         ImageView leftViewFaded = (ImageView) findViewById(R.id.notification_animation_left_faded);
-        leftViewSolid.setColorFilter(color);
-        leftViewFaded.setColorFilter(color);
+        if (lightcolor == 6) {
+            leftViewSolid.setColorFilter(randomColor());
+            leftViewFaded.setColorFilter(randomColor());
+        } else {
+            leftViewSolid.setColorFilter(color);
+            leftViewFaded.setColorFilter(color);
+        }
         leftViewSolid.getLayoutParams().width = width;
         leftViewFaded.getLayoutParams().width = width;
         leftViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         leftViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         ImageView rightViewSolid = (ImageView) findViewById(R.id.notification_animation_right_solid);
         ImageView rightViewFaded = (ImageView) findViewById(R.id.notification_animation_right_faded);
-        rightViewSolid.setColorFilter(color);
-        rightViewFaded.setColorFilter(color);
+        if (lightcolor == 6) {
+            rightViewSolid.setColorFilter(randomColor());
+            rightViewFaded.setColorFilter(randomColor());
+        } else {
+           rightViewSolid.setColorFilter(color);
+           rightViewFaded.setColorFilter(color);
+        }
         rightViewSolid.getLayoutParams().width = width;
         rightViewFaded.getLayoutParams().width = width;
         rightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
