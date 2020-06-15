@@ -5794,6 +5794,12 @@ public final class Settings {
          */
         public static final String FOD_BRIGHT_ICON = "fod_bright_icon";
 
+        /**
+         * FOD animation outside lockscreen
+         * @hide
+         */
+        public static final String FOD_ANIM_KEYGUARD = "fod_anim_lockscreen";
+
          /**
          * Whether the phone vibrates on disconnect
          * @hide
