@@ -94,6 +94,11 @@ public class FODAnimation extends ImageView {
     }
 
     public void showFODanimation() {
+        boolean isenabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_RECOGNIZING_ANIMATION, 0) != 0;
+        if (!isenabled) {
+            return;
+        }
         boolean keyguardAnim = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ANIM_KEYGUARD, 0) == 1;
         boolean allow = keyguardAnim || mIsKeyguard;
