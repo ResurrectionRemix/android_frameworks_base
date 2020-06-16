@@ -37,18 +37,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.settingslib.Utils;
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.tuner.TunerService;
 
 import androidx.palette.graphics.Palette;
 
-public class NotificationLightsView extends RelativeLayout {
+public class NotificationLightsView extends RelativeLayout implements TunerService.Tunable {
     private static final boolean DEBUG = false;
     private static final String TAG = "NotificationLightsView";
     private View mNotificationAnimView;
     private ValueAnimator mLightAnimator;
     private boolean mPulsing;
     private WallpaperManager mWallManager;
-    private int color;
+    public static final String REPEAT_COUNT =
+            "system:" + Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_COUNT;
+    public static final String LIGHT_DURATION =
+            "system:" + Settings.System.PULSE_AMBIENT_LIGHT_DURATION;
+    public int mLightsDuration, mCount;
 
     public NotificationLightsView(Context context) {
         this(context, null);
@@ -97,6 +103,30 @@ public class NotificationLightsView extends RelativeLayout {
 
     public void animateNotification() {
         animateNotificationWithColor(getNotificationLightsColor());
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Dependency.get(TunerService.class).addTunable(this, REPEAT_COUNT);
+        Dependency.get(TunerService.class).addTunable(this, LIGHT_DURATION);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Dependency.get(TunerService.class).removeTunable(this);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (REPEAT_COUNT.equals(key)) {
+             mCount =
+                   TunerService.parseInteger(newValue, 0) ;
+        } else if (LIGHT_DURATION.equals(key)) {
+            mLightsDuration =
+                   TunerService.parseInteger(newValue, 2) * 1000;
+        }
     }
 
     public int getNotificationLightsColor() {
@@ -187,12 +217,6 @@ public class NotificationLightsView extends RelativeLayout {
     }
 
     public void animateNotificationWithColor(int color) {
-        int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_AMBIENT_LIGHT_DURATION, 2,
-                UserHandle.USER_CURRENT) * 1000;
-        int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_COUNT, 0,
-                UserHandle.USER_CURRENT);
         boolean directionIsRestart = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_REPEAT_DIRECTION, 0,
                 UserHandle.USER_CURRENT) != 1;
@@ -230,12 +254,11 @@ public class NotificationLightsView extends RelativeLayout {
         rightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         rightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
-        mLightAnimator.setDuration(duration);
-        mLightAnimator.setDuration(duration);
-        if (repeat == 0) {
+        mLightAnimator.setDuration(mLightsDuration);
+        if (mCount == 0) {
             mLightAnimator.setRepeatCount(ValueAnimator.INFINITE);
         } else {
-            mLightAnimator.setRepeatCount(repeat - 1);
+            mLightAnimator.setRepeatCount(mCount - 1);
         }
         mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
