@@ -28,8 +28,6 @@ import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
-import org.lineageos.internal.statusbar.NetworkTraffic;
-
 /** @hide */
 public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkReceiver,
         StatusIconDisplayable {
@@ -51,6 +49,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     public StatusBarNetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setVisibleState(STATE_ICON);
     }
 
     @Override
