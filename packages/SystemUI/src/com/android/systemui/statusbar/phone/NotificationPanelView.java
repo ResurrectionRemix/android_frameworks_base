@@ -136,7 +136,7 @@ public class NotificationPanelView extends PanelView implements
     private static final boolean DEBUG = false;
     private static final boolean DEBUG_PULSE_LIGHT = false;
 
-    private static final String TAG = "NotificationLightsView";
+    private static final String TAG = "NotificationPanelView";
 
     /**
      * Fling expanding QS.

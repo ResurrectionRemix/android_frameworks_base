@@ -72,7 +72,6 @@ public class NotificationLightsView extends RelativeLayout {
     private Runnable mLightUpdate = new Runnable() {
         @Override
         public void run() {
-            Log.e("NotificationLightsView", "run");
             animateNotification();
         }
     };
@@ -94,7 +93,6 @@ public class NotificationLightsView extends RelativeLayout {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        Log.e("NotificationLightsView", "draw");
     }
 
     public void animateNotification() {
@@ -242,7 +240,6 @@ public class NotificationLightsView extends RelativeLayout {
         mLightAnimator.setRepeatMode(directionIsRestart ? ValueAnimator.RESTART : ValueAnimator.REVERSE);
         mLightAnimator.addUpdateListener(new AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-               // Log.e("NotificationLightsView", "onAnimationUpdate");
                 float progress = ((Float) animation.getAnimatedValue()).floatValue();
                 leftViewSolid.setScaleY(progress);
                 leftViewFaded.setScaleY(progress);
