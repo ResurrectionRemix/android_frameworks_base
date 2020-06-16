@@ -75,7 +75,6 @@ public class NetworkTraffic extends TextView {
     private static final int KB = 1024;
     private static final int MB = KB * KB;
     private static final int GB = MB * KB;
-    private static final String symbol = "/s";
 
     protected int mLocation = 0;
     private int mMode = MODE_UPSTREAM_AND_DOWNSTREAM;
@@ -253,40 +252,40 @@ public class NetworkTraffic extends TextView {
             SpannableString spanSpeedString;
 
             if (speed >= GB) {
-                unit = "GB";
+                unit = mContext.getString(R.string.gigabytespersecond_short);
                 decimalFormat = new DecimalFormat("0.00");
                 formatSpeed =  decimalFormat.format(speed / (float)GB);
             } else if (speed >= 100 * MB) {
                 decimalFormat = new DecimalFormat("###0");
-                unit = "MB";
+                unit = mContext.getString(R.string.megabytespersecond_short);
                 formatSpeed =  decimalFormat.format(speed / (float)MB);
             } else if (speed >= 10 * MB) {
                 decimalFormat = new DecimalFormat("#0.0");
-                unit = "MB";
+                unit = mContext.getString(R.string.megabytespersecond_short);
                 formatSpeed =  decimalFormat.format(speed / (float)MB);
             } else if (speed >= MB) {
                 decimalFormat = new DecimalFormat("0.00");
-                unit = "MB";
+                unit = mContext.getString(R.string.megabytespersecond_short);
                 formatSpeed =  decimalFormat.format(speed / (float)MB);
             } else if (speed >= 100 * KB) {
                 decimalFormat = new DecimalFormat("##0");
-                unit = "KB";
+                unit = mContext.getString(R.string.kilobytespersecond_short);
                 formatSpeed =  decimalFormat.format(speed / (float)KB);
             } else if (speed >= 10 * KB) {
                 decimalFormat = new DecimalFormat("#0.0");
-                unit = "KB";
+                unit = mContext.getString(R.string.kilobytespersecond_short);
                 formatSpeed =  decimalFormat.format(speed / (float)KB);
             } else {
                 decimalFormat = new DecimalFormat("0.00");
-                unit = "KB";
+                unit = mContext.getString(R.string.kilobytespersecond_short);
                 formatSpeed = decimalFormat.format(speed / (float)KB);
             }
             spanSpeedString = new SpannableString(formatSpeed);
             spanSpeedString.setSpan(mSpeedRelativeSizeSpan, 0, (formatSpeed).length(),
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-            spanUnitString = new SpannableString(unit + symbol);
-            spanUnitString.setSpan(mUnitRelativeSizeSpan, 0, (unit + symbol).length(),
+            spanUnitString = new SpannableString(unit);
+            spanUnitString.setSpan(mUnitRelativeSizeSpan, 0, (unit).length(),
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             return TextUtils.concat(spanSpeedString, "\n", spanUnitString);
         }
