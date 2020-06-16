@@ -83,6 +83,7 @@ public class BoostFramework {
     public static final int VENDOR_HINT_PERFORMANCE_MODE = 0x00001091;
     public static final int VENDOR_HINT_APP_UPDATE = 0x00001092;
     public static final int VENDOR_HINT_KILL = 0x00001093;
+    public static final int VENDOR_HINT_BOOST_RENDERTHREAD = 0x00001096;
     //perf events
     public static final int VENDOR_HINT_FIRST_DRAW = 0x00001042;
     public static final int VENDOR_HINT_TAP_EVENT = 0x00001043;
