@@ -369,6 +369,7 @@ public class CellularTile extends QSTileImpl<SignalState> {
             final DataUsageController.DataUsageInfo info = mDataController.getDataUsageInfo(
                     DataUsageUtils.getMobileTemplate(mContext,
                             SubscriptionManager.getDefaultDataSubscriptionId()));
+            DataUsageController.DataUsageInfo info_dialy = null;
             DataUsageController mobileDataController = new DataUsageController(mContext);
             mobileDataController.setSubscriptionId(
                     SubscriptionManager.getDefaultDataSubscriptionId());
