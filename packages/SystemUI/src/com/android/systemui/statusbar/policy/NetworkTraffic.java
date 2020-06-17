@@ -72,22 +72,23 @@ public class NetworkTraffic extends TextView {
     private static final int MESSAGE_TYPE_PERIODIC_REFRESH = 0;
     private static final int MESSAGE_TYPE_UPDATE_VIEW = 1;
 
-    private static final int KB = 1024;
-    private static final int MB = KB * KB;
-    private static final int GB = MB * KB;
+    private static final int Kilo = 1000;
+    private static final int Mega = Kilo * Kilo;
+    private static final int Giga = Mega * Kilo;
 
     protected int mLocation = 0;
     private int mMode = MODE_UPSTREAM_AND_DOWNSTREAM;
     private int mSubMode = MODE_UPSTREAM_AND_DOWNSTREAM;
     private boolean mConnectionAvailable;
     protected boolean mIsActive;
-    private long mTxKbps;
-    private long mRxKbps;
+    private long mTxBytes;
+    private long mRxBytes;
     private long mLastTxBytes;
     private long mLastRxBytes;
     private long mLastUpdateTime;
     private boolean mAutoHide;
     private long mAutoHideThreshold;
+    private int mUnits;
     protected int mIconTint = 0;
     protected int newTint = Color.WHITE;
 
@@ -184,8 +185,8 @@ public class NetworkTraffic extends TextView {
                 final long rxBytesDelta = rxBytes - mLastRxBytes;
 
                 if (timeDelta > 0 && txBytesDelta >= 0 && rxBytesDelta >= 0) {
-                    mTxKbps = (long) (txBytesDelta / (timeDelta / 1000f));
-                    mRxKbps = (long) (rxBytesDelta / (timeDelta / 1000f));
+                    mTxBytes = (long) (txBytesDelta / (timeDelta / 1000f));
+                    mRxBytes = (long) (rxBytesDelta / (timeDelta / 1000f));
                 }
                 mLastTxBytes = txBytes;
                 mLastRxBytes = rxBytes;
@@ -198,8 +199,8 @@ public class NetworkTraffic extends TextView {
                     mMode == MODE_UPSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
             final boolean showDownstream =
                     mMode == MODE_DOWNSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
-            final boolean aboveThreshold = (showUpstream && mTxKbps > mAutoHideThreshold)
-                    || (showDownstream && mRxKbps > mAutoHideThreshold);
+            final boolean aboveThreshold = (showUpstream && mTxBytes > mAutoHideThreshold)
+                    || (showDownstream && mRxBytes > mAutoHideThreshold);
             mIsActive = enabled && mAttached && (!mAutoHide || (mConnectionAvailable && aboveThreshold));
             int submode = MODE_UPSTREAM_AND_DOWNSTREAM;
 
@@ -208,20 +209,20 @@ public class NetworkTraffic extends TextView {
             if (mIsActive) {
                 CharSequence output = "";
                 if (showUpstream && showDownstream) {
-                    if (mTxKbps > mRxKbps) {
-                        output = formatOutput(mTxKbps);
+                    if (mTxBytes > mRxBytes) {
+                        output = formatOutput(mTxBytes);
                         submode = MODE_UPSTREAM_ONLY;
-                    } else if (mTxKbps < mRxKbps) {
-                        output = formatOutput(mRxKbps);
+                    } else if (mTxBytes < mRxBytes) {
+                        output = formatOutput(mRxBytes);
                         submode = MODE_DOWNSTREAM_ONLY;
                     } else {
-                        output = formatOutput(mRxKbps);
+                        output = formatOutput(mRxBytes);
                         submode = MODE_UPSTREAM_AND_DOWNSTREAM;
                     }
                 } else if (showDownstream) {
-                    output = formatOutput(mRxKbps);
+                    output = formatOutput(mRxBytes);
                 } else if (showUpstream) {
-                    output = formatOutput(mTxKbps);
+                    output = formatOutput(mTxBytes);
                 }
 
                 // Update view if there's anything new to show
@@ -250,35 +251,48 @@ public class NetworkTraffic extends TextView {
             String formatSpeed;
             SpannableString spanUnitString;
             SpannableString spanSpeedString;
+            String gunit, munit, kunit;
 
-            if (speed >= GB) {
-                unit = mContext.getString(R.string.gigabytespersecond_short);
+            if (mUnits == 0) {
+                // speed is in bytes, convert to bits
+                speed = speed * 8;
+                gunit = mContext.getString(R.string.gigabitspersecond_short);
+                munit = mContext.getString(R.string.megabitspersecond_short);
+                kunit = mContext.getString(R.string.kilobitspersecond_short);
+            } else {
+                gunit = mContext.getString(R.string.gigabytespersecond_short);
+                munit = mContext.getString(R.string.megabytespersecond_short);
+                kunit = mContext.getString(R.string.kilobytespersecond_short);
+            }
+
+            if (speed >= Giga) {
+                unit = gunit;
                 decimalFormat = new DecimalFormat("0.00");
-                formatSpeed =  decimalFormat.format(speed / (float)GB);
-            } else if (speed >= 100 * MB) {
+                formatSpeed =  decimalFormat.format(speed / (float)Giga);
+            } else if (speed >= 100 * Mega) {
                 decimalFormat = new DecimalFormat("###0");
-                unit = mContext.getString(R.string.megabytespersecond_short);
-                formatSpeed =  decimalFormat.format(speed / (float)MB);
-            } else if (speed >= 10 * MB) {
+                unit = munit;
+                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+            } else if (speed >= 10 * Mega) {
                 decimalFormat = new DecimalFormat("#0.0");
-                unit = mContext.getString(R.string.megabytespersecond_short);
-                formatSpeed =  decimalFormat.format(speed / (float)MB);
-            } else if (speed >= MB) {
+                unit = munit;
+                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+            } else if (speed >= Mega) {
                 decimalFormat = new DecimalFormat("0.00");
-                unit = mContext.getString(R.string.megabytespersecond_short);
-                formatSpeed =  decimalFormat.format(speed / (float)MB);
-            } else if (speed >= 100 * KB) {
+                unit = munit;
+                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+            } else if (speed >= 100 * Kilo) {
                 decimalFormat = new DecimalFormat("##0");
-                unit = mContext.getString(R.string.kilobytespersecond_short);
-                formatSpeed =  decimalFormat.format(speed / (float)KB);
-            } else if (speed >= 10 * KB) {
+                unit = kunit;
+                formatSpeed =  decimalFormat.format(speed / (float)Kilo);
+            } else if (speed >= 10 * Kilo) {
                 decimalFormat = new DecimalFormat("#0.0");
-                unit = mContext.getString(R.string.kilobytespersecond_short);
-                formatSpeed =  decimalFormat.format(speed / (float)KB);
+                unit = kunit;
+                formatSpeed =  decimalFormat.format(speed / (float)Kilo);
             } else {
                 decimalFormat = new DecimalFormat("0.00");
-                unit = mContext.getString(R.string.kilobytespersecond_short);
-                formatSpeed = decimalFormat.format(speed / (float)KB);
+                unit = kunit;
+                formatSpeed = decimalFormat.format(speed / (float)Kilo);
             }
             spanSpeedString = new SpannableString(formatSpeed);
             spanSpeedString.setSpan(mSpeedRelativeSizeSpan, 0, (formatSpeed).length(),
@@ -334,6 +348,9 @@ public class NetworkTraffic extends TextView {
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
                     LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
+                    LineageSettings.Secure.NETWORK_TRAFFIC_UNITS),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
                     LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL),
@@ -413,6 +430,9 @@ public class NetworkTraffic extends TextView {
                 LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE, 0, UserHandle.USER_CURRENT) != 0;
         mAutoHideThreshold = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0, UserHandle.USER_CURRENT);
+        mUnits = LineageSettings.Secure.getIntForUser(resolver,
+                LineageSettings.Secure.NETWORK_TRAFFIC_UNITS, /* Bytes */ 1,
+                UserHandle.USER_CURRENT);
 
         mRefreshInterval = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL, 2, UserHandle.USER_CURRENT);
