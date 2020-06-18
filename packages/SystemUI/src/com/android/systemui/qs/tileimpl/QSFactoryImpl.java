@@ -31,6 +31,7 @@ import com.android.systemui.qs.tiles.AODTile;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AmbientDisplayTile;
+import com.android.systemui.qs.tiles.AnimationsTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
@@ -129,6 +130,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<CompassTile> mCompassTileProvider;
     private final Provider<ScreenRecordTile> mScreeenRecordTileProvider;
+    private final Provider<AnimationsTile> mAnimationsTileProvider;
 
     private QSTileHost mHost;
 
@@ -177,7 +179,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<MusicTile> musicTileProvider,
             Provider<RebootTile> rebootTileProvider,
             Provider<CompassTile> compassTileProvider,
-            Provider<ScreenRecordTile> screenRecordTileProvider) {
+            Provider<ScreenRecordTile> screenRecordTileProvider,
+            Provider<AnimationsTile> animationsTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -223,6 +226,7 @@ public class QSFactoryImpl implements QSFactory {
         mRebootTileProvider = rebootTileProvider;
         mCompassTileProvider = compassTileProvider;
         mScreeenRecordTileProvider = screenRecordTileProvider;
+        mAnimationsTileProvider = animationsTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -329,6 +333,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCompassTileProvider.get();
             case "screenrecord":
                 return mScreeenRecordTileProvider.get();
+            case "animations":
+                return mAnimationsTileProvider.get();
         }
 
         // Intent tiles.

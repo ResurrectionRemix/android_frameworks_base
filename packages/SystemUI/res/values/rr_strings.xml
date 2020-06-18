@@ -195,6 +195,10 @@
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
 
+    <!-- Animations QS Tile -->
+    <string name="quick_settings_animation_label">Disable Animations</string>
+    <string name="accessibility_quick_settings_animations_on">Animations On</string>
+    <string name="accessibility_quick_settings_animations_off">Animations Off</string>
 
     <string name="tuner_show_brightness_mode">Show auto brightness icon in footer</string>
     <string name="tuner_show_brightness_side_buttons">Show brightness slider side buttons</string>
