@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2019 The PixelExperience project
  * Copyright (C) 2019 The Syberia project
- * Copyright (C) 2019 crDroid Android Project
+ * Copyright (C) 2019-2020 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ import android.os.RemoteException;
 import android.os.Process;
 import android.os.UserHandle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -136,9 +137,9 @@ public class GamingModeController {
         return mGamingModeEnabled;
     }
 
-    public void notePackageUninstalled(String pkgName) {
-        // remove from list
-        if (mGameApp.remove(pkgName)) {
+    public void notePackageUninstalled(String packageName) {
+        if (mGameApp.contains(packageName)) {
+            mGameApp.remove(packageName);
             savePackageList(mGameApp);
         }
     }
@@ -171,13 +172,13 @@ public class GamingModeController {
         }
     }
 
-    private static ApplicationInfo getAppInfoFromPkgName(Context context, String Packagename) {
+    private static ApplicationInfo getAppInfoFromPkgName(Context context, String packageName) {
       try {
         PackageManager packageManager = context.getPackageManager();
-        ApplicationInfo info = packageManager.getApplicationInfo(Packagename, PackageManager.GET_META_DATA);
+        ApplicationInfo info = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
         return info;
       } catch (PackageManager.NameNotFoundException e) {
-        e.printStackTrace();
+        Log.e(TAG, "Package info not found for name: " + packageName);
         return null;
       }
     }
