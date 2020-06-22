@@ -605,7 +605,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                      PorterDuff.Mode.SRC_ATOP);
         }
         updateAlpha();
-
+        if (!mBrightIcon) {
+            updateIconDim();
+        }
         setFODPressedState();
         invalidate();
     }
@@ -613,6 +615,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void hideCircle() {
         mIsCircleShowing = false;
         setFODIcon();
+        if (!mBrightIcon) {
+            updateIconDim();
+        }
         invalidate();
 
         dispatchRelease();
@@ -624,7 +629,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 setColorFilter(Color.argb(0, 0, 0, 0),
                    PorterDuff.Mode.SRC_ATOP); 
             } else {
-                setColorFilter(Color.argb(mCurDim, 0, 0, 0),
+                setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0),
                    PorterDuff.Mode.SRC_ATOP); 
             }
             invalidate();
@@ -632,6 +637,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         updateAlpha();
 
         setKeepScreenOn(false);
+    }
+
+    public void updateIconDim() {
+        if (!mIsCircleShowing) {
+            setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+        } else {
+            setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+        }
     }
 
     private boolean useWallpaperColor() {
@@ -705,25 +718,22 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         setVisibility(View.VISIBLE);
         animate().withStartAction(() -> mFading = true)
-                .alpha(mIsDreaming ? 0.75f : 1.0f)
                 .setDuration(FADE_ANIM_DURATION)
                 .withEndAction(() -> mFading = false)
                 .start();
         dispatchShow();
         if (mSupportsAlwaysOnHbm) {
             Dependency.get(TunerService.class).addTunable(this, SCREEN_BRIGHTNESS);
-            setDim(true);
+            if (!mNoDim || mBrightIcon) {
+                setDim(true);
+                updateAlpha();
+            }
             mHandler.sendEmptyMessageDelayed(MSG_HBM_ON, mHbmOnDelay);
         }
     }
 
     public void hide() {
         mIsShowing = false;
-
-        if (mViewPressedDisplayed) {
-            mViewPressedDisplayed = false;
-            mWindowManager.removeView(mViewPressed);
-        }
 
         if (mSupportsAlwaysOnHbm) {
             mHandler.sendEmptyMessageDelayed(MSG_HBM_OFF, mHbmOffDelay);
@@ -734,7 +744,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             Dependency.get(TunerService.class).removeTunable(this);
         }
         animate().withStartAction(() -> mFading = true)
-                .alpha(0)
                 .setDuration(FADE_ANIM_DURATION)
                 .withEndAction(() -> {
                     setVisibility(View.GONE);
@@ -750,7 +759,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         if (mIsCircleShowing) {
             setAlpha(1.0f);
         } else {
-            setAlpha(mIsDreaming ? 0.75f : 1.0f);
+            setAlpha(mIsDreaming || mIsPulsing ? 0.5f : 1.0f);
         }
     }
 
@@ -796,11 +805,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
         }
 
-        if (mIsKeyguard) {
-            mParams.x = mPositionX;
-            mParams.y = mPositionY - cutoutMaskedExtra;
-        }
-
         if (mIsDreaming) {
             mParams.y += mDreamingOffsetY;
             mFODAnimation.updateParams(mParams.y);
@@ -839,11 +843,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
         }
 
-        if (mIsKeyguard) {
-            mParamsPressed.x = mPositionX;
-            mParamsPressed.y = mPositionY - cutoutMaskedExtra;
-        }
-
         if (mIsDreaming) {
             mParamsPressed.y += mDreamingOffsetY;
         }
@@ -880,11 +879,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                         PorterDuff.Mode.SRC_ATOP);
                 }
             }
+            mWindowManager.updateViewLayout(this, mParams);
         } else {
             mParams.dimAmount = 0.0f;
+            if (mViewPressedDisplayed) {
+                mViewPressedDisplayed = false;
+                mWindowManager.removeView(mViewPressed);
+            }
         }
-
-        mWindowManager.updateViewLayout(this, mParams);
     }
 
     private boolean isPinOrPattern(int userId) {
