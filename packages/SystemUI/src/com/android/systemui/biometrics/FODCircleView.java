@@ -795,12 +795,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             default:
                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
         }
-
-        if (mIsKeyguard) {
-            mParams.x = mPositionX;
-            mParams.y = mPositionY - cutoutMaskedExtra;
-        }
-
         if (mIsDreaming) {
             mParams.y += mDreamingOffsetY;
             mFODAnimation.updateParams(mParams.y);
@@ -837,11 +831,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 break;
             default:
                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
-        }
-
-        if (mIsKeyguard) {
-            mParamsPressed.x = mPositionX;
-            mParamsPressed.y = mPositionY - cutoutMaskedExtra;
         }
 
         if (mIsDreaming) {
