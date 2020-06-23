@@ -45,6 +45,7 @@ import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.TimingsTraceLog;
+import android.view.Gravity;
 import android.view.WindowManager;
 
 import com.android.internal.telephony.ITelephony;
@@ -52,6 +53,8 @@ import com.android.server.RescueParty;
 import com.android.server.LocalServices;
 import com.android.server.pm.PackageManagerService;
 import com.android.server.statusbar.StatusBarManagerInternal;
+
+import com.android.internal.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -193,12 +196,66 @@ public final class ShutdownThread extends Thread {
             sConfirmDialog.setOnDismissListener(closer);
             WindowManager.LayoutParams attrs = sConfirmDialog.getWindow().getAttributes();
             attrs.alpha = setRebootDialogAlpha(context);
+            boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
+
+            int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+            switch (powermenuAnimations) {
+               case 0:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationEnter;
+                  attrs.gravity = Gravity.CENTER|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 1:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimation;
+                  attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 2:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTop;
+                  attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 3:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationFly;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 4:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTn;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 5:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 6:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationXylon;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 7:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationCard;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 8:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+                  attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 9:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+                  attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+               break;
+               case 10:
+                  attrs.windowAnimations = R.style.GlobalActionsAnimationRotate;
+                  attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+               break;
+            }
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
             sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
             sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
         }
+    }
+
+    private static int getPowermenuAnimations(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.POWER_MENU_ANIMATIONS, 0);
     }
 
     private static float setRebootDialogAlpha(Context context) {
@@ -368,8 +425,56 @@ public final class ShutdownThread extends Thread {
         pd.setCancelable(false);
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
-
         attrs.alpha = setRebootDialogAlpha(context);
+        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
+
+        int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
+        switch (powermenuAnimations) {
+           case 0:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationEnter;
+              attrs.gravity = Gravity.CENTER|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 1:
+              attrs.windowAnimations = R.style.GlobalActionsAnimation;
+              attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 2:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTop;
+              attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 3:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationFly;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 4:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTn;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 5:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 6:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationXylon;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 7:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationCard;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 8:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+              attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 9:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationTranslucent;
+              attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+           break;
+           case 10:
+              attrs.windowAnimations = R.style.GlobalActionsAnimationRotate;
+              attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
+           break;
+        }
         pd.getWindow().setDimAmount(setRebootDialogDim(context));
 
         pd.show();
