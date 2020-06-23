@@ -735,11 +735,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void hide() {
         mIsShowing = false;
 
-        if (mViewPressedDisplayed) {
-            mViewPressedDisplayed = false;
-            mWindowManager.removeView(mViewPressed);
-        }
-
         if (mSupportsAlwaysOnHbm) {
             mHandler.sendEmptyMessageDelayed(MSG_HBM_OFF, mHbmOffDelay);
             if (mHandler.hasMessages(MSG_HBM_ON)) {
@@ -884,10 +879,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                         PorterDuff.Mode.SRC_ATOP);
                 }
             }
+            mWindowManager.updateViewLayout(this, mParams);
         } else {
             mParams.dimAmount = 0.0f;
+            if (mViewPressedDisplayed) {
+                mViewPressedDisplayed = false;
+                mWindowManager.removeView(mViewPressed);
+            }
         }
-         mWindowManager.updateViewLayout(this, mParams);
     }
 
     private boolean isPinOrPattern(int userId) {
