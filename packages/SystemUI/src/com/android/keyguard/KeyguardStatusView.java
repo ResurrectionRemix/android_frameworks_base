@@ -155,8 +155,7 @@ public class KeyguardStatusView extends GridLayout implements
         mHandler = new Handler(Looper.myLooper());
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
-        tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
-        tunerService.addTunable(this, LS_WEATHER_PULSING);
+        tunerService.addTunable(this, LOCKSCREEN_WEATHER_STYLE);
         onDensityOrFontScaleChanged();
     }
 
@@ -473,14 +472,6 @@ public class KeyguardStatusView extends GridLayout implements
             return;
         }
         mPulsing = pulsing;
-        mPulsingAllowed = mPulsing && mPulseWeather;
-        if (mWeatherView != null) {
-            if (mShowWeather && mPulsingAllowed) {
-                mWeatherView.setVisibility(View.VISIBLE);
-            } else if (mShowWeather && mPulsing) {
-                mWeatherView.setVisibility(View.GONE);
-            }
-        }
     }
 
     private boolean shouldShowLogout() {
@@ -510,10 +501,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mPixelStyle =
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateWeatherView();
-                break;
-            case LS_WEATHER_PULSING:
-                mPulseWeather =
-                        TunerService.parseIntegerSwitch(newValue, true);
                 break;
             default:
                 break;
