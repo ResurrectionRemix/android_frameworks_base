@@ -17,8 +17,6 @@
  */
 package com.android.systemui.statusbar.phone;
 
-import static android.os.UserHandle.USER_SYSTEM;
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -78,6 +76,9 @@ public class VolumePluginManager extends BroadcastReceiver {
         "co.potatoproject.plugin.volume.tiled",
     };
 
+    static final String DEFAULT_VOLUME_PLUGIN = ALLOWED_PLUGINS[1];
+    static final String VOLUME_PLUGIN_ACTION = "com.android.systemui.action.PLUGIN_VOLUME";
+
     private PluginPrefs mPluginPrefs;
     private PluginEnabler mPluginEnabler;
     private PluginManager mManager;
@@ -100,7 +101,9 @@ public class VolumePluginManager extends BroadcastReceiver {
         mResolver = mContext.getContentResolver();
         mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
         mCustomSettingsObserver.observe();
-        mCurrentPlugin = getEnabledPlugin();
+        PackageInfo enabledPlugin = getEnabledPlugin(getPluginInfo());
+        if (enabledPlugin != null)
+            mCurrentPlugin = enabledPlugin.packageName;
         updateState();
     }
 
@@ -129,20 +132,26 @@ public class VolumePluginManager extends BroadcastReceiver {
     }
 
     private Boolean togglePlugins(String currentPackageName) {
+        List<PackageInfo> plugins = getPluginInfo();
+        PackageInfo enabledPlugin = getEnabledPlugin(plugins);
         try {
-            for (PackageInfo plugin : getPluginInfo()) {
-                ComponentName componentName = new ComponentName(plugin.packageName,
-                        plugin.services[0].name);
+            if (enabledPlugin != null) {
+                Strings enabledPkg = enabledPlugin.packageName;
+                ComponentName EnabledComponentName = new ComponentName(enabledPkg,
+                        enabledPlugin.services[0].name);
+                mPluginEnabler.setDisabled(EnabledComponentName, PluginEnabler.DISABLED_MANUALLY);
+                sendBroadcast(enabledPkg);
+            }
+            for (PackageInfo plugin : plugins) {
+                String pkg = plugin.packageName;
 
-                if (currentPackageName.equals(plugin.packageName))
+                if (currentPackageName.equals(pkg)) {
+                    ComponentName componentName = new ComponentName(pkg,
+                            plugin.services[0].name);
                     mPluginEnabler.setEnabled(componentName);
-                else
-                    mPluginEnabler.setDisabled(componentName, PluginEnabler.DISABLED_MANUALLY);
-
-                final String pkg = plugin.packageName;
-                final Intent intent = new Intent(PluginManager.PLUGIN_CHANGED,
-                        pkg != null ? Uri.fromParts("package", pkg, null) : null);
-                mContext.sendBroadcast(intent);
+                    sendBroadcast(pkg);
+                    break;
+                }
             }
         } catch (Exception re) {
             Log.w(TAG, "Error handling overlays.", re);
@@ -163,21 +172,19 @@ public class VolumePluginManager extends BroadcastReceiver {
         }
     }
 
-    private String getEnabledPlugin() {
-        List<PackageInfo> packages = getPluginInfo();
+    private PackageInfo getEnabledPlugin(List<PackageInfo> plugins) {
+        List<PackageInfo> packages = plugins;
 
         for(PackageInfo pkg : packages) {
-            for (int i = 0; i < pkg.services.length; i++) {
-                ComponentName componentName = new ComponentName(pkg.packageName,
-                        pkg.services[i].name);
-                if (!mPluginEnabler.isEnabled(componentName)) {
-                    continue;
-                }
+            ComponentName componentName = new ComponentName(pkg.packageName,
+                    pkg.services[0].name);
+            if (!mPluginEnabler.isEnabled(componentName)) {
+                continue;
             }
-            return pkg.packageName;
+            return pkg;
         }
 
-        return DEFAULT_VOLUME_PLUGIN;
+        return null;
     }
 
     private List<PackageInfo> getPluginInfo() {
@@ -201,6 +208,12 @@ public class VolumePluginManager extends BroadcastReceiver {
         }
 
         return returnList;
+    }
+
+    private void sendBroadcast(String pkg) {
+        final Intent intent = new Intent(PluginManager.PLUGIN_CHANGED,
+                pkg != null ? Uri.fromParts("package", pkg, null) : null);
+        mContext.sendBroadcast(intent);
     }
 
     private class CustomSettingsObserver extends ContentObserver {
