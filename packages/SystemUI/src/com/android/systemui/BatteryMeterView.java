@@ -457,7 +457,7 @@ public class BatteryMeterView extends LinearLayout implements
             } else {
                 Resources res = getContext().getResources();
                 mBatteryPercentView.setPaddingRelative(
-                        res.getDimensionPixelSize(R.dimen.battery_level_padding_start), 0, 0, 0);
+                        res.getDimensionPixelSize(R.dimen.battery_level_padding_end), 0, 0, 0);
             }
         } else {
             removeBatteryPercentView();
