@@ -74,6 +74,7 @@
         <item>@drawable/fod_icon_sun_metro</item>
         <item>@drawable/fod_icon_rr</item>
         <item>@drawable/fod_icon_rr2</item>
+        <item>@drawable/fod_icon_invisible</item>
     </integer-array>
 
 </resources>
