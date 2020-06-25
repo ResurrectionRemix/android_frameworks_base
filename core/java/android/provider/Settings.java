@@ -4868,6 +4868,12 @@ public final class Settings {
         private static final Validator STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+	/**
+         * Holds current enabled volume panel implementation
+         * @hide
+         */
+        public static final String SYSTEMUI_PLUGIN_VOLUME = "systemui_plugin_volume";
+
         /**
          * Screenrecord: show stop dot
          * @hide
@@ -8299,6 +8305,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_HEIGHT);
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_ENABLED);
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
+            PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
         }
 
         /**
