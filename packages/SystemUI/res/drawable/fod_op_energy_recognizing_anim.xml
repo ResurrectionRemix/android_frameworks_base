@@ -31,6 +31,7 @@
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_27" />
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_28" />
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_29" />
+    <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_30" />
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_31" />
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_32" />
     <item android:duration="6" android:drawable="@drawable/fod_op_energy_anim_33" />

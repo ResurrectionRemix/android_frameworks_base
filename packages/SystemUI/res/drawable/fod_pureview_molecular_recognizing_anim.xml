@@ -15,44 +15,44 @@
     limitations under the License.
 -->
 
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_00" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_01" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_02" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_03" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_04" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_05" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_06" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_07" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_08" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_09" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_10" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_11" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_12" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_13" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_14" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_15" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_16" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_17" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_18" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_19" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_20" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_21" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_22" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_23" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_24" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_25" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_26" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_27" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_28" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_29" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_30" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_31" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_32" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_33" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_34" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_35" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_36" android:duration="12" />
-    <item android:drawable="@drawable/fod_pureview_molecular_anim_37" android:duration="12" />
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_00" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_01" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_02" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_03" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_04" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_05" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_06" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_07" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_08" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_09" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_10" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_11" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_12" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_13" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_14" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_15" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_16" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_17" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_18" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_19" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_20" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_21" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_22" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_23" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_24" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_25" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_26" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_27" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_28" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_29" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_30" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_31" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_32" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_33" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_34" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_35" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_36" android:duration="6" />
+    <item android:drawable="@drawable/fod_pureview_molecular_anim_37" android:duration="6" />
 </animation-list>

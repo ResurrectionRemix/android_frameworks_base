@@ -15,28 +15,28 @@
     limitations under the License.
 -->
 
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_1" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_2" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_3" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_4" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_5" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_6" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_7" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_8" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_9" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_10" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_11" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_12" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_13" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_14" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_15" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_16" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_17" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_18" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_19" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_20" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_21" android:duration="12" />
-    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_22" android:duration="12" />
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_1" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_2" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_3" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_4" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_5" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_6" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_7" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_8" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_9" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_10" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_11" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_12" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_13" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_14" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_15" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_16" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_17" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_18" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_19" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_20" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_21" android:duration="6" />
+    <item android:drawable="@drawable/gxzw_rhythm_recognizing_anim_22" android:duration="6" />
 </animation-list>
