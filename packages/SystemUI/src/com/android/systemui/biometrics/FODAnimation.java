@@ -73,7 +73,7 @@ public class FODAnimation extends ImageView {
         mAnimationStylesCount = mAnimationStyles.length();
         if (mAnimationStylesCount > 0) {
             mSelectedAnim = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.FOD_ANIM, 0);
+                    Settings.System.FOD_ANIM, 18);
             setBackgroundResource(mAnimationStyles.getResourceId(mSelectedAnim, -1));
         } else {
             setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_white_anim);
