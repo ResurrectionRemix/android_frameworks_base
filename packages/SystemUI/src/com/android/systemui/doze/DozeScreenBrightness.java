@@ -201,7 +201,9 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     }
 
     private void setBrightnessToValue(int value) {
-        mDozeService.setDozeScreenBrightness(clampToUserSetting(value));
+        boolean forceCustomBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_BRIGHTNESS_FORCE, 0, UserHandle.USER_CURRENT) == 1;
+        mDozeService.setDozeScreenBrightness(forceCustomBrightness ? value : clampToUserSetting(value));
     }
 
     private int getDozeBrightnessValue() {

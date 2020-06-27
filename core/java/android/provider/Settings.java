@@ -5443,8 +5443,14 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String DOZE_BRIGHTNESS_FORCE = "doze_brightness_force";
+
+        private static final Validator DOZE_BRIGHTNESS_FORCE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Status bar ticker duration in milliseconds.
-         *
          * @hide
          */
         public static final String STATUS_BAR_TICKER_TICK_DURATION =
@@ -6414,6 +6420,7 @@ public final class Settings {
             OMNI_STATUS_BAR_CUSTOM_HEADER_PROVIDER,
             OMNI_STATUS_BAR_CUSTOM_HEADER_IMAGE,
             OMNI_STATUS_BAR_FILE_HEADER_IMAGE,
+            DOZE_BRIGHTNESS_FORCE,
             QS_BACKGROUND_BLUR,
             QS_BACKGROUND_BLUR_ALPHA,
             QS_BACKGROUND_BLUR_INTENSITY,
@@ -6671,6 +6678,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(GESTURE_NAVBAR_SHOW);
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS_FORCE);
             PRIVATE_SETTINGS.add(AUTO_BRIGHTNESS_MIN_VALUE);
             PRIVATE_SETTINGS.add(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_WIDTH);
@@ -6906,6 +6914,7 @@ public final class Settings {
             VALIDATORS.put(AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD, AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_WIDTH, NAVIGATION_HANDLE_WIDTH_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
+            VALIDATORS.put(DOZE_BRIGHTNESS_FORCE, DOZE_BRIGHTNESS_FORCE_VALIDATOR);
         }
 
         /**
