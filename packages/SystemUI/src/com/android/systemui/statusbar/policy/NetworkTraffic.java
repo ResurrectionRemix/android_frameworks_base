@@ -69,6 +69,10 @@ public class NetworkTraffic extends TextView {
     private static final int MODE_UPSTREAM_ONLY = 1;
     private static final int MODE_DOWNSTREAM_ONLY = 2;
 
+    protected static final int LOCATION_DISABLED = 0;
+    protected static final int LOCATION_STATUSBAR = 1;
+    protected static final int LOCATION_QUICK_STATUSBAR = 2;
+
     private static final int MESSAGE_TYPE_PERIODIC_REFRESH = 0;
     private static final int MESSAGE_TYPE_UPDATE_VIEW = 1;
 
@@ -76,13 +80,11 @@ public class NetworkTraffic extends TextView {
     private static final int Mega = Kilo * Kilo;
     private static final int Giga = Mega * Kilo;
 
-    protected int mLocation = 0;
+    protected int mLocation = LOCATION_DISABLED;
     private int mMode = MODE_UPSTREAM_AND_DOWNSTREAM;
     private int mSubMode = MODE_UPSTREAM_AND_DOWNSTREAM;
-    private boolean mConnectionAvailable;
     protected boolean mIsActive;
-    private long mTxBytes;
-    private long mRxBytes;
+    private boolean mTrafficActive;
     private long mLastTxBytes;
     private long mLastRxBytes;
     private long mLastUpdateTime;
@@ -155,74 +157,59 @@ public class NetworkTraffic extends TextView {
         @Override
         public void handleMessage(Message msg) {
             final long now = SystemClock.elapsedRealtime();
-            final long timeDelta = now - mLastUpdateTime; /* ms */
+            long timeDelta = now - mLastUpdateTime; /* ms */
+            long rxBytes = 0;
+            long txBytes = 0;
 
             if (msg.what == MESSAGE_TYPE_PERIODIC_REFRESH
                     && timeDelta >= mRefreshInterval * 1000 * 0.95f) {
-                // Sum tx and rx bytes from all sources of interest
-                long txBytes = 0;
-                long rxBytes = 0;
+                long[] newTotalRxTxBytes = getTotalRxTxBytes();
 
-                // Add stats
-                final long newTxBytes = TrafficStats.getTotalTxBytes();
-                final long newRxBytes = TrafficStats.getTotalRxBytes();
-
-                txBytes += newTxBytes;
-                rxBytes += newRxBytes;
-
-                // Add tether hw offload counters since these are
-                // not included in netd interface stats.
-                final TetheringStats tetheringStats = getOffloadTetheringStats();
-                txBytes += tetheringStats.txBytes;
-                rxBytes += tetheringStats.rxBytes;
-
-                if (DEBUG) {
-                    Log.d(TAG, "tether hw offload txBytes: " + tetheringStats.txBytes
-                            + " rxBytes: " + tetheringStats.rxBytes);
+                if (timeDelta < 1) {
+                    timeDelta = Long.MAX_VALUE;
                 }
 
-                final long txBytesDelta = txBytes - mLastTxBytes;
-                final long rxBytesDelta = rxBytes - mLastRxBytes;
+                final long rxBytesDelta = newTotalRxTxBytes[0] - mLastRxBytes;
+                final long txBytesDelta = newTotalRxTxBytes[1] - mLastTxBytes;
 
-                if (timeDelta > 0 && txBytesDelta >= 0 && rxBytesDelta >= 0) {
-                    mTxBytes = (long) (txBytesDelta / (timeDelta / 1000f));
-                    mRxBytes = (long) (rxBytesDelta / (timeDelta / 1000f));
-                }
-                mLastTxBytes = txBytes;
-                mLastRxBytes = rxBytes;
+                rxBytes = (long) (rxBytesDelta / (timeDelta / 1000f));
+                txBytes = (long) (txBytesDelta / (timeDelta / 1000f));
+
+                mLastRxBytes = newTotalRxTxBytes[0];
+                mLastTxBytes = newTotalRxTxBytes[1];
                 mLastUpdateTime = now;
             }
 
-            mConnectionAvailable = isConnectionAvailable();
-            final boolean enabled = mLocation != 0 && mScreenOn;
+            final boolean enabled = mLocation != LOCATION_DISABLED && mScreenOn;
             final boolean showUpstream =
                     mMode == MODE_UPSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
             final boolean showDownstream =
                     mMode == MODE_DOWNSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
-            final boolean aboveThreshold = (showUpstream && mTxBytes > mAutoHideThreshold)
-                    || (showDownstream && mRxBytes > mAutoHideThreshold);
-            mIsActive = enabled && mAttached && (!mAutoHide || (mConnectionAvailable && aboveThreshold));
+            final boolean aboveThreshold = (showUpstream && txBytes > mAutoHideThreshold)
+                    || (showDownstream && rxBytes > mAutoHideThreshold);
+            mIsActive = enabled && mAttached && (!mAutoHide || (aboveThreshold && isConnectionAvailable()));
             int submode = MODE_UPSTREAM_AND_DOWNSTREAM;
+            final boolean trafficactive = (txBytes > 0 || rxBytes > 0);
 
             clearHandlerCallbacks();
 
             if (mIsActive) {
                 CharSequence output = "";
                 if (showUpstream && showDownstream) {
-                    if (mTxBytes > mRxBytes) {
-                        output = formatOutput(mTxBytes);
+                    if (txBytes > rxBytes) {
+                        output = formatOutput(txBytes);
                         submode = MODE_UPSTREAM_ONLY;
-                    } else if (mTxBytes < mRxBytes) {
-                        output = formatOutput(mRxBytes);
+                    } else if (txBytes < rxBytes) {
+                        output = formatOutput(rxBytes);
                         submode = MODE_DOWNSTREAM_ONLY;
                     } else {
-                        output = formatOutput(mRxBytes);
+                        output = formatOutput(rxBytes);
                         submode = MODE_UPSTREAM_AND_DOWNSTREAM;
                     }
                 } else if (showDownstream) {
-                    output = formatOutput(mRxBytes);
+                    output = formatOutput(rxBytes);
                 } else if (showUpstream) {
-                    output = formatOutput(mTxBytes);
+                    output = formatOutput(txBytes);
                 }
 
                 // Update view if there's anything new to show
@@ -233,8 +220,10 @@ public class NetworkTraffic extends TextView {
 
             updateVisibility();
 
-            if (mVisible && mSubMode != submode) {
+            if (mVisible && (mSubMode != submode ||
+                    mTrafficActive != trafficactive)) {
                 mSubMode = submode;
+                mTrafficActive = trafficactive;
                 setTrafficDrawable();
             }
 
@@ -267,30 +256,30 @@ public class NetworkTraffic extends TextView {
 
             if (speed >= Giga) {
                 unit = gunit;
-                decimalFormat = new DecimalFormat("0.00");
-                formatSpeed =  decimalFormat.format(speed / (float)Giga);
+                decimalFormat = new DecimalFormat("0.##");
+                formatSpeed = decimalFormat.format(speed / (float)Giga);
             } else if (speed >= 100 * Mega) {
-                decimalFormat = new DecimalFormat("###0");
+                decimalFormat = new DecimalFormat("##0");
                 unit = munit;
-                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+                formatSpeed = decimalFormat.format(speed / (float)Mega);
             } else if (speed >= 10 * Mega) {
-                decimalFormat = new DecimalFormat("#0.0");
+                decimalFormat = new DecimalFormat("#0.#");
                 unit = munit;
-                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+                formatSpeed = decimalFormat.format(speed / (float)Mega);
             } else if (speed >= Mega) {
-                decimalFormat = new DecimalFormat("0.00");
+                decimalFormat = new DecimalFormat("0.##");
                 unit = munit;
-                formatSpeed =  decimalFormat.format(speed / (float)Mega);
+                formatSpeed = decimalFormat.format(speed / (float)Mega);
             } else if (speed >= 100 * Kilo) {
                 decimalFormat = new DecimalFormat("##0");
                 unit = kunit;
-                formatSpeed =  decimalFormat.format(speed / (float)Kilo);
+                formatSpeed = decimalFormat.format(speed / (float)Kilo);
             } else if (speed >= 10 * Kilo) {
                 decimalFormat = new DecimalFormat("#0.0");
                 unit = kunit;
-                formatSpeed =  decimalFormat.format(speed / (float)Kilo);
+                formatSpeed = decimalFormat.format(speed / (float)Kilo);
             } else {
-                decimalFormat = new DecimalFormat("0.00");
+                decimalFormat = new DecimalFormat("0.##");
                 unit = kunit;
                 formatSpeed = decimalFormat.format(speed / (float)Kilo);
             }
@@ -303,10 +292,32 @@ public class NetworkTraffic extends TextView {
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             return TextUtils.concat(spanSpeedString, "\n", spanUnitString);
         }
+
+        private long[] getTotalRxTxBytes() {
+            long[] bytes = new long[] { 0, 0 };
+
+            // Sum tx and rx bytes from all sources of interest
+            // Add stats
+            bytes[0] = TrafficStats.getTotalRxBytes();
+            bytes[1] = TrafficStats.getTotalTxBytes();
+
+            // Add tether hw offload counters since these are
+            // not included in netd interface stats.
+            final TetheringStats tetheringStats = getOffloadTetheringStats();
+            bytes[0] += tetheringStats.rxBytes;
+            bytes[1] += tetheringStats.txBytes;
+
+            if (DEBUG) {
+                Log.d(TAG, "tether hw offload txBytes: " + tetheringStats.txBytes
+                        + " rxBytes: " + tetheringStats.rxBytes);
+            }
+
+            return bytes;
+        }
     };
 
     protected void updateVisibility() {
-        boolean enabled = mIsActive && (mLocation == 2) && mScreenOn && getText() != "";
+        boolean enabled = mIsActive && (mLocation == LOCATION_QUICK_STATUSBAR) && mScreenOn && getText() != "";
         if (enabled != mVisible) {
             mVisible = enabled;
             setVisibility(mVisible ? VISIBLE : GONE);
@@ -428,8 +439,9 @@ public class NetworkTraffic extends TextView {
                 LineageSettings.Secure.NETWORK_TRAFFIC_MODE, 0, UserHandle.USER_CURRENT);
         mAutoHide = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE, 0, UserHandle.USER_CURRENT) != 0;
-        mAutoHideThreshold = LineageSettings.Secure.getIntForUser(resolver,
+        int autohidethreshold = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0, UserHandle.USER_CURRENT);
+        mAutoHideThreshold = autohidethreshold * Kilo; /* Convert kB to Bytes */
         mUnits = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_UNITS, /* Bytes */ 1,
                 UserHandle.USER_CURRENT);
@@ -455,7 +467,7 @@ public class NetworkTraffic extends TextView {
     }
 
     protected void updateViews() {
-        if (mLocation == 2 && mScreenOn) {
+        if (mLocation == LOCATION_QUICK_STATUSBAR && mScreenOn) {
             updateViewState();
         } else {
             clearHandlerCallbacks();
@@ -475,25 +487,22 @@ public class NetworkTraffic extends TextView {
 
     protected void setTrafficDrawable() {
         final int drawableResId;
-        final Resources resources = getResources();
         final Drawable drawable;
 
-        if (!mHideArrows && mMode == MODE_UPSTREAM_AND_DOWNSTREAM) {
-            if (mSubMode == MODE_DOWNSTREAM_ONLY) {
-                drawableResId = R.drawable.stat_sys_network_traffic_down;
-            } else if (mSubMode == MODE_UPSTREAM_ONLY) {
-                drawableResId = R.drawable.stat_sys_network_traffic_up;
-            } else {
-                drawableResId = R.drawable.stat_sys_network_traffic_updown;
-            }
-        } else if (!mHideArrows && mMode == MODE_UPSTREAM_ONLY) {
+        if (mHideArrows) {
+            drawableResId = 0;
+        } else if (!mTrafficActive) {
+            drawableResId = R.drawable.stat_sys_network_traffic;
+        } else if (mMode == MODE_UPSTREAM_ONLY || mSubMode == MODE_UPSTREAM_ONLY) {
             drawableResId = R.drawable.stat_sys_network_traffic_up;
-        } else if (!mHideArrows && mMode == MODE_DOWNSTREAM_ONLY) {
+        } else if (mMode == MODE_DOWNSTREAM_ONLY || mSubMode == MODE_DOWNSTREAM_ONLY) {
             drawableResId = R.drawable.stat_sys_network_traffic_down;
+        } else if (mMode == MODE_UPSTREAM_AND_DOWNSTREAM) {
+            drawableResId = R.drawable.stat_sys_network_traffic_updown;
         } else {
             drawableResId = 0;
         }
-        drawable = drawableResId != 0 ? resources.getDrawable(drawableResId) : null;
+        drawable = drawableResId != 0 ? getResources().getDrawable(drawableResId) : null;
         if (mDrawable != drawable || mIconTint != newTint) {
             mDrawable = drawable;
             mIconTint = newTint;
