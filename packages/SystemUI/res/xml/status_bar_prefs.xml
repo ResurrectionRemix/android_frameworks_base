@@ -128,4 +128,10 @@
         android:key="camera"
         android:icon="@drawable/tuner_camera"
         android:title="@string/status_bar_camera" />
+
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="vowifi"
+        android:title="@string/status_bar_vowifi"
+        android:icon="@drawable/tuner_vowifi"
+        sysui:defValue="true" />
 </PreferenceScreen>
