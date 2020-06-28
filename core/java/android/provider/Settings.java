@@ -4818,6 +4818,13 @@ public final class Settings {
         /** @hide */
         private static final Validator STATUSBAR_BATTERY_BAR_VALIDATOR = BOOLEAN_VALIDATOR;
 
+
+        /**
+         * Custom Ambient raise gesture
+         * @hide
+         */
+        public static final String CUSTOM_AMBIENT_RAISE_GESTURE = "custom_ambient_raise_gesture";
+
         /**
          * Location of the battery bar
          * @hide
