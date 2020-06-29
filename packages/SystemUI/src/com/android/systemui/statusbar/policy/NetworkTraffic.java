@@ -275,7 +275,7 @@ public class NetworkTraffic extends TextView {
                 unit = kunit;
                 formatSpeed = decimalFormat.format(speed / (float)Kilo);
             } else if (speed >= 10 * Kilo) {
-                decimalFormat = new DecimalFormat("#0.0");
+                decimalFormat = new DecimalFormat("#0.#");
                 unit = kunit;
                 formatSpeed = decimalFormat.format(speed / (float)Kilo);
             } else {
