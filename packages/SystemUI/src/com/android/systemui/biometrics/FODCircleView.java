@@ -311,7 +311,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         mParams.setTitle(res.getString(R.string.fod_view_title));
         mParams.packageName = "android";
-        mParams.type = WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY;
+        mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_FINGERPRINT;
         mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND |
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
@@ -439,7 +439,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
             mParamsPressed.setTitle(res.getString(R.string.fod_view_pressed_title));
             mParamsPressed.packageName = "android";
-            mParamsPressed.type = WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY;
+            mParamsPressed.type = WindowManager.LayoutParams.TYPE_SYSTEM_FINGERPRINT_HIGH_LIGHT;
             mParamsPressed.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
 	            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
             mParamsPressed.gravity = Gravity.TOP | Gravity.LEFT;
