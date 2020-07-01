@@ -447,7 +447,9 @@ public class MobileSignalController extends SignalController<
 
     private int getVolteResId() {
         int resId = 0;
-
+        if (mVowifiIcon && isVowifiAvailable()) {
+            return resId;
+        }
         if ( mCurrentState.isVolteRegistered && mVoLTEicon ) {
             resId = R.drawable.volte;
         }
