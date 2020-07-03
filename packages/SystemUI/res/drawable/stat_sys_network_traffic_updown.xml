@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2019-2020 crDroid Android Project
 
@@ -13,25 +14,20 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="2dp"
-    android:insetRight="2dp"
-    android:insetTop="6dp"
-    android:insetBottom="6dp">
-<vector
-    android:width="5dp"
-    android:height="17.0dp"
-    android:viewportWidth="7.1"
-    android:viewportHeight="24.0">
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="14dp"
+    android:height="18dp"
+    android:viewportWidth="14"
+    android:viewportHeight="18">
 
     <path
         android:name="down"
         android:fillColor="#FFFFFFFF"
-        android:pathData="M3.6000004,13.2l-3.6,0.0 3.6,7.3 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 3.5,-7.3z"/>
+        android:pathData="M9,16l3-3h-2V8H8v5H6L9,16z" />
 
     <path
         android:name="up"
         android:fillColor="#FFFFFFFF"
-        android:pathData="M3.6000004,10.8l3.5,0.0 -3.5,-7.3 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 -3.6,7.3z"/>
+        android:pathData="M5,2L2,5h2v5h2V5h2L5,2z" />
+
 </vector>
-</inset>
