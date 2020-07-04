@@ -104,7 +104,6 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
                 mSystemIconVisible = false;
                 break;
         }
-        updateVisibility();
     }
 
     @Override

@@ -478,7 +478,6 @@ public class NetworkTraffic extends TextView {
         String txtFont = getResources().getString(com.android.internal.R.string.config_bodyFontFamily);
         setTypeface(Typeface.create(txtFont, Typeface.BOLD));
         setLineSpacing(0.80f, 0.80f);
-        setStaticHeight(true);
 
         setTrafficDrawable();
         updateViews();
