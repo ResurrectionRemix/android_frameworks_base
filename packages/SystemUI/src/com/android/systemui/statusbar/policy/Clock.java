@@ -33,8 +33,12 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.service.dreams.DreamService;
+import android.service.dreams.IDreamManager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.format.DateFormat;
@@ -101,6 +105,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private Locale mLocale;
     private boolean mScreenOn = true;
     private Handler autoHideHandler = new Handler();
+    private IDreamManager mDreamManager;
 
     public static final int AM_PM_STYLE_GONE    = 0;
     public static final int AM_PM_STYLE_SMALL   = 1;
@@ -245,6 +250,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             }
             mCurrentUserTracker.startTracking();
             mCurrentUserId = mCurrentUserTracker.getCurrentUserId();
+
+            mDreamManager = IDreamManager.Stub.asInterface(
+                    ServiceManager.checkService(DreamService.DREAM_SERVICE));
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -304,7 +312,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     }
                 });
             } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                mScreenOn = true;
+                if (!isDozeMode()) {
+                    mScreenOn = true;
+                }
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
             }
@@ -314,6 +324,17 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             }
         }
     };
+
+    private boolean isDozeMode() {
+        try {
+            if (mDreamManager != null && mDreamManager.isDozing()) {
+                return true;
+            }
+        } catch (RemoteException e) {
+            return false;
+        }
+        return false;
+    }
 
     @Override
     public void setVisibility(int visibility) {
