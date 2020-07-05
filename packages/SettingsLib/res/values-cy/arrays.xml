@@ -123,11 +123,13 @@
         <item>Defnyddio Dewis y System (Rhagosodiad)</item>
         <item>Mono</item>
         <item>Stereo</item>
+    <item>Dual Channel</item>
     </string-array>
     <string-array name="bluetooth_a2dp_codec_channel_mode_summaries">
         <item>Defnyddio Dewis y System (Rhagosodiad)</item>
         <item>Mono</item>
         <item>Stereo</item>
+    <item>Dual Channel</item>
     </string-array>
     <string-array name="bluetooth_a2dp_codec_ldac_playback_quality_titles">
         <item>Wedi\'i optimeiddio er mwyn Ansawdd Sain (990kbps/909kbps)</item>

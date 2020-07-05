@@ -125,11 +125,13 @@
     <item msgid="3014194562841654656">"सिस्टम से चुने जाने का उपयोग करें (डिफ़ॉल्ट)"</item>
     <item msgid="5982952342181788248">"मोनो"</item>
     <item msgid="927546067692441494">"स्टीरियो"</item>
+    <item>Dual Channel</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_channel_mode_summaries">
     <item msgid="1997302811102880485">"सिस्टम चुनाव का उपयोग करें (डिफ़ॉल्ट)"</item>
     <item msgid="8005696114958453588">"मोनो"</item>
     <item msgid="1333279807604675720">"स्टीरियो"</item>
+    <item>Dual Channel</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_ldac_playback_quality_titles">
     <item msgid="1241278021345116816">"ऑडियो की गुणवत्ता के लिए अनुकूलित किया गया (990kbps/909kbps)"</item>

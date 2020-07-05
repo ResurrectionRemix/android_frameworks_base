@@ -125,11 +125,13 @@
     <item msgid="3014194562841654656">"စနစ်ရွေးချယ်မှုကို အသုံးပြုပါ (မူရင်း)"</item>
     <item msgid="5982952342181788248">"မိုနို"</item>
     <item msgid="927546067692441494">"စတီရီယို"</item>
+    <item>Dual Channel</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_channel_mode_summaries">
     <item msgid="1997302811102880485">"စနစ်ရွေးချယ်မှုကို အသုံးပြုပါ (မူရင်း)"</item>
     <item msgid="8005696114958453588">"မိုနို"</item>
     <item msgid="1333279807604675720">"စတီရီယို"</item>
+    <item>Dual Channel</item>
   </string-array>
   <string-array name="bluetooth_a2dp_codec_ldac_playback_quality_titles">
     <item msgid="1241278021345116816">"အသံအရည်အသွေးကို ပိုကောင်းအောင် ပြုလုပ်ထားသည် (၉၉၀kbps/၉၀၉kbps)"</item>
