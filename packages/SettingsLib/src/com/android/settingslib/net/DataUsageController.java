@@ -116,12 +116,6 @@ public class DataUsageController {
         return getDataUsageInfo(template);
     }
 
-    public DataUsageInfo getDailyDataUsageInfo() {
-        NetworkTemplate template = DataUsageUtils.getMobileTemplate(mContext, mSubscriptionId);
-
-        return getDailyDataUsageInfo(template);
-    }
-
     public DataUsageInfo getWifiDataUsageInfo() {
         NetworkTemplate template = NetworkTemplate.buildTemplateWifiWildcard();
         return getDataUsageInfo(template);
@@ -141,34 +135,6 @@ public class DataUsageController {
             end = now;
             start = now - DateUtils.WEEK_IN_MILLIS * 4;
         }
-        final long totalBytes = getUsageLevel(template, start, end);
-        if (totalBytes < 0L) {
-            return warn("no entry data");
-        }
-        final DataUsageInfo usage = new DataUsageInfo();
-        usage.startDate = start;
-        usage.usageLevel = totalBytes;
-        usage.period = formatDateRange(start, end);
-        usage.cycleStart = start;
-        usage.cycleEnd = end;
-
-        if (policy != null) {
-            usage.limitLevel = policy.limitBytes > 0 ? policy.limitBytes : 0;
-            usage.warningLevel = policy.warningBytes > 0 ? policy.warningBytes : 0;
-        } else {
-            usage.warningLevel = getDefaultWarningLevel();
-        }
-        if (usage != null && mNetworkController != null) {
-            usage.carrier = mNetworkController.getMobileDataNetworkName();
-        }
-        return usage;
-    }
-
-    public DataUsageInfo getDailyDataUsageInfo(NetworkTemplate template) {
-        final NetworkPolicy policy = findNetworkPolicy(template);
-        final long end = System.currentTimeMillis();
-        long start = end - DataUsageUtils.getTodayMillis();
-
         final long totalBytes = getUsageLevel(template, start, end);
         if (totalBytes < 0L) {
             return warn("no entry data");
