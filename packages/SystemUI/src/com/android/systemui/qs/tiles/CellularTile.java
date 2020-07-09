@@ -366,6 +366,8 @@ public class CellularTile extends QSTileImpl<SignalState> {
             final DataUsageDetailView v = (DataUsageDetailView) (convertView != null
                     ? convertView
                     : LayoutInflater.from(mContext).inflate(R.layout.data_usage, parent, false));
+            boolean showDailyDataUsage = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.DATA_USAGE_PERIOD, 1) == 0;
             final DataUsageController.DataUsageInfo info = mDataController.getDataUsageInfo(
                     DataUsageUtils.getMobileTemplate(mContext,
                             SubscriptionManager.getDefaultDataSubscriptionId()));
@@ -377,7 +379,9 @@ public class CellularTile extends QSTileImpl<SignalState> {
             if (defaultSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
                 info_dialy = mDataController.getDailyDataUsageInfo();
             } else {
-                info_dialy = mDataController.getDailyDataUsageInfo(
+                info_dialy = showDailyDataUsage ? mDataController.getDailyDataUsageInfo(
+                        DataUsageUtils.getMobileTemplate(mContext, defaultSubId))
+                        : mDataController.getDataUsageInfo(
                         DataUsageUtils.getMobileTemplate(mContext, defaultSubId));
             }
             if (info == null) return v;

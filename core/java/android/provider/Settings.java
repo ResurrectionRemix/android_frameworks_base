@@ -16433,6 +16433,15 @@ public final class Settings {
         /** @hide */
         public static final Validator SCREEN_STATE_ON_DELAY_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 30);
+
+        /**
+         * Data usage period
+         * 0: Daily
+         * 1: Monthly
+         * @hide
+         */
+        public static final String DATA_USAGE_PERIOD = "data_usage_period";
+
         /**
          * Whether to display rotation button on navigation bar
          * @hide
