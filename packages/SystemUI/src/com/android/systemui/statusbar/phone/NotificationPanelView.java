@@ -3466,7 +3466,7 @@ public class NotificationPanelView extends PanelView implements
                 }
             }
             if (mPulsing) {
-                if (activeNotif && pulseReasonNotification) {
+                if ((activeNotif && pulseReasonNotification) || pulseForAll) {
                     if (mPulseLights) {
                         mPulseLightsView.animateNotificationWithColor(pulseColor);
                         mPulseLightsView.setPulsing(pulsing);
@@ -3474,12 +3474,9 @@ public class NotificationPanelView extends PanelView implements
                      } else {
                         // bars can still be visible as leftover
                         // but we dont want them here
+                        mPulseLightsView.endAnimation();
                         mPulseLightsView.setVisibility(View.GONE);
-                        mPulseLightsView.stopAnimateNotification();
                     }
-                } else if (pulseForAll) {
-                    mPulseLightsView.animateNotification();
-                    mPulseLightsView.setVisibility(View.VISIBLE);
                 }
             }  else {
                stopNotificationPulse();
@@ -3492,7 +3489,8 @@ public class NotificationPanelView extends PanelView implements
 
     public void stopNotificationPulse() {
         try {
-             mPulseLightsView.stopAnimateNotification();
+             mPulseLightsView.endAnimation();
+             mPulseLightsView.setVisibility(View.GONE);
          } catch (Exception e) {
          }
     }
