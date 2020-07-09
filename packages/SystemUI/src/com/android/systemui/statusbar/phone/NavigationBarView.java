@@ -1299,10 +1299,10 @@ public class NavigationBarView extends FrameLayout implements
     }
 
     private boolean gestureNavbarHidden() {
-        boolean isGestureNavbar = (Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
-                || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back")
-                || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_extra_wide_back")
-                || Utils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_narrow_back"));
+        boolean isGestureNavbar = (RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
+                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back")
+                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_extra_wide_back")
+                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_narrow_back"));
         boolean isNavbarHidden = Settings.System.getInt(getContext().getContentResolver(),
                     Settings.System.NAVIGATION_HANDLE_WIDTH, 1) == 0;
         return isGestureNavbar && isNavbarHidden;
