@@ -6078,6 +6078,14 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
+        /**
+         * Data usage period
+         * 0: Daily
+         * 1: Monthly
+         * @hide
+         */
+        public static final String DATA_USAGE_PERIOD = "data_usage_period";
+
         /** @hide */
         private static final Validator QS_DATAUSAGE_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
@@ -16433,14 +16441,6 @@ public final class Settings {
         /** @hide */
         public static final Validator SCREEN_STATE_ON_DELAY_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 30);
-
-        /**
-         * Data usage period
-         * 0: Daily
-         * 1: Monthly
-         * @hide
-         */
-        public static final String DATA_USAGE_PERIOD = "data_usage_period";
 
         /**
          * Whether to display rotation button on navigation bar

@@ -219,7 +219,8 @@
     <!-- Name of the roaming status bar icon. -->
     <string name="status_bar_roaming">Roaming</string>
 
-    <!-- Daily data usage -->
+    <!-- Data usage -->
     <string name="daily_data_usage_title">Today\'s usage</string>
+    <string name="monthly_data_usage_title">This month usage</string>
 
 </resources>

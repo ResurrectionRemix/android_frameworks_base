@@ -36,6 +36,8 @@ import com.android.systemui.qs.DataUsageGraph;
 
 import java.text.DecimalFormat;
 
+import android.provider.Settings;
+
 /**
  * Layout for the data usage detail in quick settings.
  */
@@ -71,6 +73,8 @@ public class DataUsageDetailView extends LinearLayout {
         final String top;
         String bottom = null;
         final long dailyBytes = info_daily.usageLevel;
+        boolean showDailyDataUsage = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.DATA_USAGE_PERIOD, 1) == 0;
         if (info.usageLevel < info.warningLevel || info.limitLevel <= 0) {
             // under warning, or no limit
             titleId = R.string.quick_settings_cellular_detail_data_usage;
@@ -123,7 +127,11 @@ public class DataUsageDetailView extends LinearLayout {
             infoTop.setVisibility(View.GONE);
         }
         final TextView daily_usage_title = findViewById(R.id.daily_usage_title);
-        daily_usage_title.setText(R.string.daily_data_usage_title);
+        if (showDailyDataUsage) {
+            daily_usage_title.setText(R.string.daily_data_usage_title);
+        } else {
+            daily_usage_title.setText(R.string.monthly_data_usage_title);
+        }
         final TextView daily_usage = findViewById(R.id.daily_usage_text);
         daily_usage.setText(formatDataUsage(dailyBytes));
         daily_usage.setTextColor(usageColorState);
