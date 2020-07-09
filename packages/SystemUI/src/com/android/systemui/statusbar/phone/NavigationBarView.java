@@ -1086,7 +1086,7 @@ public class NavigationBarView extends FrameLayout implements
                     : getResources().getDimensionPixelSize(
                             com.android.internal.R.dimen.navigation_bar_height);
             int finalHeight = mShowGestureNavbar ? height : 0;
-            int frameHeight = showIMESpace() || !gestureNavbarHidden() ? getResources().getDimensionPixelSize(
+            int frameHeight = showIMESpace() ? getResources().getDimensionPixelSize(
                     com.android.internal.R.dimen.navigation_bar_frame_height) : 0;
             mBarTransitions.setBackgroundFrame(new Rect(0, frameHeight - finalHeight, w, h));
         }
@@ -1296,15 +1296,5 @@ public class NavigationBarView extends FrameLayout implements
     private boolean showIMESpace() {
         return Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.NAVIGATION_BAR_IME_SPACE, 1, UserHandle.USER_CURRENT) != 0;
-    }
-
-    private boolean gestureNavbarHidden() {
-        boolean isGestureNavbar = (RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
-                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back")
-                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_extra_wide_back")
-                || RRUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_narrow_back"));
-        boolean isNavbarHidden = Settings.System.getInt(getContext().getContentResolver(),
-                    Settings.System.NAVIGATION_HANDLE_WIDTH, 1) == 0;
-        return isGestureNavbar && isNavbarHidden;
     }
 }
