@@ -1794,7 +1794,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                     && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
                     && (!mKeyguardGoingAway || !mDeviceInteractive) && mIsPrimaryUser;
         } else {
-           return (mKeyguardIsVisible || !mDeviceInteractive ||
+            return (mKeyguardIsVisible || !mDeviceInteractive ||
                     (mBouncer && !mKeyguardGoingAway) || mGoingToSleep ||
                     shouldListenForFingerprintAssistant() || (mKeyguardOccluded && mIsDreaming))
                     && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
@@ -1806,7 +1806,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
      * If face auth is allows to scan on this exact moment.
      */
     public boolean shouldListenForFace() {
-        if (isFaceAuthOnlyOnSecurityView() && mKeyguardReset){
+        if (mFaceAuthOnSecurityView && mKeyguardReset) {
             mKeyguardReset = false;
             return false;
         }
@@ -2323,7 +2323,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         if (DEBUG) Log.d(TAG, "handleKeyguardReset");
         updateBiometricListeningState();
         mNeedsSlowUnlockTransition = resolveNeedsSlowUnlockTransition();
-        if (isFaceAuthOnlyOnSecurityView()){
+        if (mFaceAuthOnSecurityView) {
             mKeyguardReset = true;
         }
     }
