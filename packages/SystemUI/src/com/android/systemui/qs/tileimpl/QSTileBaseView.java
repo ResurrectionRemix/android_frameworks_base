@@ -19,6 +19,7 @@ import android.annotation.ColorInt;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -164,8 +165,19 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         float hsl[] = new float[3];
         hsl[0] = r.nextInt(360);
         hsl[1] = r.nextFloat();
-        hsl[2] = r.nextFloat() * 0.6f;
+        hsl[2] = (isThemeDark(mContext) ? 0.575f : 0.3f) + (r.nextFloat() * 0.125f);
         return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
+    }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
     }
 
     public View getBgCircle() {
