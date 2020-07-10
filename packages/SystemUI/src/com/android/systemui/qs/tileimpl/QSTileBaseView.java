@@ -80,6 +80,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private int mCircleColor;
     private int mBgSize;
     private int useQSAccentTint;
+    private boolean mTintInactive;
 
     public QSTileBaseView(Context context, QSIconView icon) {
         this(context, icon, false);
@@ -137,6 +138,8 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
         useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
+        mTintInactive = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_ACCENT_TINT_INACTIVE, 0, UserHandle.USER_CURRENT) == 1;
         setActiveColor(context);
         final float[] hsl = {0f, 1f, 0.5f};
         mColorDisabled = Utils.getDisabled(context,
@@ -311,8 +314,17 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             case Tile.STATE_ACTIVE:
                 return mColorActive;
             case Tile.STATE_INACTIVE:
+                 if (mTintInactive) {
+                     setActiveColor(mContext);
+                     return mColorActive;
+                 }
             case Tile.STATE_UNAVAILABLE:
-                return mColorDisabled;
+                 if (mTintInactive) {
+                     setActiveColor(mContext);
+                     return mColorActive;
+                 } else {
+                     return mColorDisabled;
+                 }
             default:
                 Log.e(TAG, "Invalid state " + state);
                 return 0;

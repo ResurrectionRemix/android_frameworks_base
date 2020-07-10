@@ -6096,6 +6096,16 @@ public final class Settings {
          */
         public static final String QS_LABEL_USE_NEW_TINT = "qs_label_use_new_tint";
 
+       /**
+         * @hide
+         */
+        public static final String QS_LABEL_INACTIVE_TINT = "qs_label_inactive_tint";
+
+       /**
+         * @hide
+         */
+        public static final String QS_TILE_ACCENT_TINT_INACTIVE = "qs_tile_accent_tint_inactive";
+
         /**
          * Data usage period
          * 0: Daily

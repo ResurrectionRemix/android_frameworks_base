@@ -53,6 +53,7 @@ public class QSTileView extends QSTileBaseView {
     private ColorStateList mColorLabelActive;
     private ColorStateList mColorLabelUnavailable;
     private int setQsUseNewTint;
+    private boolean setinActivetTint;
 
     public QSTileView(Context context, QSIconView icon) {
         this(context, icon, false);
@@ -138,7 +139,15 @@ public class QSTileView extends QSTileBaseView {
                    mSecondLine.setTextColor(mColorLabelActive);
                }
             } else if (state.state == Tile.STATE_INACTIVE) {
-                mSecondLine.setTextColor(mColorLabelDefault);
+                   if (setinActivetTint) {
+                       if (setQsUseNewTint == 0) {
+                           mSecondLine.setTextColor(mColorLabelDefault);
+                       } else if (setQsUseNewTint == 1) {
+                           mSecondLine.setTextColor(mColorLabelActive);
+                       } else if (setQsUseNewTint == 2) {
+                          mSecondLine.setTextColor(randomColor());
+                       }
+                 } 
             }
 
             mSecondLine.setText(state.secondaryLabel);
@@ -155,8 +164,21 @@ public class QSTileView extends QSTileBaseView {
                 mExpandIndicator.setImageTintList(mColorLabelActive);
             }
         } else if (state.state == Tile.STATE_INACTIVE) {
-            mLabel.setTextColor(mColorLabelDefault);
-            mExpandIndicator.setImageTintList(mColorLabelDefault);
+            if (setinActivetTint) {
+                 if (setQsUseNewTint == 0) {
+                    mLabel.setTextColor(mColorLabelDefault);
+                    mExpandIndicator.setImageTintList(mColorLabelDefault);
+                 } else if (setQsUseNewTint == 1) {
+                     mLabel.setTextColor(mColorLabelActive);
+                     mExpandIndicator.setImageTintList(mColorLabelActive);
+                 } else if (setQsUseNewTint == 2) {
+                     mLabel.setTextColor(randomColor());
+                     mExpandIndicator.setImageTintList(ColorStateList.valueOf(randomColor()));
+                 } 
+            } else {
+                mLabel.setTextColor(mColorLabelDefault);
+                mExpandIndicator.setImageTintList(mColorLabelDefault);
+            }
         }
         boolean dualTarget = DUAL_TARGET_ALLOWED && state.dualTarget;
         mExpandIndicator.setVisibility(View.GONE);
@@ -200,6 +222,8 @@ public class QSTileView extends QSTileBaseView {
     private void updateTints() {
         setQsUseNewTint = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_LABEL_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
+        setinActivetTint = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_LABEL_INACTIVE_TINT, 0, UserHandle.USER_CURRENT) == 1;
         mColorLabelDefault = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary);
         if (setQsUseNewTint == 0) {
             mColorLabelActive = mColorLabelDefault;
