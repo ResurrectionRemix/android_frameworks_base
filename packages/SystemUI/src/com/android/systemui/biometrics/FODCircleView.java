@@ -224,7 +224,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             super.onPulsing(pulsing);
             mIsPulsing = pulsing;
 	        if (mIsPulsing) {
-               mIsDreaming = false;
+                mIsDreaming = false;
 	        }
         } 
 
@@ -705,7 +705,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         setVisibility(View.VISIBLE);
         animate().withStartAction(() -> mFading = true)
-                .alpha(mIsDreaming ? 0.75f : 1.0f)
+                .alpha(mIsDreaming || mIsPulsing ? 0.75f : 1.0f)
                 .setDuration(FADE_ANIM_DURATION)
                 .withEndAction(() -> mFading = false)
                 .start();
@@ -750,7 +750,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         if (mIsCircleShowing) {
             setAlpha(1.0f);
         } else {
-            setAlpha(mIsDreaming ? 0.75f : 1.0f);
+            setAlpha(mIsDreaming || mIsPulsing ? 0.75f : 1.0f);
         }
     }
 
