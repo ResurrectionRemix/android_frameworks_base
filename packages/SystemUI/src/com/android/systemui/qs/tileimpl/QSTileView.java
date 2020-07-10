@@ -35,6 +35,7 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 
 import java.util.Objects;
+import java.util.Random;
 
 /** View that represents a standard quick settings tile. **/
 public class QSTileView extends QSTileBaseView {
@@ -51,6 +52,7 @@ public class QSTileView extends QSTileBaseView {
     private ColorStateList mColorLabelDefault;
     private ColorStateList mColorLabelActive;
     private ColorStateList mColorLabelUnavailable;
+    private int setQsUseNewTint;
 
     public QSTileView(Context context, QSIconView icon) {
         this(context, icon, false);
@@ -67,13 +69,7 @@ public class QSTileView extends QSTileBaseView {
         createLabel();
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT) == 1;
-        mColorLabelDefault = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary);
-        if (setQsUseNewTint)
-            mColorLabelActive = Utils.getColorAttr(getContext(), android.R.attr.colorAccent);
-        else
-            mColorLabelActive = mColorLabelDefault;
+        updateTints();
         // The text color for unavailable tiles is textColorSecondary, same as secondaryLabel for
         // contrast purposes
         mColorLabelUnavailable = Utils.getColorAttr(getContext(),
@@ -126,6 +122,7 @@ public class QSTileView extends QSTileBaseView {
     @Override
     protected void handleStateChanged(QSTile.State state) {
         super.handleStateChanged(state);
+        updateTints();
         if (!Objects.equals(mLabel.getText(), state.label) || mState != state.state) {
             mLabel.setTextColor(state.state == Tile.STATE_UNAVAILABLE ? mColorLabelUnavailable
                     : mColorLabelDefault);
@@ -135,7 +132,11 @@ public class QSTileView extends QSTileBaseView {
         if (!Objects.equals(mSecondLine.getText(), state.secondaryLabel)) {
 
             if (state.state == Tile.STATE_ACTIVE) {
-                mSecondLine.setTextColor(mColorLabelActive);
+               if (setQsUseNewTint == 2) {
+                   mSecondLine.setTextColor(randomColor());
+               } else {
+                   mSecondLine.setTextColor(mColorLabelActive);
+               }
             } else if (state.state == Tile.STATE_INACTIVE) {
                 mSecondLine.setTextColor(mColorLabelDefault);
             }
@@ -146,8 +147,13 @@ public class QSTileView extends QSTileBaseView {
         }
 
         if (state.state == Tile.STATE_ACTIVE) {
-            mLabel.setTextColor(mColorLabelActive);
-            mExpandIndicator.setImageTintList(mColorLabelActive);
+            if (setQsUseNewTint == 2) {
+                mLabel.setTextColor(randomColor());
+                mExpandIndicator.setImageTintList(ColorStateList.valueOf(randomColor()));
+            } else {
+                mLabel.setTextColor(mColorLabelActive);
+                mExpandIndicator.setImageTintList(mColorLabelActive);
+            }
         } else if (state.state == Tile.STATE_INACTIVE) {
             mLabel.setTextColor(mColorLabelDefault);
             mExpandIndicator.setImageTintList(mColorLabelDefault);
@@ -190,4 +196,36 @@ public class QSTileView extends QSTileBaseView {
     public void setHideLabel(boolean value) {
         mLabelContainer.setVisibility(value ? View.GONE : View.VISIBLE);
     }
+
+    private void updateTints() {
+        setQsUseNewTint = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_LABEL_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
+        mColorLabelDefault = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary);
+        if (setQsUseNewTint == 0) {
+            mColorLabelActive = mColorLabelDefault;
+        } else if (setQsUseNewTint == 1) { 
+            mColorLabelActive = Utils.getColorAttr(getContext(), android.R.attr.colorAccent);
+        } 
+    }
+
+    public int randomColor() {
+        Random r = new Random();
+        float hsl[] = new float[3];
+        hsl[0] = r.nextInt(360);
+        hsl[1] = r.nextFloat();
+        hsl[2] = (isThemeDark(getContext()) ? 0.575f : 0.3f) + (r.nextFloat() * 0.125f);
+        return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
+    }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
+    }
+
 }

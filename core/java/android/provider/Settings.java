@@ -6091,6 +6091,10 @@ public final class Settings {
          */
         public static final String QS_PANEL_BG_RGB_DURATION = "qs_panel_bg_rgb_dur";
 
+       /**
+         * @hide
+         */
+        public static final String QS_LABEL_USE_NEW_TINT = "qs_label_use_new_tint";
 
         /**
          * Data usage period
