@@ -19,6 +19,7 @@ package com.android.systemui.qs;
 import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.content.res.Configuration;
@@ -26,6 +27,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -79,6 +81,10 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mStatusBarBgTransparent;
     private static final String QS_STATUS_BAR_BG_TRANSPARENCY =              
           "system:" + Settings.System.QS_STATUS_BAR_BG_TRANSPARENCY;
+    private boolean mQsBackGroundColorRGB;
+    private ValueAnimator mDiscoAnim;
+
+    private Drawable mQsBackGround;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -103,8 +109,9 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
         mForceHideQsStatusBar = mContext.getResources().getBoolean(R.bool.qs_status_bar_hidden);
+        mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         updateResources();
-
+        updateSettings();
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         setMargins();
     }
@@ -156,11 +163,15 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                             .getUriFor(Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER_SHADOW), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_PANEL_BG_RGB), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateAlpha();
+            updateSettings();
         }
     }
 
@@ -168,7 +179,6 @@ public class QSContainerImpl extends FrameLayout implements
         mQsBackgroundAlpha = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
-
         if (mQsBackgroundAlpha < 255 ) {
             mIsAlpha = true;
         } else {
@@ -181,6 +191,53 @@ public class QSContainerImpl extends FrameLayout implements
 
         applyHeaderBackgroundShadow();
     }
+
+   private void updateSettings() {
+       mQsBackGroundColorRGB = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_PANEL_BG_RGB, 0) == 1;
+       setQsBackground();
+   }
+
+   private void setQsBackground() {
+       if (mQsBackGroundColorRGB) {
+           startDiscoMode();
+       } else {
+           stopDiscoMode();
+           mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+           mBackground.setBackground(mQsBackGround);
+           updateGradientbackground();
+       }
+   }
+
+   private void stopDiscoMode() {
+        if (mDiscoAnim != null)
+            mDiscoAnim.cancel();
+        mDiscoAnim = null;
+    }
+
+
+    private void startDiscoMode() {
+        final float from = 0f;
+        final float to = 360f;
+        stopDiscoMode();
+        mDiscoAnim = ValueAnimator.ofFloat(0, 1);
+        final float[] hsl = {0f, 1f, 0.5f};
+        mDiscoAnim.setDuration(5000);
+        mDiscoAnim.setRepeatCount(ValueAnimator.INFINITE);
+        mDiscoAnim.setRepeatMode(ValueAnimator.RESTART);
+        mDiscoAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                hsl[0] = from + (to - from)*animation.getAnimatedFraction();
+                mQsBackGround.setColorFilter(com.android.internal.graphics.ColorUtils.HSLToColor(hsl), PorterDuff.Mode.SRC_ATOP);
+                if (mQsBackGround != null && mBackground != null) {
+                    mBackground.setBackground(mQsBackGround);
+                }
+            }
+        });
+        mDiscoAnim.start();
+    }
+
 
     @Override
     public boolean performClick() {
@@ -269,11 +326,7 @@ public class QSContainerImpl extends FrameLayout implements
         mlp.setMargins(0, gradientTopMargin, 0, 0);
         mBackgroundGradient.setLayoutParams(mlp);
 
-        if (mHeaderImageEnabled || mStatusBarBgTransparent) {
-            mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            mStatusBarBackground.setBackgroundColor(Color.BLACK);
-        }
+        updateGradientbackground();
     }
 
     /**
@@ -424,6 +477,14 @@ public class QSContainerImpl extends FrameLayout implements
         mStatusBarBackground.setVisibility(shouldHideStatusbar ? View.INVISIBLE : View.VISIBLE);
 
         updateAlpha();
+    }
+
+    public void  updateGradientbackground() {
+        if (mHeaderImageEnabled || mStatusBarBgTransparent) {
+            mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            mStatusBarBackground.setBackgroundColor(Color.BLACK);
+        }
     }
 
     @Override

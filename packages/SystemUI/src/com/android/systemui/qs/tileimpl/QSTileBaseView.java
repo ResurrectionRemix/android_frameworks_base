@@ -51,6 +51,7 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
+import java.util.Random;
 
 import android.provider.Settings;
 
@@ -77,6 +78,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private final int mColorDisabled;
     private int mCircleColor;
     private int mBgSize;
+    private int useQSAccentTint;
 
     public QSTileBaseView(Context context, QSIconView icon) {
         this(context, icon, false);
@@ -131,13 +133,11 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         setBackground(mTileBackground);
 
-        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
         mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
-        boolean useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT) == 1;
-        if (useQSAccentTint) {
-            mColorActive = mColorActiveAlpha;
-        }
+        useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
+        setActiveColor(context);
+        final float[] hsl = {0f, 1f, 0.5f};
         mColorDisabled = Utils.getDisabled(context,
                 Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
@@ -147,6 +147,25 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setClipToPadding(false);
         mCollapsedView = collapsedView;
         setFocusable(true);
+    }
+
+    private void setActiveColor(Context context) {
+        if (useQSAccentTint == 0) {
+            mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+        } else if (useQSAccentTint == 1) {
+            mColorActive = mColorActiveAlpha;
+        } else if (useQSAccentTint == 2) {
+            mColorActive = randomColor();
+        }
+    }
+
+    public int randomColor() {
+        Random r = new Random();
+        float hsl[] = new float[3];
+        hsl[0] = r.nextInt(360);
+        hsl[1] = r.nextFloat();
+        hsl[2] = r.nextFloat() * 0.6f;
+        return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
     }
 
     public View getBgCircle() {
@@ -216,6 +235,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     public void onStateChanged(QSTile.State state) {
+        setActiveColor(mContext);
         mHandler.obtainMessage(H.STATE_CHANGED, state).sendToTarget();
     }
 

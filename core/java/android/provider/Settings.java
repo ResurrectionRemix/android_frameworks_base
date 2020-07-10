@@ -6078,6 +6078,13 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
+
+        /**
+         * Whether to RGB the QS panel or not
+         * @hide
+         */
+        public static final String QS_PANEL_BG_RGB = "qs_panel_bg_rgb";
+
         /**
          * Data usage period
          * 0: Daily
