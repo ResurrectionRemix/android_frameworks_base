@@ -20,6 +20,7 @@ package com.android.systemui.qs.tiles;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.IAudioService;
 import android.media.MediaMetadataRetriever;
 import android.media.RemoteControlClient;
 import android.media.RemoteController;
@@ -50,10 +51,12 @@ public class MusicTile extends QSTileImpl<BooleanState> {
 
     private boolean mActive = false;
     private boolean mClientIdLost = true;
+    private boolean mListening;
 
     private Metadata mMetadata = new Metadata();
     private Handler mHandler = new Handler();
     private RemoteController mRemoteController;
+    private IAudioService mAudioService = null;
 
     private int mTaps = 0;
 
@@ -72,6 +75,8 @@ public class MusicTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleSetListening(boolean listening) {
+        if (mListening == listening) return;
+        mListening = listening;
     }
 
     @Override
@@ -132,7 +137,7 @@ public class MusicTile extends QSTileImpl<BooleanState> {
         }
         if (active != mActive) {
             mActive = active;
-            refreshState();
+            refreshState();;
         }
     }
 
@@ -158,10 +163,25 @@ public class MusicTile extends QSTileImpl<BooleanState> {
         } else {
             long eventTime = SystemClock.uptimeMillis();
             KeyEvent key = new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyCode, 0);
-            MediaSessionLegacyHelper.getHelper(mContext).sendMediaButtonEvent(key, true);
-            MediaSessionLegacyHelper.getHelper(mContext).sendMediaButtonEvent(
-                KeyEvent.changeAction(key, KeyEvent.ACTION_UP), true);
+            dispatchMediaKeyWithWakeLockToAudioService(key);
+            dispatchMediaKeyWithWakeLockToAudioService(
+                KeyEvent.changeAction(key, KeyEvent.ACTION_UP));
         }
+    }
+
+    private void dispatchMediaKeyWithWakeLockToAudioService(KeyEvent event) {
+        MediaSessionLegacyHelper.getHelper(mContext).sendMediaButtonEvent(event, true);
+    }
+
+    private IAudioService getAudioService() {
+        if (mAudioService == null) {
+            mAudioService = IAudioService.Stub.asInterface(
+                    ServiceManager.checkService(Context.AUDIO_SERVICE));
+            if (mAudioService == null) {
+                if (DBG) Log.w(TAG, "Unable to find IAudioService interface.");
+            }
+        }
+        return mAudioService;
     }
 
     final Runnable checkDouble = new Runnable () {
@@ -236,4 +256,5 @@ public class MusicTile extends QSTileImpl<BooleanState> {
             trackTitle = null;
         }
     }
+
 }
