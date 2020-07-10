@@ -85,6 +85,7 @@ public class QSContainerImpl extends FrameLayout implements
     private ValueAnimator mDiscoAnim;
 
     private Drawable mQsBackGround;
+    private int mQsDiscoDuration;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -166,6 +167,9 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_BG_RGB), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_PANEL_BG_RGB_DURATION), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -195,6 +199,9 @@ public class QSContainerImpl extends FrameLayout implements
    private void updateSettings() {
        mQsBackGroundColorRGB = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_RGB, 0) == 1;
+        mQsDiscoDuration = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_PANEL_BG_RGB_DURATION, 5,
+                UserHandle.USER_CURRENT);
        setQsBackground();
    }
 
@@ -222,7 +229,7 @@ public class QSContainerImpl extends FrameLayout implements
         stopDiscoMode();
         mDiscoAnim = ValueAnimator.ofFloat(0, 1);
         final float[] hsl = {0f, 1f, 0.5f};
-        mDiscoAnim.setDuration(5000);
+        mDiscoAnim.setDuration(mQsDiscoDuration *1000);
         mDiscoAnim.setRepeatCount(ValueAnimator.INFINITE);
         mDiscoAnim.setRepeatMode(ValueAnimator.RESTART);
         mDiscoAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

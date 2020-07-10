@@ -6086,6 +6086,13 @@ public final class Settings {
         public static final String QS_PANEL_BG_RGB = "qs_panel_bg_rgb";
 
         /**
+         * RGB PANEL Duration
+         * @hide
+         */
+        public static final String QS_PANEL_BG_RGB_DURATION = "qs_panel_bg_rgb_dur";
+
+
+        /**
          * Data usage period
          * 0: Daily
          * 1: Monthly
