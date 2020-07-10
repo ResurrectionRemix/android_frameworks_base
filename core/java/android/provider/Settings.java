@@ -6080,6 +6080,13 @@ public final class Settings {
 
 
         /**
+         * Whether hide everything on aod when ambient lights are enabled
+         * @hide
+         */
+        public static final String AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_CONTENT = "ambient_notification_light_hide_aod_content";
+
+
+        /**
          * Whether to RGB the QS panel or not
          * @hide
          */

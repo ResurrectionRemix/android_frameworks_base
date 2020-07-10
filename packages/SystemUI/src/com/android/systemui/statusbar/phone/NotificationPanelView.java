@@ -3444,6 +3444,9 @@ public class NotificationPanelView extends PanelView implements
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
         boolean pulseForAll = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
+        boolean ambientLightsHideAod = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.AMBIENT_NOTIFICATION_LIGHT_HIDE_AOD_CONTENT,
+                0, UserHandle.USER_CURRENT) != 0;
 
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
@@ -3466,8 +3469,12 @@ public class NotificationPanelView extends PanelView implements
                 }
             }
             if (mPulsing) {
+                showAodContent(true);
                 if ((activeNotif && pulseReasonNotification) || pulseForAll) {
                     if (mPulseLights) {
+                        if (ambientLightsHideAod && activeNotif && pulseReasonNotification) {
+                            showAodContent(false);
+                        }
                         mPulseLightsView.animateNotificationWithColor(pulseColor);
                         mPulseLightsView.setPulsing(pulsing);
                         mPulseLightsView.setVisibility(View.VISIBLE);
@@ -3479,12 +3486,23 @@ public class NotificationPanelView extends PanelView implements
                     }
                 }
             }  else {
-               stopNotificationPulse();
+               showAodContent(true);
+               if (mDozing && mAmbientLights) {
+                   updatePulseLightState(mDozing);
+               } else {
+                   stopNotificationPulse();
+               }
             }
         }
 
         mNotificationStackScroller.setPulsing(pulsing, animatePulse);
         mKeyguardStatusView.setPulsing(pulsing);
+    }
+
+    private void showAodContent(boolean show) {
+        mKeyguardStatusView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        mKeyguardStatusBar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        mKeyguardBottomArea.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void stopNotificationPulse() {
@@ -3515,6 +3533,7 @@ public class NotificationPanelView extends PanelView implements
                    mPulseLightsView.setVisibility(View.GONE);
                    stopNotificationPulse(); 
                }
+               showAodContent(true);
            } else {
              stopNotificationPulse();
            }
