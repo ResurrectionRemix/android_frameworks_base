@@ -3469,7 +3469,10 @@ public class NotificationPanelView extends PanelView implements
                 }
             }
             if (mPulsing) {
-                showAodContent(true);
+                if (mBarState == StatusBarState.KEYGUARD
+                    || mBarState == StatusBarState.SHADE_LOCKED) {
+                    showAodContent(true);
+                }
                 if ((activeNotif && pulseReasonNotification) || pulseForAll) {
                     if (mPulseLights) {
                         if (ambientLightsHideAod && activeNotif && pulseReasonNotification) {
@@ -3486,7 +3489,10 @@ public class NotificationPanelView extends PanelView implements
                     }
                 }
             }  else {
-               showAodContent(true);
+               if (mBarState == StatusBarState.KEYGUARD
+                    || mBarState == StatusBarState.SHADE_LOCKED) {
+                    showAodContent(true);
+               }
                if (mDozing && mAmbientLights) {
                    updatePulseLightState(mDozing);
                } else {
@@ -3533,7 +3539,10 @@ public class NotificationPanelView extends PanelView implements
                    mPulseLightsView.setVisibility(View.GONE);
                    stopNotificationPulse(); 
                }
-               showAodContent(true);
+               if (mBarState == StatusBarState.KEYGUARD
+                    || mBarState == StatusBarState.SHADE_LOCKED) {
+                    showAodContent(true);
+               }
            } else {
              stopNotificationPulse();
            }
