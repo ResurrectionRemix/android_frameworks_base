@@ -6078,7 +6078,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
-
         /**
          * Whether hide everything on aod when ambient lights are enabled
          * @hide
