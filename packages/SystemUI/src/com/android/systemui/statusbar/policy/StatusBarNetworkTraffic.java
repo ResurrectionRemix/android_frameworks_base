@@ -111,6 +111,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
     protected void updateViews() {
         if (isIconVisible() && mScreenOn) {
             updateViewState();
+            setVisibility(isIconVisible() ? VISIBLE : GONE);
         } else {
             clearHandlerCallbacks();
             updateVisibility();
