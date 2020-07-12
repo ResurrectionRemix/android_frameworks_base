@@ -42,8 +42,6 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.service.dreams.DreamService;
-import android.service.dreams.IDreamManager;
 import android.text.Spanned;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -108,7 +106,6 @@ public class NetworkTraffic extends TextView {
 
     protected boolean mVisible = true;
     protected boolean mScreenOn = true;
-    private IDreamManager mDreamManager;
 
     private ConnectivityManager mConnectivityManager;
 
@@ -128,8 +125,6 @@ public class NetworkTraffic extends TextView {
         mContext = context;
         mConnectivityManager =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        mDreamManager = IDreamManager.Stub.asInterface(
-                ServiceManager.checkService(DreamService.DREAM_SERVICE));
         mObserver = new SettingsObserver(mTrafficHandler);
         mObserver.observe();
         updateSettings();
@@ -337,27 +332,14 @@ public class NetworkTraffic extends TextView {
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION) && mScreenOn) {
                 updateViews();
             } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                if (!isDozeMode()) {
-                    mScreenOn = true;
-                    updateViews();
-                }
+                mScreenOn = true;
+                updateViews();
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
                 updateViews();
             }
         }
     };
-
-    private boolean isDozeMode() {
-        try {
-            if (mDreamManager != null && mDreamManager.isDozing()) {
-                return true;
-            }
-        } catch (RemoteException e) {
-            return false;
-        }
-        return false;
-    }
 
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
