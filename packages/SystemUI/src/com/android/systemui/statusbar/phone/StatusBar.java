@@ -369,38 +369,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     public static final int FADE_KEYGUARD_DURATION = 300;
     public static final int FADE_KEYGUARD_DURATION_PULSING = 96;
 
-    private static final String[] QS_TILE_THEMES = {
-        "com.android.systemui.qstile.default", // 0
-        "com.android.systemui.qstile.circletrim", // 1
-        "com.android.systemui.qstile.dualtonecircletrim", // 2
-        "com.android.systemui.qstile.squircletrim", // 3
-        "com.android.systemui.qstile.wavey", // 4
-        "com.android.systemui.qstile.pokesign", // 5
-        "com.android.systemui.qstile.ninja", // 6
-        "com.android.systemui.qstile.dottedcircle", // 7
-        "com.android.systemui.qstile.attemptmountain", // 8
-        "com.android.systemui.qstile.squaremedo", // 9
-        "com.android.systemui.qstile.inkdrop", // 10
-        "com.android.systemui.qstile.cookie", // 11
-        "com.android.systemui.qstile.circleoutline", //12
-        "com.android.systemui.qstile.neonlike", // 13
-        "com.android.systemui.qstile.oos", // 14
-        "com.android.systemui.qstile.triangles", // 15
-        "com.android.systemui.qstile.divided", // 16
-        "com.android.systemui.qstile.cosmos", // 17
-        "com.android.systemui.qstile.squircle", // 18
-        "com.android.systemui.qstile.teardrop", // 19
-        "com.android.systemui.qstile.square", // 20
-        "com.android.systemui.qstile.hexagon", // 21
-        "com.android.systemui.qstile.diamond", // 22
-        "com.android.systemui.qstile.star", // 23
-        "com.android.systemui.qstile.gear", // 24
-        "com.android.systemui.qstile.badge", // 25
-        "com.android.systemui.qstile.badgetwo", // 26
-
-
-    };
-
     /** If true, the system is in the half-boot-to-decryption-screen state.
      * Prudently disable QS and notifications.  */
     public static final boolean ONLY_CORE_APPS;
@@ -2206,7 +2174,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
             setFpToDismissNotifications();
             setPulseOnNewTracks();
-            updateQsPanelResources();
             setUseLessBoringHeadsUp();
             updateHeadsUpBlackList();
             setMaxKeyguardNotifConfig();
@@ -4143,7 +4110,9 @@ public class StatusBar extends SystemUI implements DemoMode,
      public void updateTileStyle() {
          int qsTileStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.QS_TILE_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
-        updateNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsTileStyle);
+         mUiOffloadThread.submit(() -> {
+              ThemeAccentUtils.updateNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsTileStyle);
+         });
      }
 
     /**
@@ -4204,7 +4173,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
      // Switches qs tile style back to stock.
     public void stockTileStyle() {
-        stockNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+        mUiOffloadThread.submit(() -> {
+           ThemeAccentUtils.stockNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+        });
     }
 
     private void updateDozingState() {
@@ -5242,34 +5213,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.System.STATUS_BAR_TICKER_TICK_DURATION, 3000, UserHandle.USER_CURRENT);
         if (mTicker != null) {
             mTicker.updateTickDuration(mTickerTickDuration);
-        }
-    }
-
-    // Switches qs tile style to user selected.
-    public static void updateNewTileStyle(IOverlayManager om, int userId, int qsTileStyle) {
-        if (qsTileStyle == 0) {
-            stockNewTileStyle(om, userId);
-        } else {
-            try {
-                om.setEnabled(QS_TILE_THEMES[qsTileStyle],
-                        true, userId);
-            } catch (RemoteException e) {
-                Log.w(TAG, "Can't change qs tile style", e);
-            }
-        }
-    }
-
-    // Switches qs tile style back to stock.
-    public static void stockNewTileStyle(IOverlayManager om, int userId) {
-        // skip index 0
-        for (int i = 1; i < QS_TILE_THEMES.length; i++) {
-            String qstiletheme = QS_TILE_THEMES[i];
-            try {
-                om.setEnabled(qstiletheme,
-                        false /*disable*/, userId);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
         }
     }
 

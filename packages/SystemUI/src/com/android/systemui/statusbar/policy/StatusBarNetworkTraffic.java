@@ -89,7 +89,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public void setVisibleState(int state, boolean animate) {
-        if (state == mVisibleState) {
+        if (state == mVisibleState || !isIconVisible() || !mScreenOn) {
             return;
         }
         mVisibleState = state;
@@ -104,14 +104,14 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
                 mSystemIconVisible = false;
                 break;
         }
-        updateViews();
+        updateVisibility();
     }
 
     @Override
     protected void updateViews() {
-        if (isIconVisible() && mScreenOn) {
+        if (isIconVisible()) {
             updateViewState();
-            setVisibility((isIconVisible() && mSystemIconVisible) ? VISIBLE : GONE);
+            setVisibility(VISIBLE);
             checkUpdateTrafficDrawable();
         } else {
             clearHandlerCallbacks();

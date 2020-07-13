@@ -33,7 +33,7 @@ public class StatusBarIconHolder {
     public static final int TYPE_ICON = 0;
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
-    public static final int TYPE_NETWORK_TRAFFIC = 42;
+    public static final int TYPE_NETWORK_TRAFFIC = 3;
 
     private StatusBarIcon mIcon;
     private WifiIconState mWifiState;
@@ -113,7 +113,8 @@ public class StatusBarIconHolder {
                 return mWifiState.visible;
             case TYPE_MOBILE:
                 return mMobileState.visible;
-
+            case TYPE_NETWORK_TRAFFIC:
+                return true;
             default: return true;
         }
     }

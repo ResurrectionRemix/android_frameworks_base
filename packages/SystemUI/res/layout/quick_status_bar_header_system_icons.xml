@@ -80,8 +80,6 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <include layout="@layout/ongoing_privacy_chip" />
-
     <com.android.systemui.rr.logo.LogoImageViewQuickRight
         android:id="@+id/statusbar_logo_right"
         android:layout_width="wrap_content"
@@ -90,8 +88,6 @@
         android:scaleType="center"
         android:gravity="center_vertical"
         android:visibility="gone" />
-
-    </LinearLayout>
 
     <com.android.systemui.BatteryMeterView
         android:id="@+id/batteryIcon"
@@ -103,5 +99,7 @@
         android:paddingStart="2dp"
         systemui:showDark="false"
         android:visibility="gone" />
+
+    </LinearLayout>
 
 </LinearLayout>
