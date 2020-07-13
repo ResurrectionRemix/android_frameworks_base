@@ -371,18 +371,32 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private static final String[] QS_TILE_THEMES = {
         "com.android.systemui.qstile.default", // 0
-        "com.android.systemui.qstile.square", // 1
-        "com.android.systemui.qstile.squircle", // 2
+        "com.android.systemui.qstile.circletrim", // 1
+        "com.android.systemui.qstile.dualtonecircletrim", // 2
         "com.android.systemui.qstile.squircletrim", // 3
-        "com.android.systemui.qstile.hexagon", // 4
-        "com.android.systemui.qstile.teardrop", // 5
-        "com.android.systemui.qstile.diamond", // 6
-        "com.android.systemui.qstile.star", // 7
-        "com.android.systemui.qstile.gear", // 8
-        "com.android.systemui.qstile.badge", // 9
-        "com.android.systemui.qstile.badgetwo", // 10
-        "com.android.systemui.qstile.circletrim", // 11
-        "com.android.systemui.qstile.dualtonecircletrim", // 12
+        "com.android.systemui.qstile.wavey", // 4
+        "com.android.systemui.qstile.pokesign", // 5
+        "com.android.systemui.qstile.ninja", // 6
+        "com.android.systemui.qstile.dottedcircle", // 7
+        "com.android.systemui.qstile.attemptmountain", // 8
+        "com.android.systemui.qstile.squaremedo", // 9
+        "com.android.systemui.qstile.inkdrop", // 10
+        "com.android.systemui.qstile.cookie", // 11
+        "com.android.systemui.qstile.circleoutline", //12
+        "com.android.systemui.qstile.neonlike", // 13
+        "com.android.systemui.qstile.oos", // 14
+        "com.android.systemui.qstile.triangles", // 15
+        "com.android.systemui.qstile.divided", // 16
+        "com.android.systemui.qstile.cosmos", // 17
+        "com.android.systemui.qstile.squircle", // 18
+        "com.android.systemui.qstile.teardrop", // 19
+        "com.android.systemui.qstile.square", // 20
+        "com.android.systemui.qstile.hexagon", // 21
+        "com.android.systemui.qstile.diamond", // 22
+        "com.android.systemui.qstile.star", // 23
+        "com.android.systemui.qstile.gear", // 24
+        "com.android.systemui.qstile.badge", // 25
+        "com.android.systemui.qstile.badgetwo", // 26
 
 
     };
@@ -2176,7 +2190,14 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            update();
+           if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_STYLE))) {
+                stockTileStyle();
+                updateTileStyle();
+                updateQsPanelResources();
+            } else {
+              update();
+            }
         }
 
         public void update() {
@@ -2201,8 +2222,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setAmbientVis();
             updateCorners();
             setHideArrowForBackGesture();
-            stockTileStyle();
-            updateTileStyle();
+            updateQsPanelResources();
         }
     }
 
