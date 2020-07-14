@@ -33,12 +33,11 @@ public class StatusBarIconList {
 
     public StatusBarIconList(String[] slots) {
         final int N = slots.length;
-        // Network traffic slot
-        mSlots.add(0, new Slot(StatusBarNetworkTraffic.SLOT,
-                    StatusBarIconHolder.fromNetworkTraffic()));
         for (int i=0; i < N; i++) {
             mSlots.add(new Slot(slots[i], null));
         }
+        // Network traffic slot
+        mSlots.add(0, new Slot(StatusBarNetworkTraffic.SLOT, StatusBarIconHolder.fromNetworkTraffic()));
     }
 
     public int getSlotIndex(String slot) {
@@ -51,7 +50,7 @@ public class StatusBarIconList {
         }
         // Auto insert new items behind network traffic.
         mSlots.add(1, new Slot(slot, null));
-        return 0;
+        return 1;
     }
 
     protected ArrayList<Slot> getSlots() {
