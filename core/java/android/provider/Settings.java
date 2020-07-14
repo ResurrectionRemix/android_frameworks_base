@@ -11215,6 +11215,13 @@ public final class Settings {
 
         private static final Validator SHOW_BACK_ARROW_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
 
+       /**
+         * Setting to disable black in cut-out
+         * @hide
+         */
+        public static final String SYSUI_DISPLAY_CUTOUT = "sysui_display_cutout";
+
+
         /**
          * Controls whether aware is enabled.
          * @hide
