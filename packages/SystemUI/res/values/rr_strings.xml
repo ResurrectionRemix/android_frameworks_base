@@ -203,6 +203,9 @@
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
 
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_minimal" translatable="false">OnePlus Minimal</string>
+
     <!-- Animations QS Tile -->
     <string name="quick_settings_animation_label">Disable Animations</string>
     <string name="accessibility_quick_settings_animations_on">Animations On</string>
