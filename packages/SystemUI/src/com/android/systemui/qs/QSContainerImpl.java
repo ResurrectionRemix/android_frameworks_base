@@ -208,11 +208,13 @@ public class QSContainerImpl extends FrameLayout implements
    private void setQsBackground() {
        if (mQsBackGroundColorRGB) {
            startDiscoMode();
+           updateAlpha();
        } else {
            stopDiscoMode();
            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
            mBackground.setBackground(mQsBackGround);
            updateGradientbackground();
+           updateAlpha();
        }
    }
 
