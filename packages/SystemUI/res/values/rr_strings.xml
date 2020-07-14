@@ -178,11 +178,13 @@
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
     <string name="quick_settings_poweroff_label">Power off</string>
-
     <string name="lockscreen_default">Default</string>
     <string name="lockscreen_hidden">None</string>
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
     <string name="custom_hint">Swipe from icon to launch</string>
+
+    <!-- Oneplus Numbers clock -->
+    <string name="clock_title_oneplus_numbers" translatable="false">OnePlus Numbers</string>
 
     <!-- Compass QS Tile -->
     <string name="quick_settings_compass_label">Compass</string>
