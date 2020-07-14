@@ -32,7 +32,7 @@ import java.util.TimeZone;
 /**
  * Controller for Stretch clock that can appear on lock screen and AOD.
  */
-public class OPMinimalClockController implements ClockPlugin {
+public class OPRomanClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -72,7 +72,7 @@ public class OPMinimalClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public OPMinimalClockController(Resources res, LayoutInflater inflater,
+    public OPRomanClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor) {
         mResources = res;
         mLayoutInflater = inflater;
@@ -80,7 +80,7 @@ public class OPMinimalClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mBigClockView = (ClockLayout) mLayoutInflater.inflate(R.layout.op_minimal_clock, null);
+        mBigClockView = (ClockLayout) mLayoutInflater.inflate(R.layout.op_roman_clock, null);
         mOneplusClock = mBigClockView.findViewById(R.id.analog_clock);
     }
 
@@ -92,17 +92,17 @@ public class OPMinimalClockController implements ClockPlugin {
 
     @Override
     public String getName() {
-        return "Oneplus Minimal";
+        return "Oneplus Roman";
     }
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_oneplus_minimal);
+        return mResources.getString(R.string.clock_title_oneplus_roman);
     }
 
     @Override
     public Bitmap getThumbnail() {
-        return BitmapFactory.decodeResource(mResources, R.drawable.oneplus_minimal_thumbnail);
+        return BitmapFactory.decodeResource(mResources, R.drawable.oneplus_roman_thumbnail);
     }
 
     @Override

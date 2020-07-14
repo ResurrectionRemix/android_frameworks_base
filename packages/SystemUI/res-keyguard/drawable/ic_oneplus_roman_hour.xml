@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014-2020 The BlissRoms Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector android:height="211dp"
+        android:viewportHeight="512"
+        android:viewportWidth="512"
+        android:width="211dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+	<path android:fillColor="@*android:color/accent_device_default_light"
+	      android:pathData="M252.641,247.472C253.624,246.915 254.388,246.021 254.779,244.938C254.8,244.945 254.8,244.945 254.8,244.945C255.219,243.785 255.21,242.515 254.777,241.36C254.743,241.271 254.709,241.181 254.676,241.091C254.251,239.962 253.412,239.038 252.33,238.508C251.083,237.925 250.294,237.039 250.293,236.049C250.275,224.458 250.214,185.286 250.206,180.031C250.206,179.644 250.328,179.26 250.569,178.898C251.575,177.379 254.4,173.116 255.527,171.416C255.6,171.306 255.786,171.234 255.993,171.235C256.2,171.235 256.384,171.309 256.453,171.42C257.534,173.133 260.246,177.429 261.189,178.924C261.407,179.269 261.52,179.633 261.521,180C261.537,185.131 261.657,224.416 261.693,236.041C261.696,236.898 261.096,237.719 260.027,238.325C259.704,238.508 259.347,238.667 258.964,238.799C258.402,238.995 257.957,239.431 257.748,239.988C257.588,240.388 257.406,240.873 257.23,241.342C256.793,242.508 256.784,243.792 257.208,244.963C257.208,244.964 257.208,244.964 257.208,244.964C257.581,245.999 258.297,246.86 259.217,247.418C262.741,248.726 265.255,252.12 265.255,256.098C265.255,261.206 261.108,265.353 256,265.353C250.892,265.353 246.745,261.206 246.745,256.098C246.745,252.174 249.192,248.818 252.641,247.472Z"/>
+</vector>

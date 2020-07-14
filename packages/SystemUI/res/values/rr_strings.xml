@@ -211,6 +211,9 @@
     <string name="accessibility_quick_settings_animations_on">Animations On</string>
     <string name="accessibility_quick_settings_animations_off">Animations Off</string>
 
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_roman" translatable="false">OnePlus Roman</string>
+
     <string name="tuner_show_brightness_mode">Show auto brightness icon in footer</string>
     <string name="tuner_show_brightness_side_buttons">Show brightness slider side buttons</string>
 
