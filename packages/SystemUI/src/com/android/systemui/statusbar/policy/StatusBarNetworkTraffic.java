@@ -23,11 +23,10 @@ import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.os.UserHandle;
+
 import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
-import lineageos.providers.LineageSettings;
 
 /** @hide */
 public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkReceiver,
@@ -80,8 +79,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public boolean isIconVisible() {
-        return LineageSettings.Secure.getIntForUser(getContext().getContentResolver(),
-                LineageSettings.Secure.NETWORK_TRAFFIC_LOCATION, 0, UserHandle.USER_CURRENT) == LOCATION_STATUSBAR;
+        return mLocation == LOCATION_STATUSBAR;
     }
 
     @Override
@@ -106,12 +104,12 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
                 mSystemIconVisible = false;
                 break;
         }
-         updateViews();
+        updateViews();
     }
 
     @Override
     protected void updateViews() {
-        if (isIconVisible()) {
+        if (isIconVisible() && mScreenOn) {
             updateViewState();
         } else {
             clearHandlerCallbacks();
