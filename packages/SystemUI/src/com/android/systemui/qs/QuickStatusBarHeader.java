@@ -525,7 +525,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             if (mBrightnessSlider == 3) {
                 headerPanel.addRule(RelativeLayout.BELOW, R.id.quick_qs_brightness_bar);
             }
-            mQuickQsBrightness.setVisibility(View.VISIBLE);
+            if (mQuickQsBrightness.getVisibility() == View.GONE) {
+                mQuickQsBrightness.setVisibility(View.VISIBLE);
+            }
             mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             updateIconPos();
