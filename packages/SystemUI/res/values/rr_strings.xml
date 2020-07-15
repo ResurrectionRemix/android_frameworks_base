@@ -217,6 +217,9 @@
     <string name="tuner_show_brightness_mode">Show auto brightness icon in footer</string>
     <string name="tuner_show_brightness_side_buttons">Show brightness slider side buttons</string>
 
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_analog" translatable="false">OnePlus Analog</string>
+
     <!-- Name of the vowifi status bar icon. -->
     <string name="status_bar_vowifi">VoWiFi</string>
 
