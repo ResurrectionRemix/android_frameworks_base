@@ -97,6 +97,7 @@ public abstract class BiometricDialogView extends LinearLayout {
     private final int mErrorColor;
     private final float mDialogWidth;
     protected final DialogViewCallback mCallback;
+    private final PackageManager mPackageManager;
 
     protected final ViewGroup mLayout;
     protected final LinearLayout mDialog;
@@ -177,6 +178,7 @@ public abstract class BiometricDialogView extends LinearLayout {
         mWindowManager = mContext.getSystemService(WindowManager.class);
         mUserManager = mContext.getSystemService(UserManager.class);
         mDevicePolicyManager = mContext.getSystemService(DevicePolicyManager.class);
+        mPackageManager = mContext.getPackageManager();
         mAnimationTranslationOffset = getResources()
                 .getDimension(R.dimen.biometric_dialog_animation_translation_offset);
         mErrorColor = getResources().getColor(R.color.biometric_dialog_error);
