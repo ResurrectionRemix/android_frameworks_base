@@ -222,6 +222,8 @@
 
     <!-- Name of the vowifi status bar icon. -->
     <string name="status_bar_vowifi">VoWiFi</string>
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_minimalism" translatable="false">Minimalism</string>
 
     <!-- FOD View -->
     <string name="fod_view_title" translatable="false">Fingerprint on display</string>
