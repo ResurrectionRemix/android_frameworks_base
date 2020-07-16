@@ -152,6 +152,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private boolean mIsRoundedCornerMultipleRadius;
     private boolean mCustomCutout;
     private boolean mShowTopCutout;
+    private int mRoundedSize = -1;
 
     private final SysuiStatusBarStateController mStatusBarStateController =
             (SysuiStatusBarStateController) Dependency.get(StatusBarStateController.class);
@@ -715,7 +716,9 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     }
 
     private boolean hasRoundedCorners() {
-        return true;
+        return mRoundedDefault > 0 || mRoundedDefaultBottom > 0 || mRoundedDefaultTop > 0
+                || mIsRoundedCornerMultipleRadius
+                || mRoundedSize > 0;
     }
 
     private boolean shouldDrawCutout() {
@@ -820,36 +823,28 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     int size = mRoundedDefault;
                     int sizeTop = mRoundedDefaultTop;
                     int sizeBottom = mRoundedDefaultBottom;
-                    boolean sizeSet = true;
-                    int roundedSize =
-                        TunerService.parseInteger(newValue, -1);
-                    size = (int) (roundedSize * mDensity);
 
-                    // Special case, default behavaiour (framework values)
-                    if (roundedSize == -1) {
-                        sizeSet = false; // Assume no sizes were set
+                    if (newValue != null) {
+                        // Save user defined value
+                        mRoundedSize =
+                            TunerService.parseInteger(newValue, -1);
                     }
 
-                    // Choose a sane safe size in immerse, often
-                    // defaults are too large
-                    if (!sizeSet && mImmerseMode) {
-                        size = (int) (20 * mDensity);
-                        sizeSet = true;
+                    // Calculate new size if user defined value available
+                    if (mRoundedSize >= 0) {
+                        size = (int) (mRoundedSize * mDensity);
                     }
-                    // If we set a runtime size, let's ignore the
-                    // bottom and top resources
+
                     if (size < 0) size = 0;
-                    if (sizeSet) {
+
+                    if (sizeTop == 0 || size > 0) {
                         sizeTop = size;
-                        sizeBottom = size;
-                    } else {
-                        if (sizeTop == 0) {
-                            sizeTop = size;
-                        }
-                        if (sizeBottom == 0) {
-                            sizeBottom = size;
-                        }
                     }
+
+                    if (sizeBottom == 0 || size > 0) {
+                        sizeBottom = size;
+                    }
+
                     updateWindowVisibilities();
                     setSize(mOverlay.findViewById(R.id.left), sizeTop);
                     setSize(mOverlay.findViewById(R.id.right), sizeTop);
