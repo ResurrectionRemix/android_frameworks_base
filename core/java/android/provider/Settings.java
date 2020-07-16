@@ -6181,6 +6181,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_VIBRATE = "qs_panel_vibrate";
+
+        /**
          * Whether hide everything on aod when ambient lights are enabled
          * @hide
          */

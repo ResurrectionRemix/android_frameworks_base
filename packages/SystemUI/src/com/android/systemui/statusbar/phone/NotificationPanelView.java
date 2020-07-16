@@ -44,9 +44,12 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.biometrics.BiometricSourceType;
+import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -174,6 +177,8 @@ public class NotificationPanelView extends PanelView implements
             "lineagesystem:" + LineageSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
     private static final String LOCKSCREEN_ENABLE_QS =
             "global:" + Settings.Global.LOCKSCREEN_ENABLE_QS;
+    private static final String QS_PANEL_VIBRATE = 
+            "system:" + Settings.System.QS_PANEL_VIBRATE;
 
     private static final Rect mDummyDirtyRect = new Rect(0, 0, 1, 1);
     private static final Rect mEmptyRect = new Rect();
@@ -389,6 +394,9 @@ public class NotificationPanelView extends PanelView implements
      */
     private float mLinearDarkAmount;
 
+    protected Vibrator mVibrator;
+    private boolean mVibrationEnabled;
+    private boolean mVibrated = true;
     private boolean mPulsing;
     private LockscreenGestureLogger mLockscreenGestureLogger = new LockscreenGestureLogger();
     private boolean mNoVisibleNotifications = true;
@@ -492,6 +500,7 @@ public class NotificationPanelView extends PanelView implements
             FalsingManager falsingManager) {
         super(context, attrs);
         setWillNotDraw(!DEBUG);
+        mVibrator = context.getSystemService(Vibrator.class);
         mInjectionInflationController = injectionInflationController;
         mFalsingManager = falsingManager;
         mPowerManager = context.getSystemService(PowerManager.class);
@@ -602,6 +611,7 @@ public class NotificationPanelView extends PanelView implements
         Dependency.get(TunerService.class).addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
         Dependency.get(TunerService.class).addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
         Dependency.get(TunerService.class).addTunable(this, LOCKSCREEN_ENABLE_QS);
+        Dependency.get(TunerService.class).addTunable(this, QS_PANEL_VIBRATE);
         mUpdateMonitor.registerCallback(mKeyguardUpdateCallback);
         // Theme might have changed between inflating this view and attaching it to the window, so
         // force a call to onThemeChanged
@@ -629,6 +639,8 @@ public class NotificationPanelView extends PanelView implements
                 mStatusBarShownOnSecureKeyguard =
                         TunerService.parseIntegerSwitch(newValue, true);
                 mStatusBar.updateQsExpansionEnabled();
+        } else if (QS_PANEL_VIBRATE.equals(key)) {
+                mVibrationEnabled = TunerService.parseIntegerSwitch(newValue, false);
         }
     }
 
@@ -1397,6 +1409,9 @@ public class NotificationPanelView extends PanelView implements
         }
         if (!mQsExpandImmediate && mQsTracking) {
             onQsTouch(event);
+            if (!mVibrated) {
+                vibrateQS();
+            }
             if (!mConflictingQsExpansionGesture) {
                 return true;
             }
@@ -1406,6 +1421,9 @@ public class NotificationPanelView extends PanelView implements
         }
         if (action == MotionEvent.ACTION_DOWN && isFullyCollapsed()
                 && mQsExpansionEnabled && !isQSEventBlocked()) {
+            if (!mVibrated) {
+                vibrateQS();
+            }
             mTwoFingerQsExpandPossible = true;
         }
         if (mTwoFingerQsExpandPossible && isOpenQsEvent(event)
@@ -1414,6 +1432,9 @@ public class NotificationPanelView extends PanelView implements
             mQsExpandImmediate = true;
             mNotificationStackScroller.setShouldShowShelfOnly(true);
             requestPanelHeightUpdate();
+            if (!mVibrated) {
+                vibrateQS();
+            }
 
             // Normally, we start listening when the panel is expanded, but here we need to start
             // earlier so the state is already up to date when dragging down.
@@ -2261,6 +2282,7 @@ public class NotificationPanelView extends PanelView implements
             mHeadsUpManager.setIsPanelExpanded(isExpanded);
             mStatusBar.setPanelExpanded(isExpanded);
             mPanelExpanded = isExpanded;
+            mVibrated = false;
         }
     }
 
@@ -3750,5 +3772,12 @@ public class NotificationPanelView extends PanelView implements
 
     public void setPulseAmbientLightAod(boolean enabled) {
         mAmbientLights = enabled;
+    }
+
+    public void vibrateQS() {
+        if (mVibrationEnabled && mVibrator != null && mVibrator.hasVibrator()) {
+            mVibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            mVibrated = true;
+        }
     }
 }
