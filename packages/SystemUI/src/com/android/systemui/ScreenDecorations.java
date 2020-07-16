@@ -579,6 +579,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     setAssistHintVisible(true);
                 }
             }
+            updateCutoutMode();
         }
     }
 
@@ -1442,7 +1443,8 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                 mRotation == RotationUtils.ROTATION_SEASCAPE)
             newImmerseMode = false;
         else
-            newImmerseMode = mImmerseModeSetting == 1;
+            newImmerseMode = mImmerseModeSetting != 0;
+
         if (mImmerseMode != newImmerseMode) {
             mImmerseMode = newImmerseMode;
             if (mOverlay != null) {
