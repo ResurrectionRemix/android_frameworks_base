@@ -3497,6 +3497,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             }, Math.max(390, Math.round(455f * Settings.Global.getFloat(
                     mContext.getContentResolver(),
                     Settings.Global.TRANSITION_ANIMATION_SCALE, 1.0f))));
+        }
 
         if (mImmerseMode == 1) {
             mUiOffloadThread.submit(() -> {
@@ -5669,6 +5670,13 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
+    private void setImmersiveOverlay(boolean enable) {
+        try {
+            mOverlayManager.setEnabled("com.android.overlay.immersive", enable, mLockscreenUserManager.getCurrentUserId());
+        } catch (RemoteException e) {
+        }
+    }
+
     private void setUseLessBoringHeadsUp() {
         boolean lessBoringHeadsUp = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.LESS_BORING_HEADS_UP, 0,
@@ -5761,6 +5769,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean statusBarStock = Settings.System.getIntForUser(mContext.getContentResolver(),
                         Settings.System.STOCK_STATUSBAR_IN_HIDE, 1, UserHandle.USER_CURRENT) == 1;
         setBlackStatusBar(mPortrait && immerseMode);
+        setImmersiveOverlay(immerseMode || hideCutoutMode);
         setCutoutOverlay(hideCutoutMode);
         setStatusBarStockOverlay(hideCutoutMode && statusBarStock);
     }
