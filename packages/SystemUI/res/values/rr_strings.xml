@@ -68,6 +68,12 @@
     <string name="omnijaws_package_not_available">OmniJaws not available</string>
     <string name="omnijaws_service_last_update">Last update:</string>
 
+    <string name="quick_settings_pulse">Pulse</string>
+    <string name="quick_settings_pulse_off">Pulse off</string>
+    <string name="quick_settings_pulse_on">Pulse on</string>
+    <string name="quick_settings_pulse_changed_off">Pulse turned off.</string>
+    <string name="quick_settings_pulse_changed_on">Pulse turned on.</string>
+
     <!-- Tuner -->
     <string name="preview">Preview</string>
     <string name="keycode">Keycode</string>
