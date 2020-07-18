@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LongScreenshotManagerService extends ILongScreenshotManager.Stub {
-    public static final String PACKAGENAME_LONGSHOT = "com.android.screenshot";
+    public static final String PACKAGENAME_LONGSHOT = "org.mokee.screenshot";
     public static final ComponentName TAKE_SCREENSHOT_COMPONENT = new ComponentName(PACKAGENAME_LONGSHOT, PACKAGENAME_LONGSHOT + ".TakeScreenshotService");
     private static final ComponentName COMPONENT_LONGSHOT = new ComponentName(PACKAGENAME_LONGSHOT, PACKAGENAME_LONGSHOT + ".LongshotService");
     private static final String TAG = "Longshot.ManagerService";

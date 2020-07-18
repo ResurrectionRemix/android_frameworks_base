@@ -737,6 +737,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     };
 
+    private int mScreenshotDelay;
+
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
     private static final int MSG_KEYGUARD_DRAWN_COMPLETE = 5;
@@ -1014,6 +1016,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_BUTTON_MUSIC_CONTROL), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SCREENSHOT_DELAY), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.THREE_FINGER_GESTURE), false, this,
@@ -1745,6 +1750,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         public void run() {
             boolean dockMinimized = mWindowManagerInternal.isMinimizedDock();
             if (!mPocketLockShowing) {
+                 try {
+                      Thread.sleep(mScreenshotDelay * 1000);
+                     } catch (InterruptedException ie) {
+                       // Do nothing
+                     }
                 mDefaultDisplayPolicy.takeScreenshot(mScreenshotType, dockMinimized);
             }
         }
@@ -2609,6 +2619,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mForceNavbar == 1);
                 }
             }
+            mScreenshotDelay = Settings.System.getInt(resolver,
+                Settings.System.SCREENSHOT_DELAY, 1);
 
             updateKeyAssignments();
             //Three Finger Gesture
