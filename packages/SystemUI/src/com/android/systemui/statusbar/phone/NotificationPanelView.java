@@ -76,6 +76,8 @@ import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.doze.DozeLog;
+import com.android.systemui.ScreenDecorations;
+import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.fragments.FragmentHostManager.FragmentListener;
 import com.android.systemui.rr.NotificationLightsView;
@@ -458,6 +460,8 @@ public class NotificationPanelView extends PanelView implements
     private boolean mDoubleTapToSleepEnabled;
     private GestureDetector mDoubleTapGesture;
 
+    private int mStatusBarHeaderHeight;
+    private int mStatusBarHeight;
     /**
      * Cache the resource id of the theme to avoid unnecessary work in onThemeChanged.
      *
@@ -487,6 +491,7 @@ public class NotificationPanelView extends PanelView implements
      * the keyguard is dismissed to show the status bar.
      */
     private boolean mDelayShowingKeyguardStatusBar;
+    private ScreenDecorations mScreenDecorations;
 
     private int mOneFingerQuickSettingsIntercept;
 
@@ -541,6 +546,7 @@ public class NotificationPanelView extends PanelView implements
                 return true;
             }
         });
+        mScreenDecorations = SysUiServiceProvider.getComponent(mContext, ScreenDecorations.class);
     }
 
     /**
@@ -665,6 +671,8 @@ public class NotificationPanelView extends PanelView implements
                 R.dimen.keyguard_indication_bottom_padding);
         mQsNotificationTopPadding = getResources().getDimensionPixelSize(
                 R.dimen.qs_notification_padding);
+        mStatusBarHeight = getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_height_portrait);
         mShelfHeight = getResources().getDimensionPixelSize(R.dimen.notification_shelf_height);
         mDarkIconSize = getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_drawing_size_dark);
@@ -1945,6 +1953,13 @@ public class NotificationPanelView extends PanelView implements
         } else if (height <= mQsMinExpansionHeight && mQsExpanded) {
             setQsExpanded(false);
         }
+        if (mKeyguardShowing) {
+            if (height > mStatusBarHeight) {
+                setTopCorners(false);
+            } else {
+                setTopCorners(true);
+            }
+        }
         mQsExpansionHeight = height;
         updateQsExpansion();
         requestScrollerTopPaddingUpdate(false /* animate */);
@@ -2266,6 +2281,13 @@ public class NotificationPanelView extends PanelView implements
             setQsExpansion(mQsMinExpansionHeight
                     + t * (mQsMaxExpansionHeight - mQsMinExpansionHeight));
         }
+        if (!mKeyguardShowing) {
+            if (expandedHeight > mStatusBarHeight) {
+                setTopCorners(false);
+            } else {
+                setTopCorners(true);
+            }
+        }
         updateExpandedHeight(expandedHeight);
         updateHeader();
         updateNotificationTranslucency();
@@ -2478,6 +2500,12 @@ public class NotificationPanelView extends PanelView implements
                 ? 0 : KeyguardBouncer.ALPHA_EXPANSION_THRESHOLD, 1f, 0f, 1f, getExpandedFraction());
         float alpha = Math.min(expansionAlpha, 1 - getQsExpansionFraction());
         mBigClockContainer.setAlpha(alpha);
+    }
+
+    private void setTopCorners(boolean enable) {
+        if (mScreenDecorations == null)
+            mScreenDecorations = SysUiServiceProvider.getComponent(mContext, ScreenDecorations.class);
+    	mScreenDecorations.setTopCorners(enable);
     }
 
     @Override

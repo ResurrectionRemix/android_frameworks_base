@@ -160,6 +160,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private boolean mImmerseMode;
     private int mImmerseModeSetting = 0;
     private StatusBar mStatusBar;
+    private boolean mTopEnabled = true;
     private CameraAvailabilityListener.CameraTransitionCallback mCameraTransitionCallback =
             new CameraAvailabilityListener.CameraTransitionCallback() {
         @Override
@@ -838,7 +839,9 @@ public class ScreenDecorations extends SystemUI implements Tunable,
 
                     if (size < 0) size = 0;
 
-                    if (sizeTop == 0 || size > 0) {
+                    if (!mTopEnabled && mRotation == RotationUtils.ROTATION_NONE) {
+                        sizeTop = 0;
+                    } else if (sizeTop == 0 || size > 0) {
                         sizeTop = size;
                     }
 
@@ -885,6 +888,19 @@ public class ScreenDecorations extends SystemUI implements Tunable,
             params.width = pixelSize;
             params.height = pixelSize;
             view.setLayoutParams(params);
+        }
+    }
+
+    public void setTopCorners(boolean enable) {
+        if (mImmerseModeSetting == 1 && mTopEnabled != enable) {
+            mTopEnabled = enable;
+            if (mOverlay != null) {
+                if (!mHandler.getLooper().isCurrentThread()) {
+                    mHandler.post(() -> updateAllForCutout());
+                } else {
+                    updateAllForCutout();
+                }
+            }
         }
     }
 
