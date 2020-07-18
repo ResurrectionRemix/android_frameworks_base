@@ -222,7 +222,6 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                 setupDecorations();
                 if (mOverlay != null) {
                     updateLayoutParams();
-                    updateCutoutMode();
                 }
             }
         }
@@ -554,6 +553,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                 // the rotation before window manager was ready (and was still waiting for sending
                 // the updated rotation).
                 updateLayoutParams();
+                updateCutoutMode();
             }
         });
     }
@@ -579,7 +579,6 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     setAssistHintVisible(true);
                 }
             }
-            updateCutoutMode();
         }
     }
 
