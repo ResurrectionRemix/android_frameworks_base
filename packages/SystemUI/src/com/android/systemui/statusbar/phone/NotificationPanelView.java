@@ -1409,8 +1409,8 @@ public class NotificationPanelView extends PanelView implements
             mConflictingQsExpansionGesture = true;
             onQsExpansionStarted();
             mInitialHeightOnTouch = mQsExpansionHeight;
-            mInitialTouchY = event.getX();
-            mInitialTouchX = event.getY();
+            mInitialTouchY = event.getY();
+            mInitialTouchX = event.getX();
         }
         if (!isFullyCollapsed()) {
             handleQsDown(event);
