@@ -659,7 +659,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         StatusBarWindowController windowController = mStatusBarWindowController.get();
         boolean hideBecauseOccluded = shadeController != null && shadeController.isOccluded();
 
-        final boolean hasArtwork = mShowMediaMetadata && artworkDrawable != null;
+        final boolean hasArtwork = artworkDrawable != null;
         mColorExtractor.setHasMediaArtwork(hasMediaArtwork);
         if (mScrimController != null) {
             mScrimController.setHasBackdrop(hasArtwork);
