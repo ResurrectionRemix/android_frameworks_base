@@ -536,6 +536,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mQSBlurred;
     private boolean blurperformed = false;
     private boolean mSysuiRoundedFwvals;
+    private static final String SYSUI_ROUNDED_FWVALS =
+            Settings.Secure.SYSUI_ROUNDED_FWVALS;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -808,6 +810,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, BERRY_DARK_STYLE);
         tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         tunerService.addTunable(this, BERRY_SWITCH_STYLE);
+        tunerService.addTunable(this, SYSUI_ROUNDED_FWVALS);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -2118,9 +2121,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.Secure.AMBIENT_VISUALIZER_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.SYSUI_ROUNDED_FWVALS),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SHOW_BACK_ARROW_GESTURE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2184,7 +2184,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
             updateDataUsage();
             setAmbientVis();
-            updateCorners();
             setHideArrowForBackGesture();
             updateQsPanelResources();
             updateNavigationBar(false);
@@ -5598,7 +5597,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mSwitchStyle = switchStyle;
                     updateSwitchStyle();
                 }
-         }
+        } else if (SYSUI_ROUNDED_FWVALS.equals(key)) {
+                mSysuiRoundedFwvals =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateCorners();
+        }
 
     }
 
