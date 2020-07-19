@@ -1983,6 +1983,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case LAST_APP:
                 ActionUtils.switchToLastApp(mContext, mCurrentUserId);
                 break;
+            case KEY_ACTION_NOTIFICATIONS:
+                toggleNotifications();
+                break;
             case SPLIT_SCREEN:
                 toggleSplitScreen();
                 break;
@@ -6922,6 +6925,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         return am.isMusicActive();
     }
+
+    // Toggle notifications panel
+    public void toggleNotifications() {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.togglePanel();
+            } catch (RemoteException e) {
+                // do nothing.
+            }
+        }
+    }
+
      private void scheduleLongPressKeyEvent(KeyEvent origEvent, int keyCode) {
         KeyEvent event = new KeyEvent(origEvent.getDownTime(), origEvent.getEventTime(),
                 origEvent.getAction(), keyCode, 0);
