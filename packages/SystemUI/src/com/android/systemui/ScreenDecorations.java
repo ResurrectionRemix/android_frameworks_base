@@ -1454,11 +1454,11 @@ public class ScreenDecorations extends SystemUI implements Tunable,
 
     private void updateCutoutMode() {
         boolean newImmerseMode;
-        if (mRotation == RotationUtils.ROTATION_LANDSCAPE ||
-                mRotation == RotationUtils.ROTATION_SEASCAPE)
+        if (mRotation == RotationUtils.ROTATION_NONE) {
+            newImmerseMode = mImmerseModeSetting == 1;
+        } else {
             newImmerseMode = false;
-        else
-            newImmerseMode = mImmerseModeSetting != 0;
+        }
 
         if (mImmerseMode != newImmerseMode) {
             mImmerseMode = newImmerseMode;
