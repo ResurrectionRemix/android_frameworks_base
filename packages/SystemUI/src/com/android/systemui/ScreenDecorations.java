@@ -121,7 +121,8 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     private static final boolean DEBUG_SCREENSHOT_ROUNDED_CORNERS =
             SystemProperties.getBoolean("debug.screenshot_rounded_corners", false);
     private static final boolean VERBOSE = false;
-    public static final String SHOW_ASSISTANT_HANDLE = "sysui_keyguard_show_assistant_handle";
+    public static final String SHOW_ASSISTANT_HANDLE = 
+            "system:" + Settings.System.SHOW_ASSISTANT_HANDLES;
 
     private static final String DISPLAY_CUTOUT_MODE =
             "system:" + Settings.System.DISPLAY_CUTOUT_MODE;

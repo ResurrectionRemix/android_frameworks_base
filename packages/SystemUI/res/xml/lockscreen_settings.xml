@@ -44,13 +44,6 @@
         sysui:defValue="true" />
 
     <com.android.systemui.tuner.TunerSwitch
-        android:key="sysui_keyguard_show_assistant_handle"
-        android:title="@string/tuner_keyguard_show_assistant_handle_title"
-        android:icon="@drawable/rr_assist_icon"
-        android:summary="@string/tuner_keyguard_show_assistant_handle_summary"
-        sysui:defValue="true" />
-
-    <com.android.systemui.tuner.TunerSwitch
         android:key="sysui_keyguard_transition_animations"
         android:icon="@drawable/rr_animations_icon"
         android:title="@string/tuner_keyguard_transition_animations_title"
