@@ -1772,14 +1772,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (unpinActivity(false)) {
                 return;
             }
-
-            if (ActionUtils.killForegroundApp(mContext, mCurrentUserId)) {
-                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
+            RRActionUtils.killForegroundApp();
+            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                         "Back - Long Press");
-                Toast.makeText(mContext,
-                        org.lineageos.platform.internal.R.string.app_killed_message,
-                        Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(mContext,
+                  org.lineageos.platform.internal.R.string.app_killed_message,
+                  Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -1998,9 +1996,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case KEY_ACTION_VOLUME_PANEL:
                 RRActionUtils.toggleVolumePanel(mContext);
-                break;
-            case KEY_ACTION_SCREEN_OFF:
-                RRActionUtils.switchScreenOff(mContext);
                 break;
             case KEY_ACTION_POWER_MENU:
                 triggerVirtualKeypress(KeyEvent.KEYCODE_POWER);
