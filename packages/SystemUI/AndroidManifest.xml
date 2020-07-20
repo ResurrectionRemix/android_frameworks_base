@@ -272,7 +272,6 @@
     <permission android:name="com.breel.wallpapers.notifications"/>
     <uses-permission android:name="com.breel.wallpapers.notifications"/>
 
-<<<<<<< HEAD
     <!-- Sync tile -->
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -292,15 +291,6 @@
     <!-- Pulse -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-=======
-    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
-
-    <!-- Smart space -->
-    <uses-permission android:name="com.google.android.apps.nexuslauncher.permission.QSB"/>
-    <protected-broadcast android:name="com.google.android.systemui.smartspace.ENABLE_UPDATE"/>
-    <protected-broadcast android:name="com.google.android.systemui.smartspace.EXPIRE_EVENT"/>
-    <protected-broadcast android:name="com.google.android.systemui.smartspace.CLICK_EVENT"/>
->>>>>>> 4f43edb64a0... Add kill-app api (with new fresh implementation)
 
     <application
         android:name=".SystemUIApplication"

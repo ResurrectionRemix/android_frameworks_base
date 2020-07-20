@@ -224,7 +224,8 @@ import com.android.internal.policy.IShortcutService;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.rr.Utils; //Error3
+import com.android.internal.util.rr.Utils;
+import com.android.internal.util.rr.RRActionUtils;
 import com.android.server.ExtconStateObserver;
 import com.android.server.ExtconUEventObserver;
 import com.android.server.GestureLauncherService;
@@ -2002,10 +2003,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 RRActionUtils.switchScreenOff(mContext);
                 break;
             case KEY_ACTION_POWER_MENU:
-                triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
+                triggerVirtualKeypress(KeyEvent.KEYCODE_POWER);
                 break;
             case KEY_ACTION_SCREENSHOT:
-                RRActionUtils.takeScreenshot(true);
+                mHandler.post(mScreenshotRunnable);
                 break;
             case KEY_ACTION_QS_PANEL:
                 RRActionUtils.toggleQsPanel();
