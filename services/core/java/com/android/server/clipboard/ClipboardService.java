@@ -745,22 +745,26 @@ public class ClipboardService extends SystemService {
 
     private boolean clipboardAccessAllowed(int op, String callingPackage, int uid,
             @UserIdInt int userId) {
-        // create toast that app has tried to access clipboard
-        final PackageManager pm = getContext().getPackageManager();
-        ApplicationInfo ai;
-        try {
-            ai = pm.getApplicationInfo(callingPackage, 0);
-        } catch (final NameNotFoundException e) {
-            ai = null;
-        }
-        final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getContext(), applicationName + " tried to access the clipboard", Toast.LENGTH_SHORT).show();
+        final String prefName = "show_clipboard_toast";
+        boolean shouldToast = Settings.System.getInt(getContext().getContentResolver(), prefName, 0) == 1;
+        if (shouldToast) {
+            // create toast that app has tried to access clipboard
+            final PackageManager pm = getContext().getPackageManager();
+            ApplicationInfo ai;
+            try {
+                ai = pm.getApplicationInfo(callingPackage, 0);
+            } catch (final NameNotFoundException e) {
+                ai = null;
             }
-        });
+            final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), applicationName + " tried to access the clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         // Check the AppOp.
         if (mAppOps.noteOp(op, uid, callingPackage) != AppOpsManager.MODE_ALLOWED) {
             return false;
