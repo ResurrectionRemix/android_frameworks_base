@@ -27,32 +27,8 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationCornerOverlay \
 	DisplayCutoutEmulationDoubleOverlay \
 	DisplayCutoutEmulationTallOverlay \
-	FontAclonicaSourceOverlay \
 	FontAmaranteSourceOverlay \
-	FontBariolSourceOverlay \
-	FontCagliostroSourceOverlay \
-	FontComfortaaSourceOverlay \
-	FontExotwoSourceOverlay \
-	FontStoropiaSourceOverlay \
-	FontUbuntuSourceOverlay \
-	FontComicSansSourceOverlay \
-	FontCoolstorySourceOverlay \
-	FontGoogleSansSourceOverlay \
-	FontLGSmartGothicSourceOverlay \
-	FontNotoSerifSourceOverlay \
-	FontOneplusSlateSource \
-	FontReemKufiSourceOverlay \
-	FontRosemarySourceOverlay \
-	FontSamsungOneSourceOverlay \
-	FontSonySketchSourceOverlay \
-	FontSurferSourceOverlay \
-	FontNokiaPureSourceOverlay \
-	FontNunitoSourceOverlay \
-	FontFifa2018SourceOverlay \
-	FontCoconSourceOverlay \
-	FontQuandoSourceOverlay \
-	FontGrandHotelSourceOverlay \
-	FontRedressedSourceOverlay \
+    FontNotoSerifSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
 	IconPackCircularSettingsOverlay \
