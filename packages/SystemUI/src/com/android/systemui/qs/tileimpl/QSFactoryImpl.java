@@ -76,6 +76,7 @@ import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.qs.tiles.PulseTile;
+import com.android.systemui.qs.tiles.NavBarTile;
 import com.android.systemui.util.leak.GarbageMonitor;
 
 
@@ -137,6 +138,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<ScreenStabilizationTile> mScreenStabilizationTileProvider;
     private final Provider<PulseTile> mPulseTileProvider;
     private final Provider<MonoToggleTile> mMonoToggleTileProvider;
+    private final Provider<NavBarTile> mNavBarTileProvider;
 
     private QSTileHost mHost;
 
@@ -189,7 +191,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<AnimationsTile> animationsTileProvider,
             Provider<ScreenStabilizationTile> screenStabilizationTileProvider,
             Provider<PulseTile> pulseTileProvider,
-            Provider<MonoToggleTile> monoToggleTileProvider) {
+            Provider<MonoToggleTile> monoToggleTileProvider,
+            Provider<NavBarTile> navbarTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -239,6 +242,7 @@ public class QSFactoryImpl implements QSFactory {
         mScreenStabilizationTileProvider = screenStabilizationTileProvider;
         mPulseTileProvider = pulseTileProvider;
         mMonoToggleTileProvider = monoToggleTileProvider;
+        mNavBarTileProvider = navbarTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -353,6 +357,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mPulseTileProvider.get();
             case "mono":
                 return mMonoToggleTileProvider.get();
+            case "navbar":
+                return mNavBarTileProvider.get();
         }
 
         // Intent tiles.

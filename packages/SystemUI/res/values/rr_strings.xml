@@ -71,8 +71,14 @@
     <string name="quick_settings_pulse">Pulse</string>
     <string name="quick_settings_pulse_off">Pulse off</string>
     <string name="quick_settings_pulse_on">Pulse on</string>
-    <string name="quick_settings_pulse_changed_off">Pulse turned off.</string>
-    <string name="quick_settings_pulse_changed_on">Pulse turned on.</string>
+    <string name="quick_settings_pulse_changed_off">Pulse turned off</string>
+    <string name="quick_settings_pulse_changed_on">Pulse turned on</string>
+
+    <string name="quick_settings_navbar">Navigation</string>
+    <string name="quick_settings_navbar_off">Navigation off</string>
+    <string name="quick_settings_navbar_on">Navigation on</string>
+    <string name="quick_settings_navbar_changed_off">Navigation turned off</string>
+    <string name="quick_settings_navbar_changed_on">Navigation turned on</string>
 
     <!-- Tuner -->
     <string name="preview">Preview</string>
