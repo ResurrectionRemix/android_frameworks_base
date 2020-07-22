@@ -2023,6 +2023,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 triggerVirtualKeypress(KeyEvent.KEYCODE_POWER);
                 break;
             case KEY_ACTION_SCREENSHOT:
+                mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
                 mHandler.post(mScreenshotRunnable);
                 break;
             case KEY_ACTION_QS_PANEL:
