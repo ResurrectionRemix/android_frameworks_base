@@ -1269,16 +1269,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    public static void updateDismissAllButton(int iconcolor) {
+    public static void updateDismissAllButton(int iconcolor, int bgcolor) {
         if (mDismissAllButton != null) {
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
             layoutParams.width = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_width);
             layoutParams.height = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
             layoutParams.bottomMargin = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
             mDismissAllButton.setElevation(mStaticContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
-
+            Drawable d = mStaticContext.getResources().getDrawable(R.drawable.oos_dismiss_all_bcg);
+            d.setTint(bgcolor);
+            mDismissAllButton.setBackground(d);
             mDismissAllButton.setColorFilter(iconcolor);
-            mDismissAllButton.setBackground(mStaticContext.getResources().getDrawable(R.drawable.oos_dismiss_all_bcg));
         }
     }
 

@@ -165,11 +165,21 @@ import javax.inject.Named;
  */
 public class NotificationStackScrollLayout extends ViewGroup implements ScrollAdapter,
         NotificationListContainer, ConfigurationListener, Dumpable,
-        DynamicPrivacyController.Listener {
+        DynamicPrivacyController.Listener,TunerService.Tunable {
 
     public static final String LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED =
             "lineagesecure:" +
             LineageSettings.Secure.LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED;
+    private static final String NOTIF_DISMISALL_COLOR_MODE =
+            "system:" + Settings.System.NOTIF_DISMISALL_COLOR_MODE;
+    private static final String NOTIF_DISMISALL_ICON_COLOR_MODE =
+            "system:" + Settings.System.NOTIF_DISMISALL_ICON_COLOR_MODE;
+    private static final String NOTIF_CLEAR_ALL_ICON_COLOR =
+            "system:" + Settings.System.NOTIF_CLEAR_ALL_ICON_COLOR;
+    private static final String NOTIF_CLEAR_ALL_BG_COLOR =
+            "system:" + Settings.System.NOTIF_CLEAR_ALL_BG_COLOR;
+    private int mMode, mNotifIconColor, mNotifBgColor, mIconMode;
+
 
     public static final float BACKGROUND_ALPHA_DIMMED = 0.7f;
     private static final String TAG = "StackScroller";
@@ -609,7 +619,10 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
             }
         }, HIGH_PRIORITY, Settings.Secure.NOTIFICATION_DISMISS_RTL,
                 LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED);
-
+        tunerService.addTunable(this, NOTIF_DISMISALL_COLOR_MODE);
+        tunerService.addTunable(this, NOTIF_DISMISALL_ICON_COLOR_MODE);
+        tunerService.addTunable(this, NOTIF_CLEAR_ALL_BG_COLOR);
+        tunerService.addTunable(this, NOTIF_CLEAR_ALL_ICON_COLOR);
         mEntryManager.addNotificationEntryListener(new NotificationEntryListener() {
             @Override
             public void onPostEntryUpdated(NotificationEntry entry) {
@@ -713,12 +726,57 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         StatusBar.setHasClearableNotifications(hasActiveClearableNotifications(ROWS_ALL));
 
         if (needsColorRefresh) {
-            mBackgroundColor = mContext.getColor(R.color.recents_dismiss_all_background_color);
-            mIconColor = mContext.getColor(R.color.recents_dismiss_all_icon_color);
-            StatusBar.updateDismissAllButton(mIconColor);
+            checkColor();
+            StatusBar.updateDismissAllButton(mIconColor, mBackgroundColor);
             needsColorRefresh = false;
         }
     }
+
+    public void checkColor() {
+        if (mMode == 0) {
+            mBackgroundColor = mContext.getColor(R.color.recents_dismiss_all_background_color);
+        } else if (mMode == 1) {
+            mBackgroundColor = mContext.getColor(R.color.accent_device_default_light);
+        } else if (mMode == 2) {
+            mBackgroundColor = mNotifBgColor;
+        }
+
+        if (mIconMode == 0) {
+            mIconColor = mContext.getColor(R.color.recents_dismiss_all_icon_color);
+        } else if (mIconMode == 1) {
+            mIconColor = mContext.getColor(R.color.accent_device_default_light);
+        } else if (mIconMode == 2) {
+            mIconColor = mNotifIconColor;
+        }
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (NOTIF_DISMISALL_COLOR_MODE.equals(key)) {
+             mMode =
+                   TunerService.parseInteger(newValue, 0);
+             needsColorRefresh = true;
+             //reinflateViews();
+        } else if (NOTIF_DISMISALL_ICON_COLOR_MODE.equals(key)) {
+             mIconMode =
+                   TunerService.parseInteger(newValue, 0);
+             needsColorRefresh = true;
+             //reinflateViews();
+        } else if (NOTIF_CLEAR_ALL_ICON_COLOR.equals(key)) {
+             int color = mContext.getColor(R.color.recents_dismiss_all_icon_color);
+             mNotifIconColor =
+                   TunerService.parseInteger(newValue, color);
+             needsColorRefresh = true;
+             //reinflateViews();
+        } else if (NOTIF_CLEAR_ALL_BG_COLOR.equals(key)) {
+             int color = mContext.getColor(R.color.recents_dismiss_all_background_color);
+             mNotifBgColor =
+                   TunerService.parseInteger(newValue, color);
+             needsColorRefresh = true;
+             //reinflateViews();
+        }
+    }
+
 
     private boolean isDismissAllButtonEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
@@ -820,11 +878,10 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
     public void onUiModeChanged() {
         mBgColor = mContext.getColor(R.color.notification_shade_background_color);
-        mBackgroundColor = mContext.getColor(R.color.recents_dismiss_all_background_color);
-        mIconColor = mContext.getColor(R.color.recents_dismiss_all_icon_color);
+        checkColor();
         updateBackgroundDimming();
         mShelf.onUiModeChanged();
-        StatusBar.updateDismissAllButton(mIconColor);
+        StatusBar.updateDismissAllButton(mIconColor, mBackgroundColor);
     }
 
     @ShadeViewRefactor(RefactorComponent.DECORATOR)
