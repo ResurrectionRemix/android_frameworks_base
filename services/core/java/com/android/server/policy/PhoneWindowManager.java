@@ -2677,7 +2677,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
             }
             mScreenshotDelay = Settings.System.getInt(resolver,
-                Settings.System.SCREENSHOT_DELAY, 1);
+                Settings.System.SCREENSHOT_DELAY, 0);
 
             updateKeyAssignments();
             //Three Finger Gesture
