@@ -632,28 +632,27 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         View topRight = mOverlay.findViewById(R.id.right);
         View bottomLeft = mBottomOverlay.findViewById(R.id.left);
         View bottomRight = mBottomOverlay.findViewById(R.id.right);
-        boolean useCustomCutout = mCustomCutout && mImmerseModeSetting == 0;
 
         if (mRotation == RotationUtils.ROTATION_NONE) {
             updateView(topLeft, Gravity.TOP | Gravity.LEFT, 0);
-            updateView(topRight, Gravity.TOP | Gravity.RIGHT, useCustomCutout ? 0 : 90);
-            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, useCustomCutout ? 0 : 270);
-            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, useCustomCutout ? 0 : 180);
+            updateView(topRight, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 0 : 90);
+            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 0 : 270);
+            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 0 : 180);
         } else if (mRotation == RotationUtils.ROTATION_LANDSCAPE) {
             updateView(topLeft, Gravity.TOP | Gravity.LEFT, 0);
-            updateView(topRight, Gravity.BOTTOM | Gravity.LEFT, useCustomCutout ? 180 : 270);
-            updateView(bottomLeft, Gravity.TOP | Gravity.RIGHT, useCustomCutout ? 180 : 90);
-            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, useCustomCutout ? 0 : 180);
+            updateView(topRight, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 180 : 270);
+            updateView(bottomLeft, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 180 : 90);
+            updateView(bottomRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 0 : 180);
         } else if (mRotation == RotationUtils.ROTATION_UPSIDE_DOWN) {
             updateView(topLeft, Gravity.BOTTOM | Gravity.LEFT, 270);
-            updateView(topRight, Gravity.BOTTOM | Gravity.RIGHT, useCustomCutout ? 270 : 180);
-            updateView(bottomLeft, Gravity.TOP | Gravity.LEFT, useCustomCutout ? 90 : 0);
+            updateView(topRight, Gravity.BOTTOM | Gravity.RIGHT, mCustomCutout ? 270 : 180);
+            updateView(bottomLeft, Gravity.TOP | Gravity.LEFT, mCustomCutout ? 90 : 0);
             updateView(bottomRight, Gravity.TOP | Gravity.RIGHT, 90);
         } else if (mRotation == RotationUtils.ROTATION_SEASCAPE) {
             updateView(topLeft, Gravity.BOTTOM | Gravity.RIGHT, 180);
-            updateView(topRight, Gravity.TOP | Gravity.RIGHT, useCustomCutout ? 0 : 90);
-            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, useCustomCutout ? 0 : 270);
-            updateView(bottomRight, Gravity.TOP | Gravity.LEFT, useCustomCutout ? 180 : 0);
+            updateView(topRight, Gravity.TOP | Gravity.RIGHT, mCustomCutout ? 0 : 90);
+            updateView(bottomLeft, Gravity.BOTTOM | Gravity.LEFT, mCustomCutout ? 0 : 270);
+            updateView(bottomRight, Gravity.TOP | Gravity.LEFT, mCustomCutout ? 180 : 0);
         }
 
         updateAssistantHandleViews();
@@ -827,8 +826,8 @@ public class ScreenDecorations extends SystemUI implements Tunable,
         switch (key) {
             case SIZE:
                 mHandler.post(() -> {
-                    if (mCustomCutout && mImmerseModeSetting == 0) return;
-                    if (mCustomCutout || mOverlay == null) setupDecorations();
+                    if (mCustomCutout) return;
+                    if (mOverlay == null) setupDecorations();
                     int size = mRoundedDefault;
                     int sizeTop = mRoundedDefaultTop;
                     int sizeBottom = mRoundedDefaultBottom;
@@ -879,7 +878,6 @@ public class ScreenDecorations extends SystemUI implements Tunable,
                     if (mCutoutTop == null) return;
                     mCutoutTop.setShowCutout(mShowTopCutout && mImmerseModeSetting == 0);
                 });
-                if (mCustomCutout && mImmerseModeSetting == 0) setupDecorations();
                 break;
             case SHOW_ASSISTANT_HANDLE:
                 mAssistHintDisable = newValue != null && Integer.parseInt(newValue) == 0;
@@ -1425,7 +1423,7 @@ public class ScreenDecorations extends SystemUI implements Tunable,
     }
 
     private void initRoundCornerViews() {
-        if (!mCustomCutout || mImmerseModeSetting != 0) {
+        if (!mCustomCutout) {
             return;
         }
 
