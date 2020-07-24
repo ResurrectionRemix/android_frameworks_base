@@ -81,11 +81,14 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mStatusBarBgTransparent;
     private static final String QS_STATUS_BAR_BG_TRANSPARENCY =              
           "system:" + Settings.System.QS_STATUS_BAR_BG_TRANSPARENCY;
+    private static final String QS_HIDE_GRADIENT =              
+          "system:" + Settings.System.QS_HIDE_GRADIENT;
     private boolean mQsBackGroundColorRGB;
     private ValueAnimator mDiscoAnim;
 
     private Drawable mQsBackGround;
     private int mQsDiscoDuration;
+    private boolean mHideGradient;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -124,6 +127,7 @@ public class QSContainerImpl extends FrameLayout implements
         mStatusBarHeaderMachine.updateEnablement();
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_STATUS_BAR_BG_TRANSPARENCY);
+        tunerService.addTunable(this, QS_HIDE_GRADIENT);
     }
 
     @Override
@@ -139,13 +143,6 @@ public class QSContainerImpl extends FrameLayout implements
         super.onConfigurationChanged(newConfig);
         setBackgroundGradientVisibility(newConfig);
         mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-        // Hide the backgrounds when in landscape mode.
-        if (mLandscape || mForceHideQsStatusBar) {
-            mBackgroundGradient.setVisibility(View.INVISIBLE);
-        } else if (!mIsAlpha || !mLandscape) {
-            mBackgroundGradient.setVisibility(View.VISIBLE);
-        }
 
         updateResources();
         updateStatusbarVisibility();
@@ -336,6 +333,7 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundGradient.setLayoutParams(mlp);
 
         updateGradientbackground();
+        setBackgroundGradientVisibility(getResources().getConfiguration());
     }
 
     /**
@@ -369,11 +367,10 @@ public class QSContainerImpl extends FrameLayout implements
     private void setBackgroundGradientVisibility(Configuration newConfig) {
         if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
-            mStatusBarBackground.setVisibility(View.INVISIBLE);
         } else {
-            mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-            mStatusBarBackground.setVisibility(View.VISIBLE);
+            mBackgroundGradient.setVisibility((mQsDisabled || mHideGradient) ? View.INVISIBLE : View.VISIBLE);
         }
+        updateStatusbarVisibility();
     }
 
     public void setExpansion(float expansion) {
@@ -500,6 +497,9 @@ public class QSContainerImpl extends FrameLayout implements
     public void onTuningChanged(String key, String newValue) {
         if (QS_STATUS_BAR_BG_TRANSPARENCY.equals(key)) {
             mStatusBarBgTransparent = newValue != null && Integer.parseInt(newValue) == 1;
+            updateResources();
+        } else if (QS_HIDE_GRADIENT.equals(key)) {
+            mHideGradient = newValue != null && Integer.parseInt(newValue) == 1;
             updateResources();
         }
     }

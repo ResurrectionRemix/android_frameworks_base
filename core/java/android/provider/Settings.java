@@ -6190,6 +6190,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * Whether to show lock icon on lockscreen
+         * @hide
+         */
+        public static final String QS_HIDE_GRADIENT = "qs_hide_gradient";
+
+        /**
          * 
          * @hide
          */
