@@ -55,7 +55,7 @@ import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.util.leak.RotationUtils;
 
-import com.android.internal.util.custom.fod.FodUtils;
+import com.android.internal.util.rr.RRContextConstants;
 
 /**
  * Abstract base class. Shows a dialog for BiometricPrompt.
@@ -175,7 +175,8 @@ public abstract class BiometricDialogView extends LinearLayout {
                 .getDimension(R.dimen.biometric_dialog_animation_translation_offset);
         mErrorColor = getResources().getColor(R.color.biometric_dialog_error);
         mTextColor = getResources().getColor(R.color.biometric_dialog_gray);
-        mHasFod = FodUtils.hasFodSupport(context);
+        PackageManager packageManager = context.getPackageManager();
+        mHasFod = packageManager.hasSystemFeature(RRContextConstants.Features.FOD);
 
         DisplayMetrics metrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
@@ -589,7 +590,8 @@ public abstract class BiometricDialogView extends LinearLayout {
                 WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL,
                 WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                 PixelFormat.TRANSLUCENT);
-        lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
+        lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS
+                | WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
         lp.setTitle("BiometricDialogView");
         lp.token = mWindowToken;
         return lp;
