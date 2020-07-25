@@ -310,18 +310,29 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     private int getCircleColor(int state) {
+        int color;
         switch (state) {
             case Tile.STATE_ACTIVE:
                 return mColorActive;
             case Tile.STATE_INACTIVE:
                  if (mTintInactive) {
-                     setActiveColor(mContext);
-                     return mColorActive;
+                     if (useQSAccentTint == 1) {
+                         color = Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent);
+                     } else {
+                         setActiveColor(mContext);
+                         color = mColorActive;
+                     }
+                     return color;
                  }
             case Tile.STATE_UNAVAILABLE:
                  if (mTintInactive) {
-                     setActiveColor(mContext);
-                     return mColorActive;
+                     if (useQSAccentTint == 1) {
+                         color = Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent);
+                     } else {
+                         setActiveColor(mContext);
+                         color = mColorActive;
+                     }
+                     return color;
                  } else {
                      return mColorDisabled;
                  }
