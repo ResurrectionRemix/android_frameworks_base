@@ -135,7 +135,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         setBackground(mTileBackground);
 
-        mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
         useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
         mTintInactive = Settings.System.getIntForUser(context.getContentResolver(),
@@ -157,6 +156,8 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         if (useQSAccentTint == 0) {
             mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
         } else if (useQSAccentTint == 1) {
+            mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+            mColorActiveAlpha = adjustAlpha(mColorActive, isThemeDark(context) ? 0.7f : 0.5f);
             mColorActive = mColorActiveAlpha;
         } else if (useQSAccentTint == 2) {
             mColorActive = randomColor();
@@ -311,13 +312,14 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     private int getCircleColor(int state) {
         int color;
+        int accent = Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent);
         switch (state) {
             case Tile.STATE_ACTIVE:
                 return mColorActive;
             case Tile.STATE_INACTIVE:
                  if (mTintInactive) {
                      if (useQSAccentTint == 1) {
-                         color = Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent);
+                         color = adjustAlpha(accent, isThemeDark(mContext) ? 0.575f : 0.3f);
                      } else {
                          setActiveColor(mContext);
                          color = mColorActive;
@@ -327,7 +329,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             case Tile.STATE_UNAVAILABLE:
                  if (mTintInactive) {
                      if (useQSAccentTint == 1) {
-                         color = Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent);
+                         color = adjustAlpha(accent, isThemeDark(mContext) ? 0.575f : 0.3f);
                      } else {
                          setActiveColor(mContext);
                          color = mColorActive;
