@@ -3138,7 +3138,13 @@ public final class ActivityRecord extends ConfigurationContainer {
         int activityHeight = containingAppHeight;
 
         if (containingRatio > maxAspectRatio && maxAspectRatio != 0) {
-            if (containingAppWidth < containingAppHeight) {
+            final DisplayContent display = getDisplay().mDisplayContent;
+            final float displayAspectRatio = display.mBaseDisplayHeight
+                    / (float) display.mBaseDisplayWidth;
+            if (maxAspectRatio < displayAspectRatio) {
+                // This means we are currently running on a higher than 16:9 aspect ratio device
+                // We ignore this and let the app scale to the display's aspect ratio
+            } else if (containingAppWidth < containingAppHeight) {
                 // Width is the shorter side, so we use that to figure-out what the max. height
                 // should be given the aspect ratio.
                 activityHeight = (int) ((activityWidth * maxAspectRatio) + 0.5f);
