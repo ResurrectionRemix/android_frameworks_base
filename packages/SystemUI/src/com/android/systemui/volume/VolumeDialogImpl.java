@@ -145,6 +145,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.AUDIO_PANEL_VIEW_BT_SCO;
     public static final String AUDIO_PANEL_VIEW_TIMEOUT =
             "system:" + Settings.System.AUDIO_PANEL_VIEW_TIMEOUT;
+    public static final String RINGER_VOLUME_PANEL =
+            "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -218,6 +220,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mVoiceShowing;
     private boolean mBTSCOShowing;
     private int mTimeOutDesired, mTimeOut;
+    private boolean mShowRinger;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -252,6 +255,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_VOICE);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
+        tunerService.addTunable(this, RINGER_VOLUME_PANEL);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -391,7 +395,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             // Apply ringer layout gravity based on panel left/right setting
             // Layout type is different between landscape/portrait.
             setLayoutGravity(mRinger.getLayoutParams(), panelGravity);
-            Util.setVisOrGone(mRinger, !mHasAlertSlider);
+            Util.setVisOrGone(mRinger, mShowRinger);
         }
 
         mODICaptionsView = mDialog.findViewById(R.id.odi_captions);
@@ -538,6 +542,13 @@ public class VolumeDialogImpl implements VolumeDialog,
                 int timeOut = mTimeOutDesired * 1000;
                 if (mTimeOut != timeOut) {
                     mTimeOut = timeOut;
+                    triggerChange = true;
+                }
+                break;
+            case RINGER_VOLUME_PANEL:
+                boolean ShowRinger = TunerService.parseIntegerSwitch(newValue, true);
+                if (mShowRinger != ShowRinger) {
+                    mShowRinger = ShowRinger;
                     triggerChange = true;
                 }
                 break;

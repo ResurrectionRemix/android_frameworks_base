@@ -6190,6 +6190,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * =-
+         * @hide
+         */
+        public static final String SHOW_RINGER_VOLUME_PANEL = "show_ringer_volume_panel";
+
+        /**
          * Whether to show lock icon on lockscreen
          * @hide
          */
