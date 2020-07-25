@@ -259,7 +259,7 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
         if (mNotificationInterruptionStateProvider.shouldHeadsUp(entry)) {
             row.updateInflationFlag(FLAG_CONTENT_VIEW_HEADS_UP, true /* shouldInflate */);
         }
-        row.setNeedsRedaction(
+        row.setNeedsRedaction(row.isAppLocked() ||
                 Dependency.get(NotificationLockscreenUserManager.class).needsRedaction(entry));
         row.inflateViews();
 

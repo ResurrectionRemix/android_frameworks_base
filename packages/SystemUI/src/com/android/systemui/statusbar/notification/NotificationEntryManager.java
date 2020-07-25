@@ -22,12 +22,8 @@ import android.annotation.Nullable;
 import android.app.AppLockManager;
 import android.app.AppLockManager.AppLockCallback;
 import android.app.Notification;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
@@ -112,17 +108,15 @@ public class NotificationEntryManager implements
     private final List<NotificationEntryListener> mNotificationEntryListeners = new ArrayList<>();
     private NotificationRemoveInterceptor mRemoveInterceptor;
 
-    private SettingsObserver mSettingsObserver;
-    private boolean mLockNotifications;
     private final AppLockManager mAppLockManager;
     private final AppLockCallback mAppLockCallback = new AppLockCallback() {
         @Override
-        public void onAppStateChanged(String pkg, boolean open) {
-            updateAppNotifications(pkg, open);
+        public void onAppStateChanged(String pkg) {
+            updateAppNotifications(pkg);
         }
     };
 
-    private void updateAppNotifications(String pkg, boolean open) {
+    private void updateAppNotifications(String pkg) {
         ArrayList<NotificationEntry> arr = mNotificationData.getAllNotificationsForPackage(pkg);
         for (NotificationEntry notif : arr) {
             if (notif.rowExists()) {
@@ -130,7 +124,8 @@ public class NotificationEntryManager implements
                 boolean appLocked = mAppLockManager.isAppLocked(pkg);
                 row.setAppLocked(appLocked);
                 Dependency.get(Dependency.MAIN_HANDLER).post(() -> {
-                    row.onAppStateChanged(!mLockNotifications || open);
+                    row.onAppStateChanged(!mAppLockManager.getAppNotificationHide(pkg)
+                            || mAppLockManager.isAppOpen(pkg));
                 });
             }
         }
@@ -164,8 +159,6 @@ public class NotificationEntryManager implements
         mNotificationData = new NotificationData();
         mAppLockManager = (AppLockManager) context.getSystemService(Context.APPLOCK_SERVICE);
         mAppLockManager.addAppLockCallback(mAppLockCallback);
-        mSettingsObserver = new SettingsObserver(context);
-        mSettingsObserver.observe();
     }
 
     /** Adds a {@link NotificationEntryListener}. */
@@ -284,8 +277,8 @@ public class NotificationEntryManager implements
                 ExpandableNotificationRow row = entry.getRow();
                 row.setAppLocked(isAppLocked);
                 Dependency.get(Dependency.MAIN_HANDLER).post(() -> {
-                    row.onAppStateChanged(!mLockNotifications ||
-                        mAppLockManager.isAppOpen(pkg));
+                    row.onAppStateChanged(!mAppLockManager.getAppNotificationHide(pkg) ||
+                            mAppLockManager.isAppOpen(pkg));
                 });
             }
             boolean isNew = mNotificationData.get(entry.key) == null;
@@ -615,38 +608,5 @@ public class NotificationEntryManager implements
 
     public void setStatusBar(StatusBar statusBar) {
         mStatusBar = statusBar;
-    }
-
-    private class SettingsObserver extends ContentObserver {
-
-        private ContentResolver mCr;
-
-        SettingsObserver(Context context) {
-            super(Dependency.get(Dependency.MAIN_HANDLER));
-            mCr = context.getContentResolver();
-        }
-
-        void observe() {
-            mCr.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_LOCK_HIDE_NOTIFICATIONS), false, this,
-                    UserHandle.USER_ALL);
-            mLockNotifications = Settings.System.getIntForUser(mCr,
-                    Settings.System.APP_LOCK_HIDE_NOTIFICATIONS, 1,
-                    UserHandle.USER_CURRENT) != 0;
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            boolean lockNotifications = Settings.System.getIntForUser(mCr,
-                    Settings.System.APP_LOCK_HIDE_NOTIFICATIONS, 1,
-                    UserHandle.USER_CURRENT) != 0;
-            if (mLockNotifications != lockNotifications) {
-                mLockNotifications = lockNotifications;
-                List<String> lockedPackages = mAppLockManager.getLockedPackages();
-                for (String pkg : lockedPackages) {
-                    updateAppNotifications(pkg, mAppLockManager.isAppOpen(pkg));
-                }
-            }
-        }
     }
 }

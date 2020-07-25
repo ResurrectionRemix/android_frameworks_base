@@ -21,25 +21,26 @@ import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_APPLO
 
 import android.app.admin.DevicePolicyManager;
 import android.app.ActivityManager;
+import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.IActivityManager;
 import android.app.IAppLockService;
 import android.app.IAppLockCallback;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.ContentObserver;
 import android.hardware.biometrics.BiometricConstants;
 import android.hardware.biometrics.BiometricPrompt;
 import android.hardware.biometrics.BiometricPrompt.AuthenticationResult;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Environment;
@@ -90,12 +91,13 @@ public class AppLockService extends SystemService {
     private static final String TAG_PACKAGE = "package";
     private static final String ATTRIBUTE_NAME = "name";
     private static final String ATTRIBUTE_OP_MODE = "opMode";
+    private static final String ATTRIBUTE_NOTIFICATION = "notifHide";
 
     private final int APPLOCK_TIMEOUT = 15000;
 
-    private AtomicBoolean mEnabled;
     private AppLockContainer mCurrent;
     private PackageManager mPackageManager;
+    private IPackageManager mIpm;
     private AppOpsManager mAppOpsManager;
     private CancellationSignal mCancellationSignal;
     private BiometricPrompt mBiometricPrompt;
@@ -110,8 +112,7 @@ public class AppLockService extends SystemService {
     private boolean mLaunchAfterKeyguard;
     private boolean mBiometricRunning;
     private String mForegroundApp;
-    private SettingsObserver mSettingsObserver;
-    
+
     private final LockPatternUtils mLockPatternUtils;
     private Context mContext;
 
@@ -192,9 +193,6 @@ public class AppLockService extends SystemService {
         mContext = context;
         mHandler = new AppLockHandler(BackgroundThread.getHandler().getLooper());
         mUserId = ActivityManager.getCurrentUser();
-        mUserManager = UserManager.get(context);
-        mEnabled = new AtomicBoolean(!mUserManager.isManagedProfile(mUserId)
-                && mUserManager.isUserUnlockingOrUnlocked(mUserId));
         mLockPatternUtils = new LockPatternUtils(context);
 
         IntentFilter packageFilter = new IntentFilter();
@@ -205,11 +203,6 @@ public class AppLockService extends SystemService {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         context.registerReceiver(mReceiver, intentFilter);
-
-        mSettingsObserver = new SettingsObserver(mHandler);
-        mSettingsObserver.observe();
-
-        mHandler.sendEmptyMessage(AppLockHandler.MSG_READ_STATE);
     }
 
     @Override
@@ -220,41 +213,56 @@ public class AppLockService extends SystemService {
     }
 
     @Override
+    public void onBootPhase(int phase) {
+        if (phase == SystemService.PHASE_SYSTEM_SERVICES_READY) {
+            Slog.v(TAG_APPLOCK, "onBootPhase PHASE_SYSTEM_SERVICES_READY");
+            mAppOpsManager = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
+            mPackageManager = mContext.getPackageManager();
+            mIpm = AppGlobals.getPackageManager();
+        }
+    }
+
+    @Override
     public void onUnlockUser(int userHandle) {
-        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onUnlockUser()");
-        mUserId = userHandle;
-        mPackageManager = mContext.getPackageManager();
-        mAppOpsManager = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
-        mHandler.sendEmptyMessage(AppLockHandler.MSG_INIT_APPS);
+        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onUnlockUser() mUserId:" + userHandle);
+        if (!UserManager.get(mContext).isManagedProfile(userHandle)) {
+            if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onUnlockUser() is NOT ManagedProfile");
+            mUserId = userHandle;
+            mHandler.sendEmptyMessage(AppLockHandler.MSG_INIT_APPS);
+        }
     }
 
     @Override
     public void onSwitchUser(int userHandle) {
-        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onSwitchUser()");
-        mUserId = userHandle;
-        mHandler.sendEmptyMessage(AppLockHandler.MSG_INIT_APPS);
+        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onSwitchUser() mUserId:" + userHandle);
+        if (!UserManager.get(mContext).isManagedProfile(userHandle)) {
+            if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onSwitchUser() is NOT ManagedProfile");
+            mUserId = userHandle;
+            mHandler.sendEmptyMessage(AppLockHandler.MSG_INIT_APPS);
+        }
     }
 
     @Override
     public void onStopUser(int userHandle) {
-        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onStopUser()");
-        mEnabled.set(false);
+        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "onStopUser() userHandle:" + userHandle);
+        if (mUserId == userHandle) {
+            mUserId = ActivityManager.getCurrentUser();
+            mHandler.sendEmptyMessage(AppLockHandler.MSG_INIT_APPS);
+        }
     }
 
     private void initLockedApps() {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "initLockedApps(" + mUserId + ")");
         mUserHandle = new UserHandle(mUserId);
-        if (mUserManager.isManagedProfile(mUserId)) {
-            if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "Disabled");
-            mEnabled.set(false);
-        } else {
-            mFile = new AtomicFile(getFile());
-            if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "Enabled");
-            mEnabled.set(true);
-            readState();
-            clearOpenedAppsList();
-        }
         mIsSecure = isSecure();
+        mFile = new AtomicFile(getFile());
+        readState();
+        clearOpenedAppsList();
+
+        mShowOnlyOnWake = Settings.System.getIntForUser(mContext
+                .getContentResolver(),
+                Settings.System.APP_LOCK_SHOW_ONLY_ON_WAKE, 0,
+                mUserId) != 0;
     }
 
     private File getFile() {
@@ -265,9 +273,7 @@ public class AppLockService extends SystemService {
 
     private void readState() {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "readState()");
-        if (!mEnabled.get()) {
-            return;
-        }
+        mAppsList.clear();
         try (FileInputStream in = mFile.openRead()) {
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(in, null);
@@ -301,7 +307,6 @@ public class AppLockService extends SystemService {
 
     private void parsePackages(XmlPullParser parser) throws IOException,
             XmlPullParserException {
-        mAppsList.clear();
         int type;
         int depth;
         int innerDepth = parser.getDepth() + 1;
@@ -314,12 +319,14 @@ public class AppLockService extends SystemService {
             if (parser.getName().equals(TAG_PACKAGE)) {
                 String pkgName = parser.getAttributeValue(null, ATTRIBUTE_NAME);
                 String appOpMode = parser.getAttributeValue(null, ATTRIBUTE_OP_MODE);
+                String notifHide = parser.getAttributeValue(null, ATTRIBUTE_NOTIFICATION);
                 AppLockContainer cont = new AppLockContainer(pkgName, (appOpMode == null)
-                        ? -1 : Integer.parseInt(appOpMode));
+                        ? -1 : Integer.parseInt(appOpMode), (notifHide == null) ? false
+                        : Boolean.parseBoolean(notifHide));
                 writeAfter = (appOpMode == null) || (Integer.parseInt(appOpMode) == -1);
                 mAppsList.put(pkgName, cont);
                 if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "parsePackages(): pkgName=" + pkgName
-                        + " appOpMode=" + appOpMode);
+                        + " appOpMode=" + appOpMode + " notifHide:" + notifHide);
             }
         }
         if (writeAfter) {
@@ -330,9 +337,6 @@ public class AppLockService extends SystemService {
 
     private void writeState() {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "writeState()");
-        if (!mEnabled.get()) {
-            return;
-        }
 
         FileOutputStream out = null;
         try {
@@ -358,39 +362,53 @@ public class AppLockService extends SystemService {
 
     private void serializeLockedApps(XmlSerializer serializer) throws IOException {
         serializer.startTag(null, TAG_LOCKED_APPS);
-        for (int i = 0; i < mAppsList.size(); ++i) {
-            AppLockContainer cont = mAppsList.valueAt(i);
+        ArrayList<AppLockContainer> apps = new ArrayList<>(mAppsList.values());
+        for (AppLockContainer app : apps) {
             serializer.startTag(null, TAG_PACKAGE);
-            serializer.attribute(null, ATTRIBUTE_NAME, cont.packageName);
-            serializer.attribute(null, ATTRIBUTE_OP_MODE, String.valueOf(cont.appOpMode));
+            serializer.attribute(null, ATTRIBUTE_NAME, app.packageName);
+            serializer.attribute(null, ATTRIBUTE_OP_MODE, String.valueOf(app.appOpMode));
+            serializer.attribute(null, ATTRIBUTE_NOTIFICATION, String.valueOf(app.notifHide));
             serializer.endTag(null, TAG_PACKAGE);
         }
         serializer.endTag(null, TAG_LOCKED_APPS);
     }
 
     private void addAppToList(String packageName) {
-        if (!mEnabled.get()) {
-            return;
-        }
         if (DEBUG_APPLOCK) Slog.v(TAG, "addAppToList packageName:" + packageName);
         if (!mAppsList.containsKey(packageName)) {
-            AppLockContainer cont = new AppLockContainer(packageName, -1);
+            AppLockContainer cont = new AppLockContainer(packageName, -1, false);
             mAppsList.put(packageName, cont);
             mHandler.sendEmptyMessage(AppLockHandler.MSG_WRITE_STATE);
-            dispatchCallbacks(packageName, false);
+            dispatchCallbacks(packageName);
         }
     }
 
     private void removeAppFromList(String packageName) {
-        if (!mEnabled.get()) {
-            return;
-        }
         if (mAppsList.containsKey(packageName)) {
             AppLockContainer cont = getAppLockContainer(packageName);
             cont.appRemovedFromList();
             mAppsList.remove(packageName);
             mHandler.sendEmptyMessage(AppLockHandler.MSG_WRITE_STATE);
-            dispatchCallbacks(packageName, true);
+            dispatchCallbacks(packageName);
+        }
+    }
+
+    private boolean getAppNotificationHide(String packageName) {
+        AppLockContainer cont = getAppLockContainer(packageName);
+        if (cont != null) {
+            return cont.notifHide;
+        }
+        return false;
+    }
+
+    private void setAppNotificationHide(String packageName, boolean hide) {
+        AppLockContainer cont = getAppLockContainer(packageName);
+        if (cont != null) {
+            if (cont.notifHide != hide) {
+                cont.notifHide = hide;
+                mHandler.sendEmptyMessage(AppLockHandler.MSG_WRITE_STATE);
+                dispatchCallbacks(packageName);
+            }
         }
     }
 
@@ -398,27 +416,27 @@ public class AppLockService extends SystemService {
         if (mUserId == userId) {
             mIsSecure = isSecure();
             if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "reportPasswordChanged() mIsSecure:" + mIsSecure);
+            for (AppLockContainer app : mAppsList.values()) {
+                app.reportPasswordChanged();
+            }
         }
     }
 
     public boolean isAppLocked(String packageName) {
-        if (!mEnabled.get() || !mIsSecure) {
+        if (!mIsSecure) {
             return false;
         }
         return mAppsList.containsKey(packageName);
     }
 
     private AppLockContainer getAppLockContainer(String packageName) {
-        if (!mEnabled.get()) {
-            return null;
-        }
         return mAppsList.get(packageName);
     }
 
     private void clearOpenedAppsList() {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "clearOpenedAppsList()");
         for (String p : mOpenedApplicationsIndex) {
-            dispatchCallbacks(p, false);
+            dispatchCallbacks(p);
         }
         mOpenedApplicationsIndex.clear();
     }
@@ -436,22 +454,24 @@ public class AppLockService extends SystemService {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "isAlarmOrCallIntent() intent:" + intent);
 
         String intentClassName = intent.getComponent().getClassName().toLowerCase();
-        return (intentClassName.contains("call") || intentClassName.contains("voip")
-                || intentClassName.contains("alarm"))
-                && intentClassName.contains("activity");
+        return intentClassName.contains("callactivity")
+                || intentClassName.contains("callingactivity")
+                || intentClassName.contains("voipactivity")
+                || intentClassName.contains("alarmactivity");
     }
 
     void removeOpenedApp(String packageName) {
-        if (isAppOpen(packageName)) {
-            if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "removeOpenedApp(" + packageName + ")");
-            mOpenedApplicationsIndex.remove(packageName);
-            dispatchCallbacks(packageName, false);
+        if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "removeOpenedApp(" + packageName + ")");
+        if (mOpenedApplicationsIndex.remove(packageName)) {
+            dispatchCallbacks(packageName);
         }
     }
 
     void addOpenedApp(String packageName) {
         if (DEBUG_APPLOCK) Slog.v(TAG_APPLOCK, "addOpenedApp(" + packageName + ")");
-        mOpenedApplicationsIndex.add(packageName);
+        if (mOpenedApplicationsIndex.add(packageName)) {
+            dispatchCallbacks(packageName);
+        }
     }
 
     public void launchBeforeActivity(String packageName) {
@@ -537,7 +557,7 @@ public class AppLockService extends SystemService {
                 if (mCurrent != null) {
                     launchBeforeActivity(mCurrent.packageName);
                 }
-            }, 150);
+            }, 200);
         }
     }
 
@@ -572,7 +592,7 @@ public class AppLockService extends SystemService {
         return mIsSecure ? mAppsList.size() : 0;
     }
 
-    private void dispatchCallbacks(String packageName, boolean opened) {
+    private void dispatchCallbacks(String packageName) {
         mHandler.post(() -> {
             synchronized (mCallbacks) {
                 final int N = mCallbacks.size();
@@ -581,7 +601,7 @@ public class AppLockService extends SystemService {
                     final IAppLockCallback callback = mCallbacks.valueAt(i);
                     try {
                         if (callback != null) {
-                            callback.onAppStateChanged(packageName, opened);
+                            callback.onAppStateChanged(packageName);
                         } else {
                             cleanup = true;
                         }
@@ -629,31 +649,17 @@ public class AppLockService extends SystemService {
         });
     }
 
-    private class SettingsObserver extends ContentObserver {
+    private void setShowOnlyOnWake(boolean showOnce) {
+        mShowOnlyOnWake = showOnce;
+        Settings.System.putIntForUser(mContext
+                .getContentResolver(),
+                Settings.System.APP_LOCK_SHOW_ONLY_ON_WAKE,
+                showOnce ? 1 : 0,
+                mUserId);
+    }
 
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_LOCK_SHOW_ONLY_ON_WAKE), false, this,
-                    UserHandle.USER_ALL);
-            mShowOnlyOnWake = Settings.System.getIntForUser(mContext
-                    .getContentResolver(),
-                    Settings.System.APP_LOCK_SHOW_ONLY_ON_WAKE, 0,
-                    mUserId) != 0;
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            mShowOnlyOnWake = Settings.System.getIntForUser(mContext
-                    .getContentResolver(),
-                    Settings.System.APP_LOCK_SHOW_ONLY_ON_WAKE, 0,
-                    mUserId) != 0;
-            clearOpenedAppsList();
-        }
+    private boolean getShowOnlyOnWake() {
+        return mShowOnlyOnWake;
     }
 
     private class AppLockImpl extends IAppLockService.Stub {
@@ -678,6 +684,16 @@ public class AppLockService extends SystemService {
         }
 
         @Override
+        public void setShowOnlyOnWake(boolean showOnce) {
+            AppLockService.this.setShowOnlyOnWake(showOnce);
+        }
+
+        @Override
+        public boolean getShowOnlyOnWake() {
+            return AppLockService.this.getShowOnlyOnWake();
+        }
+
+        @Override
         public int getLockedAppsCount() {
             return AppLockService.this.getLockedAppsCount();
         }
@@ -685,6 +701,16 @@ public class AppLockService extends SystemService {
         @Override
         public List<String> getLockedPackages() {
             return AppLockService.this.getLockedPackages();
+        }
+
+        @Override
+        public boolean getAppNotificationHide(String packageName) {
+            return AppLockService.this.getAppNotificationHide(packageName);
+        }
+
+        @Override
+        public void setAppNotificationHide(String packageName, boolean hide) {
+            AppLockService.this.setAppNotificationHide(packageName, hide);
         }
 
         @Override
@@ -715,9 +741,6 @@ public class AppLockService extends SystemService {
                 case MSG_INIT_APPS:
                     initLockedApps();
                     break;
-                case MSG_READ_STATE:
-                    readState();
-                    break;
                 case MSG_WRITE_STATE:
                     writeState();
                     break;
@@ -738,9 +761,22 @@ public class AppLockService extends SystemService {
         private CharSequence appLabel;
         private int appOpMode = -1;
         private Intent intent;
+        private boolean notifHide;
 
-        public AppLockContainer(String pkg, int opMode) {
+        public AppLockContainer(String pkg, int opMode, boolean hideNotif) {
             packageName = pkg;
+            notifHide = hideNotif;
+
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                mIpm.setBlockUninstallForUser(packageName, mIsSecure, mUserId);
+            } catch (RemoteException re) {
+                // Shouldn't happen.
+                Slog.e(TAG, "Failed to setBlockUninstallForUser", re);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+
             try {
                 aInfo = mPackageManager.getApplicationInfo(packageName, 0);
             } catch(PackageManager.NameNotFoundException e) {
@@ -792,13 +828,35 @@ public class AppLockService extends SystemService {
         private void onUnlockSucceed() {
             addOpenedApp(packageName);
             startActivityAfterUnlock();
-            dispatchCallbacks(packageName, true);
         }
 
         private void appRemovedFromList() {
             Slog.d(TAG, "appRemovedFromList() appOpMode: " + appOpMode);
+
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                mIpm.setBlockUninstallForUser(packageName, false, mUserId);
+            } catch (RemoteException re) {
+                // Shouldn't happen.
+                Slog.e(TAG, "Failed to setBlockUninstallForUser", re);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+
             mAppOpsManager.setMode(AppOpsManager.OP_SYSTEM_ALERT_WINDOW,
                     aInfo.uid, packageName, appOpMode);
+        }
+
+        private void reportPasswordChanged() {
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                mIpm.setBlockUninstallForUser(packageName, mIsSecure, mUserId);
+            } catch (RemoteException re) {
+                // Shouldn't happen.
+                Slog.e(TAG, "Failed to setBlockUninstallForUser", re);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
         }
     }
 }

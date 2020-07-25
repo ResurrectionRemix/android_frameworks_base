@@ -47,8 +47,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.util.ArraySet;
 import android.util.AttributeSet;
@@ -458,14 +456,11 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
             updateAlarmOrCall();
             AppLockManager appLockManager = (AppLockManager) mContext
                     .getSystemService(Context.APPLOCK_SERVICE);
-            String pkg = mStatusBarNotification.getPackageName();
+            final String pkg = mStatusBarNotification.getPackageName();
             mIsAppLocked = appLockManager.isAppLocked(pkg);
             if (mIsAppLocked) {
-                boolean lockNotifications =  Settings.System.getIntForUser(
-                        mContext.getContentResolver(),
-                        Settings.System.APP_LOCK_HIDE_NOTIFICATIONS, 1,
-                        UserHandle.USER_CURRENT) != 0;
-                mAppOpen = appLockManager.isAppOpen(pkg) || !lockNotifications;
+                mAppOpen = appLockManager.isAppOpen(pkg) || !appLockManager
+                            .getAppNotificationHide(pkg);
             }
             if (mIsAppLocked) Log.d(TAG, "setEntry() app:" + mAppName
                     + " mAppOpen:" + mAppOpen + " mIsAlarmOrCall:" + mIsAlarmOrCall);
@@ -1644,7 +1639,6 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     public void setNeedsRedaction(boolean needsRedaction) {
-        needsRedaction |= mIsAppLocked && !mAppOpen;
         if (mNeedsRedaction != needsRedaction) {
             mNeedsRedaction = needsRedaction;
             updateInflationFlag(FLAG_CONTENT_VIEW_PUBLIC, needsRedaction /* shouldInflate */);
@@ -2613,7 +2607,6 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     public void onAppStateChanged(boolean open) {
         if (mAppOpen != open) {
             mAppOpen = open;
-            setNeedsRedaction(mNeedsRedaction);
             setHideSensitive(mSensitive, true, 0, 100);
         }
     }
@@ -2642,9 +2635,10 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
         ComponentName cmp = intent.getIntent().getComponent();
         if (cmp != null) {
             String intentClassName = cmp.getClassName().toLowerCase();
-            mIsAlarmOrCall = (intentClassName.contains("call") || intentClassName.contains("voip")
-                    || intentClassName.contains("alarm"))
-                    && intentClassName.contains("activity");
+            mIsAlarmOrCall = intentClassName.contains("callactivity")
+                                || intentClassName.contains("callingactivity")
+                                || intentClassName.contains("voipactivity")
+                                || intentClassName.contains("alarmactivity");
         } else {
             intent = mStatusBarNotification.getNotification().fullScreenIntent;
             if (intent != null) {

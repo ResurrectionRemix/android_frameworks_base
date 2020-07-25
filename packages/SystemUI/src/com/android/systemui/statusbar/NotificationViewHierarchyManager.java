@@ -167,11 +167,12 @@ public class NotificationViewHierarchyManager implements DynamicPrivacyControlle
                     || !mLockscreenUserManager.needsSeparateWorkChallenge(userId))) {
                 userPublic = false;
             }
-            boolean needsRedaction = mLockscreenUserManager.needsRedaction(ent);
+            boolean appLocked = ent.getRow().isAppLocked();
+            boolean needsRedaction = appLocked || mLockscreenUserManager.needsRedaction(ent);
             boolean sensitive = userPublic && needsRedaction;
             boolean deviceSensitive = devicePublic
-                    && !mLockscreenUserManager.userAllowsPrivateNotificationsInPublic(
-                    currentUserId);
+                    && (appLocked || !mLockscreenUserManager.userAllowsPrivateNotificationsInPublic(
+                    currentUserId));
             ent.setSensitive(sensitive, deviceSensitive);
             ent.getRow().setNeedsRedaction(needsRedaction);
             if (mGroupManager.isChildInGroupWithSummary(ent.notification)) {

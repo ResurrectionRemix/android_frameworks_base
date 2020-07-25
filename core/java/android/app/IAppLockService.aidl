@@ -29,9 +29,17 @@ interface IAppLockService {
 
     boolean isAppOpen(in String packageName);
 
+    void setShowOnlyOnWake(in boolean showOnce);
+
+    boolean getShowOnlyOnWake();
+
     int getLockedAppsCount();
 
     List<String> getLockedPackages();
+
+    boolean getAppNotificationHide(in String packageName);
+
+    void setAppNotificationHide(in String packageName, in boolean hide);
 
     void addAppLockCallback(IAppLockCallback callback);
 

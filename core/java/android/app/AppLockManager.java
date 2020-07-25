@@ -72,6 +72,22 @@ public class AppLockManager {
         }
     }
 
+    public void setShowOnlyOnWake(boolean showOnce) {
+        try {
+            mService.setShowOnlyOnWake(showOnce);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    public boolean getShowOnlyOnWake() {
+        try {
+            return mService.getShowOnlyOnWake();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     public int getLockedAppsCount() {
         try {
             return mService.getLockedAppsCount();
@@ -83,6 +99,22 @@ public class AppLockManager {
     public List<String> getLockedPackages() {
         try {
             return mService.getLockedPackages();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    public boolean getAppNotificationHide(String packageName) {
+        try {
+            return mService.getAppNotificationHide(packageName);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    public void setAppNotificationHide(String packageName, boolean hide) {
+        try {
+            mService.setAppNotificationHide(packageName, hide);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -106,6 +138,6 @@ public class AppLockManager {
 
     public abstract static class AppLockCallback extends IAppLockCallback.Stub {
         @Override
-        public abstract void onAppStateChanged(String pkg, boolean opened);
+        public abstract void onAppStateChanged(String pkg);
     };
 }
