@@ -105,6 +105,7 @@ import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.InflatedSmartReplies.SmartRepliesAndActions;
 
+import android.provider.Settings;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
