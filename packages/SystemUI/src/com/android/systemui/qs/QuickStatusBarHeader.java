@@ -528,7 +528,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 if (mHideDragHandle) {
                     mQuickQsBrightness.setPadding(0, 80, 0, 0);
                  } else {
-                    mQuickQsBrightness.setPadding(0, 30, 0, 0);
+                    mQuickQsBrightness.setPadding(0, 50, 0, 0);
                  }
             } else {
                 mQuickQsBrightness.setPadding(0, 0, 0, 0);
