@@ -181,8 +181,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
 
-    private PrivacyItemController mPrivacyItemController;
-
     private int mStatusBarBatteryStyle, mQSBatteryStyle;
 
     private static final String QS_SHOW_BATTERY_PERCENT =
@@ -357,7 +355,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE,
-                Settings.System.QS_DATAUSAGE, QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_BUTTONS, 
+                Settings.System.QS_DATAUSAGE, QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE, QS_SHOW_BRIGHTNESS_SLIDER);
         updateSettings();
     }
@@ -485,17 +483,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
 
         if (mIsQuickQsBrightnessEnabled) {
-           if (!mHeaderImageEnabled) {
-               qqsHeight += mContext.getResources().getDimensionPixelSize(
+            qqsHeight += mContext.getResources().getDimensionPixelSize(
                        R.dimen.brightness_mirror_height)
                        + mContext.getResources().getDimensionPixelSize(
                        R.dimen.qs_tile_margin_top);
-           } else {
-               qqsHeight += mContext.getResources().getDimensionPixelSize(
-                       R.dimen.brightness_mirror_height)
-                       + mContext.getResources().getDimensionPixelSize(
-                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight;
-           }
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
@@ -783,7 +774,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mRingerContainer && mRingerContainer.isVisibleToUser()) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Settings.ACTION_SOUND_SETTINGS), 0);
-        }
         } else if (v == mMinBrightness) {
             final ContentResolver resolver = getContext().getContentResolver();
             int currentValue = Settings.System.getIntForUser(resolver,
@@ -971,7 +961,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                         TunerService.parseInteger(newValue, 0);
                 updateResources();
                 break;
-            case QSPanel.QS_SHOW_BRIGHTNESS_BUTTONS:
+            case QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS:
                 mBrightnessButton =
                         TunerService.parseIntegerSwitch(newValue, true);
                 updateResources();
@@ -989,6 +979,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
 
     private void updateIconPos() {
+        Resources resources = mContext.getResources();
         boolean available = resources.getBoolean(
                  com.android.internal.R.bool.config_automatic_brightness_available);
         if (!available) return;

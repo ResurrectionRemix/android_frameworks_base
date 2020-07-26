@@ -29,12 +29,6 @@
             sysui:defValue="true" /-->
 
         <com.android.systemui.tuner.TunerSwitch
-            android:key="qs_brightness_position_bottom"
-            android:icon="@drawable/rr_position_icon"
-            android:title="@string/tuner_brightness_position_bottom"
-            sysui:defValue="false" />
-
-        <com.android.systemui.tuner.TunerSwitch
             android:key="qs_show_brightness_side_buttons"
             android:icon="@drawable/rr_brightness_side_icon"
             android:title="@string/tuner_show_brightness_side_buttons"
