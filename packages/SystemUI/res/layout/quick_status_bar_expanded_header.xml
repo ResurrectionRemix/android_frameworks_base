@@ -45,6 +45,7 @@
         android:id="@+id/quick_qs_brightness_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/brightness_mirror_height"
+        android:layout_gravity="center_vertical"
         android:visibility="gone" />
 
     <com.android.systemui.qs.QuickQSPanel

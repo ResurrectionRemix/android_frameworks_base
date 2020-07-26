@@ -524,6 +524,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             if (mBrightnessSlider == 3) {
                 headerPanel.addRule(RelativeLayout.BELOW, R.id.quick_qs_brightness_bar);
             }
+            if (mBrightnessSlider == 4) {
+                if (mHideDragHandle) {
+                    mQuickQsBrightness.setPadding(0, 80, 0, 0);
+                 } else {
+                    mQuickQsBrightness.setPadding(0, 30, 0, 0);
+                 }
+            } else {
+                mQuickQsBrightness.setPadding(0, 0, 0, 0);
+            }
             if (mQuickQsBrightness.getVisibility() == View.GONE) {
                 mQuickQsBrightness.setVisibility(View.VISIBLE);
             }
@@ -533,16 +542,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
        } else {
             mQuickQsBrightness.setVisibility(View.GONE);
        }
-       if (mBrightnessSlider == 4) {
-            if (mHideDragHandle) {
-                mQuickQsBrightness.setPadding(0, 80, 0, 0);
-            } else {
-               mQuickQsBrightness.setPadding(0, 30, 0, 0);
-            }
-        } else {
-            mQuickQsBrightness.setPadding(0, 0, 0, 0);
-        }
-
         mHeaderQsPanel.setLayoutParams(headerPanel);
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) getLayoutParams();
@@ -716,7 +715,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         final int sp = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         RelativeLayout.LayoutParams lpQuickQsBrightness = (RelativeLayout.LayoutParams)
                 mQuickQsBrightness.getLayoutParams();
-        lpQuickQsBrightness.setMargins(sp - mPaddingLeft, 0, sp - mPaddingRight, 0);
         lpQuickQsBrightness.addRule(RelativeLayout.BELOW, R.id.header_text_container);
         if (mBrightnessSlider == 4) {
             lpQuickQsBrightness.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
