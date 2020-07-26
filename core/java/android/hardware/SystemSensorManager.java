@@ -166,41 +166,16 @@ public class SystemSensorManager extends SensorManager {
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SENSOR_BLOCK, 1) == 1) {
-            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
+            int sensortype = sensor.getType();
+            if (sensortype == Sensor.TYPE_SIGNIFICANT_MOTION ||
+                    sensortype == Sensor.TYPE_ACCELEROMETER ||
+                    sensortype == Sensor.TYPE_LINEAR_ACCELERATION) {
                 String pkgName = mContext.getPackageName();
                 for (String blockedPkgName : mContext.getResources().getStringArray(
                         com.android.internal.R.array.config_blockPackagesSensorDrain)) {
                     if (pkgName.equals(blockedPkgName)) {
                         Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
-                                "significant motion sensor");
-                        return false;
-                    }
-                }
-            }
-        }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SENSOR_BLOCK, 1) == 1) {
-            if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                String pkgName = mContext.getPackageName();
-                for (String blockedPkgName : mContext.getResources().getStringArray(
-                        com.android.internal.R.array.config_blockPackagesSensorDrain)) {
-                    if (pkgName.equals(blockedPkgName)) {
-                        Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
-                                "accelerometer sensor");
-                        return false;
-                    }
-                }
-            }
-        }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SENSOR_BLOCK, 1) == 1) {
-            if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-                String pkgName = mContext.getPackageName();
-                for (String blockedPkgName : mContext.getResources().getStringArray(
-                        com.android.internal.R.array.config_blockPackagesSensorDrain)) {
-                    if (pkgName.equals(blockedPkgName)) {
-                        Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
-                                "linear acceleration sensor");
+                                sensor.getStringType());
                         return false;
                     }
                 }
