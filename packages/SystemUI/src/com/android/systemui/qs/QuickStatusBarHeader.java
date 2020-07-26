@@ -477,18 +477,26 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 com.android.internal.R.dimen.status_bar_height);
         int qqsHeight = mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_quick_header_panel_height);
+        int headerheight = mContext.getResources().getDimensionPixelSize(
+                R.dimen.qs_header_image_offset);
         if (mHideDragHandle) {
             qqsHeight -= mContext.getResources().getDimensionPixelSize(
                     R.dimen.quick_qs_drag_handle_height);
         }
 
         if (mIsQuickQsBrightnessEnabled) {
-            qqsHeight += mContext.getResources().getDimensionPixelSize(
+           if (!mHeaderImageEnabled) {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
                        R.dimen.brightness_mirror_height)
                        + mContext.getResources().getDimensionPixelSize(
                        R.dimen.qs_tile_margin_top);
+           } else {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + headerheight;
+           }
         }
-
         setMinimumHeight(sbHeight + qqsHeight);
     }
 
@@ -524,6 +532,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             updateIconPos();
        } else {
             mQuickQsBrightness.setVisibility(View.GONE);
+       }
+       if (mBrightnessSlider == 4) {
+            if (mHideDragHandle) {
+                mQuickQsBrightness.setPadding(0, 80, 0, 0);
+            } else {
+               mQuickQsBrightness.setPadding(0, 30, 0, 0);
+            }
+        } else {
+            mQuickQsBrightness.setPadding(0, 0, 0, 0);
         }
 
         mHeaderQsPanel.setLayoutParams(headerPanel);
@@ -986,10 +1003,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         if (mIsQsAutoBrightnessEnabled == 0) {
             mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);
             mQuickQsBrightness.findViewById(R.id.brightness_icon_left).setVisibility(View.GONE);
-        } else if (mIsQsAutoBrightnessEnabled == 0)  {
+        } else if (mIsQsAutoBrightnessEnabled == 1)  {
             mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);
             mQuickQsBrightness.findViewById(R.id.brightness_icon_left).setVisibility(View.VISIBLE);
-        } else if (mIsQsAutoBrightnessEnabled == 0)  {
+        } else if (mIsQsAutoBrightnessEnabled == 2)  {
             mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.VISIBLE);
             mQuickQsBrightness.findViewById(R.id.brightness_icon_left).setVisibility(View.GONE);
         }

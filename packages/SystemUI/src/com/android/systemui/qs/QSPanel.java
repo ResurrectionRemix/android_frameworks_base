@@ -170,7 +170,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         mBrightnessView = LayoutInflater.from(mContext).inflate(
             R.layout.quick_settings_brightness_dialog, this, false);
-        addView(mBrightnessView);
+        //addView(mBrightnessView);
 
         mBrightnessPlaceholder = LayoutInflater.from(mContext).inflate(
             R.layout.quick_settings_brightness_placeholder, this, false);
@@ -178,7 +178,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         mTileLayout = (QSTileLayout) LayoutInflater.from(mContext).inflate(
                 R.layout.qs_paged_tile_layout, this, false);
         mTileLayout.setListening(mListening);
-        addView((View) mTileLayout);
+       // addView((View) mTileLayout);
         updateSettings();
 
         mQsTileRevealController = new QSTileRevealController(mContext, this,
@@ -246,29 +246,24 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                 com.android.internal.R.bool.config_automatic_brightness_available);
     }
 
-
     private void addQSPanel() {
-        switch (mBrightnessSlider) {
-            case 1:
-            default:
-                addView(mBrightnessView);
-                addView((View) mTileLayout);
-                break;
-            case 2:
-                addView((View) mTileLayout);
-                addView(mBrightnessView);
-                break;
-            case 3:
-                addView(mBrightnessView);
-                addView((View) mTileLayout);
-                break;
-            case 4:
-                addView(mBrightnessPlaceholder);
-                addView((View) mTileLayout);
-                addView(mBrightnessView);
-                break;
+        if (mBrightnessSlider == 1) {
+            addView(mBrightnessView);
+            addView((View) mTileLayout);
+        } else if (mBrightnessSlider == 2) {
+            addView((View) mTileLayout);
+            addView(mBrightnessView);
+        }  else if (mBrightnessSlider == 3) {
+            addView(mBrightnessView);
+            addView((View) mTileLayout);
+        }  else if (mBrightnessSlider == 4) {
+            addView(mBrightnessPlaceholder);
+            addView((View) mTileLayout);
+            addView(mBrightnessView);
+        } else {
+            addView((View) mTileLayout);
+            addView(mBrightnessView);
         }
-
         addDivider();
         addView(mFooter.getView());
         updateResources();
@@ -279,6 +274,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         if (mDivider != null) removeView(mDivider);
         if ((View) mTileLayout != null) removeView((View) mTileLayout);
         if (mBrightnessView != null) removeView(mBrightnessView);
+        if (mBrightnessPlaceholder != null) removeView(mBrightnessPlaceholder);
 
         addQSPanel();
     }
@@ -363,7 +359,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     }
 
     private void updateAutoViewVisibilityForTuningValue(View view,View leftview, int pos) {
-    try {
+       try {
             if (pos == 0) {
                 view.setVisibility(View.GONE);
                 leftview.setVisibility(View.GONE);
@@ -422,23 +418,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             }
         }
         return 0;
-    }
-
-    private void updateViewVisibilityForTuningValue(@Nullable String newValue) {
-        boolean visible = TunerService.parseIntegerSwitch(newValue, true);
-        if (visible) {
-            mBrightnessVisible = true;
-            mBrightnessView.setVisibility(VISIBLE);
-            if (!mBrightnessBottom) {
-                mBrightnessPlaceholder.setVisibility(View.GONE);
-            } else {
-                mBrightnessPlaceholder.setVisibility(View.VISIBLE);
-            }
-        } else {
-            mBrightnessVisible = false;
-            mBrightnessView.setVisibility(GONE);
-            mBrightnessPlaceholder.setVisibility(View.VISIBLE);
-        }
     }
 
     private void updateViewVisibilityForBrightnessMirrorIcon(@Nullable String newValue) {
