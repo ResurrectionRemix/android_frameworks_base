@@ -148,7 +148,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private boolean mShowAutoBrightnessButton = false;
     private boolean mShowBrightnessSideButtons = false;
 
-    private int mBrightnessSlider = 1;
+    private int mBrightnessSlider;
 
     public QSPanel(Context context) {
         this(context, null);
@@ -178,6 +178,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         mTileLayout = (QSTileLayout) LayoutInflater.from(mContext).inflate(
                 R.layout.qs_paged_tile_layout, this, false);
         mTileLayout.setListening(mListening);
+        addView((View) mTileLayout);
         updateSettings();
 
         mQsTileRevealController = new QSTileRevealController(mContext, this,
@@ -245,13 +246,27 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                 com.android.internal.R.bool.config_automatic_brightness_available);
     }
 
+
     private void addQSPanel() {
-        if (mBrightnessSlider == 1 || mBrightnessSlider == 3) {
-            addView(mBrightnessView);
-            addView((View) mTileLayout);
-        } else {
-            addView((View) mTileLayout);
-            addView(mBrightnessView);
+        switch (mBrightnessSlider) {
+            case 1:
+            default:
+                addView(mBrightnessView);
+                addView((View) mTileLayout);
+                break;
+            case 2:
+                addView((View) mTileLayout);
+                addView(mBrightnessView);
+                break;
+            case 3:
+                addView(mBrightnessView);
+                addView((View) mTileLayout);
+                break;
+            case 4:
+                addView(mBrightnessPlaceholder);
+                addView((View) mTileLayout);
+                addView(mBrightnessView);
+                break;
         }
 
         addDivider();
