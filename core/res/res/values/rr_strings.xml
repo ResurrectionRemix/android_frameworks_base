@@ -80,4 +80,7 @@
     <string name="popup_camera_dialog_no">No</string>
     <string name="popup_camera_dialog_raise">Yes</string>
 
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Calls and notifications will ring</string>
+
 </resources>
