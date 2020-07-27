@@ -329,13 +329,12 @@ public class NetworkTraffic extends TextView {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action == null) return;
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION) && mScreenOn) {
-                updateViews();
-            } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
+            if (action.equals(Intent.ACTION_SCREEN_ON)) {
                 mScreenOn = true;
-                updateViews();
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
+            }
+            if (mScreenOn) {
                 updateViews();
             }
         }
