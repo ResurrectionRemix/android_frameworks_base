@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
+import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
@@ -141,6 +142,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<MonoToggleTile> mMonoToggleTileProvider;
     private final Provider<NavBarTile> mNavBarTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
+    private final Provider<GestureAnyWhereTile> mGestureAnyWhereTileProvider;
 
     private QSTileHost mHost;
 
@@ -195,7 +197,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<PulseTile> pulseTileProvider,
             Provider<MonoToggleTile> monoToggleTileProvider,
             Provider<NavBarTile> navbarTileProvider,
-            Provider<ScreenshotTile> screenshotTileProvider) {
+            Provider<ScreenshotTile> screenshotTileProvider,
+            Provider<GestureAnyWhereTile> gesturenywhereTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -247,6 +250,7 @@ public class QSFactoryImpl implements QSFactory {
         mMonoToggleTileProvider = monoToggleTileProvider;
         mNavBarTileProvider = navbarTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
+        mGestureAnyWhereTileProvider = gesturenywhereTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -365,6 +369,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mNavBarTileProvider.get();
             case "screenshot":
                 return mScreenshotTileProvider.get();
+            case "gestureanywhere":
+                return mGestureAnyWhereTileProvider.get();
         }
 
         // Intent tiles.

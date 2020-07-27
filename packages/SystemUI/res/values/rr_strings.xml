@@ -99,6 +99,12 @@
     <string name="quick_settings_navbar_changed_off">Navigation turned off</string>
     <string name="quick_settings_navbar_changed_on">Navigation turned on</string>
 
+    <string name="quick_settings_gesture">Gesture Anywhere</string>
+    <string name="quick_settings_gesture_off">Gesture anywhere off</string>
+    <string name="quick_settings_gesture_on">Gesture anywhere on</string>
+    <string name="quick_settings_gesture_changed_off">Gesture anywhere turned off</string>
+    <string name="quick_settings_gesture_changed_on">Gesture anywhere turned on</string>
+
     <!-- Tuner -->
     <string name="preview">Preview</string>
     <string name="keycode">Keycode</string>
