@@ -147,8 +147,6 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.AUDIO_PANEL_VIEW_TIMEOUT;
     public static final String RINGER_VOLUME_PANEL =
             "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
-    public static final String GRADIENT =
-            "system:" + Settings.System.QS_NEW_BG_ENABLED;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -223,7 +221,6 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mBTSCOShowing;
     private int mTimeOutDesired, mTimeOut;
     private boolean mShowRinger;
-    private boolean mGradient;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -259,7 +256,6 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         tunerService.addTunable(this, RINGER_VOLUME_PANEL);
-        tunerService.addTunable(this, GRADIENT);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -553,13 +549,6 @@ public class VolumeDialogImpl implements VolumeDialog,
                 boolean ShowRinger = TunerService.parseIntegerSwitch(newValue, true);
                 if (mShowRinger != ShowRinger) {
                     mShowRinger = ShowRinger;
-                    triggerChange = true;
-                }
-                break;
-            case GRADIENT:
-                boolean Gradient = TunerService.parseIntegerSwitch(newValue, true);
-                if (mGradient != Gradient) {
-                    mGradient = Gradient;
                     triggerChange = true;
                 }
                 break;
@@ -1825,18 +1814,8 @@ public class VolumeDialogImpl implements VolumeDialog,
                         SLIDER_PROGRESS_ALPHA_ACTIVE_DARK : SLIDER_PROGRESS_ALPHA_ACTIVE)
                 : Utils.getColorAccent(mContext).withAlpha(mDarkMode ?
                         SLIDER_PROGRESS_ALPHA_DARK : SLIDER_PROGRESS_ALPHA);
-        final int alpha = useActiveColoring
-                ? Color.alpha(tint.getDefaultColor())
-                : getAlphaAttr(android.R.attr.secondaryContentAlpha);
-        final ColorStateList progressTint = useActiveColoring ? null : tint;
         if (tint == row.cachedTint) return;
-        if (!mGradient) {
-            row.slider.setProgressTintList(tint);
-        } else {
-            row.slider.setProgressTintList(progressTint);
-        }
-        row.slider.setThumbTintList(tint);
-        row.slider.setAlpha(((float) alpha) / 255);
+        row.slider.setProgressTintList(tint);
         row.cachedTint = tint;
     }
 
@@ -2241,3 +2220,4 @@ public class VolumeDialogImpl implements VolumeDialog,
         private boolean addedToGroup;
     }
 }
+
