@@ -5547,6 +5547,26 @@ public final class Settings {
          private static final Validator CUSTOM_CARRIER_LABEL_VALIDATOR =
                  ANY_STRING_VALIDATOR;
 
+         /**
+          * custom carrier label. The value is
+          * String.
+          * @hide
+          */
+         public static final String STATUS_BAR_CARRIER_FONT_STYLE = "carrier_label_font_style";
+         /**
+          * custom carrier label. The value is
+          * String.
+          * @hide
+          */
+         public static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
+
+         /**
+          * custom carrier label. The value is
+          * String.
+          * @hide
+          */
+         public static final String STATUS_BAR_CARRIER_FONT_SIZE = "status_bar_carrier_label_font_size";
+
         /**
          * Whether to show the notification ticker on the status bar
          * @hide
