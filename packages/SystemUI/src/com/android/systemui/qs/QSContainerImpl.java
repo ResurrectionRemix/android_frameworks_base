@@ -192,11 +192,12 @@ public class QSContainerImpl extends FrameLayout implements
             mIsAlpha = false;
 
         }
-
-        mBackground.getBackground().setAlpha(mQsBackgroundAlpha);
+        try {
+        if (mBackground != null) mBackground.getBackground().setAlpha(mQsBackgroundAlpha);
+        if (mBackgroundGradient != null) mBackgroundGradient.getBackground().setAlpha(mQsBackgroundAlpha);
         mStatusBarBackground.getBackground().setAlpha(mQsBackgroundAlpha);
         mBackgroundGradient.getBackground().setAlpha(mQsBackgroundAlpha);
-
+        } catch (Exception e){}
         applyHeaderBackgroundShadow();
     }
 
@@ -207,7 +208,7 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.QS_PANEL_BG_RGB_DURATION, 5,
                 UserHandle.USER_CURRENT);
         mQsBgNewEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
-                    Settings.System.QS_NEW_BG_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
        setQsBackground();
    }
 
@@ -218,6 +219,7 @@ public class QSContainerImpl extends FrameLayout implements
        } else {
            stopDiscoMode();
            if (!mQsBgNewEnabled) {
+               mQsBackGround.clearColorFilter();
                mBackground.setBackground(mQsBackGround);
            } else {
                mBackground.setBackground(mQsBackGroundNew); 

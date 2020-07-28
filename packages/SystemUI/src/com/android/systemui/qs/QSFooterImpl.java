@@ -363,8 +363,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
         mMultiUserSwitch.setVisibility(showUserSwitcher() ? View.VISIBLE : View.INVISIBLE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
-        mSettingsButton.setVisibility(isSettingButtonEnabled() ? isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE : View.VISIBLE);
-        mSettingsButton.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
+        mSettingsButton.setVisibility(isSettingButtonEnabled() ? View.VISIBLE : View.GONE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
@@ -393,7 +392,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public boolean isSettingButtonEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 0) == 1;
+            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
     }
 
     public boolean isRunningServicesEnabled() {

@@ -428,7 +428,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
 
     public void updateClockSize() {
             setTextSize(mClockSize);
-            updateClock();
     }
 
     private void updateClockColor() {
@@ -437,13 +436,11 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             } else {
                     setTextColor(mClockColor);
             }
-   	    updateClock();
     }
 
 
     private void updateClockFontStyle() {
         getClockFontStyle(mClockFontStyle);
-        updateClock();
     }
 
     public void getClockFontStyle(int font) {
@@ -624,8 +621,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (!mUseWallpaperTextColor) {
+        if (mClockColor == 0xFFFFFFFF) {
             setTextColor(mNonAdaptedColor);
+        } else {
+            setTextColor(mClockColor);
         }
     }
 
@@ -648,16 +647,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
      * @param shouldUseWallpaperTextColor whether we should use wallpaperTextColor for text color
      */
     public void useWallpaperTextColor(boolean shouldUseWallpaperTextColor) {
-        if (shouldUseWallpaperTextColor == mUseWallpaperTextColor) {
-            return;
-        }
-        mUseWallpaperTextColor = shouldUseWallpaperTextColor;
-
-        if (mUseWallpaperTextColor) {
-            setTextColor(Utils.getColorAttr(mContext, R.attr.wallpaperTextColor));
-        } else {
-            setTextColor(mNonAdaptedColor);
-        }
+         setTextColor(mClockColor);
     }
 
     private void updateShowSeconds() {

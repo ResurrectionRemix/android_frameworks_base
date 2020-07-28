@@ -295,9 +295,7 @@ final class UiModeManagerService extends SystemService {
             if (uri.equals(System.getUriFor(System.ACCENT_COLOR))) {
                 applyAccentColor();
             } else if (uri.equals(System.getUriFor(System.GRADIENT_COLOR_PROP))) {
-                final String gradientColor = System.getStringForUser(
-                        getContext().getContentResolver(), System.GRADIENT_COLOR_PROP, 0);
-                SystemProperties.set(GRADIENT_COLOR_PROP, gradientColor);
+                applyGradientColor();
             }
         }
     };
@@ -368,7 +366,7 @@ final class UiModeManagerService extends SystemService {
         mOverlayManager = IOverlayManager.Stub
                 .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
         applyAccentColor();
-
+        applyGradientColor();
         // Update the initial, static configurations.
         SystemServerInitThreadPool.get().submit(() -> {
             synchronized (mLock) {
@@ -467,11 +465,27 @@ final class UiModeManagerService extends SystemService {
     private void applyAccentColor() {
         final Context context = getContext();
         int intColor = System.getIntForUser(context.getContentResolver(),
-                System.ACCENT_COLOR, 0xFF1A73E8, UserHandle.USER_CURRENT);
+                System.ACCENT_COLOR, 0xFF4285f4, UserHandle.USER_CURRENT);
         String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
         String accentVal = SystemProperties.get(ACCENT_COLOR_PROP);
         if (!accentVal.equals(colorHex)) {
             SystemProperties.set(ACCENT_COLOR_PROP, colorHex);
+            try {
+                mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
+                mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
+                mOverlayManager.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
+            } catch (Exception e) { }
+        }
+    }
+
+    private void applyGradientColor() {
+        final Context context = getContext();
+        int intColor = System.getIntForUser(context.getContentResolver(),
+                System.GRADIENT_COLOR_PROP, 0xFF4285f4, UserHandle.USER_CURRENT);
+        String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
+        String GradientVal = SystemProperties.get(GRADIENT_COLOR_PROP);
+        if (!GradientVal.equals(colorHex)) {
+            SystemProperties.set(GRADIENT_COLOR_PROP, colorHex);
             try {
                 mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
                 mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
