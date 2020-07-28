@@ -312,6 +312,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         getContext().registerReceiverAsUser(mDevicePolicyReceiver,
                 UserHandle.ALL, filter, null, null);
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateMonitorCallback);
+        updateIndicationTextColor();
     }
 
     @Override
