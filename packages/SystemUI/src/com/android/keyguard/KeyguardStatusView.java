@@ -413,70 +413,123 @@ public class KeyguardStatusView extends GridLayout implements
             mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
         }
         if (lockDateFont == 14) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
         }
         if (lockDateFont == 15) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
         }
         if (lockDateFont == 16) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
         }
         if (lockDateFont == 17) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
         }
         if (lockDateFont == 18) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.NORMAL));
         }
         if (lockDateFont == 19) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.BOLD));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.BOLD));
         }
         if (lockDateFont == 20) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("casual", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("casual", Typeface.NORMAL));
         }
         if (lockDateFont == 21) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.NORMAL));
         }
         if (lockDateFont == 22) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.ITALIC));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.ITALIC));
         }
         if (lockDateFont == 23) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD));
         }
         if (lockDateFont == 24) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
         if (lockDateFont == 25) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("accuratist", Typeface.NORMAL));
         }
         if (lockDateFont == 26) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("aclonica", Typeface.NORMAL));
         }
         if (lockDateFont == 27) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("amarante", Typeface.NORMAL));
         }
         if (lockDateFont == 28) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("bariol", Typeface.NORMAL));
         }
         if (lockDateFont == 29) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("cagliostro", Typeface.NORMAL));
         }
         if (lockDateFont == 30) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
-    	}
+            mKeyguardSlice.setViewsTypeface(Typeface.create("cocon", Typeface.NORMAL));
+        }
         if (lockDateFont == 31) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("comfortaa", Typeface.NORMAL));
         }
-	if (lockDateFont == 32) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
+
+        if (lockDateFont == 32) {
+                mKeyguardSlice.setViewsTypeface(Typeface.create("comicsans", Typeface.NORMAL));
         }
-	if (lockDateFont == 33) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
+        if (lockDateFont == 33) {
+                mKeyguardSlice.setViewsTypeface(Typeface.create("coolstory", Typeface.NORMAL));
         }
         if (lockDateFont == 34) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
+                mKeyguardSlice.setViewsTypeface(Typeface.create("exotwo", Typeface.NORMAL));
         }
-	if (lockDateFont == 35) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+        if (lockDateFont == 35) {
+                mKeyguardSlice.setViewsTypeface(Typeface.create("fifa2018", Typeface.NORMAL));
+        }
+        if (lockDateFont == 36) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans", Typeface.NORMAL));
+        }
+        if (lockDateFont == 37) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("grandhotel", Typeface.NORMAL));
+        }
+        if (lockDateFont == 38) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("lato", Typeface.NORMAL));
+        }
+        if (lockDateFont == 39) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("lgsmartgothic", Typeface.NORMAL));
+        }
+        if (lockDateFont == 40) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("nokiapure", Typeface.NORMAL));
+        }
+        if (lockDateFont == 41) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("nunito", Typeface.NORMAL));
+        }
+        if (lockDateFont == 42) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("quando", Typeface.NORMAL));
+        }
+
+        if (lockDateFont == 43) {
+                mKeyguardSlice.setViewsTypeface(Typeface.create("redressed", Typeface.NORMAL));
+        }
+        if (lockDateFont == 44) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
+        }
+        if (lockDateFont == 45) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("robotocondensed", Typeface.NORMAL));
+        }
+        if (lockDateFont == 46) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("rosemary", Typeface.NORMAL));
+        }
+        if (lockDateFont == 47) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("samsungone", Typeface.NORMAL));
+        }
+        if (lockDateFont == 48) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("oneplusslate", Typeface.NORMAL));
+        }
+        if (lockDateFont == 49) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("sonysketch", Typeface.NORMAL));
+        }
+        if (lockDateFont == 50) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("storopia", Typeface.NORMAL));
+        }
+        if (lockDateFont == 51) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("surfer", Typeface.NORMAL));
+        }
+        if (lockDateFont == 52) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("ubuntu", Typeface.NORMAL));
         }
     }
 
@@ -699,26 +752,92 @@ public class KeyguardStatusView extends GridLayout implements
                 mOwnerInfo.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
         if (ownerinfoFont == 25) {
-            mOwnerInfo.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("accuratist", Typeface.NORMAL));
         }
         if (ownerinfoFont == 26) {
-            mOwnerInfo.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("aclonica", Typeface.NORMAL));
         }
         if (ownerinfoFont == 27) {
-            mOwnerInfo.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("amarante", Typeface.NORMAL));
         }
         if (ownerinfoFont == 28) {
-            mOwnerInfo.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("bariol", Typeface.NORMAL));
         }
         if (ownerinfoFont == 29) {
-            mOwnerInfo.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("cagliostro", Typeface.NORMAL));
         }
         if (ownerinfoFont == 30) {
-            mOwnerInfo.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("cocon", Typeface.NORMAL));
         }
         if (ownerinfoFont == 31) {
-            mOwnerInfo.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+            mOwnerInfo.setTypeface(Typeface.create("comfortaa", Typeface.NORMAL));
         }
+
+        if (ownerinfoFont == 32) {
+                mOwnerInfo.setTypeface(Typeface.create("comicsans", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 33) {
+                mOwnerInfo.setTypeface(Typeface.create("coolstory", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 34) {
+                mOwnerInfo.setTypeface(Typeface.create("exotwo", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 35) {
+                mOwnerInfo.setTypeface(Typeface.create("fifa2018", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 36) {
+            mOwnerInfo.setTypeface(Typeface.create("googlesans", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 37) {
+            mOwnerInfo.setTypeface(Typeface.create("grandhotel", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 38) {
+            mOwnerInfo.setTypeface(Typeface.create("lato", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 39) {
+            mOwnerInfo.setTypeface(Typeface.create("lgsmartgothic", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 40) {
+            mOwnerInfo.setTypeface(Typeface.create("nokiapure", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 41) {
+            mOwnerInfo.setTypeface(Typeface.create("nunito", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 42) {
+            mOwnerInfo.setTypeface(Typeface.create("quando", Typeface.NORMAL));
+        }
+
+        if (ownerinfoFont == 43) {
+                mOwnerInfo.setTypeface(Typeface.create("redressed", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 44) {
+            mOwnerInfo.setTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 45) {
+            mOwnerInfo.setTypeface(Typeface.create("robotocondensed", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 46) {
+            mOwnerInfo.setTypeface(Typeface.create("rosemary", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 47) {
+            mOwnerInfo.setTypeface(Typeface.create("samsungone", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 48) {
+            mOwnerInfo.setTypeface(Typeface.create("oneplusslate", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 49) {
+            mOwnerInfo.setTypeface(Typeface.create("sonysketch", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 50) {
+            mOwnerInfo.setTypeface(Typeface.create("storopia", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 51) {
+            mOwnerInfo.setTypeface(Typeface.create("surfer", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 52) {
+            mOwnerInfo.setTypeface(Typeface.create("ubuntu", Typeface.NORMAL));
+        }
+
     }
 
     // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
