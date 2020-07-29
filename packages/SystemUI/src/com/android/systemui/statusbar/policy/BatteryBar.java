@@ -161,7 +161,7 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         vertical = isVertical;
         mGradientColors = new int[2];
         mGradientColors[0] = mBatteryLowColor;
-        mGradientColors[1] = mHighColor;
+        mGradientColors[1] = getColorForPercent(currentCharge);
 
         mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
     }
