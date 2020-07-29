@@ -2050,6 +2050,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KEY_ACTION_PREVIOUS_TRACK:
                 RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                 break;
+            case SCREENSHOT_PARTIAL:
+                takeScreenshot(TAKE_SCREENSHOT_SELECTED_REGION);
+                break;
             default:
                 break;
         }

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.rr.xtended;
+package com.android.internal.util.rr;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
