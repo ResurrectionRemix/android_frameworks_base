@@ -40,7 +40,7 @@ public class AmbientDisplayTile extends QSTileImpl<BooleanState> {
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_ambient_display);
 
-    private static final Intent DISPLAY_SETTINGS = new Intent("android.settings.DISPLAY_SETTINGS");
+    private static final Intent DISPLAY_SETTINGS = new Intent("android.settings.RR_DOZE");
 
     private final SecureSetting mSetting;
 
