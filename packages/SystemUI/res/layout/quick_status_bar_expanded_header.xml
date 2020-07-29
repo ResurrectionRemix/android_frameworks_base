@@ -18,6 +18,7 @@
 <!-- Extends RelativeLayout -->
 <com.android.systemui.qs.QuickStatusBarHeader
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="@*android:dimen/quick_qs_total_height"
@@ -39,6 +40,11 @@
 
     <!-- Layout containing tooltips, alarm text, etc. -->
     <include layout="@layout/quick_settings_header_info" />
+
+    <com.android.systemui.statusbar.policy.BatteryBarController
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        systemui:viewLocation="5"/>
 
     <!-- Quick QS brightness bar -->
     <include layout="@layout/quick_settings_brightness_dialog"
