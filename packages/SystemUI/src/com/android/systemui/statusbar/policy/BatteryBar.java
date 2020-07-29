@@ -21,11 +21,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.Rect;
 import android.os.BatteryManager;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -67,6 +70,11 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
     private boolean mUseChargingColor = true;
     private boolean mBlendColorsReversed = false;
     private boolean mBlendDarkColorsReversed = false;
+    private int mLowColor = 0xFFFF0000;
+    private int mHighColor = 0xFF00FF00;
+    GradientDrawable mBarGradient;
+    int[] mGradientColors;
+    private boolean useGradientColor = false;
 
     private Handler mHandler = new Handler();
 
@@ -124,6 +132,8 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
                     Settings.System.getUriFor(
                             Settings.System.STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE), false,
                     this);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_BAR_USE_GRADIENT_COLOR), false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -149,6 +159,11 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         mBatteryLevel = currentCharge;
         mBatteryCharging = isCharging;
         vertical = isVertical;
+        mGradientColors = new int[2];
+        mGradientColors[0] = mBatteryLowColor;
+        mGradientColors[1] = mHighColor;
+
+        mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
     }
 
     public BatteryBar(Context context, AttributeSet attrs) {
@@ -263,6 +278,9 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         mBlendColorsReversed = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE, 0) == 1;
 
+        useGradientColor = Settings.System.getIntForUser(resolver,
+                Settings.System.BATTERY_BAR_USE_GRADIENT_COLOR, 0, UserHandle.USER_CURRENT) == 1;
+
         if (mBatteryCharging && mBatteryLevel < 100 && shouldAnimateCharging) {
             start();
         } else {
@@ -288,8 +306,40 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         }
         // Update color
         int color = getColorForPercent(n);
-        mBatteryBar.setBackgroundColor(color);
+        if (useGradientColor) {
+            float size = n / 100f;
+            mGradientColors[1] = mixColors(color, mBatteryLowColor, size);
+            mBarGradient.setColors(mGradientColors);
+            mBatteryBar.setBackgroundDrawable(mBarGradient);
+        } else {
+            mBatteryBar.setBackgroundColor(color);
+        }
         mCharger.setBackgroundColor(color);
+    }
+
+    private int mixColors(int color1, int color2, float mix) {
+        int[] rgb1 = colorToRgb(color1);
+        int[] rgb2 = colorToRgb(color2);
+
+        rgb1[0] = mixedValue(rgb1[0], rgb2[0], mix);
+        rgb1[1] = mixedValue(rgb1[1], rgb2[1], mix);
+        rgb1[2] = mixedValue(rgb1[2], rgb2[2], mix);
+        rgb1[3] = mixedValue(rgb1[3], rgb2[3], mix);
+
+        return rgbToColor(rgb1);
+    }
+
+    private int[] colorToRgb(int color) {
+        int[] rgb = {(color & 0xFF000000) >> 24, (color & 0xFF0000) >> 16, (color & 0xFF00) >> 8, (color & 0xFF)};
+        return rgb;
+    }
+
+    private int rgbToColor(int[] rgb) {
+        return (rgb[0] << 24) + (rgb[1] << 16) + (rgb[2] << 8) + rgb[3];
+    }
+
+    private int mixedValue(int val1, int val2, float mix) {
+        return (int)Math.min((mix * val1 + (1f - mix) * val2), 255f);
     }
 
     @Override
