@@ -203,6 +203,21 @@
     <alias name="fantasy" to="surfer" />
     <alias name="ITC Stone Serif" to="surfer" />
 
+
+    <family name="sonysketch">
+        <font weight="300" style="normal">SonySketch.ttf</font>
+    </family>
+    <alias name="sonysketch-semi-bold" to="sonysketch" weight="600" />
+    <alias name="sonysketch-bold" to="sonysketch" weight="700" />
+    <alias name="times" to="sonysketch" />
+    <alias name="times new roman" to="sonysketch" />
+    <alias name="palatino" to="sonysketch" />
+    <alias name="georgia" to="sonysketch" />
+    <alias name="baskerville" to="sonysketch" />
+    <alias name="goudy" to="sonysketch" />
+    <alias name="fantasy" to="sonysketch" />
+    <alias name="ITC Stone Serif" to="sonysketch" />
+
     <family name="oneplusslate">
         <font weight="300" style="normal">SlateFromOP-Light.ttf</font>
         <font weight="400" style="normal">SlateFromOP-Regular.ttf</font>
