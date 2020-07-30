@@ -77,7 +77,6 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.tuner.TunerService;
 import android.text.TextUtils;
 import lineageos.providers.LineageSettings;
-import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.SysUiServiceProvider;
 
 import java.io.FileDescriptor;
@@ -724,15 +723,6 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         mColorExtractor.setHasMediaArtwork(hasMediaArtwork);
         if (mScrimController != null) {
             mScrimController.setHasBackdrop(hasArtwork);
-        }
-
-        if (mStatusBar != null && mStatusBar.getVisualizer() != null) {
-            if (hasMediaArtwork && (artworkDrawable instanceof BitmapDrawable)) {
-                // always use current backdrop to color eq
-                mStatusBar.getVisualizer().setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
-            } else if (lockDrawable != null) {
-                mStatusBar.getVisualizer().setBitmap(((BitmapDrawable)lockDrawable).getBitmap());
-            }
         }
 
         if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
