@@ -148,6 +148,7 @@
     <dimen name="config_customCutoutTopHeight">0.0px</dimen>
     <dimen name="config_customCutoutBottomWidth">0.0px</dimen>
     <dimen name="config_customCutoutBottomHeight">0.0px</dimen>
+    <dimen name="battery_bar_keyguard_padding">4dp</dimen>
 
     <dimen name="lock_clock_font_size_56">56dp</dimen>
     <dimen name="lock_clock_font_size_57">57dp</dimen>
