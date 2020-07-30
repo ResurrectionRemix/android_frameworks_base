@@ -108,12 +108,6 @@ public class ThemeAccentUtils {
         "com.android.systemui.qstile.badgetwo", // 26
     };
 
-    // Dark Variants
-    private static final String[] DARK_THEMES = {
-        "com.android.system.theme.charcoalblack", // 0
-        "com.android.system.theme.amoledblack", // 1
-    };
-
     // Switch themes
     private static final String[] SWITCH_STYLES = {
         "com.android.system.switch.stock", // 0
@@ -123,6 +117,11 @@ public class ThemeAccentUtils {
         "com.android.system.switch.contained", // 4
         "com.android.system.switch.retro", // 5
         "com.android.system.switch.telegram", // 6
+    };
+
+    public static final String[] PITCH_BLACK = {
+            "com.android.theme.pitchblack.system",
+            "com.android.theme.pitchblack.systemui",
     };
 
     // Check for the dark system theme
