@@ -2258,6 +2258,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEM_THEME),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2271,7 +2274,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SYSTEM_THEME))) {
                 updateSystemTheme();
-            } else {
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_HEADER_STYLE))) {
+                stockQSHeaderStyle();
+                updateQSHeaderStyle();
+	         } else {
               update();
             }
         }
@@ -6072,4 +6078,16 @@ public class StatusBar extends SystemUI implements DemoMode,
            break;
           }
      }
+
+    // Switches qs header style from stock to custom
+    public void updateQSHeaderStyle() {
+        int qsHeaderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemesUtils.updateQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsHeaderStyle);
+    }
+
+    // Unload all qs header styles back to stock
+    public void stockQSHeaderStyle() {
+        ThemesUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
 }
