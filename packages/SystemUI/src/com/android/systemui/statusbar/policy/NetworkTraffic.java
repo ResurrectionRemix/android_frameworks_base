@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff;
@@ -55,15 +54,15 @@ import android.widget.TextView;
 
 import lineageos.providers.LineageSettings;
 
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.tuner.TunerService;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-public class NetworkTraffic extends TextView {
+public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private static final String TAG = "NetworkTraffic";
-
-    private static final boolean DEBUG = false;
 
     private static final int MODE_UPSTREAM_AND_DOWNSTREAM = 0;
     private static final int MODE_UPSTREAM_ONLY = 1;
@@ -80,6 +79,21 @@ public class NetworkTraffic extends TextView {
     private static final int Mega = Kilo * Kilo;
     private static final int Giga = Mega * Kilo;
 
+    private static final String NETWORK_TRAFFIC_LOCATION =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_LOCATION;
+    private static final String NETWORK_TRAFFIC_MODE =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_MODE;
+    private static final String NETWORK_TRAFFIC_AUTOHIDE =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE;
+    private static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD;
+    private static final String NETWORK_TRAFFIC_UNITS =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_UNITS;
+    private static final String NETWORK_TRAFFIC_REFRESH_INTERVAL =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL;
+    private static final String NETWORK_TRAFFIC_HIDEARROW =
+            "lineagesecure:" + LineageSettings.Secure.NETWORK_TRAFFIC_HIDEARROW;
+
     protected int mLocation = LOCATION_DISABLED;
     private int mMode = MODE_UPSTREAM_AND_DOWNSTREAM;
     private int mSubMode = MODE_UPSTREAM_AND_DOWNSTREAM;
@@ -94,7 +108,6 @@ public class NetworkTraffic extends TextView {
     protected int mIconTint = 0;
     protected int newTint = Color.WHITE;
 
-    private SettingsObserver mObserver;
     private Drawable mDrawable;
 
     private int mRefreshInterval = 2;
@@ -112,6 +125,9 @@ public class NetworkTraffic extends TextView {
     private RelativeSizeSpan mSpeedRelativeSizeSpan = new RelativeSizeSpan(0.70f);
     private RelativeSizeSpan mUnitRelativeSizeSpan = new RelativeSizeSpan(0.65f);
 
+    protected boolean mEnabled = false;
+    protected boolean mConnectionAvailable = true;
+
     public NetworkTraffic(Context context) {
         this(context, null);
     }
@@ -125,9 +141,6 @@ public class NetworkTraffic extends TextView {
         mContext = context;
         mConnectivityManager =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        mObserver = new SettingsObserver(mTrafficHandler);
-        mObserver.observe();
-        updateSettings();
     }
 
     @Override
@@ -136,6 +149,17 @@ public class NetworkTraffic extends TextView {
 
         if (!mAttached) {
             mAttached = true;
+            final TunerService tunerService = Dependency.get(TunerService.class);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_LOCATION);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_MODE);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_AUTOHIDE);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_UNITS);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_REFRESH_INTERVAL);
+            tunerService.addTunable(this, NETWORK_TRAFFIC_HIDEARROW);
+
+            mConnectionAvailable = mConnectivityManager.getActiveNetworkInfo() != null;
+
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
             filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -149,6 +173,7 @@ public class NetworkTraffic extends TextView {
         super.onDetachedFromWindow();
         if (mAttached) {
             mContext.unregisterReceiver(mIntentReceiver);
+            Dependency.get(TunerService.class).removeTunable(this);
             mAttached = false;
         }
     }
@@ -156,44 +181,41 @@ public class NetworkTraffic extends TextView {
     private Handler mTrafficHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            final long now = SystemClock.elapsedRealtime();
-            long timeDelta = now - mLastUpdateTime; /* ms */
             long rxBytes = 0;
             long txBytes = 0;
 
-            if (msg.what == MESSAGE_TYPE_PERIODIC_REFRESH
-                    && timeDelta >= mRefreshInterval * 1000 * 0.95f) {
-                long[] newTotalRxTxBytes = getTotalRxTxBytes();
+            if (msg.what == MESSAGE_TYPE_PERIODIC_REFRESH) {
+                final long now = SystemClock.elapsedRealtime();
+                long timeDelta = now - mLastUpdateTime; /* ms */
 
-                if (timeDelta < 1) {
-                    timeDelta = Long.MAX_VALUE;
+                if (timeDelta >= mRefreshInterval * 1000 * 0.95f) {
+                    long[] newTotalRxTxBytes = getTotalRxTxBytes();
+
+                    final long rxBytesDelta = newTotalRxTxBytes[0] - mLastRxBytes;
+                    final long txBytesDelta = newTotalRxTxBytes[1] - mLastTxBytes;
+
+                    rxBytes = (long) (rxBytesDelta / (timeDelta / 1000f));
+                    txBytes = (long) (txBytesDelta / (timeDelta / 1000f));
+
+                    mLastRxBytes = newTotalRxTxBytes[0];
+                    mLastTxBytes = newTotalRxTxBytes[1];
+                    mLastUpdateTime = now;
                 }
-
-                final long rxBytesDelta = newTotalRxTxBytes[0] - mLastRxBytes;
-                final long txBytesDelta = newTotalRxTxBytes[1] - mLastTxBytes;
-
-                rxBytes = (long) (rxBytesDelta / (timeDelta / 1000f));
-                txBytes = (long) (txBytesDelta / (timeDelta / 1000f));
-
-                mLastRxBytes = newTotalRxTxBytes[0];
-                mLastTxBytes = newTotalRxTxBytes[1];
-                mLastUpdateTime = now;
             }
 
-            final boolean enabled = mLocation != LOCATION_DISABLED && mScreenOn;
             final boolean showUpstream =
                     mMode == MODE_UPSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
             final boolean showDownstream =
                     mMode == MODE_DOWNSTREAM_ONLY || mMode == MODE_UPSTREAM_AND_DOWNSTREAM;
             final boolean aboveThreshold = (showUpstream && txBytes > mAutoHideThreshold)
                     || (showDownstream && rxBytes > mAutoHideThreshold);
-            mIsActive = enabled && mAttached && (!mAutoHide || (aboveThreshold && isConnectionAvailable()));
+            mIsActive = mAttached && mConnectionAvailable && (!mAutoHide || aboveThreshold);
             int submode = MODE_UPSTREAM_AND_DOWNSTREAM;
             final boolean trafficactive = (txBytes > 0 || rxBytes > 0);
 
             clearHandlerCallbacks();
 
-            if (mIsActive) {
+            if (mEnabled && mIsActive) {
                 CharSequence output = "";
                 if (showUpstream && showDownstream) {
                     if (txBytes > rxBytes) {
@@ -228,7 +250,7 @@ public class NetworkTraffic extends TextView {
             }
 
             // Schedule periodic refresh
-            if (enabled && mAttached) {
+            if (mEnabled && mScreenOn && mAttached) {
                 mTrafficHandler.sendEmptyMessageDelayed(MESSAGE_TYPE_PERIODIC_REFRESH,
                         mRefreshInterval * 1000);
             }
@@ -307,19 +329,18 @@ public class NetworkTraffic extends TextView {
             bytes[0] += tetheringStats.rxBytes;
             bytes[1] += tetheringStats.txBytes;
 
-            if (DEBUG) {
-                Log.d(TAG, "tether hw offload txBytes: " + tetheringStats.txBytes
-                        + " rxBytes: " + tetheringStats.rxBytes);
-            }
-
             return bytes;
         }
     };
 
+    protected void setEnabled() {
+        mEnabled = mLocation == LOCATION_QUICK_STATUSBAR;
+    }
+
     protected void updateVisibility() {
-        boolean enabled = mIsActive && (mLocation == LOCATION_QUICK_STATUSBAR) && mScreenOn && getText() != "";
-        if (enabled != mVisible) {
-            mVisible = enabled;
+        boolean visible = mEnabled && mIsActive && getText() != "";
+        if (visible != mVisible) {
+            mVisible = visible;
             setVisibility(mVisible ? VISIBLE : GONE);
         }
     }
@@ -329,60 +350,18 @@ public class NetworkTraffic extends TextView {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action == null) return;
-            if (action.equals(Intent.ACTION_SCREEN_ON)) {
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                mConnectionAvailable = mConnectivityManager.getActiveNetworkInfo() != null;
+                if (mScreenOn) updateViews();
+            } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
                 mScreenOn = true;
+                updateViews();
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
-            }
-            if (mScreenOn) {
-                updateViews();
+                clearHandlerCallbacks();
             }
         }
     };
-
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_LOCATION),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_MODE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_UNITS),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.NETWORK_TRAFFIC_HIDEARROW),
-                    false, this, UserHandle.USER_ALL);
-        }
-
-        void unobserve() {
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-
-    private boolean isConnectionAvailable() {
-        return mConnectivityManager.getActiveNetworkInfo() != null;
-    }
 
     private class TetheringStats {
         long txBytes;
@@ -417,9 +396,6 @@ public class NetworkTraffic extends TextView {
         // Counters persist even after tethering has been disabled.
         for (int i = 0; i < stats.size(); i++) {
             entry = stats.getValues(i, entry);
-            if (DEBUG) {
-                Log.d(TAG, "tethering stats entry: " + entry);
-            }
             // hw offload tether stats are reported under UID_ALL.
             if (entry.uid == NetworkStats.UID_ALL) {
                 tetheringStats.txBytes += entry.txBytes;
@@ -429,61 +405,80 @@ public class NetworkTraffic extends TextView {
         return tetheringStats;
     }
 
-    private void updateSettings() {
-        ContentResolver resolver = mContext.getContentResolver();
-
-        mLocation = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_LOCATION, 0, UserHandle.USER_CURRENT);
-        mMode = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_MODE, 0, UserHandle.USER_CURRENT);
-        mAutoHide = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE, 0, UserHandle.USER_CURRENT) != 0;
-        int autohidethreshold = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0, UserHandle.USER_CURRENT);
-        mAutoHideThreshold = autohidethreshold * Kilo; /* Convert kB to Bytes */
-        mUnits = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_UNITS, /* Bytes */ 1,
-                UserHandle.USER_CURRENT);
-
-        mRefreshInterval = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL, 2, UserHandle.USER_CURRENT);
-        mHideArrows = LineageSettings.Secure.getIntForUser(resolver,
-                LineageSettings.Secure.NETWORK_TRAFFIC_HIDEARROW, 0, UserHandle.USER_CURRENT) == 1;
-
-        if (!mHideArrows) {
-            setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
-        } else {
-            setGravity(Gravity.CENTER);
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case NETWORK_TRAFFIC_LOCATION:
+                mLocation =
+                        TunerService.parseInteger(newValue, 0);
+                setEnabled();
+                if (mEnabled) {
+                    setLines(2);
+                    String txtFont = getResources().getString(com.android.internal.R.string.config_bodyFontFamily);
+                    setTypeface(Typeface.create(txtFont, Typeface.BOLD));
+                    setLineSpacing(0.75f, 0.75f);
+                }
+                updateViews();
+                break;
+            case NETWORK_TRAFFIC_MODE:
+                mMode =
+                        TunerService.parseInteger(newValue, 0);
+                updateViews();
+                setTrafficDrawable();
+                break;
+            case NETWORK_TRAFFIC_AUTOHIDE:
+                mAutoHide =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                updateViews();
+                break;
+            case NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD:
+                int autohidethreshold =
+                        TunerService.parseInteger(newValue, 0);
+                mAutoHideThreshold = autohidethreshold * Kilo; /* Convert kB to Bytes */
+                updateViews();
+                break;
+            case NETWORK_TRAFFIC_UNITS:
+                mUnits =
+                        TunerService.parseInteger(newValue, 1);
+                updateViews();
+                break;
+            case NETWORK_TRAFFIC_REFRESH_INTERVAL:
+                mRefreshInterval =
+                        TunerService.parseInteger(newValue, 2);
+                updateViews();
+                break;
+            case NETWORK_TRAFFIC_HIDEARROW:
+                mHideArrows =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                if (!mHideArrows) {
+                    setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
+                } else {
+                    setGravity(Gravity.CENTER);
+                }
+                setTrafficDrawable();
+                break;
+            default:
+                break;
         }
-        setLines(2);
-        String txtFont = getResources().getString(com.android.internal.R.string.config_bodyFontFamily);
-        setTypeface(Typeface.create(txtFont, Typeface.BOLD));
-        setLineSpacing(0.75f, 0.75f);
-
-        setTrafficDrawable();
-        updateViews();
     }
 
     protected void updateViews() {
-        if (mLocation == LOCATION_QUICK_STATUSBAR && mScreenOn) {
+        if (mEnabled) {
             updateViewState();
-        } else {
-            clearHandlerCallbacks();
-            updateVisibility();
         }
     }
 
-    protected void updateViewState() {
+    private void updateViewState() {
         mTrafficHandler.removeMessages(MESSAGE_TYPE_UPDATE_VIEW);
         mTrafficHandler.sendEmptyMessageDelayed(MESSAGE_TYPE_UPDATE_VIEW, 1000);
     }
 
-    protected void clearHandlerCallbacks() {
+    private void clearHandlerCallbacks() {
         mTrafficHandler.removeMessages(MESSAGE_TYPE_PERIODIC_REFRESH);
         mTrafficHandler.removeMessages(MESSAGE_TYPE_UPDATE_VIEW);
     }
 
-    protected void setTrafficDrawable() {
+    private void setTrafficDrawable() {
         final int drawableResId;
         final Drawable drawable;
 
