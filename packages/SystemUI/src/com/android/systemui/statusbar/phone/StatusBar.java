@@ -5951,9 +5951,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void updateSystemTheme() {
           int mSystemTheme = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SYSTEM_THEME, 0, UserHandle.USER_CURRENT);
-            mUiOffloadThread.submit(() -> {
                switchThemes(mSystemTheme);
-             });
     }
 
 
