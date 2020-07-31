@@ -18,6 +18,8 @@
     <!-- Gradient Shit -->
     <color name="gradient_start">#ff1a73e8</color>
     <color name="gradient_end">#ff1a73e8</color>
+    <!-- Themes -->
+    <color name="theme_generic_semi_transparent_color">#EAFFFFFF</color>
 
 </resources>
 

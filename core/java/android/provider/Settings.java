@@ -6498,6 +6498,11 @@ public final class Settings {
         public static final String QS_TILE_STYLE = "qs_tile_style";
 
         /**
+         * @hide
+         */
+        public static final String SYSTEM_THEME = "system_theme";
+
+        /**
          * User definable value of pulse notification screen brightness
          *
          * @hide

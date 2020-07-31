@@ -2255,6 +2255,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_THEME),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2265,6 +2268,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 stockTileStyle();
                 updateTileStyle();
                 updateQsPanelResources();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_THEME))) {
+                updateSystemTheme();
             } else {
               update();
             }
@@ -4271,15 +4277,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mDarkStyle != ThemeAccentUtils.getDarkStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId()))) {
             mUseDarkTheme = useDarkTheme;
             if (mUseDarkTheme) {
-                mUiOffloadThread.submit(() -> {
                     ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
                                             mUseDarkTheme, mDarkStyle);
-                });
             } else {
-                mUiOffloadThread.submit(() -> {
                     ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
                                             mUseDarkTheme, mDarkStyle);
-                });
             }
         }
 
@@ -5961,5 +5963,103 @@ public class StatusBar extends SystemUI implements DemoMode,
         lp.setTitle("GestureAnywhereView");
 
         return lp;
+    }
+
+
+    public void updateSystemTheme() {
+          int mSystemTheme = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEM_THEME, 0, mLockscreenUserManager.getCurrentUserId());
+            int style = ThemeAccentUtils.getDarkStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+            switch (mSystemTheme) {
+            case 0:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+                updateTheme();
+           break;
+           case 1:
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 2:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+          case 3:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 4:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 5:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 6:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 7:
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.DARK_THEMES);
+                RRUtils.enableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+          }
+ 
     }
 }

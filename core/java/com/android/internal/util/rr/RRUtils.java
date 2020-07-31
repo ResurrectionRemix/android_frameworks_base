@@ -36,6 +36,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.text.format.Time;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
@@ -50,6 +51,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class RRUtils {
+
+    public static final String TAG = "RRUtils";
     private static OverlayManager sOverlayService;
     /**
      * @hide
@@ -363,6 +366,30 @@ public class RRUtils {
             }
         } else {
             return hasNavigationBar == 1;
+        }
+    }
+
+    public static void enableSystemTheme(IOverlayManager om, int userId, String[] overlays) {
+        for (int i = 0; i < overlays.length; i++) {
+            String background = overlays[i];
+            try {
+                om.setEnabled(background,
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change qs tile icon", e);
+            }
+        }
+    }
+
+    public static void disableSystemTheme(IOverlayManager om, int userId, String[] overlays) {
+        for (int i = 0; i < overlays.length; i++) {
+            String background = overlays[i];
+            try {
+                om.setEnabled(background,
+                        false, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change qs tile icon", e);
+            }
         }
     }
 

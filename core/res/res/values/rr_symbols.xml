@@ -200,4 +200,8 @@
   <!-- Gradients Shit -->
   <java-symbol type="color" name="gradient_start" />
   <java-symbol type="color" name="gradient_end" />
+
+
+  <!-- Themes -->
+  <java-symbol type="color" name="theme_generic_semi_transparent_color" />
 </resources>
