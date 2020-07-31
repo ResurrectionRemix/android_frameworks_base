@@ -5,12 +5,19 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
@@ -76,6 +83,7 @@ public class OpaLayout extends FrameLayout implements ButtonInterface {
     private ImageView mWhiteCutout;
     private boolean mWindowVisible;
     private View mYellow;
+    private SettingsObserver mSettingsObserver;
 
     public OpaLayout(Context context) {
         this(context, null);
@@ -84,6 +92,28 @@ public class OpaLayout extends FrameLayout implements ButtonInterface {
     public OpaLayout(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);
     }
+
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+           ContentResolver resolver = mContext.getContentResolver();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.PIXEL_NAV_ANIMATION),
+                  false, this, UserHandle.USER_CURRENT);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+           super.onChange(selfChange, uri);
+           setOpaEnabled(true);
+        }
+    }
+
+
 
     public OpaLayout(Context context, AttributeSet attributeSet, int i, int i2) {
         super(context, attributeSet, i, i2);
@@ -95,6 +125,10 @@ public class OpaLayout extends FrameLayout implements ButtonInterface {
         mDiamondInterpolator = new PathInterpolator(0.2f, 0.0f, 0.2f, 1.0f);
         HOME_DISAPPEAR_INTERPOLATOR = new PathInterpolator(0.65f, 0.0f, 1.0f, 1.0f);
         mCurrentAnimators = new ArraySet<>();
+        if (mSettingsObserver == null) {
+            mSettingsObserver = new SettingsObserver(new Handler());
+        }
+        mSettingsObserver.observe();
         mAnimatedViews = new ArrayList<>();
         mAnimationState = 0;
         mRetract = new Runnable() {
@@ -149,6 +183,10 @@ public class OpaLayout extends FrameLayout implements ButtonInterface {
         mAnimatedViews.add(mWhiteCutout);
         mAnimatedViews.add(mHalo);
         mOverviewProxyService = (OverviewProxyService) Dependency.get(OverviewProxyService.class);
+        if (mSettingsObserver == null) {
+            mSettingsObserver = new SettingsObserver(new Handler());
+        }
+        mSettingsObserver.observe();
         setOpaEnabled(OpaUtils.shouldEnable(getContext()));
     }
 
@@ -596,7 +634,9 @@ public class OpaLayout extends FrameLayout implements ButtonInterface {
     }
 
     public void setOpaEnabled(boolean z) {
-        mOpaEnabled = z;
+        final boolean opaToggle = Settings.System.getIntForUser(this.getContext().getContentResolver(),
+            Settings.System.PIXEL_NAV_ANIMATION, 1, UserHandle.USER_CURRENT) == 1;
+        mOpaEnabled = z && opaToggle;
         mOpaEnabledNeedsUpdate = false;
         updateOpaLayout();
     }

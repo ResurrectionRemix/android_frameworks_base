@@ -6083,11 +6083,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void updateQSHeaderStyle() {
         int qsHeaderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_HEADER_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
-        ThemesUtils.updateQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsHeaderStyle);
+        ThemeAccentUtils.updateQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), qsHeaderStyle);
     }
 
     // Unload all qs header styles back to stock
     public void stockQSHeaderStyle() {
-        ThemesUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 }
