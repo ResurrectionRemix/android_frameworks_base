@@ -334,8 +334,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public static final String FORCE_SHOW_NAVBAR =
             "lineagesystem:" + LineageSettings.System.FORCE_SHOW_NAVBAR;
-    private static final String BERRY_DARK_STYLE =
-            "system:" + Settings.System.BERRY_DARK_STYLE;
     private static final String STATUS_BAR_CUSTOM_HEADER =
             "system:" + Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER;
     private static final String BERRY_SWITCH_STYLE =
@@ -845,7 +843,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
         tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
-        tunerService.addTunable(this, BERRY_DARK_STYLE);
         tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         tunerService.addTunable(this, BERRY_SWITCH_STYLE);
         tunerService.addTunable(this, SYSUI_ROUNDED_FWVALS);
@@ -4275,25 +4272,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
-        boolean useDarkTheme = (mContext.getResources().getConfiguration().uiMode
-                        & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
         haltTicker();
-
-        if (mUiModeManager != null && (mUseDarkTheme != useDarkTheme ||
-                mDarkStyle != ThemeAccentUtils.getDarkStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId()))) {
-            mUseDarkTheme = useDarkTheme;
-            if (mUseDarkTheme) {
-                mUiOffloadThread.submit(() -> {
-                    ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
-                                            mUseDarkTheme, mDarkStyle);
-                });
-            } else {
-                mUiOffloadThread.submit(() -> {
-                    ThemeAccentUtils.setSystemTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(),
-                                            mUseDarkTheme, mDarkStyle);
-                });
-            }
-        }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
@@ -5754,13 +5733,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (NumberFormatException ex) {}
         } else if (STATUS_BAR_BRIGHTNESS_CONTROL.equals(key)) {
             mBrightnessControl = TunerService.parseIntegerSwitch(newValue, false);
-        }  else if (BERRY_DARK_STYLE.equals(key)) {
-                int darkStyle =
-                        TunerService.parseInteger(newValue, 0);
-                if (mDarkStyle != darkStyle) {
-                    mDarkStyle = darkStyle;
-                    updateTheme();
-                }
         } else if (STATUS_BAR_CUSTOM_HEADER.equals(key)) {
                     updateTheme();
         } else if (BERRY_SWITCH_STYLE.equals(key)) {
@@ -6074,6 +6046,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PITCH_BLACK);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.XTENDED_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+           break;
+           case 8:
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.XTENDED_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
            break;
           }

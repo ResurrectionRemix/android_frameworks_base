@@ -123,8 +123,7 @@ public class ThemeAccentUtils {
     }
 
     public static final String[] DARK_THEMES = {
-        "com.android.system.theme.charcoalblack", // 0
-        "com.android.system.theme.amoledblack", // 1
+        "com.android.system.theme.charcoalblack", 
     };
 
     // Dark Variants
