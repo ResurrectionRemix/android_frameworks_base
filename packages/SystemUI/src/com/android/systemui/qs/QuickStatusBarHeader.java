@@ -63,7 +63,7 @@ import android.os.UserHandle;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
-import com.android.internal.util.xtended.FileUtils;
+import com.android.internal.util.rr.FileUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Dependency;
