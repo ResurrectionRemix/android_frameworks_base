@@ -37,13 +37,11 @@ import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
-import com.android.systemui.plugins.DarkIconDispatcher;
-import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
-public class StatusBarWeatherImage extends ImageView implements
+public class QsHeaderWeatherImage extends ImageView implements
         OmniJawsClient.OmniJawsObserver {
 
-    private String TAG = StatusBarWeatherImage.class.getSimpleName();
+    private String TAG = QsHeaderWeatherImage.class.getSimpleName();
 
     private static final boolean DEBUG = false;
 
@@ -54,28 +52,26 @@ public class StatusBarWeatherImage extends ImageView implements
     private OmniJawsClient mWeatherClient;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
-    private boolean mWeatherInHeaderView;
     private boolean mAttached;
-    private int mTintColor;
+    private boolean mWeatherInHeaderView;
 
     Handler mHandler;
 
-    public StatusBarWeatherImage(Context context) {
+    public QsHeaderWeatherImage(Context context) {
         this(context, null);
     }
 
-    public StatusBarWeatherImage(Context context, AttributeSet attrs) {
+    public QsHeaderWeatherImage(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StatusBarWeatherImage(Context context, AttributeSet attrs, int defStyle) {
+    public QsHeaderWeatherImage(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         mContext = context;
         mHandler = new Handler();
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
-        mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
     }
@@ -90,7 +86,6 @@ public class StatusBarWeatherImage extends ImageView implements
         super.onAttachedToWindow();
         mEnabled = mWeatherClient.isOmniJawsEnabled();
         mWeatherClient.addObserver(this);
-        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         queryAndUpdateWeather();
     }
 
@@ -99,7 +94,6 @@ public class StatusBarWeatherImage extends ImageView implements
         super.onDetachedFromWindow();
         mWeatherClient.removeObserver(this);
         mWeatherClient.cleanupObserver();
-        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 
     class SettingsObserver extends ContentObserver {
@@ -113,8 +107,8 @@ public class StatusBarWeatherImage extends ImageView implements
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-	            Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
-		    UserHandle.USER_ALL);
+			        Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
+			        UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -144,7 +138,7 @@ public class StatusBarWeatherImage extends ImageView implements
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
         if ((mStatusBarWeatherEnabled == 1 || mStatusBarWeatherEnabled == 2
-                || mStatusBarWeatherEnabled == 5) && !mWeatherInHeaderView) {
+                || mStatusBarWeatherEnabled == 5) && mWeatherInHeaderView) {
             mWeatherClient.setOmniJawsEnabled(true);
             queryAndUpdateWeather();
         } else {
@@ -160,17 +154,12 @@ public class StatusBarWeatherImage extends ImageView implements
                 mWeatherData = mWeatherClient.getWeatherInfo();
                 mWeatherImage = mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode);
                 if (mWeatherData != null) {
-                    if (mWeatherImage instanceof VectorDrawable) {
-                        mWeatherImage.setTint(mTintColor);
-                    }
                     if ((mStatusBarWeatherEnabled == 1
                             || mStatusBarWeatherEnabled == 2
-                            || mStatusBarWeatherEnabled == 5) && !mWeatherInHeaderView) {
+                            || mStatusBarWeatherEnabled == 5) && mWeatherInHeaderView) {
                         setImageDrawable(mWeatherImage);
                         setVisibility(View.VISIBLE);
-                    } else {
-			setVisibility(View.GONE);
- 		    }
+                    }
                 } else {
                     setVisibility(View.GONE);
                 }
@@ -181,10 +170,6 @@ public class StatusBarWeatherImage extends ImageView implements
             // Do nothing
         }
     }
-
-    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
-        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
-        queryAndUpdateWeather();
-    }
 }
+
 

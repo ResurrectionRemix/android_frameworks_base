@@ -1,3 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+** Copyright 2017, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:systemui="http://schemas.android.com/apk/res-auto"
@@ -28,13 +44,6 @@
         android:paddingEnd="1dip"
         android:scaleType="center"
         android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|start" >
 
     <com.android.systemui.statusbar.policy.Clock
         android:id="@+id/clock"
@@ -71,14 +80,28 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <com.android.systemui.rr.logo.LogoImageViewQuickRight
-        android:id="@+id/statusbar_logo_right"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingStart="2dip"
-        android:scaleType="center"
-        android:gravity="center_vertical"
-        android:visibility="gone" />
+        <com.android.systemui.rr.statusbarweather.QsHeaderWeather
+             android:id="@+id/weather_temp"
+             android:layout_width="wrap_content"
+             android:layout_height="@dimen/status_bar_icon_size"
+             android:maxLines="1"
+             android:layout_gravity="center_vertical"
+             android:gravity="center_vertical|end"
+             android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+             android:paddingStart="2dp"
+             android:paddingEnd="2dp"
+             systemui:showDark="false"
+             android:visibility="gone" />
+
+        <com.android.systemui.rr.statusbarweather.QsHeaderWeatherImage
+             android:id="@+id/weather_image"
+             android:layout_width="@dimen/status_bar_icon_size"
+             android:layout_height="@dimen/status_bar_icon_size"
+             android:layout_gravity="center_vertical"
+             android:gravity="center_vertical|end"
+             android:paddingStart="2dp"
+             android:paddingEnd="2dp"
+             android:visibility="gone" />
 
         <LinearLayout
                 android:id="@+id/system_info_layout"
@@ -106,6 +129,15 @@
                     android:visibility="gone"/>
         </LinearLayout>
 
+    <com.android.systemui.rr.logo.LogoImageViewQuickRight
+        android:id="@+id/statusbar_logo_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingStart="2dip"
+        android:scaleType="center"
+        android:gravity="center_vertical"
+        android:visibility="gone" />
+
     <com.android.systemui.BatteryMeterView
         android:id="@+id/batteryIcon"
         android:layout_height="match_parent"
@@ -118,4 +150,5 @@
         android:visibility="gone" />
 
     </LinearLayout>
+
 </LinearLayout>

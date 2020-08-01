@@ -37,6 +37,7 @@ import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+
 import java.util.Arrays;
 
 public class StatusBarWeather extends TextView implements
@@ -54,6 +55,7 @@ public class StatusBarWeather extends TextView implements
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
     private int mTintColor;
+    private boolean mWeatherInHeaderView;
 
     Handler mHandler;
 
@@ -67,6 +69,9 @@ public class StatusBarWeather extends TextView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
+   	            UserHandle.USER_ALL);
             updateSettings(false);
         }
 
@@ -130,7 +135,11 @@ public class StatusBarWeather extends TextView implements
         mStatusBarWeatherEnabled = Settings.System.getIntForUser(
                 resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
-        if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
+        mWeatherInHeaderView = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
+                UserHandle.USER_CURRENT) == 1;
+        if ((mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5)
+                                           && !mWeatherInHeaderView) {
             mWeatherClient.setOmniJawsEnabled(true);
             queryAndUpdateWeather();
         } else {
@@ -156,17 +165,19 @@ public class StatusBarWeather extends TextView implements
                 mWeatherClient.queryWeather();
                 mWeatherData = mWeatherClient.getWeatherInfo();
                 if (mWeatherData != null) {
-                    if (mStatusBarWeatherEnabled != 0
-                            || mStatusBarWeatherEnabled != 5) {
+                    if ((mStatusBarWeatherEnabled != 0
+                            || mStatusBarWeatherEnabled != 5) && !mWeatherInHeaderView) {
                         if (mStatusBarWeatherEnabled == 2 || mStatusBarWeatherEnabled == 4) {
                             setText(mWeatherData.temp);
                         } else {
                             setText(mWeatherData.temp + mWeatherData.tempUnits);
                         }
-                        if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
+                        if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5 && !mWeatherInHeaderView) {
                             setVisibility(View.VISIBLE);
                         }
-                    }
+                    } else {
+                        setVisibility(View.GONE);
+		    }
                 } else {
                     setVisibility(View.GONE);
                 }
@@ -184,3 +195,4 @@ public class StatusBarWeather extends TextView implements
         queryAndUpdateWeather();
     }
 }
+
