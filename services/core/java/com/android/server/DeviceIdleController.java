@@ -1184,7 +1184,7 @@ public class DeviceIdleController extends SystemService
             return duration;
         }
 
-         private void updateConstants() {
+        private void updateConstants() {
             synchronized (DeviceIdleController.this) {
                 try {
                     String userValues = Settings.Global.getString(mResolver,
@@ -1199,14 +1199,6 @@ public class DeviceIdleController extends SystemService
                     mAggressiveIdle = Settings.Global.getInt(mResolver,
                         Settings.Global.AGGRESSIVE_IDLE_ENABLED) == 1;
                 } catch (Exception e) {
-                    // Failed to parse the settings string, log this and move on
-                    // with defaults.
-                    Slog.e(TAG, "Bad device idle settings", e);
-
-                    // Setting not found, assume false
-                    mAggressiveIdle = false;
-                }
-
                     // Failed to parse the settings string, log this and move on
                     // with defaults.
                     Slog.e(TAG, "Bad device idle settings", e);
@@ -1723,6 +1715,18 @@ public class DeviceIdleController extends SystemService
 
         @Override public boolean isPowerSaveWhitelistApp(String name) {
             return isPowerSaveWhitelistAppInternal(name);
+        }
+
+        @Override public int getIdleStateDetailed() {
+            getContext().enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER,
+                    null);
+            return mState;
+        }
+
+        @Override public int getLightIdleStateDetailed() {
+            getContext().enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER,
+                    null);
+            return mLightState;
         }
 
         @Override public void addPowerSaveTempWhitelistApp(String packageName, long duration,
