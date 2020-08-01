@@ -156,10 +156,18 @@ public class StatusBarWeather extends TextView implements
                 mWeatherClient.setOmniJawsEnabled(false);
             }
         }
+        if (mStatusBarWeatherEnabled == 5) {
+            setVisibility(View.GONE); 
+            return;
+        }
     }
 
     private void queryAndUpdateWeather() {
         try {
+            if (mStatusBarWeatherEnabled == 5) {
+                setVisibility(View.GONE); 
+                return;
+            }
             if (DEBUG) Log.d(TAG, "queryAndUpdateWeather " + mEnabled);
             if (mEnabled) {
                 mWeatherClient.queryWeather();
