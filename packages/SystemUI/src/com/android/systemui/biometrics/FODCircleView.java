@@ -314,7 +314,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_FINGERPRINT;
         mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND |
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
         mParams.gravity = Gravity.TOP | Gravity.LEFT;
 
         mWindowManager.addView(this, mParams);
@@ -442,6 +443,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             mParamsPressed.type = WindowManager.LayoutParams.TYPE_SYSTEM_FINGERPRINT_HIGH_LIGHT;
             mParamsPressed.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
 	            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+            mParamsPressed.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
             mParamsPressed.gravity = Gravity.TOP | Gravity.LEFT;
 
             setImageResource(PRESSED_STYLES[mPressedIcon]);
@@ -454,7 +456,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         } else {
             if (mViewPressedDisplayed) {
                 mViewPressedDisplayed = false;
-                mWindowManager.removeView(mViewPressed);
+                mWindowManager.removeViewImmediate(mViewPressed);
             }
         }
     }
@@ -704,7 +706,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         if (mViewPressedDisplayed) {
             mViewPressedDisplayed = false;
-            mWindowManager.removeView(mViewPressed);
+            mWindowManager.removeViewImmediate(mViewPressed);
         }
 
         if (mSupportsAlwaysOnHbm) {
