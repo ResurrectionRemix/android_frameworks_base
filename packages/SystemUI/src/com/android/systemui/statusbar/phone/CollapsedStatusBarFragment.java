@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.os.UserHandle;
+import android.net.Uri;
 import android.provider.Settings;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
