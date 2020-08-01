@@ -177,9 +177,9 @@ public class ThemeAccentUtils {
             "com.android.theme.materialocean.systemui",
     };
 
-    public static final String[] XTENDED_CLEAR = {
-            "com.android.theme.xtendedclear.system",
-            "com.android.theme.xtendedclear.systemui",
+    public static final String[] RR_CLEAR = {
+            "com.android.theme.rr.system",
+            "com.android.theme.rr.systemui",
     };
 
     // QS header themes

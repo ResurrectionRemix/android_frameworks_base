@@ -1064,7 +1064,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mBrightnessSlider =
                         TunerService.parseInteger(newValue, 3);
                 mIsQuickQsBrightnessEnabled = mBrightnessSlider > 2;
-                updateResources();
+                 updateSettings();
                 break;
             case QS_SHOW_AUTO_BRIGHTNESS:
                 mIsQsAutoBrightnessEnabled =
