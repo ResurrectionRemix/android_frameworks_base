@@ -333,8 +333,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
         mSystemInfoText = findViewById(R.id.system_info_text);
 
-        updateResources();
-
         Rect tintArea = new Rect(0, 0, 0, 0);
         int colorForeground = Utils.getColorAttrDefaultColor(getContext(),
                 android.R.attr.colorForeground);
@@ -669,6 +667,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mSystemInfoMode = getQsSystemInfoMode();
+        updateSystemInfoText();
         updateResources();
         updateDataUsageView();
         updateStatusbarProperties();
@@ -685,12 +685,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mDataUsageLayout.setVisibility(View.GONE);
         }
     }
-
-      private void updateSettings() {
-        mSystemInfoMode = getQsSystemInfoMode();
-        updateSystemInfoText();
-        updateResources();
-     }
 
     private void updateStatusIconAlphaAnimator() {
         mStatusIconsAlphaAnimator = new TouchAnimator.Builder()

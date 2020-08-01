@@ -82,6 +82,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mWeatherTextView;
     private int mShowWeather;
     private boolean mWeatherInHeaderView;
+    private ContentResolver mContentResolver;
+    private final Handler mHandler = new Handler();
 
    private class SettingsObserver extends ContentObserver {
        SettingsObserver(Handler handler) {
@@ -131,6 +133,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContentResolver = getContext().getContentResolver();
         mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
         mNetworkController = Dependency.get(NetworkController.class);
         mStatusBarStateController = Dependency.get(StatusBarStateController.class);
@@ -271,8 +274,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideSbWeather(boolean animate) {
         if (!mWeatherInHeaderView && mShowWeather != 0
 	    && mWeatherTextView != null && mWeatherImageView != null) {
-            animateHide(mWeatherTextView, animate, false);
-            animateHide(mWeatherImageView, animate, false);
+            animateHide(mWeatherTextView, animate);
+            animateHide(mWeatherImageView, animate);
 	     }
     }
 
@@ -533,10 +536,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 animateShow(mWeatherImageView, animate);
             } else if (mShowWeather == 3 || mShowWeather == 4){
                 animateShow(mWeatherTextView, animate);
-                animateHide(mWeatherImageView, animate, false);
+                animateHide(mWeatherImageView, animate);
             } else if (mShowWeather == 5) {
                 animateShow(mWeatherImageView, animate);
-                animateHide(mWeatherTextView, animate, false);
+                animateHide(mWeatherTextView, animate);
             }
         }
     }
