@@ -950,7 +950,7 @@ public class KeyguardStatusView extends GridLayout implements
                 break;
             case LOCKSCREEN_WEATHER_STYLE:
                 mPixelStyle =
-                        TunerService.parseIntegerSwitch(newValue, false);
+                        TunerService.parseIntegerSwitch(newValue, true);
                 updateWeatherView();
                 break;
             default:
