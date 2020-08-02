@@ -144,6 +144,7 @@
     <alias name="goudy" to="oduda" />
     <alias name="fantasy" to="oduda" />
     <alias name="ITC Stone Serif" to="oduda" />
+
     <family name="amarante">
         <font weight="300" style="normal">Amarante.ttf</font>
     </family>
@@ -551,9 +552,6 @@
     <family name="snowstorm-sys">
         <font weight="300" style="normal">Snowstorm-Regular.ttf</font>
     </family>
-    <family name="googlesans-sys">
-        <font weight="300" style="normal">GoogleSans-Medium.ttf</font>
-    </family>
     <family name="neoneon-sys">
         <font weight="300" style="normal">Neoneon-Regular.ttf</font>
     </family>
@@ -581,12 +579,6 @@
     </family>
     <alias name="sans-serif-monospace" to="monospace" />
     <alias name="monaco" to="monospace" />
-
-    <family name="serif-monospace">
-        <font weight="400" style="normal">CutiveMono.ttf</font>
-    </family>
-    <alias name="courier" to="serif-monospace" />
-    <alias name="courier new" to="serif-monospace" />
 
     <family name="casual">
         <font weight="400" style="normal">ComingSoon.ttf</font>
