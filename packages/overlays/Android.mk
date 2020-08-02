@@ -22,6 +22,19 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationDoubleOverlay \
 	DisplayCutoutEmulationTallOverlay \
 	FontAmaranteSourceOverlay \
+	FontAclonicaSourceOverlay \
+	FontAntipastoProSourceOverlay \
+	FontCagliostroSourceOverlay \
+	FontComicSansSourceOverlay \
+	FontEvolveSansSourceOverlay \
+	FontFucekSourceOverlay \
+	FontLemonMilkSourceOverlay \
+	FontNotoSerifSourceOverlay \
+	FontOdudaSourceOverlay \
+	FontOneplusSlateSource \
+	FontSamsungOneSourceOverlay \
+	FontSimpleDaySourceOverlay \
+    FontLinotte \
     FontNotoSerifSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \

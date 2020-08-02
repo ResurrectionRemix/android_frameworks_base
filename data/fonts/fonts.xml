@@ -89,6 +89,61 @@
     <alias name="fantasy" to="aclonica" />
     <alias name="ITC Stone Serif" to="aclonica" />
 
+    <family name="evolvesans">
+        <font weight="400" style="normal">EvolveSans.ttf</font>
+    </family>
+    <alias name="evolvesans-semi-bold" to="evolvesans" weight="600" />
+    <alias name="evolvesans-bold" to="evolvesans" weight="700" />
+    <alias name="times" to="evolvesans" />
+    <alias name="times new roman" to="evolvesans" />
+    <alias name="palatino" to="evolvesans" />
+    <alias name="georgia" to="evolvesans" />
+    <alias name="baskerville" to="evolvesans" />
+    <alias name="goudy" to="evolvesans" />
+    <alias name="fantasy" to="evolvesans" />
+    <alias name="ITC Stone Serif" to="evolvesans" />
+
+    <family name="fucek">
+        <font weight="400" style="normal">Fucek.ttf</font>
+    </family>
+    <alias name="fucek-semi-bold" to="fucek" weight="600" />
+    <alias name="fucek-bold" to="fucek" weight="700" />
+    <alias name="times" to="fucek" />
+    <alias name="times new roman" to="fucek" />
+    <alias name="palatino" to="fucek" />
+    <alias name="georgia" to="fucek" />
+    <alias name="baskerville" to="fucek" />
+    <alias name="goudy" to="fucek" />
+    <alias name="fantasy" to="fucek" />
+    <alias name="ITC Stone Serif" to="fucek" />
+	
+    <family name="lemonmilk">
+        <font weight="400" style="normal">LemonMilk.ttf</font>
+    </family>
+    <alias name="lemonmilk-semi-bold" to="lemonmilk" weight="600" />
+    <alias name="lemonmilk-bold" to="lemonmilk" weight="700" />
+    <alias name="times" to="lemonmilk" />
+    <alias name="times new roman" to="lemonmilk" />
+    <alias name="palatino" to="lemonmilk" />
+    <alias name="georgia" to="lemonmilk" />
+    <alias name="baskerville" to="lemonmilk" />
+    <alias name="goudy" to="lemonmilk" />
+    <alias name="fantasy" to="lemonmilk" />
+    <alias name="ITC Stone Serif" to="lemonmilk" />
+	
+    <family name="oduda">
+        <font weight="400" style="normal">Oduda.ttf</font>
+    </family>
+    <alias name="oduda-semi-bold" to="oduda" weight="600" />
+    <alias name="oduda-bold" to="oduda" weight="700" />
+    <alias name="times" to="oduda" />
+    <alias name="times new roman" to="oduda" />
+    <alias name="palatino" to="oduda" />
+    <alias name="georgia" to="oduda" />
+    <alias name="baskerville" to="oduda" />
+    <alias name="goudy" to="oduda" />
+    <alias name="fantasy" to="oduda" />
+    <alias name="ITC Stone Serif" to="oduda" />
     <family name="amarante">
         <font weight="300" style="normal">Amarante.ttf</font>
     </family>
@@ -188,6 +243,20 @@
     <alias name="goudy" to="rosemary" />
     <alias name="fantasy" to="rosemary" />
     <alias name="ITC Stone Serif" to="rosemary" />
+
+    <family name="simpleday">
+        <font weight="400" style="normal">SimpleDay.ttf</font>
+    </family>
+    <alias name="simpleday-semi-bold" to="simpleday" weight="600" />
+    <alias name="simpleday-bold" to="simpleday" weight="700" />
+    <alias name="times" to="simpleday" />
+    <alias name="times new roman" to="simpleday" />
+    <alias name="palatino" to="simpleday" />
+    <alias name="georgia" to="simpleday" />
+    <alias name="baskerville" to="simpleday" />
+    <alias name="goudy" to="simpleday" />
+    <alias name="fantasy" to="simpleday" />
+    <alias name="ITC Stone Serif" to="simpleday" />
 
     <family name="surfer">
         <font weight="300" style="normal">Surfer.ttf</font>
@@ -426,6 +495,20 @@
     <alias name="fantasy" to="grandhotel" />
     <alias name="ITC Stone Serif" to="grandhotel" />
 
+    <family name="antipastopro">
+        <font weight="400" style="normal">AntipastoPro.ttf</font>
+    </family>
+    <alias name="antipastopro-semi-bold" to="antipastopro" weight="600" />
+    <alias name="antipastopro-bold" to="antipastopro" weight="700" />
+    <alias name="times" to="antipastopro" />
+    <alias name="times new roman" to="antipastopro" />
+    <alias name="palatino" to="antipastopro" />
+    <alias name="georgia" to="antipastopro" />
+    <alias name="baskerville" to="antipastopro" />
+    <alias name="goudy" to="antipastopro" />
+    <alias name="fantasy" to="antipastopro" />
+    <alias name="ITC Stone Serif" to="antipastopro" />
+
     <family name="redressed">
         <font weight="400" style="normal">Redressed.ttf</font>
     </family>
@@ -458,6 +541,40 @@
     <alias name="goudy" to="nunito" />
     <alias name="fantasy" to="nunito" />
     <alias name="ITC Stone Serif" to="nunito" />
+    <!-- Lockscren Fonts -->
+    <family name="gobold-sys">
+	<font weight="300" style="normal">Gobold.ttf</font>
+    </family>
+    <family name="roadrage-sys">
+        <font weight="300" style="normal">RoadRage-Regular.ttf</font>
+    </family>
+    <family name="snowstorm-sys">
+        <font weight="300" style="normal">Snowstorm-Regular.ttf</font>
+    </family>
+    <family name="googlesans-sys">
+        <font weight="300" style="normal">GoogleSans-Medium.ttf</font>
+    </family>
+    <family name="neoneon-sys">
+        <font weight="300" style="normal">Neoneon-Regular.ttf</font>
+    </family>
+    <family name="themeable-sys">
+        <font weight="300" style="normal">ThemeableFont-Regular.ttf</font>
+    </family>
+    <family name="samsung-sys">
+	<font weight="300" style="normal">Shamshung.ttf</font>
+    </family>
+    <family name="mexcellent-sys">
+        <font weight="300" style="normal">Mexcellent-Regular.ttf</font>
+    </family>
+    <family name="dumbledor-sys">
+        <font weight="300" style="normal">Dumbledor-Regular.ttf</font>
+    </family>
+    <family name="phantombold-sys">
+        <font weight="300" style="normal">PhantomBold-Regular.ttf</font>
+    </family>
+    <family name="burnstown-sys">
+        <font weight="300" style="normal">Burnstown-Regular.ttf</font>
+    </family>
 
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
