@@ -547,28 +547,28 @@
 	<font weight="300" style="normal">Gobold.ttf</font>
     </family>
     <family name="roadrage-sys">
-        <font weight="300" style="normal">RoadRage-Regular.ttf</font>
+        <font weight="300" style="normal">road_rage.ttf</font>
     </family>
     <family name="snowstorm-sys">
-        <font weight="300" style="normal">Snowstorm-Regular.ttf</font>
+        <font weight="300" style="normal">snowstorm.ttf</font>
     </family>
     <family name="neoneon-sys">
-        <font weight="300" style="normal">Neoneon-Regular.ttf</font>
+        <font weight="300" style="normal">neoneon.ttf</font>
     </family>
     <family name="themeable-sys">
-        <font weight="300" style="normal">ThemeableFont-Regular.ttf</font>
+        <font weight="300" style="normal">vcr_osd_mono.ttf</font>
     </family>
     <family name="samsung-sys">
 	<font weight="300" style="normal">Shamshung.ttf</font>
     </family>
     <family name="mexcellent-sys">
-        <font weight="300" style="normal">Mexcellent-Regular.ttf</font>
+        <font weight="300" style="normal">mexcellent.ttf</font>
     </family>
     <family name="dumbledor-sys">
-        <font weight="300" style="normal">Dumbledor-Regular.ttf</font>
+        <font weight="300" style="normal">dumbledor.ttf</font>
     </family>
     <family name="phantombold-sys">
-        <font weight="300" style="normal">PhantomBold-Regular.ttf</font>
+        <font weight="300" style="normal">PhantomBold.ttf</font>
     </family>
     <family name="burnstown-sys">
         <font weight="300" style="normal">Burnstown-Regular.ttf</font>
@@ -591,6 +591,10 @@
 
     <family name="sans-serif-smallcaps">
         <font weight="400" style="normal">CarroisGothicSC-Regular.ttf</font>
+    </family>
+
+   <family name="linotte">
+        <font weight="300" style="normal">Linotte.ttf</font>
     </family>
 
     <family name="source-sans-pro">

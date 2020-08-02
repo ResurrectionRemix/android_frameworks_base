@@ -48,7 +48,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import com.android.systemui.R;
-
+import com.android.internal.util.rr.RRFontHelper;
 public class CarrierLabel extends TextView implements DarkReceiver {
 
     private Context mContext;
@@ -194,170 +194,6 @@ public class CarrierLabel extends TextView implements DarkReceiver {
         return operatorName;
     }
 
-     public void getFontStyle(int font) {
-        if (font == 0) {
-            setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        }
-        if (font == 1) {
-            setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-        }
-        if (font == 2) {
-            setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-        }
-        if (font == 3) {
-            setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-        }
-        if (font == 4) {
-            setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-        }
-        if (font == 5) {
-            setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        }
-        if (font == 6) {
-            setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-        }
-        if (font == 7) {
-            setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        }
-        if (font == 8) {
-            setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        }
-        if (font == 9) {
-            setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-        }
-        if (font == 10) {
-            setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-        }
-        if (font == 11) {
-            setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-        }
-        if (font == 12) {
-            setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        }
-        if (font == 13) {
-            setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-        }
-        if (font == 14) {
-                setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-        }
-        if (font == 15) {
-                setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-        }
-        if (font == 16) {
-                setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-        }
-        if (font == 17) {
-                setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-        }
-        if (font == 18) {
-                setTypeface(Typeface.create("cursive", Typeface.NORMAL));
-        }
-        if (font == 19) {
-                setTypeface(Typeface.create("cursive", Typeface.BOLD));
-        }
-        if (font == 20) {
-                setTypeface(Typeface.create("casual", Typeface.NORMAL));
-        }
-        if (font == 21) {
-                setTypeface(Typeface.create("serif", Typeface.NORMAL));
-        }
-        if (font == 22) {
-                setTypeface(Typeface.create("serif", Typeface.ITALIC));
-        }
-        if (font == 23) {
-                setTypeface(Typeface.create("serif", Typeface.BOLD));
-        }
-        if (font == 24) {
-                setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
-        }
-        if (font == 25) {
-            setTypeface(Typeface.create("accuratist", Typeface.NORMAL));
-        }
-        if (font == 26) {
-            setTypeface(Typeface.create("aclonica", Typeface.NORMAL));
-        }
-        if (font == 27) {
-            setTypeface(Typeface.create("amarante", Typeface.NORMAL));
-        }
-        if (font == 28) {
-            setTypeface(Typeface.create("bariol", Typeface.NORMAL));
-        }
-        if (font == 29) {
-            setTypeface(Typeface.create("cagliostro", Typeface.NORMAL));
-        }
-        if (font == 30) {
-            setTypeface(Typeface.create("cocon", Typeface.NORMAL));
-        }
-        if (font == 31) {
-            setTypeface(Typeface.create("comfortaa", Typeface.NORMAL));
-        }
-
-        if (font == 32) {
-                setTypeface(Typeface.create("comicsans", Typeface.NORMAL));
-        }
-        if (font == 33) {
-                setTypeface(Typeface.create("coolstory", Typeface.NORMAL));
-        }
-        if (font == 34) {
-                setTypeface(Typeface.create("exotwo", Typeface.NORMAL));
-        }
-        if (font == 35) {
-                setTypeface(Typeface.create("fifa2018", Typeface.NORMAL));
-        }
-        if (font == 36) {
-            setTypeface(Typeface.create("googlesans", Typeface.NORMAL));
-        }
-        if (font == 37) {
-            setTypeface(Typeface.create("grandhotel", Typeface.NORMAL));
-        }
-        if (font == 38) {
-            setTypeface(Typeface.create("lato", Typeface.NORMAL));
-        }
-        if (font == 39) {
-            setTypeface(Typeface.create("lgsmartgothic", Typeface.NORMAL));
-        }
-        if (font == 40) {
-            setTypeface(Typeface.create("nokiapure", Typeface.NORMAL));
-        }
-        if (font == 41) {
-            setTypeface(Typeface.create("nunito", Typeface.NORMAL));
-        }
-        if (font == 42) {
-            setTypeface(Typeface.create("quando", Typeface.NORMAL));
-        }
-
-        if (font == 43) {
-                setTypeface(Typeface.create("redressed", Typeface.NORMAL));
-        }
-        if (font == 44) {
-            setTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
-        }
-        if (font == 45) {
-            setTypeface(Typeface.create("robotocondensed", Typeface.NORMAL));
-        }
-        if (font == 46) {
-            setTypeface(Typeface.create("rosemary", Typeface.NORMAL));
-        }
-        if (font == 47) {
-            setTypeface(Typeface.create("samsungone", Typeface.NORMAL));
-        }
-        if (font == 48) {
-            setTypeface(Typeface.create("oneplusslate", Typeface.NORMAL));
-        }
-        if (font == 49) {
-            setTypeface(Typeface.create("sonysketch", Typeface.NORMAL));
-        }
-        if (font == 50) {
-            setTypeface(Typeface.create("storopia", Typeface.NORMAL));
-        }
-        if (font == 51) {
-            setTypeface(Typeface.create("surfer", Typeface.NORMAL));
-        }
-        if (font == 52) {
-            setTypeface(Typeface.create("ubuntu", Typeface.NORMAL));
-        }
-    }
-
     private void updateColor() {
         mCarrierColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_COLOR, 0xffffffff);
@@ -377,7 +213,7 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     private void updateStyle() {
         mCarrierLabelFontStyle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_FONT_STYLE, FONT_NORMAL);
-        getFontStyle(mCarrierLabelFontStyle);
+        RRFontHelper.setFontType(this, mCarrierLabelFontStyle);
     }
 }
 

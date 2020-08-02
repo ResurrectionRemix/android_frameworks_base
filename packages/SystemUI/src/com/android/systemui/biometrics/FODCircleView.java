@@ -388,6 +388,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_BRIGHT_ICON))) {
                 updateStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.FOD_PRESSED_STATE))) {
+                updateStyle();
             }
         }
 
@@ -738,7 +741,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_BRIGHT_ICON, 0) == 1;
         mPressedIcon = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_PRESSED_STATE, 0);
+                Settings.System.FOD_PRESSED_STATE, 4);
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }

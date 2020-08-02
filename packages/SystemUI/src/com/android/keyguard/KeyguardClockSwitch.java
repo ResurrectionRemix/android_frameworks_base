@@ -31,6 +31,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 
+import com.android.internal.util.rr.RRFontHelper;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.android.internal.colorextraction.ColorExtractor;
@@ -893,6 +895,132 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
             mClockViewBold.setTypeface(Typeface.create("ubuntu", Typeface.NORMAL));
             if (mClockPlugin != null) {
                 mClockPlugin.setTypeface(Typeface.create("ubuntu", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 53) {
+            mClockView.setTypeface(Typeface.create("antipastopro", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("antipastopro", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("antipastopro", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 54) {
+            mClockView.setTypeface(Typeface.create("evolvesans", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("evolvesans", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("evolvesans", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 55) {
+            mClockView.setTypeface(Typeface.create("fucek", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("fucek", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("fucek", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 56) {
+            mClockView.setTypeface(Typeface.create("lemonmilk", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("lemonmilk", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("lemonmilk", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 57) {
+            mClockView.setTypeface(Typeface.create("oduda", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("oduda", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("oduda", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 58) {
+            mClockView.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 59) {
+            mClockView.setTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 60) {
+            mClockView.setTypeface(Typeface.create("monospace", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("monospace", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("monospace", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 61) {
+            mClockView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 62) {
+            mClockView.setTypeface(Typeface.create("simpleday", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("simpleday", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("simpleday", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 63) {
+            mClockView.setTypeface(Typeface.create("gobold-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("gobold-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("gobold-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 64) {
+            mClockView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 65) {
+            mClockView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 66) {
+            mClockView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 67) {
+            mClockView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 68) {
+            mClockView.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 69) {
+            mClockView.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
+            }
+        }
+        if (lockClockFont == 70) {
+            mClockView.setTypeface(Typeface.create("linotte", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("linotte", Typeface.NORMAL));
+            if (mClockPlugin != null) {
+                mClockPlugin.setTypeface(Typeface.create("linotte", Typeface.NORMAL));
             }
         }
     }
