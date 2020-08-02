@@ -142,7 +142,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private int animStyle, animDuration, interpolatorType, mPosition;
     private boolean mDualTargetSecondary;
 
-    // omni
     private boolean mBrightnessBottom;
     private boolean mBrightnessVisible;
     private View mBrightnessPlaceholder;
@@ -254,19 +253,23 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             default:
                 addView(mBrightnessView);
                 addView((View) mTileLayout);
+                mBrightnessBottom = false;
                 break;
             case 2:
                 addView((View) mTileLayout);
                 addView(mBrightnessView);
+                mBrightnessBottom = true;
                 break;
             case 3:
                 addView(mBrightnessView);
                 addView((View) mTileLayout);
+                mBrightnessBottom = false;
                 break;
             case 4:
                 addView(mBrightnessPlaceholder);
                 addView((View) mTileLayout);
                 addView(mBrightnessView);
+                mBrightnessBottom = true;
                 break;
         }
 
@@ -478,6 +481,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     View getBrightnessPlaceholder() {
         return mBrightnessPlaceholder;
+    }
+
+    public boolean isBrightnessViewBottom() {
+        return mBrightnessBottom;
     }
 
     public void setCallback(QSDetail.Callback callback) {
