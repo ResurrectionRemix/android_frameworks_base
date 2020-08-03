@@ -6919,6 +6919,26 @@ public final class Settings {
          */
         public static final String SETTINGS_SPACER = "settings_spacer";
 
+        /**
+         * 
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_STYLE = "settings_spacer_style";
+
+        /**
+         * 
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_FONT_STYLE = "settings_spacer_font_style";
+
+        /**
+         * 
+         * @hide
+         */
+        public static final String SETTINGS_DISPLAY_ANIM = "settings_display_anim";
+
+
+
 
         /**
          * Header height
