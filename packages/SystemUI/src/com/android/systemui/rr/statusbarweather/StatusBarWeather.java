@@ -24,6 +24,7 @@ import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.net.Uri;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -37,7 +38,7 @@ import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
-
+import com.android.internal.util.rr.RRFontHelper;
 import java.util.Arrays;
 
 public class StatusBarWeather extends TextView implements
@@ -56,6 +57,9 @@ public class StatusBarWeather extends TextView implements
     private boolean mEnabled;
     private int mTintColor;
     private boolean mWeatherInHeaderView;
+    private int mColor;
+    private int mStyle;
+    private int mSize;
 
     Handler mHandler;
 
@@ -72,11 +76,20 @@ public class StatusBarWeather extends TextView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
 		    Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
    	            UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_WEATHER_COLOR), false, this,
+   	            UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_WEATHER_FONT), false, this,
+   	            UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_WEATHER_FONT_SIZE), false, this,
+   	            UserHandle.USER_ALL);
             updateSettings(false);
         }
 
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(boolean selfChange, Uri uri) {
             updateSettings(true);
         }
     }
@@ -138,6 +151,15 @@ public class StatusBarWeather extends TextView implements
         mWeatherInHeaderView = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_WEATHER_COLOR, 0xffffffff,
+                UserHandle.USER_CURRENT);
+        mStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_WEATHER_FONT, 0,
+                UserHandle.USER_CURRENT);
+        mSize = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_WEATHER_FONT_SIZE, 14,
+                UserHandle.USER_CURRENT);
         if ((mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5)
                                            && !mWeatherInHeaderView) {
             mWeatherClient.setOmniJawsEnabled(true);
@@ -145,7 +167,11 @@ public class StatusBarWeather extends TextView implements
         } else {
             setVisibility(View.GONE);
         }
-
+        if (mColor != 0xFFFFFFFF) {
+            updateFontColor();
+        }
+        updateFont();
+        updateFontSize();
         if (onChange && mStatusBarWeatherEnabled == 0) {
             // Disable OmniJaws if tile isn't used either
             String[] tiles = Settings.Secure.getStringForUser(resolver,
@@ -197,9 +223,32 @@ public class StatusBarWeather extends TextView implements
         }
     }
 
+
+    public void updateFontColor() {
+       try {
+           setTextColor(mColor);
+       } catch (Exception e) {}
+    }
+
+    public void updateFont() {
+       try {
+           RRFontHelper.setFontType(this, mStyle);
+       } catch (Exception e) {}
+    }
+
+    public void updateFontSize() {
+       try {
+           setTextSize(mSize);
+       } catch (Exception e) {}
+    }
+
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
-        setTextColor(mTintColor);
+        if (mColor == 0xFFFFFFFF) {
+            setTextColor(mTintColor);
+        } else {
+            updateFontColor();
+        }
         queryAndUpdateWeather();
     }
 }

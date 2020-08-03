@@ -6466,6 +6466,24 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_WEATHER_LOCATION = "status_bar_show_weather_location";
 
         /**
+         * 
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT = "status_bar_weather_font";
+
+        /**
+         * 
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT_SIZE = "status_bar_weather_font_size";
+
+        /**
          * Gestures nav: whether show it or hide completely
          * @hide
          */
