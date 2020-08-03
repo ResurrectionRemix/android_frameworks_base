@@ -579,7 +579,7 @@ public class KeyguardStatusView extends GridLayout implements
             mKeyguardSlice.setViewsTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
         }
         if (lockDateFont == 68) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
         }
         if (lockDateFont == 69) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));

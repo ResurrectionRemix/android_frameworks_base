@@ -1003,10 +1003,10 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
             }
         }
         if (lockClockFont == 68) {
-            mClockView.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
-            mClockViewBold.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            mClockView.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
+            mClockViewBold.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
             if (mClockPlugin != null) {
-                mClockPlugin.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+                mClockPlugin.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
             }
         }
         if (lockClockFont == 69) {

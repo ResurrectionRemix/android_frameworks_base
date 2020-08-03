@@ -264,7 +264,7 @@ public class RRFontHelper {
             view.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
         }
         if (font == 68) {
-            view.setTypeface(Typeface.create("mexcellent", Typeface.NORMAL));
+            view.setTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
         }
         if (font == 69) {
             view.setTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
