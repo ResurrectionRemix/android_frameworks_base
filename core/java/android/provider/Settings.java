@@ -3286,6 +3286,14 @@ public final class Settings {
          * @hide
          */
          public static final String RR_CONFIG_STYLE = "rr_config_style";
+
+
+        /**
+         * RR Config Setting
+         * @hide
+         */
+         public static final String RR_CONFIG_ANIM = "rr_config_anim";
+
         /**
          * Transition effect in RR tabs
          *
