@@ -143,6 +143,10 @@ public class StatusBarWeatherImage extends ImageView implements
         mWeatherInHeaderView = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
+        if (mStatusBarWeatherEnabled == 3 || mStatusBarWeatherEnabled == 4) {
+            setVisibility(View.GONE); 
+            return;
+        }
         if ((mStatusBarWeatherEnabled == 1 || mStatusBarWeatherEnabled == 2
                 || mStatusBarWeatherEnabled == 5) && !mWeatherInHeaderView) {
             mWeatherClient.setOmniJawsEnabled(true);
@@ -154,6 +158,10 @@ public class StatusBarWeatherImage extends ImageView implements
 
     private void queryAndUpdateWeather() {
         try {
+            if (mStatusBarWeatherEnabled == 3 || mStatusBarWeatherEnabled == 4) {
+                setVisibility(View.GONE); 
+                return;
+            }
             if (DEBUG) Log.d(TAG, "queryAndUpdateWeather " + mEnabled);
             if (mEnabled) {
                 mWeatherClient.queryWeather();
