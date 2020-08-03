@@ -54,7 +54,7 @@ public class QsHeaderWeatherImage extends ImageView implements
     private boolean mEnabled;
     private boolean mAttached;
     private boolean mWeatherInHeaderView;
-
+    private int mColor;
     Handler mHandler;
 
     public QsHeaderWeatherImage(Context context) {
@@ -109,6 +109,9 @@ public class QsHeaderWeatherImage extends ImageView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
 			        Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
 			        UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_WEATHER_COLOR), false, this,
+   	            UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -137,6 +140,9 @@ public class QsHeaderWeatherImage extends ImageView implements
         mWeatherInHeaderView = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_WEATHER_COLOR, 0xffffffff,
+                UserHandle.USER_CURRENT);
         if ((mStatusBarWeatherEnabled == 1 || mStatusBarWeatherEnabled == 2
                 || mStatusBarWeatherEnabled == 5) && mWeatherInHeaderView) {
             mWeatherClient.setOmniJawsEnabled(true);
@@ -158,6 +164,9 @@ public class QsHeaderWeatherImage extends ImageView implements
                             || mStatusBarWeatherEnabled == 2
                             || mStatusBarWeatherEnabled == 5) && mWeatherInHeaderView) {
                         setImageDrawable(mWeatherImage);
+                        if (mWeatherImage instanceof VectorDrawable) {
+                            updateColor();
+                        }
                         setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -166,6 +175,14 @@ public class QsHeaderWeatherImage extends ImageView implements
             } else {
                 setVisibility(View.GONE);
             }
+        } catch(Exception e) {
+            // Do nothing
+        }
+    }
+
+    public void updateColor() {
+       try {
+          mWeatherImage.setTint(mColor);
         } catch(Exception e) {
             // Do nothing
         }

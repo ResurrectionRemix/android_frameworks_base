@@ -56,7 +56,8 @@ public class StatusBarWeatherImage extends ImageView implements
     private boolean mEnabled;
     private boolean mWeatherInHeaderView;
     private boolean mAttached;
-    private int mTintColor;
+    private int mTintColor = 0xffffffff;
+    private int mColor;
 
     Handler mHandler;
 
@@ -75,7 +76,6 @@ public class StatusBarWeatherImage extends ImageView implements
         mHandler = new Handler();
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
-        mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
     }
@@ -115,6 +115,9 @@ public class StatusBarWeatherImage extends ImageView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
 	            Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
 		    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.STATUS_BAR_WEATHER_COLOR), false, this,
+   	            UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -143,6 +146,9 @@ public class StatusBarWeatherImage extends ImageView implements
         mWeatherInHeaderView = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_WEATHER_COLOR, 0xffffffff,
+                UserHandle.USER_CURRENT);
         if (mStatusBarWeatherEnabled == 3 || mStatusBarWeatherEnabled == 4) {
             setVisibility(View.GONE); 
             return;
@@ -169,7 +175,7 @@ public class StatusBarWeatherImage extends ImageView implements
                 mWeatherImage = mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode);
                 if (mWeatherData != null) {
                     if (mWeatherImage instanceof VectorDrawable) {
-                        mWeatherImage.setTint(mTintColor);
+                        updateColor();
                     }
                     if ((mStatusBarWeatherEnabled == 1
                             || mStatusBarWeatherEnabled == 2
@@ -185,6 +191,20 @@ public class StatusBarWeatherImage extends ImageView implements
             } else {
                 setVisibility(View.GONE);
             }
+        } catch(Exception e) {
+            // Do nothing
+        }
+    }
+
+    public void updateColor() {
+       try {
+           if (mColor == 0xFFFFFFFF) {
+               clearColorFilter();
+               mWeatherImage.setTint(mTintColor); 
+           } else {
+               mWeatherImage.setTint(mColor);
+               setColorFilter(mColor);
+           }
         } catch(Exception e) {
             // Do nothing
         }
