@@ -22,7 +22,6 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationDoubleOverlay \
 	DisplayCutoutEmulationTallOverlay \
 	FontAmaranteSourceOverlay \
-	FontAclonicaSourceOverlay \
 	FontAntipastoProSourceOverlay \
 	FontCagliostroSourceOverlay \
 	FontComicSansSourceOverlay \
