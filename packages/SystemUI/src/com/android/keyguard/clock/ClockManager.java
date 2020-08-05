@@ -148,9 +148,9 @@ public final class ClockManager {
         LayoutInflater layoutInflater = injectionInflater.injectable(LayoutInflater.from(context));
 
         addBuiltinClock(() -> new DefaultClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new SamsungClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new SamsungHighlightClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new SamsungClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new SamsungHighlightClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new AnalogClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new TypeClockAltController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new BinaryClockController(res, layoutInflater, colorExtractor));
@@ -167,9 +167,9 @@ public final class ClockManager {
         addBuiltinClock(() -> new SpideyClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new TypeClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new LineageClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new DividedLinesClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new MNMLBoxClockController(res, layoutInflater, colorExtractor));
-        addBuiltinClock(() -> new MNMLMinimalClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new DividedLinesClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new MNMLBoxClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new MNMLMinimalClockController(res, layoutInflater, colorExtractor, context));
 
         // Store the size of the display for generation of clock preview.
         DisplayMetrics dm = res.getDisplayMetrics();

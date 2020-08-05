@@ -17,11 +17,13 @@ package com.android.keyguard.clock;
 
 import android.app.WallpaperManager;
 import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,7 @@ import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
-
+import android.provider.Settings;
 import java.util.TimeZone;
 
 import static com.android.systemui.statusbar.phone
@@ -77,6 +79,8 @@ public class SamsungHighlightClockController implements ClockPlugin {
      */
     private int mAccentColor;
 
+    protected Context mContext;
+
     /**
      * Create a DefaultClockController instance.
      *
@@ -85,10 +89,11 @@ public class SamsungHighlightClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SamsungHighlightClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -108,6 +113,128 @@ public class SamsungHighlightClockController implements ClockPlugin {
     public void onDestroyView() {
         mView = null;
         mClock = null;
+    }
+
+    private int getLockClockSize() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKCLOCK_FONT_SIZE, 78);
+    }
+
+   public void refreshclocksize() {
+        int lockClockSize = getLockClockSize();
+
+        if (lockClockSize == 65) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_65));
+        } else if (lockClockSize == 66) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_66));
+        } else if (lockClockSize == 66) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_67));
+        } else if (lockClockSize == 68) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_68));
+        } else if (lockClockSize == 69) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_69));
+        } else if (lockClockSize == 70) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_70));
+        } else if (lockClockSize == 71) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_71));
+        } else if (lockClockSize == 72) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_72));
+        } else if (lockClockSize == 73) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_73));
+        } else if (lockClockSize == 74) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_74));
+        } else if (lockClockSize == 75) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_75));
+        } else if (lockClockSize == 76) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_76));
+        } else if (lockClockSize == 77) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_77));
+        } else if (lockClockSize == 78) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_78));
+        } else if (lockClockSize == 79) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_79));
+        } else if (lockClockSize == 80) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_80));
+        } else if (lockClockSize == 81) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_81));
+        } else if (lockClockSize == 82) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_82));
+        } else if (lockClockSize == 83) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_83));
+        } else if (lockClockSize == 84) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_84));
+        }  else if (lockClockSize == 85) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_85));
+        } else if (lockClockSize == 86) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_86));
+        } else if (lockClockSize == 87) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_87));
+        } else if (lockClockSize == 88) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_88));
+        } else if (lockClockSize == 89) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_89));
+        } else if (lockClockSize == 90) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_90));
+        } else if (lockClockSize == 91) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_91));
+        } else if (lockClockSize == 92) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_92));
+        }  else if (lockClockSize == 93) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_93));
+        } else if (lockClockSize == 94) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_94));
+        } else if (lockClockSize == 95) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_95));
+        } else if (lockClockSize == 96) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_96));
+        } else if (lockClockSize == 97) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_97));
+        } else if (lockClockSize == 98) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_98));
+        } else if (lockClockSize == 99) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_99));
+        } else if (lockClockSize == 100) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_100));
+        } else if (lockClockSize == 101) {
+        mClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_101));
+        }
     }
 
     @Override
@@ -188,6 +315,7 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
+        refreshclocksize();
     }
 
     @Override
