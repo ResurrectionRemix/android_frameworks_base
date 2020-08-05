@@ -212,7 +212,6 @@ public class MobileSignalController extends SignalController<
             resolver.registerContentObserver(
 	            Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
 		    this, UserHandle.USER_ALL);
-                    this, UserHandle.USER_ALL);
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.DATA_DISABLED_ICON),
                   false, this, UserHandle.USER_ALL);
@@ -476,10 +475,10 @@ public class MobileSignalController extends SignalController<
                     resId = R.drawable.ic_volte3;
                     break;
                 case 5:
-                    resId = R.drawable.ic_hd_volte4;
+                    resId = R.drawable.ic_volte4;
                     break;
                 case 6:
-                    resId = R.drawable.ic_hd_volte5;
+                    resId = R.drawable.ic_volte5;
                     break;
  	        //Vo
                 case 0:
