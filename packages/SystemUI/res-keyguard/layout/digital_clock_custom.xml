@@ -34,7 +34,7 @@
              android:paddingBottom="@dimen/title_clock_padding"
              android:letterSpacing="0.02"
              android:textColor="?attr/wallpaperTextColor"
-             style="@style/widget_big"
+             android:textSize="88sp"
              android:elegantTextHeight="false"
         />
     </FrameLayout>

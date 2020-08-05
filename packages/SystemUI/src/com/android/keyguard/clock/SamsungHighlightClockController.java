@@ -26,7 +26,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
-
+import android.graphics.Typeface;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -108,6 +108,11 @@ public class SamsungHighlightClockController implements ClockPlugin {
     public void onDestroyView() {
         mView = null;
         mClock = null;
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
     }
 
     @Override
@@ -195,6 +200,11 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldShowInBigContainer() {
         return true;
     }
 }
