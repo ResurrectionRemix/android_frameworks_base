@@ -278,6 +278,7 @@ public class QSContainerImpl extends FrameLayout implements
        if (mQsBackGroundColorRGB) {
            startDiscoMode();
        } else {
+           stopDiscoMode();
           if (mSetQsFromResources) {
             if (!mQsBgNewEnabled) {
                 mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
