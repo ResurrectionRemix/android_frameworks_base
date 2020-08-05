@@ -232,6 +232,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_SYSTEM_INFO), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_DATAUSAGE), false,
+                    this, UserHandle.USER_ALL);
             }
 
         @Override
@@ -381,7 +384,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE, STATUS_BAR_CUSTOM_HEADER_HEIGHT,
-                Settings.System.QS_DATAUSAGE, QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
+                QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE, QS_SHOW_BRIGHTNESS_SLIDER);
         updateSettings();
     }
@@ -1049,9 +1052,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 boolean showClock =
                         TunerService.parseIntegerSwitch(newValue, true);
                 mClockView.setClockVisibleByUser(showClock);
-                break;
-            case Settings.System.QS_DATAUSAGE:
-                 updateSettings();
                 break;
             case QS_SHOW_BRIGHTNESS_SLIDER:
                 mBrightnessSlider =
