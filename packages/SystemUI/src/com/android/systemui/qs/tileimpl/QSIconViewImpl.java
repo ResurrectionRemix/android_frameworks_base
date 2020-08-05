@@ -196,10 +196,8 @@ public class QSIconViewImpl extends QSIconView {
 
         int  useQSAccentTint = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
-        boolean setQsFromResources = System.getIntForUser(getContext().getContentResolver(),
-                     System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
 	
-	if (mAnimationEnabled && setQsFromResources && ValueAnimator.areAnimatorsEnabled()) {
+	if (mAnimationEnabled  && ValueAnimator.areAnimatorsEnabled()) {
             final float fromAlpha = Color.alpha(fromColor);
             final float toAlpha = Color.alpha(toColor);
             final float fromChannel = Color.red(fromColor);
@@ -214,8 +212,6 @@ public class QSIconViewImpl extends QSIconView {
 
                 if (useQSAccentTint == 1) {
                     setTint(iv, toColor);
-                } if (useQSAccentTint == 2) {
-                    setTint(iv, randomColor());
                 } else {
                     setTint(iv, Color.argb(alpha, channel, channel, channel));
                 }
@@ -228,11 +224,7 @@ public class QSIconViewImpl extends QSIconView {
             });
             anim.start();
         } else {
-            if (useQSAccentTint == 2) {
-                setTint(iv, randomColor());
-            } else {
-                setTint(iv, toColor);
-            }
+            setTint(iv, toColor);
             endRunnable.run();
         }
     }

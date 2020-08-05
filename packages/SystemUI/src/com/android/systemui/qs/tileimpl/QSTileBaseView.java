@@ -21,13 +21,18 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.content.res.ColorUtils;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.ShapeDrawable.ShaderFactory;
 import android.graphics.drawable.shapes.PathShape;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.Shader.TileMode;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -71,8 +76,11 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private boolean mCollapsedView;
     private boolean mClicked;
     private boolean mShowRippleEffect = true;
+    private final ShapeDrawable backgroundDrawable;
+    private final ShapeDrawable foregroundDrawable;
 
-    private final ImageView mBg;
+    private final ImageView backgroundView;
+    private final ImageView foregroundView;
     private int mColorActive;
     private int mColorActiveAlpha;
     private final int mColorInactive;
@@ -81,7 +89,8 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private int mBgSize;
     private int useQSAccentTint;
     private boolean mTintInactive;
-
+    private int mState;
+    private boolean tintgradient;
     public QSTileBaseView(Context context, QSIconView icon) {
         this(context, icon, false);
     }
@@ -93,32 +102,68 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         mIconFrame = new FrameLayout(context);
         int size = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
         addView(mIconFrame, new LayoutParams(size, size));
-        mBg = new ImageView(getContext());
+        backgroundView = new ImageView(getContext());
+        foregroundView = new ImageView(getContext());
+        Path path = new Path(PathParser.createPathFromPathData(
+                context.getResources().getString(ICON_MASK_ID)));
+        float pathSize = AdaptiveIconDrawable.MASK_SIZE;
+        int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
+        PathShape p = new PathShape(path, pathSize, pathSize);
+        // The drawable shown when the tile is not active
+        backgroundDrawable = new ShapeDrawable(p);
+        // The drawable shown when the tile is active
+        foregroundDrawable = new ShapeDrawable(p);
          int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
                  Settings.System.QS_TILE_STYLE, 0);
-        if (qsTileStyle == 0) {
-            if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
-                Path path = new Path(PathParser.createPathFromPathData(
-                            context.getResources().getString(ICON_MASK_ID)));
-                float pathSize = AdaptiveIconDrawable.MASK_SIZE;
-                PathShape p = new PathShape(path, pathSize, pathSize);
-                ShapeDrawable d = new ShapeDrawable(p);
-                d.setTintList(ColorStateList.valueOf(Color.TRANSPARENT));
-                int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
-                d.setIntrinsicHeight(bgSize);
-                d.setIntrinsicWidth(bgSize);
-                mBg.setImageDrawable(d);
+        mColorDisabled = Utils.getDisabled(context,
+                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
+        mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
+        useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
+        tintgradient = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_GRADIENT, 0, UserHandle.USER_CURRENT) == 1;
+        if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
+            if (tintgradient) {
+                backgroundDrawable.setTintList(ColorStateList.valueOf(mColorDisabled));
+                backgroundDrawable.setIntrinsicHeight(bgSize);
+                backgroundDrawable.setIntrinsicWidth(bgSize);
+                backgroundView.setImageDrawable(backgroundDrawable);
+                // Draw a 45 degree gradient for the foreground
+                foregroundDrawable.setShaderFactory(new ShaderFactory() {
+                    @Override
+                    public Shader resize(int width, int height) {
+                        LinearGradient gradient = new LinearGradient (0, pathSize, pathSize, 0,
+                                context.getResources().getColor(com.android.internal.R.color.gradient_start),
+                                context.getResources().getColor(com.android.internal.R.color.gradient_end),
+                                TileMode.REPEAT);
+                        return gradient;
+                    }
+                });
+                foregroundDrawable.setIntrinsicHeight(bgSize);
+                foregroundDrawable.setIntrinsicWidth(bgSize);
+                foregroundView.setAlpha(0f);
+                foregroundView.setVisibility(View.GONE);
+                foregroundView.setImageDrawable(foregroundDrawable);
+                // Add the views to the tile frame layout
                 FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
-                mIconFrame.addView(mBg, lp);
-                mBg.setLayoutParams(lp);
-             } else {
-                mBg.setImageResource(R.drawable.ic_qs_circle);
-                mIconFrame.addView(mBg);
-             }
-        }  else {
-               mBg.setScaleType(ScaleType.FIT_CENTER);
-               mBg.setImageResource(R.drawable.ic_qs_circle);
-               mIconFrame.addView(mBg);
+                mIconFrame.addView(backgroundView, lp);
+                mIconFrame.addView(foregroundView, lp);
+                backgroundView.setLayoutParams(lp);
+                foregroundView.setLayoutParams(lp);
+            } else {
+                backgroundDrawable.setTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+                backgroundDrawable.setIntrinsicHeight(bgSize);
+                backgroundDrawable.setIntrinsicWidth(bgSize);
+                backgroundView.setImageDrawable(backgroundDrawable);
+                // Add the views to the tile frame layout
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
+                mIconFrame.addView(backgroundView, lp);
+                backgroundView.setLayoutParams(lp);
+            }
+        } else {
+            backgroundView.setScaleType(ScaleType.FIT_CENTER);
+            backgroundView.setImageResource(R.drawable.ic_qs_circle);
+            mIconFrame.addView(backgroundView);
         }
         mIcon = icon;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -135,15 +180,10 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         setBackground(mTileBackground);
 
-        useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
         mTintInactive = Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.QS_TILE_ACCENT_TINT_INACTIVE, 0, UserHandle.USER_CURRENT) == 1;
         setActiveColor(context);
         final float[] hsl = {0f, 1f, 0.5f};
-        mColorDisabled = Utils.getDisabled(context,
-                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
-        mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
 
         setPadding(0, 0, 0, 0);
         setClipChildren(false);
@@ -160,7 +200,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             mColorActiveAlpha = adjustAlpha(mColorActive, isThemeDark(context) ? 0.7f : 0.5f);
             mColorActive = mColorActiveAlpha;
         } else if (useQSAccentTint == 2) {
-            mColorActive = randomColor();
+           mColorActive = ColorUtils.genRandomAccentColor(isThemeDark(context), (long) (ColorUtils.getBootTime() + mIcon.toString().hashCode()));
         }
     }
 
@@ -185,7 +225,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     public View getBgCircle() {
-        return mBg;
+        return backgroundView;
     }
 
     protected Drawable newTileBackground() {
@@ -265,21 +305,56 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     protected void handleStateChanged(QSTile.State state) {
-        int circleColor = getCircleColor(state.state);
         boolean allowAnimations = animationsEnabled();
-        if (circleColor != mCircleColor) {
-            if (allowAnimations) {
-                ValueAnimator animator = ValueAnimator.ofArgb(mCircleColor, circleColor)
-                        .setDuration(QS_ANIM_LENGTH);
-                animator.addUpdateListener(animation -> mBg.setImageTintList(ColorStateList.valueOf(
-                        (Integer) animation.getAnimatedValue())));
-                animator.start();
-            } else {
-                QSIconViewImpl.setTint(mBg, circleColor);
+        if (getResources().getBoolean(R.bool.config_useMaskForQs) && tintgradient) {
+            int newTileState = state.state;
+            if (newTileState != mState) {
+                if (allowAnimations) {
+                    if (newTileState == Tile.STATE_ACTIVE) {
+                         foregroundView.setVisibility(View.VISIBLE);
+                         foregroundView.animate().alpha(1f).setDuration(QS_ANIM_LENGTH).withEndAction(new Runnable() {
+                             @Override
+                             public void run() {
+                                 backgroundView.setVisibility(View.GONE);
+                             }
+                         });
+                    } else if (mState == Tile.STATE_ACTIVE) {
+                         backgroundView.setVisibility(View.VISIBLE);
+                         foregroundView.animate().alpha(0f).setDuration(QS_ANIM_LENGTH).withEndAction(new Runnable() {
+                             @Override
+                             public void run() {
+                                 foregroundView.setVisibility(View.GONE);
+                             }
+                         });
+                    }
+                } else {
+                    if (newTileState == Tile.STATE_ACTIVE) {
+                        foregroundView.setVisibility(View.VISIBLE);
+                        foregroundView.setAlpha(1f);
+                        backgroundView.setVisibility(View.GONE);
+                    } else if (mState == Tile.STATE_ACTIVE) {
+                        foregroundView.setVisibility(View.GONE);
+                        foregroundView.setAlpha(0f);
+                        backgroundView.setVisibility(View.VISIBLE);
+                    }
+                }
             }
-            mCircleColor = circleColor;
+            mState = newTileState;
+        } else {
+            int circleColor = getCircleColor(state.state);
+            if (circleColor != mCircleColor) {
+                if (allowAnimations) {
+                    ValueAnimator animator = ValueAnimator.ofArgb(mCircleColor, circleColor)
+                            .setDuration(QS_ANIM_LENGTH);
+                    animator.addUpdateListener(animation -> backgroundView.setImageTintList(ColorStateList.valueOf(
+                            (Integer) animation.getAnimatedValue())));
+                    animator.start();
+                } else {
+                    QSIconViewImpl.setTint(backgroundView, circleColor);
+                }
+                mCircleColor = circleColor;
+            }
         }
-
         mShowRippleEffect = state.showRippleEffect;
         setClickable(state.state != Tile.STATE_UNAVAILABLE);
         setLongClickable(state.handlesLongClick);

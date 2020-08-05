@@ -5967,6 +5967,13 @@ public final class Settings {
         public static final String QS_DATAUSAGE = "qs_datausage";
 
         /**
+         * Show data usage in QS header
+         * @hide
+         */
+        public static final String QS_TILE_GRADIENT = "qs_tile_gradient";
+
+
+        /**
          * @hide
          */
         public static final String SMART_CHARGING = "smart_charging";

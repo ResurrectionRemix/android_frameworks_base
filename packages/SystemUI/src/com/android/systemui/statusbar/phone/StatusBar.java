@@ -2274,6 +2274,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_ICON_PRIMARY),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_GRADIENT),
+                    false, this, UserHandle.USER_ALL);
+
 
         }
 
@@ -2294,6 +2298,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_GRADIENT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY)))  {
                 mQSPanel.getHost().reloadAllTiles();
              } else {

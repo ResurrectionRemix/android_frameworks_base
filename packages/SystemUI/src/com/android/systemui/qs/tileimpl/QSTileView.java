@@ -61,7 +61,6 @@ public class QSTileView extends QSTileBaseView {
 
     public QSTileView(Context context, QSIconView icon, boolean collapsedView) {
         super(context, icon, collapsedView);
-
         setClipChildren(false);
         setClipToPadding(false);
 
