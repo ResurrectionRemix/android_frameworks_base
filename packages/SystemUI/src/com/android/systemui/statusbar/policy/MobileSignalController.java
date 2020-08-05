@@ -478,7 +478,7 @@ public class MobileSignalController extends SignalController<
                 case 5:
                     resId = R.drawable.ic_hd_volte4;
                     break;
-                case 5:
+                case 6:
                     resId = R.drawable.ic_hd_volte5;
                     break;
  	        //Vo
