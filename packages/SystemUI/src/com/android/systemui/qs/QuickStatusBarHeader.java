@@ -235,6 +235,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_DATAUSAGE), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(LineageSettings.Secure
+                    .getUriFor(LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER), false,
+                    this, UserHandle.USER_ALL);
             }
 
         @Override
@@ -385,7 +388,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE, STATUS_BAR_CUSTOM_HEADER_HEIGHT,
                 QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
-                QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE, QS_SHOW_BRIGHTNESS_SLIDER);
+                QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
 
@@ -649,6 +652,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                   com.android.internal.R.integer.config_sysCPUTempMultiplier);
         mSysBatTempMultiplier = resources.getInteger(
                   com.android.internal.R.integer.config_sysBatteryTempMultiplier);
+        mBrightnessSlider = LineageSettings.Secure.getIntForUser(getContext().getContentResolver(),
+                LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, 1,
+                UserHandle.USER_CURRENT);
+        mIsQuickQsBrightnessEnabled = mBrightnessSlider > 2;
 
         mSystemInfoMode = getQsSystemInfoMode();
         updateSystemInfoText();
@@ -1052,12 +1059,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 boolean showClock =
                         TunerService.parseIntegerSwitch(newValue, true);
                 mClockView.setClockVisibleByUser(showClock);
-                break;
-            case QS_SHOW_BRIGHTNESS_SLIDER:
-                mBrightnessSlider =
-                        TunerService.parseInteger(newValue, 3);
-                mIsQuickQsBrightnessEnabled = mBrightnessSlider > 2;
-                 updateSettings();
                 break;
             case QS_SHOW_AUTO_BRIGHTNESS:
                 mIsQsAutoBrightnessEnabled =
