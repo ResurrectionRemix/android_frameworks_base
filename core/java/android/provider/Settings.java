@@ -6386,6 +6386,12 @@ public final class Settings {
          */
         public static final String QS_PANEL_BG_RGB_DURATION = "qs_panel_bg_rgb_dur";
 
+        /**
+         * Whether to RGB the QS tile or not
+         * @hide
+         */
+        public static final String QS_TILE_RGB_TINT = "qs_tile_rgb_tint";
+
        /**
          * @hide
          */

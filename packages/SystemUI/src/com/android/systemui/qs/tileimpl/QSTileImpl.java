@@ -77,6 +77,7 @@ import com.android.systemui.R;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Base quick-settings tile, extend this to create a new tile.
@@ -457,27 +458,13 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     public abstract CharSequence getTileLabel();
 
     public static int getColorForState(Context context, int state) {
-        int defaultColor = ColorUtils.genRandomQsColor();
-
-        boolean setQsFromWall = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_WALL, 0, UserHandle.USER_CURRENT) == 1;
-        boolean setQsFromResources = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
-        boolean setQsFromAccent = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_ACCENT, 1, UserHandle.USER_CURRENT) == 1;
-        int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT);
-
-        int qsBackGroundColor = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
-                System.QS_PANEL_BG_COLOR, defaultColor, UserHandle.USER_CURRENT));
-        int qsBackGroundColorWall = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
-                System.QS_PANEL_BG_COLOR_WALL, defaultColor, UserHandle.USER_CURRENT));
-
-        int qsTileStyle = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_TILE_STYLE, 0, UserHandle.USER_CURRENT);
-
+        int useQSAccentTint = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_ACCENT_TINT, 0, UserHandle.USER_CURRENT) ;
         boolean qsIconPrimary = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_TILE_ICON_PRIMARY, 0, UserHandle.USER_CURRENT) == 1;
+
+        boolean rgbTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_RGB_TINT, 0, UserHandle.USER_CURRENT) == 1;
 
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
@@ -486,30 +473,18 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
             case Tile.STATE_INACTIVE:
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
             case Tile.STATE_ACTIVE:
-                if (setQsFromResources) {
-                    if (setQsUseNewTint == 2)
-                        return ColorUtils.genRandomAccentColor(isThemeDark(context));
-                    else if (setQsUseNewTint == 1 && (qsTileStyle == 0 || qsTileStyle == 7 ||
-                            qsTileStyle == 9 || qsTileStyle == 10 || qsTileStyle == 12 || qsTileStyle == 13))
-                            return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-                    else
-                        if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
-                                                       qsTileStyle == 12 || qsTileStyle == 13)
-                            return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-                        else
-                            if (qsIconPrimary)
+                if (useQSAccentTint == 1) {
+                    return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                } else if (useQSAccentTint == 2){
+                      if (rgbTint)
+                             return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                          else 
+                             return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                }  else if (useQSAccentTint == 0){
+                      if (qsIconPrimary)
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
                             else
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
-                } else {
-                     if (setQsFromAccent) {
-                        return context.getResources().getColor(R.color.accent_device_default_light);
-                     } else {
-                         if (setQsFromWall)
-                            return qsBackGroundColorWall;
-                         else
-                            return qsBackGroundColor;
-                     }
                 }
             default:
                 Log.e("QSTile", "Invalid state " + state);
