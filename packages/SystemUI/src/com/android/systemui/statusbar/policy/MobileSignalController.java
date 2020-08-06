@@ -469,7 +469,7 @@ public class MobileSignalController extends SignalController<
                     break;
                 // HD Icon
                 case 3:
-                    resId = R.drawable.ic_hd_volte;
+                    resId = R.drawable.ic_volte6;
                     break;
                 case 4:
                     resId = R.drawable.ic_volte3;
