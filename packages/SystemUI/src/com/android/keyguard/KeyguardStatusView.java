@@ -88,9 +88,6 @@ public class KeyguardStatusView extends GridLayout implements
             "system:" + Settings.System.LOCKSCREEN_WEATHER_STYLE;
     private static final String LS_WEATHER_PULSING =
             "system:" + Settings.System.LS_WEATHER_PULSING;
-
-    private static final String LOCK_CLOCK_FONT_SIZE =
-            "system:" + Settings.System.LOCKCLOCK_FONT_SIZE;
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
      * icons on AOD.
@@ -181,7 +178,6 @@ public class KeyguardStatusView extends GridLayout implements
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_STYLE);
-        tunerService.addTunable(this, LOCK_CLOCK_FONT_SIZE);
         onDensityOrFontScaleChanged();
     }
 
@@ -857,10 +853,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mPixelStyle =
                         TunerService.parseIntegerSwitch(newValue, true);
                 updateWeatherView();
-                break;
-            case LOCK_CLOCK_FONT_SIZE:
-                    mLockClockFontSize = TunerService.parseInteger(newValue, 50);
-                onDensityOrFontScaleChanged();
                 break;
             default:
                 break;
