@@ -194,8 +194,97 @@ public class SfunyClockController implements ClockPlugin {
 
    public void refreshclocksize() {
         int lockClockSize = getLockClockSize();
-
-        if (lockClockSize == 65) {
+        if (lockClockSize == 35) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_35));
+        } else if (lockClockSize == 36) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_36));
+        } else if (lockClockSize == 37) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_37));
+        } else if (lockClockSize == 38) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_38));
+        } else if (lockClockSize == 39) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_39));
+        } else if (lockClockSize == 40) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_40));
+        } else if (lockClockSize == 41) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_41));
+        } else if (lockClockSize == 42) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_42));
+        } else if (lockClockSize == 43) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_43));
+        } else if (lockClockSize == 44) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_44));
+        } else if (lockClockSize == 45) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_45));
+        } else if (lockClockSize == 46) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_46));
+        } else if (lockClockSize == 47) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_47));
+        } else if (lockClockSize == 48) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_48));
+        } else if (lockClockSize == 49) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_49));
+        } else if (lockClockSize == 50) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_50));
+        } else if (lockClockSize == 51) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_51));
+        } else if (lockClockSize == 52) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_52));
+        } else if (lockClockSize == 53) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_53));
+        } else if (lockClockSize == 54) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_54));
+        } else if (lockClockSize == 55) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_55));
+        } else if (lockClockSize == 56) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_56));
+        } else if (lockClockSize == 57) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_57));
+        } else if (lockClockSize == 58) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_58));
+        } else if (lockClockSize == 59) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_59));
+        } else if (lockClockSize == 60) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_60));
+        }  else if (lockClockSize == 61) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_61));
+        }  else if (lockClockSize == 62) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_62));
+        }  else if (lockClockSize == 63) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_63));
+        }  else if (lockClockSize == 64) {
+        mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_64));
+        }else if (lockClockSize == 65) {
         mHourClock.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 mResources.getDimensionPixelSize(R.dimen.lock_clock_font_size_65));
         } else if (lockClockSize == 66) {
