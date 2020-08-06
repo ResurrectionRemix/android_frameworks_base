@@ -436,6 +436,8 @@ public class SamsungHighlightClockController implements ClockPlugin {
         }
         final int color = colorPalette[Math.max(0, colorPalette.length - 5)];
         mAccentColor = color;
+        mClock.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
+        mClock.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
     }
 
     @Override
