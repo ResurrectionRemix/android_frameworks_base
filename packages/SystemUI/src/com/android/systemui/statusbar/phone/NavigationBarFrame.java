@@ -20,29 +20,57 @@ import android.annotation.AttrRes;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.policy.DeadZone;
+import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.PulseController;
+import com.android.systemui.tuner.TunerService;
 
-public class NavigationBarFrame extends FrameLayout {
+public class NavigationBarFrame extends FrameLayout implements KeyguardMonitor.Callback,
+        TunerService.Tunable {
+
+    private static final String NAVBAR_PULSE_ENABLED =
+            Settings.Secure.NAVBAR_PULSE_ENABLED;
 
     private DeadZone mDeadZone = null;
+    private KeyguardMonitor mKeyguardMonitor;
 
+    private boolean mAttached;
+    private boolean mKeyguardShowing;
+    private boolean mPulseEnabled;
+    
     public NavigationBarFrame(@NonNull Context context) {
-        super(context);
+        this(context, null);
     }
 
-    public NavigationBarFrame(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public NavigationBarFrame(@NonNull Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
     public NavigationBarFrame(@NonNull Context context, @Nullable AttributeSet attrs,
             @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
+        mKeyguardMonitor.addCallback(this);
+        Dependency.get(TunerService.class).addTunable(this, NAVBAR_PULSE_ENABLED);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case NAVBAR_PULSE_ENABLED:
+                mPulseEnabled =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                updatePulseVisibility();
+                break;
+            default:
+                break;
+        }
     }
 
     public void setDeadZone(@NonNull DeadZone deadZone) {
@@ -61,13 +89,29 @@ public class NavigationBarFrame extends FrameLayout {
 
     @Override
     public void onAttachedToWindow() {
-        Dependency.get(PulseController.class).attachPulseTo(this);
+        mAttached = true;
+        updatePulseVisibility();
         super.onAttachedToWindow();
     }
 
     @Override
     public void onDetachedFromWindow() {
-        Dependency.get(PulseController.class).detachPulseFrom(this);
+        mAttached = false;
+        updatePulseVisibility();
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    public void onKeyguardShowingChanged() {
+        mKeyguardShowing = mKeyguardMonitor.isShowing();
+        updatePulseVisibility();
+    }
+
+    private void updatePulseVisibility() {
+        if (mAttached && !mKeyguardShowing && mPulseEnabled) {
+            Dependency.get(PulseController.class).attachPulseTo(this);
+        } else {
+            Dependency.get(PulseController.class).detachPulseFrom(this);
+        }
     }
 }
