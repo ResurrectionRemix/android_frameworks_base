@@ -1043,6 +1043,10 @@ public class NavigationBarView extends FrameLayout implements
                 mNavBarMode == NAV_BAR_MODE_GESTURAL, isRecentsButtonVisible());
     }
 
+    public NavigationBarFrame getNavbarFrame() {
+        return ((NavigationBarFrame) getRootView());
+    }
+
     public boolean isVertical() {
         return mIsVertical;
     }

@@ -20,6 +20,8 @@ package com.android.systemui.statusbar.policy;
 import android.widget.FrameLayout;
 
 import com.android.systemui.statusbar.NotificationMediaManager;
+import com.android.systemui.navigation.pulse.VisualizerView;
+import com.android.systemui.statusbar.phone.NavigationBarView;
 
 public interface PulseController extends NotificationMediaManager.MediaListener {
     public interface PulseStateListener {
@@ -27,7 +29,10 @@ public interface PulseController extends NotificationMediaManager.MediaListener 
     }
 
     public void attachPulseTo(FrameLayout parent);
-    public void detachPulseFrom(FrameLayout parent);
+    public void detachPulseFrom(FrameLayout parent, boolean keepLinked);
     public void addCallback(PulseStateListener listener);
     public void removeCallback(PulseStateListener listener);
+    public void setDozing(boolean dozing);
+    public void notifyKeyguardGoingAway();
+    public void setKeyguardShowing(boolean showing);
 }

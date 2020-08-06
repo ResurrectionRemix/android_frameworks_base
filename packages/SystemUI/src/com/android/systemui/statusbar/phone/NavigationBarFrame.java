@@ -27,50 +27,26 @@ import android.widget.FrameLayout;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.policy.DeadZone;
-import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.tuner.TunerService;
 
-public class NavigationBarFrame extends FrameLayout implements KeyguardMonitor.Callback,
-        TunerService.Tunable {
-
-    private static final String NAVBAR_PULSE_ENABLED =
-            Settings.Secure.NAVBAR_PULSE_ENABLED;
+public class NavigationBarFrame extends FrameLayout {
 
     private DeadZone mDeadZone = null;
-    private KeyguardMonitor mKeyguardMonitor;
 
     private boolean mAttached;
-    private boolean mKeyguardShowing;
-    private boolean mPulseEnabled;
     
     public NavigationBarFrame(@NonNull Context context) {
-        this(context, null);
+        super(context);
     }
 
-    public NavigationBarFrame(@NonNull Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public NavigationBarFrame(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     public NavigationBarFrame(@NonNull Context context, @Nullable AttributeSet attrs,
             @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
-        mKeyguardMonitor.addCallback(this);
-        Dependency.get(TunerService.class).addTunable(this, NAVBAR_PULSE_ENABLED);
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        switch (key) {
-            case NAVBAR_PULSE_ENABLED:
-                mPulseEnabled =
-                        TunerService.parseIntegerSwitch(newValue, false);
-                updatePulseVisibility();
-                break;
-            default:
-                break;
-        }
     }
 
     public void setDeadZone(@NonNull DeadZone deadZone) {
@@ -90,28 +66,16 @@ public class NavigationBarFrame extends FrameLayout implements KeyguardMonitor.C
     @Override
     public void onAttachedToWindow() {
         mAttached = true;
-        updatePulseVisibility();
         super.onAttachedToWindow();
     }
 
     @Override
     public void onDetachedFromWindow() {
         mAttached = false;
-        updatePulseVisibility();
         super.onDetachedFromWindow();
     }
 
-    @Override
-    public void onKeyguardShowingChanged() {
-        mKeyguardShowing = mKeyguardMonitor.isShowing();
-        updatePulseVisibility();
-    }
-
-    private void updatePulseVisibility() {
-        if (mAttached && !mKeyguardShowing && mPulseEnabled) {
-            Dependency.get(PulseController.class).attachPulseTo(this);
-        } else {
-            Dependency.get(PulseController.class).detachPulseFrom(this);
-        }
+    public boolean isAttached() {
+        return mAttached;
     }
 }
