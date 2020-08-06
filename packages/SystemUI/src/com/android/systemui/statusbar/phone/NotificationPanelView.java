@@ -1363,9 +1363,7 @@ public class NotificationPanelView extends PanelView implements
                 && mBarState == StatusBarState.KEYGUARD) ||
                 (!mQsExpanded && mDoubleTapToSleepEnabled
                 && event.getY() < mStatusBarHeaderHeight)) {
-            if (mDoubleTapGesture.onTouchEvent(event)) {
-                return false;
-            }
+            mDoubleTapGesture.onTouchEvent(event);
         }
 
         // Make sure the next touch won't the blocked after the current ends.
