@@ -458,6 +458,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     ANBIHandler mANBIHandler;
     private boolean mANBIEnabled;
 
+    private boolean mHwKeysEnabled = true;
+
     // Camera button control flags and actions
     boolean mCameraLaunch;
     boolean mCameraSleepOnRelease;
@@ -1024,6 +1026,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_ROCKER_WAKE), false, this,
+                    UserHandle.USER_ALL);
+         resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.HARDWARE_KEYS_ENABLE), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_ANSWER_CALL), false, this,
@@ -2085,6 +2090,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else if (longPress) {
                 if (!keyguardOn) {
                     // Post to main thread to avoid blocking input pipeline.
+                    Log.d(TAG, "Going to home longpress.");
                     mHandler.post(() -> handleLongPressOnHome(event.getDeviceId()));
                 }
             }
@@ -2105,6 +2111,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mHomeConsumed = true;
             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                     "Home - Long Press");
+            Log.d(TAG, "Going to home longpress." + mLongPressOnHomeBehavior);
             switch (mLongPressOnHomeBehavior) {
                 case LONG_PRESS_HOME_ALL_APPS:
                     launchAllAppsAction();
@@ -2219,6 +2226,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mKeyHandler = new HardkeyActionHandler(mContext, mHandler);
         }
         mSettingsObserver = new SettingsObserver(mHandler);
+        mSettingsObserver.observe();
 
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
@@ -2726,6 +2734,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Secure.TORCH_POWER_BUTTON_GESTURE,
                             0, UserHandle.USER_CURRENT);
 
+            mHwKeysEnabled = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.HARDWARE_KEYS_ENABLE, 1, UserHandle.USER_CURRENT) != 0;
             mDefaultDisplayPolicy.updatehasNavigationBar();
         }
         if (updateRotation) {
@@ -4313,6 +4323,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         launchHomeFromHotKey(displayId, true /* awakenFromDreams */, true /*respectKeyguard*/);
     }
 
+
     /**
      * A home key -> launch home action was detected.  Take the appropriate action
      * given the situation with the keyguard.
@@ -4529,8 +4540,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         context.sendBroadcastAsUser(keyguardIntent, user);
     }
 
-    private boolean isHwKeysDisabled() {
-        return mKeyHandler != null ? mKeyHandler.isHwKeysDisabled() : false;
+    public boolean isHwKeysDisabled() {
+        return !mHwKeysEnabled;
+    }
+
+
+    private boolean filterDisabledKey(int keyCode) {
+        return !mHwKeysEnabled && (keyCode == KeyEvent.KEYCODE_HOME
+                || keyCode == KeyEvent.KEYCODE_MENU
+                || keyCode == KeyEvent.KEYCODE_APP_SWITCH
+                || keyCode == KeyEvent.KEYCODE_ASSIST
+                || keyCode == KeyEvent.KEYCODE_BACK);
     }
 
     // TODO(b/117479243): handle it in InputPolicy
@@ -4577,8 +4597,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // Request haptic feedback for hw keys finger down events.
         boolean hapticFeedbackRequested = false;
-
-        if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyBeforeQueueing(): event =" + event.toString()
                     + "interceptKeyTq keycode=" + keyCode
                     + ", interactive =" + interactive + ", keyguardActive =" + keyguardActive
@@ -4586,8 +4604,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     + ", virtualKey = " + virtualKey + ", virtualHardKey = " + virtualHardKey
                     + ", navBarKey = " + navBarKey + ", fromSystem = " + fromSystem
                     + ", canApplyCustomPolicy = " + NavbarUtilities.canApplyCustomPolicy(keyCode));
-        }
-
         // Apply custom policy for supported key codes.
         if (NavbarUtilities.canApplyCustomPolicy(keyCode) && !isCustomSource) {
             if (mNavBarEnabled && !navBarKey /* TODO> && !isADBVirtualKeyOrAnyOtherKeyThatWeNeedToHandleAKAWhenMonkeyTestOrWHATEVER! */) {
@@ -6066,8 +6082,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         // Ensure observe happens in systemReady() since we need
         // LineageHardwareService to be up and running
-        mSettingsObserver.observe();
-
         if (mHasAlertSlider) {
             mAlertSliderObserver = new AlertSliderObserver(mContext);
             mAlertSliderObserver.startObserving(com.android.internal.R.string.alert_slider_uevent_match_path);
