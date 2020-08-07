@@ -221,5 +221,12 @@
                 android:inflatedId="@+id/odi_captions_tooltip_view"
                 android:layout="@layout/volume_tool_tip_view" />
         </LinearLayout>
+        <include
+            layout="@layout/volume_media_card"
+            android:layout_width="@dimen/custom_volume_media_card_height"
+            android:layout_height="@dimen/custom_volume_media_card_height"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/volume_dialog_spacer"
+            android:layout_marginStart="2dp" />
     </LinearLayout>
 </LinearLayout>

@@ -102,6 +102,7 @@ import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.plugins.VolumeDialogController.State;
 import com.android.systemui.plugins.VolumeDialogController.StreamState;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.phone.ExpandableIndicator;
 import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -109,6 +110,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.tuner.TunerService;
 
 import lineageos.providers.LineageSettings;
+import com.android.systemui.rr.RRMusic;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -212,6 +214,8 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     // Volume panel placement left or right
     private boolean mVolumePanelOnLeft;
+    private RRMusic mMusicText;
+    private NotificationMediaManager mMediaManager;
 
     private boolean mMediaShowing;
     private boolean mRingerShowing;
@@ -243,6 +247,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         mAccessibilityMgr = Dependency.get(AccessibilityManagerWrapper.class);
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
+        mMediaManager = Dependency.get(NotificationMediaManager.class);
         mShowActiveStreamOnly = showActiveStreamOnly();
         mHasSeenODICaptionsTooltip =
                 Prefs.getBoolean(context, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
@@ -305,6 +310,10 @@ public class VolumeDialogImpl implements VolumeDialog,
         Dependency.get(ConfigurationController.class).addCallback(this);
     }
 
+    public void initDependencies(NotificationMediaManager mediaManager) {
+        mMediaManager = mediaManager;
+    }
+
     @Override
     public void destroy() {
         mController.removeCallback(mControllerCallbackH);
@@ -337,6 +346,12 @@ public class VolumeDialogImpl implements VolumeDialog,
         mWindow.setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY);
         mWindow.setWindowAnimations(com.android.internal.R.style.Animation_Toast);
         final WindowManager.LayoutParams lp = mWindow.getAttributes();
+        mMusicText = mDialog.findViewById(R.id.music_main);
+        if (mMediaManager == null) {
+            mMediaManager = Dependency.get(NotificationMediaManager.class);
+        } else {
+            mMusicText.initDependencies(mMediaManager, mContext);
+        }
         lp.format = PixelFormat.TRANSLUCENT;
         lp.setTitle(VolumeDialogImpl.class.getSimpleName());
         lp.width = MATCH_PARENT;
@@ -352,6 +367,8 @@ public class VolumeDialogImpl implements VolumeDialog,
         mDialogView = mDialog.findViewById(R.id.volume_dialog);
         mDialogView.setLayoutDirection(
                 isAudioPanelOnLeftSide() ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL);
+        mMusicText.setLayoutDirection(
+                isAudioPanelOnLeftSide() ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_LTR);
         mDialogView.setAlpha(0);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnShowListener(dialog -> {
@@ -374,6 +391,17 @@ public class VolumeDialogImpl implements VolumeDialog,
                         }
                     })
                     .start();
+            if (!isLandscape()) {
+                mMusicText.setTranslationX((mMusicText.getWidth() / 2.0f)*(isAudioPanelOnLeftSide() ? -1 : 1));
+            }
+            mMusicText.setAlpha(0);
+            mMusicText.animate()
+                    .alpha(1)
+                    .translationX(0)
+                    .setDuration(DIALOG_SHOW_ANIMATION_DURATION)
+                    .setInterpolator(new SystemUIInterpolators.LogDecelerateInterpolator())
+                    .start();
+            mMusicText.update();
             if (mLocalMediaManager != null) {
                 mLocalMediaManager.startScan();
             }
@@ -559,6 +587,10 @@ public class VolumeDialogImpl implements VolumeDialog,
             mHandler.removeCallbacks(mVolumeDialogRunnable);
             mHandler.post(mVolumeDialogRunnable);
         }
+    }
+
+    public void initText (NotificationMediaManager mediaManager) {
+        mMediaManager = mediaManager;
     }
 
     protected ViewGroup getDialogView() {
@@ -1378,6 +1410,12 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
         mDialogView.setTranslationX(0);
         mDialogView.setAlpha(1);
+        mMusicText.setTranslationX(0);
+        mMusicText.setAlpha(1);
+        ViewPropertyAnimator musicAnimator = mMusicText.animate()
+                .alpha(0)
+                .setDuration(DIALOG_HIDE_ANIMATION_DURATION)
+                .setInterpolator(new SystemUIInterpolators.LogAccelerateInterpolator());
         ViewPropertyAnimator animator = mDialogView.animate()
                 .alpha(0)
                 .setDuration(DIALOG_HIDE_ANIMATION_DURATION)
@@ -1393,7 +1431,11 @@ public class VolumeDialogImpl implements VolumeDialog,
             animator.translationX(
                     (mDialogView.getWidth() / 2.0f) * (!isAudioPanelOnLeftSide() ? 1 : -1));
         }
+        if (!isLandscape()) {
+            musicAnimator.translationX((mMusicText.getWidth() / 2.0f) * (isAudioPanelOnLeftSide() ? -1 : 1));
+        }
         animator.start();
+        musicAnimator.start();
         checkODICaptionsTooltip(true);
         mController.notifyVisible(false);
         synchronized (mSafetyWarningLock) {

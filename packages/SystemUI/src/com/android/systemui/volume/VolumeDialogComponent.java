@@ -36,6 +36,7 @@ import com.android.systemui.plugins.PluginDependencyProvider;
 import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.tuner.TunerService;
 
@@ -60,6 +61,7 @@ public class VolumeDialogComponent implements VolumeComponent, TunerService.Tuna
     protected final Context mContext;
     private final VolumeDialogControllerImpl mController;
     private TriStateUiControllerImpl mTriStateController;
+    private NotificationMediaManager mMediaManager;
     private final InterestingConfigChanges mConfigChanges = new InterestingConfigChanges(
             ActivityInfo.CONFIG_FONT_SCALE | ActivityInfo.CONFIG_LOCALE
             | ActivityInfo.CONFIG_ASSETS_PATHS | ActivityInfo.CONFIG_UI_MODE);
@@ -108,6 +110,7 @@ public class VolumeDialogComponent implements VolumeComponent, TunerService.Tuna
         impl.setStreamImportant(AudioManager.STREAM_SYSTEM, false);
         impl.setAutomute(true);
         impl.setSilentMode(false);
+        impl.initText(mMediaManager);
         return impl;
     }
 
@@ -177,6 +180,12 @@ public class VolumeDialogComponent implements VolumeComponent, TunerService.Tuna
     public void register() {
         mController.register();
         DndTile.setCombinedIcon(mContext, true);
+    }
+
+
+    @Override
+    public void initDependencies(NotificationMediaManager mediaManager) {
+        mMediaManager = mediaManager;
     }
 
     @Override

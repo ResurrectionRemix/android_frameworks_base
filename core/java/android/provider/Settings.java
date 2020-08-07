@@ -7791,6 +7791,12 @@ public final class Settings {
         public static final String QS_FOOTER_SHOW_USER = "qs_footer_show_user";
 
         /**
+        * Music Card in VolumePanel
+        * @hide
+        */
+        public static final String MUSIC_VOLUME_PANEL_DIALOG = "music_volume_panel_dialog";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

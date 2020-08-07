@@ -174,4 +174,6 @@
     <!-- brightness slider padding -->
     <dimen name="brightness_slider_padding_top">5dp</dimen>
     <dimen name="brightness_slider_padding_bottom">15dp</dimen>
+    <dimen name="volume_dialog_aosp_card_media_size">135dp</dimen>
+    <dimen name="custom_volume_media_card_height">150dip</dimen>
 </resources>

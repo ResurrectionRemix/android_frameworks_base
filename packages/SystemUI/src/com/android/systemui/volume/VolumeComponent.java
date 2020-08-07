@@ -19,6 +19,7 @@ package com.android.systemui.volume;
 import android.content.res.Configuration;
 
 import com.android.systemui.DemoMode;
+import com.android.systemui.statusbar.NotificationMediaManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -28,4 +29,5 @@ public interface VolumeComponent extends DemoMode {
     void onConfigurationChanged(Configuration newConfig);
     void dump(FileDescriptor fd, PrintWriter pw, String[] args);
     void register();
+    void initDependencies (NotificationMediaManager mediaManager);
 }
