@@ -270,10 +270,6 @@ public final class PowerManagerService extends SystemService
     private int mButtonBrightness;
     private int mButtonBrightnessSettingDefault;
 
-    private boolean mButtonPressed;
-    private boolean mButtonOn;
-    private boolean mButtonLightOnKeypressOnly;
-
     private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
 
     // A bitfield that indicates what parts of the power state have
@@ -324,7 +320,6 @@ public final class PowerManagerService extends SystemService
     private int mLastSleepReason;
 
     // Timestamp of the last call to user activity.
-    private long mLastButtonActivityTime;
     private long mLastUserActivityTime;
     private long mLastUserActivityTimeNoChangeLights;
 
@@ -1016,9 +1011,6 @@ public final class PowerManagerService extends SystemService
                 LineageSettings.Secure.BUTTON_BACKLIGHT_TIMEOUT),
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                LineageSettings.System.BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED),
-                false, mSettingsObserver, UserHandle.USER_ALL);
-        resolver.registerContentObserver(LineageSettings.System.getUriFor(
                 LineageSettings.System.PROXIMITY_ON_WAKE),
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(LineageSettings.System.getUriFor(
@@ -1238,10 +1230,6 @@ public final class PowerManagerService extends SystemService
         mButtonBrightness = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.BUTTON_BRIGHTNESS, mButtonBrightnessSettingDefault,
                 UserHandle.USER_CURRENT);
-        mButtonLightOnKeypressOnly = LineageSettings.System.getIntForUser(resolver,
-                LineageSettings.System.BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED,
-                0, UserHandle.USER_CURRENT) == 1;
-
         mProximityWakeEnabled = LineageSettings.System.getInt(resolver,
                 LineageSettings.System.PROXIMITY_ON_WAKE,
                 mProximityWakeEnabledByDefaultConfig ? 1 : 0) == 1;
@@ -1635,14 +1623,6 @@ public final class PowerManagerService extends SystemService
                 }
             } else {
                 if (eventTime > mLastUserActivityTime) {
-                    mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
-                    if (eventTime == mLastWakeTime ||
-                            (mButtonLightOnKeypressOnly && mButtonPressed &&
-                                    (flags & PowerManager.USER_ACTIVITY_FLAG_NO_BUTTON_LIGHTS)
-                                            == 0)) {
-                        mButtonPressed = true;
-                        mLastButtonActivityTime = eventTime;
-                    }
                     mLastUserActivityTime = eventTime;
                     mDirty |= DIRTY_USER_ACTIVITY;
                     if (event == PowerManager.USER_ACTIVITY_EVENT_BUTTON) {
@@ -2346,26 +2326,13 @@ public final class PowerManagerService extends SystemService
                                 buttonBrightness = !mForceNavbar ? mButtonBrightness : 0;
                             }
 
-                            mLastButtonActivityTime = mButtonLightOnKeypressOnly ?
-                                    mLastButtonActivityTime : mLastUserActivityTime;
                             if (mButtonTimeout != 0 &&
-                                    now > mLastButtonActivityTime + mButtonTimeout) {
+                                    now > mLastUserActivityTime + mButtonTimeout) {
                                 mButtonsLight.setBrightness(0);
-                                mButtonOn = false;
                             } else {
-                                if ((!mButtonLightOnKeypressOnly || mButtonPressed) &&
-                                        !mProximityPositive) {
-                                    mButtonsLight.setBrightness(buttonBrightness);
-                                    mButtonPressed = false;
-                                    if (buttonBrightness != 0 && mButtonTimeout != 0) {
-                                        mButtonOn = true;
-                                        if (now + mButtonTimeout < nextTimeout) {
-                                            nextTimeout = now + mButtonTimeout;
-                                        }
-                                    }
-                                } else if (mButtonLightOnKeypressOnly && mButtonOn &&
-                                        mLastButtonActivityTime + mButtonTimeout < nextTimeout) {
-                                    nextTimeout = mLastButtonActivityTime + mButtonTimeout;
+                                mButtonsLight.setBrightness(buttonBrightness);
+                                if (buttonBrightness != 0 && mButtonTimeout != 0) {
+                                    nextTimeout = now + mButtonTimeout;
                                 }
                             }
                         }
@@ -2375,7 +2342,6 @@ public final class PowerManagerService extends SystemService
                             mUserActivitySummary = USER_ACTIVITY_SCREEN_DIM;
                             if (mWakefulness == WAKEFULNESS_AWAKE) {
                                 mButtonsLight.setBrightness(0);
-                                mButtonOn = false;
                             }
                         }
                     }
