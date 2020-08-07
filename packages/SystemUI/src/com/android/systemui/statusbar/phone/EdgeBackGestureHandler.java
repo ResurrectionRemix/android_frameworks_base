@@ -19,8 +19,6 @@ import static android.view.Display.INVALID_DISPLAY;
 import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 import static android.view.View.NAVIGATION_BAR_TRANSIENT;
 
-import static org.lineageos.internal.util.DeviceKeysConstants.Action;
-
 import android.content.Context;
 import android.content.pm.ParceledListSlice;
 import android.content.res.Resources;
@@ -67,9 +65,6 @@ import com.android.systemui.bubbles.BubbleController;
 import com.android.systemui.recents.OverviewProxyService;
 import com.android.systemui.shared.system.QuickStepContract;
 import com.android.systemui.shared.system.WindowManagerWrapper;
-import com.android.systemui.tuner.TunerService;
-
-import lineageos.providers.LineageSettings;
 
 import java.io.PrintWriter;
 import java.util.concurrent.Executor;
@@ -77,14 +72,11 @@ import java.util.concurrent.Executor;
 /**
  * Utility class to handle edge swipes for back gesture
  */
-public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tunable {
+public class EdgeBackGestureHandler implements DisplayListener {
 
     private static final String TAG = "EdgeBackGestureHandler";
     private static final int MAX_LONG_PRESS_TIMEOUT = SystemProperties.getInt(
             "gestures.back_timeout", 250);
-
-    private static final String KEY_EDGE_LONG_SWIPE_ACTION =
-            "lineagesystem:" + LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION;
 
     private final IPinnedStackListener.Stub mImeChangedListener = new IPinnedStackListener.Stub() {
         @Override
@@ -174,7 +166,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
     private boolean mIsGesturalModeEnabled;
     private boolean mIsEnabled;
     private boolean mIsInTransientImmersiveStickyState;
-    private boolean mIsLongSwipeEnabled;
 
     private InputMonitor mInputMonitor;
     private InputEventReceiver mInputEventReceiver;
@@ -187,7 +178,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
     private RegionSamplingHelper mRegionSamplingHelper;
     private int mLeftInset;
     private int mRightInset;
-    private float mLongSwipeWidth;
 
     // AICP additions start
     private int mEdgeHeight;
@@ -206,9 +196,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
         mMainExecutor = context.getMainExecutor();
         mWm = context.getSystemService(WindowManager.class);
         mOverviewProxyService = overviewProxyService;
-
-        final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, KEY_EDGE_LONG_SWIPE_ACTION);
 
         // Reduce the default touch slop to ensure that we can intercept the gesture
         // before the app starts to react to it.
@@ -382,7 +369,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
             mEdgePanelLp.accessibilityTitle = mContext.getString(R.string.nav_bar_edge_panel);
             mEdgePanelLp.windowAnimations = 0;
             mEdgePanel.setLayoutParams(mEdgePanelLp);
-            updateLongSwipeWidth();
             mWm.addView(mEdgePanel, mEdgePanelLp);
             mRegionSamplingHelper = new RegionSamplingHelper(mEdgePanel,
                     new RegionSamplingHelper.SamplingCallback() {
@@ -506,17 +492,7 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
             boolean isUp = action == MotionEvent.ACTION_UP;
             if (isUp) {
                 boolean performAction = mEdgePanel.shouldTriggerBack();
-                boolean performLongSwipe = mEdgePanel.shouldTriggerLongSwipe();
-                if (mEdgeHaptic && (performAction || performLongSwipe)) {
-                    vibrateTick();
-                }
-                if (performLongSwipe) {
-                    // Perform long swipe action
-                    sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK,
-                            KeyEvent.FLAG_LONG_PRESS);
-                    sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK,
-                            KeyEvent.FLAG_LONG_PRESS);
-                } else if (performAction) {
+                if (performAction) {
                     if (mEdgeHaptic) {
                         vibrateTick();
                     }
@@ -524,7 +500,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
                     sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
                 }
-                performAction = performAction || performLongSwipe;
                 mOverviewProxyService.notifyBackAction(performAction, (int) mDownPoint.x,
                         (int) mDownPoint.y, false /* isButton */, !mIsOnLeftEdge);
                 int backtype = performAction ? (mInRejectedExclusion
@@ -562,17 +537,6 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
         mEdgePanel.adjustRectToBoundingBox(mSamplingRect);
     }
 
-    private void updateLongSwipeWidth() {
-        if (mIsEnabled && mEdgePanel != null) {
-            if (mIsLongSwipeEnabled) {
-                mLongSwipeWidth = MathUtils.min(mDisplaySize.x * 0.5f, mEdgePanelLp.width * 2.5f);
-                mEdgePanel.setLongSwipeThreshold(mLongSwipeWidth);
-            } else {
-                mEdgePanel.setLongSwipeThreshold(0.0f);
-            }
-        }
-    }
-
     @Override
     public void onDisplayAdded(int displayId) { }
 
@@ -590,29 +554,19 @@ public class EdgeBackGestureHandler implements DisplayListener, TunerService.Tun
         mContext.getSystemService(DisplayManager.class)
                 .getDisplay(mDisplayId)
                 .getRealSize(mDisplaySize);
-        updateLongSwipeWidth();
         updateEdgeHeightValue();
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (KEY_EDGE_LONG_SWIPE_ACTION.equals(key)) {
-            mIsLongSwipeEnabled = newValue != null
-                    && Action.fromIntSafe(Integer.parseInt(newValue)) != Action.NOTHING;
-            updateLongSwipeWidth();
         }
-
     }
 
     private void sendEvent(int action, int code) {
-        sendEvent(action, code, 0);
-    }
-
-    private void sendEvent(int action, int code, int flags) {
         long when = SystemClock.uptimeMillis();
         final KeyEvent ev = new KeyEvent(when, when, action, code, 0 /* repeat */,
                 0 /* metaState */, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /* scancode */,
-                flags | KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
+                KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
                 InputDevice.SOURCE_KEYBOARD);
 
         // Bubble controller will give us a valid display id if it should get the back event
