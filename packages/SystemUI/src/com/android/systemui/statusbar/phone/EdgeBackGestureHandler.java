@@ -202,7 +202,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
     private Handler mHandler;
     private AssistManager mAssistManager;
-    private int mTImeout = 3000; //ms
+    private int mTimeout = 3000; //ms
     private int mLeftLongSwipeAction;
     private int mRightLongSwipeAction;
     private boolean mBlockNextEvent;
@@ -583,7 +583,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
                         mThresholdCrossed = true;
                         if ((mLeftLongSwipeAction != 0 && mIsOnLeftEdge)
                                 || (mRightLongSwipeAction != 0 && !mIsOnLeftEdge)) {
-                            mHandler.postDelayed(mLongSwipeAction, (mTImeout - elapsedTime));
+                            mHandler.postDelayed(mLongSwipeAction, (mTimeout - elapsedTime));
                         }
                         // Capture inputs
                         mInputMonitor.pilferPointers();
@@ -768,10 +768,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 .getDisplay(mDisplayId)
                 .getRealSize(mDisplaySize);
         updateEdgeHeightValue();
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
     }
 
     private void sendEvent(int action, int code) {

@@ -22,7 +22,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.ListView;
 
-import package com.android.internal.util.rr.AppPicker;
+import com.android.internal.util.rr.AppPicker;
 
 public class LeftBackSwipeCustomApp extends AppPicker {
 

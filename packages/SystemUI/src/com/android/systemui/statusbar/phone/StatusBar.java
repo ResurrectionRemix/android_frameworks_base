@@ -280,6 +280,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
@@ -2533,7 +2534,11 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void toggleCameraFlash() {
-        mDozeServiceHost.toggleCameraFlash();
+        if (!isScreenFullyOff() && mDeviceInteractive && !mPulsing && !mDozing) {
+            toggleFlashlight();
+            return;
+        }
+        mDozeServiceHost.toggleFlashlightProximityCheck();
     }
 
     void makeExpandedVisible(boolean force) {
@@ -5357,12 +5362,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         public boolean shouldAnimateScreenOff() {
             return mAnimateScreenOff;
         }
-
-        public void toggleCameraFlash() {
-            for (Callback callback : mCallbacks) {
-                callback.toggleCameraFlash();
-            }
-        }
     }
 
     public boolean shouldIgnoreTouch() {
@@ -5514,17 +5513,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         } else {
             mNotificationListener.snoozeNotification(sbn.getKey(),
                     snoozeOption.getMinutesToSnoozeFor() * 60 * 1000);
-        }
-    }
-
-
-    @Override
-    public void toggleCameraFlash() {
-        if (DEBUG) {
-            Log.d(TAG, "Toggling camera flashlight");
-        }
-        if (mFlashlightController.isAvailable()) {
-            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
         }
     }
 
@@ -6178,11 +6166,5 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all qs header styles back to stock
     public void stockQSHeaderStyle() {
         ThemeAccentUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
-    }
-
-    private void setGestureNavOptions() {
-        if (getNavigationBarView() != null) {
-            getNavigationBarView().setLongSwipeOptions();
-        }
     }
 }
