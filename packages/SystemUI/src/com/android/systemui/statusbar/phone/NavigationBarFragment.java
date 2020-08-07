@@ -668,7 +668,6 @@ public class NavigationBarFragment extends LifecycleFragment implements Callback
 
         ButtonDispatcher homeButton = mNavigationBarView.getHomeButton();
         homeButton.setOnTouchListener(this::onHomeTouch);
-        homeButton.setLongClickable(true);
         homeButton.setOnLongClickListener(this::onHomeLongClick);
 
         ButtonDispatcher accessibilityButton = mNavigationBarView.getAccessibilityButton();
@@ -723,9 +722,19 @@ public class NavigationBarFragment extends LifecycleFragment implements Callback
                 && ActivityManagerWrapper.getInstance().isScreenPinningActive()) {
             return onLongPressBackHome(v);
         }
-        KeyButtonView keyButtonView = (KeyButtonView) v;
-        keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
-        keyButtonView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+        if (shouldDisableNavbarGestures()) {
+            return false;
+        }
+        mMetricsLogger.action(MetricsEvent.ACTION_ASSIST_LONG_PRESS);
+        Bundle args  = new Bundle();
+        args.putInt(
+                AssistManager.INVOCATION_TYPE_KEY, AssistManager.INVOCATION_HOME_BUTTON_LONG_PRESS);
+        mAssistManager.startAssist(args);
+        mStatusBar.awakenDreams();
+
+        if (mNavigationBarView != null) {
+            mNavigationBarView.abortCurrentGesture();
+        }
         return true;
     }
 
