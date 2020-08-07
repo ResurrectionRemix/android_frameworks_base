@@ -252,7 +252,6 @@ import dalvik.system.PathClassLoader;
 import lineageos.providers.LineageSettings;
 
 import org.lineageos.internal.buttons.LineageButtons;
-import org.lineageos.internal.util.ActionUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -429,8 +428,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mHasFeatureWatch;
     private boolean mHasFeatureLeanback;
     private boolean mHasFeatureHdmiCec;
-    AlarmManager mAlarmManager;
-
     // Double-tap-to-doze
     private boolean mDoubleTapToWake;
     private boolean mDoubleTapToDoze;
@@ -698,7 +695,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
 
     private int mVolButtonScreenshotType;
-    private int mTorchActionMode;
 
     private PocketManager mPocketManager;
     private PocketLock mPocketLock;
@@ -751,15 +747,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_NOTIFY_USER_ACTIVITY = 26;
     private static final int MSG_RINGER_TOGGLE_CHORD = 27;
     private static final int MSG_MOVE_DISPLAY_TO_TOP = 28;
-    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 29; //Error 1
+    private static final int MSG_DISPATCH_VOLKEY_SKIP_TRACK = 29;
     private static final int MSG_TOGGLE_TORCH = 30;
 
     private boolean mHasPermanentMenuKey;
 
-    private SwipeToScreenshotListener mSwipeToScreenshot;
-
     private boolean mHasAlertSlider = false;
 
+ 
     private class PolicyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -852,14 +847,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mWindowManagerFuncs.moveDisplayToTop(msg.arg1);
                     mMovingDisplayToTopKeyTriggered = false;
                     break;
-                case MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK: {
-                    KeyEvent event = (KeyEvent) msg.obj;
-                    dispatchMediaKeyWithWakeLockToAudioService(event);
-                    dispatchMediaKeyWithWakeLockToAudioService(
-                            KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
                 case MSG_TOGGLE_TORCH:
                     performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Flashlight toggle");
-                    ActionUtils.toggleCameraFlash();
+                    RRActionUtils.launchCamera(mContext);
                     break;
                 case MSG_DISPATCH_VOLKEY_SKIP_TRACK: {
                     sendSkipTrackEventToStatusBar(msg.arg1);
@@ -1439,7 +1429,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case MULTI_PRESS_POWER_NOTHING:
                 if ((mTorchActionMode == 1) && (!isScreenOn() || isDozeMode())) {
                     performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, true, "Flashlight toggle");
-                    ActionUtils.toggleCameraFlash();
+                    RRActionUtils.toggleCameraFlash();
                 }
                 break;
             case MULTI_PRESS_POWER_THEATER_MODE:
@@ -1491,7 +1481,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void powerLongPress() {
-        final int behavior = getResolvedLongPressOnPowerBehavior();
+        int behavior = getResolvedLongPressOnPowerBehavior();
         switch (behavior) {
             case LONG_PRESS_POWER_NOTHING:
                 break;
@@ -1756,24 +1746,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mScreenshotRunnable.setScreenshotType(screenshotType);
         mHandler.postDelayed(mScreenshotRunnable, delay);
     }
-
-
-    private final Runnable mBackLongPress = new Runnable() {
-        @Override
-        public void run() {
-            if (unpinActivity(false)) {
-                return;
-            }
-
-            if (ActionUtils.killForegroundApp(mContext, mCurrentUserId)) {
-                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
-                        "Back - Long Press");
-                Toast.makeText(mContext,
-                        org.lineageos.platform.internal.R.string.app_killed_message,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
 
     @Override
@@ -2162,8 +2134,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
         mSettingsObserver = new SettingsObserver(mHandler);
 
-        // Lineage additions
-        mAlarmManager = mContext.getSystemService(AlarmManager.class);
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
@@ -2544,17 +2514,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mWakeGestureEnabledSetting != wakeGestureEnabledSetting) {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
-            }
-
-            int forceNavbar = LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
-                    UserHandle.USER_CURRENT);
-            if (forceNavbar != mForceNavbar) {
-                mForceNavbar = forceNavbar;
-                if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_DISABLE)) {
-                    mLineageHardware.set(LineageHardwareManager.FEATURE_KEY_DISABLE,
-                            mForceNavbar == 1);
-                }
             }
             mScreenshotDelay = Settings.System.getInt(resolver,
                 Settings.System.SCREENSHOT_DELAY, 0);
@@ -3597,12 +3556,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 launchAssistAction(Intent.EXTRA_ASSIST_INPUT_HINT_KEYBOARD, event.getDeviceId());
             }
             return -1;
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mKillAppLongpressBack || unpinActivity(true)) {
-                if (down && repeatCount == 0) {
-                    mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
-                }
-            }
         }
 
         // Shortcuts are invoked through Search+key, so intercept those here
@@ -4689,22 +4642,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // {@link interceptKeyBeforeDispatching()}.
                     result |= ACTION_PASS_TO_USER;
                 } else if ((result & ACTION_PASS_TO_USER) == 0) {
-                    if (mLineageButtons.handleVolumeKey(event, interactive)) {
-                        break;
-                    }
-
                     if (!interactive && mVolumeMusicControl && isMusicActive()) {
                         boolean notHandledMusicControl = false;
                         if (down) {
                             if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                                scheduleLongPressKeyEvent(event, KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+                                scheduleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                                 break;
                             } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                                scheduleLongPressKeyEvent(event, KeyEvent.KEYCODE_MEDIA_NEXT);
+                                scheduleLongPressKeyEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
                                 break;
                             }
                         } else {
-                            mHandler.removeMessages(MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK);
+                            mHandler.removeMessages(MSG_DISPATCH_VOLKEY_SKIP_TRACK);
                             notHandledMusicControl = true;
                         }
 
@@ -5804,8 +5753,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mVrManagerInternal != null) {
             mVrManagerInternal.addPersistentVrModeStateListener(mPersistentVrModeListener);
         }
-
-        mLineageHardware = LineageHardwareManager.getInstance(mContext);
         // Ensure observe happens in systemReady() since we need
         // LineageHardwareService to be up and running
         mSettingsObserver.observe();
@@ -5832,9 +5779,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKeyguardDelegate.onBootCompleted();
             }
         }
-
-        mLineageButtons = new LineageButtons(mContext);
-
         mAutofillManagerInternal = LocalServices.getService(AutofillManagerInternal.class);
     }
 
@@ -6770,10 +6714,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return am.isMusicActive();
     }
 
-     private void scheduleLongPressKeyEvent(KeyEvent origEvent, int keyCode) {
-        KeyEvent event = new KeyEvent(origEvent.getDownTime(), origEvent.getEventTime(),
-                origEvent.getAction(), keyCode, 0);
-        Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK, event);
+    private void scheduleLongPressKeyEvent(int keyCode) {
+        Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_SKIP_TRACK, keyCode, 0);
         msg.setAsynchronous(true);
         mHandler.sendMessageDelayed(msg, ViewConfiguration.getLongPressTimeout());
     }
@@ -6892,7 +6834,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case NavbarUtilities.KEY_ACTION_CAMERA:
                 sendCloseSystemWindows();
-                NavbarUtilities.launchCamera();
+                RRActionUtils.launchCamera(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_LAST_APP:
                 awakenDreams();
@@ -6903,28 +6845,28 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 NavbarUtilities.toggleSplitScreen();
                 break;
             case NavbarUtilities.KEY_ACTION_FLASHLIGHT:
-                 ActionUtils.toggleCameraFlash();
+                 RRActionUtils.toggleCameraFlash();
                 break;
             case NavbarUtilities.KEY_ACTION_CLEAR_NOTIFICATIONS:
-                ActionUtils.toggleClearNotifications();
+                RRActionUtils.clearAllNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_VOLUME_PANEL:
-                ActionUtils.toggleVolumePanel(mContext);
+                RRActionUtils.toggleVolumePanel(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_SCREEN_OFF:
-                ActionUtils.toggleScreenOff(mContext);
+                RRActionUtils.switchScreenOff(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_NOTIFICATIONS:
-                ActionUtils.toggleNotifications();
+                RRActionUtils.toggleNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_POWER_MENU:
                 triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
                 break;
             case NavbarUtilities.KEY_ACTION_SCREENSHOT:
-                ActionUtils.takeScreenshot(true);
+                RRActionUtils.takeScreenshot(true);
                 break;
             case NavbarUtilities.KEY_ACTION_QS_PANEL:
-                ActionUtils.toggleQsPanel();
+                RRActionUtils.toggleQsPanel();
                 break;
             case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
                 switch (keyCode) {
@@ -6946,12 +6888,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case NavbarUtilities.KEY_ACTION_RINGER_MODES:
-                ActionUtils.toggleRingerModes(mContext);
+                RRActionUtils.toggleRingerModes(mContext);
+                break;
+            case NavbarUtilities.KEY_ACTION_KILL_APP:
+                RRActionUtils.killForegroundApp();
                 break;
         }
     }
 
-    /**
+   /**
      * Execute key code action based on behavior.
      * @param keyCode the KeyEvent key code.
      * @param behavior the user selected behavior.
@@ -6978,7 +6923,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case NavbarUtilities.KEY_ACTION_CAMERA:
                 sendCloseSystemWindows();
-                NavbarUtilities.launchCamera();
+                RRActionUtils.launchCamera(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_LAST_APP:
                 awakenDreams();
@@ -6989,28 +6934,28 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 NavbarUtilities.toggleSplitScreen();
                 break;
             case NavbarUtilities.KEY_ACTION_FLASHLIGHT:
-                ActionUtils.toggleCameraFlash();
+                RRActionUtils.toggleCameraFlash();
                 break;
             case NavbarUtilities.KEY_ACTION_CLEAR_NOTIFICATIONS:
-                ActionUtils.clearAllNotifications();
+                RRActionUtils.clearAllNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_VOLUME_PANEL:
-                ActionUtils.toggleVolumePanel(mContext);
+                RRActionUtils.toggleVolumePanel(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_SCREEN_OFF:
-                ActionUtils.switchScreenOff(mContext);
+                RRActionUtils.switchScreenOff(mContext);
                 break;
             case NavbarUtilities.KEY_ACTION_NOTIFICATIONS:
-                ActionUtils.toggleNotifications();
+                RRActionUtils.toggleNotifications();
                 break;
             case NavbarUtilities.KEY_ACTION_POWER_MENU:
                 triggerVirtualKeypress(KeyEvent.KEYCODE_POWER, false, true);
                 break;
             case NavbarUtilities.KEY_ACTION_SCREENSHOT:
-                ActionUtils.takeScreenshot(true);
+                RRActionUtils.takeScreenshot(true);
                 break;
             case NavbarUtilities.KEY_ACTION_QS_PANEL:
-                ActionUtils.toggleQsPanel();
+                RRActionUtils.toggleQsPanel();
                 break;
             case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
                 switch (keyCode) {
@@ -7032,7 +6977,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case NavbarUtilities.KEY_ACTION_RINGER_MODES:
-                ActionUtils.toggleRingerModes(mContext);
+                RRActionUtils.toggleRingerModes(mContext);
+                break;
+            case NavbarUtilities.KEY_ACTION_KILL_APP:
+                RRActionUtils.killForegroundApp();
                 break;
         }
     }
@@ -7058,7 +7006,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case KeyEvent.KEYCODE_CAMERA:
                 sendCloseSystemWindows();
-                NavbarUtilities.launchCamera();
+                RRActionUtils.launchCamera(mContext);
                 break;
         }
     }
@@ -7109,5 +7057,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             context.startActivity(intent);
         } catch (Exception e) {
         }
+    }
+
+
+    private void sendSkipTrackEventToStatusBar(int keyCode) {
+        sendSystemKeyToStatusBar(keyCode);
     }
 }

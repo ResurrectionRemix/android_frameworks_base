@@ -46,6 +46,7 @@ public class NavbarUtilities {
     public static final int KEY_ACTION_QS_PANEL = 15;
     public static final int KEY_ACTION_CUSTOM_APP = 16;
     public static final int KEY_ACTION_RINGER_MODES = 17;
+    public static final int KEY_ACTION_KILL_APP = 18;
 
     // Special values, used internal only.
     public static final int KEY_ACTION_HOME = 100;
@@ -76,19 +77,6 @@ public class NavbarUtilities {
                         LocalServices.getService(StatusBarManagerInternal.class);
             }
             return mStatusBarManagerInternal;
-        }
-    }
-
-    /**
-     * Request camera to be opened.
-     * This goes through status bar service which will check if there
-     * is an app set as default camera app and launch that or trigger
-     * a ResolverActivity to let user chose which camera app to use.
-     */
-    public static void launchCamera() {
-        StatusBarManagerInternal statusbar = getCustomStatusBarManagerInternal();
-        if (statusbar != null) {
-            statusbar.onCameraLaunchGestureDetected(-1);
         }
     }
 
@@ -135,7 +123,8 @@ public class NavbarUtilities {
             KEY_ACTION_SCREENSHOT,
             KEY_ACTION_QS_PANEL,
             KEY_ACTION_CUSTOM_APP,
-            KEY_ACTION_RINGER_MODES
+            KEY_ACTION_RINGER_MODES,
+            KEY_ACTION_KILL_APP
     };
 
     /**

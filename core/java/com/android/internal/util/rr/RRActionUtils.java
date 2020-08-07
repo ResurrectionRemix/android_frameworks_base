@@ -28,7 +28,6 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.IWindowManager;
-import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
 import com.android.internal.statusbar.IStatusBarService;
@@ -98,6 +97,14 @@ public class RRActionUtils {
         }
     }
 
+    // Partial screenshot
+    public static void setPartialScreenshot(boolean active) {
+    }
+
+    // Full screenshots
+    public static void takeScreenshot(boolean full) {
+    }
+
     // Toggle notifications panel
     public static void toggleNotifications() {
         IStatusBarService service = getStatusBarService();
@@ -160,22 +167,22 @@ public class RRActionUtils {
         context.startActivity(intent);
     }
 
-    public static void killForegroundApp() {
+    public static void sendSystemKeyToStatusBar(int keyCode) {
         IStatusBarService service = getStatusBarService();
         if (service != null) {
             try {
-                service.killForegroundApp();
+                service.handleSystemKey(keyCode);
             } catch (RemoteException e) {
                 // do nothing.
             }
         }
     }
 
-    public static void sendSystemKeyToStatusBar(int keyCode) {
+    public static void killForegroundApp() {
         IStatusBarService service = getStatusBarService();
         if (service != null) {
             try {
-                service.handleSystemKey(keyCode);
+                service.killForegroundApp();
             } catch (RemoteException e) {
                 // do nothing.
             }
