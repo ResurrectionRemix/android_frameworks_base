@@ -26,6 +26,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -49,7 +51,6 @@ import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.UiOffloadThread;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
-import com.android.systemui.privacy.PrivacyItemControllerKt;
 import com.android.systemui.privacy.PrivacyType;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
@@ -152,6 +153,7 @@ public class PhoneStatusBarPolicy
 
     private static final String BLUETOOTH_SHOW_BATTERY =
             "system:" + Settings.System.BLUETOOTH_SHOW_BATTERY;
+    private boolean mPermissionsHubEnabled;
 
     public PhoneStatusBarPolicy(Context context, StatusBarIconController iconController) {
         mContext = context;
@@ -289,6 +291,8 @@ public class PhoneStatusBarPolicy
 
         Dependency.get(TunerService.class).addTunable(this,
                 BLUETOOTH_SHOW_BATTERY);
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
     }
 
     @Override
@@ -302,6 +306,34 @@ public class PhoneStatusBarPolicy
             default:
                 break;
         }
+    }
+
+    private final class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUETOOTH_SHOW_BATTERY),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.PERMISSIONS_HUB_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+            updateSettings();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    private void updateSettings() {
+        mPermissionsHubEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PERMISSIONS_HUB_ENABLED, 1,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     @Override
@@ -727,7 +759,7 @@ public class PhoneStatusBarPolicy
 
     @Override
     public void onLocationActiveChanged(boolean active) {
-        if (!PrivacyItemControllerKt.isPermissionsHubEnabled()) updateLocation();
+        if (!mPermissionsHubEnabled) updateLocation();
     }
 
     // Updates the status view based on the current state of location requests.

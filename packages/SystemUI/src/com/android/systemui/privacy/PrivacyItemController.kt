@@ -28,6 +28,7 @@ import android.os.Message
 import android.os.UserHandle
 import android.os.UserManager
 import android.provider.DeviceConfig
+import android.provider.Settings
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags
 import com.android.systemui.Dependency.BG_HANDLER_NAME
@@ -42,9 +43,6 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
-
-fun isPermissionsHubEnabled() = DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_PRIVACY,
-                SystemUiDeviceConfigFlags.PROPERTY_PERMISSIONS_HUB_ENABLED, true)
 
 @Singleton
 class PrivacyItemController @Inject constructor(
@@ -93,7 +91,9 @@ class PrivacyItemController @Inject constructor(
         uiHandler.post(notifyChanges)
     }
 
-    private var indicatorsAvailable = isPermissionsHubEnabled()
+    private var indicatorsAvailable = Settings.System.getIntForUser(context.getContentResolver(),
+            Settings.System.PERMISSIONS_HUB_ENABLED, 1,
+            UserHandle.USER_CURRENT) == 1
     @VisibleForTesting
     internal val devicePropertyChangedListener =
             object : DeviceConfig.OnPropertyChangedListener {

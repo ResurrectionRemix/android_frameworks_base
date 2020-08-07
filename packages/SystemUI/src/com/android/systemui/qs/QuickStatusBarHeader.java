@@ -62,7 +62,6 @@ import android.os.UserHandle;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.internal.util.rr.FileUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
@@ -76,7 +75,6 @@ import com.android.systemui.privacy.OngoingPrivacyChip;
 import com.android.systemui.privacy.PrivacyDialogBuilder;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
-import com.android.systemui.privacy.PrivacyItemControllerKt;
 import com.android.systemui.qs.QSDetail.Callback;
 import com.android.systemui.statusbar.info.DataUsageView;
 import com.android.systemui.settings.BrightnessController;
@@ -251,6 +249,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.SETTING_BUTTON_TOGGLE), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.PERMISSIONS_HUB_ENABLED), false,
+                    this, UserHandle.USER_ALL);
 
             }
 
@@ -274,20 +275,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     };
     private boolean mHasTopCutout = false;
     private boolean mPrivacyChipLogged = false;
-
-    private final DeviceConfig.OnPropertyChangedListener mPropertyListener =
-            new DeviceConfig.OnPropertyChangedListener() {
-                @Override
-                public void onPropertyChanged(String namespace, String name, String value) {
-                    if (DeviceConfig.NAMESPACE_PRIVACY.equals(namespace)
-                            && SystemUiDeviceConfigFlags.PROPERTY_PERMISSIONS_HUB_ENABLED.equals(
-                            name)) {
-                        mPermissionsHubEnabled = Boolean.valueOf(value);
-                        StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
-                        iconContainer.setIgnoredSlots(getIgnoredIconSlots());
-                    }
-                }
-            };
 
     private PrivacyItemController.Callback mPICCallback = new PrivacyItemController.Callback() {
         @Override
@@ -403,12 +390,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryIcon.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
-
-        mPermissionsHubEnabled = PrivacyItemControllerKt.isPermissionsHubEnabled();
-        updateResources();
-        // Change the ignored slots when DeviceConfig flag changes
-        DeviceConfig.addOnPropertyChangedListener(DeviceConfig.NAMESPACE_PRIVACY,
-                mContext.getMainExecutor(), mPropertyListener);
 
         Dependency.get(TunerService.class).addTunable(this,
                 StatusBarIconController.ICON_BLACKLIST,
@@ -638,6 +619,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemIconsView.getLayoutParams().height = topMargin;
         mSystemIconsView.setLayoutParams(mSystemIconsView.getLayoutParams());
 
+        StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
+        iconContainer.addIgnoredSlots(getIgnoredIconSlots());
+
         RelativeLayout.LayoutParams headerPanel = (RelativeLayout.LayoutParams)
                 mHeaderQsPanel.getLayoutParams();
         headerPanel.addRule(RelativeLayout.BELOW, R.id.quick_qs_status_icons);
@@ -715,6 +699,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSettingsButton = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.SETTING_BUTTON_TOGGLE, 2,
                 UserHandle.USER_CURRENT);
+        mPermissionsHubEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.PERMISSIONS_HUB_ENABLED, 1,
+                UserHandle.USER_CURRENT) == 1;
 
         mSystemInfoMode = getQsSystemInfoMode();
         updateSystemInfoText();

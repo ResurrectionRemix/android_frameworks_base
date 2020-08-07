@@ -7982,6 +7982,12 @@ public final class Settings {
         public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
 
         /**
+         * Whether to enable permissions hub
+         * @hide
+         */
+        public static final String PERMISSIONS_HUB_ENABLED = "permissions_hub_enabled";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
