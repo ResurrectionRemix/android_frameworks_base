@@ -33,17 +33,15 @@ import android.graphics.Region;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.hardware.input.InputManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.SystemClock;
-import android.os.UserHandle;
 import android.os.SystemProperties;
-import android.os.Vibrator;
+import android.os.UserHandle;
 import android.os.VibrationEffect;
-import android.provider.MediaStore;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -96,11 +94,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         @Override
         public void onImeVisibilityChanged(boolean imeVisible, int imeHeight) {
             // No need to thread jump, assignments are atomic
-            if (mBlockImeSpace) {
-                mImeHeight = imeVisible ? imeHeight : 0;
-            } else {
-                mImeHeight = 0;
-            }
+            mImeHeight = imeVisible ? imeHeight : 0;
             // TODO: Probably cancel any existing gesture
         }
 
@@ -189,14 +183,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private int mLeftInset;
     private int mRightInset;
 
-    // AICP additions start
     private int mEdgeHeight;
-    private boolean mEdgeHaptic;
-    private static final int HAPTIC_DURATION = 20;
-    // should back gesture be movewd above ime if its visible
-    private boolean mBlockImeSpace = true;
-
-    private final Vibrator mVibrator;
 
     private IntentFilter mIntentFilter;
 
@@ -209,6 +196,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private boolean mBlockNextEvent;
     private boolean mBackHapticEnabled;
 
+    private final Vibrator mVibrator;
 
     public EdgeBackGestureHandler(Context context, OverviewProxyService overviewProxyService) {
         final Resources res = context.getResources();
@@ -225,7 +213,11 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mLongPressTimeout = Math.min(MAX_LONG_PRESS_TIMEOUT,
                 ViewConfiguration.getLongPressTimeout());
 
-        mNavBarHeight = res.getDimensionPixelSize(R.dimen.navigation_bar_frame_height);
+        // always consider the normal navbar height even if nav is hidden,
+        // so when swiping at the very bottom of the screen to scroll recents apps
+        // the back swipe action is not triggered too at the same time (see isWithinTouchRegion).
+        mNavBarHeight = /*Utils.shouldShowGestureNav(context) ?
+                */res.getDimensionPixelSize(R.dimen.navigation_bar_frame_height)/* : 0*/;
         mMinArrowPosition = res.getDimensionPixelSize(R.dimen.navigation_edge_arrow_min_y);
         mFingerOffset = res.getDimensionPixelSize(R.dimen.navigation_edge_finger_offset);
         updateCurrentUserResources(res);
@@ -233,21 +225,17 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         mIntentFilter.addDataScheme("package");
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
         mAssistManager = Dependency.get(AssistManager.class);
         mHandler = new Handler();
         setLongSwipeOptions();
-        onSettingsChanged();
+
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     public void updateCurrentUserResources(Resources res) {
         mEdgeWidth = res.getDimensionPixelSize(
                 com.android.internal.R.dimen.config_backGestureInset);
-    }
-
-    private void vibrateTick() {
-            AsyncTask.execute(() ->
-                    mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
     }
 
     private void updateEdgeHeightValue() {
@@ -260,27 +248,18 @@ public class EdgeBackGestureHandler implements DisplayListener {
         // 0 means full height
         // 1 measns half of the screen
         // 2 means lower third of the screen
-        // 3 means lower sixth of the screen
+        // 3 means lower sicth of the screen
         if (edgeHeightSetting == 0) {
             mEdgeHeight = mDisplaySize.y;
         } else if (edgeHeightSetting == 1) {
-            mEdgeHeight = mDisplaySize.y / 2;
+            mEdgeHeight = (mDisplaySize.y * 3) / 4;
         } else if (edgeHeightSetting == 2) {
-            mEdgeHeight = mDisplaySize.y / 3;
+            mEdgeHeight = mDisplaySize.y / 2;
         } else {
-            mEdgeHeight = mDisplaySize.y / 6;
+            mEdgeHeight = mDisplaySize.y / 4;
         }
     }
 
-    private void updateEdgeHaptic() {
-        mEdgeHaptic = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.BACK_GESTURE_HAPTIC, 0, UserHandle.USER_CURRENT) == 1;
-    }
-
-    private void updateBlockImeSpace() {
-        mBlockImeSpace = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.BACK_GESTURE_BLOCK_IME, 1, UserHandle.USER_CURRENT) == 1;
-    }
     /**
      * @see NavigationBarView#onAttachedToWindow()
      */
@@ -309,6 +288,12 @@ public class EdgeBackGestureHandler implements DisplayListener {
         }
     }
 
+    public void setStateForBackGestureHaptic() {
+        if (mEdgePanel != null) {
+            mEdgePanel.setBackGestureHaptic();
+        }
+    }
+
     public void onSystemUiVisibilityChanged(int systemUiVisibility) {
         mIsInTransientImmersiveStickyState =
                 (systemUiVisibility & SYSTEM_UI_FLAG_IMMERSIVE_STICKY) != 0
@@ -317,8 +302,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
     public void onSettingsChanged() {
         updateEdgeHeightValue();
-        updateEdgeHaptic();
-        updateBlockImeSpace();
     }
 
     private void disposeInputChannel() {
@@ -408,7 +391,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 WindowManagerGlobal.getWindowManagerService()
                         .unregisterSystemGestureExclusionListener(
                                 mGestureExclusionListener, mDisplayId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Failed to unregister window manager callbacks", e);
             }
 
@@ -423,7 +406,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 WindowManagerGlobal.getWindowManagerService()
                         .registerSystemGestureExclusionListener(
                                 mGestureExclusionListener, mDisplayId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Failed to register window manager callbacks", e);
             }
 
@@ -628,9 +611,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
             if (isUp) {
                 boolean performAction = mEdgePanel.shouldTriggerBack();
                 if (performAction) {
-                    if (mEdgeHaptic) {
-                        vibrateTick();
-                    }
                     // Perform back
                     sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
@@ -681,10 +661,10 @@ public class EdgeBackGestureHandler implements DisplayListener {
                 mAssistManager.startAssist(new Bundle() /* args */);
                 break;
             case 2: // Voice search
-                launchVoiceSearch(mContext);
+                RRActionUtils.launchVoiceSearch(mContext);
                 break;
             case 3: // Camera
-                launchCamera(mContext);
+                RRActionUtils.launchCamera(mContext);
                 break;
             case 4: // Flashlight
                 RRActionUtils.toggleCameraFlash();
@@ -749,18 +729,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
         }
     }
 
-    private static void launchCamera(Context context) {
-        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-    }
-
-    private void launchVoiceSearch(Context context) {
-        Intent intent = new Intent(Intent.ACTION_SEARCH_LONG_PRESS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
     private void updateEdgePanelPosition(float touchY) {
         float position = touchY - mFingerOffset;
         position = Math.max(position, mMinArrowPosition);
@@ -803,7 +771,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         final KeyEvent ev = new KeyEvent(when, when, action, code, 0 /* repeat */,
                 0 /* metaState */, KeyCharacterMap.VIRTUAL_KEYBOARD, 0 /* scancode */,
                 KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
-                InputDevice.SOURCE_KEYBOARD);
+                InputDevice.SOURCE_NAVIGATION_BAR);
 
         // Bubble controller will give us a valid display id if it should get the back event
         BubbleController bubbleController = Dependency.get(BubbleController.class);
@@ -842,3 +810,4 @@ public class EdgeBackGestureHandler implements DisplayListener {
         }
     }
 }
+
