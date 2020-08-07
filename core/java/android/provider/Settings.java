@@ -7320,7 +7320,14 @@ public final class Settings {
          */
         public static final String KEY_BACK_LONG_PRESS_CUSTOM_ACTIVITY = "key_back_long_press_custom_activity";
 
-        /**
+
+       /**
+         * toggle QS data usage location
+         * @hide
+         */
+        public static final String QS_DATAUSAGE_LOCATION = "qs_datausage_location";
+
+       /**
          * Display friendly name of custom application launched when
          * back key is long-pressed.
          * @hide

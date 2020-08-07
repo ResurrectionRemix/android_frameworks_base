@@ -82,7 +82,7 @@
     <dimen name="status_bar_clock_end_padding">0dp</dimen>
 
     <!-- Starting padding for a left-aligned status bar clock -->
-    <dimen name="status_bar_left_clock_starting_padding">2dp</dimen>
+    <dimen name="status_bar_left_clock_starting_padding">4dp</dimen>
 
     <!-- End padding for left-aligned status bar clock -->
     <dimen name="status_bar_left_clock_end_padding">2dp</dimen>

@@ -30,20 +30,14 @@
     android:background="@android:color/transparent" 
     android:paddingTop="@dimen/status_bar_padding_top" >
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|start" >
 
-    <com.android.systemui.rr.logo.LogoImageViewQuick
-        android:id="@+id/statusbar_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingEnd="1dip"
-        android:scaleType="center"
-        android:visibility="gone" />
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
 
     <com.android.systemui.statusbar.policy.Clock
         android:id="@+id/clock"
@@ -56,6 +50,49 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.StatusBar.Clock"
         systemui:showDark="false" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
+
+       <com.android.systemui.rr.logo.LogoImageViewQuick
+                android:id="@+id/statusbar_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingEnd="1dip"
+                android:scaleType="center"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/qsb_daily_data_usage_layout"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|start"
+                android:clipChildren="false" >
+
+                    <ImageView
+                        android:id="@+id/qsb_daily_data_usage_icon"
+                        android:layout_height="@dimen/qs_temperatur_icon_size"
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_data_saver_off"
+                        android:visibility="gone" />
+
+                    <com.android.systemui.statusbar.info.DataUsageView
+                        android:id="@+id/qsb_data_sim_usage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|start"
+                        android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+                        android:singleLine="true"
+                        systemui:showDark="false"
+                        android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

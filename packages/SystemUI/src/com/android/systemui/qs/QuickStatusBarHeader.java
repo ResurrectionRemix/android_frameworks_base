@@ -173,7 +173,14 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private BatteryMeterView mBatteryIcon;
     private boolean mPermissionsHubEnabled;
 
+
     private PrivacyItemController mPrivacyItemController;
+
+    private int mDataUsageLocation;
+    private View mQsbDataUsageLayout;
+    private ImageView mQsbDataUsageImage;
+    private DataUsageView mQsbDataUsageView;
+
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
     private int mHeaderImageHeight;
@@ -249,6 +256,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mForceHideQsStatusBar;
     public static final String STATUS_BAR_CUSTOM_HEADER_HEIGHT =
             "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT;
+    public static final String QS_DATAUSAGE_LOCATION =
+            "system:" + Settings.System.QS_DATAUSAGE_LOCATION;
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -364,6 +373,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDataUsageLayout = findViewById(R.id.daily_data_usage_layout);
         mDataUsageImage = findViewById(R.id.daily_data_usage_icon);
         mDataUsageView = findViewById(R.id.data_sim_usage);
+        mQsbDataUsageLayout = findViewById(R.id.qsb_daily_data_usage_layout);
+        mQsbDataUsageImage = findViewById(R.id.qsb_daily_data_usage_icon);
+        mQsbDataUsageView = findViewById(R.id.qsb_data_sim_usage);
 
         // Set the correct tint for the data uasgae icons so they contrast
         mDataUsageImage.setImageTintList(ColorStateList.valueOf(fillColor));
@@ -389,7 +401,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE, STATUS_BAR_CUSTOM_HEADER_HEIGHT,
-                QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
+                QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, QS_DATAUSAGE_LOCATION, 
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
@@ -668,13 +680,48 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private void updateDataUsageView() {
         if (mDataUsageView.isDataUsageEnabled() != 0) {
-            mDataUsageView.setVisibility(View.VISIBLE);
-            mDataUsageImage.setVisibility(View.VISIBLE);
-            mDataUsageLayout.setVisibility(View.VISIBLE);
+            updateDataUsageVisibility(true);
         } else {
-            mDataUsageView.setVisibility(View.GONE);
-            mDataUsageImage.setVisibility(View.GONE);
+            updateDataUsageVisibility(false);
+        }
+    }
+
+    private void updateDataUsageVisibility(boolean isVisible) {
+        if (isVisible) {
+            if (mDataUsageLocation == 0) {
+                qsDataUsage(true);
+                qsHeaderDataUsage(false);
+            } else {
+                qsDataUsage(false);
+                qsHeaderDataUsage(true);
+            }
+        } else {
+            qsDataUsage(false);
+            qsHeaderDataUsage(false);
+        }
+    }
+
+    private void qsDataUsage(boolean isVisible) {
+        if (isVisible) {
+            mDataUsageLayout.setVisibility(View.VISIBLE);
+            mDataUsageImage.setVisibility(View.VISIBLE);
+            mDataUsageView.setVisibility(View.VISIBLE);
+        } else {
             mDataUsageLayout.setVisibility(View.GONE);
+            mDataUsageImage.setVisibility(View.GONE);
+            mDataUsageView.setVisibility(View.GONE);
+        }
+    }
+
+    private void qsHeaderDataUsage(boolean isVisible) {
+        if (isVisible) {
+            mQsbDataUsageLayout.setVisibility(View.VISIBLE);
+            mQsbDataUsageImage.setVisibility(View.VISIBLE);
+            mQsbDataUsageView.setVisibility(View.VISIBLE);
+        } else {
+            mQsbDataUsageLayout.setVisibility(View.GONE);
+            mQsbDataUsageImage.setVisibility(View.GONE);
+            mQsbDataUsageView.setVisibility(View.GONE);
         }
     }
 
@@ -1079,6 +1126,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS:
                 mBrightnessButton =
                         TunerService.parseIntegerSwitch(newValue, true);
+                updateResources();
+                break;
+            case QS_DATAUSAGE_LOCATION:
+                mDataUsageLocation =
+                        TunerService.parseInteger(newValue, 0);
                 updateResources();
                 break;
             default:
