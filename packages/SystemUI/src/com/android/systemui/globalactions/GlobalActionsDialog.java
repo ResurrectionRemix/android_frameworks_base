@@ -411,8 +411,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             mSilentModeAction = new SilentModeTriStateAction(mAudioManager, mHandler);
         }
         mAirplaneModeOn = new ToggleAction(
-                R.drawable.rr_airplane_icon,
-                R.drawable.rr_airplane_off_icon,
+                com.android.systemui.R.drawable.rr_airplane_icon,
+                com.android.systemui.R.drawable.rr_airplane_off_icon,
                 R.string.global_actions_toggle_airplane_mode) {
 
             void onToggle(boolean on) {
@@ -1078,7 +1078,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     }
 
     private Action getSettingsAction() {
-        return new SinglePressAction(R.drawable.rr_system_icon,
+        return new SinglePressAction(com.android.systemui.R.drawable.rr_system_icon,
                 R.string.global_action_settings) {
 
             @Override
@@ -1101,7 +1101,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     }
 
     private Action getAssistAction() {
-        return new SinglePressAction(R.drawable.rr_mic_icon
+        return new SinglePressAction(com.android.systemui.R.drawable.rr_mic_icon,
                 R.string.global_action_assist) {
             @Override
             public void onPress() {
