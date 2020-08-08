@@ -581,7 +581,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_ASSIST, 0) != 0) {
-                    mItems.add(getAssistAction());
+                     mItems.add(getVoiceAssistAction());
                 }
             /* else if (GLOBAL_ACTION_KEY_LOCKDOWN.equals(actionKey)) {
                 if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
@@ -592,7 +592,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 }
             }
             } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
-                mItems.add(getVoiceAssistAction());
+
              else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {*/;
             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
