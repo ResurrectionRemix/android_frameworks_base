@@ -578,7 +578,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         Settings.System.POWERMENU_TORCH, 0) != 0) {
                     mItems.add(getTorchToggleAction());
                 }
-            } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
+            } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_ASSIST, 0) != 0) {
                      mItems.add(getVoiceAssistAction());
@@ -882,6 +882,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
             @Override
             public boolean onLongPress() {
+            mDialog.dismiss();
             RRActionUtils.takeScreenshot(false);
             return true;
         }
@@ -1094,11 +1095,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public boolean onLongPress() {
+            mDialog.dismiss();
             Intent intent = new Intent();
             intent.setClassName("com.android.settings",
                 "com.android.settings.Settings$MainSettingsLayoutActivity");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-             mContext.startActivity(intent);
+            mContext.startActivity(intent);
             return true;
         }
 
