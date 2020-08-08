@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package package com.android.internal.util.rr;
+package com.android.internal.util.rr;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -38,7 +38,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.android.internal.R;
 
 public class AppPicker extends ListActivity {
 
@@ -53,7 +52,7 @@ public class AppPicker extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(android.R.layout.list_content);
-        setTitle(R.string.active_edge_app_select_title);
+        setTitle(com.android.internal.R.string.active_edge_app_select_title);
 
         packageManager = getPackageManager();
         new LoadApplications().execute();
@@ -75,7 +74,7 @@ public class AppPicker extends ListActivity {
     public void onBackPressed() {
         if (mIsActivitiesList) {
             setListAdapter(listadapter);
-            setTitle(R.string.active_edge_app_select_title);
+            setTitle(com.android.internal.R.string.active_edge_app_select_title);
             // Reset the dialog again
             mIsActivitiesList = false;
         } else {
@@ -120,7 +119,7 @@ public class AppPicker extends ListActivity {
             applist = checkForLaunchIntent(packageManager.getInstalledApplications(
                     PackageManager.GET_META_DATA));
             listadapter = new Adapter(AppPicker.this,
-                    R.layout.app_list_item, applist, packageManager);
+                    com.android.internal.R.layout.app_list_item, applist, packageManager);
             return null;
         }
 
@@ -172,9 +171,9 @@ public class AppPicker extends ListActivity {
             return;
         }
 
-        setTitle(R.string.active_edge_activity_select_title);
+        setTitle(com.android.internal.R.string.active_edge_activity_select_title);
         // switch to a new adapter to show app activities
-        ActivitiesAdapter adapter = new ActivitiesAdapter(this, R.layout.app_list_item, list, packageManager);
+        ActivitiesAdapter adapter = new ActivitiesAdapter(this, com.android.internal.R.layout.app_list_item, list, packageManager);
         setListAdapter(adapter);
     }
 
@@ -216,12 +215,12 @@ public class AppPicker extends ListActivity {
             if (view == null) {
                 LayoutInflater layoutInflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = layoutInflater.inflate(R.layout.app_list_item, null);
+                view = layoutInflater.inflate(com.android.internal.R.layout.app_list_item, null);
             }
 
             if (data != null) {
-                TextView appName = view.findViewById(R.id.app_name);
-                ImageView iconView = view.findViewById(R.id.app_icon);
+                TextView appName = view.findViewById(com.android.internal.R.id.app_name);
+                ImageView iconView = view.findViewById(com.android.internal.R.id.app_icon);
 
                 appName.setText(data.loadLabel(packageManager));
                 iconView.setImageDrawable(data.loadIcon(packageManager));

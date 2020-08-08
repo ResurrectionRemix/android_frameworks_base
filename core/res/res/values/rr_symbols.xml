@@ -242,7 +242,11 @@
   <java-symbol type="anim" name="custom_app_out" />
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
-
+  <java-symbol type="string" name="active_edge_app_select_title" />
+  <java-symbol type="string" name="active_edge_activity_select_title" />
+  <java-symbol type="id" name="app_name" />
+  <java-symbol type="layout" name="app_list_item" />
+  <java-symbol type="id" name="app_icon" />
   <!-- Button brightness -->
   <java-symbol type="bool" name="config_button_brightness_support" />
   <java-symbol type="integer" name="config_button_brightness_default" />
