@@ -261,10 +261,6 @@ public final class PowerManagerService extends SystemService
     private SettingsObserver mSettingsObserver;
     private DreamManagerInternal mDreamManager;
     private Light mAttentionLight;
-
-    private int mButtonTimeout;
-    private int mButtonBrightness;
-    private int mButtonBrightnessSettingDefault;
     private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
 
     // A bitfield that indicates what parts of the power state have
@@ -5147,7 +5143,6 @@ public final class PowerManagerService extends SystemService
                                                              mWakeLocks);
             }
         }
-    }
 
         /**
          * Used by the settings application and brightness control widgets to
