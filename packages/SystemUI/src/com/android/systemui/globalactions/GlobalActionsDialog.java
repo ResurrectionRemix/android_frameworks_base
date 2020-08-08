@@ -200,6 +200,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private GlobalActionsPanelPlugin mPanelPlugin;
     private boolean mTorchEnabled = false;
 
+    private static final String OMNIRECORD_PACKAGE_NAME = "org.omnirom.omnirecord";
+
     /**
      * @param context everything needs a context :(
      */
@@ -936,8 +938,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             public boolean showBeforeProvisioning() {
                 return false;
             }
-        };
-    }
+     };
 
     private CameraManager mCameraManager;
     CameraManager.TorchCallback torchCallback = new CameraManager.TorchCallback() {
