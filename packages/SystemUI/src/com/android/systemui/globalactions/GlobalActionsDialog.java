@@ -411,8 +411,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             mSilentModeAction = new SilentModeTriStateAction(mAudioManager, mHandler);
         }
         mAirplaneModeOn = new ToggleAction(
-                R.drawable.ic_lock_airplane_mode,
-                R.drawable.ic_lock_airplane_mode_off,
+                R.drawable.rr_airplane_icon,
+                R.drawable.rr_airplane_off_icon,
                 R.string.global_actions_toggle_airplane_mode) {
 
             void onToggle(boolean on) {
@@ -573,6 +573,16 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         Settings.System.POWERMENU_SETTINGS, 0) != 0) {
                     mItems.add(getSettingsAction());
                 }
+            }  else if (GLOBAL_ACTION_KEY_TORCH.equals(actionKey)) {
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_TORCH, 0) != 0) {
+                    mItems.add(getTorchToggleAction());
+                }
+            } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_ASSIST, 0) != 0) {
+                    mItems.add(getAssistAction());
+                }
             /* else if (GLOBAL_ACTION_KEY_LOCKDOWN.equals(actionKey)) {
                 if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                             Settings.Secure.LOCKDOWN_IN_POWER_MENU, 0, getCurrentUser().id) != 0
@@ -580,17 +590,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                     mItems.add(getLockdownAction());
                     mHasLockdownButton = true;
                 }
-            } else if (GLOBAL_ACTION_KEY_TORCH.equals(actionKey)) {
-                if (Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.POWERMENU_TORCH, 0) != 0) {
-                    mItems.add(getTorchToggleAction());
-                }
+            }
             } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
                 mItems.add(getVoiceAssistAction());
-            } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
-                mItems.add(getAssistAction());
-            } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {*/
-                mItems.add(getAssistAction());
+             else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {*/;
             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_LOGOUT, 0) == 1
@@ -1075,7 +1078,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     }
 
     private Action getSettingsAction() {
-        return new SinglePressAction(R.drawable.ic_settings,
+        return new SinglePressAction(R.drawable.rr_system_icon,
                 R.string.global_action_settings) {
 
             @Override
@@ -1098,7 +1101,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     }
 
     private Action getAssistAction() {
-        return new SinglePressAction(R.drawable.ic_action_assist_focused,
+        return new SinglePressAction(R.drawable.rr_mic_icon
                 R.string.global_action_assist) {
             @Override
             public void onPress() {

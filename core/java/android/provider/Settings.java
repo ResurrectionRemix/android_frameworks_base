@@ -7601,6 +7601,14 @@ public final class Settings {
         private static final Validator POWERMENU_TORCH_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+
+        /**
+         * Whether to display the assist option in the power menu
+         *
+         * @hide
+         */
+        public static final String POWERMENU_ASSIST = "powermenu_assist";
+
         /**
          * Whether to display set of animations when prompting the power menu
          *
