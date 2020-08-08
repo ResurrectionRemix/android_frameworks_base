@@ -116,7 +116,7 @@ import com.android.systemui.volume.SystemUIInterpolators.LogAccelerateInterpolat
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.android.internal.util.rr.RRActionUtils;
 import com.android.internal.util.rr.OnTheGoActions;
 import com.android.internal.util.rr.ImageHelper;
 
@@ -882,7 +882,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
             @Override
             public boolean onLongPress() {
-            return false;
+            RRActionUtils.takeScreenshot(false);
+            return true;
         }
 
         @Override
