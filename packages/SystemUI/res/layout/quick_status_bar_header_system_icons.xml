@@ -85,8 +85,7 @@
     <com.android.systemui.statusbar.policy.NetworkTraffic
         android:id="@+id/network_traffic"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent"/>
 
         <com.android.systemui.rr.statusbarweather.QsHeaderWeather
              android:id="@+id/weather_temp"
