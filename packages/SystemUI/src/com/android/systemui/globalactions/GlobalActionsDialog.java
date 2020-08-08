@@ -571,7 +571,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_SETTINGS.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_SETTINGS, 0) != 0) {
-                    mItems.add(getSettingsAction());
+                    mItems.add(new SettingsAction());
                 }
             }  else if (GLOBAL_ACTION_KEY_TORCH.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
@@ -1077,9 +1077,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
     }
 
-    private Action getSettingsAction() {
-        return new SinglePressAction(com.android.systemui.R.drawable.rr_system_icon,
-                R.string.global_action_settings) {
+    private final class SettingsAction extends SinglePressAction implements LongPressAction {
+
+      private SettingsAction() {
+         super(com.android.systemui.R.drawable.rr_system_icon,
+                R.string.global_action_settings);
+      }
 
             @Override
             public void onPress() {
@@ -1088,16 +1091,24 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 mContext.startActivity(intent);
             }
 
+        @Override
+        public boolean onLongPress() {
+            Intent intent = new Intent();
+            intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$MainSettingsLayoutActivity");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             mContext.startActivity(intent);
+            return true;
+        }
+
             @Override
             public boolean showDuringKeyguard() {
                 return true;
             }
-
             @Override
             public boolean showBeforeProvisioning() {
                 return true;
             }
-        };
     }
 
     private Action getAssistAction() {
