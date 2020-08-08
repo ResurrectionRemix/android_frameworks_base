@@ -24,15 +24,13 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
-import com.android.systemui.Dependency;
+import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
-import com.android.systemui.statusbar.StatusIconDisplayable;
-import com.android.systemui.statusbar.policy.KeyguardMonitor;
 
 /** @hide */
 public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkReceiver,
-        StatusIconDisplayable, KeyguardMonitor.Callback {
+        StatusIconDisplayable {
 
 
     public static final String SLOT = "networktraffic";
@@ -41,22 +39,17 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
     private boolean mSystemIconVisible = true;
     private boolean mColorIsStatic;
 
-    private KeyguardMonitor mKeyguardMonitor;
-    private boolean mKeyguardShowing;
-
     public StatusBarNetworkTraffic(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public StatusBarNetworkTraffic(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public StatusBarNetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setVisibleState(STATE_ICON);
-        mKeyguardMonitor = Dependency.get(KeyguardMonitor.class);
-        mKeyguardMonitor.addCallback(this);
     }
 
     @Override
@@ -86,7 +79,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public boolean isIconVisible() {
-        return mEnabled;
+        return mLocation == LOCATION_STATUSBAR;
     }
 
     @Override
@@ -96,7 +89,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public void setVisibleState(int state, boolean animate) {
-        if (state == mVisibleState || !mEnabled || !mScreenOn) {
+        if (state == mVisibleState || !isIconVisible() || !mScreenOn) {
             return;
         }
         mVisibleState = state;
@@ -111,25 +104,25 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
                 mSystemIconVisible = false;
                 break;
         }
+        updateViews();
     }
 
     @Override
-    public void onKeyguardShowingChanged() {
-        mKeyguardShowing = mKeyguardMonitor.isShowing();
-        updateVisibility();
-    }
-
-    @Override
-    protected void setEnabled() {
-        mEnabled = mLocation == LOCATION_STATUSBAR;
+    protected void updateViews() {
+        if (isIconVisible() && mScreenOn) {
+            updateViewState();
+        } else {
+            clearHandlerCallbacks();
+            updateVisibility();
+        }
     }
 
     @Override
     protected void updateVisibility() {
-        boolean visible = mEnabled && mIsActive && !mKeyguardShowing && mSystemIconVisible
-            && getText() != "";
-        if (visible != mVisible) {
-            mVisible = visible;
+        boolean enabled = mIsActive && mSystemIconVisible && isIconVisible() && mScreenOn
+            &&  getText() != "";
+        if (enabled != mVisible) {
+            mVisible = enabled;
             setVisibility(mVisible ? VISIBLE : GONE);
             checkUpdateTrafficDrawable();
         }
