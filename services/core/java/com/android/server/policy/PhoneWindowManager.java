@@ -7479,6 +7479,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case NavbarUtilities.KEY_ACTION_QS_PANEL:
                 RRActionUtils.toggleQsPanel();
                 break;
+            case NavbarUtilities.KEY_PARTIAL_SCREENSHOT:
+                RRActionUtils.takeScreenshot(false);
+                break;
             case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_HOME:
