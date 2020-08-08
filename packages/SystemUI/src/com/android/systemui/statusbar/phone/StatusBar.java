@@ -2361,6 +2361,14 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateNavigationBar(getRegisterStatusBarResult(), false);
             updateQSPanel();
             setGestureNavOptions();
+            setHapticFeedbackForBackGesture();
+        }
+    }
+
+
+    private void setHapticFeedbackForBackGesture() {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().updateBackGestureHaptic();
         }
     }
 

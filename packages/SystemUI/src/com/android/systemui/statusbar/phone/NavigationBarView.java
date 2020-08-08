@@ -1301,4 +1301,10 @@ public class NavigationBarView extends FrameLayout implements
         return Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.NAVIGATION_BAR_IME_SPACE, 1, UserHandle.USER_CURRENT) != 0;
     }
+
+
+    public void updateBackGestureHaptic() {
+        mEdgeBackGestureHandler.setStateForBackGestureHaptic();
+    }
+
 }
