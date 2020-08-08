@@ -7390,6 +7390,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case NavbarUtilities.KEY_PARTIAL_SCREENSHOT:
                 RRActionUtils.takeScreenshot(false);
                 break;
+            case NavbarUtilities.KEY_ACTION_SKIP_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case NavbarUtilities.KEY_ACTION_PREVIOUS_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+                break;
             case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_HOME:
@@ -7481,6 +7487,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case NavbarUtilities.KEY_PARTIAL_SCREENSHOT:
                 RRActionUtils.takeScreenshot(false);
+                break;
+            case NavbarUtilities.KEY_ACTION_SKIP_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case NavbarUtilities.KEY_ACTION_PREVIOUS_TRACK:
+                RRActionUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
                 break;
             case NavbarUtilities.KEY_ACTION_CUSTOM_APP:
                 switch (keyCode) {
