@@ -6000,12 +6000,31 @@ public final class Settings {
          **/
         public static final String CUSTOM_TEXT_CLOCK_FONTS = "custom_text_clock_fonts";
 
+
         /**
          * Change font size for the lockscreen text clock widget
          *
          * @hide
          */
         public static final String CUSTOM_TEXT_CLOCK_FONT_SIZE = "custom_text_clock_font_size";
+
+        /**
+         * Clock font style  QS
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_FONT_STYLE = "qs_header_clock_font_style";
+
+       /**
+         * Qs Header Clock font color
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_COLOR = "qs_header_clock_color";
+
+	   /**
+         * Clock font size QS
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_SIZE = "qs_header_clock_size";
 
         /**
          * Change quick settings tiles animation style

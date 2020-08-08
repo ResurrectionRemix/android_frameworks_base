@@ -139,6 +139,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public int DEFAULT_CLOCK_COLOR = 0xffffffff;
     private int mClockColor = 0xffffffff;
     private int mClockSize = 14;
+    private int mQsClockColor = 0xffffffff;
+    private int mQsClockFontStyle = FONT_NORMAL;
+    private int mQsClockSize = 14;
 
     public static final String STATUS_BAR_CLOCK_AUTO_HIDE =
             "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
@@ -154,6 +157,13 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     public static final String STATUS_BAR_CLOCK_FONT_STYLE =
             "system:" + Settings.System.STATUS_BAR_CLOCK_FONT_STYLE;
 
+
+    public static final String QS_HEADER_CLOCK_FONT_STYLE =
+            "system:" + Settings.System.QS_HEADER_CLOCK_FONT_STYLE;
+    public static final String QS_HEADER_CLOCK_SIZE =
+            "system:" + Settings.System.QS_HEADER_CLOCK_SIZE;
+    public static final String QS_HEADER_CLOCK_COLOR =
+            "system:" + Settings.System.QS_HEADER_CLOCK_COLOR;
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
      * for text.
@@ -254,6 +264,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     STATUS_BAR_CLOCK_AUTO_HIDE,
                     STATUS_BAR_CLOCK_COLOR,
                     STATUS_BAR_CLOCK_FONT_STYLE,
+                    QS_HEADER_CLOCK_SIZE,
+                    QS_HEADER_CLOCK_COLOR,
+                    QS_HEADER_CLOCK_FONT_STYLE,
                     STATUS_BAR_CLOCK_SIZE,
                     STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
                     STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION);
@@ -423,24 +436,52 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             mClockSize =
                     TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
             updateClockSize();
+        }  else if (QS_HEADER_CLOCK_COLOR.equals(key)) {
+           mQsClockColor =
+                    TunerService.parseInteger(newValue, DEFAULT_CLOCK_COLOR);
+           updateClockColor();
+        } else if (QS_HEADER_CLOCK_FONT_STYLE.equals(key)) {
+            mQsClockFontStyle  =
+                    TunerService.parseInteger(newValue, 0);
+            updateClockFontStyle();
+        } else if (QS_HEADER_CLOCK_SIZE.equals(key)) {
+            mQsClockSize =
+                    TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
+            updateClockSize();
         }
     }
 
     public void updateClockSize() {
+        if(mQsHeader) {
+            setTextSize(mQsClockSize);
+        } else {
             setTextSize(mClockSize);
+        }
     }
 
     private void updateClockColor() {
-            if (mClockColor == 0xFFFFFFFF) {
-                    setTextColor(mNonAdaptedColor);
+        if (mQsHeader) {
+   	        if (mQsClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
             } else {
-                    setTextColor(mClockColor);
+                setTextColor(mQsClockColor);
             }
+       } else {
+           if (mClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mClockColor);
+            }
+        }
     }
 
 
     private void updateClockFontStyle() {
-        RRFontHelper.setFontType(this, mClockFontStyle);
+        if(mQsHeader) {
+           RRFontHelper.setFontType(this, mQsClockFontStyle);
+        } else {
+           RRFontHelper.setFontType(this, mClockFontStyle);
+        }
     }
 
     @Override
@@ -457,10 +498,18 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(mNonAdaptedColor);
+        if (mQsHeader) {
+            if (mQsClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mQsClockColor);
+            }
         } else {
-            setTextColor(mClockColor);
+            if (mClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mClockColor);
+            }
         }
     }
 
