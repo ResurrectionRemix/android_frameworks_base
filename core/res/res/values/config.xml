@@ -2887,6 +2887,10 @@
         <item>screenshot</item>
         <item>screenrecord</item>
         <item>onthego</item>
+        <item>users</item>
+        <item>silent</item>
+        <item>airplane</item>
+        <item>settings</item>
     </string-array>
         <!--<item>emergency</item>-->
 
