@@ -6361,6 +6361,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * Network traffic font style
+         * @hide
+         */
+        public static final String TRAFFIC_FONT_STYLE = "traffic_font_style";
+
+        /**
          * Clock font size
          * @hide
          */

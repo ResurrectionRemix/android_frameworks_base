@@ -52,11 +52,11 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-
+import android.provider.Settings;
 import lineageos.providers.LineageSettings;
 
 import com.android.systemui.R;
-
+import com.android.internal.util.rr.RRFontHelper;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
@@ -101,6 +101,7 @@ public class NetworkTraffic extends TextView {
 
     protected boolean mAttached;
     private boolean mHideArrows;
+    private int mFontStyle;
 
     private INetworkManagementService mNetworkManagementService;
 
@@ -368,6 +369,9 @@ public class NetworkTraffic extends TextView {
             resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
                     LineageSettings.Secure.NETWORK_TRAFFIC_HIDEARROW),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TRAFFIC_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         void unobserve() {
@@ -444,6 +448,9 @@ public class NetworkTraffic extends TextView {
         mUnits = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_UNITS, /* Bytes */ 1,
                 UserHandle.USER_CURRENT);
+        mFontStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.TRAFFIC_FONT_STYLE, /* Bytes */ 0,
+                UserHandle.USER_CURRENT);
 
         mRefreshInterval = LineageSettings.Secure.getIntForUser(resolver,
                 LineageSettings.Secure.NETWORK_TRAFFIC_REFRESH_INTERVAL, 2, UserHandle.USER_CURRENT);
@@ -459,7 +466,7 @@ public class NetworkTraffic extends TextView {
         String txtFont = getResources().getString(com.android.internal.R.string.config_bodyFontFamily);
         setTypeface(Typeface.create(txtFont, Typeface.BOLD));
         setLineSpacing(0.75f, 0.75f);
-
+        RRFontHelper.setFontType(this, mFontStyle);
         setTrafficDrawable();
         updateViews();
     }
