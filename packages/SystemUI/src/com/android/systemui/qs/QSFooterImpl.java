@@ -399,7 +399,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public boolean isSettingButtonEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 0) == 1;
+            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
     }
 
     public boolean isRunningServicesEnabled() {
