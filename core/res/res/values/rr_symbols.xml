@@ -218,6 +218,7 @@
   <java-symbol type="color" name="gradient_start" />
   <java-symbol type="color" name="gradient_end" />
 
+  <java-symbol type="bool" name="disable_fod_night_light"/>
 
   <!-- Themes -->
   <java-symbol type="color" name="theme_generic_semi_transparent_color" />

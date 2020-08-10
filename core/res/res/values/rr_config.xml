@@ -211,5 +211,5 @@
     <string-array name="config_deviceKeyHandlerClasses" translatable="false">
     </string-array>
 
-
+    <bool name="disable_fod_night_light">false</bool>
 </resources>
