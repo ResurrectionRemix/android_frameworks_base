@@ -7006,6 +7006,13 @@ public final class Settings {
         public static final String LOCKSCREEN_INDICATION_TEXT_COLOR = "lockscreen_indication_text_color";
 
         /**
+         * Change the color of the lockscreen charging text
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_CHARGE_COLOR = "lockscreen_charge_color";
+
+        /**
          * Color of the weather temperature the lock screen
          * @hide
          */
