@@ -179,9 +179,11 @@ public class QSTileView extends QSTileBaseView {
                 mExpandIndicator.setImageTintList(mColorLabelDefault);
             }
         }
+        boolean mIsDualEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_SHOW_EXPANDINDICATOR, 0, UserHandle.USER_CURRENT) == 1;
         boolean dualTarget = DUAL_TARGET_ALLOWED && state.dualTarget;
-        mExpandIndicator.setVisibility(View.GONE);
-        mExpandSpace.setVisibility(View.GONE);
+        mExpandIndicator.setVisibility(dualTarget && mIsDualEnabled ? View.VISIBLE : View.GONE);
+        mExpandSpace.setVisibility(dualTarget && mIsDualEnabled ? View.VISIBLE : View.GONE);
         mLabelContainer.setContentDescription(dualTarget ? state.dualLabelContentDescription
                 : null);
         if (dualTarget != mLabelContainer.isClickable()) {

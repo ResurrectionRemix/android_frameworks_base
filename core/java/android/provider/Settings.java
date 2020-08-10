@@ -6026,6 +6026,12 @@ public final class Settings {
          */
         public static final String QS_HEADER_CLOCK_SIZE = "qs_header_clock_size";
 
+	   /**
+         * 
+         * @hide
+         */
+        public static final String QS_SHOW_EXPANDINDICATOR = "qs_show_expand_indicator";
+
         /**
          * Change quick settings tiles animation style
          *
