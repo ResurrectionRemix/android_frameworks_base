@@ -65,7 +65,9 @@ public class MobileDataToggle extends ScreenStateToggle {
 
     private void setMobileDataState(boolean mobileDataEnabled){
         TelephonyManager telephonyService = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyService.setDataEnabled(mobileDataEnabled);
+        if (isMobileDataEnabled() != mobileDataEnabled) {
+            telephonyService.setDataEnabled(mobileDataEnabled);
+        }
     }
 
     protected Runnable getScreenOffAction(){

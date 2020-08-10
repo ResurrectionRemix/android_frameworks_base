@@ -65,7 +65,7 @@ public class GpsToggle extends ScreenStateToggle {
             @Override
             public void run() {
                 Settings.Secure.putIntForUser(mContext.getContentResolver(),
-                Settings.Secure.LOCATION_MODE, 0, ActivityManager.getCurrentUser());
+                Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF, ActivityManager.getCurrentUser());
                 Log.d(TAG, "gps = false");
             }
         };
@@ -75,7 +75,7 @@ public class GpsToggle extends ScreenStateToggle {
             @Override
             public void run() {
                 Settings.Secure.putIntForUser(mContext.getContentResolver(),
-                Settings.Secure.LOCATION_MODE, 3, ActivityManager.getCurrentUser());
+                Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_HIGH_ACCURACY, ActivityManager.getCurrentUser());
                 Log.d(TAG, "gps = true");
             }
         };
