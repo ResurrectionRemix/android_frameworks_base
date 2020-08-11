@@ -575,7 +575,12 @@ public class NavigationBarEdgePanel extends View {
         boolean isSlow = Math.abs(mVelocityTracker.getXVelocity()) < 500;
         if (mBackHapticEnabled && (isSlow
                 || SystemClock.uptimeMillis() - mVibrationTime >= GESTURE_DURATION_FOR_CLICK_MS)) {
-            mVibratorHelper.vibrate(VibrationEffect.EFFECT_CLICK);
+                if (mVibrateOnOpening) {
+                    mVibratorHelper.vibrate(VibrationEffect.EFFECT_TICK);
+                    mVibrationTime = SystemClock.uptimeMillis();
+                } else {
+                    mVibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+                }
         }
 
         // Let's also snap the angle a bit
@@ -653,14 +658,6 @@ public class NavigationBarEdgePanel extends View {
         // Apply a haptic on drag slop passed
         if (!mDragSlopPassed && touchTranslation > mSwipeThreshold) {
             mDragSlopPassed = true;
-            if (mBackHapticEnabled) {
-                if (mVibrateOnOpening) {
-                    mVibratorHelper.vibrate(VibrationEffect.EFFECT_TICK);
-                    mVibrationTime = SystemClock.uptimeMillis();
-                } else {
-                    mVibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
-                }
-            }
 
             // Let's show the arrow and animate it in!
             mDisappearAmount = 0.0f;
