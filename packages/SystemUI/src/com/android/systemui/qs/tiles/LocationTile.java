@@ -312,8 +312,11 @@ public class LocationTile extends QSTileImpl<BooleanState> {
                 mMessageText = (TextView) details.findViewById(R.id.location_introduction_message);
             }
 
-            mButtons.setSelectedValue(mLastState, false /* fromClick */);
-            refresh(mLastState);
+            try {
+                mButtons.setSelectedValue(mLastState, false /* fromClick */);
+                refresh(mLastState);
+            } catch (Exception e) {}
+
 
             return details;
         }
