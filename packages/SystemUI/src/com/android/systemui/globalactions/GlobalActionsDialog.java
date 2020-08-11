@@ -1971,8 +1971,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 case MESSAGE_SHOW_ADVANCED_TOGGLES_SHOW:
                     mAdapter.notifyDataSetChanged();
                     addNewItems();
-                    mDialog.refreshList();
-                    mDialog.show();
+                    if (mDialog != null) {
+                        mDialog.refreshList();
+                        mDialog.show();
+                    }
                     break;
             }
         }
