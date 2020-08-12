@@ -124,6 +124,12 @@ public class ThemeAccentUtils {
             "com.android.theme.pitchblack.systemui",
     };
 
+    public static final String[] DARK_GREY = {
+            "com.android.theme.darkgrey.system",
+            "com.android.theme.darkgrey.systemui",
+    };
+
+
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
         OverlayInfo themeInfo = null;
