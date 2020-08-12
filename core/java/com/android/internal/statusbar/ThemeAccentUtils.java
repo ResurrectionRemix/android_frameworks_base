@@ -108,6 +108,17 @@ public class ThemeAccentUtils {
         "com.android.systemui.qstile.badgetwo", // 26
     };
 
+
+    public static final String[] BAKED_GREEN = {
+            "com.android.theme.bakedgreen.system",
+            "com.android.theme.bakedgreen.systemui",
+    };
+
+    public static final String[] CHOCO_X = {
+            "com.android.theme.chocox.system",
+            "com.android.theme.chocox.systemui",
+    };
+
     // Switch themes
     private static final String[] SWITCH_STYLES = {
         "com.android.system.switch.stock", // 0
