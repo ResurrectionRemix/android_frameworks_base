@@ -134,6 +134,10 @@ public class ThemeAccentUtils {
             "com.android.theme.materialocean.systemui",
     };
 
+    public static final String[] XTENDED_CLEAR = {
+            "com.android.theme.xtendedclear.system",
+            "com.android.theme.xtendedclear.systemui",
+    };
 
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
