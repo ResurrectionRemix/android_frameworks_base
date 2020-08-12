@@ -129,6 +129,11 @@ public class ThemeAccentUtils {
             "com.android.theme.darkgrey.systemui",
     };
 
+    public static final String[] MATERIAL_OCEAN = {
+            "com.android.theme.materialocean.system",
+            "com.android.theme.materialocean.systemui",
+    };
+
 
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
