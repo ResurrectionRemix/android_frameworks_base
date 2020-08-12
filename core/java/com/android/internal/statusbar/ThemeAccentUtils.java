@@ -112,16 +112,6 @@ public class ThemeAccentUtils {
     };
 
     // Dark Variants
-    public static final String[] PRIMARY_THEMES = {
-        "com.android.theme.color.primary.ocean", 
-        "com.android.theme.color.primary.nature", 
-        "com.android.theme.color.primary.gray", 
-        "com.android.theme.color.primary.flame", 
-        "com.android.theme.color.primary.charcoal", 
-        "com.android.theme.color.primary.omniblack",
-        "com.android.theme.color.primary.darkblue",
-    }
-
     public static final String[] DARK_THEMES = {
         "com.android.system.theme.charcoalblack", 
     };
@@ -190,6 +180,7 @@ public class ThemeAccentUtils {
         "com.android.systemui.qsheader.accent", // 3
         "com.android.systemui.qsheader.transparent", // 4
     };
+
 
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
