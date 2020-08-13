@@ -494,7 +494,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private void setTrafficDrawable() {
         final int drawableResId;
         final Drawable drawable;
-        if (!mVisible) return;
+        if (!mEnabled) return;
         if (mHideArrows) {
             drawableResId = 0;
         } else if (!mTrafficActive) {
