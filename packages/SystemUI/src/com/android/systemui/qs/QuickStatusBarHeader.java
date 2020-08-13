@@ -805,12 +805,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         final int sp = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         RelativeLayout.LayoutParams lpQuickQsBrightness = (RelativeLayout.LayoutParams)
                 mQuickQsBrightness.getLayoutParams();
-        lpQuickQsBrightness.setMargins(sp - mPaddingLeft, 0, sp - mPaddingRight, 0);
         lpQuickQsBrightness.addRule(RelativeLayout.BELOW, R.id.header_text_container);
         if (mBrightnessSlider == 4) {
             lpQuickQsBrightness.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            lpQuickQsBrightness.setMargins(sp - mPaddingLeft,
+                    getResources().getDimensionPixelSize(R.dimen.brightness_slider_padding_bottom), sp - mPaddingRight, 0);
         } else {
             lpQuickQsBrightness.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+            lpQuickQsBrightness.setMargins(sp - mPaddingLeft,
+                    0, sp - mPaddingRight, getResources().getDimensionPixelSize(R.dimen.brightness_slider_padding_top));
         }
         mQuickQsBrightness.setLayoutParams(lpQuickQsBrightness);
         return super.onApplyWindowInsets(insets);
