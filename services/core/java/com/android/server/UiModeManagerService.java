@@ -480,8 +480,10 @@ final class UiModeManagerService extends SystemService {
 
     private void applyGradientColor() {
         final Context context = getContext();
+        int defaultcolor = (context.getColor(
+                                com.android.internal.R.color.gradient_device_default));
         int intColor = System.getIntForUser(context.getContentResolver(),
-                System.GRADIENT_COLOR_PROP, 0xFF0D5BD9, UserHandle.USER_CURRENT);
+                System.GRADIENT_COLOR_PROP, defaultcolor, UserHandle.USER_CURRENT);
         String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
         String GradientVal = SystemProperties.get(GRADIENT_COLOR_PROP);
         if (!GradientVal.equals(colorHex)) {

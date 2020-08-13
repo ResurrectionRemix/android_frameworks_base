@@ -274,4 +274,7 @@
     <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
     <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
 
+    <!-- Device keyhandlers -->
+  <java-symbol type="color" name="gradient_device_default" />
+
 </resources>

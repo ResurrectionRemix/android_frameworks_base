@@ -24,6 +24,9 @@
     <!-- QS Accent -->
     <color name="qs_accent">@color/accent_device_default_light</color>
 
+    <!-- Default Gradient -->
+    <color name="gradient_device_default">@color/accent_device_default_light</color>
+
 </resources>
 
 
