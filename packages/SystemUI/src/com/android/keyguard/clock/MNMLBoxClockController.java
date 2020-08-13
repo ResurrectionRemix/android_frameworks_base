@@ -516,8 +516,10 @@ public class MNMLBoxClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-      refreshclocksize();
-      refreshdatesize();
+     if (mClock != null)
+         refreshclocksize();
+     if (mDate != null && mDateDay !=null)
+         refreshdatesize();
     }
 
     @Override

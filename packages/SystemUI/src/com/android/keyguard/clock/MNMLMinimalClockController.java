@@ -456,8 +456,10 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-      refreshclocksize();
-      refreshdatesize();
+     if (mClock != null)
+         refreshclocksize();
+     if (mDate != null)
+         refreshdatesize();
     }
 
     @Override

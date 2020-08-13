@@ -417,7 +417,8 @@ public class DividedLinesClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-      refreshclocksize();
+     if (mClock != null)
+         refreshclocksize();
     }
 
     @Override

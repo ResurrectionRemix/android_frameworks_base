@@ -394,7 +394,9 @@ public class SamsungHighlightClockController implements ClockPlugin {
         previewDate.setTextColor(Color.WHITE);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        try {
+          setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        } catch (Exception e) {}
         previewTime.setLineSpacing(0, 0.8f);
         previewTime.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
         previewTime.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
@@ -442,6 +444,7 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
+     if (mClock != null)
         refreshclocksize();
     }
 
