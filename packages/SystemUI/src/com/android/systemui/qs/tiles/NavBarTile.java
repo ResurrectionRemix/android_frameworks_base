@@ -38,7 +38,7 @@ public class NavBarTile extends QSTileImpl<BooleanState> {
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_navbar);
 
     private static final Intent NAVBAR_SETTINGS =
-            new Intent("org.lineageos.lineageparts.BUTTON_SETTINGS");
+            new Intent("android.settings.RR_BUTTONS");
 
     private final SystemSetting mSetting;
 
