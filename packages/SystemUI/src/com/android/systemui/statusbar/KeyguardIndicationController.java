@@ -534,7 +534,7 @@ public class KeyguardIndicationController implements StateListener,
                 if (DEBUG_CHARGING_SPEED) {
                     powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
                 }
-                mTextView.setTextColor(mCustomColor);
+                updateChargeColor(mCustomColor);
                 if (animate) {
                     animateText(mTextView, powerIndication);
                 } else {
@@ -551,6 +551,14 @@ public class KeyguardIndicationController implements StateListener,
             }
             updateChargingIndication();
         }
+    }
+
+    public void updateChargeColor(int color) {
+       if (color == 0xFFFFFFFF) {
+           mTextView.setTextColor(mInitialTextColorState);
+       } else {
+           mTextView.setTextColor(mCustomColor);
+       }
     }
 
     public void updateChargingIndicationStyle() {
