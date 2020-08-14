@@ -212,4 +212,7 @@
     </string-array>
 
     <bool name="disable_fod_night_light">false</bool>
+
+    <!-- Whether or not we should show vendor mismatch message -->
+    <bool name="config_show_vendor_mismatch_message">false</bool>
 </resources>

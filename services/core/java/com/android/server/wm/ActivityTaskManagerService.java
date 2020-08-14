@@ -6545,7 +6545,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 if (!Build.isBuildConsistent()) {
                     Slog.e(TAG, "Build fingerprint is not consistent, warning user");
                     mUiHandler.post(() -> {
-                        if (mShowDialogs) {
+                        boolean mShowVendorMismatch = Resources.getSystem().getBoolean(
+                                R.bool.config_show_vendor_mismatch_message);
+                        if (mShowDialogs && mShowVendorMismatch) {
                             AlertDialog d = new BaseErrorDialog(mUiContext);
                             d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
                             d.setCancelable(false);

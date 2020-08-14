@@ -277,4 +277,7 @@
     <!-- Device keyhandlers -->
   <java-symbol type="color" name="gradient_device_default" />
 
+    <!-- Whether or not we should show vendor mismatch message -->
+    <java-symbol type="bool" name="config_show_vendor_mismatch_message" />
+
 </resources>
