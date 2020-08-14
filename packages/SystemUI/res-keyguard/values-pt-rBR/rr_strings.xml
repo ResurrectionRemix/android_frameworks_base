@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Time displayed on typographic clock face, which displays the time in words.
+             Example:
+                 It's
+                 Four
+                 Twenty
+                 Nine
+         This string requires two arguments: the first in the hours of the time and
+         the second is the minutes of the time. The hours string is obtained from
+         string-array type_clock_hours below and the minutes string is obtained
+         from string-array type_clock_minutes below.
+    [CHAR LIMIT=8] -->
+    <plurals name="type_clock_header">
+        <item quantity="one"><annotation name="color">São</annotation>\n^1\n^2</item>
+        <item quantity="few"><annotation name="color">São</annotation>\n^1\n^2</item>
+        <item quantity="other"><annotation name="color">São</annotation>\n^1\n^2</item>
+    </plurals>
+    <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
+    <string-array name="type_clock_hours">
+        <item>Doze</item>
+        <item>Uma</item>
+        <item>Duas</item>
+        <item>Três</item>
+        <item>Quatro</item>
+        <item>Cinco</item>
+        <item>Seis</item>
+        <item>Sete</item>
+        <item>Oito</item>
+        <item>Nove</item>
+        <item>Dez</item>
+        <item>Onze</item>
+    </string-array>
+
+    <!-- Minutes displayed in words on the typographic clock face. [CHAR LIMIT=20] -->
+    <string-array name="type_clock_minutes">
+        <item>Horas</item>
+        <item>E Um</item>
+        <item>E Dois</item>
+        <item>E Três</item>
+        <item>E Quatro</item>
+        <item>E Cinco</item>
+        <item>E Seis</item>
+        <item>E Sete</item>
+        <item>E Oito</item>
+        <item>E Nove</item>
+        <item>E Dez</item>
+        <item>E Onze</item>
+        <item>E Doze</item>
+        <item>E Treze</item>
+        <item>E Quatorze</item>
+        <item>E Quinze</item>
+        <item>E Dezesseis</item>
+        <item>E Dezessete</item>
+        <item>E Dezoito</item>
+        <item>E Dezenove</item>
+        <item>E Vinte</item>
+        <item>E Vinte\nE Um</item>
+        <item>E Vinte\nE Dois</item>
+        <item>E Vinte\nE Três</item>
+        <item>E Vinte\nE Quatro</item>
+        <item>E Vinte\nE Cinco</item>
+        <item>E Vinte\nE Seis</item>
+        <item>E Vinte\nE Sete</item>
+        <item>E Vinte\nE Oito</item>
+        <item>E Vinte\nE Nove</item>
+        <item>E Trinta</item>
+        <item>E Trinta\nE Um</item>
+        <item>E Trinta\nE Dois</item>
+        <item>E Trinta\nE Três</item>
+        <item>E Trinta\nE Quatro</item>
+        <item>E Trinta\nE Cinco</item>
+        <item>E Trinta\nE Seis</item>
+        <item>E Trinta\nE Sete</item>
+        <item>E Trinta\nE Oito</item>
+        <item>E Trinta\nE Nove</item>
+        <item>E Quarenta</item>
+        <item>E Quarenta\nE Um</item>
+        <item>E Quarenta\nE Dois</item>
+        <item>E Quarenta\nE Três</item>
+        <item>E Quarenta\nE Quatro</item>
+        <item>E Quarenta\nE Cinco</item>
+        <item>E Quarenta\nE Seis</item>
+        <item>E Quarenta\nE Sete</item>
+        <item>E Quarenta\nE Oito</item>
+        <item>E Quarenta\nE Nove</item>
+        <item>E Cinquenta</item>
+        <item>E Cinquenta\nE Um</item>
+        <item>E Cinquenta\nE Dois</item>
+        <item>E Cinquenta\nE Três</item>
+        <item>E Cinquenta\nE Quatro</item>
+        <item>E Cinquenta\nE Cinco</item>
+        <item>E Cinquenta\nE Seis</item>
+        <item>E Cinquenta\nE Sete</item>
+        <item>E Cinquenta\nE Oito</item>
+        <item>E Cinquenta\nE Nove</item>
+    </string-array>
+
+    <!-- Title for Typographic clock face that will appear in the picker app next to a preview image of
+         the clock face. [CHAR LIMIT=8] -->
+    <string name="clock_title_type" translatable="false">Escrito</string>
+    <string name="clock_title_type_alt" translatable="false">Escrito (centro)</string>
+</resources>
