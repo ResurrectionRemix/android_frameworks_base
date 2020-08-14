@@ -162,4 +162,12 @@
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
 
+    <include layout="@layout/qs_carrier_group"
+        android:id="@+id/carrier_group"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/qs_status_separator"
+        android:layout_gravity="center_horizontal|start"
+        android:focusable="false"/>
+
 </com.android.systemui.qs.QSFooterImpl>
