@@ -21,6 +21,7 @@ import static com.android.systemui.statusbar.notification.stack.NotificationStac
 import android.annotation.Nullable;
 import android.content.Intent;
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -53,6 +54,7 @@ class NotificationSectionsManager implements StackScrollAlgorithm.SectionProvide
     private boolean mGentleHeaderVisible = false;
     private boolean mAlertHeaderVisible = false;
     private boolean mShowHeaders;
+    private boolean mCenterHeaders;
     @Nullable private ExpandableNotificationRow mFirstGentleNotif;
     @Nullable private ExpandableNotificationRow mFirstAlertNotif;
 
@@ -62,13 +64,15 @@ class NotificationSectionsManager implements StackScrollAlgorithm.SectionProvide
             StatusBarStateController statusBarStateController,
             ConfigurationController configurationController,
             boolean useMultipleSections,
-            boolean showHeaders) {
+            boolean showHeaders,
+            boolean centerHeaders) {
         mParent = parent;
         mActivityStarter = activityStarter;
         mStatusBarStateController = statusBarStateController;
         mConfigurationController = configurationController;
         mUseMultipleSections = useMultipleSections;
         mShowHeaders = showHeaders;
+        mCenterHeaders = centerHeaders;
     }
 
     /** Must be called before use. */
@@ -106,6 +110,11 @@ class NotificationSectionsManager implements StackScrollAlgorithm.SectionProvide
         sectionHeader = (SectionHeaderView) layoutInflater.inflate(
                 R.layout.status_bar_notification_section_header, mParent, false);
         sectionHeader.setLabelText(mParent.getContext().getResources().getString(labelId));
+        if (mCenterHeaders) {
+            sectionHeader.setLabelGravity(Gravity.CENTER);
+        } else {
+            sectionHeader.setLabelGravity(Gravity.START);
+        }
 
         if (oldPos != -1) {
             mParent.addView(sectionHeader, oldPos);

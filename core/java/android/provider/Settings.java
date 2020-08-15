@@ -7676,6 +7676,13 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+         * Controls whether to center R style notification headers
+         * by.tikkiX2
+         * @hide
+         */
+        public static final String CENTER_NOTIFICATION_HEADERS = "center_notification_headers";
+
+        /**
          * use same value for buttons as for screen (manual and auto mode)
          *
          * @hide

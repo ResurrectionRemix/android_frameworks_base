@@ -22,6 +22,7 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -88,5 +89,17 @@ public class SectionHeaderView extends StackScrollerDecorView {
 
     public void setLabelText(String label) {
         mLabelView.setText(label);
+    }
+
+    public void setLabelGravity(int gravity) {
+        mLabelView.setGravity(gravity);
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mLabelView.getLayoutParams();
+        if (gravity == Gravity.CENTER){
+          lp.setMarginStart(0);
+        } else if (gravity == Gravity.START){
+          lp.setMarginStart(getContext().getResources().getDimensionPixelSize(
+                  R.dimen.notification_section_header_padding_left));
+        }
+        mLabelView.setLayoutParams(lp);
     }
 }
