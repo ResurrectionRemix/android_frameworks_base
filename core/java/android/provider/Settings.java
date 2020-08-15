@@ -7744,6 +7744,12 @@ public final class Settings {
         public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
 
         /**
+         * Clipboard access info
+         * @hide
+         */
+        public static final String CLIPBOARD_TOAST_INFO = "clipboard_toast_info";
+
+        /**
          * Whether VoWiFi icon should override VoLTE icon
          * @hide
          */

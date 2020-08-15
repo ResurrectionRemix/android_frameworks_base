@@ -281,4 +281,8 @@
     <!-- Device keyhandlers -->
   <java-symbol type="color" name="gradient_device_default" />
 
+    <!-- Clipboard access toast -->
+    <java-symbol type="string" name="app_clipboard_access_denied" />
+    <java-symbol type="string" name="app_clipboard_access_granted" />
+
 </resources>
