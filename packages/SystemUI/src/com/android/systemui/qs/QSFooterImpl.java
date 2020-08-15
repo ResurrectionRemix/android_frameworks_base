@@ -73,6 +73,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private static final String TAG = "QSFooterImpl";
     public static final String QS_SHOW_DRAG_HANDLE = "qs_show_drag_handle";
     public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON = "qs_show_auto_brightness_button";
+    public static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
 
     private final ActivityStarter mActivityStarter;
     private final UserInfoController mUserInfoController;
@@ -89,6 +90,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private boolean mExpanded;
 
     private boolean mListening;
+
+    private int mQsSettings;
 
     protected MultiUserSwitch mMultiUserSwitch;
     private ImageView mMultiUserAvatar;
@@ -118,6 +121,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             setBuildText();
+            updateResources();
         }
     };
 
@@ -218,6 +222,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         updateResources();
+        updateEverything();
     }
 
     @Override
@@ -236,15 +241,25 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     @Nullable
     private TouchAnimator createFooterAnimator() {
-        return new TouchAnimator.Builder()
-                .addFloat(mActionsContainer, "alpha", 1, 1)
-                .addFloat(mMultiUserAvatar, "alpha", 0, 1)
-                .addFloat(mEditContainer, "alpha", 0, 1)
-                .addFloat(mCarrierGroup, "alpha", 1, 0, 0)
-                .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                .addFloat(mPageIndicator, "alpha", 0, 1)
-                .setStartDelay(0.15f)
-                .build();
+        if (isQsSettingsEnabled()) {
+            return new TouchAnimator.Builder()
+                    .addFloat(mActionsContainer, "alpha", 1, 1) // contains mRunningServicesButton
+                    .addFloat(mEditContainer, "alpha", 0, 1)
+                    .addFloat(mCarrierGroup, "alpha", 1, 0, 0)
+                    .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                    .addFloat(mPageIndicator, "alpha", 0, 1)
+                    .setStartDelay(0.15f)
+                    .build();
+        } else {
+            return new TouchAnimator.Builder()
+                    .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
+                    .addFloat(mEditContainer, "alpha", 0, 1)
+                    .addFloat(mCarrierGroup, "alpha", 1, 0, 0)
+                    .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                    .addFloat(mPageIndicator, "alpha", 0, 1)
+                    .setStartDelay(0.15f)
+                    .build();
+        }
     }
 
     @Override
@@ -281,13 +296,16 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
 
+
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_SHOW_DRAG_HANDLE);
         tunerService.addTunable(this, QS_SHOW_AUTO_BRIGHTNESS_BUTTON);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.RR_FOOTER_TEXT_SHOW), false,
                 mSettingsObserver, UserHandle.USER_ALL);
-
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SETTING_BUTTON_TOGGLE), false,
+                mSettingsObserver, UserHandle.USER_ALL);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.RR_FOOTER_TEXT_STRING), false,
                 mSettingsObserver, UserHandle.USER_ALL);
@@ -371,8 +389,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         mAutoBrightnessContainer.setVisibility(mShowAutoBrightnessButton ? View.GONE : View.VISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
-        mSettingsContainer.setVisibility(!isSettingsEnabled() || mQsDisabled ? View.GONE : View.VISIBLE);
-        mSettingsButton.setVisibility(isSettingsEnabled() ? (isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE) : View.GONE);
+        mSettingsContainer.setVisibility(isSettingsDisabled() || mQsDisabled ? View.GONE : View.VISIBLE);
+        mSettingsButton.setVisibility(isSettingsDisabled() ? View.GONE : (isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE));
         mRunningServicesButton.setVisibility(isServicesEnabled() ? (isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE) : View.GONE);
         mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
@@ -404,20 +422,19 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
     }
 
-
-    public boolean isSettingButtonEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
-    }
-
     public boolean isRunningServicesEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
     }
 
-    public boolean isSettingsEnabled() {
+    public boolean isSettingsDisabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 1;
+            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 0;
+    }
+
+    public boolean isQsSettingsEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 2;
     }
 
     public boolean isServicesEnabled() {
