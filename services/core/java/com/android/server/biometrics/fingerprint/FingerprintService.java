@@ -711,6 +711,10 @@ public class FingerprintService extends BiometricServiceBase {
                 Slog.w(TAG, "authenticate(): no fingerprint HAL!");
                 return ERROR_ESRCH;
             }
+            int ret = daemon.authenticate(operationId, groupId);
+            if (ret < 0) {
+                return ret;
+            }
             if (mHasFod) {
                 IFingerprintInscreen fodDaemon = getFingerprintInScreenDaemon();
                 if (fodDaemon != null) {
@@ -726,7 +730,7 @@ public class FingerprintService extends BiometricServiceBase {
                     Slog.e(TAG, "showInDisplayFingerprintView failed", e);
                 }
             }
-            return daemon.authenticate(operationId, groupId);
+            return ret;
         }
 
         @Override
@@ -774,6 +778,10 @@ public class FingerprintService extends BiometricServiceBase {
                 Slog.w(TAG, "enroll(): no fingerprint HAL!");
                 return ERROR_ESRCH;
             }
+            int ret = daemon.enroll(cryptoToken, groupId, timeout);
+            if (ret < 0) {
+                return ret;
+            }
             if (mHasFod) {
                 IFingerprintInscreen fodDaemon = getFingerprintInScreenDaemon();
                 if (fodDaemon != null) {
@@ -789,7 +797,7 @@ public class FingerprintService extends BiometricServiceBase {
                     Slog.e(TAG, "showInDisplayFingerprintView failed", e);
                 }
             }
-            return daemon.enroll(cryptoToken, groupId, timeout);
+            return ret;
         }
 
         @Override
