@@ -250,6 +250,17 @@ public class GamingModeController {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS_MODE, SCREEN_BRIGHTNESS_MODE_MANUAL);
         }
+        boolean mGamingRefreshRate = Settings.System.getInt(mContext.getContentResolver(),
+                               Settings.System.GAMING_MODE_REFRESH_RATE, 0) == 1;
+
+        if (mGamingRefreshRate) {
+            Settings.Global.putInt(mContext.getContentResolver(),
+                Settings.Global.REFRESH_RATE_SETTING, 1);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, 60);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 60);
+        }
         
         // HW Buttons
         boolean disableHwKeys = Settings.System.getInt(mContext.getContentResolver(),
@@ -290,12 +301,25 @@ public class GamingModeController {
     private void disableGamingFeatures() {
         if (!ActivityManager.isSystemReady())
              return;
+        int defVarRateSetting = mContext.getResources().getInteger(com.android.internal.R.integer.config_defaultVariableRefreshRateSetting);
         ContentResolver resolver = mContext.getContentResolver();
         boolean lockBrightness = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE, 1) == 1;
         if (lockBrightness) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS_MODE, mAdaptiveBrightness);
+        }
+        boolean mGamingRefreshRate = Settings.System.getInt(mContext.getContentResolver(),
+                               Settings.System.GAMING_MODE_REFRESH_RATE, 0) == 1;
+        if (mGamingRefreshRate) {
+            int mVarRateSetting = Settings.Global.getInt(mContext.getContentResolver(),
+             Settings.Global.REFRESH_RATE_SETTING, defVarRateSetting);
+            Settings.Global.putInt(mContext.getContentResolver(),
+                Settings.Global.REFRESH_RATE_SETTING, 0);
+             Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.MIN_REFRESH_RATE, mVarRateSetting);
+             Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.PEAK_REFRESH_RATE, mVarRateSetting);
         }
         boolean disableHwKeys = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.GAMING_MODE_HW_KEYS_TOGGLE, 0) == 1;
@@ -401,7 +425,7 @@ public class GamingModeController {
                 boolean enable = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.GAMING_MODE_ACTIVE, 0) == 1;
                 activateGamingMode(enable);
-            }
+            }         
         }
     }
 }

@@ -5849,6 +5849,11 @@ public final class Settings {
         private static final Validator GAMING_MODE_DYNAMIC_STATE_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /**
+         * Weather to allow refresh rate change on gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_REFRESH_RATE = "gaming_mode_refresh_rate";
  
         public static final String SHOW_BATTERY_PERCENT_DUMMY = "dummy_show_battery_percent";
 
