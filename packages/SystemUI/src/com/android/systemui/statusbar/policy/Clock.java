@@ -532,7 +532,24 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
      * @param shouldUseWallpaperTextColor whether we should use wallpaperTextColor for text color
      */
     public void useWallpaperTextColor(boolean shouldUseWallpaperTextColor) {
-         setTextColor(mClockColor);
+      if (shouldUseWallpaperTextColor == mUseWallpaperTextColor) {
+            return;
+        }
+        mUseWallpaperTextColor = shouldUseWallpaperTextColor;
+
+        if (mUseWallpaperTextColor) {
+   	       if (mQsClockColor == 0xFFFFFFFF) {
+               setTextColor(Utils.getColorAttr(mContext, R.attr.wallpaperTextColor));
+            } else {
+               setTextColor(mQsClockColor);
+            }
+        } else {
+   	       if (mQsClockColor == 0xFFFFFFFF) {
+               setTextColor(mNonAdaptedColor);
+            } else {
+               setTextColor(mQsClockColor);
+            }
+        }
     }
 
     private void updateShowSeconds() {
