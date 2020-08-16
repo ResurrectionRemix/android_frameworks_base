@@ -842,13 +842,15 @@ public class Notifier {
         mSuspendBlocker.release();
     }
 
-    private void showWiredChargingStarted(@UserIdInt int userId,int batteryLevel, boolean plugged) {
+    private void showWiredChargingStarted(@UserIdInt int userId,int batteryLevel, boolean plugged, boolean play) {
         final boolean animationEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.CHARGING_ANIMATION, 0) == 1;
+        if (play)
         playChargingStartedFeedback(userId);
         if (mStatusBarManagerInternal != null && animationEnabled && plugged) {
             mStatusBarManagerInternal.showChargingAnimation(batteryLevel);
         }
+        if (play)
         mSuspendBlocker.release();
     }
 
@@ -899,9 +901,9 @@ public class Notifier {
                     lockProfile(msg.arg1);
                     break;
                 case MSG_WIRED_CHARGING_STARTED:
-                    showWiredChargingStarted(msg.arg1,msg.arg2, true);
+                    showWiredChargingStarted(msg.arg1,msg.arg2, true, false);
                 case MSG_WIRED_CHARGING_DISCONNECTED:
-                    showWiredChargingStarted(msg.arg1,msg.arg2, false);
+                    showWiredChargingStarted(msg.arg1,msg.arg2, false, true);
                     break;
             }
         }
