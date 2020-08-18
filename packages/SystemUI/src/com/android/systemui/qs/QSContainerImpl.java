@@ -254,7 +254,7 @@ public class QSContainerImpl extends FrameLayout implements
 
         }
         mQsBgNewEnabled = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_NEW_BG_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
         mQsBackGroundColor = ColorUtils.getValidQsColor(Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_BG_COLOR, ColorUtils.genRandomQsColor(),
                 UserHandle.USER_CURRENT));
