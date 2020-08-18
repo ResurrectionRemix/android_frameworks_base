@@ -94,7 +94,7 @@
     <integer name="config_screenBrightnessPulse">-1</integer>
 
     <!-- SBC Dual Channel (SBC HD Audio) -->
-    <bool name="config_enableSBCDualChannelAudio">true</bool>
+    <bool name="config_enableSBCDualChannelAudio">false</bool>
 
   <!-- Any package that has one of the package names defined below will be prevented
          from using specific sensors in order to stop battery drain -->
