@@ -6159,12 +6159,6 @@ public final class Settings {
         public static final String FOD_NIGHT_LIGHT = "fod_night_light";
 
         /**
-         * FOD constant bright icon
-         * @hide
-         */
-        public static final String FOD_BRIGHT_ICON = "fod_bright_icon";
-
-        /**
          * FOD animation outside lockscreen
          * @hide
          */
