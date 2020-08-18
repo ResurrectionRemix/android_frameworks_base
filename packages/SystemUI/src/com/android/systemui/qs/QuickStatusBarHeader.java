@@ -1055,7 +1055,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 break;
             case STATUS_BAR_CUSTOM_HEADER_HEIGHT:
                 mHeaderImageHeight =
-                        TunerService.parseInteger(newValue, 0);
+                        TunerService.parseInteger(newValue, 25);
                 updateHeaderImage(mHeaderImageHeight);
                 updateResources();
                 break;
