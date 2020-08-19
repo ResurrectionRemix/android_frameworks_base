@@ -217,6 +217,8 @@
   <!-- Gradients Shit -->
   <java-symbol type="color" name="gradient_start" />
   <java-symbol type="color" name="gradient_end" />
+  <java-symbol type="color" name="accent_device_default_light" />
+  <java-symbol type="color" name="accent_material_light" />
 
   <java-symbol type="bool" name="disable_fod_night_light"/>
 
