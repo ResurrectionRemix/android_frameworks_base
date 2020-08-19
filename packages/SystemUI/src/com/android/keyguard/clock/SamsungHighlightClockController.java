@@ -443,8 +443,11 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-     if (mClock != null)
-        refreshclocksize();
+        if (mView != null && mClock != null) {
+            mView.onTimeChanged();
+            mClock.refresh();
+            refreshclocksize();
+        }
     }
 
     @Override

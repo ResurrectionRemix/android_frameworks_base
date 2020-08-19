@@ -393,9 +393,13 @@ public class SamsungClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-     if (mClock != null)
-         refreshclocksize();
+        if (mView != null && mClock != null) {
+            mView.onTimeChanged();
+            mClock.refresh();
+            refreshclocksize();
+        }
     }
+
 
     @Override
     public void setDarkAmount(float darkAmount) {

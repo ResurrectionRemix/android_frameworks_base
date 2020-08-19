@@ -183,8 +183,15 @@ public class SfunyClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-      if (mHourClock != null)
+      if (mHourClock != null) {
+          mHourClock.refresh();
           refreshclocksize();
+      }
+      if (mBigClockView != null) {
+          mBigClockView.onTimeChanged();
+      }
+      if (mMinuteClock != null)
+          mMinuteClock.refresh();
     }
 
    private int getLockClockSize() {
