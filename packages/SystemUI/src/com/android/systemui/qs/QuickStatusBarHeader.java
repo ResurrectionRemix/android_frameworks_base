@@ -177,7 +177,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private PrivacyItemController mPrivacyItemController;
 
     private int mDataUsageLocation;
-    private View mQsbDataUsageLayout;
     private ImageView mQsbDataUsageImage;
     private DataUsageView mQsbDataUsageView;
 
@@ -245,6 +244,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(LineageSettings.Secure
                     .getUriFor(LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_DATAUSAGE_LOCATION), false,
+                    this, UserHandle.USER_ALL);
+
             }
 
         @Override
@@ -373,7 +376,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDataUsageLayout = findViewById(R.id.daily_data_usage_layout);
         mDataUsageImage = findViewById(R.id.daily_data_usage_icon);
         mDataUsageView = findViewById(R.id.data_sim_usage);
-        mQsbDataUsageLayout = findViewById(R.id.qsb_daily_data_usage_layout);
         mQsbDataUsageImage = findViewById(R.id.qsb_daily_data_usage_icon);
         mQsbDataUsageView = findViewById(R.id.qsb_data_sim_usage);
 
@@ -401,7 +403,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST,
                 STATUS_BAR_BATTERY_STYLE,SHOW_QS_CLOCK, QS_SHOW_BATTERY_PERCENT,
                 QS_SHOW_BATTERY_ESTIMATE, QS_BATTERY_STYLE, STATUS_BAR_CUSTOM_HEADER_HEIGHT,
-                QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, QS_DATAUSAGE_LOCATION, 
+                QS_SHOW_AUTO_BRIGHTNESS, QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS, 
                 QS_BATTERY_LOCATION, QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
@@ -669,6 +671,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBrightnessSlider = LineageSettings.Secure.getIntForUser(getContext().getContentResolver(),
                 LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, 1,
                 UserHandle.USER_CURRENT);
+        mDataUsageLocation = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_DATAUSAGE_LOCATION, 0,
+                UserHandle.USER_CURRENT);
         mIsQuickQsBrightnessEnabled = mBrightnessSlider > 2;
 
         mSystemInfoMode = getQsSystemInfoMode();
@@ -715,11 +720,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private void qsHeaderDataUsage(boolean isVisible) {
         if (isVisible) {
-            mQsbDataUsageLayout.setVisibility(View.VISIBLE);
             mQsbDataUsageImage.setVisibility(View.VISIBLE);
             mQsbDataUsageView.setVisibility(View.VISIBLE);
         } else {
-            mQsbDataUsageLayout.setVisibility(View.GONE);
             mQsbDataUsageImage.setVisibility(View.GONE);
             mQsbDataUsageView.setVisibility(View.GONE);
         }
@@ -1126,11 +1129,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS:
                 mBrightnessButton =
                         TunerService.parseIntegerSwitch(newValue, true);
-                updateResources();
-                break;
-            case QS_DATAUSAGE_LOCATION:
-                mDataUsageLocation =
-                        TunerService.parseInteger(newValue, 0);
                 updateResources();
                 break;
             default:
