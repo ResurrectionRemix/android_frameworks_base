@@ -231,6 +231,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mHandler = new Handler();
         setLongSwipeOptions();
 
+        onSettingsChanged();
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
