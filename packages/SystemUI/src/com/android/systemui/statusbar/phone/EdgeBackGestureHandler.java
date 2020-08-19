@@ -94,7 +94,11 @@ public class EdgeBackGestureHandler implements DisplayListener {
         @Override
         public void onImeVisibilityChanged(boolean imeVisible, int imeHeight) {
             // No need to thread jump, assignments are atomic
-            mImeHeight = imeVisible ? imeHeight : 0;
+            if (mBlockImeSpace) {
+                mImeHeight = imeVisible ? imeHeight : 0;
+            } else {
+                mImeHeight = 0;
+            }
             // TODO: Probably cancel any existing gesture
         }
 
@@ -184,6 +188,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private int mRightInset;
 
     private int mEdgeHeight;
+    private boolean mBlockImeSpace = true;
 
     private IntentFilter mIntentFilter;
 
@@ -213,11 +218,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         mLongPressTimeout = Math.min(MAX_LONG_PRESS_TIMEOUT,
                 ViewConfiguration.getLongPressTimeout());
 
-        // always consider the normal navbar height even if nav is hidden,
-        // so when swiping at the very bottom of the screen to scroll recents apps
-        // the back swipe action is not triggered too at the same time (see isWithinTouchRegion).
-        mNavBarHeight = /*Utils.shouldShowGestureNav(context) ?
-                */res.getDimensionPixelSize(R.dimen.navigation_bar_frame_height)/* : 0*/;
+        mNavBarHeight = res.getDimensionPixelSize(R.dimen.navigation_bar_frame_height);
         mMinArrowPosition = res.getDimensionPixelSize(R.dimen.navigation_edge_arrow_min_y);
         mFingerOffset = res.getDimensionPixelSize(R.dimen.navigation_edge_finger_offset);
         updateCurrentUserResources(res);
@@ -248,7 +249,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
         // 0 means full height
         // 1 measns half of the screen
         // 2 means lower third of the screen
-        // 3 means lower sicth of the screen
+        // 3 means lower sixth of the screen
         if (edgeHeightSetting == 0) {
             mEdgeHeight = mDisplaySize.y;
         } else if (edgeHeightSetting == 1) {
@@ -302,6 +303,12 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
     public void onSettingsChanged() {
         updateEdgeHeightValue();
+        updateBlockImeSpace();
+    }
+
+    private void updateBlockImeSpace() {
+        mBlockImeSpace = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.BACK_GESTURE_BLOCK_IME, 1, UserHandle.USER_CURRENT) == 1;
     }
 
     private void disposeInputChannel() {
