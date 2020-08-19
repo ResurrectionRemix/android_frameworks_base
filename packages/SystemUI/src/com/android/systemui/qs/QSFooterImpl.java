@@ -85,7 +85,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
-    private QSCarrierGroup mCarrierGroup;
 
     private boolean mExpanded;
 
@@ -168,7 +167,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
-        mCarrierGroup = findViewById(R.id.carrier_group);
 
         mAutoBrightnessContainer = findViewById(R.id.brightness_icon_container);
         mAutoBrightnessIcon = findViewById(R.id.brightness_icon);
@@ -245,7 +243,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             return new TouchAnimator.Builder()
                     .addFloat(mActionsContainer, "alpha", 1, 1) // contains mRunningServicesButton
                     .addFloat(mEditContainer, "alpha", 0, 1)
-                    .addFloat(mCarrierGroup, "alpha", 1, 0, 0)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .setStartDelay(0.15f)
@@ -254,7 +251,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             return new TouchAnimator.Builder()
                     .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
                     .addFloat(mEditContainer, "alpha", 0, 1)
-                    .addFloat(mCarrierGroup, "alpha", 1, 0, 0)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .setStartDelay(0.15f)
@@ -410,7 +406,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         } else {
             mUserInfoController.removeCallback(this);
         }
-        mCarrierGroup.setListening(mListening);
     }
 
     @Override
