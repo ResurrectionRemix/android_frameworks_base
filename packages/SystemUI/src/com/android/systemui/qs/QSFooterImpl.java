@@ -387,12 +387,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
         mSettingsContainer.setVisibility(isSettingsDisabled() || mQsDisabled ? View.GONE : View.VISIBLE);
         mSettingsButton.setVisibility(isSettingsDisabled() ? View.GONE : (isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE));
-        mRunningServicesButton.setVisibility(isServicesEnabled() ? (isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE) : View.GONE);
+        mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? (isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE) : View.GONE);
         mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
-        mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? !isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE : View.GONE);
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
     }
 
@@ -430,11 +429,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     public boolean isQsSettingsEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.SETTING_BUTTON_TOGGLE, 1) == 2;
-    }
-
-    public boolean isServicesEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_FOOTER_SHOW_SERVICES, 0) == 1;
     }
 
     public boolean isEditEnabled() {
