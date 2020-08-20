@@ -378,7 +378,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDataUsageView = findViewById(R.id.data_sim_usage);
         mQsbDataUsageImage = findViewById(R.id.qsb_daily_data_usage_icon);
         mQsbDataUsageView = findViewById(R.id.qsb_data_sim_usage);
-
+        if (mDataUsageView != null)
+            mDataUsageView.setOnClickListener(this);
+        if (mQsbDataUsageView != null)
+            mQsbDataUsageView.setOnClickListener(this);
         // Set the correct tint for the data uasgae icons so they contrast
         mDataUsageImage.setImageTintList(ColorStateList.valueOf(fillColor));
 
@@ -969,6 +972,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mBatteryIcon) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                 Intent.ACTION_POWER_USAGE_SUMMARY), 0);
+        } else if (v == mDataUsageView) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                    Settings.Panel.ACTION_MOBILE_DATA), 0);
+        } else if (v == mQsbDataUsageView) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                    Settings.Panel.ACTION_MOBILE_DATA), 0);
         } 
     }
 
