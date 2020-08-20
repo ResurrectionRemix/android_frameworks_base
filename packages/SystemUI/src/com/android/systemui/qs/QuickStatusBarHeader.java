@@ -708,23 +708,33 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private void qsDataUsage(boolean isVisible) {
         if (isVisible) {
-            mDataUsageLayout.setVisibility(View.VISIBLE);
-            mDataUsageImage.setVisibility(View.VISIBLE);
-            mDataUsageView.setVisibility(View.VISIBLE);
+            if (mDataUsageLayout != null)
+                mDataUsageLayout.setVisibility(View.VISIBLE);
+            if (mDataUsageImage != null)
+                mDataUsageImage.setVisibility(View.VISIBLE);
+            if (mDataUsageView != null)
+                mDataUsageView.setVisibility(View.VISIBLE);
         } else {
-            mDataUsageLayout.setVisibility(View.GONE);
-            mDataUsageImage.setVisibility(View.GONE);
-            mDataUsageView.setVisibility(View.GONE);
+            if (mDataUsageLayout != null)
+                mDataUsageLayout.setVisibility(View.GONE);
+            if (mDataUsageImage != null)
+                mDataUsageImage.setVisibility(View.GONE);
+            if (mDataUsageView != null)
+                mDataUsageView.setVisibility(View.GONE);
         }
     }
 
     private void qsHeaderDataUsage(boolean isVisible) {
         if (isVisible) {
-            mQsbDataUsageImage.setVisibility(View.VISIBLE);
-            mQsbDataUsageView.setVisibility(View.VISIBLE);
+            if (mQsbDataUsageImage != null)
+                mQsbDataUsageImage.setVisibility(View.VISIBLE);
+            if (mQsbDataUsageView != null)
+                mQsbDataUsageView.setVisibility(View.VISIBLE);
         } else {
-            mQsbDataUsageImage.setVisibility(View.GONE);
-            mQsbDataUsageView.setVisibility(View.GONE);
+            if (mQsbDataUsageImage != null)
+                mQsbDataUsageImage.setVisibility(View.GONE);
+            if (mQsbDataUsageView != null)
+                mQsbDataUsageView.setVisibility(View.GONE);
         }
     }
 
