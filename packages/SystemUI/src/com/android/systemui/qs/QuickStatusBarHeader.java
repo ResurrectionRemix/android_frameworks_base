@@ -382,6 +382,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mDataUsageView.setOnClickListener(this);
         if (mQsbDataUsageView != null)
             mQsbDataUsageView.setOnClickListener(this);
+        if (mQsbDataUsageImage != null)
+            mQsbDataUsageImage.setOnClickListener(this);
+        if (mDataUsageImage != null)
+            mDataUsageImage.setOnClickListener(this);
         // Set the correct tint for the data uasgae icons so they contrast
         mDataUsageImage.setImageTintList(ColorStateList.valueOf(fillColor));
 
@@ -977,13 +981,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mBatteryIcon) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                 Intent.ACTION_POWER_USAGE_SUMMARY), 0);
-        } else if (v == mDataUsageView) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+        } else if (v == mDataUsageView || v == mQsbDataUsageView
+                  || v == mDataUsageImage || v == mQsbDataUsageImage) {
+            openDataPanel();
+        }
+   }
+    
+    public void openDataPanel() {
+      mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Settings.Panel.ACTION_MOBILE_DATA), 0);
-        } else if (v == mQsbDataUsageView) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
-                    Settings.Panel.ACTION_MOBILE_DATA), 0);
-        } 
     }
 
     @Override
