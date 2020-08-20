@@ -3,7 +3,6 @@ package android.media.audiofx;
 import android.util.Log;
 import java.util.UUID;
 
-/** @hide */
 public class MiSound extends AudioEffect {
 
     public static final int MISOUND_HEADSET_EM001 = 15;
