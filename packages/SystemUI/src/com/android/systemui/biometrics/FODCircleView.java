@@ -56,14 +56,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import androidx.palette.graphics.Palette;
 
+import com.android.systemui.statusbar.policy.ConfigurationController;
+import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.policy.ConfigurationController;
-import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreen;
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreenCallback;
@@ -93,8 +93,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     private int mDreamingOffsetX;
     private int mDreamingOffsetY;
 
-    private int mCurrentBrightness;
-
     private int mColor;
     private int mColorBackground;
 
@@ -104,11 +102,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     private boolean mIsKeyguard;
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
-
-    private boolean mDozeEnabled;
-    private boolean mFodGestureEnable;
-    private boolean mPressPending;
-    private boolean mScreenTurnedOn;
 
     private PowerManager mPowerManager;
     private PowerManager.WakeLock mWakeLock;
