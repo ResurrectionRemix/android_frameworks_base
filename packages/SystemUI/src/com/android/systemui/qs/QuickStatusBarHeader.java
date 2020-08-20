@@ -687,11 +687,16 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private void updateDataUsageView() {
-        if (mDataUsageView.isDataUsageEnabled() != 0) {
-            updateDataUsageVisibility(true);
-        } else {
+        boolean isWifi = com.android.internal.util.rr.Utils.isWifiOnly(mContext);
+        if (!isWifi) {
+            if (mDataUsageView.isDataUsageEnabled() != 0) {
+                updateDataUsageVisibility(true);
+            } else {
+                updateDataUsageVisibility(false);
+            }
+         } else {
             updateDataUsageVisibility(false);
-        }
+         }
     }
 
     private void updateDataUsageVisibility(boolean isVisible) {
