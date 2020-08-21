@@ -22,11 +22,18 @@
     android:clipChildren="false" >
 
     <!-- Main QS background -->
-    <View
+    <FrameLayout
         android:id="@+id/quick_settings_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:elevation="4dp" />
+        android:elevation="4dp" >
+
+        <ImageView android:id="@+id/qs_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <!-- Gradient view behind QS -->
     <View
@@ -42,7 +49,7 @@
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
         android:layout_height="@*android:dimen/quick_qs_offset_height"
-        android:background="@color/quick_settings_status_bar_background_color" >
+        android:background="@color/quick_settings_status_bar_background_color">
 
         <ImageView android:id="@+id/qs_header_image_view"
             android:layout_width="match_parent"

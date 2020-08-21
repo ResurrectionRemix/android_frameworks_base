@@ -7961,7 +7961,20 @@ public final class Settings {
          */
         public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
 
-         /**
+       /**
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String QS_PANEL_TYPE_BACKGROUND = "qs_panel_type_background";
+
+        private static final Validator QS_PANEL_TYPE_BACKGROUND_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        public static final String QS_PANEL_CUSTOM_IMAGE = "qs_panel_custom_image";
+
+        public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -8733,6 +8746,7 @@ public final class Settings {
             VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_ENABLED, OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST, OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
+            VALIDATORS.put(QS_PANEL_TYPE_BACKGROUND, QS_PANEL_TYPE_BACKGROUND_VALIDATOR);
         }
 
         /**
