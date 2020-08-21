@@ -297,7 +297,7 @@ public class LockIcon extends KeyguardAffordanceView implements OnUserInfoChange
             final AnimatedVectorDrawable animation = icon instanceof AnimatedVectorDrawable
                     ? (AnimatedVectorDrawable) icon
                     : null;
-            setImageDrawable(icon, false, false);
+            setImageDrawable(icon, false);
             if (mIsFaceUnlockState) {
                 announceForAccessibility(getContext().getString(
                         R.string.accessibility_scanning_face));
