@@ -60,16 +60,6 @@ public class ShortcutPicker extends PreferenceFragment implements Tunable {
         mHiddenPreference.setIcon(R.drawable.ic_remove_circle);
         screen.addPreference(mHiddenPreference);
 
-        mDefaultPreference = new SelectablePreference(context);
-        mSelectablePreferences.add(mDefaultPreference);
-        mDefaultPreference.setTitle(R.string.lockscreen_default);
-        screen.addPreference(mDefaultPreference);
-        if (LOCKSCREEN_LEFT_BUTTON.equals(mKey)) {
-            mDefaultPreference.setIcon(context.getDrawable(R.drawable.ic_mic_26dp));
-        } else {
-            mDefaultPreference.setIcon(context.getDrawable(R.drawable.ic_camera_alt_24dp));
-        }
-
         LauncherApps apps = getContext().getSystemService(LauncherApps.class);
         List<LauncherActivityInfo> activities = apps.getActivityList(null,
                 Process.myUserHandle());
