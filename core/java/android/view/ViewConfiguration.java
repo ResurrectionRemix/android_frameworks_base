@@ -90,7 +90,7 @@ public class ViewConfiguration {
      * Defines the duration in milliseconds a user needs to hold down the
      * appropriate buttons (power + volume down) to trigger the screenshot chord.
      */
-    private static final int SCREENSHOT_CHORD_KEY_TIMEOUT = 500;
+    private static final int SCREENSHOT_CHORD_KEY_TIMEOUT = 100;
 
     /**
      * Defines the duration in milliseconds a user needs to hold down the
