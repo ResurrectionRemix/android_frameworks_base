@@ -177,6 +177,7 @@ public class QSContainerImpl extends FrameLayout implements
         mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
 
         updateResources();
+        updateStatusbarVisibility();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
     }
 
@@ -270,6 +271,7 @@ public class QSContainerImpl extends FrameLayout implements
         updateHeaderImageHeight();
         setQsBackground();
         updateResources();
+        updateStatusbarVisibility();
    }
 
    private void setQsBackground() {
@@ -464,13 +466,12 @@ public class QSContainerImpl extends FrameLayout implements
     }
 
     private void setBackgroundGradientVisibility(Configuration newConfig) {
-        boolean shouldHideStatusbar = (mLandscape || mForceHideQsStatusBar || mStatusBarBgTransparent) && !mHeaderImageEnabled;
         if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
         } else {
             mBackgroundGradient.setVisibility((mQsDisabled || mHideGradient) ? View.INVISIBLE : View.VISIBLE);
         }
-        mStatusBarBackground.setVisibility(shouldHideStatusbar ? View.INVISIBLE : View.VISIBLE);
+        updateStatusbarVisibility();
     }
 
     public void setExpansion(float expansion) {
@@ -516,6 +517,7 @@ public class QSContainerImpl extends FrameLayout implements
                 mBackgroundImage.setVisibility(View.GONE);
                 mHeaderImageEnabled = false;
                 updateResources();
+                updateStatusbarVisibility();
             }
         });
     }
@@ -536,11 +538,13 @@ public class QSContainerImpl extends FrameLayout implements
             setNotificationPanelHeaderBackground(next, force);
             mHeaderImageEnabled = true;
             updateResources();
+            updateStatusbarVisibility();
         } else {
             mCurrentBackground = null;
             mBackgroundImage.setVisibility(View.GONE);
             mHeaderImageEnabled = false;
             updateResources();
+            updateStatusbarVisibility();
         }
     }
 
@@ -573,6 +577,12 @@ public class QSContainerImpl extends FrameLayout implements
                 mCurrentBackground.setColorFilter(null);
             }
         }
+    }
+
+    private void updateStatusbarVisibility() {
+        boolean shouldHideStatusbar = (mLandscape || mForceHideQsStatusBar) && !mHeaderImageEnabled;
+        mStatusBarBackground.setVisibility(shouldHideStatusbar ? View.INVISIBLE : View.VISIBLE);
+
     }
 
     public void  updateGradientbackground() {
