@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_1" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_2" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_3" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_4" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_5" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_6" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_7" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_8" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_9" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_10" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_11" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_12" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_13" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_14" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_15" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_16" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_17" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_18" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_19" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_20" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_21" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_22" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_23" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_24" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_25" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_26" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_27" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_28" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_29" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_30" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_31" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_32" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_33" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_34" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_35" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_36" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_37" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_38" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_39" />
+    <item android:duration="6" android:drawable="@drawable/gxzw_neon_recognizing_anim_40" />
+</animation-list>
