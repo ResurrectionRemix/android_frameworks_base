@@ -268,8 +268,6 @@ import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 import dalvik.system.PathClassLoader;
 import lineageos.providers.LineageSettings;
 
-import org.lineageos.internal.buttons.LineageButtons;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -727,9 +725,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mVolumeMusicControl;
     private boolean mVolumeWakeActive;
 
-
-    private LineageButtons mLineageButtons;
-
     private boolean mAodShowing;
     private final List<DeviceKeyHandler> mDeviceKeyHandlers = new ArrayList<>();
     private AlternativeDeviceKeyHandler mAlternativeDeviceKeyHandler;
@@ -912,10 +907,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     toggleTorch();
                     break;
                 case MSG_DISPATCH_VOLKEY_SKIP_TRACK: {
-                    KeyEvent event1 = (KeyEvent) msg.obj;
-                    dispatchMediaKeyWithWakeLockToAudioService(event1);
-                    dispatchMediaKeyWithWakeLockToAudioService(
-                            KeyEvent.changeAction(event1, KeyEvent.ACTION_UP));
+                    sendSkipTrackEventToStatusBar(msg.arg1);
                     mVolumeMusicControlActive = true;
                     break;
                 }
@@ -5024,9 +5016,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // {@link interceptKeyBeforeDispatching()}.
                     result |= ACTION_PASS_TO_USER;
                 } else if ((result & ACTION_PASS_TO_USER) == 0 && !mVolumeRockerWake) {
-                    if (mLineageButtons.handleVolumeKey(event, interactive)) {
-                        break;
-                    }
                     if (!interactive && mVolumeMusicControl && isMusicActive()) {
                         boolean notHandledMusicControl = false;
                         if (down) {
@@ -6262,8 +6251,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKeyguardDelegate.onBootCompleted();
             }
         }
-
-        mLineageButtons = new LineageButtons(mContext);
         mAutofillManagerInternal = LocalServices.getService(AutofillManagerInternal.class);
     }
 
