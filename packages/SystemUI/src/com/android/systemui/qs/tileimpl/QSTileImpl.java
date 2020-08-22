@@ -465,6 +465,8 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
 
         boolean rgbTint = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_TILE_RGB_TINT, 0, UserHandle.USER_CURRENT) == 1;
+        int qsTileStyle = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_STYLE, 0, UserHandle.USER_CURRENT);
 
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
@@ -478,10 +480,14 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 } else if (useQSAccentTint == 2){
                       if (rgbTint)
                              return ColorUtils.genRandomAccentColor(isThemeDark(context));
-                          else 
+                      else if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                               qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17)
+                             return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                      else 
                              return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
-                }  else if (useQSAccentTint == 0){
-                      if (qsIconPrimary)
+                }  else if (useQSAccentTint == 0) {
+                            if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17))
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
                             else
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
