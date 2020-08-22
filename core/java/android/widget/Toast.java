@@ -31,6 +31,7 @@ import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
@@ -302,7 +303,9 @@ public class Toast {
         View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
         TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
         tv.setText(text);
-        tv.setTextColor(textColor);
+        if (textColor != ColorStateList.valueOf(Color.BLACK)) {
+            tv.setTextColor(textColor);
+        }
         result.mNextView = v;
         result.mDuration = duration;
 
