@@ -37,6 +37,8 @@
         <item>@drawable/fod_op_ripple_recognizing_anim</item>
         <item>@drawable/fod_op_energy_recognizing_anim</item>
         <item>@drawable/fod_miui_neon_recognizing_anim</item>
+        <item>@drawable/fod_miui_aurora_cas_recognizing_anim</item>
+        <item>@drawable/fod_miui_star_cas_recognizing_anim</item>
     </integer-array>
 
     <!-- Cardinal directions for the compass tile -->

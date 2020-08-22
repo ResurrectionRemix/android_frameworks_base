@@ -854,7 +854,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             updatePosition();
         }
     }
-
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_HBM_OFF: {
