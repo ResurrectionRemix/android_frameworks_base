@@ -346,12 +346,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mWindow.setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY);
         mWindow.setWindowAnimations(com.android.internal.R.style.Animation_Toast);
         final WindowManager.LayoutParams lp = mWindow.getAttributes();
-        mMusicText = mDialog.findViewById(R.id.music_main);
-        if (mMediaManager == null) {
-            mMediaManager = Dependency.get(NotificationMediaManager.class);
-        } else {
-            mMusicText.initDependencies(mMediaManager, mContext);
-        }
+
         lp.format = PixelFormat.TRANSLUCENT;
         lp.setTitle(VolumeDialogImpl.class.getSimpleName());
         lp.width = MATCH_PARENT;
@@ -364,6 +359,12 @@ public class VolumeDialogImpl implements VolumeDialog,
         mWindow.setAttributes(lp);
 
         mDialog.setContentView(R.layout.volume_dialog);
+        mMusicText = mDialog.findViewById(R.id.music_main);
+        if (mMediaManager == null) {
+            mMediaManager = Dependency.get(NotificationMediaManager.class);
+        } else {
+            mMusicText.initDependencies(mMediaManager, mContext);
+        }
         mDialogView = mDialog.findViewById(R.id.volume_dialog);
         mDialogView.setLayoutDirection(
                 isAudioPanelOnLeftSide() ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL);
