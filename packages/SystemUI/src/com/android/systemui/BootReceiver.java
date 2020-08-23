@@ -145,10 +145,6 @@ public class BootReceiver extends BroadcastReceiver {
             }
 
             updateRefreshRate();
-        } catch (Exception e) {
-            Log.e(TAG, "Can't start custom services", e);
-        }
-
             // Start the cpu info overlay, if activated
             if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_CPU_OVERLAY, 0) != 0) {
                 Intent cpuinfo = new Intent(mContext, com.android.systemui.CPUInfoService.class);
