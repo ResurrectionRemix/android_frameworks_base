@@ -329,4 +329,9 @@
     <string name="quick_settings_cpuinfo_label">CPU Info</string>
     <string name="accessibility_quick_settings_cpuinfo_off">CPU Info off</string>
     <string name="accessibility_quick_settings_cpuinfo_on">CPU Info on</string>
+
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE on</string>
+    <string name="lte_off">LTE off</string>
+
 </resources>
