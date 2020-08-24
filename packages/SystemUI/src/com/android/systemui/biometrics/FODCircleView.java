@@ -115,6 +115,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private boolean mIsShowing;
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
+    private boolean mUseWallpaperColor;
 
     private float mCurrentDimAmount = 0.0f;
 
@@ -358,6 +359,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_PRESSED_STATE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FOD_ICON_WALLPAPER_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -374,11 +378,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_PRESSED_STATE))) {
                 updateStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.FOD_ICON_WALLPAPER_COLOR))) {
+                useWallpaperColor();
             }
         }
 
         public void update() {
             updateStyle();
+            useWallpaperColor();
         }
     }
 
@@ -584,13 +592,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         setKeepScreenOn(false);
     }
 
-    private boolean useWallpaperColor() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) != 0;
+    private void useWallpaperColor() {
+        mUseWallpaperColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) == 1;
     }
 
     private void setFODIcon() {
-        if (useWallpaperColor()) {
+        if (mUseWallpaperColor) {
             try {
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
                 Drawable wallpaperDrawable = wallpaperManager.getDrawable();
