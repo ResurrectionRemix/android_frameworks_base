@@ -478,7 +478,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 if (useQSAccentTint == 1) {
                     return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
                 } else if (useQSAccentTint == 2){
-                      if (rgbTint)
+                      if (rgbTint || qsTileStyle == 27)
                              return ColorUtils.genRandomAccentColor(isThemeDark(context));
                       else if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17)
@@ -487,7 +487,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                              return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
                 }  else if (useQSAccentTint == 0) {
                             if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
-                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17))
+                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17 || qsTileStyle == 27))
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
                             else
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
