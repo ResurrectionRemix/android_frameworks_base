@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.MonoToggleTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
@@ -145,6 +146,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<GestureAnyWhereTile> mGestureAnyWhereTileProvider;
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
+    private final Provider<LteTile> mLteTileProvider;
 
     private QSTileHost mHost;
 
@@ -201,7 +203,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<NavBarTile> navbarTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<GestureAnyWhereTile> gesturenywhereTileProvider,
-            Provider<CPUInfoTile> cpuInfoTileProvider) {
+            Provider<CPUInfoTile> cpuInfoTileProvider,
+            Provider<LteTile> lteTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -255,6 +258,7 @@ public class QSFactoryImpl implements QSFactory {
         mScreenshotTileProvider = screenshotTileProvider;
         mGestureAnyWhereTileProvider = gesturenywhereTileProvider;
         mCPUInfoTileProvider = cpuInfoTileProvider;
+        mLteTileProvider = lteTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -377,6 +381,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mGestureAnyWhereTileProvider.get();
             case "cpuinfo":
                 return mCPUInfoTileProvider.get();
+            case "lte":
+                return mLteTileProvider.get();
         }
 
         // Intent tiles.
