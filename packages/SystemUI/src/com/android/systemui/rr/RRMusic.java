@@ -172,7 +172,7 @@ public class RRMusic extends RelativeLayout implements NotificationMediaManager.
    public void updateViews() {
 
         boolean show = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.MUSIC_VOLUME_PANEL_DIALOG, 1, UserHandle.USER_CURRENT) != 0;
+                Settings.System.MUSIC_VOLUME_PANEL_DIALOG, 0, UserHandle.USER_CURRENT) == 1;
 
         if (mMediaManager != null && mMediaTitle != null && mMediaArtist != null && mMediaArtwork != null) {
             mTitle.setText(mMediaTitle.toString());
