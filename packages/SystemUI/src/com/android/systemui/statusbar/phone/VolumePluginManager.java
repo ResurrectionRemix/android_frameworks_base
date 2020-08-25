@@ -67,10 +67,11 @@ public class VolumePluginManager extends BroadcastReceiver {
     private static final Uri SETTING_URI = Settings.System.getUriFor(
         Settings.System.SYSTEMUI_PLUGIN_VOLUME);
 
-    static final String DEFAULT_VOLUME_PLUGIN = "co.potatoproject.plugin.volume.aosp";
+    static final String DEFAULT_VOLUME_PLUGIN = "com.android.systemui.volume";
     static final String VOLUME_PLUGIN_ACTION = "com.android.systemui.action.PLUGIN_VOLUME";
 
     static final String[] ALLOWED_PLUGINS = {
+        "com.android.systemui.volume",
         "co.potatoproject.plugin.volume.aosp",
         "co.potatoproject.plugin.volume.compact",
         "co.potatoproject.plugin.volume.oreo",

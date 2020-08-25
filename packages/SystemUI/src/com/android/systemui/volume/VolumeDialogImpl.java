@@ -319,8 +319,10 @@ public class VolumeDialogImpl implements VolumeDialog,
         mController.removeCallback(mControllerCallbackH);
         mHandler.removeCallbacksAndMessages(null);
         Dependency.get(ConfigurationController.class).removeCallback(this);
-        mLocalMediaManager.unregisterCallback(this);
-    }
+        if (mLocalMediaManager != null) {
+            mLocalMediaManager.unregisterCallback(this);
+        }
+    } 
 
     private void initDialog() {
         mDialog = new CustomDialog(mContext);
