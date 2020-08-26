@@ -6344,6 +6344,12 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
         /**
+         * 
+         * @hide
+         */
+        public static final String SHOW_BATTERY_SYMBOL = "show_battery_symbol";
+
+        /**
          * Pulse ambient music visualizer
          * @hide
          */
