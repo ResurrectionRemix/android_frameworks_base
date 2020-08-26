@@ -595,14 +595,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
                     break;
                 }
             }
-
-            if (mStatusBar.getVisualizer() != null) {
-                mStatusBar.getVisualizer().setPlaying(true);
-            }
         } else {
-            if (mStatusBar.getVisualizer() != null) {
-                mStatusBar.getVisualizer().setPlaying(false);
-            }
             mStatusBar.resetTrackInfo();
         }
     }

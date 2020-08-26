@@ -46,7 +46,7 @@ public class PulseTile extends QSTileImpl<BooleanState> {
     public PulseTile(QSHost host) {
         super(host);
 
-        mSetting = new SystemSetting(mContext, mHandler, System.PULSE_ENABLED) {
+        mSetting = new SystemSetting(mContext, mHandler, System.NAVBAR_PULSE_ENABLED) {
             @Override
             protected void handleValueChanged(int value) {
                 handleRefreshState(value);
@@ -72,7 +72,7 @@ public class PulseTile extends QSTileImpl<BooleanState> {
 
     private void setEnabled(boolean enabled) {
         Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.PULSE_ENABLED,
+                Settings.System.NAVBAR_PULSE_ENABLED,
                 enabled ? 1 : 0);
     }
 
