@@ -10,12 +10,6 @@
     <color name="recents_dismiss_all_background_color_ripple">@color/system_primary_color</color>
     <color name="recents_dismiss_all_icon_color">#ff000000</color>
 
-    <!-- Color for the Assistant invocation lights -->
-    <color name="edge_light_blue">#4185f4</color>
-    <color name="edge_light_green">#3aa853</color>
-    <color name="edge_light_red">#ea4234</color>
-    <color name="edge_light_yellow">#fbbc06</color>
-
     <color name="accent_device_default_light">@*android:color/accent_device_default_light</color>
     <color name="system_primary_color">@*android:color/background_floating_device_default_dark</color>
     <!-- Quicksettings main QS background-->
@@ -35,4 +29,5 @@
     <color name="ga_fab_bg_color">@android:color/white</color>
     <color name="ga_fab_icon_color">@*android:color/accent_material_dark</color>
     <color name="ga_fab_color_ripple">#ff7a7a7a</color>
+
 </resources>

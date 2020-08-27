@@ -122,8 +122,6 @@ import javax.inject.Named;
 import dagger.Lazy;
 import dagger.Subcomponent;
 
-import com.google.android.systemui.AssistManagerGoogle;
-
 /**
  * Class to handle ugly dependencies throughout sysui until we determine the
  * long-term dependency injection solution.
@@ -218,7 +216,7 @@ public class Dependency {
     @Inject Lazy<AccessibilityController> mAccessibilityController;
     @Inject Lazy<DeviceProvisionedController> mDeviceProvisionedController;
     @Inject Lazy<PluginManager> mPluginManager;
-    @Inject Lazy<AssistManagerGoogle> mAssistManager;
+    @Inject Lazy<AssistManager> mAssistManager;
     @Inject Lazy<SecurityController> mSecurityController;
     @Inject Lazy<LeakDetector> mLeakDetector;
     @Inject Lazy<LeakReporter> mLeakReporter;
