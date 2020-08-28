@@ -16,29 +16,6 @@
 -->
 <resources>
     <integer-array name="fod_animation_resources">
-        <item>@drawable/fod_miui_normal_recognizing_anim</item>
-        <item>@drawable/fod_miui_aod_recognizing_anim</item>
-        <item>@drawable/fod_miui_light_recognizing_anim</item>
-        <item>@drawable/fod_miui_pop_recognizing_anim</item>
-        <item>@drawable/fod_miui_pulse_recognizing_anim</item>
-        <item>@drawable/fod_miui_pulse_recognizing_white_anim</item>
-        <item>@drawable/fod_miui_rhythm_recognizing_anim</item>
-        <item>@drawable/fod_op_cosmos_recognizing_anim</item>
-        <item>@drawable/fod_op_mclaren_recognizing_anim</item>
-        <item>@drawable/fod_op_stripe_recognizing_anim</item>
-        <item>@drawable/fod_op_wave_recognizing_anim</item>
-        <item>@drawable/fod_pureview_dna_recognizing_anim</item>
-        <item>@drawable/fod_pureview_future_recognizing_anim</item>
-        <item>@drawable/fod_pureview_halo_ring_recognizing_anim</item>
-        <item>@drawable/fod_pureview_molecular_recognizing_anim</item>
-        <item>@drawable/fod_blue_firework_recognizing_anim</item>
-        <item>@drawable/fod_coloros7_1_recognizing_anim</item>
-        <item>@drawable/fod_coloros7_2_recognizing_anim</item>
-        <item>@drawable/fod_op_ripple_recognizing_anim</item>
-        <item>@drawable/fod_op_energy_recognizing_anim</item>
-        <item>@drawable/fod_miui_neon_recognizing_anim</item>
-        <item>@drawable/fod_miui_aurora_cas_recognizing_anim</item>
-        <item>@drawable/fod_miui_star_cas_recognizing_anim</item>
     </integer-array>
 
     <!-- Cardinal directions for the compass tile -->
@@ -54,30 +31,6 @@
     </string-array>
 
     <integer-array name="fod_icon_resources">
-        <item>@drawable/fod_icon_default</item>
-        <item>@drawable/fod_icon_default_1</item>
-        <item>@drawable/fod_icon_default_2</item>
-        <item>@drawable/fod_icon_default_3</item>
-        <item>@drawable/fod_icon_default_4</item>
-        <item>@drawable/fod_icon_default_5</item>
-        <item>@drawable/fod_icon_arc_reactor</item>
-        <item>@drawable/fod_icon_cpt_america_flat</item>
-        <item>@drawable/fod_icon_cpt_america_flat_gray</item>
-        <item>@drawable/fod_icon_dragon_black_flat</item>
-        <item>@drawable/fod_icon_future</item>
-        <item>@drawable/fod_icon_glow_circle</item>
-        <item>@drawable/fod_icon_neon_arc</item>
-        <item>@drawable/fod_icon_neon_arc_gray</item>
-        <item>@drawable/fod_icon_neon_circle_pink</item>
-        <item>@drawable/fod_icon_neon_triangle</item>
-        <item>@drawable/fod_icon_paint_splash_circle</item>
-        <item>@drawable/fod_icon_rainbow_horn</item>
-        <item>@drawable/fod_icon_shooky</item>
-        <item>@drawable/fod_icon_spiral_blue</item>
-        <item>@drawable/fod_icon_sun_metro</item>
-        <item>@drawable/fod_icon_rr</item>
-        <item>@drawable/fod_icon_rr2</item>
-        <item>@drawable/fod_icon_invisible</item>
     </integer-array>
 
 
