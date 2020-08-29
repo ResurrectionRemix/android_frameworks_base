@@ -34,6 +34,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -877,7 +878,8 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
    private void updateDateStyles() {
-         switch (mDateSelection) {
+         if (mKeyguardSlice == null) return;
+    switch (mDateSelection) {
             case 0: // default
             default:
                 mKeyguardSlice.setViewBackgroundResource(0);
@@ -914,28 +916,42 @@ public class KeyguardStatusView extends GridLayout implements
                 mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
                 mKeyguardSlice.setViewsTextStyles(0.15f, true);
                 break;
-            case 5: // accent box transparent
+            case 5: // accent box but just the day
+                mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
+                mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));
+                mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
+                mKeyguardSlice.setViewsTextStyles(0.15f, true);
+                break;
+            case 6: // accent box transparent
                 mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_accent), 160);
                 mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
                 mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));
                 mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
                 mKeyguardSlice.setViewsTextStyles(0.15f, true);
                 break;
-            case 6: // gradient box
+            case 7: // accent box transparent but just the day
+                mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_accent), 160);
+                mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
+                mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));
+                mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
+                mKeyguardSlice.setViewsTextStyles(0.15f, true);
+                break;
+            case 8: // gradient box
                 mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_gradient));
                 mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
                 mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));
                 mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
                 mKeyguardSlice.setViewsTextStyles(0.15f, true);
                 break;
-            case 7: // Dark Accent border
+            case 9: // Dark Accent border
                 mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_borderacc));
                 mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
                 mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));
                 mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
                 mKeyguardSlice.setViewsTextStyles(0.08f, true);
                 break;
-            case 8: // Dark Gradient border
+            case 10: // Dark Gradient border
                 mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_bordergrad));
                 mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_hor),getResources().getDisplayMetrics()));
                 mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_accent_box_padding_ver),getResources().getDisplayMetrics()));

@@ -6806,6 +6806,18 @@ public final class Settings {
         public static final String SCREENRECORD_AUDIO_OPT = "screenrecord_audio_opt";
 
         /**
+         * Whether to show lockscreen clock
+         * @hide
+         */
+        public static final String LOCKSCREEN_CLOCK = "lockscreen_clock";
+
+        /**
+         * Whether to show lockscreen clock
+         * @hide
+         */
+        public static final String LOCKSCREEN_DATE = "lockscreen_date";
+
+        /**
          * SBC HD priority - whether to use dual channel for SBC by default
          * @hide
          */
