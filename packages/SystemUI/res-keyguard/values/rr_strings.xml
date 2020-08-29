@@ -43,4 +43,9 @@
          is not fully charged, and it's plugged into a VOOC charger, say that it's VOOC charging.  -->
     <string name="keyguard_plugged_in_vooc_charging"><xliff:g id="percentage">%s</xliff:g> • VOOC Charging</string>
 
+    <!-- Title for Typographic clock face that will appear in the picker app next to a preview image of
+         the clock face. [CHAR LIMIT=8] -->
+    <string name="clock_title_type_accent" translatable="false">Type (accent)</string>
+    <string name="clock_title_type_alt_accent" translatable="false">Type (center &amp; accent)</string>
+
 </resources>
