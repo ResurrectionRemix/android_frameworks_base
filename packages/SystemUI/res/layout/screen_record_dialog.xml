@@ -268,6 +268,57 @@
 
             </FrameLayout>
 
+            <FrameLayout
+                android:id="@+id/turn_screen_off"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="?android:attr/dialogPreferredPadding"
+                android:paddingEnd="?android:attr/dialogPreferredPadding">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:id="@android:id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_screenoff" />
+
+                    <TextView
+                        android:id="@android:id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@android:id/title"
+                        android:layout_alignStart="@android:id/title"
+                        android:layout_marginEnd="90dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/screenrecord_screenoff_summary" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/screenoff_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:src="@drawable/ic_screenrecord_screen_off" />
+
+                <Switch
+                    android:id="@+id/switch_screenoff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="top|end" />
+
+            </FrameLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

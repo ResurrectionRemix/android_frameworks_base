@@ -4791,6 +4791,12 @@ public final class Settings {
         public static final String SCREENRECORD_STOP_DOT = "screenrecord_stop_dot";
 
         /**
+         * 
+         * @hide
+         */
+        public static final String SCREENRECORD_SCREENOFF = "screenrecord_screen_off";
+
+        /**
          * Screenrecord: low quality
          * @hide
          */

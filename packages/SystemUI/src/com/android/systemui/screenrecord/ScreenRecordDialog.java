@@ -47,6 +47,7 @@ import static android.provider.Settings.System.SCREENRECORD_VIDEO_BITRATE;
 import static android.provider.Settings.System.SCREENRECORD_AUDIO_OPT;
 import static android.provider.Settings.System.SCREENRECORD_SHOW_TAPS;
 import static android.provider.Settings.System.SCREENRECORD_STOP_DOT;
+import static android.provider.Settings.System.SCREENRECORD_SCREENOFF;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -76,6 +77,7 @@ public class ScreenRecordDialog extends Activity {
     private int mAudioSourceOpt;
     private boolean mShowTaps;
     private boolean mShowDot;
+    private boolean mScreenoff;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class ScreenRecordDialog extends Activity {
         final Spinner audioSourceSpinner = findViewById(R.id.spinner_audio_source);
         final Switch tapsSwitch = findViewById(R.id.switch_taps);
         final Switch dotSwitch = findViewById(R.id.switch_stopdot);
+        final Switch screenoff = findViewById(R.id.switch_screenoff);
 
         ArrayAdapter<CharSequence> bitrateAdapter = ArrayAdapter.createFromResource(this,
             SystemProperties.get("ro.config.low_ram").equals("true") ? R.array.screen_video_quality_go_entries :
@@ -116,9 +119,11 @@ public class ScreenRecordDialog extends Activity {
         initialCheckSpinner(audioSourceSpinner, SCREENRECORD_AUDIO_OPT, 0 /* disabled */);
         initialCheckSwitch(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         initialCheckSwitch(dotSwitch, SCREENRECORD_STOP_DOT);
+        initialCheckSwitch(screenoff, SCREENRECORD_SCREENOFF);
 
         setSwitchListener(tapsSwitch, SCREENRECORD_SHOW_TAPS);
         setSwitchListener(dotSwitch, SCREENRECORD_STOP_DOT);
+        setSwitchListener(screenoff, SCREENRECORD_SCREENOFF);
         setSpinnerListener(bitrateSpinner, SCREENRECORD_VIDEO_BITRATE);
         setSpinnerListener(audioSourceSpinner, SCREENRECORD_AUDIO_OPT);
 
@@ -128,9 +133,10 @@ public class ScreenRecordDialog extends Activity {
             public void onClick(View v) {
                 mShowTaps = tapsSwitch.isChecked();
                 mShowDot = dotSwitch.isChecked();
+                mScreenoff = screenoff.isChecked();
                 mVideoBitrateOpt = bitrateSpinner.getSelectedItemPosition();
                 mAudioSourceOpt = audioSourceSpinner.getSelectedItemPosition();
-                Log.d(TAG, "Record button clicked: bitrate " + mVideoBitrateOpt + " audio " + mAudioSourceOpt + ", taps " + mShowTaps + ", dot " + mShowDot);
+                Log.d(TAG, "Record button clicked: bitrate " + mVideoBitrateOpt + " audio " + mAudioSourceOpt + ", taps " + mShowTaps + ", dot " + mShowDot  + ", screenoffswitch " + mScreenoff);
 
                 if (mUseAudio && ScreenRecordDialog.this.checkSelfPermission(Manifest.permission.RECORD_AUDIO)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -247,7 +253,7 @@ public class ScreenRecordDialog extends Activity {
                 if (resultCode == RESULT_OK) {
                     startForegroundService(
                             RecordingService.getStartIntent(this, resultCode, data, mAudioSourceOpt,
-                                    mShowTaps, mShowDot, mVideoBitrateOpt));
+                                    mShowTaps, mShowDot, mVideoBitrateOpt, mScreenoff));
                 } else {
                     Toast.makeText(this,
                             getResources().getString(R.string.screenrecord_permission_error),

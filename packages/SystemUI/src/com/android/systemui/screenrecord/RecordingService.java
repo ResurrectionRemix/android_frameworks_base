@@ -65,7 +65,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.systemui.R;
-
+import com.android.keyguard.KeyguardUpdateMonitor;
+import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -88,6 +89,7 @@ public class RecordingService extends Service {
     private static final String EXTRA_SHOW_TAPS = "extra_showTaps";
     private static final String EXTRA_SHOW_DOT = "extra_showDot";
     private static final String EXTRA_VIDEO_BITRATE = "extra_videoBitrate";
+    private static final String EXTRA_SCREEN_OFF = "extra_screenoff";
     private static final int REQUEST_CODE = 2;
 
     private static final String ACTION_START = "com.android.systemui.screenrecord.START";
@@ -133,6 +135,7 @@ public class RecordingService extends Service {
     private boolean mIsLowRamEnabled;
     private boolean mShowTaps;
     private boolean mShowDot;
+    private boolean mScreenOff;
     private boolean mIsDotAtRight;
     private boolean mDotShowing;
     private int mVideoBitrateOpt;
@@ -141,6 +144,29 @@ public class RecordingService extends Service {
     private LayoutInflater mInflater;
     private WindowManager mWindowManager;
     private File mTempFile;
+    private boolean mIsRecording = false;
+
+    private KeyguardUpdateMonitor mUpdateMonitor;
+
+    private KeyguardUpdateMonitorCallback mMonitorCallback = new KeyguardUpdateMonitorCallback() {
+        @Override
+        public void onScreenTurnedOff() {
+              if (mIsRecording) {
+                  if (mScreenOff)  {
+                     try {
+                         NotificationManager notificationManager =
+                         (NotificationManager) getSystemService(
+                         Context.NOTIFICATION_SERVICE);
+                         stopRecording();
+                         saveRecording(notificationManager);
+                      } catch (Exception e) {
+                        Log.e(TAG, "Unable to save recording because: "
+                         + e.getMessage());
+                      }
+                  }
+              }
+         }
+    };
 
     /**
      * Get an intent to start the recording service.
@@ -154,7 +180,7 @@ public class RecordingService extends Service {
      * @param showTaps   True to make touches visible while recording
      */
     public static Intent getStartIntent(Context context, int resultCode, Intent data,
-            int audioSourceOpt, boolean showTaps, boolean showDot, int vidBitrateOpt) {
+            int audioSourceOpt, boolean showTaps, boolean showDot, int vidBitrateOpt, boolean screenOff) {
         return new Intent(context, RecordingService.class)
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_RESULT_CODE, resultCode)
@@ -162,7 +188,8 @@ public class RecordingService extends Service {
                 .putExtra(EXTRA_AUDIO_SOURCE, audioSourceOpt)
                 .putExtra(EXTRA_SHOW_TAPS, showTaps)
                 .putExtra(EXTRA_SHOW_DOT, showDot)
-                .putExtra(EXTRA_VIDEO_BITRATE, vidBitrateOpt);
+                .putExtra(EXTRA_VIDEO_BITRATE, vidBitrateOpt)
+                .putExtra(EXTRA_SCREEN_OFF, screenOff);
     }
 
     @Override
@@ -183,6 +210,7 @@ public class RecordingService extends Service {
                 mShowTaps = intent.getBooleanExtra(EXTRA_SHOW_TAPS, false);
                 mShowDot = intent.getBooleanExtra(EXTRA_SHOW_DOT, false);
                 mVideoBitrateOpt = intent.getIntExtra(EXTRA_VIDEO_BITRATE, 2);
+                mScreenOff = intent.getBooleanExtra(EXTRA_SCREEN_OFF, false);
 
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
@@ -287,7 +315,11 @@ public class RecordingService extends Service {
                 (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         mWindowManager =
                 (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
+        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(getApplicationContext());
+        mUpdateMonitor.registerCallback(mMonitorCallback);
     }
+
 
     /**
      * Begin the recording session
@@ -459,6 +491,7 @@ public class RecordingService extends Service {
             throw new RuntimeException(e);
         }
 
+        mIsRecording = true;
         createRecordingNotification();
     }
 
@@ -592,6 +625,7 @@ public class RecordingService extends Service {
             }
         } catch (Exception e) {}
         stopSelf();
+        mIsRecording = false;
     }
 
     private void saveRecording(NotificationManager notificationManager) {

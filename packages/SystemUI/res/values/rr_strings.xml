@@ -51,6 +51,8 @@
     <string name="screenrecord_video_bitrate_title">Video Bitrate</string>
     <string name="screenrecord_video_bitrate_summary">Set the video bitrate for better video quality, at the cost of a bigger file.</string>
     <string name="quick_settings_sound_search">Sound search</string>
+    <string name="screenrecord_screenoff">Turn recorder off when screen off</string>
+    <string name="screenrecord_screenoff_summary">Turn recorder off when screen is turned off. The recorder will automatically attempt to save your file when screen turns off.</string>
 
     <!-- On The Go -->
     <string name="onthego_notif_ticker">On-The-Go activated</string>
