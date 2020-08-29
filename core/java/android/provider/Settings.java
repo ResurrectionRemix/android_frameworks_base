@@ -6848,6 +6848,11 @@ public final class Settings {
         public static final String STOCK_STATUSBAR_IN_HIDE = "stock_statusbar_in_hide";
 
         /**
+         * Weather to enable statusbar dual
+         */
+        public static final String STATUSBAR_DUAL = "statusbar_dual";
+
+        /**
          * Select which lockscreen date style to display
          * @hide
          */
