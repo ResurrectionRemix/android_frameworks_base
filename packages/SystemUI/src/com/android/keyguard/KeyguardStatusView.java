@@ -83,6 +83,8 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mPixelStyle;
     private int mLockClockFontSize;
     private int mDateSelection;
+    private boolean mShowClock = true;
+    private boolean mShowDate = true;
 
     // Date styles paddings
     private int mDateVerPadding;
@@ -97,6 +99,10 @@ public class KeyguardStatusView extends GridLayout implements
 
     private static final String LOCKSCREEN_DATE_SELECTION =
             "system:" + Settings.System.LOCKSCREEN_DATE_SELECTION;
+    private static final String LOCKSCREEN_CLOCK =
+            "system:" + Settings.System.LOCKSCREEN_CLOCK;
+    private static final String LOCKSCREEN_DATE =
+            "system:" + Settings.System.LOCKSCREEN_DATE;
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
      * icons on AOD.
@@ -135,6 +141,8 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfoColor();
                 refreshOwnerInfoSize();
                 refreshOwnerInfoFont();
+                updateDateVisbility();
+                updateClockVisbility();
 	        }
         }
 
@@ -165,6 +173,8 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfoColor();
             refreshOwnerInfoSize();
             refreshOwnerInfoFont();
+            updateDateVisbility();
+            updateClockVisbility();
 	    }
 
         @Override
@@ -190,6 +200,8 @@ public class KeyguardStatusView extends GridLayout implements
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_STYLE);
         tunerService.addTunable(this, LOCKSCREEN_DATE_SELECTION);
+        tunerService.addTunable(this, LOCKSCREEN_DATE);
+        tunerService.addTunable(this, LOCKSCREEN_CLOCK);
         onDensityOrFontScaleChanged();
     }
 
@@ -872,14 +884,41 @@ public class KeyguardStatusView extends GridLayout implements
                         TunerService.parseInteger(newValue, 0);
                 updateDateStyles();
                 break;
+            case LOCKSCREEN_DATE:
+                mShowDate =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateDateVisbility();
+                break;
+            case LOCKSCREEN_CLOCK:
+                mShowClock =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateClockVisbility();
+                break;
             default:
                 break;
         }
     }
 
+   private void updateClockVisbility() {
+        if (mClockView != null) {
+           if (mShowClock)
+               mClockView.setVisibility(View.VISIBLE);
+           else
+               mClockView.setVisibility(View.GONE);
+        }
+   }
+
+   private void updateDateVisbility() {
+         if (mKeyguardSlice != null) {
+             if (mShowDate)
+                 mKeyguardSlice.setVisibility(View.VISIBLE);
+             else 
+                 mKeyguardSlice.setVisibility(View.GONE);
+         }
+   }
    private void updateDateStyles() {
          if (mKeyguardSlice == null) return;
-    switch (mDateSelection) {
+         switch (mDateSelection) {
             case 0: // default
             default:
                 mKeyguardSlice.setViewBackgroundResource(0);
@@ -963,7 +1002,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void updateWeatherView() {
         if (mWeatherView != null) {
-            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
+            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE || !mShowDate)) {
                 mWeatherView.enableUpdates();
             } else if (!mShowWeather || mPixelStyle) {
                 mWeatherView.disableUpdates();
