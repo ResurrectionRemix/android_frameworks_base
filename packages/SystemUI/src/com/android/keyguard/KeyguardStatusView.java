@@ -81,6 +81,11 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mPulseWeather;
     private boolean mPixelStyle;
     private int mLockClockFontSize;
+    private int mDateSelection;
+
+    // Date styles paddings
+    private int mDateVerPadding;
+    private int mDateHorPadding;
 
     private static final String LOCKSCREEN_WEATHER_ENABLED =
             "system:" + Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED;
@@ -88,6 +93,9 @@ public class KeyguardStatusView extends GridLayout implements
             "system:" + Settings.System.LOCKSCREEN_WEATHER_STYLE;
     private static final String LS_WEATHER_PULSING =
             "system:" + Settings.System.LS_WEATHER_PULSING;
+
+    private static final String LOCKSCREEN_DATE_SELECTION =
+            "system:" + Settings.System.LOCKSCREEN_DATE_SELECTION;
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
      * icons on AOD.
@@ -116,6 +124,7 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfo();
                 updateLogoutView();
                 updateWeatherView();
+                updateDateStyles();
                 mClockView.refreshLockFont();
 		        refreshLockDateFont();
 		        mClockView.refreshclocksize();
@@ -144,6 +153,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfo();
             updateLogoutView();
             updateWeatherView();
+            updateDateStyles();         
             mClockView.refreshLockFont();
             refreshLockDateFont();
 	        refreshLockDateFont();
@@ -178,6 +188,7 @@ public class KeyguardStatusView extends GridLayout implements
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_ENABLED);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_STYLE);
+        tunerService.addTunable(this, LOCKSCREEN_DATE_SELECTION);
         onDensityOrFontScaleChanged();
     }
 
@@ -264,6 +275,7 @@ public class KeyguardStatusView extends GridLayout implements
         updateLogoutView();
         updateDark();
         updateWeatherView();
+        updateDateStyles();
     }
 
     /**
@@ -854,7 +866,37 @@ public class KeyguardStatusView extends GridLayout implements
                         TunerService.parseIntegerSwitch(newValue, true);
                 updateWeatherView();
                 break;
+            case LOCKSCREEN_DATE_SELECTION:
+                mDateSelection =
+                        TunerService.parseInteger(newValue, 0);
+                updateDateStyles();
+                break;
             default:
+                break;
+        }
+    }
+
+   private void updateDateStyles() {
+
+        switch (mDateSelection) {
+            case 0: // default
+            default:
+                mKeyguardSlice.setViewBackgroundResource(0);
+                mDateVerPadding = 0;
+                mDateHorPadding = 0;
+                mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
+                break;
+            case 1: // semi-transparent box
+                mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_box_str_border));
+                mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_box_padding_hor),getResources().getDisplayMetrics()));
+                mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_box_padding_ver),getResources().getDisplayMetrics()));
+                mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
+                break;
+            case 2: // semi-transparent box (round)
+                mKeyguardSlice.setViewBackground(getResources().getDrawable(R.drawable.date_str_border));
+                mDateHorPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_box_padding_hor),getResources().getDisplayMetrics()));
+                mDateVerPadding = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.widget_date_box_padding_ver),getResources().getDisplayMetrics()));
+                mKeyguardSlice.setViewPadding(mDateHorPadding,mDateVerPadding,mDateHorPadding,mDateVerPadding);
                 break;
         }
     }

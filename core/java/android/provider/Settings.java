@@ -6830,6 +6830,13 @@ public final class Settings {
         public static final String STOCK_STATUSBAR_IN_HIDE = "stock_statusbar_in_hide";
 
         /**
+         * Select which lockscreen date style to display
+         * @hide
+         */
+        public static final String LOCKSCREEN_DATE_SELECTION = "lockscreen_date_selection";
+
+
+        /**
          * Force full screen for devices with cutout
          * @hide
          */
