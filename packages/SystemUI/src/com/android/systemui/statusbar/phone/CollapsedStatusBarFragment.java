@@ -142,7 +142,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.status_bar, container, false);
+         if(isDualStatusbarEnabled()) {
+            return inflater.inflate(R.layout.status_bar_dual, container, false);
+         } else {
+             return inflater.inflate(R.layout.status_bar, container, false);
+         }
+    }
+
+    private boolean isDualStatusbarEnabled() {
+        return Settings.System.getInt(getContext().getContentResolver(),
+            Settings.System.STATUSBAR_DUAL, 0) == 1;
     }
 
     @Override
