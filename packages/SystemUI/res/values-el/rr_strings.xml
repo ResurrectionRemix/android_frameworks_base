@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2019, RR
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Screenshot Delete Toast -->
+    <string name="delete_screenshot_toast">Το στιγμιότυπο οθόνης διαγράφηκε</string>
+
+    <string name="screenrecord_stopdot_label">Εμφάνιση κουκκίδας εγγρ. οθόνης</string>
+    <string name="screenrecord_low_quality_label">Χαμηλή ποιότητα</string>
+        <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
+    <string name="global_action_screenshot_cust">Στιγμιότυπο οθόνης</string>
+    <string name="global_action_restart_advanced">Προχωρημένη</string>
+    <string name="global_action_restart_recovery">Ανάκτηση</string>
+    <string name="global_action_restart_bootloader">Εκκινητής</string>
+    <string name="global_action_restart_ui">UI συστήματος</string>
+
+    <!-- Screenshot -->
+    <string name="quick_settings_screenshot_label">Στιγμιότυπο οθόνης</string>
+    <string name="quick_settings_region_screenshot_label">Μερικό στιγμιότυπο οθόνης</string>
+
+    <!-- Screen record -->
+    <string name="screenrecord_dialog_title">Ξεκινήστε την εγγραφή;</string>
+    <string name="screenrecord_dialog_summary">Κατά την εγγραφή, το σύστημα Android μπορεί να συλλάβει τυχόν ευαίσθητες πληροφορίες που είναι ορατές στην οθόνη σας ή που αναπαράγονται στη συσκευή σας. Αυτό περιλαμβάνει κωδικούς πρόσβασης, πληροφορίες πληρωμής, φωτογραφίες, μηνύματα και ήχο.</string>
+    <string name="screenrecord_dialog_start">Αρχή</string>
+    <string name="screenrecord_dialog_cancel">Ματαίωση</string>
+    <string name="screenrecord_audio_title">Πηγή ήχου</string>
+    <string name="screenrecord_audio_summary">Επιτρέπει να επιλέξετε την είσοδο ήχου ή να την απενεργοποιήσετε.</string>
+    <string name="screenrecord_audio_recording_internal">Εσωτερικοί ήχοι</string>
+    <string name="screenrecord_audio_recording_microphone">Μικρόφωνο</string>
+    <string name="screenrecord_audio_recording_off">άτομα με ειδικές ανάγκες</string>
+    <string name="screenrecord_taps_title">Εμφάνιση πινελιών στην οθόνη</string>
+    <string name="screenrecord_taps_summary">Εμφάνιση οπτικών σχολίων κατά την εγγραφή</string>
+    <string name="screenrecord_stopdot_title">Εμφάνιση στάσης κουκκίδας</string>
+    <string name="screenrecord_stopdot_summary">Εμφάνιση κόκκινης κουκκίδας για διακοπή της εγγραφής με ένα μόνο πάτημα. Πατήστε το για να το μετακινήσετε στην αντίθετη πλευρά.</string>
+    <string name="screenrecord_video_bitrate_title">Ρυθμός bit βίντεο</string>
+    <string name="screenrecord_video_bitrate_summary">Ρυθμίστε το ρυθμό bit βίντεο για καλύτερη ποιότητα βίντεο, με κόστος ενός μεγαλύτερου αρχείου.</string>
+    <string name="quick_settings_sound_search">Αναζήτηση ήχου</string>
+
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">Ενεργοποιήθηκε εν κινήσει</string>
+    <string name="onthego_notif_title">Το On-The-Go είναι ενεργό</string>
+    <string name="onthego_notif_stop">Να σταματήσει</string>
+    <string name="onthego_notif_options">Επιλογές</string>
+    <string name="onthego_notif_error">Δεν είναι δυνατή η έναρξη On-The-Go</string>
+    <string name="onthego_notif_restart">Επανεκκινήστε εν κινήσει</string>
+    <string name="onthego_notif_camera_changed">Η λειτουργία κάμερας άλλαξε</string>
+    <string name="onthego_transparency">Διαφάνεια</string>
+    <string name="onthego_front_camera">Χρησιμοποιήστε μπροστινή κάμερα</string>
+    <string name="onthego_service_toggle">Αυτόματη επανεκκίνηση της υπηρεσίας</string>
+    <string name="onthego_channel_name">Κύριος</string>
+    <string name="global_action_onthego">Εν κινήσει</string>
+
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">Εν κινήσει</string>
+
+    <!-- Label for item that screenrecords in power menu options dialog -->
+    <string name="global_action_screenrecord">Εγγραφή οθόνης</string>
+
+  <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Η ειδοποίηση μπαίνει σε αναβολή για 1 λεπτό.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Οι ειδοποιήσεις θα μπούν σε αναβολή για <xliff:g id="number">%d</xliff:g> λεπτά.</string>
+
+    <!-- Omnijaws Weather -->
+    <string name="omnijaws_service_error">Σφάλμα</string>
+    <string name="omnijaws_service_unkown">Δεν υπάρχουν δεδομένα καιρού</string>
+    <string name="omnijaws_service_error_long">Σφάλμα κατά τη φόρτωση δεδομένων καιρού</string>
+    <string name="omnijaws_service_disabled">Η υπηρεσία είναι απενεργοποιημένη</string>
+    <string name="omnijaws_detail_header">Καιρός</string>
+    <string name="omnijaws_label_default">Καιρός</string>
+    <string name="omnijaws_current_text">Τώρα</string>
+    <string name="omnijaws_package_not_available">Το OmniJaws δεν είναι διαθέσιμο</string>
+    <string name="omnijaws_service_last_update">Τελευταία ενημέρωση:</string>
+
+    <string name="quick_settings_pulse">Παλμός</string>
+    <string name="quick_settings_pulse_off">Παλμός κλειστός</string>
+    <string name="quick_settings_pulse_on">Παλμός</string>
+    <string name="quick_settings_pulse_changed_off">Ο παλμός απενεργοποιήθηκε</string>
+    <string name="quick_settings_pulse_changed_on">Ο παλμός ενεργοποιήθηκε</string>
+
+    <string name="quick_settings_navbar">Πλοήγηση</string>
+    <string name="quick_settings_navbar_off">Η πλοήγηση είναι απενεργοποιημένη</string>
+    <string name="quick_settings_navbar_on">Ενεργοποίηση πλοήγησης</string>
+    <string name="quick_settings_navbar_changed_off">Η πλοήγηση απενεργοποιήθηκε</string>
+    <string name="quick_settings_navbar_changed_on">Η πλοήγηση είναι ενεργοποιημένη</string>
+
+    <string name="quick_settings_gesture">Χειρονομία οπουδήποτε</string>
+    <string name="quick_settings_gesture_off">Κάντε χειρονομία οπουδήποτε μακριά</string>
+    <string name="quick_settings_gesture_on">Κάντε χειρονομία οπουδήποτε</string>
+    <string name="quick_settings_gesture_changed_off">Η χειρονομία οπουδήποτε απενεργοποιήθηκε</string>
+    <string name="quick_settings_gesture_changed_on">Χειρονομία οπουδήποτε είναι ενεργοποιημένη</string>
+
+    <!-- Tuner -->
+    <string name="preview">Προεπισκόπηση</string>
+    <string name="keycode">Κωδικός κλειδιού</string>
+    <string name="no_home_title">Δεν βρέθηκε κουμπί αρχικής σελίδας</string>
+    <string name="no_home_message">Απαιτείται κουμπί αρχικής οθόνης για να μπορείτε να πλοηγηθείτε σε αυτήν τη συσκευή. Προσθέστε ένα κουμπί αρχικής σελίδας πριν από την αποθήκευση.</string>
+    <string name="clipboard_description">Το Πρόχειρο επιτρέπει την μεταφορά αντικειμένων απευθείας στο πρόχειρο. Τα στοιχεία μπορούν επίσης να μεταφερθούν απευθείας από το πρόχειρο όταν υπάρχουν.</string>
+    <string name="keycode_description">Τα κουμπιά του πλήκτρου επιτρέπουν την προσθήκη πλήκτρων πληκτρολογίου στη γραμμή πλοήγησης. Όταν πατηθούν μιμούνται το επιλεγμένο πλήκτρο πληκτρολογίου. Πρώτα πρέπει να επιλεγεί το πλήκτρο για το κουμπί, ακολουθούμενο από μια εικόνα που θα εμφανίζεται στο κουμπί.</string>
+    <string name="start">Αρχή</string>
+    <string name="center">Κέντρο</string>
+    <string name="end">Τέλος</string>
+    <string name="space">Διάστημα</string>
+    <string name="menu_ime">Εναλλαγή μενού/πληκτρολογίου</string>
+    <string name="select_button">Επιλέξτε κουμπί για προσθήκη</string>
+    <string name="add_button">Προσθήκη κουμπιού</string>
+    <string name="save">Αποθηκεύσετε</string>
+    <string name="reset">Επαναφορά</string>
+    <string name="select_keycode">Επιλέξτε κουμπί πληκτρολογίου</string>
+    <string name="left">Αριστερά</string>
+    <string name="right">σωστά</string>
+    <string name="navbar_editor_title">Συντάκτης</string>
+    <string name="navbar_editor_summary">Διαμόρφωση γραμμής πλοήγησης</string>
+    <!-- Stock Navbar -->
+    <string name="navbar_activity_title">Μπάρα πλοήγησης</string>
+    <string name="tuner_status_bar_bg_transparency">Διαφανές φόντο γραμμής κατάστασης</string>
+
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Αναγκαστική διακοπή;</string>
+    <string name="force_stop_dlg_text">Εάν υποχρεώσετε να σταματήσετε μια εφαρμογή, ενδέχεται να συμπεριφέρεται εσφαλμένα.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="guts_force_close_app">Κλείσιμο εφαρμογής</string>
+
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Εναλλαγή κάρτας δεδομένων</string>
+    <string name="qs_data_switch_toast_0">Προς το παρόν δεν έχει εισαχθεί κάρτα SIM</string>
+    <string name="qs_data_switch_toast_1">Προς το παρόν έχει εισαχθεί μόνο μία κάρτα SIM</string>
+    <string name="qs_data_switch_changed_1">Αλλαγή κάρτας δεδομένων σε SIM 1.</string>
+    <string name="qs_data_switch_changed_2">Αλλαγή κάρτας δεδομένων σε SIM 2.</string>
+
+    <!-- Gaming mode -->
+    <string name="gaming_mode_not_enabled">Η λειτουργία παιχνιδιού είναι απενεργοποιημένη στις ρυθμίσεις</string>
+    <string name="quick_settings_gaming_mode_label">Λειτουργία παιχνιδιού</string>
+    <!-- Content description of the Gaming mode tile in quick settings when disabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_disabled">Η λειτουργία παιχνιδιού απενεργοποιήθηκε.</string>
+    <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_enabled">Η λειτουργία παιχνιδιού είναι ενεργοποιημένη.</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_dash_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Ταχεία Φόρτιση (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> έως την πλήρη φόρτιση)</string>
+    <string name="keyguard_plugged_in_dash_charging"><xliff:g id="percentage">%s</xliff:g> • Ταχεία Φόρτιση</string>
+
+    <!-- Indication on the keyguard that is shown when the device is charging with a warp charger. Should match keyguard_plugged_in_warp_charging [CHAR LIMIT=40]-->
+    <string name="keyguard_indication_warp_charging_time"><xliff:g id="percentage">%2$s</xliff:g> • Κανονική Φόρτιση (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%1$s</xliff:g> έως την πλήρη φόρτιση)</string>
+    <string name="keyguard_plugged_in_warp_charging"><xliff:g id="percentage">%s</xliff:g> • Κανονική Φόρτιση</string>
+
+    <!-- The width/height of the charging indicator view on keyguard. -->
+    <dimen name="keyguard_charging_indication_height">60dp</dimen>
+    <dimen name="keyguard_charging_indication_width">32dp</dimen>
+
+
+    <!-- QS Header data usage info -->
+    <string name="usage_data">σε χρήση</string>
+
+    <!-- SystemUI tuner -->
+    <string name="systemui_tuner_navbar_title">Μπάρα πλοήγησης</string>
+
+    <string name="quick_rr_tools_label">Διαμορφώσεις</string>
+
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">Πληροφορίες FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Απενεργοποίηση πληροφοριών FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Πληροφορίες FPS ενεργοποιημένες</string>
+
+    <string name="tuner_keyguard_transition_animations_title">Εμφάνιση κινούμενων γραφικών-εικόνων μετάβασης</string>
+    <string name="tuner_keyguard_transition_animations_summary">Δείξτε ακόμα και άχρηστα κινούμενα γραφικά σχέδια</string>
+
+    <string name="tuner_quick_settings">Γρήγορες ρυθμίσεις</string>
+    <string name="tuner_show_brightness_new">Εμφάνιση ρυθμιστικού φωτεινότητας</string>
+    <string name="tuner_brightness_position_bottom">Ρυθμιστικό φωτεινότητας στο κάτω μέρος</string>
+    <string name="tuner_show_secure_title">Εμφάνιση υποσέλιδου ασφαλείας</string>
+    <string name="tuner_show_drag_handle">Εμφάνιση λαβής μεταφοράς</string>
+    <string name="tuner_qs_long_press_action">Μην εμφανίζετε πάνελ σε παρατεταμένο πάτημα</string>
+
+    <!-- Alerting notification header label -->
+    <string name="notification_section_header_alerting">Ειδοποιήσεις συναγερμών</string>
+    <!-- Smart pixels QS tile -->
+    <string name="quick_settings_smart_pixels">Έξυπνα pixel</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Αυτόματα ενεργοποιημένα έξυπνα pixel</string>
+
+    <!-- Sound QS tile -->
+    <string name="quick_settings_sound_label">Ήχος</string>
+    <string name="quick_settings_sound_ring">Κουδούνισμα</string>
+    <string name="quick_settings_sound_vibrate">Παλμός</string>
+    <string name="quick_settings_sound_dnd">Μην ενοχλείτε</string>
+
+    <!-- Music tile -->
+    <string name="quick_settings_music_label">Μουσική</string>
+    <string name="quick_settings_music_play">Αναπ/γη</string>
+    <string name="quick_settings_music_pause">Παύση</string>
+
+    <!-- Reboot/Recovery QS tile -->
+    <string name="quick_settings_reboot_label">Επανεκκίνηση</string>
+    <string name="quick_settings_reboot_recovery_label">Ανάκτηση</string>
+    <string name="quick_settings_poweroff_label">Απενεργοποίηση</string>
+    <string name="lockscreen_default">Προεπιλογή</string>
+    <string name="lockscreen_hidden">Καμία</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Σύρετε από το εικονίδιο για εκκίνηση</string>
+
+    <!-- Oneplus Numbers clock -->
+    <string name="clock_title_oneplus_numbers" translatable="false">OnePlus Numbers</string>
+
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Πυξίδα</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Αρχικοποίηση\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Πυξίδα ενεργή.</string>
+    <string name="accessibility_quick_settings_compass_on">Πυξίδα ανενεργή.</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Η πυξίδα έκλεισε.</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Η πυξίδα άνοιξε.</string>
+    <string name="quick_settings_compass_N">Β</string>
+    <string name="quick_settings_compass_NE">ΒΑ</string>
+    <string name="quick_settings_compass_E">Α</string>
+    <string name="quick_settings_compass_SE">ΝΑ</string>
+    <string name="quick_settings_compass_S">Ν</string>
+    <string name="quick_settings_compass_SW">ΝΔ</string>
+    <string name="quick_settings_compass_W">Δ</string>
+    <string name="quick_settings_compass_NW">ΒΔ</string>
+
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_minimal" translatable="false">OnePlus Minimal</string>
+
+    <!-- Animations QS Tile -->
+    <string name="quick_settings_animation_label">Απενεργοποίηση κινούμενων σχεδίων</string>
+    <string name="accessibility_quick_settings_animations_on">Ενεργοποίηση κινούμενων σχεδίων</string>
+    <string name="accessibility_quick_settings_animations_off">Κινούμενες εικόνες απενεργοποιημένες</string>
+
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_roman" translatable="false">OnePlus Roman</string>
+
+    <string name="tuner_show_brightness_mode">Εμφάνιση εικονιδίου αυτόματης φωτεινότητας στο υποσέλιδο</string>
+    <string name="tuner_show_brightness_side_buttons">Εμφάνιση πλευρικών κουμπιών ρυθμιστή φωτεινότητας</string>
+
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_oneplus_analog" translatable="false">OnePlus Analog</string>
+
+    <!-- Name of the vowifi status bar icon. -->
+    <string name="status_bar_vowifi">VoWiFi</string>
+    <!-- Oneplus Analog clock -->
+    <string name="clock_title_minimalism" translatable="false">Mινιμαλιστικό</string>
+
+    <!-- FOD View -->
+    <string name="fod_view_title" translatable="false">Δακτυλικό αποτύπωμα στην οθόνη</string>
+    <string name="fod_view_pressed_title" translatable="false">Δακτυλικό αποτύπωμα στην οθόνη</string>
+
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+
+    <!-- Name of the data saver status bar icon. -->
+    <string name="status_bar_data_saver">Εξοικονόμηση δεδομένων</string>
+
+    <!-- Name of the vpn status bar icon. -->
+    <string name="status_bar_vpn">VPN</string>
+
+    <!-- Name of the roaming status bar icon. -->
+    <string name="status_bar_roaming">Περιαγωγή</string>
+
+    <!-- Data usage -->
+    <string name="daily_data_usage_title">Η σημερινή χρήση</string>
+    <string name="monthly_data_usage_title">Αυτό το μήνα χρήση</string>
+
+    <!-- Status bar network traffic monitor strings -->
+    <string name="kilobitspersecond_short">kb/δευτ</string>
+    <string name="megabitspersecond_short">Mb/δευτ</string>
+    <string name="gigabitspersecond_short">Gb/δευτ</string>
+    <string name="kilobytespersecond_short">kB/δευτ</string>
+    <string name="megabytespersecond_short">MB/δευτ</string>
+    <string name="gigabytespersecond_short">GB/δευτ</string>
+
+    <!-- Mono Tile-->
+    <string name="quick_settings_monotoggle_tile">Λειτουργία ήχου</string>
+    <string name="quick_settings_monotoggle_tile_mono">Μονοφωνικός ήχος</string>
+    <string name="quick_settings_monotoggle_tile_stereo">Στερεοφωνικός ήχος</string>
+
+    <!-- Text to use when the number in a notification info is too large
+         (greater than status_bar_notification_info_maxnum, defined in
+         values/config.xml) and must be truncated.
+         [CHAR LIMIT=4] -->
+    <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
+
+     <!-- Screen Stabilization -->
+    <string name="quick_settings_stabilization_label">Σταθεροποίηση οθόνης</string>
+    <string name="quick_settings_stabilization_off">Η σταθεροποίηση είναι απενεργοποιημένη</string>
+    <string name="quick_settings_stabilization_on">Η σταθεροποίηση είναι ενεργοποιημένη</string>
+    <string name="low_label">Χαμηλός</string>
+    <string name="high_label">Υψηλός</string>
+    <string name="stabilization_velocity_friction">Τριβή ταχύτητας</string>
+    <string name="stabilization_velocity_amplitude">Εύρος ταχύτητας</string>
+    <string name="stabilization_position_friction">Τριβή θέσης</string>
+
+    <string name="recents_app_killed">Η εφαρμογή έκλεισε</string>
+    <string name="nope_cant_kill">Το πρόγραμμα εκκίνησης δεν μπορεί να απενεργοποιηθεί</string>
+
+
+    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">Ανοίξτε την οθόνη Υπηρεσίες λειτουργίας.</string>
+
+    <!-- Screen pinning -->
+    <string name="screen_pinning_description_custom">Αυτό το κρατάει σε εμφάνιση μέχρι να ξεκαρφιτσωθεί. Αγγίξτε &amp; και κρατήστε πατημένο το πίσω για ξεκαρφίτσωμα.</string>
+    <string name="screen_pinning_description_recents_invisible_custom">Αυτό το κρατάει σε εμφάνιση μέχρι να ξεκαρφιτσωθεί. Αγγίξτε &amp; και κρατήστε πατημένο το πίσω για ξεκαρφίτσωμα.</string>
+    <string name="screen_pinning_description_accessible_custom">Αυτό το κρατάει σε εμφάνιση μέχρι να ξεκαρφιτσωθεί. Αγγίξτε &amp; και κρατήστε πατημένο το πίσω για ξεκαρφίτσωμα.</string>
+    <string name="screen_pinning_description_recents_invisible_accessible_custom">Αυτό το κρατάει σε εμφάνιση μέχρι να ξεκαρφιτσωθεί. Αγγίξτε &amp; και κρατήστε πατημένο το πίσω για ξεκαρφίτσωμα.</string>
+    <string name="screen_pinning_toast_custom">Για ξεκαρφίτσωμα αυτής της οθόνης αγγίξτε &amp; και κρατήστε πατημένο το πίσω πλήκτρο</string>
+    <string name="screen_pinning_toast_recents_invisible_custom">Για ξεκαρφίτσωμα αυτής της οθόνης αγγίξτε &amp; και κρατήστε πατημένο το πίσω πλήκτρο</string>
+
+    <!-- Long swipe gesture actions -->
+    <string name="app_picker_dialog_title">Επιλογή εφαρμογής</string>
+</resources>
