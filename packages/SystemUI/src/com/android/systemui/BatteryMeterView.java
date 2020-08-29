@@ -426,7 +426,7 @@ public class BatteryMeterView extends LinearLayout implements
             });
         } else {
             if (mShowSymbol) {
-                mBatteryPercentView.setText(mChargeIndicator + text);
+                batteryPercentViewSetText(mChargeIndicator + text);
             } else {
                 mBatteryPercentView.setText(text);
             }
@@ -479,6 +479,13 @@ public class BatteryMeterView extends LinearLayout implements
             removeBatteryPercentView();
         }
         updatePercentText();
+    }
+
+    private void batteryPercentViewSetText(CharSequence text) {
+        CharSequence currentText = mBatteryPercentView.getText();
+        if (!currentText.toString().equals(text.toString())) {
+            mBatteryPercentView.setText(text);
+        }
     }
 
     public void updateVisibility() {
