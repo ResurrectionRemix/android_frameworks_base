@@ -84,7 +84,8 @@ public class KeyguardStatusView extends GridLayout implements
     private int mLockClockFontSize;
     private int mDateSelection;
     private boolean mShowClock = true;
-    private boolean mShowDate= true;
+    private boolean mShowDate = true;
+    private int mWeatherBgSelection;
 
     // Date styles paddings
     private int mDateVerPadding;
@@ -103,6 +104,9 @@ public class KeyguardStatusView extends GridLayout implements
             "system:" + Settings.System.LOCKSCREEN_CLOCK;
     private static final String LOCKSCREEN_DATE =
             "system:" + Settings.System.LOCKSCREEN_DATE;
+    private static final String LOCKSCREEN_WEATHER_SELECTION =
+            "system:" + Settings.System.LOCKSCREEN_WEATHER_SELECTION;
+
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
      * icons on AOD.
@@ -201,6 +205,7 @@ public class KeyguardStatusView extends GridLayout implements
         tunerService.addTunable(this, LOCKSCREEN_DATE_SELECTION);
         tunerService.addTunable(this, LOCKSCREEN_DATE);
         tunerService.addTunable(this, LOCKSCREEN_CLOCK);
+        tunerService.addTunable(this, LOCKSCREEN_WEATHER_SELECTION);
         onDensityOrFontScaleChanged();
     }
 
@@ -894,6 +899,11 @@ public class KeyguardStatusView extends GridLayout implements
                         TunerService.parseIntegerSwitch(newValue, true);
                 updateClockVisbility();
                 break;
+            case LOCKSCREEN_WEATHER_SELECTION:
+                mWeatherBgSelection =
+                        TunerService.parseInteger(newValue, 0);
+                updateWeatherBG();
+                break;
             default:
                 break;
         }
@@ -916,6 +926,7 @@ public class KeyguardStatusView extends GridLayout implements
                  mKeyguardSlice.setVisibility(View.GONE);
          }
    }
+
    private void updateDateStyles() {
          if (mKeyguardSlice == null) return;
          switch (mDateSelection) {
@@ -1014,10 +1025,58 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 
+    public void updateWeatherBG() {
+        if (mWeatherView != null) {
+            switch (mWeatherBgSelection) {
+                case 0: // default
+                default:
+                    mWeatherView.setViewBackgroundResource(0);
+                    break;
+                case 1: // semi-transparent box
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_box_str_border));
+                    break;
+                case 2: // semi-transparent box (round)
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_border));
+                    break;
+                case 3: // Q-Now Playing background
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.ambient_indication_pill_background));
+                    break;
+                case 4: // accent box
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                    break;
+                case 5: // accent box transparent
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_accent), 160);
+                    break;
+                case 6: // gradient box
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_gradient));
+                    break;
+                case 7: // Dark Accent border
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_borderacc));
+                    break;
+                case 8: // Dark Gradient border
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_bordergrad));
+                    break;
+                case 9: // Dark Accent border
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_borderacc));
+                    break;
+                case 10: // Dark Gradient border
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_bordergrad));
+                    break;
+                case 11: // gradient color box
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_gradient_color));
+                    break;
+                case 12: // gradient color box 2
+                    mWeatherView.setViewBackground(getResources().getDrawable(R.drawable.date_str_gradient_color_2));
+                    break;
+            }
+        }
+   }
+
     public void updateWeatherView() {
         if (mWeatherView != null) {
             if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
                 mWeatherView.enableUpdates();
+                updateWeatherBG();
             } else if (!mShowWeather || mPixelStyle) {
                 mWeatherView.disableUpdates();
             }

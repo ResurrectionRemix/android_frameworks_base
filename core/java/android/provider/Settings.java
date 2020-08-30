@@ -6817,6 +6817,13 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_CLOCK = "lockscreen_clock";
 
+
+        /**
+         * Lockscreen Weather Background Selection
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_SELECTION = "lockscreen_weather_selection";
+
         /**
          * Whether to show lockscreen clock
          * @hide

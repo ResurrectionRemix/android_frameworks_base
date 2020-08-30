@@ -29,9 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/left_text"

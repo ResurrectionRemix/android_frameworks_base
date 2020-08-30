@@ -76,6 +76,7 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     private int mRightTextColor;
     private int mLeftTextColor;
     private int mCurrentImageColor;
+    private LinearLayout mLayout;
 
     public CurrentWeatherView(Context context) {
         this(context, null);
@@ -123,6 +124,7 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         mCurrentImage  = (ImageView) findViewById(R.id.current_image);
         mLeftText = (TextView) findViewById(R.id.left_text);
         mRightText = (TextView) findViewById(R.id.right_text);
+        mLayout = findViewById(R.id.current);
         mTextColor = mLeftText.getCurrentTextColor();
         mSettingsObserver = new SettingsObserver(new Handler());
         mSettingsObserver.observe();
@@ -242,6 +244,20 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
                 getResources().getDimensionPixelSize(R.dimen.current_weather_image_size);
         mCurrentImage.getLayoutParams().width =
                 getResources().getDimensionPixelSize(R.dimen.current_weather_image_size);
+    }
+
+    public void setViewBackground(Drawable drawRes) {
+        if (mWeatherClient.getWeatherInfo() == null) return;
+        setViewBackground(drawRes, 255);
+    }
+
+    public void setViewBackground(Drawable drawRes, int bgAlpha) {
+        mLayout.setBackground(drawRes);
+        mLayout.getBackground().setAlpha(bgAlpha);
+    }
+
+    public void setViewBackgroundResource(int drawRes) {
+        mLayout.setBackgroundResource(drawRes);
     }
 
     private class SettingsObserver extends ContentObserver {
