@@ -98,7 +98,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private static final String LOCK_DATE_ALIGNMENT =
             "system:" + Settings.System.LOCK_DATE_ALIGNMENT;
     private static final String LOCKSCREEN_ITEM_PADDING =
-            "system:" + Settings.System.LOCKSCREEN_ITEM_PADDING;
+            "system:" + Settings.System.LOCKSCREEN_DATE_PADDING;
 
     private final HashMap<View, PendingIntent> mClickActions;
     private final ActivityStarter mActivityStarter;

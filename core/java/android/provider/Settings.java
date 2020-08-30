@@ -6831,6 +6831,18 @@ public final class Settings {
         public static final String LOCKSCREEN_ITEM_PADDING = "lockscreen_item_padding";
 
         /**
+         * Lockscreen Items padding
+         * @hide
+         */
+        public static final String LOCKSCREEN_DATE_PADDING = "lockscreen_date_padding";
+
+        /**
+         * Lockscreen Items padding
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_PADDING = "lockscreen_weather_padding";
+
+        /**
          * Screenrecord: audio source
          * @hide
          */
