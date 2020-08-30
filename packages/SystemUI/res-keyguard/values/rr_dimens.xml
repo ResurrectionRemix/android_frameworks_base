@@ -48,6 +48,31 @@
     <dimen name="lock_date_font_size_23">23dp</dimen>
     <dimen name="lock_date_font_size_24">24dp</dimen>
     <dimen name="lock_date_font_size_25">25dp</dimen>
+    <dimen name="lock_date_font_size_26">26dp</dimen>
+    <dimen name="lock_date_font_size_27">27dp</dimen>
+    <dimen name="lock_date_font_size_28">28dp</dimen>
+    <dimen name="lock_date_font_size_29">29dp</dimen>
+    <dimen name="lock_date_font_size_30">30dp</dimen>
+    <dimen name="lock_date_font_size_31">31dp</dimen>
+    <dimen name="lock_date_font_size_32">32dp</dimen>
+    <dimen name="lock_date_font_size_33">33dp</dimen>
+    <dimen name="lock_date_font_size_34">34dp</dimen>
+    <dimen name="lock_date_font_size_35">35dp</dimen>
+    <dimen name="lock_date_font_size_36">36dp</dimen>
+    <dimen name="lock_date_font_size_37">37dp</dimen>
+    <dimen name="lock_date_font_size_38">38dp</dimen>
+    <dimen name="lock_date_font_size_39">39dp</dimen>
+    <dimen name="lock_date_font_size_40">40dp</dimen>
+    <dimen name="lock_date_font_size_41">41dp</dimen>
+    <dimen name="lock_date_font_size_42">42dp</dimen>
+    <dimen name="lock_date_font_size_43">43dp</dimen>
+    <dimen name="lock_date_font_size_44">44dp</dimen>
+    <dimen name="lock_date_font_size_45">45dp</dimen>
+    <dimen name="lock_date_font_size_46">46dp</dimen>
+    <dimen name="lock_date_font_size_47">47dp</dimen>
+    <dimen name="lock_date_font_size_48">48dp</dimen>
+    <dimen name="lock_date_font_size_49">49dp</dimen>
+    <dimen name="lock_date_font_size_50">50dp</dimen>
 
      <!-- Typo clock font size parameters -->
     <dimen name="lock_clock_font_size_35">35dp</dimen>
@@ -116,31 +141,6 @@
     <dimen name="lock_clock_font_size_106">106dp</dimen>
     <dimen name="lock_clock_font_size_107">107dp</dimen>
     <dimen name="lock_clock_font_size_108">108dp</dimen>
-    <dimen name="lock_date_font_size_26">26dp</dimen>
-    <dimen name="lock_date_font_size_27">27dp</dimen>
-    <dimen name="lock_date_font_size_28">28dp</dimen>
-    <dimen name="lock_date_font_size_29">29dp</dimen>
-    <dimen name="lock_date_font_size_30">30dp</dimen>
-    <dimen name="lock_date_font_size_31">31dp</dimen>
-    <dimen name="lock_date_font_size_32">32dp</dimen>
-    <dimen name="lock_date_font_size_33">33dp</dimen>
-    <dimen name="lock_date_font_size_34">34dp</dimen>
-    <dimen name="lock_date_font_size_35">35dp</dimen>
-    <dimen name="lock_date_font_size_36">36dp</dimen>
-    <dimen name="lock_date_font_size_37">37dp</dimen>
-    <dimen name="lock_date_font_size_38">38dp</dimen>
-    <dimen name="lock_date_font_size_39">39dp</dimen>
-    <dimen name="lock_date_font_size_40">40dp</dimen>
-    <dimen name="lock_date_font_size_41">41dp</dimen>
-    <dimen name="lock_date_font_size_42">42dp</dimen>
-    <dimen name="lock_date_font_size_43">43dp</dimen>
-    <dimen name="lock_date_font_size_44">44dp</dimen>
-    <dimen name="lock_date_font_size_45">45dp</dimen>
-    <dimen name="lock_date_font_size_46">46dp</dimen>
-    <dimen name="lock_date_font_size_47">47dp</dimen>
-    <dimen name="lock_date_font_size_48">48dp</dimen>
-    <dimen name="lock_date_font_size_49">49dp</dimen>
-    <dimen name="lock_date_font_size_50">50dp</dimen>
 
     <!-- padding for date view -->
     <dimen name="widget_clock_normal_clock_padding">2dp</dimen>

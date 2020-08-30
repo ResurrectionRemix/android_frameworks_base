@@ -6812,6 +6812,25 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_ALIGNMENT = "lockscreen_weather_alignment";
 
         /**
+         * Lockscreen OwnerInfo Alignment
+         * @hide
+         */
+        public static final String LOCK_OWNERINFO_ALIGNMENT = "lock_ownerinfo_alignment";
+
+        /**
+         * Lockscreen Date Alignment
+         * @hide
+         */
+        public static final String LOCK_DATE_ALIGNMENT = "lock_date_alignment";
+
+
+        /**
+         * Lockscreen Items padding
+         * @hide
+         */
+        public static final String LOCKSCREEN_ITEM_PADDING = "lockscreen_item_padding";
+
+        /**
          * Screenrecord: audio source
          * @hide
          */

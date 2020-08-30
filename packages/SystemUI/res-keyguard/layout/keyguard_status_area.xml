@@ -52,7 +52,6 @@
         android:id="@+id/row_maincenter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center">
             <view class="com.android.keyguard.KeyguardSliceView$Row"
                       android:id="@+id/row"
