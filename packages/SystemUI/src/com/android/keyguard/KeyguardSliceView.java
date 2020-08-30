@@ -111,7 +111,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private Row mRow;
     private int mTextColor;
     private float mDarkAmount = 0;
-    private RelativeLayout mRowContainer;
+    public RelativeLayout mRowContainer;
     private LiveData<Slice> mLiveData;
     private int mDisplayId = INVALID_DISPLAY;
     private int mIconSize;

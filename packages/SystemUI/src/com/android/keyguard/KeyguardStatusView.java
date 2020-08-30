@@ -1405,17 +1405,15 @@ public class KeyguardStatusView extends GridLayout implements
    }
 
    private void updateDateVisbility() {
-         if (mKeyguardSlice != null) {
-            // Dont hide slice view in doze
-            mKeyguardSlice.setVisibility(mDarkAmount != 1 ? 
-             (mShowDate ? View.VISIBLE : View.GONE) : View.VISIBLE);
-         }
+        if (mKeyguardSlice != null) {
+            mKeyguardSlice.mRowContainer.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
+        }
    }
 
    private void updateWeatherAlignment() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                           LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        if (mWeatherView != null && !mPixelStyle) {
+        if (mWeatherView != null) {
             switch (mWeatherViewAlignment) {
                 case 0:
                     params.gravity = Gravity.LEFT;
@@ -1584,7 +1582,8 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void updateWeatherView() {
         if (mWeatherView != null) {
-            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
+            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE
+                || mKeyguardSlice.mRowContainer.getVisibility() != View.VISIBLE)) {
                 mWeatherView.enableUpdates();
                 updateWeatherAlignment();
                 updateWeatherBG();
