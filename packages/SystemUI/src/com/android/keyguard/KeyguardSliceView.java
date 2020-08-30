@@ -92,6 +92,8 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private static final String TAG = "KeyguardSliceView";
     public static final int DEFAULT_ANIM_DURATION = 550;
     private static final String KEYGUARD_TRANSISITION_ANIMATIONS = "sysui_keyguard_transition_animations";
+    private static final String LOCKDATE_FONT_SIZE =
+            "system:" + Settings.System.LOCKDATE_FONT_SIZE;
 
     private final HashMap<View, PendingIntent> mClickActions;
     private final ActivityStarter mActivityStarter;
@@ -110,6 +112,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private int mIconSize;
     private int mIconSizeWithHeader;
     private int mWeatherIconSize;
+    private int mDateSize;
     /**
      * Runnable called whenever the view contents change.
      */
@@ -132,6 +135,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, Settings.Secure.KEYGUARD_SLICE_URI);
         tunerService.addTunable(this, KEYGUARD_TRANSISITION_ANIMATIONS);
+        tunerService.addTunable(this, LOCKDATE_FONT_SIZE);
 
         mClickActions = new HashMap<>();
         mRowPadding = context.getResources().getDimensionPixelSize(R.dimen.subtitle_clock_padding);
@@ -197,12 +201,6 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         super.onVisibilityAggregated(isVisible);
         setLayoutTransition((isVisible && mKeyguardTransitionAnimations) ? mLayoutTransition : null);
     }
-
-    private int getLockDateSize() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-               Settings.System.LOCKDATE_FONT_SIZE, 14);
-    }
-
     /**
      * Returns whether the current visible slice has a title/header.
      */
@@ -415,6 +413,9 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     public void onTuningChanged(String key, String newValue) {
         if (key.equals(KEYGUARD_TRANSISITION_ANIMATIONS)) {
             mKeyguardTransitionAnimations = newValue == null || newValue.equals("1");
+        } else if (key.equals(LOCKDATE_FONT_SIZE)) {
+            mDateSize = TunerService.parseInteger(newValue, 14);
+            refreshdatesize();
         } else {
             setupUri(newValue);
         }
@@ -485,42 +486,38 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     }
 
     public void refreshdatesize() {
-        final Resources res = getContext().getResources();
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateSize = isPrimary ? getLockDateSize() : 18;
-
-        if (lockDateSize == 10) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_10);
-        } else if (lockDateSize == 11) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_11);
-        } else if (lockDateSize == 12) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_12);
-        } else if (lockDateSize == 13) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_13);
-        } else if (lockDateSize == 14) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_14);
-        } else if (lockDateSize == 15) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_15);
-        } else if (lockDateSize == 16) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_16);
-        } else if (lockDateSize == 17) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_17);
-        } else if (lockDateSize == 18) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_18);
-        } else if (lockDateSize == 19) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_19);
-        } else if (lockDateSize == 20) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_20);
-        } else if (lockDateSize == 21) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21);
-        } else if (lockDateSize == 22) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_22);
-        } else if (lockDateSize == 23) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_23);
-        } else if (lockDateSize == 24) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_24);
-        } else if (lockDateSize == 25) {
-        mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_25);
+        if (mDateSize == 10) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_10);
+        } else if (mDateSize == 11) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_11);
+        } else if (mDateSize == 12) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_12);
+        } else if (mDateSize == 13) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_13);
+        } else if (mDateSize == 14) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_14);
+        } else if (mDateSize == 15) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_15);
+        } else if (mDateSize == 16) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_16);
+        } else if (mDateSize == 17) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_17);
+        } else if (mDateSize == 18) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_18);
+        } else if (mDateSize == 19) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_19);
+        } else if (mDateSize == 20) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_20);
+        } else if (mDateSize == 21) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21);
+        } else if (mDateSize == 22) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_22);
+        } else if (mDateSize == 23) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_23);
+        } else if (mDateSize == 24) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_24);
+        } else if (mDateSize == 25) {
+            mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_25);
         }
     }
 
