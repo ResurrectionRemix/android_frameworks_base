@@ -1406,10 +1406,9 @@ public class KeyguardStatusView extends GridLayout implements
 
    private void updateDateVisbility() {
          if (mKeyguardSlice != null) {
-             if (mShowDate)
-                 mKeyguardSlice.setVisibility(View.VISIBLE);
-             else 
-                 mKeyguardSlice.setVisibility(View.GONE);
+            // Dont hide slice view in doze
+            mKeyguardSlice.setVisibility(mDarkAmount != 1 ? 
+             (mShowDate ? View.VISIBLE : View.GONE) : View.VISIBLE);
          }
    }
 
