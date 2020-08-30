@@ -902,7 +902,7 @@ public class KeyguardStatusView extends GridLayout implements
             case LOCKSCREEN_WEATHER_SELECTION:
                 mWeatherBgSelection =
                         TunerService.parseInteger(newValue, 0);
-                updateWeatherBG();
+                updateWeatherView();
                 break;
             default:
                 break;

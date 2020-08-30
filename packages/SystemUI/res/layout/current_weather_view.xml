@@ -40,6 +40,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             style="@style/TextAppearance.Keyguard.Weather" />
 
         <ImageView
@@ -56,6 +57,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             style="@style/TextAppearance.Keyguard.Weather" />
     </LinearLayout>
 

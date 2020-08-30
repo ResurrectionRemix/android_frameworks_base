@@ -140,12 +140,8 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
                 Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
         if (DEBUG) Log.d(TAG, "updateWeatherData");
 
-        if (!mWeatherClient.isOmniJawsEnabled()) {
+        if (!mWeatherClient.isOmniJawsEnabled() || weatherData == null) {
             setErrorView();
-            return;
-        }
-        if (weatherData == null) {
-            setBlankView();
             return;
         }
         Drawable d = mWeatherClient.getWeatherConditionImage(weatherData.conditionCode);
@@ -156,7 +152,12 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         mLeftText.setText(weatherData.city);
         mRightText.setTextColor(mRightTextColor);
         mLeftText.setTextColor(mLeftTextColor);
-        mCurrentImage.setColorFilter(mCurrentImageColor);
+        if (mCurrentImageColor != 0xFFFFFFFF) {
+            mCurrentImage.setImageTintList((d instanceof VectorDrawable) ? 
+                 ColorStateList.valueOf(mCurrentImageColor) : null);
+        } else {
+            updateTint(d);
+        }
     }
 
     private int getTintColor() {
@@ -167,12 +168,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         Drawable d = mContext.getResources().getDrawable(R.drawable.ic_qs_weather_default_off_white);
         updateTint(d);
         mCurrentImage.setImageDrawable(d);
-        mLeftText.setText("");
-        mRightText.setText("");
-    }
-
-    private void setBlankView() {
-        mCurrentImage.setImageDrawable(null);
         mLeftText.setText("");
         mRightText.setText("");
     }
@@ -247,7 +242,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     }
 
     public void setViewBackground(Drawable drawRes) {
-        if (mWeatherClient.getWeatherInfo() == null) return;
         setViewBackground(drawRes, 255);
     }
 
