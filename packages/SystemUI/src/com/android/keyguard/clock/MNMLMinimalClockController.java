@@ -335,9 +335,18 @@ public class MNMLMinimalClockController implements ClockPlugin {
                Settings.System.LOCKDATE_FONT_SIZE, 14);
     }
 
+    private boolean isDateEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_DATE, 1) == 1;
+    }
+
     public void refreshdatesize() {
         int lockDateSize = getLockDateSize();
-
+        if(isDateEnabled()) {
+           mDate.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                mResources.getDimensionPixelSize(R.dimen.lock_date_font_size_0));
+           return;
+        }
         if (lockDateSize == 10) {
         mDate.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 mResources.getDimensionPixelSize(R.dimen.lock_date_font_size_10));

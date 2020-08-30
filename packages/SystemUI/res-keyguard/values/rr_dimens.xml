@@ -22,6 +22,7 @@
 
 
     <!-- Lock date font size parameters -->
+    <dimen name="lock_date_font_size_0">0dp</dimen>
     <dimen name="lock_date_font_size_1">1dp</dimen>
     <dimen name="lock_date_font_size_2">2dp</dimen>
     <dimen name="lock_date_font_size_3">3dp</dimen>

@@ -84,7 +84,7 @@ public class KeyguardStatusView extends GridLayout implements
     private int mLockClockFontSize;
     private int mDateSelection;
     private boolean mShowClock = true;
-    private boolean mShowDate = true;
+    private boolean mShowDate;
 
     // Date styles paddings
     private int mDateVerPadding;
