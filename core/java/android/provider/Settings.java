@@ -6806,6 +6806,12 @@ public final class Settings {
         public static final String STABILIZATION_VELOCITY_AMPLITUDE = "stabilization_velocity_amplitude";
 
         /**
+         * Lockscreen Weather Alignment
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_ALIGNMENT = "lockscreen_weather_alignment";
+
+        /**
          * Screenrecord: audio source
          * @hide
          */

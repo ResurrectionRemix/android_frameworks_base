@@ -41,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.core.graphics.ColorUtils;
 import com.android.internal.util.rr.RRFontHelper;
+import android.view.Gravity;
 
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.Dependency;
@@ -86,7 +87,8 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mShowClock = true;
     private boolean mShowDate = true;
     private int mWeatherBgSelection;
-
+    private int mWeatherViewAlignment;
+ 
     // Date styles paddings
     private int mDateVerPadding;
     private int mDateHorPadding;
@@ -106,6 +108,8 @@ public class KeyguardStatusView extends GridLayout implements
             "system:" + Settings.System.LOCKSCREEN_DATE;
     private static final String LOCKSCREEN_WEATHER_SELECTION =
             "system:" + Settings.System.LOCKSCREEN_WEATHER_SELECTION;
+    private static final String LOCKSCREEN_WEATHER_ALIGNMENT =
+            "system:" + Settings.System.LOCKSCREEN_WEATHER_ALIGNMENT;
 
     /**
      * Bottom margin that defines the margin between bottom of smart space and top of notification
@@ -206,6 +210,7 @@ public class KeyguardStatusView extends GridLayout implements
         tunerService.addTunable(this, LOCKSCREEN_DATE);
         tunerService.addTunable(this, LOCKSCREEN_CLOCK);
         tunerService.addTunable(this, LOCKSCREEN_WEATHER_SELECTION);
+        tunerService.addTunable(this, LOCKSCREEN_WEATHER_ALIGNMENT);
         onDensityOrFontScaleChanged();
     }
 
@@ -904,6 +909,12 @@ public class KeyguardStatusView extends GridLayout implements
                         TunerService.parseInteger(newValue, 0);
                 updateWeatherView();
                 break;
+            case LOCKSCREEN_WEATHER_ALIGNMENT:
+                mWeatherViewAlignment =
+                        TunerService.parseInteger(newValue, 1);
+                updateWeatherAlignment();
+                break;
+
             default:
                 break;
         }
@@ -925,6 +936,31 @@ public class KeyguardStatusView extends GridLayout implements
              else 
                  mKeyguardSlice.setVisibility(View.GONE);
          }
+   }
+
+   private void updateWeatherAlignment() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                          LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        if (mWeatherView != null && !mPixelStyle) {
+            switch (mWeatherViewAlignment) {
+                case 0:
+                    params.gravity = Gravity.LEFT;
+                    mWeatherView.setPaddingRelative(58, 0, 0, 0);
+                    mWeatherView.setLayoutParams(params);
+                    break;
+                case 1:
+                default:
+                    params.gravity = Gravity.CENTER;
+                    mWeatherView.setPaddingRelative(0, 0, 0, 0);
+                    mWeatherView.setLayoutParams(params);
+                    break;
+                case 2:
+                    params.gravity = Gravity.RIGHT;
+                    mWeatherView.setPaddingRelative(0, 0, 58, 0);
+                    mWeatherView.setLayoutParams(params);
+                    break;
+            }
+        }
    }
 
    private void updateDateStyles() {
@@ -1076,6 +1112,7 @@ public class KeyguardStatusView extends GridLayout implements
         if (mWeatherView != null) {
             if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
                 mWeatherView.enableUpdates();
+                updateWeatherAlignment();
                 updateWeatherBG();
             } else if (!mShowWeather || mPixelStyle) {
                 mWeatherView.disableUpdates();
