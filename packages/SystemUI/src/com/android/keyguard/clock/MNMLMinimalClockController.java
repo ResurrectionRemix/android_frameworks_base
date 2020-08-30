@@ -83,6 +83,7 @@ public class MNMLMinimalClockController implements ClockPlugin {
     private TextClock mClock;
     private TextClock mDate;
     private final Context mContext;
+    private GradientDrawable dateBg;
     /**
      * Accent color for the hour section
      */
@@ -112,7 +113,7 @@ public class MNMLMinimalClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        GradientDrawable dateBg = (GradientDrawable) mDate.getBackground();
+        dateBg = (GradientDrawable) mDate.getBackground();
         dateBg.setColor(mAccentColor);
         dateBg.setStroke(0,Color.TRANSPARENT);
         onTimeTick();
@@ -476,6 +477,13 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
+        if (dateBg != null) {
+           if(isDateEnabled()) {
+              dateBg.setColor(Color.TRANSPARENT);
+           } else {
+              dateBg.setColor(mAccentColor);
+           }
+        }
         if (mBigClockView != null) {
             mBigClockView.onTimeChanged();
         }

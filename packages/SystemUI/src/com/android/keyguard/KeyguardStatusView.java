@@ -84,7 +84,7 @@ public class KeyguardStatusView extends GridLayout implements
     private int mLockClockFontSize;
     private int mDateSelection;
     private boolean mShowClock = true;
-    private boolean mShowDate;
+    private boolean mShowDate= true;
 
     // Date styles paddings
     private int mDateVerPadding;
@@ -130,7 +130,6 @@ public class KeyguardStatusView extends GridLayout implements
                 refreshTime();
                 updateOwnerInfo();
                 updateLogoutView();
-                updateWeatherView();
                 updateDateStyles();
                 mClockView.refreshLockFont();
 		        refreshLockDateFont();
@@ -287,8 +286,9 @@ public class KeyguardStatusView extends GridLayout implements
         updateOwnerInfo();
         updateLogoutView();
         updateDark();
-        updateWeatherView();
         updateDateStyles();
+        updateDateVisbility();
+        updateWeatherView();
     }
 
     /**
@@ -1016,7 +1016,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void updateWeatherView() {
         if (mWeatherView != null) {
-            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE || !mShowDate)) {
+            if (mShowWeather && (!mPixelStyle || mKeyguardSlice.getVisibility() != View.VISIBLE)) {
                 mWeatherView.enableUpdates();
             } else if (!mShowWeather || mPixelStyle) {
                 mWeatherView.disableUpdates();
