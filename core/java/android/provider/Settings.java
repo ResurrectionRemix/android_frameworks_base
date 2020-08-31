@@ -6441,6 +6441,11 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_SMOOTHING_ENABLED = "pulse_smoothing_enabled";
+        /**
+         * 
+         * @hide
+         */
+        public static final String PULSE_ALWAYS_ENABLED = "pulse_always_enabled";
 
         /**
          * Network traffic font style
