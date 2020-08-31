@@ -148,8 +148,6 @@ public class KeyguardIndicationController implements StateListener,
     private float mTemperature;
     private String mMessageToShowOnScreenOn;
     private boolean mDozeChargeIndicator;
-    private int mCustomColor;
-    private int mIndicationColor;
 
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback;
 
@@ -226,8 +224,6 @@ public class KeyguardIndicationController implements StateListener,
 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, LOCKSCREEN_CHARGING_ANIMATION_STYLE);
-        tunerService.addTunable(this, LOCKSCREEN_CHARGE_COLOR);
-        tunerService.addTunable(this, LOCKSCREEN_INDICATION_TEXT_COLOR);
     }
 
     @Override
@@ -237,14 +233,6 @@ public class KeyguardIndicationController implements StateListener,
                 mChargingIndication =
                         TunerService.parseInteger(newValue, 1);
                 if (mChargingIndicationView != null) updateChargingIndicationStyle();
-            case LOCKSCREEN_CHARGE_COLOR:
-                mCustomColor =
-                        TunerService.parseInteger(newValue, 0xFFFFFFFF);
-                break;
-            case LOCKSCREEN_INDICATION_TEXT_COLOR:
-                mIndicationColor =
-                        TunerService.parseInteger(newValue, 0xFFFFFFFF);
-                break;
             default:
                 break;
         }
@@ -459,7 +447,6 @@ public class KeyguardIndicationController implements StateListener,
         if (TextUtils.isEmpty(mTransientIndication)) {
             mWakeLock.setAcquired(false);
         }
-
         if (mVisible) {
             // Walk down a precedence-ordered list of what indication
             // should be shown based on user or device state
@@ -467,15 +454,15 @@ public class KeyguardIndicationController implements StateListener,
                 // When dozing we ignore any text color and use white instead, because
                 // colors can be hard to read in low brightness.
                  if (mPowerPluggedIn) {
-                     mTextView.setTextColor(mCustomColor);
+                     updateDozeChargeColor();
                  } else {
-                     mTextView.setTextColor(mIndicationColor);
+                     updateDozeIndicationColor();
                  }
                 if (!TextUtils.isEmpty(mTransientIndication)) {
                     mTextView.switchIndication(mTransientIndication);
                 } else if (!TextUtils.isEmpty(mAlignmentIndication)) {
                     mTextView.switchIndication(mAlignmentIndication);
-                    mTextView.setTextColor(mIndicationColor);
+                    updateErrorColor();
                 } else if (mPowerPluggedIn) {
                     String indication = computePowerIndication();
                     if (animate) {
@@ -512,10 +499,10 @@ public class KeyguardIndicationController implements StateListener,
 
             if (!mUserManager.isUserUnlocked(userId)) {
                 mTextView.switchIndication(com.android.internal.R.string.lockscreen_storage_locked);
-                mTextView.setTextColor(mIndicationColor);
+                updateIndicationColor();
             } else if (!TextUtils.isEmpty(mTransientIndication)) {
                 mTextView.switchIndication(mTransientIndication);
-                mTextView.setTextColor(mIndicationColor);
+                updateTransientColor();
             } else if (!TextUtils.isEmpty(trustGrantedIndication)
                     && mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
                 if (powerIndication != null) {
@@ -526,15 +513,15 @@ public class KeyguardIndicationController implements StateListener,
                 } else {
                     mTextView.switchIndication(trustGrantedIndication);
                 }
-                mTextView.setTextColor(mIndicationColor);
+                updateIndicationColor();
             } else if (!TextUtils.isEmpty(mAlignmentIndication)) {
                 mTextView.switchIndication(mAlignmentIndication);
-                mTextView.setTextColor(mIndicationColor);
+                updateErrorColor();
             } else if (mPowerPluggedIn) {
                 if (DEBUG_CHARGING_SPEED) {
                     powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
                 }
-                updateChargeColor(mCustomColor);
+                updateChargeColor();
                 if (animate) {
                     animateText(mTextView, powerIndication);
                 } else {
@@ -544,21 +531,65 @@ public class KeyguardIndicationController implements StateListener,
                     && mKeyguardUpdateMonitor.getUserTrustIsManaged(userId)
                     && !mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
                 mTextView.switchIndication(trustManagedIndication);
-                mTextView.setTextColor(mIndicationColor);
+                updateIndicationColor();
             } else {
                 mTextView.switchIndication(mRestingIndication);
-                mTextView.setTextColor(mIndicationColor);
+                updateIndicationColor();
             }
             updateChargingIndication();
         }
     }
 
-    public void updateChargeColor(int color) {
-       if (color == 0xFFFFFFFF) {
-           mTextView.setTextColor(mInitialTextColorState);
-       } else {
-           mTextView.setTextColor(mCustomColor);
-       }
+    public void updateChargeColor() {
+        int color = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CHARGE_COLOR, 0xFFFFFFFF);
+        if (color == 0xFFFFFFFF) {
+            mTextView.setTextColor(mInitialTextColorState);
+        } else {
+            mTextView.setTextColor(color);
+        }
+    }
+
+    public void updateIndicationColor() {
+        int indicationcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFFFF);
+        if (indicationcolor == 0xFFFFFFFF) {
+            mTextView.setTextColor(mInitialTextColorState);
+        } else {
+            mTextView.setTextColor(indicationcolor);
+        }
+    }
+
+    public void updateDozeChargeColor() {
+        int indicationcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CHARGE_COLOR, 0xFFFFFFFF);
+        mTextView.setTextColor(indicationcolor);
+    }
+
+    public void updateDozeIndicationColor() {
+        int indicationcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFFFF);
+        mTextView.setTextColor(indicationcolor);
+    }
+
+    public void updateTransientColor() {
+        int indicationcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFFFF);
+        if (indicationcolor == 0xFFFFFFFF) {
+            mTextView.setTextColor(mTransientTextColorState);
+        } else {
+            mTextView.setTextColor(indicationcolor);
+        }
+    }
+
+    public void updateErrorColor() {
+        int indicationcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFFFF);
+        if (indicationcolor == 0xFFFFFFFF) {
+            mTextView.setTextColor(Utils.getColorError(mContext));
+        } else {
+            mTextView.setTextColor(indicationcolor);
+        }
     }
 
     public void updateChargingIndicationStyle() {
