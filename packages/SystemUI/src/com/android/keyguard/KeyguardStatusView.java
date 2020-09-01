@@ -148,8 +148,6 @@ public class KeyguardStatusView extends GridLayout implements
                 updateLogoutView();
                 updateItemPadding();
                 updateDateStyles();
-                updateWeatherPadding();
-                updateWeatherView();
                 mClockView.refreshLockFont();
 		        refreshLockDateFont();
 		        mClockView.refreshclocksize();
@@ -163,6 +161,8 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfoAlignment();
                 updateDateVisbility();
                 updateClockVisbility();
+                updateWeatherPadding();
+                updateWeatherView();
 	        }
         }
 
@@ -182,8 +182,6 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfo();
             updateLogoutView();
             updateItemPadding();
-            updateWeatherPadding();
-            updateWeatherView();
             updateDateStyles();         
             mClockView.refreshLockFont();
             refreshLockDateFont();
@@ -199,6 +197,8 @@ public class KeyguardStatusView extends GridLayout implements
             refreshOwnerInfoFont();
             updateDateVisbility();
             updateClockVisbility();
+            updateWeatherPadding();
+            updateWeatherView();
 	    }
 
         @Override
@@ -1405,8 +1405,22 @@ public class KeyguardStatusView extends GridLayout implements
    }
 
    private void updateDateVisbility() {
+        final ContentResolver resolver = mContext.getContentResolver();
+        String currentClock = Settings.Secure.getString(
+                resolver, Settings.Secure.LOCK_SCREEN_CUSTOM_CLOCK_FACE);
         if (mKeyguardSlice != null) {
+            boolean mCustomClockSelection = currentClock == null ? false : currentClock.contains("mnml_mnml");
             mKeyguardSlice.mRowContainer.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
+            if (currentClock != null && currentClock.contains("MNMLMinimalClockController")) {
+                if (mShowDate)
+                    mKeyguardSlice.setVisibility(View.VISIBLE);
+            } else if (currentClock != null && ((currentClock.contains("MNMLBoxClockController")) 
+                       || (currentClock.contains("DividedLinesClockController")))) {
+                if (mShowDate) {
+                    mKeyguardSlice.setVisibility(View.VISIBLE);
+                    mKeyguardSlice.mRowContainer.setVisibility(View.GONE);
+                }
+            }
         }
    }
 

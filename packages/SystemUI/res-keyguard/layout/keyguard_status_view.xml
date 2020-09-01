@@ -61,8 +61,8 @@
         android:id="@+id/weather_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/date_owner_info_margin"
         android:visibility="gone"
-        android:paddingTop="6dp"
         android:layout_below="@id/keyguard_status_area"/>
 
         <TextView
