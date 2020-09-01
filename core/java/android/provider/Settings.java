@@ -7271,6 +7271,13 @@ public final class Settings {
         public static final String POWER_MENU_BG_STYLE = "power_menu_bg_style";
 
         /**
+         * Powermenu backgroud blur radius
+         * Value as percentage
+         * @hide
+         */
+        public static final String POWER_MENU_BG_BLUR_RADIUS = "power_menu_bg_blur_radius";
+
+        /**
          * Whether to change the color of the qs panel
          * @hide
          */
