@@ -213,10 +213,6 @@
     <string name="lockscreen_hidden">Καμία</string>
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
     <string name="custom_hint">Σύρετε από το εικονίδιο για εκκίνηση</string>
-
-    <!-- Oneplus Numbers clock -->
-    <string name="clock_title_oneplus_numbers" translatable="false">OnePlus Numbers</string>
-
     <!-- Compass QS Tile -->
     <string name="quick_settings_compass_label">Πυξίδα</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -234,31 +230,19 @@
     <string name="quick_settings_compass_W">Δ</string>
     <string name="quick_settings_compass_NW">ΒΔ</string>
 
-    <!-- Oneplus Analog clock -->
-    <string name="clock_title_oneplus_minimal" translatable="false">OnePlus Minimal</string>
-
     <!-- Animations QS Tile -->
     <string name="quick_settings_animation_label">Απενεργοποίηση κινούμενων σχεδίων</string>
     <string name="accessibility_quick_settings_animations_on">Ενεργοποίηση κινούμενων σχεδίων</string>
     <string name="accessibility_quick_settings_animations_off">Κινούμενες εικόνες απενεργοποιημένες</string>
 
-    <!-- Oneplus Analog clock -->
-    <string name="clock_title_oneplus_roman" translatable="false">OnePlus Roman</string>
 
     <string name="tuner_show_brightness_mode">Εμφάνιση εικονιδίου αυτόματης φωτεινότητας στο υποσέλιδο</string>
     <string name="tuner_show_brightness_side_buttons">Εμφάνιση πλευρικών κουμπιών ρυθμιστή φωτεινότητας</string>
 
-    <!-- Oneplus Analog clock -->
-    <string name="clock_title_oneplus_analog" translatable="false">OnePlus Analog</string>
 
     <!-- Name of the vowifi status bar icon. -->
     <string name="status_bar_vowifi">VoWiFi</string>
     <!-- Oneplus Analog clock -->
-    <string name="clock_title_minimalism" translatable="false">Mινιμαλιστικό</string>
-
-    <!-- FOD View -->
-    <string name="fod_view_title" translatable="false">Δακτυλικό αποτύπωμα στην οθόνη</string>
-    <string name="fod_view_pressed_title" translatable="false">Δακτυλικό αποτύπωμα στην οθόνη</string>
 
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
@@ -293,7 +277,6 @@
          (greater than status_bar_notification_info_maxnum, defined in
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
-    <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
 
      <!-- Screen Stabilization -->
     <string name="quick_settings_stabilization_label">Σταθεροποίηση οθόνης</string>
