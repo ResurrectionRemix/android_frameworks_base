@@ -31,6 +31,7 @@ import android.app.admin.DevicePolicyManager;
 import android.app.trust.TrustManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.content.DialogInterface;
 import android.content.ComponentName;
@@ -2019,9 +2020,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         private Drawable mBackgroundDrawable;
         private final SysuiColorExtractor mColorExtractor;
         private final GlobalActionsPanelPlugin.PanelViewController mPanelController;
-        private final Drawable mbackground;
-        private final Bitmap mbittemp;
-        private int mbackgroundfilter;
         private boolean mKeyguardShowing;
         private boolean mShowing;
         private float mScrimAlpha;
@@ -2043,30 +2041,40 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             window.requestFeature(Window.FEATURE_NO_TITLE);
 
             View v1 = window.getDecorView();
-            mbackgroundfilter = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Resources res = mContext.getResources();
+            Bitmap bitMap;
+            int backgroundFilter = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.POWER_MENU_BG_STYLE, 0,
                     UserHandle.USER_CURRENT);
-            switch (mbackgroundfilter) {
-                case 1:
-                    mbittemp = ImageHelper.toGrayscale(ImageHelper.screenshotSurface(mContext));
-                    break;
-                case 2:
-                    Drawable bittemp = new BitmapDrawable(mContext.getResources(), ImageHelper.screenshotSurface(mContext));
-                    mbittemp = ImageHelper.getColoredBitmap(bittemp, mContext.getResources().getColor(color.accent_device_default_light));
-                    break;
-                case 3:
-                    mbittemp = ImageHelper.getGrayscaleBlurredImage(mContext, ImageHelper.screenshotSurface(mContext), 25.0f);
-                    break;
-                case 4:
-                    Drawable bittempp = new BitmapDrawable(mContext.getResources(), ImageHelper.screenshotSurface(mContext));
-                    Bitmap bittemppp = ImageHelper.getColoredBitmap(bittempp, mContext.getResources().getColor(color.accent_device_default_light));
-                    mbittemp = ImageHelper.getBlurredImage(mContext, bittemppp, 25.0f);
-                    break;
-                case 0:
+            switch (backgroundFilter) {
+                case 0: // Blur
                 default:
-                    mbittemp = ImageHelper.getBlurredImage(mContext, ImageHelper.screenshotSurface(mContext), 25.0f);
+                    bitMap = ImageHelper.getBlurredImage(mContext,
+                            ImageUtilities.screenshotSurface(mContext), radius);
+                    break;
+                case 1: // Garyscale
+                    bitMap = ImageHelper.toGrayscale(
+                            ImageUtilities.screenshotSurface(mContext));
+                    break;
+                case 2: // Tint
+                    Drawable bittemp = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bittemp,
+                            res.getColor(color.accent_device_default_light));
+                    break;
+                case 3: // Gray blur
+                    bitMap = ImageHelper.getGrayscaleBlurredImage(mContext,
+                            ImageUtilities.screenshotSurface(mContext), 25.0f);
+                    break;
+                case 4: // Tinted blur
+                    Drawable bitMapDrawable = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bitMapDrawable,
+                            res.getColor(color.accent_device_default_light));
+                    bitMap = ImageHelper.getBlurredImage(mContext, bitMap, 25.0f);
+                    break;
             }
-            mbackground = new BitmapDrawable(mContext.getResources(), mbittemp);
+            mbackground = new BitmapDrawable(res, bitMap);
 
             // Inflate the decor view, so the attributes below are not overwritten by the theme.
             window.getDecorView();
