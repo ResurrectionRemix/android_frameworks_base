@@ -653,7 +653,7 @@ public class RecordingService extends Service {
             notificationManager.notify(NOTIFICATION_ID, notification);
 
             mTempFile.delete();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Error saving screen recording: " + e.getMessage());
             Toast.makeText(this, R.string.screenrecord_delete_error, Toast.LENGTH_LONG)
                     .show();
