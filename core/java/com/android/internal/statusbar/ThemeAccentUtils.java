@@ -137,6 +137,11 @@ public class ThemeAccentUtils {
         "com.android.system.switch.contained", // 4
         "com.android.system.switch.retro", // 5
         "com.android.system.switch.telegram", // 6
+        "com.android.system.switch.telegramnormal", // 7
+        "com.android.system.switch.oneplusgradient", // 8
+        "com.android.system.switch.md2normal", // 9
+        "com.android.system.switch.narrownormal", // 10
+        "com.android.system.switch.containednormal", // 11
     };
 
     public static final String[] SOLARIZED_DARK = {
