@@ -247,7 +247,7 @@ public abstract class LogoImage extends ImageView implements
         Drawable drawable = null;
         switch (key) {
             case STATUS_BAR_LOGO:
-                mLogo = newValue != null && Integer.parseInt(newValue) == 1;
+                mLogo = TunerService.parseIntegerSwitch(newValue, false);
                 break;
             case STATUS_BAR_LOGO_COLOR:
                 mLogoColor =
