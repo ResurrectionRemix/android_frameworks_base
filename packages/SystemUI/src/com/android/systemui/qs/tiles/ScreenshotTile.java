@@ -61,15 +61,6 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleClick() {
-        mRegion = !mRegion;
-        Settings.System.putIntForUser(mContext.getContentResolver(),
-                Settings.System.SCREENSHOT_DEFAULT_MODE, mRegion ? 1 : 0,
-                UserHandle.USER_CURRENT);
-        refreshState();
-    }
-
-    @Override
-    public void handleLongClick() {
         mHost.collapsePanels();
 
         //finish collapsing the panel
@@ -77,6 +68,17 @@ public class ScreenshotTile extends QSTileImpl<BooleanState> {
              Thread.sleep(1000); //1s
         } catch (InterruptedException ie) {}
         Utils.takeScreenshot(mRegion ? false : true);
+
+    }
+
+    @Override
+    public void handleLongClick() {
+
+        mRegion = !mRegion;
+        Settings.System.putIntForUser(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_DEFAULT_MODE, mRegion ? 1 : 0,
+                UserHandle.USER_CURRENT);
+        refreshState();
     }
 
     @Override

@@ -74,14 +74,14 @@ public class ImmersiveTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleLongClick() {
-        mHost.collapsePanels();
-        setImmersiveMode(mMode);
-        refreshState();
+        switchMode();
     }
 
     @Override
     protected void handleClick() {
-        switchMode();
+        mHost.collapsePanels();
+        setImmersiveMode(mMode);
+        refreshState();
     }
 
     private void switchMode() {
