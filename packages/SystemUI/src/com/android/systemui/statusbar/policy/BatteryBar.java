@@ -83,6 +83,7 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
 
     LinearLayout mChargerLayout;
     View mCharger;
+    private int mGradientColor;
 
     public static final int STYLE_REGULAR = 0;
     public static final int STYLE_SYMMETRIC = 1;
@@ -160,7 +161,8 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         mBatteryCharging = isCharging;
         vertical = isVertical;
         mGradientColors = new int[2];
-        mGradientColors[0] = mBatteryLowColor;
+        mGradientColor = context.getColor(com.android.internal.R.color.gradient_end);
+        mGradientColors[0] = mGradientColor;
         mGradientColors[1] = getColorForPercent(currentCharge);
 
         mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
@@ -308,7 +310,7 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         int color = getColorForPercent(n);
         if (useGradientColor) {
             float size = n / 100f;
-            mGradientColors[1] = mixColors(color, mBatteryLowColor, size);
+            mGradientColors[1] = mixColors(color, mGradientColor, size);
             mBarGradient.setColors(mGradientColors);
             mBatteryBar.setBackgroundDrawable(mBarGradient);
         } else {
