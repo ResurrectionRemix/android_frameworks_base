@@ -108,6 +108,7 @@ public class ImageHelper {
             return null;
         }
         Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
+        if (colorBitmap == null) return null;
         Bitmap grayscaleBitmap = toGrayscale(colorBitmap);
         Paint pp = new Paint();
         pp.setAntiAlias(true);
@@ -183,6 +184,7 @@ public class ImageHelper {
     }
 
     public static Bitmap toGrayscale(Bitmap bmpOriginal) {
+        if (bmpOriginal == null) return null;
         int width, height;
         height = bmpOriginal.getHeight();
         width = bmpOriginal.getWidth();
@@ -374,6 +376,7 @@ public class ImageHelper {
     }
 
     public static Bitmap getBlurredImage(Context context, Bitmap image, float radius) {
+        if (image == null) return null;
         try {
             image = RGB565toARGB888(image);
         } catch (Exception e) {
@@ -403,6 +406,7 @@ public class ImageHelper {
     }
 
     public static Bitmap getGrayscaleBlurredImage(Context context, Bitmap image, float radius) {
+        if (image == null) return null;
         Bitmap finalImage = Bitmap.createBitmap(
                 image.getWidth(), image.getHeight(),
                 Bitmap.Config.ARGB_8888);
