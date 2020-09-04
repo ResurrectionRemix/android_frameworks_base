@@ -2047,6 +2047,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             int backgroundFilter = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.POWER_MENU_BG_STYLE, 0,
                     UserHandle.USER_CURRENT);
+            int colorcustom = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.POWERMENU_FILTER_COLOR,  0xffffffff,
+                    UserHandle.USER_CURRENT);
             float radius = 0.25f * ((float) Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.POWER_MENU_BG_BLUR_RADIUS, 100,
                     UserHandle.USER_CURRENT));
@@ -2075,6 +2078,19 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                             ImageUtilities.screenshotSurface(mContext));
                     bitMap = ImageHelper.getColoredBitmap(bitMapDrawable,
                             res.getColor(color.accent_device_default_light));
+                    bitMap = ImageHelper.getBlurredImage(mContext, bitMap, radius);
+                    break;
+                case 5: // Tint custom
+                    Drawable bittemp1 = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bittemp1,
+                            colorcustom);
+                    break;
+                case 6: // Tinted blur custom
+                    Drawable bitMapDrawable1 = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bitMapDrawable1,
+                             colorcustom);
                     bitMap = ImageHelper.getBlurredImage(mContext, bitMap, radius);
                     break;
             }

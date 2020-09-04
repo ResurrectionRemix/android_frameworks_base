@@ -2329,6 +2329,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_BG_FILTER),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_FILTER_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5892,6 +5895,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void drawBlurView() {
         Bitmap bitMap;
+        int color = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_FILTER_COLOR,  0xffffffff,
+                    UserHandle.USER_CURRENT);
         Resources res = mContext.getResources();
         switch (mBackgroundFilter) {
                 case 0: // Blur
@@ -5918,6 +5924,19 @@ public class StatusBar extends SystemUI implements DemoMode,
                             ImageUtilities.screenshotSurface(mContext));
                     bitMap = ImageHelper.getColoredBitmap(bitMapDrawable,
                             res.getColor(R.color.accent_device_default_light));
+                    bitMap = ImageHelper.getBlurredImage(mContext, bitMap, qsBlurIntensity());
+                    break;
+                case 5: // Tint custom
+                    Drawable bittemp1 = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bittemp1,
+                            color);
+                    break;
+                case 6: // Tinted blur custom
+                    Drawable bitMapDrawable1 = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bitMapDrawable1,
+                             color);
                     bitMap = ImageHelper.getBlurredImage(mContext, bitMap, qsBlurIntensity());
                     break;
             }

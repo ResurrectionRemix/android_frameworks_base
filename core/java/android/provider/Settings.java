@@ -5952,6 +5952,18 @@ public final class Settings {
          */
         public static final String QS_PANEL_BG_FILTER = "qs_panel_bg_filter";
 
+        /**
+         * What filter to use for qspanel bg
+         * @hide
+         */
+        public static final String QS_PANEL_FILTER_COLOR = "qs_panel_filter_color";
+
+        /**
+         * What filter to use for power menu
+         * @hide
+         */
+        public static final String POWERMENU_FILTER_COLOR = "powermenu_filter_color";
+
        /**
          * @hide
          */
