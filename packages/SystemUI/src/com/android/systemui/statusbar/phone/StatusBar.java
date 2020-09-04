@@ -305,7 +305,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import com.android.internal.util.rr.ImageHelper;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -567,6 +567,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             Settings.Secure.SYSUI_ROUNDED_FWVALS;
 
     private PackageMonitor mPackageMonitor;
+    private int mBackgroundFilter;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -2325,7 +2326,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED),
                     false, this, UserHandle.USER_ALL);
-
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_BG_FILTER),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2417,6 +2420,9 @@ public class StatusBar extends SystemUI implements DemoMode,
        mQSBlurEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_BACKGROUND_BLUR, 1,
                 UserHandle.USER_CURRENT) == 1;
+       mBackgroundFilter = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_FILTER, 0,
+                    UserHandle.USER_CURRENT);
        if (!mQSBlurEnabled) {
            mQSBlurView.setVisibility(View.GONE);
        } else {
@@ -5885,17 +5891,47 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private void drawBlurView() {
-        Bitmap surfaceBitmap = ImageUtilities.screenshotSurface(mContext);
-        if (surfaceBitmap == null) {
+        Bitmap bitMap;
+        Resources res = mContext.getResources();
+        switch (mBackgroundFilter) {
+                case 0: // Blur
+                default:
+                    bitMap = ImageHelper.getBlurredImage(mContext,
+                            ImageUtilities.screenshotSurface(mContext), qsBlurIntensity());
+                    break;
+                case 1: // Garyscale
+                    bitMap = ImageHelper.toGrayscale(
+                            ImageUtilities.screenshotSurface(mContext));
+                    break;
+                case 2: // Tint
+                    Drawable bittemp = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bittemp,
+                            res.getColor(R.color.accent_device_default_light));
+                    break;
+                case 3: // Gray blur
+                    bitMap = ImageHelper.getGrayscaleBlurredImage(mContext,
+                            ImageUtilities.screenshotSurface(mContext), qsBlurIntensity());
+                    break;
+                case 4: // Tinted blur
+                    Drawable bitMapDrawable = new BitmapDrawable(res,
+                            ImageUtilities.screenshotSurface(mContext));
+                    bitMap = ImageHelper.getColoredBitmap(bitMapDrawable,
+                            res.getColor(R.color.accent_device_default_light));
+                    bitMap = ImageHelper.getBlurredImage(mContext, bitMap, qsBlurIntensity());
+                    break;
+            }
+        if (bitMap == null) {
             mQSBlurView.setImageDrawable(null);
         } else {
-            mQSBlurView.setImageBitmap(ImageUtilities.blurImage(mContext, surfaceBitmap, qsBlurIntensity()));
+            mQSBlurView.setImageBitmap(bitMap);
         }
     }
 
-    private int qsBlurIntensity() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
+    private float qsBlurIntensity() {
+        return 0.25f * ((float) Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30,
+               UserHandle.USER_CURRENT));
     }
 
     @Override

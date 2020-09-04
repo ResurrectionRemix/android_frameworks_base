@@ -5946,6 +5946,12 @@ public final class Settings {
          */
         public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
 
+        /**
+         * Whether to change the qs panel filter
+         * @hide
+         */
+        public static final String QS_PANEL_BG_FILTER = "qs_panel_bg_filter";
+
        /**
          * @hide
          */
