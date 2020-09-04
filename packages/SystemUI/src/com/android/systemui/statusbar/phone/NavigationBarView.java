@@ -658,29 +658,25 @@ public class NavigationBarView extends FrameLayout implements
 
         updateRecentsIcon();
 
-        boolean showCursorKeys = mShowCursorKeys
+        final boolean isImeShown =
+                (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0;
+        final boolean showCursorKeys = mShowCursorKeys
                 && (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0;
-        final boolean showImeSwitcher = mImeVisible &&
-                // IME switcher can be shown while gestural mode is enabled because
-                // the cursor keys must be hidden anyway
-                (isGesturalMode(mNavBarMode) ||
+        final boolean showImeSwitcher = isImeShown
                 // IME switcher in 3-button mode and cursor keys take the same spot in
                 // the view, so one can only use one or the other
-                (!isLegacyMode(mNavBarMode) || !showCursorKeys));
+                && (!isLegacyMode(mNavBarMode) || !showCursorKeys);
 
         // Update IME button visibility, a11y and rotate button always overrides the appearance
         mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, showImeSwitcher);
 
         mBarTransitions.reapplyDarkIntensity();
 
-        if (isGesturalMode(mNavBarMode)) {
-            // With gestural mode enabled, ensure that cursor keys are not shown if IME is visible
-            showCursorKeys &= !mImeVisible;
-        }
         // right arrow overrules ime in 3 button mode cause there is not enough space
         if ((QuickStepContract.isLegacyMode(mNavBarMode) && showDpadArrowKeys()) || (!showIMESpace() && !isButtonMode)) {
             mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, false);
         }
+
         final int cursorKeyVisibility = showCursorKeys ? View.VISIBLE : View.INVISIBLE;
 
         getCursorLeftButton().setVisibility(cursorKeyVisibility);
