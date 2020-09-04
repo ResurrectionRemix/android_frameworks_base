@@ -113,8 +113,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         backgroundDrawable = new ShapeDrawable(p);
         // The drawable shown when the tile is active
         foregroundDrawable = new ShapeDrawable(p);
-         int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
-                 Settings.System.QS_TILE_STYLE, 0);
         mColorDisabled = Utils.getDisabled(context,
                 Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
@@ -193,11 +191,18 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     private void setActiveColor(Context context) {
+        int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
+                 Settings.System.QS_TILE_STYLE, 0);
         if (useQSAccentTint == 0) {
             mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
         } else if (useQSAccentTint == 1) {
             mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-            mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+            if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 || qsTileStyle == 12 
+                || qsTileStyle == 13 || qsTileStyle == 15 || qsTileStyle == 16 || qsTileStyle == 17) {
+                mColorActiveAlpha = adjustAlpha(mColorActive, isThemeDark(context) ? 0.7f : 0.5f);
+            } else {
+                mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+            }
             mColorActive = mColorActiveAlpha;
         } else if (useQSAccentTint == 2) {
            mColorActive = randomColor();
