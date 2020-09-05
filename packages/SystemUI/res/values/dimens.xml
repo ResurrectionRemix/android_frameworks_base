@@ -416,6 +416,8 @@
     <dimen name="volume_tool_tip_arrow_margin_start">24dp</dimen>
     <dimen name="volume_tool_tip_arrow_corner_radius">2dp</dimen>
 
+    <dimen name="volume_row_app_icon_padding">8dp</dimen>
+
     <!-- Gravity for the notification panel -->
     <integer name="notification_panel_layout_gravity">0x31</integer><!-- center_horizontal|top -->
 

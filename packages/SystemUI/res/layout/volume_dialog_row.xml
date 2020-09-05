@@ -61,6 +61,18 @@
                 android:soundEffectsEnabled="false"
                 android:tint="@*android:color/gradient_end" />
 
+        <com.android.keyguard.AlphaOptimizedImageButton
+            android:id="@+id/volume_row_app_icon"
+            style="@style/VolumeButtons"
+            android:visibility="gone"
+            android:clickable="false"
+            android:layout_width="@dimen/volume_dialog_tap_target_size"
+            android:layout_height="@dimen/volume_dialog_tap_target_size"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="-12dp"
+            android:scaleType="centerInside"
+            android:soundEffectsEnabled="false"  />
+
             <com.android.systemui.statusbar.AlphaOptimizedTextView
                 android:id="@+id/volume_row_header"
                 android:layout_width="match_parent"
