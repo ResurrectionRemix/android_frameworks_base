@@ -1431,18 +1431,18 @@ public class KeyguardStatusView extends GridLayout implements
             switch (mWeatherViewAlignment) {
                 case 0:
                     params.gravity = Gravity.LEFT;
-                    mWeatherView.setPaddingRelative(updateWeatherPadding() + 8, 0, 0, 0);
+                    mWeatherView.setPaddingRelative(updateWeatherPadding() + 8, 10, 0, 0);
                     mWeatherView.setLayoutParams(params);
                     break;
                 case 1:
                 default:
                     params.gravity = Gravity.CENTER;
-                    mWeatherView.setPaddingRelative(0, 0, 0, 0);
+                    mWeatherView.setPaddingRelative(0, 10, 0, 0);
                     mWeatherView.setLayoutParams(params);
                     break;
                 case 2:
                     params.gravity = Gravity.RIGHT;
-                    mWeatherView.setPaddingRelative(0, 0, updateWeatherPadding() + 8, 0);
+                    mWeatherView.setPaddingRelative(0, 10, updateWeatherPadding() + 8, 0);
                     mWeatherView.setLayoutParams(params);
                     break;
             }
