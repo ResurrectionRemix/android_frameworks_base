@@ -224,6 +224,21 @@ public abstract class LogoImage extends ImageView implements
             case 32:
                 drawable = mContext.getDrawable(R.drawable.ic_guitar_electric);
                 break;
+            case 33:
+                drawable = mContext.getDrawable(R.drawable.ic_decepticons);
+                break;
+            case 34:
+                drawable = mContext.getDrawable(R.drawable.ic_deadpool);
+                break;
+            case 35:
+                drawable = mContext.getDrawable(R.drawable.ic_spiderman);
+                break;
+            case 36:
+                drawable = mContext.getDrawable(R.drawable.ic_superman);
+                break;
+            case 37:
+                drawable = mContext.getDrawable(R.drawable.ic_minions);
+                break;
         }
 
         setImageDrawable(null);
