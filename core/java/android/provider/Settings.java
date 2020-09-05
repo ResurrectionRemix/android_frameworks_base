@@ -5843,7 +5843,7 @@ public final class Settings {
         public static final String FOD_ICON = "fod_icon";
         /** @hide */
         private static final Validator FOD_ICON_VALIDATOR =
-               new SettingsValidators.InclusiveIntegerRangeValidator(0, 45);
+               new SettingsValidators.InclusiveIntegerRangeValidator(0, 60);
 
         /**
          * FOD use wallpaper color
