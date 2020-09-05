@@ -1091,6 +1091,10 @@ public class AudioSystem
      */
     public static native int setAudioHalPids(int[] pids);
 
+    public static native int setAppVolume(String packageName, float volume);
+    public static native int setAppMute(String packageName, boolean mute);
+    public static native int listAppTrackDatas(ArrayList<AppTrackData> volumes);
+
     // Items shared with audio service
 
     /**
