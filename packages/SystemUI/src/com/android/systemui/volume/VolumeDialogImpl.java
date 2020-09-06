@@ -154,6 +154,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.AUDIO_PANEL_VIEW_TIMEOUT;
     public static final String RINGER_VOLUME_PANEL =
             "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
+    public static final String APP_VOLUME =
+            "system:" + Settings.System.SHOW_APP_VOLUME;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -233,6 +235,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mBTSCOShowing;
     private int mTimeOutDesired, mTimeOut;
     private boolean mShowRinger;
+    private boolean mAppVolume;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -269,6 +272,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_BT_SCO);
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         tunerService.addTunable(this, RINGER_VOLUME_PANEL);
+        tunerService.addTunable(this, APP_VOLUME);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -596,6 +600,12 @@ public class VolumeDialogImpl implements VolumeDialog,
                     triggerChange = true;
                 }
                 break;
+            case APP_VOLUME:
+                boolean appVolume = TunerService.parseIntegerSwitch(newValue, false);
+                if (mAppVolume != appVolume) {
+                    mAppVolume = appVolume;
+                    triggerChange = true;
+                }
             default:
                 break;
         }
@@ -945,7 +955,9 @@ public class VolumeDialogImpl implements VolumeDialog,
                 mExpandRows.setExpanded(mExpanded);
             });
         }
-        updateAppRows();
+        if (mAppVolume) {
+            updateAppRows();
+        }
     }
 
     private void updateAppRows() {

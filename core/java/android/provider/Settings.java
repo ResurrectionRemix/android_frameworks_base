@@ -6497,6 +6497,13 @@ public final class Settings {
         public static final String SHOW_RINGER_VOLUME_PANEL = "show_ringer_volume_panel";
 
         /**
+         * =-
+         * @hide
+         */
+        public static final String SHOW_APP_VOLUME = "show_app_volume";
+
+
+        /**
          * Whether to show lock icon on lockscreen
          * @hide
          */
