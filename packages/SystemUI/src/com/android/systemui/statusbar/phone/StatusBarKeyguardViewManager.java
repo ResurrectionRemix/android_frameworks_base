@@ -107,6 +107,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             updateStates();
             mStatusBar.wakeUpIfDozing(SystemClock.uptimeMillis(), mContainer, "BOUNCER_VISIBLE");
             updateLockIcon();
+            onKeyguardBouncerFullyShownChanged(true);
         }
 
         @Override
@@ -124,6 +125,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         public void onFullyHidden() {
             updateStates();
             updateLockIcon();
+            onKeyguardBouncerFullyShownChanged(false);
         }
     };
     private final DockManager.DockEventListener mDockEventListener =
@@ -821,6 +823,11 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             mStatusBar.getNavigationBarView().getRootView().setVisibility(View.VISIBLE);
         }
     };
+
+    private void onKeyguardBouncerFullyShownChanged(boolean fullyShown){
+        KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+        updateMonitor.onKeyguardBouncerFullyShown(fullyShown);
+    }
 
     protected void updateStates() {
         int vis = mContainer.getSystemUiVisibility();
