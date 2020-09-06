@@ -399,7 +399,7 @@
 
     <dimen name="volume_dialog_panel_transparent_padding_left_right">8dp</dimen>
     <dimen name="volume_dialog_panel_transparent_padding">20dp</dimen>
-    <dimen name="volume_dialog_panel_width">54dp</dimen>
+    <dimen name="volume_dialog_panel_width">50dp</dimen>
     <dimen name="volume_dialog_slider_height">185dp</dimen>
     <dimen name="volume_dialog_icon_padding">13dp</dimen>
     <dimen name="volume_dialog_tap_target_size">@dimen/volume_dialog_panel_width</dimen>
