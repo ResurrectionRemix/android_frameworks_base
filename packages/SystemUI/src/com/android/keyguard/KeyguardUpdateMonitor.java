@@ -1823,7 +1823,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
      * If face auth is allows to scan on this exact moment.
      */
     public boolean shouldListenForFace() {
-        boolean awakeKeyguard = mKeyguardIsVisible && mDeviceInteractive && !mGoingToSleep;
+        final boolean awakeKeyguard = mKeyguardIsVisible && mDeviceInteractive && !mGoingToSleep;
         final int user = getCurrentUser();
         final int strongAuth = mStrongAuthTracker.getStrongAuthForUser(user);
         final boolean isLockOutOrLockDown =
@@ -1846,10 +1846,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         boolean strongAuthAllowsScanning = (!isEncryptedOrTimedOut || canBypass && !mBouncer)
                 && !isLockOutOrLockDown;
 
-        boolean unlockPossible = true;
-        if ((!mBouncer || !awakeKeyguard) && isFaceAuthOnlyOnSecurityView()){
-            unlockPossible = false;
-        }
 
         // Only listen if this KeyguardUpdateMonitor belongs to the primary user. There is an
         // instance of KeyguardUpdateMonitor for each user but KeyguardUpdateMonitor is user-aware.
@@ -1857,10 +1853,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 && !mSwitchingUser && !isFaceDisabled(user) && becauseCannotSkipBouncer
                 && !mKeyguardGoingAway && mFaceSettingEnabledForUser.get(user) && !mLockIconPressed
                 && strongAuthAllowsScanning && mIsPrimaryUser
-                && !mSecureCameraLaunched && !mIsDeviceInPocket
-                && unlockPossible;
+                && !mSecureCameraLaunched && !mIsDeviceInPocket;
 
-        if (shouldListen && mFaceAuthOnSecurityView && !mBouncerFullyShown){
+        if (shouldListen && isFaceAuthOnlyOnSecurityView() && !mBouncerFullyShown){
             shouldListen = false;
         }
 
@@ -1870,7 +1865,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
     public void onKeyguardBouncerFullyShown(boolean fullyShow) {
         if (mBouncerFullyShown != fullyShow){
             mBouncerFullyShown = fullyShow;
-            if (mFaceAuthOnSecurityView){
+            if (isFaceAuthOnlyOnSecurityView()){
                 updateFaceListeningState();
             }
         }
@@ -2329,6 +2324,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         checkIsHandlerThread();
         Log.d(TAG, "onKeyguardVisibilityChanged(" + showing + ")");
         mKeyguardIsVisible = showing;
+        mBouncerFullyShown = false;
 
         if (showing) {
             mSecureCameraLaunched = false;
@@ -2394,6 +2390,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
      * Handle {@link #MSG_REPORT_EMERGENCY_CALL_ACTION}
      */
     private void handleReportEmergencyCallAction() {
+        mBouncerFullyShown = false;
         for (int i = 0; i < mCallbacks.size(); i++) {
             KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
             if (cb != null) {
