@@ -301,7 +301,7 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
             View fod_view = v.findViewById(R.id.fod_view);
             if (fod_view != null) {
                 if (hasInDisplayFingerprint() &&
-                        mUpdateMonitor.isUnlockWithFingerprintPossible()) {
+                        mUpdateMonitor.isFingerprintAvailable()) {
                     fod_view.setVisibility(View.VISIBLE);
                 } else {
                     fod_view.setVisibility(View.GONE);
