@@ -306,4 +306,7 @@
     <java-symbol type="string" name="popup_camera_dialog_no" />
     <java-symbol type="string" name="popup_camera_dialog_raise" />
 
+    <!-- Whether device uses linear screen brightness slider -->
+    <java-symbol type="bool" name="config_linearBrightnessSlider" />
+
 </resources>

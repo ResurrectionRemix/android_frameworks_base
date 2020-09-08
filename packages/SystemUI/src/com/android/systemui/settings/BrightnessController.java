@@ -73,6 +73,7 @@ public class BrightnessController implements ToggleSlider.Listener {
     private final ImageView mIconLeft;
     private final ToggleSlider mControl;
     private final boolean mAutomaticAvailable;
+    private final boolean mLinearBrightnessSlider;
     private final DisplayManager mDisplayManager;
     private final CurrentUserTracker mUserTracker;
     private final IVrManager mVrManager;
@@ -291,6 +292,8 @@ public class BrightnessController implements ToggleSlider.Listener {
 
         mAutomaticAvailable = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
+        mLinearBrightnessSlider = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_linearBrightnessSlider);
         mDisplayManager = context.getSystemService(DisplayManager.class);
         mVrManager = IVrManager.Stub.asInterface(ServiceManager.getService(
                 Context.VR_SERVICE));
@@ -406,7 +409,12 @@ public class BrightnessController implements ToggleSlider.Listener {
             setting = Settings.System.SCREEN_BRIGHTNESS;
         }
 
-        final int val = convertGammaToLinear(value, min, max);
+        final int val;
+        if (!mLinearBrightnessSlider) {
+            val = convertGammaToLinear(value, min, max);
+        } else {
+            val = (value < min) ? min : value;
+        }
 
         if (stopTracking) {
             MetricsLogger.action(mContext, metric, val);
@@ -479,16 +487,22 @@ public class BrightnessController implements ToggleSlider.Listener {
             min = mMinimumBacklight;
             max = mMaximumBacklight;
         }
-        if (val == convertGammaToLinear(mControl.getValue(), min, max)) {
-            // If we have more resolution on the slider than we do in the actual setting, then
-            // multiple slider positions will map to the same setting value. Thus, if we see a
-            // setting value here that maps to the current slider position, we don't bother to
-            // calculate the new slider position since it may differ and look like a brightness
-            // change to the user even though it isn't one.
-            return;
+        if (!mLinearBrightnessSlider) {
+            if (val == convertGammaToLinear(mControl.getValue(), min, max)) {
+                // If we have more resolution on the slider than we do in the actual setting, then
+                // multiple slider positions will map to the same setting value. Thus, if we see a
+                // setting value here that maps to the current slider position, we don't bother to
+                // calculate the new slider position since it may differ and look like a brightness
+                // change to the user even though it isn't one.
+                return;
+            }
+            final int sliderVal = convertLinearToGamma(val, min, max);
+            mControl.setMax(GAMMA_SPACE_MAX);
+            animateSliderTo(sliderVal);
+        } else {
+            mControl.setMax(max - min);
+            animateSliderTo(val - min);
         }
-        final int sliderVal = convertLinearToGamma(val, min, max);
-        animateSliderTo(sliderVal);
     }
 
     private void animateSliderTo(int target) {

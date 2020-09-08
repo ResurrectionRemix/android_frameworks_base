@@ -234,4 +234,7 @@
     <!-- Whether the device has a popup camera -->
     <bool name="config_hasPopupCamera">false</bool>
 
+    <!-- Whether device uses linear screen brightness slider -->
+    <bool name="config_linearBrightnessSlider">false</bool>
+
 </resources>
