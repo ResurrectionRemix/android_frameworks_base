@@ -93,10 +93,12 @@ public class PocketLock {
                         @Override
                         public void run() {
                             mView.setAlpha(0.0f);
+                            mView.setVisibility(View.VISIBLE);
                             addView();
                         }
                     }).start();
                 } else {
+                    mView.setVisibility(View.VISIBLE);
                     mView.setAlpha(1.0f);
                     addView();
                 }
@@ -128,6 +130,7 @@ public class PocketLock {
 
                         @Override
                         public void onAnimationEnd(Animator animator) {
+                            mView.setVisibility(View.GONE);
                             mView.setLayerType(View.LAYER_TYPE_NONE, null);
                             mAnimating = false;
                             removeView();
@@ -142,8 +145,9 @@ public class PocketLock {
                         }
                     }).start();
                 } else {
-                    removeView();
+                    mView.setVisibility(View.GONE);
                     mView.setAlpha(0.0f);
+                    removeView();
                 }
             }
         };
