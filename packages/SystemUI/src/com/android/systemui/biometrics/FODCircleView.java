@@ -377,7 +377,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 updateStyle();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_PRESSED_STATE))) {
-                updateStyle();
+                updatepressedState();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_ICON_WALLPAPER_COLOR))) {
                 useWallpaperColor();
@@ -386,7 +386,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         public void update() {
             updateStyle();
-            useWallpaperColor();
+            useWallpaperColor(); 
+            updatepressedState();
         }
     }
 
@@ -394,6 +395,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void onTuningChanged(String key, String newValue) {
         mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
         setDim(true);
+    }
+
+    public void updatepressedState() {
+        mPressedIcon = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_PRESSED_STATE, mDefaultPressedIcon);
+        mViewPressed.setImageResource(PRESSED_STYLES[mPressedIcon]);
     }
 
     @Override
@@ -413,8 +420,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 	            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
             mParamsPressed.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
             mParamsPressed.gravity = Gravity.TOP | Gravity.LEFT;
-
-            setImageResource(PRESSED_STYLES[mPressedIcon]);
 
             if (!mViewPressedDisplayed && mIsShowing) {
                 mViewPressedDisplayed = true;
@@ -438,19 +443,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
             showCircle();
-            if (mIsRecognizingAnimEnabled && (!mIsDreaming || mIsPulsing)) {
-                mHandler.post(() -> mFODAnimation.showFODanimation());
-            }
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             hideCircle();
-            mHandler.post(() -> mFODAnimation.hideFODanimation());
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             return true;
         }
-
-        mHandler.post(() -> mFODAnimation.hideFODanimation());
         return false;
     }
 
@@ -543,7 +542,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         if (mIsAuthenticated) {
             return;
         }
-
         mIsCircleShowing = true;
 
         setKeepScreenOn(true);
@@ -555,9 +553,11 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             setColorFilter(Color.argb(0, 0, 0, 0), 
                      PorterDuff.Mode.SRC_ATOP);
         }
-        updateAlpha();
 
-        setImageResource(PRESSED_STYLES[mPressedIcon]);
+        if (mIsRecognizingAnimEnabled) {
+            mHandler.post(() -> mFODAnimation.showFODanimation());
+        }
+        updatePosition();
         invalidate();
     }
 
@@ -581,6 +581,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             invalidate();
         }
         updateAlpha();
+        mHandler.post(() -> mFODAnimation.hideFODanimation());
 
         setKeepScreenOn(false);
     }
@@ -698,8 +699,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 Settings.System.FOD_ICON, 3);
         mBrightIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_BRIGHT_ICON, 0) == 1;
-        mPressedIcon = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_PRESSED_STATE, mDefaultPressedIcon);
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
