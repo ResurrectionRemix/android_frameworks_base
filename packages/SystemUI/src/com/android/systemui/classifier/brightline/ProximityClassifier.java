@@ -19,6 +19,8 @@ package com.android.systemui.classifier.brightline;
 import static com.android.internal.config.sysui.SystemUiDeviceConfigFlags.BRIGHTLINE_FALSING_PROXIMITY_PERCENT_COVERED_THRESHOLD;
 import static com.android.systemui.classifier.Classifier.QUICK_SETTINGS;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.provider.DeviceConfig;
 import android.view.MotionEvent;
 

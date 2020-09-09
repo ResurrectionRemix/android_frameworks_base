@@ -5276,6 +5276,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
             return;
         }
         mPulsing = pulsing;
+        updateClipping();
         mAmbientState.setPulsing(pulsing);
         mSwipeHelper.setPulsing(pulsing);
         updateNotificationAnimationStates();

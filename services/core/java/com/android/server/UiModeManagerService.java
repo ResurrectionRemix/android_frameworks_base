@@ -51,6 +51,7 @@ import android.os.ShellCallback;
 import android.os.ShellCommand;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings.Secure;
 import android.provider.Settings.System;
 import android.service.dreams.Sandman;
@@ -584,7 +585,13 @@ final class UiModeManagerService extends SystemService {
 
                         // Only persist setting if not in car mode
                         if (!mCarModeEnabled) {
-                            persistNightMode(user);
+                            Secure.putIntForUser(getContext().getContentResolver(),
+                                    Secure.UI_NIGHT_MODE, mode, user);
+
+                            if (UserManager.get(getContext()).isPrimaryUser()) {
+                                SystemProperties.set(SYSTEM_PROPERTY_DEVICE_THEME,
+                                        Integer.toString(mode));
+                            }
                         }
                         // on screen off will update configuration instead
                         if ((mNightMode != MODE_NIGHT_AUTO)
