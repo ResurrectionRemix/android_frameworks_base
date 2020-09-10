@@ -27,6 +27,7 @@ import com.android.systemui.tuner.TunerService
 import java.io.PrintWriter
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.util.Log
 
 @Singleton
 class KeyguardBypassController {
@@ -103,7 +104,7 @@ class KeyguardBypassController {
      */
     fun onBiometricAuthenticated(biometricSourceType: BiometricSourceType): Boolean {
         if (bypassEnabledBiometric) {
-            val can = canBypass()
+            val can = biometricSourceType != BiometricSourceType.FACE || canBypass()
             if (!can && (isPulseExpanding || qSExpanded)) {
                 pendingUnlockType = biometricSourceType
             }
