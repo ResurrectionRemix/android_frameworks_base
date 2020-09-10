@@ -6374,6 +6374,31 @@ public final class Settings {
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_BUTTONS = "qs_brightness_buttons";
+
+        /**
+         * @hide
+         */
+        public static final String QS_DRAG_HANDLE = "qs_drag_handle";
+
+        /**
+         * @hide
+         */
+        public static final String QS_FOOTER_AUTO_ICON = "qs_footer_auto_icon";
+
+        /**
+         * @hide
+         */
+        public static final String QS_PANEL_LONGPRESS_ACTION = "qs_panel_longpress_action";
+
+        /**
+         * @hide
+         */
+        public static final String QS_SECURITY_FOOTER = "qs_security_footer";
+
+        /**
          * 
          * @hide
          */

@@ -71,9 +71,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         OnClickListener,  OnLongClickListener, OnUserInfoChangedListener, Tunable {
 
     private static final String TAG = "QSFooterImpl";
-    public static final String QS_SHOW_DRAG_HANDLE = "qs_show_drag_handle";
-    public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON = "qs_show_auto_brightness_button";
+    public static final String QS_SHOW_DRAG_HANDLE =
+            "system:" + Settings.System.QS_DRAG_HANDLE;
+    public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON =
+            "system:" + Settings.System.QS_FOOTER_AUTO_ICON;
     public static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
+
 
     private final ActivityStarter mActivityStarter;
     private final UserInfoController mUserInfoController;
@@ -319,10 +322,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (QS_SHOW_DRAG_HANDLE.equals(key)) {
-            setHideDragHandle(newValue != null && Integer.parseInt(newValue) == 0);
+            boolean showdrag = TunerService.parseIntegerSwitch(newValue, false);
+            setHideDragHandle(showdrag);
         }
         if (QS_SHOW_AUTO_BRIGHTNESS_BUTTON.equals(key)) {
-            setHideAutoBright(newValue != null && Integer.parseInt(newValue) == 0);
+            boolean show = TunerService.parseIntegerSwitch(newValue, true);
+            setHideAutoBright(show);
         }
     }
 

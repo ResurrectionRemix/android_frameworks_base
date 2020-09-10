@@ -98,9 +98,12 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             "system:" + Settings.System.ANIM_TILE_DURATION;
     public static final String ANIM_TILE_INTERPOLATOR =
             "system:" + Settings.System.ANIM_TILE_INTERPOLATOR;
-    public static final String QS_SHOW_BRIGHTNESS_SIDE_BUTTONS = "qs_show_brightness_side_buttons";
-    public static final String QS_SHOW_SECURITY = "qs_show_secure";
-    public static final String QS_LONG_PRESS_ACTION = "qs_long_press_action";
+    public static final String QS_SHOW_BRIGHTNESS_SIDE_BUTTONS = 
+            "system:" + Settings.System.QS_BRIGHTNESS_BUTTONS;
+    public static final String QS_SHOW_SECURITY = 
+            "system:" + Settings.System.QS_SECURITY_FOOTER;
+    public static final String QS_LONG_PRESS_ACTION = 
+            "system:" + Settings.System.QS_PANEL_LONGPRESS_ACTION;
     public static final String QS_AUTO_BRIGHTNESS_POS =
             "system:" + Settings.System.QS_AUTO_BRIGHTNESS_POS;
 
@@ -406,14 +409,14 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                 setTiles(mHost.getTiles());
             }
         } else  if (QS_SHOW_BRIGHTNESS_SIDE_BUTTONS.equals(key)) {
-            mShowBrightnessSideButtons = (newValue == null || Integer.parseInt(newValue) == 0)
-                    ? false : true;
+            mShowBrightnessSideButtons = TunerService.parseIntegerSwitch(newValue, false);
             mMaxBrightness.setVisibility(mShowBrightnessSideButtons ? View.VISIBLE : View.GONE);
             mMinBrightness.setVisibility(mShowBrightnessSideButtons ? View.VISIBLE : View.GONE);
         } else if (QS_SHOW_SECURITY.equals(key)) {
-            mFooter.setForceHide(newValue != null && Integer.parseInt(newValue) == 0);
+            boolean hide = TunerService.parseIntegerSwitch(newValue, true);
+            mFooter.setForceHide(hide);
         } else if (QS_LONG_PRESS_ACTION.equals(key)) {
-            mDualTargetSecondary = newValue != null && Integer.parseInt(newValue) == 1;
+            mDualTargetSecondary = TunerService.parseIntegerSwitch(newValue, false);
             updateSettings();
         }
     }
