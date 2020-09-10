@@ -2182,6 +2182,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_STYLE),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
                     false, this, UserHandle.USER_ALL);
@@ -2347,7 +2350,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_HEADER_STYLE))) {
                 stockQSHeaderStyle();
                 updateQSHeaderStyle();
-	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_STYLE))) {
+                stockBrightnessStyle();
+                updateBrightnessSliderStyle();
+	         }  else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)) ||
@@ -2395,6 +2401,17 @@ public class StatusBar extends SystemUI implements DemoMode,
             mMediaManager.setMediaHeadsup();
         }
     }
+
+
+     public void updateBrightnessSliderStyle() {
+         int brighthnessSliderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.BRIGHTNESS_SLIDER_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateBrightnessSliderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), brighthnessSliderStyle);
+     }
+
+     public void stockBrightnessStyle() {
+        ThemeAccentUtils.stockBrightnessSliderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+     }
 
     private void refreshGA() {
         mGaEnabled = Settings.System.getInt(
