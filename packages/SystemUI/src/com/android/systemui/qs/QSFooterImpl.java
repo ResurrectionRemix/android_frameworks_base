@@ -242,7 +242,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     @Nullable
     private TouchAnimator createFooterAnimator() {
-        if (isQsSettingsEnabled()) {
+        if (isSettingsDisabled() == 2) {
             return new TouchAnimator.Builder()
                     .addFloat(mActionsContainer, "alpha", 1, 1) // contains mRunningServicesButton
                     .addFloat(mEditContainer, "alpha", 0, 1)
@@ -383,15 +383,26 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private void updateClickabilities() {
         mMultiUserSwitch.setClickable(mMultiUserSwitch.getVisibility() == View.VISIBLE);
         mEdit.setClickable(mEdit.getVisibility() == View.VISIBLE);
-        mSettingsButton.setClickable(mSettingsButton.getVisibility() == View.VISIBLE);
+        if (isSettingsDisabled() == 0) {
+            mSettingsButton.setClickable(false);
+        } else if (isSettingsDisabled() == 1) { 
+            if (mExpanded) {
+                mSettingsButton.setClickable(true);
+            } else {
+                mSettingsButton.setClickable(false);
+            }
+        } else if (isSettingsDisabled() == 2) {
+            mSettingsButton.setClickable(true);
+        }
+        
     }
 
     private void updateVisibilities() {
         mSettingsContainer.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         mAutoBrightnessContainer.setVisibility(mShowAutoBrightnessButton ? View.GONE : View.VISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
-        mSettingsContainer.setVisibility(isSettingsDisabled() || mQsDisabled ? View.GONE : View.VISIBLE);
-        mSettingsButton.setVisibility(isSettingsDisabled() ? View.GONE : (isDemo || !mExpanded ? View.VISIBLE : View.VISIBLE));
+        mSettingsContainer.setVisibility(isSettingsDisabled() == 0 || mQsDisabled ? View.GONE : View.VISIBLE);
+        mSettingsButton.setVisibility(isSettingsDisabled() == 0 ? View.GONE : (isDemo || !mExpanded ? (isSettingsDisabled() == 1 ? View.GONE: View.VISIBLE) : View.VISIBLE));
         mRunningServicesButton.setVisibility(isRunningServicesEnabled() ? (isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE) : View.GONE);
         mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
@@ -426,15 +437,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
     }
 
-    public boolean isSettingsDisabled() {
+    public int isSettingsDisabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 0;
+            Settings.System.SETTING_BUTTON_TOGGLE, 2);
     }
 
-    public boolean isQsSettingsEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 1) == 2;
-    }
+
 
     public boolean isEditEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
