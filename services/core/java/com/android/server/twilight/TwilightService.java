@@ -296,7 +296,7 @@ public final class TwilightService extends SystemService
      */
     private static TwilightState calculateTwilightState(Location location, long timeMillis) {
         if (location == null) {
-            return getManualTwilightState();
+            return getManualTwilightState(timeMillis);
         }
 
         final CalendarAstronomer ca = new CalendarAstronomer(
@@ -326,7 +326,7 @@ public final class TwilightService extends SystemService
         return new TwilightState(sunriseTimeMillis, sunsetTimeMillis);
     }
 
-    private static TwilightState getManualTwilightState() {
+    private static TwilightState getManualTwilightState(long timeMillis) {
         final Calendar sunrise = Calendar.getInstance();
         sunrise.setTimeInMillis(timeMillis);
         sunrise.set(Calendar.HOUR_OF_DAY, 5);
