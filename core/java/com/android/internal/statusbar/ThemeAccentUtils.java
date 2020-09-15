@@ -156,6 +156,7 @@ public class ThemeAccentUtils {
         "com.android.system.switch.md2normal", // 9
         "com.android.system.switch.narrownormal", // 10
         "com.android.system.switch.containednormal", // 11
+        "com.android.system.switch.radio", // 11
     };
 
     public static final String[] SOLARIZED_DARK = {
