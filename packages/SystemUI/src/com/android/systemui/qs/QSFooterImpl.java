@@ -439,7 +439,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public int isSettingsDisabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 2);
+            Settings.System.SETTING_BUTTON_TOGGLE, 1);
     }
 
 
