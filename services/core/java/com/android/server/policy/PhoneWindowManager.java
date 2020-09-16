@@ -160,7 +160,6 @@ import android.media.AudioManagerInternal;
 import android.media.AudioSystem;
 import android.media.IAudioService;
 import android.media.session.MediaSessionLegacyHelper;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.FactoryTest;
@@ -441,7 +440,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private DisplayFoldController mDisplayFoldController;
     AppOpsManager mAppOpsManager;
     private boolean mHasFeatureAuto;
-    AlertSliderObserver mAlertSliderObserver;
     AlarmManager mAlarmManager;
     private boolean mHasFeatureWatch;
     private boolean mHasFeatureLeanback;
@@ -801,10 +799,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private PendingIntent mTorchOffPendingIntent;
 
     private boolean mHasPermanentMenuKey;
-
-    private boolean mHasAlertSlider = false;
     private SwipeToScreenshotListener mSwipeToScreenshot;
-
     private class PolicyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -934,9 +929,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     };
 
     class SettingsObserver extends ContentObserver {
-        private final Uri SWAP_ALERT_SLIDER_ORDER_URI =
-                Settings.System.getUriFor(Settings.System.ALERT_SLIDER_ORDER);
-
         SettingsObserver(Handler handler) {
             super(handler);
         }
@@ -1035,9 +1027,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Secure.TORCH_POWER_BUTTON_GESTURE), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ALERT_SLIDER_ORDER), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_ROCKER_WAKE), false, this,
                     UserHandle.USER_ALL);
          resolver.registerContentObserver(Settings.Secure.getUriFor(
@@ -1082,15 +1071,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             updateSettings();
         }
 
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (SWAP_ALERT_SLIDER_ORDER_URI.equals(uri)
-                    && mSystemReady && mAlertSliderObserver != null) {
-                mAlertSliderObserver.update();
-            } else {
-                updateSettings();
-                updateRotation(false);
-            }
+        @Override public void onChange(boolean selfChange) {
+            updateSettings();
+            updateRotation(false);
         }
     }
 
@@ -2161,10 +2144,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAccessibilityShortcutController =
                 new AccessibilityShortcutController(mContext, new Handler(), mCurrentUserId);
         mLogger = new MetricsLogger();
-        // Init alert slider
-        mHasAlertSlider = mContext.getResources().getBoolean(R.bool.config_hasAlertSlider)
-                && !TextUtils.isEmpty(mContext.getResources().getString(R.string.alert_slider_state_path))
-                && !TextUtils.isEmpty(mContext.getResources().getString(R.string.alert_slider_uevent_match_path));
         // Double-tap-to-doze
         mNativeDoubleTapToDozeAvailable = !TextUtils.isEmpty(
                 mContext.getResources().getString(R.string.config_dozeDoubleTapSensorType));
@@ -6214,10 +6193,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         // Ensure observe happens in systemReady() since we need
         // LineageHardwareService to be up and running
-        if (mHasAlertSlider) {
-            mAlertSliderObserver = new AlertSliderObserver(mContext);
-            mAlertSliderObserver.startObserving(com.android.internal.R.string.alert_slider_uevent_match_path);
-        }
 
         mANBIHandler = new ANBIHandler(mContext);
 
