@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -87,6 +88,8 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
     private static final long DIALOG_TIMEOUT = 2000;
     private static final long DIALOG_DELAY = 300;
+    private int mTextColor = 0;
+    private int mIconColor = 0;
 
     private Context mContext;
     private final VolumeDialogController mVolumeDialogController;
@@ -124,8 +127,7 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
         @Override
         public void onConfigurationChanged() {
-            mHandler.sendEmptyMessage(MSG_DIALOG_DISMISS);
-            initDialog();
+            updateThemeColor();
         }
     };
 
@@ -135,7 +137,6 @@ public class TriStateUiControllerImpl implements TriStateUiController,
     private ViewGroup mDialogView;
     private final H mHandler;
     private UserActivityListener mListener;
-    private boolean mShowing = false;
     private int mBackgroundColor = 0;
     private ImageView mTriStateIcon;
     private TextView mTriStateText;
@@ -260,7 +261,6 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
     private void initDialog() {
         mDialog = new Dialog(mContext, R.style.qs_theme);
-        mShowing = false;
         mWindow = mDialog.getWindow();
         mWindow.requestFeature(Window.FEATURE_NO_TITLE);
         mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -287,6 +287,7 @@ public class TriStateUiControllerImpl implements TriStateUiController,
         mDialogView = (ViewGroup) mDialog.findViewById(R.id.tri_state_layout);
         mTriStateIcon = (ImageView) mDialog.findViewById(R.id.tri_state_icon);
         mTriStateText = (TextView) mDialog.findViewById(R.id.tri_state_text);
+        updateThemeColor();
     }
 
     private void updateTriStateLayout() {
@@ -491,9 +492,8 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
     private void handleShow() {
         mHandler.removeMessages(MSG_DIALOG_SHOW);
-        if (!mShowing) {
+        if (!mDialog.isShowing()) {
             updateTriStateLayout();
-            mShowing = true;
             mDialog.show();
             if (mListener != null) {
                 mListener.onTriStateUserActivity();
@@ -504,8 +504,10 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
     private void handleDismiss() {
         mHandler.removeMessages(MSG_DIALOG_DISMISS);
-        if (mShowing) {
-            mShowing = false;
+        if (mDialog == null) {
+            return;
+        }
+        if (mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
@@ -532,7 +534,6 @@ public class TriStateUiControllerImpl implements TriStateUiController,
 
     @Override
     public void onDensityOrFontScaleChanged() {
-        mHandler.sendEmptyMessage(MSG_DIALOG_DISMISS);
         initDialog();
     }
 
@@ -541,5 +542,27 @@ public class TriStateUiControllerImpl implements TriStateUiController,
         int colorAccent = ta.getColor(0, 0);
         ta.recycle();
         return colorAccent;
+    }
+    
+    public void updateThemeColor() {
+        mIconColor = getAttrColor(android.R.attr.colorAccent);
+        mTextColor = getAttrColor(android.R.attr.textColorPrimary);
+        if (mTriStateText != null) {
+            mTriStateText.setTextColor(mTextColor);
+        }
+        if (mTriStateIcon != null) {
+            mTriStateIcon.setColorFilter(mIconColor);
+        }
+    }
+
+    @Override
+    public void onOverlayChanged() {
+        updateThemeColor();
+    }
+
+    @Override
+    public void onConfigChanged(Configuration newConfig) {
+        updateTriStateLayout();
+        updateThemeColor();
     }
 }
