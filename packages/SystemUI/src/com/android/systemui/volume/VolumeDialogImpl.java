@@ -1170,7 +1170,13 @@ public class VolumeDialogImpl implements VolumeDialog,
                 row.summary = row.view.findViewById(R.id.media_output_summary);
                 row.selected = row.view.findViewById(R.id.media_output_selected);
                 row.icon = row.view.findViewById(R.id.media_output_icon);
-                Drawable drawable = device.getIcon();
+                Drawable drawable = null;
+                try {
+                    drawable = device.getIcon();
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to get icon of bluetooth headset");
+                    
+                }
                 if (drawable == null) {
                     drawable = mContext.getDrawable(
                             com.android.internal.R.drawable.ic_bt_headphones_a2dp);
