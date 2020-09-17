@@ -416,7 +416,6 @@
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
 
-
     <style name="VolumeButtons" parent="@android:style/Widget.Material.Button.Borderless">
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/rounded_ripple</item>

@@ -63,14 +63,14 @@
 
         <com.android.keyguard.AlphaOptimizedImageButton
             android:id="@+id/volume_row_app_icon"
-            style="@style/VolumeButtons"
+            style="@style/VolumeButtonsApp"
             android:visibility="gone"
             android:clickable="false"
             android:layout_width="@dimen/volume_dialog_tap_target_size"
             android:layout_height="@dimen/volume_dialog_tap_target_size"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="-12dp"
-            android:scaleType="centerInside"
+            android:layout_marginBottom="-15dp"
+            android:scaleType="fitCenter"
             android:soundEffectsEnabled="false"  />
 
             <com.android.systemui.statusbar.AlphaOptimizedTextView

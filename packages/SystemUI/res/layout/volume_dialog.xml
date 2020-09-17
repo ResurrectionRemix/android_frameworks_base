@@ -45,8 +45,8 @@
             <com.android.keyguard.AlphaOptimizedImageButton
                 android:id="@+id/ringer_icon"
                 style="@style/VolumeButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/volume_dialog_ringer_width"
+                android:layout_height="@dimen/volume_dialog_ringer_width"
                 android:padding="17dp"
                 android:tint="@*android:color/gradient_end" />
 
