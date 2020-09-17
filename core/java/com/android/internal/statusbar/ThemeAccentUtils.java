@@ -93,6 +93,8 @@ public class ThemeAccentUtils {
             "com.android.systemui.brightness.slider.memeroundgradient",
             "com.android.systemui.brightness.slider.memeroundstrokegradient",
             "com.android.systemui.brightness.slider.memestrokegradient",
+            "com.android.systemui.brightness.slider.minihalf",
+            "com.android.systemui.brightness.slider.half",
     };
 
     private static final String[] QS_TILE_THEMES = {
