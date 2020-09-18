@@ -480,13 +480,21 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                     return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
                 } else if (useQSAccentTint == 2){
                       if (rgbTint || qsTileStyle == 27)
-                             return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                             return randomColor(context);
                       else if (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17)
                              return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
                       else 
                              return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
-                }  else if (useQSAccentTint == 0 || useQSAccentTint == 3) {
+                }  else if (useQSAccentTint == 3) {
+                            if (rgbTint || qsTileStyle == 27)
+                                return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                            else if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17 || qsTileStyle == 27))
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                            else
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                } else if (useQSAccentTint == 0) {
                             if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
                                 qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17 || qsTileStyle == 27))
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
@@ -497,6 +505,15 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 Log.e("QSTile", "Invalid state " + state);
                 return 0;
         }
+    }
+
+    public static int randomColor(Context context) {
+        Random r = new Random();
+        float hsl[] = new float[3];
+        hsl[0] = r.nextInt(360);
+        hsl[1] = r.nextFloat();
+        hsl[2] = (isThemeDark(context) ? 0.575f : 0.3f) + (r.nextFloat() * 0.125f);
+        return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
     }
 
     private static Boolean isThemeDark(Context context) {
