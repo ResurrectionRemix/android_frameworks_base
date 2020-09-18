@@ -17,6 +17,7 @@ package com.android.systemui.qs.tileimpl;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.ColorUtils;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
@@ -134,6 +135,8 @@ public class QSTileView extends QSTileBaseView {
             if (state.state == Tile.STATE_ACTIVE) {
                if (setQsUseNewTint == 2) {
                    mSecondLine.setTextColor(randomColor());
+               } else  if (setQsUseNewTint == 3) {
+                   mSecondLine.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(getContext())));
                } else {
                    mSecondLine.setTextColor(mColorLabelActive);
                }
@@ -145,6 +148,8 @@ public class QSTileView extends QSTileBaseView {
                            mSecondLine.setTextColor(mColorLabelActive);
                        } else if (setQsUseNewTint == 2) {
                           mSecondLine.setTextColor(randomColor());
+                       } else if (setQsUseNewTint == 3) {
+                          mSecondLine.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(getContext())));
                        }
                  } 
             }
@@ -158,6 +163,9 @@ public class QSTileView extends QSTileBaseView {
             if (setQsUseNewTint == 2) {
                 mLabel.setTextColor(randomColor());
                 mExpandIndicator.setImageTintList(ColorStateList.valueOf(randomColor()));
+            } else if (setQsUseNewTint == 3) {
+                mLabel.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(getContext())));
+                mExpandIndicator.setImageTintList(ColorStateList.valueOf(ColorUtils.genRandomAccentColor(isThemeDark(getContext()))));
             } else {
                 mLabel.setTextColor(mColorLabelActive);
                 mExpandIndicator.setImageTintList(mColorLabelActive);
@@ -173,7 +181,10 @@ public class QSTileView extends QSTileBaseView {
                  } else if (setQsUseNewTint == 2) {
                      mLabel.setTextColor(randomColor());
                      mExpandIndicator.setImageTintList(ColorStateList.valueOf(randomColor()));
-                 } 
+                 } else if (setQsUseNewTint == 3) {
+                     mLabel.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(getContext())));
+                     mExpandIndicator.setImageTintList(ColorStateList.valueOf(ColorUtils.genRandomAccentColor(isThemeDark(getContext()))));
+                 }
             } else {
                 mLabel.setTextColor(mColorLabelDefault);
                 mExpandIndicator.setImageTintList(mColorLabelDefault);
