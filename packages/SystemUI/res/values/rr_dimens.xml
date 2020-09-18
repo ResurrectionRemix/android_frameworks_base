@@ -37,9 +37,6 @@
     <dimen name="ticker_icon_end_margin">4dp</dimen>
     <dimen name="ticker_text_end_padding">10dp</dimen>
 
-    <!-- Custom padding size on biometric dialog -->
-    <dimen name="fp_dialog_error_padding_top">16dp</dimen>
-    <dimen name="fp_dialog_error_padding_bottom">24dp</dimen>
 
     <!-- Custom padding size on biometric dialog when fingerprint in display is active -->
     <dimen name="fp_dialog_error_padding_top_fingerprint_in_display">@dimen/fp_dialog_error_padding_top</dimen>
@@ -188,5 +185,4 @@
     <dimen name="opa_overshoot_translation">8.0dip</dimen>
     <dimen name="opa_return_translation">-1.0dip</dimen>
     <dimen name="opa_rest_to_collapse">7.0dip</dimen>
-
 </resources>
