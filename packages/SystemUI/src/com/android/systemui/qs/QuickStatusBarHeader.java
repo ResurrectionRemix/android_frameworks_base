@@ -192,6 +192,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private int mBrightnessSlider;
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
+    private int mSettingsButton;
 
     private int mStatusBarBatteryStyle, mQSBatteryStyle;
 
@@ -246,6 +247,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_DATAUSAGE_LOCATION), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.SETTING_BUTTON_TOGGLE), false,
                     this, UserHandle.USER_ALL);
 
             }
@@ -583,11 +587,37 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                        + mContext.getResources().getDimensionPixelSize(
                        R.dimen.qs_tile_margin_top);
            } else {
-               qqsHeight += mContext.getResources().getDimensionPixelSize(
+              if (mSettingsButton == 2 && mLandscape) {
+                  qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight +
+                       mContext.getResources().getDimensionPixelSize(
+                       R.dimen.quick_qs_drag_handle_height);
+               } else if (mSettingsButton != 2 && mLandscape && mHideDragHandle) {
+                  qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight -
+                       mContext.getResources().getDimensionPixelSize(
+                       R.dimen.quick_qs_drag_handle_height);
+               }  else { 
+                 qqsHeight += mContext.getResources().getDimensionPixelSize(
                        R.dimen.brightness_mirror_height)
                        + mContext.getResources().getDimensionPixelSize(
                        R.dimen.qs_tile_margin_top) + mHeaderImageHeight;
+               }
            }
+        } else {
+           if (mHeaderImageEnabled && mSettingsButton == 2 && mLandscape) {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight;
+           }  else if (mHeaderImageEnabled && mSettingsButton != 2 && mLandscape && !mHideDragHandle) {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight +
+                       mContext.getResources().getDimensionPixelSize(
+                       R.dimen.quick_qs_drag_handle_height);
+           } 
         }
         setMinimumHeight(sbHeight + qqsHeight);
     }
@@ -682,6 +712,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 Settings.System.QS_DATAUSAGE_LOCATION, 0,
                 UserHandle.USER_CURRENT);
         mIsQuickQsBrightnessEnabled = mBrightnessSlider > 2;
+        mSettingsButton = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.SETTING_BUTTON_TOGGLE, 2,
+                UserHandle.USER_CURRENT);
 
         mSystemInfoMode = getQsSystemInfoMode();
         updateSystemInfoText();
@@ -1143,8 +1176,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 updateResources();
                 break;
             case QSFooterImpl.QS_SHOW_DRAG_HANDLE:
-            mHideDragHandle = newValue != null && Integer.parseInt(newValue) == 0;
-            updateResources();
+                mHideDragHandle = TunerService.parseIntegerSwitch(newValue, false);
+                updateResources();
                 break;
             case SHOW_QS_CLOCK:
                 boolean showClock =

@@ -75,6 +75,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             "system:" + Settings.System.QS_DRAG_HANDLE;
     public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON =
             "system:" + Settings.System.QS_FOOTER_AUTO_ICON;
+    public static final String QS_SETTINGS_BUTTON =
+            "system:" + Settings.System.SETTING_BUTTON_TOGGLE;
     public static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
 
 
@@ -299,6 +301,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_SHOW_DRAG_HANDLE);
         tunerService.addTunable(this, QS_SHOW_AUTO_BRIGHTNESS_BUTTON);
+        tunerService.addTunable(this, QS_SETTINGS_BUTTON);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.RR_FOOTER_TEXT_SHOW), false,
                 mSettingsObserver, UserHandle.USER_ALL);
@@ -328,6 +331,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         if (QS_SHOW_AUTO_BRIGHTNESS_BUTTON.equals(key)) {
             boolean show = TunerService.parseIntegerSwitch(newValue, true);
             setHideAutoBright(show);
+        } 
+        if (QS_SETTINGS_BUTTON.equals(key)) {
+            updateVisibilities();
         }
     }
 
@@ -439,10 +445,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public int isSettingsDisabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.SETTING_BUTTON_TOGGLE, 1);
+            Settings.System.SETTING_BUTTON_TOGGLE, 2);
     }
-
-
 
     public boolean isEditEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
