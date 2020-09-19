@@ -5941,6 +5941,13 @@ public final class Settings {
         public static final String QS_BACKGROUND_BLUR = "qs_background_blur";
 
         /**
+         * Whether to blur behind QS panel
+         * @hide
+         */
+        public static final String QS_IMAGE_BLUR_INTENSITY = "qs_image_blur_intesity";
+
+
+        /**
          * Whether to change the transparency of the qs panel
          * @hide
          */

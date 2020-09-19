@@ -272,6 +272,9 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_CUSTOM_IMAGE_BLUR), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_IMAGE_BLUR_INTENSITY), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -344,7 +347,7 @@ public class QSContainerImpl extends FrameLayout implements
             int width = mQSPanel.getWidth();
             int height = mQSPanel.getHeight() + mQSFooter.getHeight();
 
-            Bitmap bitmap = mQsBackgroundBlur ? ImageHelperQS.getBlurredImage(mContext, currentImage.getBitmap()) : currentImage.getBitmap();
+            Bitmap bitmap = mQsBackgroundBlur ? ImageHelperQS.getBlurredImage(mContext, currentImage.getBitmap(),getblurRadius()) : currentImage.getBitmap();
             Bitmap toCenter = ImageHelperQS.scaleCenterCrop(bitmap, width, height);
             BitmapDrawable bDrawable = new BitmapDrawable(mContext.getResources(),
                             ImageHelperQS.getRoundedCornerBitmap(toCenter, 15, width, height, mCurrentColor));
@@ -357,6 +360,12 @@ public class QSContainerImpl extends FrameLayout implements
             mBackground.setBackground(mQsBackGround);
             mBackground.setClipToOutline(true);
         }
+    }
+
+    private float getblurRadius() {
+        return 0.25f * ((float) Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.QS_IMAGE_BLUR_INTENSITY, 30,
+               UserHandle.USER_CURRENT));
     }
 
     private void setQsBackground() {
