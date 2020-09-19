@@ -76,8 +76,6 @@ public class VolumePluginManager extends BroadcastReceiver {
         "co.potatoproject.plugin.volume.tiled",
     };
 
-    static final String DEFAULT_VOLUME_PLUGIN = ALLOWED_PLUGINS[1];
-    static final String VOLUME_PLUGIN_ACTION = "com.android.systemui.action.PLUGIN_VOLUME";
 
     private PluginPrefs mPluginPrefs;
     private PluginEnabler mPluginEnabler;
@@ -136,7 +134,7 @@ public class VolumePluginManager extends BroadcastReceiver {
         PackageInfo enabledPlugin = getEnabledPlugin(plugins);
         try {
             if (enabledPlugin != null) {
-                Strings enabledPkg = enabledPlugin.packageName;
+                String enabledPkg = enabledPlugin.packageName;
                 ComponentName EnabledComponentName = new ComponentName(enabledPkg,
                         enabledPlugin.services[0].name);
                 mPluginEnabler.setDisabled(EnabledComponentName, PluginEnabler.DISABLED_MANUALLY);
