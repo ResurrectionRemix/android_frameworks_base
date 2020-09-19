@@ -366,27 +366,26 @@ public class QSContainerImpl extends FrameLayout implements
         mQsBackgroundBlur = Settings.System.getIntForUser(getContext().getContentResolver(),
                     Settings.System.QS_PANEL_CUSTOM_IMAGE_BLUR, 1, UserHandle.USER_CURRENT) == 1;
        if (mQsBackGroundColorRGB) {
-           setQCustomBG();
            startDiscoMode();
        } else {
            stopDiscoMode();
-          if (mQsBackGroundType) {
+           if (mQsBackGroundType) {
               setQCustomBG();
-          } else {
-            if (mSetQsFromResources) {
-                if (!mQsBgNewEnabled) {
-                    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-                    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-                } else {
-                    mQsBackGroundNew = getContext().getDrawable(R.drawable.qs_background_primary_new);
-                    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_new);
-                }
-                try {
-                   mOverlayManager.setEnabled("com.android.systemui.qstheme.color",
+            } else {
+              if (mSetQsFromResources) {
+                  if (!mQsBgNewEnabled) {
+                       mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+                       mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+                  } else {
+                       mQsBackGroundNew = getContext().getDrawable(R.drawable.qs_background_primary_new);
+                       mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_new);
+                  }
+                  try {
+                       mOverlayManager.setEnabled("com.android.systemui.qstheme.color",
                         false, ActivityManager.getCurrentUser());
-                } catch (RemoteException e) {
-                   Log.w("QSContainerImpl", "Can't change qs theme", e);
-                }
+                  } catch (RemoteException e) {
+                      Log.w("QSContainerImpl", "Can't change qs theme", e);
+                  }
              } else {
                 if (!mQsBgNewEnabled) {
                      mQsBackGround.setColorFilter(mCurrentColor, PorterDuff.Mode.SRC_ATOP);
@@ -406,13 +405,13 @@ public class QSContainerImpl extends FrameLayout implements
             } else {
                 mBackground.setBackground(mQsBackGroundNew);
             }
+         }
             mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
             if (!mQsBgNewEnabled) {
                 mQsBackGround.setAlpha(mQsBackGroundAlpha);
             } else {
                 mQsBackGroundNew.setAlpha(mQsBackGroundAlpha);
             }
-         }
       }
    }
 
@@ -715,16 +714,14 @@ public class QSContainerImpl extends FrameLayout implements
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
         } else {
             mQsBackgroundAlpha = true;
+            mStatusBarBackground.setBackgroundColor(Color.BLACK);
             if(mQsBackGroundType) {
                post(new Runnable() {
                     public void run() {
                       setQsBackground();
                     }
                });
-               mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
-          } else {
-            mStatusBarBackground.setBackgroundColor(Color.BLACK);
-          }
+          } 
         }
     }
 
