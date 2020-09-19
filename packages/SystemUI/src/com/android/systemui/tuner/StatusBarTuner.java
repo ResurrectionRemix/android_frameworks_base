@@ -23,12 +23,15 @@ import androidx.preference.PreferenceFragment;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
-
+import android.provider.Settings;
+import android.os.UserHandle;
 import com.android.internal.util.rr.DeviceUtils;
 
 public class StatusBarTuner extends PreferenceFragment {
 
     private static final String KEY_NFC = "nfc";
+    private static final String KEY_CAMERA = "camera";
+    private static final String KEY_MIC = "microphone";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -40,6 +43,15 @@ public class StatusBarTuner extends PreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.status_bar_prefs);
+
+        boolean permissionenabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.PERMISSIONS_HUB_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        if (!permissionenabled) {
+            getPreferenceScreen().removePreference(findPreference(KEY_CAMERA));
+            getPreferenceScreen().removePreference(findPreference(KEY_MIC));
+        }
 
         if (!DeviceUtils.deviceSupportsNfc(getContext())) {
             getPreferenceScreen().removePreference(findPreference(KEY_NFC));

@@ -332,7 +332,7 @@ public class PhoneStatusBarPolicy
 
     private void updateSettings() {
         mPermissionsHubEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PERMISSIONS_HUB_ENABLED, 1,
+                Settings.System.PERMISSIONS_HUB_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 
