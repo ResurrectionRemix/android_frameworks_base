@@ -91,9 +91,7 @@ class PrivacyItemController @Inject constructor(
         uiHandler.post(notifyChanges)
     }
 
-    private var indicatorsAvailable = Settings.System.getIntForUser(context.getContentResolver(),
-            Settings.System.PERMISSIONS_HUB_ENABLED, 1,
-            UserHandle.USER_CURRENT) == 1
+    private var indicatorsAvailable = true
     @VisibleForTesting
     internal val devicePropertyChangedListener =
             object : DeviceConfig.OnPropertyChangedListener {

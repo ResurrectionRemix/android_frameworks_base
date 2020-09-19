@@ -7988,6 +7988,12 @@ public final class Settings {
         public static final String PERMISSIONS_HUB_ENABLED = "permissions_hub_enabled";
 
         /**
+         * Whether to enable permissions hub in QS
+         * @hide
+         */
+        public static final String PERMISSIONS_HUB_QS_ENABLED = "permissions_hub_qs_enabled";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

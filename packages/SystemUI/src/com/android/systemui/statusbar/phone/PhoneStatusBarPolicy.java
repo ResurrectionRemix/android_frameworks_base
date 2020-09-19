@@ -739,16 +739,18 @@ public class PhoneStatusBarPolicy
                 }
                 continue;
             }
-            switch (item.getPrivacyType()) {
-                case TYPE_CAMERA:
-                    showCamera = true;
-                    break;
-                case TYPE_LOCATION:
-                    showLocation = true;
-                    break;
-                case TYPE_MICROPHONE:
-                    showMicrophone = true;
-                    break;
+            if (mPermissionsHubEnabled) {
+                switch (item.getPrivacyType()) {
+                    case TYPE_CAMERA:
+                        showCamera = true;
+                        break;
+                    case TYPE_LOCATION:
+                        showLocation = true;
+                        break;
+                    case TYPE_MICROPHONE:
+                        showMicrophone = true;
+                        break;
+                }
             }
         }
 

@@ -250,7 +250,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     .getUriFor(Settings.System.SETTING_BUTTON_TOGGLE), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PERMISSIONS_HUB_ENABLED), false,
+                    Settings.System.PERMISSIONS_HUB_QS_ENABLED), false,
                     this, UserHandle.USER_ALL);
 
             }
@@ -700,7 +700,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 Settings.System.SETTING_BUTTON_TOGGLE, 2,
                 UserHandle.USER_CURRENT);
         mPermissionsHubEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.PERMISSIONS_HUB_ENABLED, 1,
+                Settings.System.PERMISSIONS_HUB_QS_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
 
         mSystemInfoMode = getQsSystemInfoMode();
