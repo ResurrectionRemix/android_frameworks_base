@@ -55,6 +55,7 @@ public class BatteryMeterDrawableBase extends Drawable {
     public static final int BATTERY_STYLE_TEXT = 4;
     public static final int BATTERY_STYLE_HIDDEN = 5;
     public static final int BATTERY_STYLE_SOLID = 6;
+    public static final int BATTERY_STYLE_BIG_CIRCLE = 7;
 
     protected final Context mContext;
     protected final Paint mFramePaint;
@@ -210,6 +211,7 @@ public class BatteryMeterDrawableBase extends Drawable {
    private boolean canAnimate() {
         return (mMeterStyle == BATTERY_STYLE_SOLID ||
                 mMeterStyle == BATTERY_STYLE_DOTTED_CIRCLE ||
+                mMeterStyle == BATTERY_STYLE_BIG_CIRCLE ||
                 mMeterStyle == BATTERY_STYLE_CIRCLE);
    }
 
@@ -417,6 +419,9 @@ public class BatteryMeterDrawableBase extends Drawable {
                 break;
             case BATTERY_STYLE_SOLID:
                 drawSolid(c);
+                break;
+            case BATTERY_STYLE_BIG_CIRCLE:
+                drawCircle(c);
                 break;
         }
     }

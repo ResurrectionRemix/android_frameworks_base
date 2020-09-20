@@ -22,6 +22,7 @@ import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STY
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_CIRCLE;
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_DOTTED_CIRCLE;
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_SOLID;
+import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_BIG_CIRCLE;
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN;
 
 import static com.android.systemui.util.SysuiLifecycle.viewAttachLifecycle;
@@ -515,12 +516,19 @@ public class BatteryMeterView extends LinearLayout implements
         res.getValue(R.dimen.status_bar_icon_scale_factor, typedValue, true);
         float iconScaleFactor = typedValue.getFloat();
 
-        int batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height);
+        int batteryHeight = res.getDimensionPixelSize(
+                           isBigCircleBattery() ? R.dimen.status_bar_battery_bigcircle_icon_height :
+                                                  R.dimen.status_bar_battery_icon_height);
         int batteryWidth = mBatteryStyle == BATTERY_STYLE_CIRCLE || 
                            mBatteryStyle == BATTERY_STYLE_DOTTED_CIRCLE ||
                            mBatteryStyle == BATTERY_STYLE_SOLID ?
                 res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width) :
                 res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
+
+        if (isBigCircleBattery()) {
+                 batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_bigcircle_icon_width);
+        }
+
         int marginBottom = res.getDimensionPixelSize(R.dimen.battery_margin_bottom);
 
         LinearLayout.LayoutParams scaledLayoutParams = new LinearLayout.LayoutParams(
@@ -539,6 +547,10 @@ public class BatteryMeterView extends LinearLayout implements
             mXDrawable.setMeterStyle(mBatteryStyle);
             mBatteryIconView.setImageDrawable(mXDrawable);
         }
+    }
+
+    private boolean isBigCircleBattery() {
+        return mBatteryStyle == BatteryMeterDrawableBase.BATTERY_STYLE_BIG_CIRCLE;
     }
 
     @Override
