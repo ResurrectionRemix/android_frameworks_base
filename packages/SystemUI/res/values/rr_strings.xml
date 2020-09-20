@@ -348,4 +348,17 @@
     <string name="lte_on">LTE on</string>
     <string name="lte_off">LTE off</string>
 
+    <!-- Refresh rate -->
+    <string name="refresh_title">Screen refresh</string>
+    <string name="tile_refresh_rate">Screen refresh rate</string>
+    <string name="auto_refresh_rate_summary">Auto refresh rate</string>
+    <string name="auto_refresh_rate_title">Auto refresh mode</string>
+    <string name="refresh_rate_60">Refresh rate 60Hz</string>
+    <string name="refresh_rate_90">Refresh rate 90Hz</string>
+    <string name="refresh_rate_60_triggered">Refresh rate is set to 60Hz</string>
+    <string name="refresh_rate_90_triggered">Refresh rate is set to 90Hz</string>
+    <string name="refresh_rate_auto_triggered">Refresh rate is set to auto</string>
+    <string name="refresh_change_triggered">Refresh rate setting changed. Please long press tile to activate desired refresh rate</string>
+    <string name="refresh_rate_disabled">Refresh rate disabled</string>
+
 </resources>

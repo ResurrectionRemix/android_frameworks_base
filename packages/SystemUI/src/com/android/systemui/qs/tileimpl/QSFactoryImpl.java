@@ -81,6 +81,7 @@ import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.RRTile;
+import com.android.systemui.qs.tiles.RefreshRateTile;
 import com.android.systemui.qs.tiles.PulseTile;
 import com.android.systemui.qs.tiles.NavBarTile;
 import com.android.systemui.util.leak.GarbageMonitor;
@@ -151,6 +152,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<LteTile> mLteTileProvider;
     private final Provider<ImmersiveTile> mImmersiveTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
+    private final Provider<RefreshRateTile> mRefreshRateTileProvider;
 
     private QSTileHost mHost;
 
@@ -210,7 +212,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CPUInfoTile> cpuInfoTileProvider,
             Provider<LteTile> lteTileProvider,
             Provider<ImmersiveTile> immersiveTileProvider,
-            Provider<LocaleTile> localeTileProvider) {
+            Provider<LocaleTile> localeTileProvider,
+            Provider<RefreshRateTile> refreshRateTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -267,6 +270,7 @@ public class QSFactoryImpl implements QSFactory {
         mLteTileProvider = lteTileProvider;
         mImmersiveTileProvider = immersiveTileProvider;
         mLocaleTileProvider = localeTileProvider;
+        mRefreshRateTileProvider = refreshRateTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -395,6 +399,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mImmersiveTileProvider.get();
             case "locale":
                 return mLocaleTileProvider.get();
+            case "refreshrate":
+                return mRefreshRateTileProvider.get();
         }
 
         // Intent tiles.
