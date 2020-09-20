@@ -210,6 +210,22 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
             mColorActive = ColorUtils.genRandomAccentColor(isThemeDark(context));
             mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
             mColorActive = mColorActiveAlpha;
+        } else if (useQSAccentTint == 4) {
+            if (isThemeDark(context)) {
+                mColorActive = ColorUtils.genRandomAccentColor(true);
+                mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+                mColorActive = mColorActiveAlpha;
+            } else {
+                mColorActive = randomColor();
+            }
+        } else if (useQSAccentTint == 5) {
+            if (isThemeDark(context)) {
+                mColorActive = randomColor();
+            } else {
+                mColorActive = ColorUtils.genRandomAccentColor(false);
+                mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+                mColorActive = mColorActiveAlpha;
+            }
         }
     }
 

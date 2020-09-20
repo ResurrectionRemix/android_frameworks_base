@@ -500,7 +500,31 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
                             else
                                 return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
-                }
+                }   else if (useQSAccentTint == 4) {
+                            if (rgbTint || qsTileStyle == 27) {
+                                if (isThemeDark(context))
+                                    return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                                 else 
+                                    return randomColor(context);
+                            }
+                            else if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17 || qsTileStyle == 27))
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                            else
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                }   else if (useQSAccentTint == 5) {
+                            if (rgbTint || qsTileStyle == 27) {
+                                if (isThemeDark(context))
+                                    return randomColor(context);
+                                 else
+                                    return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                            }
+                            else if (qsIconPrimary || (qsTileStyle == 7 || qsTileStyle == 9 || qsTileStyle == 10 ||
+                                qsTileStyle == 12 || qsTileStyle == 13 || qsTileStyle == 16 || qsTileStyle == 17 || qsTileStyle == 27))
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                            else
+                                return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                } 
             default:
                 Log.e("QSTile", "Invalid state " + state);
                 return 0;
