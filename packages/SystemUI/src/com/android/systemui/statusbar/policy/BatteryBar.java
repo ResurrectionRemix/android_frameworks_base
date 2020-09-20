@@ -73,7 +73,7 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
     private int mLowColor = 0xFFFF0000;
     private int mHighColor = 0xFF00FF00;
     GradientDrawable mBarGradient;
-    int[] mGradientColors;
+    int[] mGradientColors = new int[2];
     private boolean useGradientColor = false;
 
     private Handler mHandler = new Handler();
@@ -135,6 +135,8 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
                     this);
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_BAR_USE_GRADIENT_COLOR), false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_BAR_GRADIENT_COLOR), false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -160,12 +162,6 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
         mBatteryLevel = currentCharge;
         mBatteryCharging = isCharging;
         vertical = isVertical;
-        mGradientColors = new int[2];
-        mGradientColor = context.getColor(com.android.internal.R.color.gradient_end);
-        mGradientColors[0] = mGradientColor;
-        mGradientColors[1] = getColorForPercent(currentCharge);
-
-        mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
     }
 
     public BatteryBar(Context context, AttributeSet attrs) {
@@ -271,7 +267,8 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
                 Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR, 0xFFFFFFFF);
         mBatteryLowDarkColor = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR, 0x99000000);
-
+        mGradientColor = Settings.System.getInt(resolver,
+                Settings.System.BATTERY_BAR_GRADIENT_COLOR, 0xFFFFFFFF);
         shouldAnimateCharging = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_BATTERY_BAR_ANIMATE, 0) == 1;
 
@@ -282,6 +279,12 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
 
         useGradientColor = Settings.System.getIntForUser(resolver,
                 Settings.System.BATTERY_BAR_USE_GRADIENT_COLOR, 0, UserHandle.USER_CURRENT) == 1;
+        mGradientColors[0] = mGradientColor;
+        mGradientColors[1] = getColorForPercent(mBatteryLevel);
+
+        if (mBarGradient == null) {
+            mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
+        }
 
         if (mBatteryCharging && mBatteryLevel < 100 && shouldAnimateCharging) {
             start();

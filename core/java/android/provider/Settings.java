@@ -7240,6 +7240,11 @@ public final class Settings {
          */
         public static final String BATTERY_BAR_USE_GRADIENT_COLOR = "battery_bar_use_gradient_color";
 
+       /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_GRADIENT_COLOR = "battery_bar_gradient_color";
+
         /**
          * Some creation simillar to samsung OneUI
          * @hide
