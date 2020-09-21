@@ -4,7 +4,7 @@
         <shape>
             <padding android:top="10dp" android:right="12dp" android:bottom="10dp" android:left="12dp" />
             <solid android:color="@color/toast_bg" />
-            <corners android:radius="4dp" />
+            <corners android:radius="?android:attr/dialogCornerRadius"/>
         </shape>
     </item>
 </layer-list>
