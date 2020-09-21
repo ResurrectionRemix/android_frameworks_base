@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    	
+    <!-- Time displayed on typographic clock face, which displays the time in words.
+             Example:
+                 It's
+                 Four
+                 Twenty
+                 Nine
+         This string requires two arguments: the first in the hours of the time and
+         the second is the minutes of the time. The hours string is obtained from
+         string-array type_clock_hours below and the minutes string is obtained
+         from string-array type_clock_minutes below.
+    [CHAR LIMIT=8] -->
+    <plurals name="type_clock_header">
+        <item quantity="one"><annotation name="">E\u2019 la</annotation>\n^1\n^2</item> 
+        <item quantity="few"><annotation name="color">Sono le</annotation>\n^1\n^2</item>
+        <item quantity="other"><annotation name="color">Sono le</annotation>\n^1\n^2</item>
+    </plurals>
+
+    <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
+    <string-array name="type_clock_hours">
+        <item>Una</item>
+        <item>Due</item>
+        <item>Tre</item>
+        <item>Quattro</item>
+        <item>Cinque</item>
+        <item>Sei</item>
+        <item>Sette</item>
+        <item>Otto</item>
+        <item>Nove</item>
+        <item>Dieci</item>
+        <item>Undici</item>
+        <item>Docdici</item>
+    </string-array>
+
+    <!-- Minutes displayed in words on the typographic clock face. [CHAR LIMIT=20] -->
+    <string-array name="type_clock_minutes">
+        <item>in punto\n</item>
+        <item>e uno\n</item>
+        <item>e due\n</item>
+        <item>e tre\n</item>
+        <item>e quattro\n</item>
+        <item>e cinque\n</item>
+        <item>e sei\n</item>
+        <item>e sette\n</item>
+        <item>e otto\n</item>
+        <item>e nove\n</item>
+        <item>e dieci\n</item>
+        <item>e undici\n</item>
+        <item>e dodici\n</item>
+        <item>e tredici\n</item>
+        <item>e quattordici\n</item>
+        <item>e quindici\n</item>
+        <item>e sedici\n</item>
+        <item>e diciassette\n</item>
+        <item>e diciotto\n</item>
+        <item>e diciannove\n</item>
+        <item>e venti\n</item>
+        <item>e ventuno\n</item>
+        <item>e ventidue\n</item>
+        <item>e ventitre\n</item>
+        <item>e ventiquattro\n</item>
+        <item>e venticinque\n</item>
+        <item>e ventisei\n</item>
+        <item>e ventisette\n</item>
+        <item>e ventotto\n</item>
+        <item>e ventinove\n</item>
+        <item>e trenta\n</item>
+        <item>e trentuno\n</item>
+        <item>e trentadue\n</item>
+        <item>e trentatre\n</item>
+        <item>e trentaquattro\n</item>
+        <item>e trentaquattro\n</item>
+        <item>e trentasei\n</item>
+        <item>e trentasette\n</item>
+        <item>e trentotto\n</item>
+        <item>e trentanove\n</item>
+        <item>e quaranta\n</item>
+        <item>e quarantuno\n</item>
+        <item>e quarantadue\n</item>
+        <item>e quarantatre\n</item>
+        <item>e quarantaquattro\n</item>
+        <item>e quarantacinque\n</item>
+        <item>e quarantasei\n</item>
+        <item>e quarantasette\n</item>
+        <item>e quarantotto\n</item>
+        <item>e quarantanove\n</item>
+        <item>e cinquanta\n</item>
+        <item>e cinquantuno\n</item>
+        <item>e cinquantadue\n</item>
+        <item>e cinquantatre\n</item>
+        <item>e cinquantaquattro\n</item>
+        <item>e cinquantacinque\n</item>
+        <item>e cinquantasei\n</item>
+        <item>e cinquantasette\n</item>
+        <item>e cinquantotto\n</item>
+        <item>e cinquantanove\n</item>
+    </string-array>
+    
+</resources>
