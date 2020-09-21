@@ -158,6 +158,8 @@ public class ThemeAccentUtils {
         "com.android.system.switch.md2normal", // 9
         "com.android.system.switch.narrownormal", // 10
         "com.android.system.switch.containednormal", // 11
+        "com.android.system.switch.stockish", // 12
+        "com.android.system.switch.fluid", //13
     };
 
     public static final String[] SOLARIZED_DARK = {
