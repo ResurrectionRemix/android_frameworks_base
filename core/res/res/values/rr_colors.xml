@@ -26,7 +26,7 @@
 
     <!-- Default Gradient -->
     <color name="gradient_device_default">@color/accent_material_light</color>
-    <color name="toast_bg">@color/white</color>
+    <color name="toast_bg">#E6EEEEEE</color>
     <color name="toast_text">@color/black</color>
 
 </resources>
