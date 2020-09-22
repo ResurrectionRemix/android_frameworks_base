@@ -2459,7 +2459,7 @@ class AppWindowToken extends WindowToken implements WindowManagerService.AppFree
      */
     boolean shouldUseAppThemeSnapshot() {
         return mDisablePreviewScreenshots || forAllWindows(w -> (w.mAttrs.flags & FLAG_SECURE) != 0,
-                true /* topToBottom */);
+                true /* topToBottom */) || mActivityRecord.getIsAppLocked();
     }
 
     SurfaceControl getAppAnimationLayer() {

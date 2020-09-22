@@ -32,7 +32,7 @@ public class ActivityTaskManagerDebugConfig {
     // While debugging it is sometimes useful to have the category name of the log appended to the
     // base log tag to make sifting through logs with the same base tag easier. By setting this
     // constant to true, the category name of the log point will be appended to the log tag.
-    private static final boolean APPEND_CATEGORY_NAME = false;
+    private static final boolean APPEND_CATEGORY_NAME = true;
 
     // Default log tag for the activities.
     static final String TAG_ATM = "ActivityTaskManager";
@@ -67,6 +67,7 @@ public class ActivityTaskManagerDebugConfig {
     static final boolean DEBUG_RESULTS = DEBUG_ALL || false;
     public static final boolean DEBUG_CLEANUP = DEBUG_ALL || false;
     public static final boolean DEBUG_METRICS = DEBUG_ALL || false;
+    public static final boolean DEBUG_APPLOCK = DEBUG_ALL || true;
 
     static final String POSTFIX_APP = APPEND_CATEGORY_NAME ? "_App" : "";
     static final String POSTFIX_CLEANUP = (APPEND_CATEGORY_NAME) ? "_Cleanup" : "";
@@ -89,4 +90,5 @@ public class ActivityTaskManagerDebugConfig {
     static final String POSTFIX_TRANSITION = APPEND_CATEGORY_NAME ? "_Transition" : "";
     static final String POSTFIX_VISIBILITY = APPEND_CATEGORY_NAME ? "_Visibility" : "";
     static final String POSTFIX_RESULTS = APPEND_CATEGORY_NAME ? "_Results" : "";
+    public static final String POSTFIX_APPLOCK = APPEND_CATEGORY_NAME ? "_AppLock" : "";
 }

@@ -3608,6 +3608,21 @@ public final class Settings {
         public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
 
         /**
+         * Indicates whether we should only show the app lock view when the device is woken up
+         * Or always.
+         * @hide
+         */
+        public static final String APP_LOCK_SHOW_ONLY_ON_WAKE = "app_lock_show_only_on_wake";
+
+        
+        /**
+         * Indicates whether we should only show the app lock view when the device is woken up
+         * Or always.
+         * @hide
+         */
+        public static final String APP_LOCK_HIDE_NOTIFICATIONS = "app_lock_hide_notifications";
+
+        /**
          * Control whether to enable adaptive sleep mode.
          * @hide
          */
@@ -5248,6 +5263,13 @@ public final class Settings {
         /** @hide */
         private static final Validator LOCKSCREEN_WEATHER_STYLE_VALIDATOR =
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+
+        /**
+        * 
+        *
+        * @hide
+        */
+        public static final String VOLUME_PANEL_ANIMATION = "volume_panel_animation";
 
         /**
         * Toast animations
@@ -7985,6 +8007,21 @@ public final class Settings {
         public static final String QS_PANEL_CUSTOM_IMAGE = "qs_panel_custom_image";
 
         public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
+
+        /**
+         * Screen off fod
+         * @hide
+         */
+        public static final String FOD_GESTURE = "fod_gesture";
+
+        /** @hide */
+        public static final Validator FOD_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Screen off fod
+         * @hide
+         */
+        public static final String FOD_GESTURE_WAKE = "fod_gesture_wake";
 
         /**
          * Whether to enable permissions hub

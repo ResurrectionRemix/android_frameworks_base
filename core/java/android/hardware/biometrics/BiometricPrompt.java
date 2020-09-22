@@ -61,6 +61,10 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
     /**
      * @hide
      */
+    public static final String KEY_APPLOCK_PKG = "applock_package_name";
+    /**
+     * @hide
+     */
     public static final String KEY_SUBTITLE = "subtitle";
     /**
      * @hide
@@ -157,6 +161,17 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
         @RequiresPermission(USE_BIOMETRIC_INTERNAL)
         @NonNull public Builder setUseDefaultTitle() {
             mBundle.putBoolean(KEY_USE_DEFAULT_TITLE, true);
+            return this;
+        }
+
+        /**
+         * Optional: Show a special dialog for app locker if KEY_APPLOCK_PKG is set
+         * @param packageName
+         * @return
+         * @hide
+         */
+        @NonNull public Builder setApplockPackage(@NonNull CharSequence packageName) {
+            mBundle.putCharSequence(KEY_APPLOCK_PKG, packageName);
             return this;
         }
 

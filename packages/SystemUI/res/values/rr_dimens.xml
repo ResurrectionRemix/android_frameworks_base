@@ -188,4 +188,7 @@
      <!-- Width of the big battery circle icon in the status bar. -->
     <dimen name="status_bar_battery_bigcircle_icon_width">20.5dp</dimen>
 
+    <!-- App lock -->
+    <dimen name="applock_icon_dimension">54dp</dimen>
+
 </resources>

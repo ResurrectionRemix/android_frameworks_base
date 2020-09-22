@@ -969,23 +969,23 @@ public class BiometricService extends SystemService {
 
         int firstHwAvailable = TYPE_NONE;
         for (int i = 0; i < mAuthenticators.size(); i++) {
-            modality = mAuthenticators.get(i).getType();
+            int type = mAuthenticators.get(i).getType();
             BiometricAuthenticator authenticator = mAuthenticators.get(i).getAuthenticator();
             if (authenticator.isHardwareDetected()) {
                 isHardwareDetected = true;
                 if (firstHwAvailable == TYPE_NONE) {
                     // Store the first one since we want to return the error in correct priority
                     // order.
-                    firstHwAvailable = modality;
+                    firstHwAvailable = type;
                 }
                 if (authenticator.hasEnrolledTemplates(userId)) {
                     hasTemplatesEnrolled = true;
-                    if (isEnabledForApp(modality, userId)) {
+                    if (isEnabledForApp(type, userId)) {
                         // TODO(b/110907543): When face settings (and other settings) have both a
                         // user toggle as well as a work profile settings page, this needs to be
                         // updated to reflect the correct setting.
                         enabledForApps = true;
-                        break;
+                        modality |= type;
                     }
                 }
             }
@@ -1132,14 +1132,14 @@ public class BiometricService extends SystemService {
         if (mCurrentAuthSession == null) {
             return BiometricsProtoEnums.MODALITY_UNKNOWN;
         }
-        if ((mCurrentAuthSession.mModality & BiometricAuthenticator.TYPE_FINGERPRINT)
+        if ((mCurrentAuthSession.mModality & TYPE_FINGERPRINT)
                 != 0) {
             modality |= BiometricsProtoEnums.MODALITY_FINGERPRINT;
         }
-        if ((mCurrentAuthSession.mModality & BiometricAuthenticator.TYPE_IRIS) != 0) {
+        if ((mCurrentAuthSession.mModality & TYPE_IRIS) != 0) {
             modality |= BiometricsProtoEnums.MODALITY_IRIS;
         }
-        if ((mCurrentAuthSession.mModality & BiometricAuthenticator.TYPE_FACE) != 0) {
+        if ((mCurrentAuthSession.mModality & TYPE_FACE) != 0) {
             modality |= BiometricsProtoEnums.MODALITY_FACE;
         }
         return modality;
@@ -1185,6 +1185,7 @@ public class BiometricService extends SystemService {
                 mCurrentAuthSession.mClientReceiver.onAuthenticationSucceeded();
                 mCurrentAuthSession.mState = STATE_AUTH_IDLE;
                 mCurrentAuthSession = null;
+                cancelInternal(null, null, false);
             } else {
                 mCurrentAuthSession.mAuthenticatedTimeMs = System.currentTimeMillis();
                 // Store the auth token and submit it to keystore after the confirmation
@@ -1195,7 +1196,7 @@ public class BiometricService extends SystemService {
 
             // Notify SysUI that the biometric has been authenticated. SysUI already knows
             // the implicit/explicit state and will react accordingly.
-            mStatusBarService.onBiometricAuthenticated(true, null /* failureReason */);
+            mStatusBarService.onBiometricAuthenticated(true, null /* failureReason */, requireConfirmation);
         } catch (RemoteException e) {
             Slog.e(TAG, "Remote exception", e);
         }
@@ -1210,7 +1211,7 @@ public class BiometricService extends SystemService {
                 return;
             }
 
-            mStatusBarService.onBiometricAuthenticated(false, failureReason);
+            mStatusBarService.onBiometricAuthenticated(false, failureReason, false);
 
             // TODO: This logic will need to be updated if BP is multi-modal
             if ((mCurrentAuthSession.mModality & TYPE_FACE) != 0) {
@@ -1395,6 +1396,9 @@ public class BiometricService extends SystemService {
                 // to the application
                 KeyStore.getInstance().addAuthToken(mCurrentAuthSession.mTokenEscrow);
                 mCurrentAuthSession.mClientReceiver.onAuthenticationSucceeded();
+                // If we are using multiple modalities, we cancel the other modality that still
+                // might be listening for authentication
+                cancelInternal(null /* token */, null /* package */, false /* fromClient */);
             }
 
             // Do not clean up yet if we are from ConfirmDeviceCredential. We should be in the
@@ -1426,6 +1430,7 @@ public class BiometricService extends SystemService {
                 mCurrentAuthSession.mCallingUserId,
                 mCurrentAuthSession.mModality,
                 mCurrentAuthSession.mConfirmDeviceCredentialCallback);
+        mCurrentAuthSession = null;
     }
 
     private void handleOnReadyForAuthentication(int cookie, boolean requireConfirmation,
@@ -1461,14 +1466,14 @@ public class BiometricService extends SystemService {
                 it = mCurrentAuthSession.mModalitiesMatched.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry<Integer, Integer> pair = (Map.Entry) it.next();
-                    if (pair.getKey() == TYPE_FINGERPRINT) {
+                    if ((pair.getKey() & TYPE_FINGERPRINT) != 0) {
                         mFingerprintService.startPreparedClient(pair.getValue());
-                    } else if (pair.getKey() == TYPE_IRIS) {
+                    }
+                    if ((pair.getKey() & TYPE_IRIS) != 0) {
                         Slog.e(TAG, "Iris unsupported");
-                    } else if (pair.getKey() == TYPE_FACE) {
+                    }
+                    if ((pair.getKey() & TYPE_FACE) != 0) {
                         mFaceService.startPreparedClient(pair.getValue());
-                    } else {
-                        Slog.e(TAG, "Unknown modality: " + pair.getKey());
                     }
                     modality |= pair.getKey();
                 }
@@ -1558,13 +1563,9 @@ public class BiometricService extends SystemService {
             Slog.d(TAG, "Creating auth session. Modality: " + modality
                     + ", cookie: " + cookie);
             final HashMap<Integer, Integer> authenticators = new HashMap<>();
-            authenticators.put(modality, cookie);
-            mPendingAuthSession = new AuthSession(authenticators, token, sessionId, userId,
-                    receiver, opPackageName, bundle, callingUid, callingPid, callingUserId,
-                    modality, requireConfirmation, callback);
-            mPendingAuthSession.mState = STATE_AUTH_CALLED;
             // No polymorphism :(
             if ((modality & TYPE_FINGERPRINT) != 0) {
+                authenticators.put(TYPE_FINGERPRINT, cookie);
                 mFingerprintService.prepareForAuthentication(token, sessionId, userId,
                         mInternalReceiver, opPackageName, cookie,
                         callingUid, callingPid, callingUserId);
@@ -1573,10 +1574,15 @@ public class BiometricService extends SystemService {
                 Slog.w(TAG, "Iris unsupported");
             }
             if ((modality & TYPE_FACE) != 0) {
+                authenticators.put(TYPE_FACE, cookie);
                 mFaceService.prepareForAuthentication(requireConfirmation,
                         token, sessionId, userId, mInternalReceiver, opPackageName,
                         cookie, callingUid, callingPid, callingUserId);
             }
+            mPendingAuthSession = new AuthSession(authenticators, token, sessionId, userId,
+                    receiver, opPackageName, bundle, callingUid, callingPid, callingUserId,
+                    modality, requireConfirmation, callback);
+            mPendingAuthSession.mState = STATE_AUTH_CALLED;
         } catch (RemoteException e) {
             Slog.e(TAG, "Unable to start authentication", e);
         }
@@ -1629,6 +1635,11 @@ public class BiometricService extends SystemService {
             if (fromCDC) {
                 if (DEBUG) Slog.d(TAG, "Cancelling from CDC");
                 cancelInternal(token, opPackageName, false /* fromClient */);
+                try {
+                    mStatusBarService.hideBiometricDialog();
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Remote exception", e);
+                }
             } else {
                 cancelInternal(token, opPackageName, true /* fromClient */);
             }
