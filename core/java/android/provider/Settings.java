@@ -8018,6 +8018,12 @@ public final class Settings {
         public static final Validator FOD_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Screen off fod
+         * @hide
+         */
+        public static final String FOD_GESTURE_WAKE = "fod_gesture_wake";
+
+        /**
          * Whether to enable permissions hub
          * @hide
          */

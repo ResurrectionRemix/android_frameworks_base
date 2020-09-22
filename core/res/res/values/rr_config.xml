@@ -237,4 +237,7 @@
     <!-- Whether device uses linear screen brightness slider -->
     <bool name="config_linearBrightnessSlider">false</bool>
 
+    <!-- Enable doze for FODScreen off -->
+    <bool name="config_fodScreenOffDoze">true</bool>
+
 </resources>

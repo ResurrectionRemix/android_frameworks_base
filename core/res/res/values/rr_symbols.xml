@@ -311,4 +311,5 @@
 
     <java-symbol type="attr" name="colorBackgroundFloating" />
 
+    <java-symbol type="bool" name="config_fodScreenOffDoze" />
 </resources>

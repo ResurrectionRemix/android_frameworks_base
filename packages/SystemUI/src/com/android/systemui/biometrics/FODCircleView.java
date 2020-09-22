@@ -83,6 +83,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private final int MSG_HBM_ON = 1002;
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
     private static final String FOD_GESTURE = "system:" + Settings.System.FOD_GESTURE;
+    public static final String FOD_GESTURE_WAKE =
+            "system:" + Settings.System.FOD_GESTURE_WAKE;
 
     private final int mPositionX;
     private final int mPositionY;
@@ -125,6 +127,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private float mCurrentDimAmount = 0.0f;
 
     private boolean mDozeEnabled;
+    private boolean mIsWakeEnabledByDefault;
     private boolean mFodGestureEnable;
     private boolean mPressPending;
     private boolean mScreenTurnedOn;
@@ -346,6 +349,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         mDefaultPressedIcon = res.getInteger(com.android.internal.R.
              integer.config_pressed_fod_icon);
+        mIsWakeEnabledByDefault = res.getBoolean(com.android.internal.R.
+             bool.config_fodScreenOffDoze);
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
@@ -354,7 +359,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         Dependency.get(ConfigurationController.class).addCallback(this);
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
         Dependency.get(TunerService.class).addTunable(this, FOD_GESTURE,
-                Settings.Secure.DOZE_ENABLED, SCREEN_BRIGHTNESS);
+                FOD_GESTURE_WAKE, SCREEN_BRIGHTNESS);
         getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             float drawingDimAmount = mParams.dimAmount;
             if (!mSupportsAlwaysOnHbm) {
@@ -431,8 +436,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         } else if (key.equals(SCREEN_BRIGHTNESS)) {
             mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
             setDim(true);
-        } else {
-            mDozeEnabled = TunerService.parseIntegerSwitch(newValue, true);
+        } else if (key.equals(FOD_GESTURE_WAKE)) {
+            mDozeEnabled = TunerService.parseIntegerSwitch(newValue, mIsWakeEnabledByDefault);
         }
 
     }
