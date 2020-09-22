@@ -81,6 +81,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private final String SCREEN_BRIGHTNESS = "system:" + Settings.System.SCREEN_BRIGHTNESS;
     private final int MSG_HBM_OFF = 1001;
     private final int MSG_HBM_ON = 1002;
+    private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
     private static final String FOD_GESTURE = "system:" + Settings.System.FOD_GESTURE;
 
     private final int mPositionX;
@@ -123,6 +124,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
     private float mCurrentDimAmount = 0.0f;
 
+    private boolean mDozeEnabled;
     private boolean mFodGestureEnable;
     private boolean mPressPending;
     private boolean mScreenTurnedOn;
@@ -163,9 +165,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         @Override
         public void onFingerDown() {
             if (mFodGestureEnable && !mScreenTurnedOn) {
-                mWakeLock.acquire(3000);
-                mHandler.post(() -> mPowerManager.wakeUp(SystemClock.uptimeMillis(),
+                if (mDozeEnabled) {
+                    mHandler.post(() -> mContext.sendBroadcast(new Intent(DOZE_INTENT)));
+                } else {
+                    mWakeLock.acquire(3000);
+                    mHandler.post(() -> mPowerManager.wakeUp(SystemClock.uptimeMillis(),
                         PowerManager.WAKE_REASON_GESTURE, FODCircleView.class.getSimpleName()));
+                }
                 mPressPending = true;
             } else {
                 mHandler.post(() -> showCircle());
@@ -348,7 +354,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         Dependency.get(ConfigurationController.class).addCallback(this);
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
         Dependency.get(TunerService.class).addTunable(this, FOD_GESTURE,
-              SCREEN_BRIGHTNESS);
+                Settings.Secure.DOZE_ENABLED, SCREEN_BRIGHTNESS);
         getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             float drawingDimAmount = mParams.dimAmount;
             if (!mSupportsAlwaysOnHbm) {
@@ -425,6 +431,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         } else if (key.equals(SCREEN_BRIGHTNESS)) {
             mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
             setDim(true);
+        } else {
+            mDozeEnabled = TunerService.parseIntegerSwitch(newValue, true);
         }
 
     }
