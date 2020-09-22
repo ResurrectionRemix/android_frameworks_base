@@ -156,6 +156,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
     public static final String APP_VOLUME =
             "system:" + Settings.System.SHOW_APP_VOLUME;
+    public static final String VOLUME_ANIMATIONS =
+            "system:" + Settings.System.VOLUME_PANEL_ANIMATION;
 
     static final int DIALOG_TIMEOUT_MILLIS = 3000;
     static final int DIALOG_SAFETYWARNING_TIMEOUT_MILLIS = 5000;
@@ -236,6 +238,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private int mTimeOutDesired, mTimeOut;
     private boolean mShowRinger;
     private boolean mAppVolume;
+    private int mVolumeAnimations;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -273,6 +276,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         tunerService.addTunable(this, RINGER_VOLUME_PANEL);
         tunerService.addTunable(this, APP_VOLUME);
+        tunerService.addTunable(this, VOLUME_ANIMATIONS);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
         mVibrateOnSlider = mContext.getResources().getBoolean(R.bool.config_vibrateOnIconAnimation);
@@ -363,7 +367,7 @@ public class VolumeDialogImpl implements VolumeDialog,
                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         mWindow.setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY);
-        mWindow.setWindowAnimations(com.android.internal.R.style.Animation_Toast);
+        updateAnimations();
         final WindowManager.LayoutParams lp = mWindow.getAttributes();
 
         lp.format = PixelFormat.TRANSLUCENT;
@@ -506,6 +510,47 @@ public class VolumeDialogImpl implements VolumeDialog,
         initODICaptionsH();
     }
 
+    private void updateAnimations() {
+        switch (mVolumeAnimations) {
+           case 0:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationEnter);
+           break;
+           case 1:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimation);
+           break;
+           case 2:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationTop);
+           break;
+           case 3:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationFly);
+           break;
+           case 4:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationTn);
+           break;
+           case 5:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationTranslucent);
+           break;
+           case 6:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationXylon);
+           break;
+           case 7:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationCard);
+           break;
+           case 8:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationTranslucent);
+           break;
+           case 9:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationTranslucent);
+           break;
+           case 10:
+              mWindow.setWindowAnimations(com.android.internal.R.style.GlobalActionsAnimationRotate);
+           default:
+           case 11:
+             mWindow.setWindowAnimations(com.android.internal.R.style.Animation_Toast);
+           break;
+        }
+    }
+
     // Helper to set layout gravity.
     // Particular useful when the ViewGroup in question
     // is different for portait vs landscape.
@@ -604,6 +649,12 @@ public class VolumeDialogImpl implements VolumeDialog,
                 boolean appVolume = TunerService.parseIntegerSwitch(newValue, false);
                 if (mAppVolume != appVolume) {
                     mAppVolume = appVolume;
+                    triggerChange = true;
+                }
+            case VOLUME_ANIMATIONS:
+                int animations = TunerService.parseInteger(newValue, 11);
+                if (mVolumeAnimations != animations) {
+                    mVolumeAnimations = animations;
                     triggerChange = true;
                 }
             default:

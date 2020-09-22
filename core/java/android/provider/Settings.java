@@ -5250,6 +5250,13 @@ public final class Settings {
                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
         /**
+        * 
+        *
+        * @hide
+        */
+        public static final String VOLUME_PANEL_ANIMATION = "volume_panel_animation";
+
+        /**
         * Toast animations
         *
         * @hide
