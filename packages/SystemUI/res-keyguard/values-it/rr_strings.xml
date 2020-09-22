@@ -40,7 +40,7 @@
 
     <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
     <string-array name="type_clock_hours">
-        <item>Docdici</item>
+        <item>Dodici</item>
         <item>Una</item>
         <item>Due</item>
         <item>Tre</item>
