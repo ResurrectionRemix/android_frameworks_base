@@ -57,9 +57,7 @@ import android.widget.TextView;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.util.leak.RotationUtils;
-
 import com.android.internal.util.rr.RRContextConstants;
-
 /**
  * Abstract base class. Shows a dialog for BiometricPrompt.
  */
@@ -183,8 +181,7 @@ public abstract class BiometricDialogView extends LinearLayout {
                 .getDimension(R.dimen.biometric_dialog_animation_translation_offset);
         mErrorColor = getResources().getColor(R.color.biometric_dialog_error);
         mTextColor = getResources().getColor(R.color.biometric_dialog_gray);
-        PackageManager packageManager = context.getPackageManager();
-        mHasFod = packageManager.hasSystemFeature(RRContextConstants.Features.FOD);
+        mHasFod = mPackageManager.hasSystemFeature(RRContextConstants.Features.FOD);
 
         DisplayMetrics metrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
@@ -283,31 +280,6 @@ public abstract class BiometricDialogView extends LinearLayout {
         // Must set these in order for the back button events to be received.
         mLayout.setFocusableInTouchMode(true);
         mLayout.requestFocus();
-
-        mBiometricIcon.setVisibility(mHasFod ? View.INVISIBLE : View.VISIBLE);
-        boolean isPortrait = (getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT);
-        if (mHasFod && isPortrait) {
-            boolean isGesturalNav= Integer.parseInt(Settings.Secure.getStringForUser(
-                    mContext.getContentResolver(), Settings.Secure.NAVIGATION_MODE,
-                    UserHandle.USER_CURRENT)) == NAV_BAR_MODE_GESTURAL;
-
-            final int navbarHeight = getResources().getDimensionPixelSize(
-                    com.android.internal.R.dimen.navigation_bar_height);
-            final int fodMargin = getResources().getDimensionPixelSize(
-                    R.dimen.biometric_dialog_fod_margin);
-
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mBiometricIcon.getLayoutParams();
-            lp.topMargin = isGesturalNav ? fodMargin : (fodMargin > navbarHeight)
-                    ? (fodMargin - navbarHeight) : 0;
-
-            // Add Errortext above the biometric icon
-            mDialog.removeView(mErrorText);
-            mDialog.addView(mErrorText, mDialog.indexOfChild(mBiometricIcon));
-            lp = (LinearLayout.LayoutParams) mDescriptionText.getLayoutParams();
-            lp.bottomMargin = mErrorText.getPaddingTop();
-            mErrorText.setPadding(0, 0, 0, 0);
-        }
     }
 
     public void onSaveState(Bundle bundle) {
@@ -453,6 +425,34 @@ public abstract class BiometricDialogView extends LinearLayout {
     public void setFaceAndFingerprint(boolean isFace, boolean isFingerprint) {
         mIsFace = isFace;
         mIsFingerprint = isFingerprint;
+        if (mIsFingerprint) {
+            mBiometricIcon.setVisibility(mHasFod ? View.INVISIBLE : View.VISIBLE);
+            boolean isPortrait = (getResources().getConfiguration().orientation
+                    == Configuration.ORIENTATION_PORTRAIT);
+            if (mHasFod && isPortrait) {
+                boolean isGesturalNav= Integer.parseInt(Settings.Secure.getStringForUser(
+                        mContext.getContentResolver(), Settings.Secure.NAVIGATION_MODE,
+                        UserHandle.USER_CURRENT)) == NAV_BAR_MODE_GESTURAL;
+
+                final int navbarHeight = getResources().getDimensionPixelSize(
+                        com.android.internal.R.dimen.navigation_bar_height);
+                final int fodMargin = getResources().getDimensionPixelSize(
+                        R.dimen.biometric_dialog_fod_margin);
+
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mBiometricIcon.getLayoutParams();
+                lp.topMargin = isGesturalNav ? fodMargin : (fodMargin > navbarHeight)
+                        ? (fodMargin - navbarHeight) : 0;
+
+                // Add Errortext above the biometric icon
+                mDialog.removeView(mErrorText);
+                mDialog.addView(mErrorText, mDialog.indexOfChild(mBiometricIcon));
+                lp = (LinearLayout.LayoutParams) mDescriptionText.getLayoutParams();
+                lp.bottomMargin = mErrorText.getPaddingTop();
+                mErrorText.setPadding(0, 0, 0, 0);
+            }
+        } else if (mIsFace) {
+            mBiometricIcon.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setDismissesDialog(View v) {
@@ -684,3 +684,4 @@ public abstract class BiometricDialogView extends LinearLayout {
                 CONTENT_CHANGE_TYPE_SUBTREE);
     }
 }
+
