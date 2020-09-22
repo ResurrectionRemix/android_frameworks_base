@@ -346,9 +346,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         updateCutoutFlags();
 
         Dependency.get(ConfigurationController.class).addCallback(this);
-        mPowerManager = context.getSystemService(PowerManager.class);
-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                FODCircleView.class.getSimpleName());
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
         Dependency.get(TunerService.class).addTunable(this, FOD_GESTURE,
               SCREEN_BRIGHTNESS);
@@ -801,8 +798,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         }
 
         if (mIsDreaming) {
-            mFODAnimation.updateParams(mParamsPressed.y);
             mParamsPressed.y += mDreamingOffsetY;
+            mFODAnimation.updateParams(mParamsPressed.y);
         }
 
         mWindowManager.updateViewLayout(mViewPressed, mParamsPressed);
