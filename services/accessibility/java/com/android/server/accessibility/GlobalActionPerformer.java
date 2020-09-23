@@ -117,7 +117,7 @@ public class GlobalActionPerformer {
     private void sendKeyEventIdentityCleared(int keyCode, int action, long downTime, long time) {
         KeyEvent event = KeyEvent.obtain(downTime, time, action, keyCode, 0, 0,
                 KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_FROM_SYSTEM,
-                InputDevice.SOURCE_KEYBOARD, null);
+                InputDevice.SOURCE_NAVIGATION_BAR, null);
         InputManager.getInstance()
                 .injectInputEvent(event, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
         event.recycle();
