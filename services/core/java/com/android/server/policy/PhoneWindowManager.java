@@ -666,7 +666,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Time to volume and power must be pressed within this interval of each other.
     private static final long SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS = 150;
     // Increase the chord delay when taking a screenshot from the keyguard
-    private static final float KEYGUARD_SCREENSHOT_CHORD_DELAY_MULTIPLIER = 2.5f;
+    private static final int KEYGUARD_SCREENSHOT_CHORD_DELAY_MULTIPLIER = 2;
     private boolean mScreenshotChordEnabled;
     private boolean mScreenshotChordVolumeDownKeyTriggered;
     private long mScreenshotChordVolumeDownKeyTime;
@@ -1765,13 +1765,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 : config.getAccessibilityShortcutKeyTimeoutAfterConfirmation();
     }
 
-    private long getScreenshotChordLongPressDelay() {
+  private int getScreenshotChordLongPressDelay() {
         if (mKeyguardDelegate.isShowing()) {
             // Double the time it takes to take a screenshot from the keyguard
-            return (long) (KEYGUARD_SCREENSHOT_CHORD_DELAY_MULTIPLIER *
-                    ViewConfiguration.get(mContext).getScreenshotChordKeyTimeout());
+            return (KEYGUARD_SCREENSHOT_CHORD_DELAY_MULTIPLIER *
+                    mScreenshotDelay);
         }
-        return ViewConfiguration.get(mContext).getScreenshotChordKeyTimeout();
+        return mScreenshotDelay;
     }
 
     private long getRingerToggleChordDelay() {
@@ -1811,12 +1811,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         @Override
         public void run() {
             if (!mPocketLockShowing) {
-                 try {
-                      Thread.sleep(mScreenshotDelay * 1000);
-                     } catch (InterruptedException ie) {
-                       // Do nothing
-                     }
-            mDefaultDisplayPolicy.takeScreenshot(mScreenshotType);
+                 mDefaultDisplayPolicy.takeScreenshot(mScreenshotType);
             }
         }
     }
@@ -2740,8 +2735,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
             }
-            mScreenshotDelay = Settings.System.getInt(resolver,
-                Settings.System.SCREENSHOT_DELAY, 0);
+            mScreenshotDelay = Settings.System.getIntForUser(resolver,
+                Settings.System.SCREENSHOT_DELAY,(int) ViewConfiguration.get(mContext).getScreenshotChordKeyTimeout(), 
+                UserHandle.USER_CURRENT);
 
             //Three Finger Gesture
             boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
