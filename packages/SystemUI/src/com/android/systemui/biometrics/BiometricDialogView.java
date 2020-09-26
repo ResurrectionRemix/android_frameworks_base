@@ -23,6 +23,7 @@ import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -667,6 +668,9 @@ public abstract class BiometricDialogView extends LinearLayout {
                 | WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
         lp.setTitle("BiometricDialogView");
         lp.token = mWindowToken;
+        if (mHasFod) {
+            lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        }
         return lp;
     }
 
