@@ -44,9 +44,11 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
     private int mDefaultRate;
     private Toast toast;
     private RefreshRateObserver mObserver;
+    private int peakRate;
     private static final int REFRESH_RATE_AUTO = 0;
     private static final int REFRESH_RATE_60 = 1;
     private static final int REFRESH_RATE_90 = 2;
+    private static final int REFRESH_RATE_120 = 3;
 
     @Inject
     public RefreshRateTile(QSHost host) {
@@ -55,6 +57,8 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
             com.android.internal.R.bool.config_hasVariableRefreshRate);
         mDefaultRate = mContext.getResources().getInteger(
                com.android.internal.R.integer.config_defaultVariableRefreshRateSetting);
+        peakRate = mContext.getResources().getInteger(
+              com.android.internal.R.integer.config_defaultPeakRefreshRate);
         mObserver = new RefreshRateObserver(mHandler);
         mObserver.observe();
 
@@ -67,7 +71,11 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
-      switchMode();
+      if (peakRate > 90) {
+          switchModeLarge();
+      } else {
+          switchMode();
+      }
       refreshState();
       showToast(mContext.getResources().getString(R.
           string.refresh_change_triggered), Toast.LENGTH_LONG);
@@ -120,6 +128,23 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
         }
     }
 
+    private void switchModeLarge() {
+         switch (mMode) {
+            case REFRESH_RATE_AUTO:
+                mMode = REFRESH_RATE_60;
+                break;
+            case REFRESH_RATE_60:
+                mMode = REFRESH_RATE_90;
+                break;
+            case REFRESH_RATE_90:
+                mMode = REFRESH_RATE_120;
+                break;
+            case REFRESH_RATE_120:
+                mMode = REFRESH_RATE_AUTO;
+                break;
+        }
+    }
+
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         switch (mMode) {
@@ -141,6 +166,12 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
                 state.label = mContext.getString(R.string.refresh_rate_90);
                 state.icon = ResourceIcon.get(R.drawable.ic_refresh_tile_90);
                 break;
+            case REFRESH_RATE_120:
+                state.contentDescription = mContext.getString(
+                        R.string.refresh_rate_120);
+                state.label = mContext.getString(R.string.refresh_rate_120);
+                state.icon = ResourceIcon.get(R.drawable.ic_refresh_tile_120);
+                break;
         }
     }
 
@@ -148,7 +179,7 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
         switch (mMode) {
             case REFRESH_RATE_AUTO:
                 Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.PEAK_REFRESH_RATE, 90);
+                        Settings.System.PEAK_REFRESH_RATE, peakRate);
                 Settings.System.putInt(mContext.getContentResolver(),
                         Settings.System.MIN_REFRESH_RATE, 60);
                 showToast(mContext.getResources().getString(R.
@@ -169,6 +200,14 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
                         Settings.System.MIN_REFRESH_RATE, 90);
                 showToast(mContext.getResources().getString(R.
                   string.refresh_rate_90_triggered), Toast.LENGTH_LONG);
+                break;
+            case REFRESH_RATE_120:
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PEAK_REFRESH_RATE, 120);
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.MIN_REFRESH_RATE, 120);
+                showToast(mContext.getResources().getString(R.
+                  string.refresh_rate_120_triggered), Toast.LENGTH_LONG);
                 break;
             default:
                 break;
