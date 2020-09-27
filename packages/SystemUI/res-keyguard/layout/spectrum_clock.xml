@@ -15,16 +15,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
+    <LinearLayout
         android:layout_width="@dimen/analog_clock_width"
-        android:layout_height="@dimen/custom_clock_height"
-        android:layout_gravity="center" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
 
         <com.android.keyguard.clock.ImageClock
             android:id="@+id/spectrum_clock"
-            android:layout_marginBottom="@dimen/date_padding"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/analog_clock_height">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -41,5 +42,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/spectrum_clock_hand_minute"/>
         </com.android.keyguard.clock.ImageClock>
-    </FrameLayout>
+        <View
+            android:layout_width="@dimen/analog_clock_width"
+            android:layout_height="@dimen/clock_bottom_margin" />
+    </LinearLayout>
 </com.android.keyguard.clock.ClockLayout>

@@ -2316,6 +2316,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_FILTER_COLOR),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ANALOG_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2334,7 +2337,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_STYLE))) {
                 stockBrightnessStyle();
                 updateBrightnessSliderStyle();
-	         }  else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.ANALOG_CLOCK_SIZE))) {
+                stockAnalogClockSize();
+                updateAnalogClockSize();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)) ||
@@ -6291,5 +6297,16 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all qs header styles back to stock
     public void stockQSHeaderStyle() {
         ThemeAccentUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateAnalogClockSize() {
+        int analogstyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.ANALOG_CLOCK_SIZE , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateAnalogClockSize(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), analogstyle);
+    }
+
+    // Unload all qs header styles back to stock
+    public void stockAnalogClockSize() {
+        ThemeAccentUtils.stockAnalogClockSize(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 }

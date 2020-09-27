@@ -24,7 +24,8 @@
 
         <com.android.keyguard.clock.ImageClock
             android:id="@+id/analog_clock"
-            android:layout_width="@dimen/analog_clock_width"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/analog_clock_height">
 
             <ImageView

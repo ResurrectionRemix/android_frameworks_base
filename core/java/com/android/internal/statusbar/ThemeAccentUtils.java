@@ -214,6 +214,16 @@ public class ThemeAccentUtils {
         "com.android.system.navbar.tecno", //4
     };
 
+    // Clock size
+    public static final String[] ANALOG_CLOCK_SIZE = {
+        "com.android.system.clock.normal", //0
+        "com.android.system.clock.small", //1
+        "com.android.system.clock.smallest", //2
+        "com.android.system.clock.big", //3
+        "com.android.system.clock.largest", //4
+        "com.android.system.clock.insane", //5
+    };
+
     // Check for the dark system theme
     public static int getDarkStyle(IOverlayManager om, int userId) {
         OverlayInfo themeInfo = null;
@@ -287,6 +297,34 @@ public class ThemeAccentUtils {
             String qsheadertheme = QS_HEADER_THEMES[i];
             try {
                 om.setEnabled(qsheadertheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Switches analog clock size to user selected.
+    public static void updateAnalogClockSize(IOverlayManager om, int userId, int size) {
+        if (size == 0) {
+            stockAnalogClockSize(om, userId);
+        } else {
+            try {
+                om.setEnabled(ANALOG_CLOCK_SIZE[size],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change analog clock size", e);
+            }
+        }
+    }
+
+    // Switches analog clock size back to stock.
+    public static void stockAnalogClockSize(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < ANALOG_CLOCK_SIZE.length; i++) {
+            String size = ANALOG_CLOCK_SIZE[i];
+            try {
+                om.setEnabled(size,
                         false /*disable*/, userId);
             } catch (RemoteException e) {
                 e.printStackTrace();

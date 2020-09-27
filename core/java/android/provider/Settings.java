@@ -6005,6 +6005,13 @@ public final class Settings {
          **/
         public static final String CUSTOM_TEXT_CLOCK_FONTS = "custom_text_clock_fonts";
 
+        /**
+         * Change  size for the lockscreen clock widget
+         *
+         * @hide
+         */
+        public static final String ANALOG_CLOCK_SIZE = "analog_clock_size";
+
 
         /**
          * Change font size for the lockscreen text clock widget
