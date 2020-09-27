@@ -40,6 +40,7 @@ import javax.inject.Inject;
 
 public class RefreshRateTile extends QSTileImpl<BooleanState> {
     private boolean mIsAvailable;
+    private boolean mIsAlt;
     private int mMode;
     private int mDefaultRate;
     private Toast toast;
@@ -55,6 +56,8 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
         super(host);
         mIsAvailable = mContext.getResources().getBoolean(
             com.android.internal.R.bool.config_hasVariableRefreshRate);
+        mIsAlt = mContext.getResources().getBoolean(
+            R.bool.config_hasAltRefresh);
         mDefaultRate = mContext.getResources().getInteger(
                com.android.internal.R.integer.config_defaultVariableRefreshRateSetting);
         peakRate = mContext.getResources().getInteger(
@@ -71,8 +74,10 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
-      if (peakRate > 90) {
+      if (peakRate > 90 && !mIsAlt) {
           switchModeLarge();
+      } else if (mIsAlt) {
+          switchModeLargeAlt();
       } else {
           switchMode();
       }
@@ -128,6 +133,20 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
         }
     }
 
+    private void switchModeLargeAlt() {
+         switch (mMode) {
+            case REFRESH_RATE_AUTO:
+                mMode = REFRESH_RATE_60;
+                break;
+            case REFRESH_RATE_60:
+                mMode = REFRESH_RATE_120;
+                break;
+            case REFRESH_RATE_120:
+                mMode = REFRESH_RATE_AUTO;
+                break;
+        }
+    }
+
     private void switchModeLarge() {
          switch (mMode) {
             case REFRESH_RATE_AUTO:
@@ -144,6 +163,7 @@ public class RefreshRateTile extends QSTileImpl<BooleanState> {
                 break;
         }
     }
+
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {

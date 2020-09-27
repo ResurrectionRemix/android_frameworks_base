@@ -73,6 +73,9 @@
     <!-- Device supports internal audio recording -->
     <bool name="config_recorderInternalAudio">true</bool>
 
+    <!-- Device supports internal audio recording -->
+    <bool name="config_hasAltRefresh">false</bool>
+
     <!-- Navbar -->
     <string name="config_navBarLayoutHandleArrows" translatable="false">back[1.7WC];home_handle;ime_switcher[1.7WC]</string>
 </resources>
