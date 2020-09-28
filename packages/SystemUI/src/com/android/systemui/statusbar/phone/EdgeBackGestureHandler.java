@@ -202,6 +202,7 @@ public class EdgeBackGestureHandler implements DisplayListener {
     private boolean mBackHapticEnabled;
 
     private final Vibrator mVibrator;
+    private boolean mAltVib;
 
     public EdgeBackGestureHandler(Context context, OverviewProxyService overviewProxyService) {
         final Resources res = context.getResources();
@@ -233,6 +234,8 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
         onSettingsChanged();
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        mAltVib = context.getResources().getBoolean(
+                R.bool.config_vibrateOnIconAnimation);
     }
 
     public void updateCurrentUserResources(Resources res) {
@@ -654,7 +657,11 @@ public class EdgeBackGestureHandler implements DisplayListener {
             mEdgePanel.resetOnDown();
             triggerAction(mIsOnLeftEdge);
             if (mBackHapticEnabled) {
-                mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK));
+                if (mAltVib) {
+                    mVibrator.vibrate(VibrationEffect.EFFECT_CLICK);
+                } else {
+                    mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK));
+                }
             }
         }
     }

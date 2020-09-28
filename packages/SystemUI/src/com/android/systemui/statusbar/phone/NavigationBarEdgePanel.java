@@ -200,6 +200,7 @@ public class NavigationBarEdgePanel extends View {
     private float mDisappearAmount;
     private long mVibrationTime;
     private int mScreenSize;
+    private boolean mAltVib;
 
     private boolean mBackHapticEnabled;
     private boolean mVibrateOnOpening;
@@ -336,6 +337,8 @@ public class NavigationBarEdgePanel extends View {
         setVisibility(GONE);
 
         mVibrateOnOpening = context.getResources().getBoolean(
+                R.bool.config_vibrateOnIconAnimation);
+        mAltVib = context.getResources().getBoolean(
                 R.bool.config_vibrateOnIconAnimation);
 
         setExtendedSwipe();
@@ -579,7 +582,13 @@ public class NavigationBarEdgePanel extends View {
                     mVibratorHelper.vibrate(VibrationEffect.EFFECT_TICK);
                     mVibrationTime = SystemClock.uptimeMillis();
                 } else {
-                    mVibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+                    if (mAltVib) {
+                        mVibratorHelper.vibrate(VibrationEffect.EFFECT_CLICK);
+                        mVibrationTime = SystemClock.uptimeMillis();
+                     } else {
+                        mVibrator.vibrate(VibrationEffect.createOneShot(
+                          30, VibrationEffect.DEFAULT_AMPLITUDE));
+                     }
                 }
         }
 
