@@ -278,7 +278,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         switch (key) {
             case LOCKSCREEN_MEDIA_METADATA:
                 mShowMediaMetadata =
-                        TunerService.parseIntegerSwitch(newValue, true);
+                        TunerService.parseIntegerSwitch(newValue, false);
                 dispatchUpdateMediaMetaData(false /* changed */, true /* allowAnimation */);
                 break;
             case LOCKSCREEN_ALBUMART_FILTER:
@@ -951,7 +951,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
 
     private float getLockScreenMediaBlurLevel() {
         float level = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.OMNI_LOCKSCREEN_MEDIA_BLUR, 25,
+                Settings.System.OMNI_LOCKSCREEN_MEDIA_BLUR, 26,
                 UserHandle.USER_CURRENT) / 100;
         return level;
     }
