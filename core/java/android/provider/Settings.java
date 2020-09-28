@@ -6614,6 +6614,12 @@ public final class Settings {
         public static final String SCREENSHOT_DELAY = "screenshot_delay";
 
         /**
+         * Change the power menu screenshot delay
+         * @hide
+         */
+        public static final String GLOBAL_SCREENSHOT_DELAY = "global_screenshot_delay";
+
+        /**
          *
          * @hide
          */

@@ -866,6 +866,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 @Override
                 public void run() {
                     try {
+                        Thread.sleep(getScreenShotDelay() * 1000);
+                    } catch (InterruptedException ie) {
+                        // Do nothing
+                    }
+                    try {
                         WindowManagerGlobal.getWindowManagerService().takeAlternativeScreenshot();
                     } catch (RemoteException e) {
                         Log.e("GlobalActionsDialog", "Error while trying to takeAlternativeScreenshot.", e);
@@ -884,7 +889,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             @Override
             public boolean onLongPress() {
             mDialog.dismiss();
-            RRActionUtils.takeScreenshot(false);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                RRActionUtils.takeScreenshot(false);
+                }
+            }, getScreenShotDelay());
+
             return true;
         }
 
@@ -892,6 +903,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         public boolean showBeforeProvisioning() {
             return false;
         }
+    }
+
+    public int getScreenShotDelay() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.GLOBAL_SCREENSHOT_DELAY,0, 
+               UserHandle.USER_CURRENT);
     }
 
     private Action getOnTheGoAction() {
