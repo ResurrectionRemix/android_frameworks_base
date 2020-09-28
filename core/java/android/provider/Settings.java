@@ -7304,6 +7304,16 @@ public final class Settings {
         public static final String SETTINGS_SPACER_FONT_STYLE = "settings_spacer_font_style";
 
         /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_IMAGE_STYLE = "settings_spacer_image_style";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_IMAGE_SEARCHBAR = "settings_spacer_image_searchbar";
+
+        /**
          * 
          * @hide
          */
