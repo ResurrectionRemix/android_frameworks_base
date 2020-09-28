@@ -7311,6 +7311,16 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String SETTINGS_SPACER_IMAGE_CROP = "settings_spacer_image_crop";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_CUSTOM = "settings_spacer_custom";
+
+        /**
+         * @hide
+         */
         public static final String SETTINGS_SPACER_IMAGE_SEARCHBAR = "settings_spacer_image_searchbar";
 
         /**
