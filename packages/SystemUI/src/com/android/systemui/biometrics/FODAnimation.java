@@ -16,7 +16,16 @@
 
 package com.android.systemui.biometrics;
 
+import android.app.ActivityManager;
+import android.app.ActivityManagerNative;
+import android.app.ActivityOptions;
+import android.app.IActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
@@ -27,7 +36,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.provider.Settings;
+import android.os.Process;
 import com.android.systemui.R;
+
+import java.util.List;
 
 public class FODAnimation extends ImageView {
 
@@ -46,6 +58,7 @@ public class FODAnimation extends ImageView {
     private TypedArray mAnimationStyles;
     private int mAnimationStylesCount;
     private boolean mIsDreaming;
+    private boolean mKeyguardAnim;
 
     public FODAnimation(Context context, int mPositionX, int mPositionY) {
         super(context);
@@ -99,9 +112,12 @@ public class FODAnimation extends ImageView {
         if (!isenabled) {
             return;
         }
-        boolean keyguardAnim = Settings.System.getInt(mContext.getContentResolver(),
+        mKeyguardAnim = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ANIM_KEYGUARD, 0) == 1;
-        boolean allow = keyguardAnim || mIsKeyguard;
+        if (!mIsKeyguard) {
+            checkapps();
+        }
+        boolean allow = mKeyguardAnim || mIsKeyguard;
         if (mAnimParams != null && !mShowing && allow) {
             mShowing = true;
             if (this.getWindowToken() == null){
@@ -109,6 +125,35 @@ public class FODAnimation extends ImageView {
                 mWindowManager.updateViewLayout(this, mAnimParams);
             }
             recognizingAnim.start();
+        }
+    }
+
+    public void checkapps() {
+        if (!mKeyguardAnim) return;
+        try {
+               IActivityManager am = ActivityManagerNative.getDefault();
+               String pkgName;
+               List<RunningAppProcessInfo> apps = am.getRunningAppProcesses();
+               for (RunningAppProcessInfo appInfo : apps) {
+                    int uid = appInfo.uid;
+                    if (uid >= Process.FIRST_APPLICATION_UID
+                       && uid <= Process.LAST_APPLICATION_UID
+                       && appInfo.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                        if (appInfo.pkgList != null
+                           && (appInfo.pkgList.length > 0)) {
+                           for (String pkg : appInfo.pkgList) {
+                                if (pkg.equals("net.one97.paytm")
+                                    || pkg.equals("com.google.android.apps.nbu.paisa.user")
+                                    || pkg.equals("com.anz.android.gomoney")
+                                    || pkg.equals("com.google.android.apps.walletnfcrel")) {
+                                    mKeyguardAnim = false;
+                                }
+                            }
+                        }
+                    }
+               }
+        } catch (Exception e) {
+          //do nothing
         }
     }
 
