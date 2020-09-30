@@ -145,6 +145,7 @@ public class FODAnimation extends ImageView {
                                 if (pkg.equals("net.one97.paytm")
                                     || pkg.equals("com.google.android.apps.nbu.paisa.user")
                                     || pkg.equals("com.anz.android.gomoney")
+                                    || pkg.equals("com.dashlane")
                                     || pkg.equals("com.google.android.apps.walletnfcrel")) {
                                     mKeyguardAnim = false;
                                 }
