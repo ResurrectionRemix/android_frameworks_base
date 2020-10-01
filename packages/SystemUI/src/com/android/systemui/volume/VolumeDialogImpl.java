@@ -64,6 +64,7 @@ import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.UserHandle;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.provider.Settings;
@@ -156,6 +157,8 @@ public class VolumeDialogImpl implements VolumeDialog,
             "system:" + Settings.System.SHOW_RINGER_VOLUME_PANEL;
     public static final String APP_VOLUME =
             "system:" + Settings.System.SHOW_APP_VOLUME;
+    public static final String TINT_INACTIVE_SLIDER =
+            "system:" + Settings.System.TINT_INACTIVE_SLIDER;
     public static final String VOLUME_ANIMATIONS =
             "system:" + Settings.System.VOLUME_PANEL_ANIMATION;
 
@@ -167,7 +170,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     static final int DIALOG_HIDE_ANIMATION_DURATION = 250;
 
     private static final int SLIDER_PROGRESS_ALPHA_ACTIVE = 100;
-    private static final int SLIDER_PROGRESS_ALPHA_ACTIVE_DARK = 60;
+    private static final int SLIDER_PROGRESS_ALPHA_ACTIVE_DARK = 90;
     private static final int SLIDER_PROGRESS_ALPHA = 50;
     private static final int SLIDER_PROGRESS_ALPHA_DARK = 40;
 
@@ -236,7 +239,9 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mVoiceShowing;
     private boolean mBTSCOShowing;
     private int mTimeOutDesired, mTimeOut;
+    private int mVolumeAlpha;
     private boolean mShowRinger;
+    private boolean mTintInActive;
     private boolean mAppVolume;
     private int mVolumeAnimations;
 
@@ -276,6 +281,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         tunerService.addTunable(this, AUDIO_PANEL_VIEW_TIMEOUT);
         tunerService.addTunable(this, RINGER_VOLUME_PANEL);
         tunerService.addTunable(this, APP_VOLUME);
+        tunerService.addTunable(this, TINT_INACTIVE_SLIDER);
         tunerService.addTunable(this, VOLUME_ANIMATIONS);
         mHasAlertSlider = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_hasAlertSlider);
@@ -651,12 +657,17 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mAppVolume = appVolume;
                     triggerChange = true;
                 }
+                break;
+            case TINT_INACTIVE_SLIDER:
+                mTintInActive = TunerService.parseIntegerSwitch(newValue, false);
+                break;
             case VOLUME_ANIMATIONS:
                 int animations = TunerService.parseInteger(newValue, 11);
                 if (mVolumeAnimations != animations) {
                     mVolumeAnimations = animations;
                     triggerChange = true;
                 }
+                break;
             default:
                 break;
         }
@@ -1994,7 +2005,10 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (isActive) {
             row.slider.requestFocus();
         }
-        boolean useActiveColoring = isActive && row.slider.isEnabled();
+        mVolumeAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.VOLUME_TINT_ALPHA, 255,
+                UserHandle.USER_CURRENT);
+        boolean useActiveColoring = (isActive && row.slider.isEnabled()) || mTintInActive;
         final ColorStateList tint = useActiveColoring
                 ? Utils.getColorAccent(mContext).withAlpha(mDarkMode ?
                         SLIDER_PROGRESS_ALPHA_ACTIVE_DARK : SLIDER_PROGRESS_ALPHA_ACTIVE)
@@ -2007,7 +2021,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (tint == row.cachedTint) return;
         row.slider.setProgressTintList(progressTint);
         row.slider.setThumbTintList(tint);
-        row.slider.setAlpha(((float) alpha) / 255);
+        row.slider.setAlpha(((float) alpha)/ mVolumeAlpha);
         row.cachedTint = tint;
     }
 
