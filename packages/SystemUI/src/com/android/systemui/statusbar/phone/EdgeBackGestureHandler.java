@@ -720,6 +720,9 @@ public class EdgeBackGestureHandler implements DisplayListener {
             case 16: // Partial screenshot
                 RRActionUtils.takeScreenshot(false);
                 break;
+            case 17: // Partial screenshot
+                RRActionUtils.toggleRecentApps();
+                break;
         }
     }
 
