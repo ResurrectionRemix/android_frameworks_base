@@ -597,7 +597,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         }
 
         if (mIsRecognizingAnimEnabled) {
-            mHandler.post(() -> mFODAnimation.showFODanimation());
+            try {
+              mFODAnimation.showFODanimation();
+            } catch (Exception e) {
+            }
         }
         updatePosition();
         invalidate();
@@ -623,7 +626,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             invalidate();
         }
         updateAlpha();
-        mHandler.post(() -> mFODAnimation.hideFODanimation());
+        try {
+           mFODAnimation.hideFODanimation();
+        } catch (Exception e) {
+        }
 
         setKeepScreenOn(false);
     }
