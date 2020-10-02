@@ -274,7 +274,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
                     msgId == -1) { // Auth error
                 hideCircle();
-                mHandler.post(() -> mFODAnimation.hideFODanimation());
+                hideFODAnimation();
             }
         }
     };
@@ -495,6 +495,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             return true;
         }
+        hideFODAnimation();
         return false;
     }
 
@@ -626,10 +627,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             invalidate();
         }
         updateAlpha();
-        try {
-           mFODAnimation.hideFODanimation();
-        } catch (Exception e) {
-        }
+        hideFODAnimation();
 
         setKeepScreenOn(false);
     }
@@ -871,6 +869,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         }
 
         return false;
+    }
+
+    public void hideFODAnimation() {
+       try {
+          mFODAnimation.hideFODanimation();
+       } catch (Exception e) {
+       }
     }
 
     private class BurnInProtectionTask extends TimerTask {
