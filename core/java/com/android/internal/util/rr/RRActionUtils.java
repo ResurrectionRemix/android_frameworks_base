@@ -194,4 +194,15 @@ public class RRActionUtils {
             }
         }
     }
+
+    public static  void toggleRecentApps() {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+              service.toggleRecentApps();
+            } catch (RemoteException e) {
+                // do nothing.
+            }
+        }
+    }
 }
