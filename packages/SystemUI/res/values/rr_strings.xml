@@ -370,4 +370,5 @@
     <string name="applock_fingerprint">&#160;or your fingerprint to unlock.</string>
     <string name="applock_locked_notification">App is locked</string>
 
+    <string name="photos_not_allowed">You are trying to set QS Panel image with an incompatible app. Please user another gallery app</string>
 </resources>
