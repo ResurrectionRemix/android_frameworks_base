@@ -398,7 +398,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
         }
 
         public void updateLockscreenWeather() {
-            mWeatherEnabled = Settings.System.getIntForUser(mContentResolver, Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+            mWeatherEnabled = Settings.System.getIntForUser(mContentResolver, Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
         }
 
         public void updateLockscreenWeatherStyle() {
