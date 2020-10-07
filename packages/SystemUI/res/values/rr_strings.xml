@@ -356,12 +356,12 @@
     <string name="refresh_rate_60">Refresh rate 60Hz</string>
     <string name="refresh_rate_90">Refresh rate 90Hz</string>
     <string name="refresh_rate_120">Refresh rate 120Hz</string>
-    <string name="refresh_rate_60_triggered">Refresh rate is set to 60Hz</string>
-    <string name="refresh_rate_90_triggered">Refresh rate is set to 90Hz</string>
-    <string name="refresh_rate_120_triggered">Refresh rate is set to 120Hz</string>
-    <string name="refresh_rate_auto_triggered">Refresh rate is set to auto</string>
-    <string name="refresh_change_triggered">Refresh rate setting changed. Please long press tile to activate desired refresh rate</string>
-    <string name="refresh_rate_disabled">Refresh rate disabled</string>
+    <string name="refresh_rate_60_triggered">Screen refresh rate is set to 60Hz</string>
+    <string name="refresh_rate_90_triggered">Screen refresh rate is set to 90Hz</string>
+    <string name="refresh_rate_120_triggered">Screen refresh rate is set to 120Hz</string>
+    <string name="refresh_rate_auto_triggered">Screen refresh rate is set to auto</string>
+    <string name="refresh_change_triggered">Screen refresh rate setting changed. Please long press tile to activate desired refresh rate</string>
+    <string name="refresh_rate_disabled">Screen refresh rate disabled</string>
 
     <!-- App lock -->
     <string name="applock_locked">&#160;is Locked.</string>
