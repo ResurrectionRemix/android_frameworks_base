@@ -783,6 +783,9 @@ public final class DefaultPermissionGrantPolicy {
 
         // SystemUI Pulse EQ
         grantSystemFixedPermissionsToSystemPackage("com.android.systemui", userId, PULSE_EQ_PERMISSIONS);
+
+        // OmniJaws
+        grantSystemFixedPermissionsToSystemPackage("org.omnirom.omnijaws", userId, ALWAYS_LOCATION_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(String category, int userId) {
