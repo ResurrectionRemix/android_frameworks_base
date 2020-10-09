@@ -181,6 +181,32 @@ public class NotificationData {
         }
     }
 
+    /**
+     * Return whether there are any visible notifications (i.e. without an error).
+     */
+    public boolean hasActiveVisibleNotifications() {
+        for (NotificationEntry e : mSortedAndFiltered) {
+            if (e.getContentView() != null) { // the view successfully inflated
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return whether there are any ongoing notifications (that aren't errors).
+     */
+    public boolean hasActiveOngoingNotifications() {
+        for (NotificationEntry e : mSortedAndFiltered) {
+            if (e.getContentView() != null) { // the view successfully inflated
+                if (e.notification.isOngoing()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public NotificationEntry get(String key) {
         return mEntries.get(key);
     }
