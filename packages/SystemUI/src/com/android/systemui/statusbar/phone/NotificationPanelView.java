@@ -176,6 +176,8 @@ public class NotificationPanelView extends PanelView implements
 
     public static final String STATUS_BAR_QUICK_QS_PULLDOWN =
             "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
+    public static final String QS_SMART_PULLDOWN =
+            "system:" + Settings.System.QS_SMART_PULLDOWN;
     public static final String DOUBLE_TAP_SLEEP_GESTURE =
             "lineagesystem:" + LineageSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
     private static final String LOCKSCREEN_ENABLE_QS =
@@ -498,6 +500,7 @@ public class NotificationPanelView extends PanelView implements
     private ScreenDecorations mScreenDecorations;
 
     private int mOneFingerQuickSettingsIntercept;
+    private int mQsSmartPullDown;
 
     @Inject
     public NotificationPanelView(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
@@ -622,6 +625,7 @@ public class NotificationPanelView extends PanelView implements
         Dependency.get(ZenModeController.class).addCallback(this);
         Dependency.get(ConfigurationController.class).addCallback(this);
         Dependency.get(TunerService.class).addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
+        Dependency.get(TunerService.class).addTunable(this, QS_SMART_PULLDOWN);
         Dependency.get(TunerService.class).addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
         Dependency.get(TunerService.class).addTunable(this, LOCKSCREEN_ENABLE_QS);
         Dependency.get(TunerService.class).addTunable(this, QS_PANEL_VIBRATE);
@@ -647,6 +651,8 @@ public class NotificationPanelView extends PanelView implements
     public void onTuningChanged(String key, String newValue) {
         if (STATUS_BAR_QUICK_QS_PULLDOWN.equals(key)) {
             mOneFingerQuickSettingsIntercept = newValue == null ? 1 : Integer.parseInt(newValue);
+        } else if (QS_SMART_PULLDOWN.equals(key)) {
+            mQsSmartPullDown = newValue == null ? 0 : Integer.parseInt(newValue);
         } else if (DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {
             mDoubleTapToSleepEnabled = newValue == null || Integer.parseInt(newValue) == 1;
         } else if (LOCKSCREEN_ENABLE_QS.equals(key)) {
@@ -1506,6 +1512,12 @@ public class NotificationPanelView extends PanelView implements
                 break;
         }
         showQsOverride &= mBarState == StatusBarState.SHADE;
+
+        if (mQsSmartPullDown == 1 && !hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 && !mStatusBar.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mStatusBar.hasActiveVisibleNotifications()) {
+            showQsOverride = true;
+        }
 
         return !isQSEventBlocked() && (twoFingerDrag || showQsOverride
                 || stylusButtonClickDrag || mouseButtonClickDrag);
