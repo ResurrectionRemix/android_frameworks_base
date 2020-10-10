@@ -147,6 +147,7 @@ public class FODAnimation extends ImageView {
                                     || pkg.equals("com.anz.android.gomoney")
                                     || pkg.equals("com.sec.android.app.sbrowser")
                                     || pkg.equals("com.sec.android.app.sbrowser.beta")
+                                    || pkg.equals("com.google.android.gms")
                                     || pkg.equals("com.dashlane")
                                     || pkg.equals("com.google.android.apps.walletnfcrel")) {
                                     mKeyguardAnim = false;
