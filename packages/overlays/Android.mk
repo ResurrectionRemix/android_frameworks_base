@@ -55,6 +55,7 @@ LOCAL_REQUIRED_MODULES := \
     IconShapePebbleOverlay \
 	IconShapeRoundedHexagonOverlay \
 	IconShapeHeartOverlay \
+	IconShapeLeafOverlay \
 	IconShapeRoundedRectOverlay \
 	IconShapeSquircleOverlay \
     IconShapeSquareOverlay \
