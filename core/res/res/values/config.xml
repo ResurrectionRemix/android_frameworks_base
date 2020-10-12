@@ -3586,8 +3586,6 @@
          rendered inoperative for safety reasons, like the phone dialer and
          SMS handler. -->
     <string-array translatable="false" name="config_nonBlockableNotificationPackages">
-        <item>com.android.dialer</item>
-        <item>com.android.messaging</item>
     </string-array>
 
     <!-- An array of packages that can make sound on the ringer stream in priority-only DND
