@@ -100,6 +100,10 @@ public class FODAnimation extends ImageView {
 
     public void setAnimationKeyguard(boolean state) {
         mIsKeyguard = state;
+        if (!mIsKeyguard && isAttachedToWindow()) {
+            // Force FODanimation view remove when keyguard gone away
+            mWindowManager.removeViewImmediate(this);
+        }
     }
 
     public void setDreamingAnimation(boolean dreaming) {
