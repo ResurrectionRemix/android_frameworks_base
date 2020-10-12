@@ -109,7 +109,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast,dark,rr_tools,heads_up
+        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast,rr_tools
     </string>
 
     <!-- The minimum number of tiles to display in QuickSettings -->
