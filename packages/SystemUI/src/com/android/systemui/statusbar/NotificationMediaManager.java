@@ -669,7 +669,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         }
 
         Bitmap artworkBitmap = null;
-        if (mediaMetadata != null && !mKeyguardBypassController.getBypassEnabled()) {
+        if (mShowMediaMetadata && mediaMetadata != null && !mKeyguardBypassController.getBypassEnabled()) {
             artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
@@ -694,45 +694,21 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
         Trace.endSection();
     }
 
+  
     private void finishUpdateMediaMetaData(boolean metaDataChanged, boolean allowEnterAnimation,
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
-        if (bmp != null && (mShowMediaMetadata || !ENABLE_LOCKSCREEN_WALLPAPER)) {
-            switch (mAlbumArtFilter) {
-                case 0:
-                default:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
-                    break;
-                case 1:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.toGrayscale(bmp));
-                    break;
-                case 2:
-                    Drawable aw = new BitmapDrawable(mBackdropBack.getResources(), bmp);
-                    artworkDrawable = new BitmapDrawable(ImageHelper.getColoredBitmap(aw,
-                        mContext.getResources().getColor(R.color.accent_device_default_light)));
-                    break;
-                case 3:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.getBlurredImage(mContext, bmp, 7.0f));
-                    break;
-                case 4:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.getGrayscaleBlurredImage(mContext, bmp, 7.0f));
-                    break;
-            }
+        if (bmp != null) {
+            artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
         }
         boolean hasMediaArtwork = artworkDrawable != null;
         boolean allowWhenShade = false;
-        BitmapDrawable lockDrawable = null;
-
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
             Bitmap lockWallpaper =
                     mLockscreenWallpaper != null ? mLockscreenWallpaper.getBitmap() : null;
             if (lockWallpaper != null) {
                 artworkDrawable = new LockscreenWallpaper.WallpaperDrawable(
                         mBackdropBack.getResources(), lockWallpaper);
-                lockDrawable = new BitmapDrawable(mBackdropBack.getResources(), lockWallpaper);
                 // We're in the SHADE mode on the SIM screen - yet we still need to show
                 // the lockscreen wallpaper in that mode.
                 allowWhenShade = mStatusBarStateController.getState() == KEYGUARD;
@@ -883,7 +859,31 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
     };
 
     private Bitmap processArtwork(Bitmap artwork) {
-        return mMediaArtworkProcessor.processArtwork(mContext, artwork, getLockScreenMediaBlurLevel());
+        Bitmap bp;
+        Drawable artworkDrawable;
+        switch (mAlbumArtFilter) {
+            case 0:
+            default:
+                // TODO: Implement a proper fix to use this recycled bitmap
+                bp = Bitmap.createBitmap(ImageHelper.getBlurredImage(mContext, artwork, 0.001f));
+                return mMediaArtworkProcessor.processArtwork(mContext, bp, getLockScreenMediaBlurLevel());
+            case 1:
+                bp = Bitmap.createBitmap(ImageHelper.toGrayscale(artwork));
+                return mMediaArtworkProcessor.processArtwork(mContext, bp, getLockScreenMediaBlurLevel());
+            case 2:
+                bp = Bitmap.createBitmap(ImageHelper.getColoredBitmap(new BitmapDrawable(mBackdropBack.getResources(), artwork), mContext.getResources().getColor(R.color.accent_device_default_light)));
+                return mMediaArtworkProcessor.processArtwork(mContext, bp, getLockScreenMediaBlurLevel());
+            case 3:
+                artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                        ImageHelper.getBlurredImage(mContext, artwork, 5.5f));
+                bp = ImageHelper.drawableToBitmap(artworkDrawable);
+                return mMediaArtworkProcessor.processArtwork(mContext, bp, getLockScreenMediaBlurLevel());
+            case 4:
+                artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
+                        ImageHelper.getGrayscaleBlurredImage(mContext, artwork, 5.5f));
+                bp = ImageHelper.drawableToBitmap(artworkDrawable);
+                return mMediaArtworkProcessor.processArtwork(mContext, bp, getLockScreenMediaBlurLevel());
+        }
     }
 
     @MainThread
