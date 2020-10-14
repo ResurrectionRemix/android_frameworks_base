@@ -187,7 +187,7 @@
     <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
 
     <string name="tuner_keyguard_transition_animations_title">Show transition animations</string>
-    <string name="tuner_keyguard_transition_animations_summary">Show useless animations</string>
+    <string name="tuner_keyguard_transition_animations_summary">Show keyguard slice animations when turning screen on</string>
 
     <string name="tuner_quick_settings">Quick settings</string>
     <string name="tuner_show_brightness_new">Show brightness slider</string>
@@ -371,7 +371,6 @@
     <string name="applock_locked_notification">App is locked</string>
 
     <string name="photos_not_allowed">You are trying to set QS Panel image with an incompatible app. Please use another gallery app</string>
-
 
     <!-- DC Dimming -->
     <string name="quick_settings_dc_dimming_label">DC Dimming</string>
