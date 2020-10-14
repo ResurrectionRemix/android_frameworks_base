@@ -13,8 +13,8 @@
                         <corners android:radius="?android:attr/dialogCornerRadius" />
                         <size android:height="@dimen/volume_dialog_panel_width" />
                         <gradient
-                           android:startColor="@*android:color/gradient_start"
-                           android:endColor="@*android:color/gradient_end"
+                           android:startColor="@color/volume_slider_start"
+                           android:endColor="@color/volume_slider_end"
                            android:angle="45"/>
                     </shape>
                 </item>

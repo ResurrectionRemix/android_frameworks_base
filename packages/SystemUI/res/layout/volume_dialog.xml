@@ -48,7 +48,7 @@
                 android:layout_width="@dimen/volume_dialog_ringer_width"
                 android:layout_height="@dimen/volume_dialog_ringer_width"
                 android:padding="17dp"
-                android:tint="@*android:color/gradient_end" />
+                android:tint="@color/volume_row_ringer_tint" />
 
             <include
                 layout="@layout/volume_dnd_icon"

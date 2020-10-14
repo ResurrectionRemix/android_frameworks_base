@@ -2327,6 +2327,12 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ANALOG_CLOCK_SIZE),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.VOLUME_PANEL_ICON_TINT),
+                    false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.VOLUME_SLIDER_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2348,6 +2354,12 @@ public class StatusBar extends SystemUI implements DemoMode,
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.ANALOG_CLOCK_SIZE))) {
                 stockAnalogClockSize();
                 updateAnalogClockSize();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.VOLUME_PANEL_ICON_TINT))) {
+                stockVolumeIconTint();
+                updateVolumeIconTint();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.VOLUME_SLIDER_COLOR))) {
+                stockVolumeSlider();
+                updateVolumeSlider();
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
@@ -6313,8 +6325,30 @@ public class StatusBar extends SystemUI implements DemoMode,
         ThemeAccentUtils.updateAnalogClockSize(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), analogstyle);
     }
 
-    // Unload all qs header styles back to stock
+    // Unload all clock sizes stock
     public void stockAnalogClockSize() {
         ThemeAccentUtils.stockAnalogClockSize(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateVolumeIconTint() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.VOLUME_PANEL_ICON_TINT , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateVolumeIcon(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
+    }
+
+    // Unload volume panel icon tint
+    public void stockVolumeIconTint() {
+        ThemeAccentUtils.stockVolumeIcon(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateVolumeSlider() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.VOLUME_SLIDER_COLOR , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateVolumeSlider(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
+    }
+
+    /// Unload volume panel slider tint
+    public void stockVolumeSlider() {
+        ThemeAccentUtils.stockVolumeSlider(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 }

@@ -6601,6 +6601,18 @@ public final class Settings {
         public static final String SHOW_RINGER_VOLUME_PANEL = "show_ringer_volume_panel";
 
         /**
+         * =-
+         * @hide
+         */
+        public static final String VOLUME_PANEL_ICON_TINT = "volume_panel_icon_tint";
+
+        /**
+         * =-
+         * @hide
+         */
+        public static final String VOLUME_SLIDER_COLOR = "volume_panel_slider_color";
+
+        /**
          * 
          * @hide
          */

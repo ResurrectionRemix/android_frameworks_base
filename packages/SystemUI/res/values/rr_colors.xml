@@ -30,4 +30,11 @@
     <color name="ga_fab_icon_color">@*android:color/accent_material_dark</color>
     <color name="ga_fab_color_ripple">#ff7a7a7a</color>
 
+    <!-- volume icon color -->
+    <color name="volume_row_icon_tint">@*android:color/gradient_end</color>
+    <color name="volume_row_ringer_tint">@*android:color/gradient_end</color>
+    <color name="volume_row_text_tint">@*android:color/gradient_end</color>
+    <color name="volume_slider_start">@*android:color/gradient_start</color>
+    <color name="volume_slider_end">@*android:color/gradient_end</color>
+
 </resources>

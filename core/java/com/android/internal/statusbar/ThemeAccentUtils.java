@@ -196,6 +196,18 @@ public class ThemeAccentUtils {
             "com.android.theme.rr.systemui",
     };
 
+    public static final String[] VOLUME_ICON_COLOR = {
+            "com.android.volume.default",
+            "com.android.volume.primary",
+            "com.android.volume.accent",
+    };
+
+
+    public static final String[] VOLUME_SLIDER_COLOR = {
+            "com.android.volume.slider.default",
+            "com.android.volume.slider.accent",
+    };
+
     // QS header themes
     private static final String[] QS_HEADER_THEMES = {
         "com.android.systemui.qsheader.black", // 0
@@ -297,6 +309,59 @@ public class ThemeAccentUtils {
             String qsheadertheme = QS_HEADER_THEMES[i];
             try {
                 om.setEnabled(qsheadertheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void updateVolumeIcon(IOverlayManager om, int userId, int color) {
+        if (color == 0) {
+            stockVolumeIcon(om, userId);
+        } else {
+            try {
+                om.setEnabled(VOLUME_ICON_COLOR[color],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change tint of volume icon", e);
+            }
+        }
+    }
+
+    public static void stockVolumeIcon(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < VOLUME_ICON_COLOR.length; i++) {
+            String color = VOLUME_ICON_COLOR[i];
+            try {
+                om.setEnabled(color,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateVolumeSlider(IOverlayManager om, int userId, int color) {
+        if (color == 0) {
+            stockVolumeSlider(om, userId);
+        } else {
+            try {
+                om.setEnabled(VOLUME_SLIDER_COLOR[color],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change tint of volume slider", e);
+            }
+        }
+    }
+
+    public static void stockVolumeSlider(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < VOLUME_SLIDER_COLOR.length; i++) {
+            String color = VOLUME_SLIDER_COLOR[i];
+            try {
+                om.setEnabled(color,
                         false /*disable*/, userId);
             } catch (RemoteException e) {
                 e.printStackTrace();

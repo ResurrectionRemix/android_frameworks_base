@@ -59,7 +59,7 @@
                 android:layoutDirection="ltr"
                 android:scaleType="fitCenter"
                 android:soundEffectsEnabled="false"
-                android:tint="@*android:color/gradient_end" />
+                android:tint="@color/volume_row_icon_tint" />
 
         <com.android.keyguard.AlphaOptimizedImageButton
             android:id="@+id/volume_row_app_icon"
@@ -85,7 +85,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.Volume.Header"
-                android:textColor="@*android:color/gradient_end"
+                android:textColor="@color/volume_row_text_tint"
                 android:textStyle="bold" />
         </LinearLayout>
     </FrameLayout>
