@@ -172,7 +172,7 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
         }
     };
 
-    private boolean mKeyguardTransitionAnimations = true;
+    private boolean mKeyguardTransitionAnimations = false;
 
     @Inject
     public KeyguardClockSwitch(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
@@ -1444,7 +1444,7 @@ public class KeyguardClockSwitch extends RelativeLayout implements TunerService.
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (key.equals(KEYGUARD_TRANSISITION_ANIMATIONS)) {
-            mKeyguardTransitionAnimations = newValue == null || newValue.equals("1");
+            mKeyguardTransitionAnimations = TunerService.parseIntegerSwitch(newValue, false);
             if (!mKeyguardTransitionAnimations) {
                 // reset to default before we disable transitions
                 if (mClockPlugin == null) {

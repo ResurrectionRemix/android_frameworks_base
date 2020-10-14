@@ -53,5 +53,5 @@
         android:icon="@drawable/rr_animations_icon"
         android:title="@string/tuner_keyguard_transition_animations_title"
         android:summary="@string/tuner_keyguard_transition_animations_summary"
-        sysui:defValue="true" />
+        sysui:defValue="false" />
 </PreferenceScreen>
