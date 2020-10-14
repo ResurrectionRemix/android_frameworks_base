@@ -129,7 +129,7 @@ public class LockscreenFragment extends PreferenceFragment {
 
     private void setSummary(Preference shortcut, String value) {
         if (value == null) {
-            shortcut.setSummary(R.string.lockscreen_default);
+            shortcut.setSummary(R.string.lockscreen_none);
             return;
         }
         if (value.contains("::")) {
