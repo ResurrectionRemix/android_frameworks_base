@@ -91,7 +91,7 @@
           android:key="doze_always_on"
           android:icon="@drawable/rr_add_icon"
           android:title="@string/tuner_doze_always_on"
-          sysui:defValue="true" />
+          sysui:defValue="false" />
 
     </PreferenceScreen>
 

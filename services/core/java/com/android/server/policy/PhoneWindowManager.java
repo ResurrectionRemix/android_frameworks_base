@@ -585,6 +585,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     boolean mKillAppLongpressBack;
     int mBackKillTimeout;
+    private int mScreenshotChordKeyTimeout;
 
     private boolean mPendingKeyguardOccluded;
     private boolean mKeyguardOccludedChanged;
@@ -2735,8 +2736,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
             }
+            mScreenshotChordKeyTimeout = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenshotChordKeyTimeout);
             mScreenshotDelay = Settings.System.getIntForUser(resolver,
-                Settings.System.SCREENSHOT_DELAY,(int) ViewConfiguration.get(mContext).getScreenshotChordKeyTimeout(), 
+                Settings.System.SCREENSHOT_DELAY, mScreenshotChordKeyTimeout, 
                 UserHandle.USER_CURRENT);
 
             //Three Finger Gesture
