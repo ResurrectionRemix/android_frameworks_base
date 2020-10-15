@@ -14,17 +14,13 @@
     limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
+        android:width="24.0dip"
+        android:height="24.0dip"
         android:viewportWidth="24.0"
         android:viewportHeight="24.0" >
 
     <path
         android:fillColor="?android:attr/colorControlActivated"
-        android:pathData="M11,7l-3.2,9h1.9l0.7,-2h3.2l0.7,2h1.9L13,7H11zM10.85,12.65L12,9l1.15,3.65H10.85z" />
-
-    <path
-        android:fillColor="?android:attr/colorControlActivated"
-        android:pathData="M20,8.69 V4h-4.69L12,0.69L8.69,4H4v4.69L0.69,12L4,15.31V20h4.69L12,23.31L15.31,20H20v-4.69L23.31,12L20,8.69z M18,14.48V18h-3.52L12,20.48L9.52,18H6v-3.52L3.52,12L6,9.52V6h3.52L12,3.52L14.48,6H18v3.52L20.48,12L18,14.48z" />
+        android:pathData="M12,17.75C8.824,17.75 6.25,15.176 6.25,12C6.25,8.824 8.824,6.25 12,6.25C15.176,6.25 17.75,8.824 17.75,12C17.75,15.176 15.176,17.75 12,17.75ZM12.75,23L11.25,23L11.25,19L12.75,19L12.75,23ZM4.75,20.31L3.69,19.25L6.47,16.47L7.53,17.53L4.75,20.31ZM1,12.75L1,11.25L5,11.25L5,12.75L1,12.75ZM3.69,4.75L4.75,3.69L7.53,6.47L6.47,7.53L3.69,4.75ZM11.25,1L12.75,1L12.75,5L11.25,5L11.25,1ZM19.25,3.69L20.31,4.75L17.53,7.53L16.47,6.47L19.25,3.69ZM23,11.25L23,12.75L19,12.75L19,11.25L23,11.25ZM20.05,16L18.94,16L16.14,23L17.36,23L18.05,21.28L20.88,21.28L21.58,23L22.86,23L20.05,16ZM18.47,20.14L19.47,17.62L20.47,20.14L18.47,20.14Z" android:strokeColor="#00000000" android:strokeWidth="1.0" />
 </vector>
 
