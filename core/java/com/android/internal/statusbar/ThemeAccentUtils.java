@@ -202,6 +202,22 @@ public class ThemeAccentUtils {
             "com.android.volume.accent",
     };
 
+    public static final String[] SYSTEMUI_ICON_PACK = {
+            "com.android.theme.icon_pack.normal.systemui",
+            "com.android.theme.icon_pack.rounded.systemui",
+            "com.android.theme.icon_pack.multi.systemui",
+            "com.android.theme.icon_pack.filled.systemui",
+            "com.android.theme.icon_pack.circular.systemui",
+    };
+
+
+    public static final String[] SETTINGS_ICON_PACK = {
+            "com.android.theme.icon_pack.normal.settings",
+            "com.android.theme.icon_pack.rounded.settings",
+            "com.android.theme.icon_pack.multi.settings",
+            "com.android.theme.icon_pack.filled.settings",
+            "com.android.theme.icon_pack.circular.settings",
+    };
 
     public static final String[] VOLUME_SLIDER_COLOR = {
             "com.android.volume.slider.default",
@@ -388,6 +404,58 @@ public class ThemeAccentUtils {
         // skip index 0
         for (int i = 1; i < ANALOG_CLOCK_SIZE.length; i++) {
             String size = ANALOG_CLOCK_SIZE[i];
+            try {
+                om.setEnabled(size,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateSystemUIIcons(IOverlayManager om, int userId, int size) {
+        if (size == 0) {
+            stockSystemUIIcons(om, userId);
+        } else {
+            try {
+                om.setEnabled(SYSTEMUI_ICON_PACK[size],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change icon pack", e);
+            }
+        }
+    }
+
+    public static void stockSystemUIIcons(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < SYSTEMUI_ICON_PACK.length; i++) {
+            String size = SYSTEMUI_ICON_PACK[i];
+            try {
+                om.setEnabled(size,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateSettingsIcons(IOverlayManager om, int userId, int size) {
+        if (size == 0) {
+            stockSettingsIcons(om, userId);
+        } else {
+            try {
+                om.setEnabled(SETTINGS_ICON_PACK[size],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change icon pack", e);
+            }
+        }
+    }
+
+    public static void stockSettingsIcons(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < SETTINGS_ICON_PACK.length; i++) {
+            String size = SETTINGS_ICON_PACK[i];
             try {
                 om.setEnabled(size,
                         false /*disable*/, userId);

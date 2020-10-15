@@ -2333,6 +2333,12 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_SLIDER_COLOR),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SYSTEMUI_ICON_PACK),
+                    false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SETTINGS_ICON_PACK),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2360,6 +2366,12 @@ public class StatusBar extends SystemUI implements DemoMode,
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.VOLUME_SLIDER_COLOR))) {
                 stockVolumeSlider();
                 updateVolumeSlider();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.SYSTEMUI_ICON_PACK))) {
+                stockSystemUIIcons();
+                updateSystemUIIcons();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.SETTINGS_ICON_PACK))) {
+                stockSettingsIcons();
+                updateSettingsIcons();
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
@@ -6350,5 +6362,25 @@ public class StatusBar extends SystemUI implements DemoMode,
     /// Unload volume panel slider tint
     public void stockVolumeSlider() {
         ThemeAccentUtils.stockVolumeSlider(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateSystemUIIcons() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEMUI_ICON_PACK , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateSystemUIIcons(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
+    }
+
+    public void stockSystemUIIcons() {
+        ThemeAccentUtils.stockSystemUIIcons(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void stockSettingsIcons() {
+        ThemeAccentUtils.stockSettingsIcons(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateSettingsIcons() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SETTINGS_ICON_PACK , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateSettingsIcons(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
     }
 }

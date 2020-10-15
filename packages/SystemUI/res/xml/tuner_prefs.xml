@@ -104,7 +104,7 @@
     <Preference
             android:key="lockscreen"
             android:icon="@drawable/rr_lock_icon"
-            android:title="@string/tuner_lock_screen"
+            android:title="@string/rr_lockscreen_shortcuts"
             android:fragment="com.android.systemui.tuner.LockscreenFragment" />
 
     <Preference

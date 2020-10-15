@@ -224,6 +224,7 @@
     <string name="lockscreen_hidden">None</string>
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
     <string name="custom_hint">Swipe from icon to launch</string>
+    <string name="rr_lockscreen_shortcuts">Bottom shortcuts &amp; transitions</string>
 
     <!-- Oneplus Numbers clock -->
     <string name="clock_title_oneplus_numbers" translatable="false">OnePlus Numbers</string>

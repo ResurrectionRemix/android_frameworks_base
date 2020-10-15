@@ -6582,6 +6582,16 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_SIZE = "status_bar_clock_size";
 
         /**
+         * @hide
+         */
+        public static final String SYSTEMUI_ICON_PACK = "systemui_icon_pack";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_ICON_PACK = "settings_icon_pack";
+
+        /**
          * Clock font color
          * @hide
          */
