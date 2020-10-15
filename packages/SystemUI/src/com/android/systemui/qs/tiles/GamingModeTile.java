@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.android.systemui.R;
 import com.android.systemui.SysUIToast;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
-import com.android.systemui.qs.GlobalSetting;
+import com.android.systemui.qs.SystemSetting;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
@@ -37,14 +37,14 @@ import javax.inject.Inject;
 
 public class GamingModeTile extends QSTileImpl<BooleanState> {
 
-    private final GlobalSetting mGamingModeActivated;
+    private final SystemSetting mGamingModeActivated;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_gaming_mode);
     private static final Intent GAMING_MODE_SETTINGS = new Intent("android.settings.GAMING_MODE_SETTINGS");
 
     @Inject
     public GamingModeTile(QSHost host) {
         super(host);
-        mGamingModeActivated = new GlobalSetting(mContext, mHandler, Settings.System.GAMING_MODE_ACTIVE) {
+        mGamingModeActivated = new SystemSetting(mContext, mHandler, Settings.System.GAMING_MODE_ACTIVE) {
             @Override
             protected void handleValueChanged(int value) {
                 handleRefreshState(value);
