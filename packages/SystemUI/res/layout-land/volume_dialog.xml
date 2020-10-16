@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp"
-                android:tint="?android:attr/colorAccent" />
+                android:tint="@color/volume_row_ringer_tint" />
 
             <include
                 layout="@layout/volume_dnd_icon"
