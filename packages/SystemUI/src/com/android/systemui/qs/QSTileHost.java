@@ -360,6 +360,18 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, D
         throw new RuntimeException("Default factory didn't create view for " + tile.getTileSpec());
     }
 
+    public boolean isStock() {
+        String setting = Settings.Secure.getStringForUser(mContext.getContentResolver(),
+              TILES_SETTING, ActivityManager.getCurrentUser());
+        final Resources res = mContext.getResources();
+        final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
+        if (setting.isEmpty()) return false;
+        if (setting.equals(defaultTileList)) {
+            return true;
+        }
+        return false;
+    }
+
     protected static List<String> loadTileSpecs(Context context, String tileList) {
         final Resources res = context.getResources();
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);

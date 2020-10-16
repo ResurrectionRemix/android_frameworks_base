@@ -2375,12 +2375,24 @@ public class StatusBar extends SystemUI implements DemoMode,
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_GRADIENT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)))  {
+                mQSPanel.getHost().reloadAllTiles();
+             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_GRADIENT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_RGB_TINT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ACCENT_TINT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ACCENT_TINT_INACTIVE)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_SHOW_EXPANDINDICATOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY)))  {
-                mQSPanel.getHost().reloadAllTiles();
+                if (mQSPanel.getHost().isStock()) {
+                    try {
+                      mOverlayManager.reloadAssets("com.android.systemui",
+                           mLockscreenUserManager.getCurrentUserId());
+                    } catch (Exception e) {
+                      Log.w(TAG, "Cannot reload assets", e);
+                    }
+                } else {
+                    mQSPanel.getHost().reloadAllTiles();
+                }
              } else {
               update();
             }
