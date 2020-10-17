@@ -196,6 +196,11 @@ public class ThemeAccentUtils {
             "com.android.theme.rr.systemui",
     };
 
+    public static final String[] RR_CLEAR2 = {
+            "com.android.theme.rr.clear.system",
+            "com.android.theme.rr.clear.systemui",
+    };
+
     public static final String[] VOLUME_ICON_COLOR = {
             "com.android.volume.default",
             "com.android.volume.primary",

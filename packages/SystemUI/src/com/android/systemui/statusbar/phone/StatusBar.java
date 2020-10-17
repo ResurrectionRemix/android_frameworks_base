@@ -6238,6 +6238,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
                 updateTheme();
            break;
            case 1:
@@ -6250,6 +6251,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 2:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);;
@@ -6261,6 +6263,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
                 RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
           case 3:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6272,6 +6275,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
                 RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 4:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6283,6 +6287,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 5:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6294,6 +6299,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 6:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6305,6 +6311,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 7:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6316,6 +6323,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
            case 8:
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
@@ -6327,6 +6335,19 @@ public class StatusBar extends SystemUI implements DemoMode,
                 RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
                 RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
+           break;
+           case 9:
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.SOLARIZED_DARK);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.BAKED_GREEN);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.CHOCO_X);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_GREY);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.MATERIAL_OCEAN);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PITCH_BLACK);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.DARK_THEMES);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR);
+                RRUtils.disableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.PRIMARY_THEMES);
+                RRUtils.enableSystemTheme(mOverlayManager, UserHandle.USER_CURRENT, ThemeAccentUtils.RR_CLEAR2);
            break;
           }
      }

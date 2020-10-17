@@ -324,4 +324,8 @@
     <java-symbol type="id" name="aerr_copy" />
     <java-symbol type="string" name="url_copy_success" />
     <java-symbol type="string" name="url_copy_failed" />
+
+    <!-- RR -->
+   <java-symbol type="color" name="rr_accent" />
+   <java-symbol type="color" name="rr_config_icon_tint_nav" />
 </resources>

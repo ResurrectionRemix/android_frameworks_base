@@ -23,5 +23,8 @@
 
     <color name="toast_bg">@color/material_grey_800</color>
     <color name="toast_text">@color/white</color>
+
+    <color name="rr_accent">@color/accent_material_dark</color>
+    <color name="rr_config_icon_tint_nav">@color/notification_material_background_color</color>
 </resources>
 

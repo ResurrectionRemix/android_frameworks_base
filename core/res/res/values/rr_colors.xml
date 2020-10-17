@@ -29,6 +29,9 @@
     <color name="toast_bg">#E6EEEEEE</color>
     <color name="toast_text">@color/black</color>
 
+    <color name="rr_accent">@color/accent_material_light</color>
+    <color name="rr_config_icon_tint_nav">#ffffffff</color>
+
 </resources>
 
 
