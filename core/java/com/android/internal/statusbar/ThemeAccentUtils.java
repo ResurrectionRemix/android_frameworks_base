@@ -207,6 +207,21 @@ public class ThemeAccentUtils {
             "com.android.volume.accent",
     };
 
+    public static final String[] SEARCHBAR_COLOR = {
+            "com.android.settings.search.defaultcolor",
+            "com.android.settings.search.accentcolor",
+            "com.android.settings.search.gradientcolor",
+    };
+
+    public static final String[] SEARCHBAR_RADIUS = {
+            "com.android.settings.search.default",
+            "com.android.settings.search.corner",
+            "com.android.settings.search.rectangle",
+            "com.android.settings.search.squarerounded",
+            "com.android.settings.search.rounded",
+            "com.android.settings.search.roundedmax",
+    };
+
     public static final String[] SYSTEMUI_ICON_PACK = {
             "com.android.theme.icon_pack.normal.systemui",
             "com.android.theme.icon_pack.rounded.systemui",
@@ -461,6 +476,62 @@ public class ThemeAccentUtils {
         // skip index 0
         for (int i = 1; i < SETTINGS_ICON_PACK.length; i++) {
             String size = SETTINGS_ICON_PACK[i];
+            try {
+                om.setEnabled(size,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+    public static void updateSearchBarRadius(IOverlayManager om, int userId, int size) {
+        if (size == 0) {
+            stockSearchBarRadius(om, userId);
+        } else {
+            try {
+                om.setEnabled(SEARCHBAR_RADIUS[size],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change icon pack", e);
+            }
+        }
+    }
+
+    public static void stockSearchBarRadius(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < SEARCHBAR_RADIUS.length; i++) {
+            String size = SEARCHBAR_RADIUS[i];
+            try {
+                om.setEnabled(size,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void updateSearchBarColor(IOverlayManager om, int userId, int size) {
+        if (size == 0) {
+            stockSettingsIcons(om, userId);
+        } else {
+            try {
+                om.setEnabled(SEARCHBAR_COLOR[size],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change icon pack", e);
+            }
+        }
+    }
+
+    public static void stockSearchBarColor(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < SEARCHBAR_COLOR.length; i++) {
+            String size = SEARCHBAR_COLOR[i];
             try {
                 om.setEnabled(size,
                         false /*disable*/, userId);

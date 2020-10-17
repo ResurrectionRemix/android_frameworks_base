@@ -31,7 +31,8 @@
 
     <color name="rr_accent">@color/accent_material_light</color>
     <color name="rr_config_icon_tint_nav">#ffffffff</color>
-
+    <color name="search_bar_background">@android:color/white</color>
+    <color name="search_bar_background_2">@color/search_bar_background</color>
 </resources>
 
 

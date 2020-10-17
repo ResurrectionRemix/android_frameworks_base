@@ -22,4 +22,7 @@
 
     <dimen name="toast_elevation">2dp</dimen>
 
+    <!-- Searchbar -->
+    <dimen name="searchbar_corner_radius">28dp</dimen>
+
 </resources>

@@ -2339,6 +2339,12 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SETTINGS_ICON_PACK),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SETTINGS_SEARCHBAR_COLOR),
+                    false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SETTINGS_SEARCHBAR_RADIUS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2372,7 +2378,13 @@ public class StatusBar extends SystemUI implements DemoMode,
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.SETTINGS_ICON_PACK))) {
                 stockSettingsIcons();
                 updateSettingsIcons();
-	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.SETTINGS_SEARCHBAR_COLOR))) {
+                stockSearchBarColor();
+                updateSearchBarColor();
+	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.SETTINGS_SEARCHBAR_RADIUS))) {
+                stockSearchBarRadius();
+                updateSearchBarRadius();
+	         }  else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_FW)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT)))  {
@@ -6415,5 +6427,25 @@ public class StatusBar extends SystemUI implements DemoMode,
         int style = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SETTINGS_ICON_PACK , 0, mLockscreenUserManager.getCurrentUserId());
         ThemeAccentUtils.updateSettingsIcons(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
+    }
+
+    public void updateSearchBarColor() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SETTINGS_SEARCHBAR_COLOR, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateSearchBarColor(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
+    }
+
+    public void stockSearchBarColor() {
+        ThemeAccentUtils.stockSearchBarColor(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void stockSearchBarRadius() {
+        ThemeAccentUtils.stockSearchBarRadius(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public void updateSearchBarRadius() {
+        int style = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SETTINGS_SEARCHBAR_RADIUS , 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateSearchBarRadius(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), style);
     }
 }

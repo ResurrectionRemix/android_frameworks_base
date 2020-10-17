@@ -328,4 +328,7 @@
     <!-- RR -->
    <java-symbol type="color" name="rr_accent" />
    <java-symbol type="color" name="rr_config_icon_tint_nav" />
+   <java-symbol type="color" name="search_bar_background" />
+   <java-symbol type="color" name="search_bar_background_2" />
+   <java-symbol type="dimen" name="searchbar_corner_radius" />
 </resources>

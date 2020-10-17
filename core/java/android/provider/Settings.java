@@ -7400,12 +7400,20 @@ public final class Settings {
         public static final String SETTINGS_SPACER_IMAGE_SEARCHBAR = "settings_spacer_image_searchbar";
 
         /**
+         * @hide
+         */
+        public static final String SETTINGS_SEARCHBAR_COLOR = "settings_searchbar_color";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SEARCHBAR_RADIUS = "settings_searchbar_radius";
+
+        /**
          * 
          * @hide
          */
         public static final String SETTINGS_DISPLAY_ANIM = "settings_display_anim";
-
-
 
 
         /**
