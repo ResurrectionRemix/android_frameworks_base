@@ -6592,6 +6592,11 @@ public final class Settings {
         public static final String SETTINGS_ICON_PACK = "settings_icon_pack";
 
         /**
+         * @hide
+         */
+        public static final String BATTERY_SAVER_VIB = "battery_saver_vib";
+
+        /**
          * Clock font color
          * @hide
          */
