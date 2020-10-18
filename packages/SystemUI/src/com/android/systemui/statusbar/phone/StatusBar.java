@@ -2392,6 +2392,8 @@ public class StatusBar extends SystemUI implements DemoMode,
              } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_GRADIENT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_RGB_TINT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ACCENT_TINT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_INACTIVE_TINT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ACCENT_TINT_INACTIVE)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_SHOW_EXPANDINDICATOR)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY)))  {
