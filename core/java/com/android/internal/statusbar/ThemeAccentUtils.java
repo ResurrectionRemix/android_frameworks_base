@@ -211,6 +211,9 @@ public class ThemeAccentUtils {
             "com.android.settings.search.defaultcolor",
             "com.android.settings.search.accentcolor",
             "com.android.settings.search.gradientcolor",
+            "com.android.settings.search.gradientcolor2",
+            "com.android.settings.search.gradientcolorsystem",
+            "com.android.settings.search.gradientcolorsystem2",
     };
 
     public static final String[] SEARCHBAR_RADIUS = {
