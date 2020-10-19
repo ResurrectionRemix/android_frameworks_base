@@ -201,6 +201,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private final ActivityStarter mActivityStarter;
     private GlobalActionsPanelPlugin mPanelPlugin;
     private boolean mTorchEnabled = false;
+    private final boolean mAdvancedRestartDefault;
 
     private static final String OMNIRECORD_PACKAGE_NAME = "org.omnirom.omnirecord";
 
@@ -245,6 +246,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
         mScreenshotHelper = new ScreenshotHelper(context);
         mScreenRecordHelper = new ScreenRecordHelper(context);
+        mAdvancedRestartDefault = context.getResources().getBoolean(
+            com.android.internal.R.bool.config_powermenuadvanceddefault);
 
         Dependency.get(ConfigurationController.class).addCallback(this);
 
@@ -638,8 +641,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 }
             } else if (GLOBAL_ACTION_KEY_ADVANCED.equals(actionKey)) {
                 if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                        Settings.Secure.ADVANCED_REBOOT_IN_POWER_MENU, 0,
-                        getCurrentUser().id) != 0) {
+                        Settings.Secure.ADVANCED_REBOOT_IN_POWER_MENU, (mAdvancedRestartDefault ? 1 : 0),
+                        getCurrentUser().id) == 1) {
                     mItems.add(mShowAdvancedToggles);
                 }
             } else {

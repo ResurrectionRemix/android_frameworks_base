@@ -245,4 +245,7 @@
          to enable/disable DC dimming. -->
     <string name="config_deviceDcDimmingSysfsNode"></string>
 
+    <!-- Whether power menu advanced reboot enabled by default -->
+    <bool name="config_powermenuadvanceddefault">false</bool>
+
 </resources>
