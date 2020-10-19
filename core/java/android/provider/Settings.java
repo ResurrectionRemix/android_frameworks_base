@@ -7410,6 +7410,12 @@ public final class Settings {
         public static final String SETTINGS_SEARCHBAR_RADIUS = "settings_searchbar_radius";
 
         /**
+         * @hide
+         */
+        public static final String SETTINGS_SEARCHBAR_TINT = "settings_searchbar_tint";
+
+
+        /**
          * 
          * @hide
          */
