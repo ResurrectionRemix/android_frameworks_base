@@ -44,9 +44,9 @@
     <string name="screenrecord_audio_recording_internal">Внутрненний</string>
     <string name="screenrecord_audio_recording_microphone">Микрофон</string>
     <string name="screenrecord_audio_recording_off">Отключен</string>
-    <string name="screenrecord_taps_title">Показывать штрихи на экране</string>
+    <string name="screenrecord_taps_title">Показывать касания на экране</string>
     <string name="screenrecord_taps_summary">Показывать визуальную область во время записи </string>
-    <string name="screenrecord_stopdot_title">Показать точку остановки</string>
+    <string name="screenrecord_stopdot_title">Показать кнопку остановки</string>
     <string name="screenrecord_stopdot_summary">Покажите красную точку, чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
     <string name="screenrecord_video_bitrate_title">Битрейт видео</string>
     <string name="screenrecord_video_bitrate_summary">Установите битрейт видео для лучшего качества видео за счет большего размера файла.</string>
