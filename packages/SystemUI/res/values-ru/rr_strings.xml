@@ -19,7 +19,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Screenshot Delete Toast -->
-    <string name="delete_screenshot_toast">Снимок экрана удален</string>
+    <string name="delete_screenshot_toast">Скриншот удалён</string>
 
     <string name="screenrecord_stopdot_label">Показать точку остановки</string>
     <string name="screenrecord_low_quality_label">Низкое качество</string>
@@ -31,12 +31,12 @@
     <string name="global_action_restart_ui">Системный интерфейс</string>
 
     <!-- Screenshot -->
-    <string name="quick_settings_screenshot_label">Скриншот</string>
-    <string name="quick_settings_region_screenshot_label">Снимок части экрана</string>
+    <string name="quick_settings_screenshot_label">Снимок экрана</string>
+    <string name="quick_settings_region_screenshot_label">Частичный снимок экрана</string>
 
     <!-- Screen record -->
     <string name="screenrecord_dialog_title">Начать запись?</string>
-    <string name="screenrecord_dialog_summary">Во время записи система Android может захватывать любую конфиденциальную информацию, которая отображается на вашем экране или воспроизводится на вашем устройстве. Сюда входят пароли, информация об оплате, фотографии, сообщения и аудио.</string>
+    <string name="screenrecord_dialog_summary">Во время записи Android может захватить любую важную информацию, которая видна на вашем экране или воспроизведена на вашем устройстве. Сюда входят пароли, платежные данные, фотографии, сообщения и аудио.</string>
     <string name="screenrecord_dialog_start">Начать запись</string>
     <string name="screenrecord_dialog_cancel">Отменить</string>
     <string name="screenrecord_audio_title">Источник звука</string>
@@ -45,9 +45,9 @@
     <string name="screenrecord_audio_recording_microphone">Микрофон</string>
     <string name="screenrecord_audio_recording_off">Отключен</string>
     <string name="screenrecord_taps_title">Показывать касания на экране</string>
-    <string name="screenrecord_taps_summary">Показывать визуальную область во время записи </string>
+    <string name="screenrecord_taps_summary">Показывать касания на экране во время записи </string>
     <string name="screenrecord_stopdot_title">Показать кнопку остановки</string>
-    <string name="screenrecord_stopdot_summary">Покажите красную точку, чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
+    <string name="screenrecord_stopdot_summary">Включает отображение красной точки, чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
     <string name="screenrecord_video_bitrate_title">Битрейт видео</string>
     <string name="screenrecord_video_bitrate_summary">Установите битрейт видео для лучшего качества видео за счет большего размера файла.</string>
     <string name="quick_settings_sound_search">Поиск музыки</string>
@@ -96,36 +96,36 @@
     <string name="quick_settings_pulse_changed_on">Визуализация включена</string>
 
     <string name="quick_settings_navbar">Навигационная панель</string>
-    <string name="quick_settings_navbar_off">Навигационная панель отключена</string>
-    <string name="quick_settings_navbar_on">Навигационная панель включена</string>
+    <string name="quick_settings_navbar_off">Отключить навигационную панель</string>
+    <string name="quick_settings_navbar_on">Включить навигационную панель</string>
     <string name="quick_settings_navbar_changed_off">Навигационная панель отключена</string>
     <string name="quick_settings_navbar_changed_on">Навигационная панель включена</string>
 
     <string name="quick_settings_gesture">Жест в любом месте</string>
-    <string name="quick_settings_gesture_off">Жест в любом месте выключен</string>
-    <string name="quick_settings_gesture_on">Жест в любом месте включен</string>
+    <string name="quick_settings_gesture_off">Отключить жест в любом месте</string>
+    <string name="quick_settings_gesture_on">Включить жест в любом месте</string>
     <string name="quick_settings_gesture_changed_off">Жест в любом месте выключен</string>
     <string name="quick_settings_gesture_changed_on">Жест в любом месте включен/string>
 
     <!-- Tuner -->
     <string name="preview">Предварительный просмотр</string>
-    <string name="keycode">Ключевой код</string>
+    <string name="keycode">Код клавиши</string>
     <string name="no_home_title">Кнопка "Домой" не найдена</string>
-    <string name="no_home_message">Для навигации на этом устройстве требуется кнопка «Домой». Пожалуйста, добавьте кнопку домой перед сохранением.</string>
-    <string name="clipboard_description">Буфер обмена позволяет перетаскивать элементы прямо в буфер обмена. Элементы также можно перетаскивать прямо из буфера обмена, если они есть.</string>
-    <string name="keycode_description">Кнопки с кодом клавиатуры позволяют добавлять клавиши клавиатуры на панель навигации. При нажатии они имитируют выбранную клавишу клавиатуры. Сначала необходимо выбрать ключ для кнопки, а затем изображение, которое будет отображаться на кнопке.</string>
-    <string name="start">Старт</string>
-    <string name="center">Центр</string>
-    <string name="end">Конец</string>
-    <string name="space">Spacer</string>
-    <string name="menu_ime">Переключатель меню / клавиатуры</string>
-    <string name="select_button">Выберите кнопку, чтобы добавить</string>
+    <string name="no_home_message">Кнопка \"Домой\" необходима для управления устройством. Пожалуйста добавьте кнопку \"Домой\" перед сохранением.</string>
+    <string name="clipboard_description">Буфер Обмена позволяет перетаскивать элементы непосредственно в буфер обмена. Элементы также можно перетаскивать непосредственно из буфера обмена, когда они присутствуют.</string>
+    <string name="keycode_description">Код клавиши позволяют добавлять клавиши клавиатуры на панель навигации. При нажатии они эмулируют выбранную клавишу. Сначала нужно назначить клавишу на кнопку, затем выбрать изображение для неё.</string>
+    <string name="start">Запустить</string>
+    <string name="center">По центру</string>
+    <string name="end">Закончить</string>
+    <string name="space">Разделитель</string>
+    <string name="menu_ime">Меню / Переключение раскладки</string>
+    <string name="select_button">Выберите кнопку для добавления</string>
     <string name="add_button">Добавить кнопку</string>
     <string name="save">Сохранить</string>
     <string name="reset">Сброс</string>
     <string name="select_keycode">Выберите кнопку клавиатуры</string>
-    <string name="left">Слева</string>
-    <string name="right">Справа</string>
+    <string name="left">Лево</string>
+    <string name="right">Право</string>
     <string name="navbar_editor_title">Редактор</string>
     <string name="navbar_editor_summary">Настроить панель навигации</string>
     <!-- Stock Navbar -->
@@ -206,7 +206,7 @@
     <string name="quick_settings_sound_label">Звук</string>
     <string name="quick_settings_sound_ring">Рингтон</string>
     <string name="quick_settings_sound_vibrate">Вибрация</string>
-    <string name="quick_settings_sound_dnd">Отключить звук</string>
+    <string name="quick_settings_sound_dnd">Не беспокоить</string>
 
     <!-- Music tile -->
     <string name="quick_settings_music_label">Музыка</string>
@@ -233,8 +233,8 @@
     <string name="quick_settings_compass_label">Компас</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
     <string name="quick_settings_compass_init">Initializing\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Компас отключен</string>
-    <string name="accessibility_quick_settings_compass_on">Компас включен</string>
+    <string name="accessibility_quick_settings_compass_off">Отключить компас</string>
+    <string name="accessibility_quick_settings_compass_on">Включить компас</string>
     <string name="accessibility_quick_settings_compass_changed_off">Компас отключен</string>
     <string name="accessibility_quick_settings_compass_changed_on">Компас включен</string>
     <string name="quick_settings_compass_N">N</string>
