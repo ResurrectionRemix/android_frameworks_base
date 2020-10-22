@@ -170,4 +170,108 @@
     <string name="clock_title_default" msgid="6342735240617459864">"По умолчанию"</string>
     <string name="clock_title_bubble" msgid="2204559396790593213">"Пузырь"</string>
     <string name="clock_title_analog" msgid="8409262532900918273">"Стрелки"</string>
+ <!-- Time displayed on typographic clock face, which displays the time in words.
+             Example:
+
+                 It's
+                 Four
+                 Twenty
+                 Nine
+
+         This string requires two arguments: the first in the hours of the time and
+         the second is the minutes of the time. The hours string is obtained from
+         string-array type_clock_hours below and the minutes string is obtained
+         from string-array type_clock_minutes below.
+
+    [CHAR LIMIT=8] -->
+    <plurals name="type_clock_header">
+        <item quantity="one"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="few"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="other"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+    </plurals>
+   
+    <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
+    <string-array name="type_clock_hours">
+        <item>Двенадцать</item>
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+        <item>Пять</item>
+        <item>Шесть</item>
+        <item>Семь</item>
+        <item>Восемь</item>
+        <item>Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+    </string-array>
+
+    <!-- Minutes displayed in words on the typographic clock face. [CHAR LIMIT=20] -->
+    <string-array name="type_clock_minutes">
+        <item>Ноль Ноль</item>
+        <item>Ноль одна</item>
+        <item>Ноль две</item>
+        <item>Ноль три</item>
+        <item>Ноль четыре</item>
+        <item>Ноль пять</item>
+        <item>Ноль шесть</item>
+        <item>Ноль семь</item>
+        <item>Ноль восемь</item>
+        <item>Ноль девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+        <item>Двенадцать</item>
+        <item>Тринадцать</item>
+        <item>Четырнадцать</item>
+        <item>Пятнадцать</item>
+        <item>Шестнадцать</item>
+        <item>Семнадцать</item>
+        <item>Восемнадцать</item>
+        <item>Девятнадцать</item>
+        <item>Двадцать</item>
+        <item>Двадцать\nОдин</item>
+        <item>Двадцать\nДва</item>
+        <item>Двадцать\nТри</item>
+        <item>Двадцать\nЧетыре</item>
+        <item>Двадцать\nПять</item>
+        <item>Двадцать\nШесть</item>
+        <item>Двадцать\nСемь</item>
+        <item>Двадцать\nВосемь</item>
+        <item>Двадцать\nДевять</item>
+        <item>Тридцать</item>
+        <item>Тридцать\nОдин</item>
+        <item>Тридцать\nДва</item>
+        <item>Тридцать\nТри</item>
+        <item>Тридцать\nЧетыре</item>
+        <item>Тридцать\nПять</item>
+        <item>Тридцать\nШесть</item>
+        <item>Тридцать\nСемь</item>
+        <item>Тридцать\nВосемь</item>
+        <item>Тридцать\nДевять</item>
+        <item>Сорок</item>
+        <item>Сорок\nОдин</item>
+        <item>Сорок\nДва</item>
+        <item>Сорок\nТри</item>
+        <item>Сорок\nЧетыре</item>
+        <item>Сорок\nПять</item>
+        <item>Сорок\nШесть</item>
+        <item>Сорок\nСемь</item>
+        <item>Сорок\nВосемь</item>
+        <item>Сорок\nДевять</item>
+        <item>Пятьдесят</item>
+        <item>Пятьдесят\nОдин</item>
+        <item>Пятьдесят\nДва</item>
+        <item>Пятьдесят\nТри</item>
+        <item>Пятьдесят\nЧетыре</item>
+        <item>Пятьдедят\nПять</item>
+        <item>Пятьдесят\nШесть</item>
+        <item>Пятьдесят\nСемь</item>
+        <item>Пятьдесят\nВосемь</item>
+        <item>Пятьдесят\nДевять</item>
+    </string-array>
+
+    <!-- Title for Typographic clock face that will appear in the picker app next to a preview image of
+         the clock face. [CHAR LIMIT=8] -->
+    <string name="clock_title_type" translatable="false">Type</string>
+    <string name="clock_title_type_alt" translatable="false">Type (center)</string>
 </resources>
