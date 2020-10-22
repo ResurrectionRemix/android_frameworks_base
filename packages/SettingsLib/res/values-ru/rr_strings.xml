@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019 RR
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Description for the screen zoom level that makes interface elements smaller. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smaller">Меньше</string>
+    <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smallest">Наименьший</string>
+
+    <!-- Label for estimated remaining duration of dash battery charging -->
+    <string name="power_remaining_dash_charging_duration_only">Dash зарядка (<xliff:g id="time">%1$s</xliff:g> осталось до полной зарядки)</string>
+
+    <!-- Battery use screen.  Battery status shown in chart label when charging from a dash source.  -->
+    <string name="battery_info_status_dash_charging">Dash зарядка</string>
+
+    <!-- Label for estimated remaining duration of warp battery charging -->
+    <string name="power_remaining_warp_charging_duration_only">Warp зарядка (<xliff:g id="time">%1$s</xliff:g> осталось до полной зарядки)</string>
+
+    <!-- Battery use screen. Battery status shown in chart label when charging from a warp source.  -->
+    <string name="battery_info_status_warp_charging">Warp зарядка</string>
+
+    <!-- Label for estimated remaining duration of VOOC battery charging -->
+    <string name="power_remaining_vooc_charging_duration_only">VOOC зарядка (<xliff:g id="time">%1$s</xliff:g> осталось до полной зарядки)</string>
+
+    <!-- Battery use screen. Battery status shown in chart label when charging from a VOOC source.  -->
+    <string name="battery_info_status_vooc_charging">VOOC зарядка</string>
+    <string name="battery_info_status_vooc_charging_lower">vooc зарядка</string>
+
+</resources>
