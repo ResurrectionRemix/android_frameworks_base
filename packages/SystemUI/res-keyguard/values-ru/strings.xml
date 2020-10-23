@@ -269,9 +269,4 @@
         <item>Пятьдесят\nВосемь</item>
         <item>Пятьдесят\nДевять</item>
     </string-array>
-
-    <!-- Title for Typographic clock face that will appear in the picker app next to a preview image of
-         the clock face. [CHAR LIMIT=8] -->
-    <string name="clock_title_type" translatable="false">Type</string>
-    <string name="clock_title_type_alt" translatable="false">Type (center)</string>
 </resources>
