@@ -135,8 +135,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Принудительно остановить?</string>
     <string name="force_stop_dlg_text">Если вы принудительно остановите приложение, оно может вести себя неправильно.</string>
-    <string name="dlg_ok">@android:string/Ok</string>
-    <string name="dlg_cancel">@android:string/Отмена</string>
     <string name="guts_force_close_app">Закрыть приложение</string>
 
     <!-- DataSwitch Tile -->
