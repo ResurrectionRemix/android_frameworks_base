@@ -85,6 +85,7 @@ import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.qs.tiles.RefreshRateTile;
 import com.android.systemui.qs.tiles.PulseTile;
 import com.android.systemui.qs.tiles.NavBarTile;
+import com.android.systemui.qs.tiles.SmartChargeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
 
 
@@ -155,6 +156,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<ImmersiveTile> mImmersiveTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
+    private final Provider<SmartChargeTile> mSmartChargeTileProvider;
 
     private QSTileHost mHost;
 
@@ -216,6 +218,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<LteTile> lteTileProvider,
             Provider<ImmersiveTile> immersiveTileProvider,
             Provider<LocaleTile> localeTileProvider,
+            Provider<SmartChargeTile> smartChargeTileProvider,
             Provider<RefreshRateTile> refreshRateTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -274,6 +277,7 @@ public class QSFactoryImpl implements QSFactory {
         mLteTileProvider = lteTileProvider;
         mImmersiveTileProvider = immersiveTileProvider;
         mLocaleTileProvider = localeTileProvider;
+        mSmartChargeTileProvider = smartChargeTileProvider;
         mRefreshRateTileProvider = refreshRateTileProvider;
     }
 
@@ -407,6 +411,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mLocaleTileProvider.get();
             case "refreshrate":
                 return mRefreshRateTileProvider.get();
+            case "smart_charge":
+                return mSmartChargeTileProvider.get();
         }
 
         // Intent tiles.

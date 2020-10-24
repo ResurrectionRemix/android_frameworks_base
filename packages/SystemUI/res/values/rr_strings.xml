@@ -95,6 +95,12 @@
     <string name="quick_settings_pulse_changed_off">Pulse turned off</string>
     <string name="quick_settings_pulse_changed_on">Pulse turned on</string>
 
+    <string name="quick_smart_charge">Smart charging</string>
+    <string name="quick_smart_charge_off">Smart charging off</string>
+    <string name="quick_smart_charge_on">Smart charging on</string>
+    <string name="quick_smart_charge_changed_off">Smart charging turned off</string>
+    <string name="quick_smart_charge_changed_on">Smart charging turned on</string>
+
     <string name="quick_settings_navbar">Navigation</string>
     <string name="quick_settings_navbar_off">Navigation off</string>
     <string name="quick_settings_navbar_on">Navigation on</string>
