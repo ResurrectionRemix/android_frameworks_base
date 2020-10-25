@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015-2018 AospExtended
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Button that copies the url to the log of a crashed application -->
+    <string name="aerr_copy">Скопировать ссылку лога ошибки</string>
+    <string name="url_copy_success">Ссылка скопирована успешно</string>
+    <string name="url_copy_failed">Произошла ошибка во время загрузки лога на dogbin</string>
+
+    <string name="reboot_title">Перезагрузка</string>
+    <string name="reboot_message">Перезагрузка системы...</string>
+
+    <!-- Pocket Lock --> 
+    <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания, чтобы разблокировать</string>
+
+    <!-- Gaming mode -->
+    <string name="notification_channel_gaming">Игровой режим</string>
+    <string name="gaming_mode_notification_title">Игровой режим включён</string>
+    <string name="gaming_mode_notification_content">Нажмите чтобы выключить Игровой режим</string>
+    <string name="gaming_mode_enabled_toast">Игровой режим включён</string>
+    <string name="gaming_mode_disabled_toast">Игровой режим выключен</string>
+
+    <!-- AOKP custom system animations -->
+    <string name="animation_fade">Затухание</string>
+    <string name="animation_slide_right">Сдвинуть вправо</string>
+    <string name="animation_slide_left">Сдвинуть влево</string>
+    <string name="animation_slide_right_no_fade">Сдвинуть вправо (без выцветания)</string>
+    <string name="animation_slide_left_no_fade">Сдвинуть влево (без затухания)</string>
+    <string name="animation_slide_up">Сдвинуть вниз</string>
+    <string name="animation_slide_down">Сдвинуть вверх</string>
+    <string name="animation_default">По умолчанию</string>
+    <string name="animation_translucent">Прозрачный</string>
+    <string name="animation_grow_shrink">Расти (вверху)</string>
+    <string name="animation_grow_shrink_center">Расти (по центру)</string>
+    <string name="animation_grow_shrink_bottom">Расти (снизу)</string>
+    <string name="animation_grow_shrink_left">Расти (слева)</string>
+    <string name="animation_grow_shrink_right">Расти (справа)</string>
+    <string name="animation_random">Случайно</string>
+    <string name="action_null">Пусто</string>
+    <string name="animation_ethans">Этанс</string>
+    <string name="active_edge_app_select_title">Выбрать приложение</string>
+    <string name="active_edge_activity_select_title">Выбрать действие</string>
+    <!-- MicroG -->
+    <string name="permlab_fakePackageSignature">Подпись пакета подделана</string>
+    <!-- Description of an application permission, listed so the user can choose whether
+         they want to allow the application to do this. -->
+    <string name="permdesc_fakePackageSignature">Позволяет приложению выдавать себя за другое приложение. Вредоносные приложения могут использовать это для доступа к данным частного приложения. Законное использование включает эмулятор, который притворяется тем, что он имитирует. Предоставляйте это разрешение только с осторожностью!</string>
+    <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgrouplab_fake_package_signature">Подпись пакета подделана</string>
+    <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgroupdesc_fake_package_signature">Разрешить подделку подписи пакета</string>
+    <!-- Message shown to the user when the apps requests permission from this group. If ever possible this should stay below 80 characters (assuming the parameters takes 20 characters). Don't abbreviate until the message reaches 120 characters though. [CHAR LIMIT=120] -->
+    <string name="permgrouprequest_fake_package_signature">Позволять
+        &lt;b><xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b> подделать подпись пакета?</string>
+
+
+    <!-- Clipboard access toast -->
+    <string name="app_clipboard_access_denied">%1$s попытался получить доступ к буферу обмена, но ему было отказано</string>
+    <string name="app_clipboard_access_granted">%1$s попытался получить доступ к буферу обмена, и ему было предоставлено разрешение</string>
+
+    <!-- Popup camera dialog -->
+    <string name="popup_camera_dialog_message">Хотите, чтобы передняя камера оставалась поднятой?</string>
+    <string name="popup_camera_dialog_no">Нет</string>
+    <string name="popup_camera_dialog_raise">Да</string>
+
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Звонки и уведомления будут звучать</string>
+
+</resources>
