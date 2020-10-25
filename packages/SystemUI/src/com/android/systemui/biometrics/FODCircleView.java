@@ -534,7 +534,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                      mFODAnimation.updateParams(mParams.y);
                      break;
                 case Surface.ROTATION_270:
-                     mFODAnimation.updateParams(mParams.x);
+                     mFODAnimation.updateParams(mParams.y + 1200);
                      break;
                 default:
                      throw new IllegalArgumentException("Unknown rotation: " + rotation);

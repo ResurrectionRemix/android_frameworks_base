@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.metrics.LogMaker;
 import android.os.UserHandle;
@@ -101,6 +102,7 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
     private int mActivePointerId = -1;
     private boolean mIsDragging;
     private float mStartTouchY = -1;
+    private View fod_view;
 
     // Used to notify the container when something interesting happens.
     public interface SecurityCallback {
@@ -164,6 +166,24 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
     @Override
     public boolean shouldDelayChildPressedState() {
         return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        updatePosition();
+    }
+
+    public void updatePosition() {
+        Configuration config = getResources().getConfiguration();
+         if (fod_view != null) {
+             if (hasInDisplayFingerprint() &&
+                  mUpdateMonitor.isFingerprintAvailable() &&
+                  config.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                 fod_view.setVisibility(View.VISIBLE);
+              } else {
+                 fod_view.setVisibility(View.GONE);
+              }
+          }
     }
 
     @Override
@@ -298,15 +318,8 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
             if (DEBUG) Log.v(TAG, "inflating id = " + layoutId);
             View v = mInjectionInflationController.injectable(inflater)
                     .inflate(layoutId, mSecurityViewFlipper, false);
-            View fod_view = v.findViewById(R.id.fod_view);
-            if (fod_view != null) {
-                if (hasInDisplayFingerprint() &&
-                        mUpdateMonitor.isFingerprintAvailable()) {
-                    fod_view.setVisibility(View.VISIBLE);
-                } else {
-                    fod_view.setVisibility(View.GONE);
-                }
-            }
+            fod_view = v.findViewById(R.id.fod_view);
+            updatePosition();
             mSecurityViewFlipper.addView(v);
             updateSecurityView(v);
             view = (KeyguardSecurityView)v;
@@ -337,13 +350,11 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
         mSecurityViewFlipper.setLockPatternUtils(mLockPatternUtils);
     }
 
+
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        int minBottomMargin = getResources().getDimensionPixelSize(
-                R.dimen.kg_security_container_min_bottom_margin);
         // Consume bottom insets because we're setting the padding locally (for IME and navbar.)
-        setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(),
-                minBottomMargin > insets.bottom ? minBottomMargin : insets.bottom);
+        setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), insets.bottom);
         insets.bottom = 0;
         return false;
     }

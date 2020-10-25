@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.biometrics.BiometricSourceType;
@@ -713,7 +714,8 @@ public class KeyguardIndicationController implements StateListener,
     }
 
    private void updateChargingIndicatorPos() {
-            if (hasActiveInDisplayFp()) {
+            Configuration config = mContext.getResources().getConfiguration();
+            if (hasActiveInDisplayFp() && config.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 if (mFODPositionY != 0) {
                     // Get screen height
                     WindowManager windowManager = mContext.getSystemService(WindowManager.class);
