@@ -513,6 +513,33 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     public void onConfigurationChanged(Configuration newConfig) {
         updateStyle();
         updatePosition();
+
+    }
+
+    public void updateAnimationParams() {
+        Display defaultDisplay = mWindowManager.getDefaultDisplay();
+        Point size = new Point();
+        defaultDisplay.getRealSize(size);
+        int rotation = defaultDisplay.getRotation();
+
+        if (mFODAnimation != null) {
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                     mFODAnimation.updateParams(mParams.y);
+                     break;
+                case Surface.ROTATION_90:
+                     mFODAnimation.updateParams(mParams.x);
+                     break;
+                case Surface.ROTATION_180:
+                     mFODAnimation.updateParams(mParams.y);
+                     break;
+                case Surface.ROTATION_270:
+                     mFODAnimation.updateParams(mParams.x);
+                     break;
+                default:
+                     throw new IllegalArgumentException("Unknown rotation: " + rotation);
+            }
+        }
     }
 
     public IFingerprintInscreen getFingerprintInScreenDaemon() {
@@ -789,8 +816,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         }
         if (mIsDreaming) {
             mParams.y += mDreamingOffsetY;
-            mFODAnimation.updateParams(mParams.y);
         }
+        updateAnimationParams();
 
         mWindowManager.updateViewLayout(this, mParams);
     }
@@ -827,8 +854,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         if (mIsDreaming) {
             mParamsPressed.y += mDreamingOffsetY;
-            mFODAnimation.updateParams(mParamsPressed.y);
         }
+        updateAnimationParams();
 
         mWindowManager.updateViewLayout(mViewPressed, mParamsPressed);
     }
