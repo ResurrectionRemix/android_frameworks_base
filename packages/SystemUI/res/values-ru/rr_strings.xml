@@ -47,7 +47,7 @@
     <string name="screenrecord_taps_title">Показать касания на экране</string>
     <string name="screenrecord_taps_summary">Отображать касания по экрану во время записи</string>
     <string name="screenrecord_stopdot_title">Показать кнопку остановки</string>
-    <string name="screenrecord_stopdot_summary">Показать красную точку, нажмите на нее остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
+    <string name="screenrecord_stopdot_summary">Показать красную точку, нажмите на нее чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
     <string name="screenrecord_video_bitrate_title">Битрейт видео </string>
     <string name="screenrecord_video_bitrate_summary">Установите битрейт видео для лучшего качества видео за счет большего размера файла.</string>
     <string name="quick_settings_sound_search">Поиск звука</string>
