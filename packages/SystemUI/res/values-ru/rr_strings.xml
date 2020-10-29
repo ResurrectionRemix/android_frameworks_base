@@ -44,10 +44,10 @@
     <string name="screenrecord_audio_recording_internal">Внутренний</string>
     <string name="screenrecord_audio_recording_microphone">Микрофон</string>
     <string name="screenrecord_audio_recording_off">Отключено</string>
-    <string name="screenrecord_taps_title">Показывать штрихи на экране</string>
-    <string name="screenrecord_taps_summary">Отображать визуальную обратную связь во время записи</string>
-    <string name="screenrecord_stopdot_title">Показать точку остановки</string>
-    <string name="screenrecord_stopdot_summary">Покажите красную точку, чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
+    <string name="screenrecord_taps_title">Показать касания на экране</string>
+    <string name="screenrecord_taps_summary">Отображать касания по экрану во время записи</string>
+    <string name="screenrecord_stopdot_title">Показать кнопку остановки</string>
+    <string name="screenrecord_stopdot_summary">Показать красную точку, нажмите на нее чтобы остановить запись одним касанием. Нажмите и удерживайте, чтобы переместить на противоположную сторону.</string>
     <string name="screenrecord_video_bitrate_title">Битрейт видео </string>
     <string name="screenrecord_video_bitrate_summary">Установите битрейт видео для лучшего качества видео за счет большего размера файла.</string>
     <string name="quick_settings_sound_search">Поиск звука</string>
@@ -94,6 +94,12 @@
     <string name="quick_settings_pulse_on">Включение визуализации</string>
     <string name="quick_settings_pulse_changed_off">Визуализация отключена</string>
     <string name="quick_settings_pulse_changed_on">Визуализация включена</string>
+    
+        <string name="quick_smart_charge">Умная зарядка</string>
+    <string name="quick_smart_charge_off">Отключение умной зарядки</string>
+    <string name="quick_smart_charge_on">Включение умной зарядки</string>
+    <string name="quick_smart_charge_changed_off">Умная зарядка отключена</string>
+    <string name="quick_smart_charge_changed_on">Умная зарядка включена</string>
 
     <string name="quick_settings_navbar">Панель навигации</string>
     <string name="quick_settings_navbar_off">Отключение панели навигации</string>
