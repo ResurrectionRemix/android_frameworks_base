@@ -76,6 +76,7 @@ public class VolumePluginManager extends BroadcastReceiver {
         "co.potatoproject.plugin.volume.compact",
         "co.potatoproject.plugin.volume.oreo",
         "co.potatoproject.plugin.volume.tiled",
+        "com.rr.plugin.volume.miui",
     };
 
     private PluginPrefs mPluginPrefs;
