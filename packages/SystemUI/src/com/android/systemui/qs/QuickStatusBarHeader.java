@@ -377,6 +377,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mQsbDataUsageImage.setOnClickListener(this);
         if (mDataUsageImage != null)
             mDataUsageImage.setOnClickListener(this);
+        if (mDateView != null) 
+            mDateView.setOnClickListener(this);
         // Set the correct tint for the data uasgae icons so they contrast
         mDataUsageImage.setImageTintList(ColorStateList.valueOf(fillColor));
 
@@ -1004,6 +1006,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mDataUsageView || v == mQsbDataUsageView
                   || v == mDataUsageImage || v == mQsbDataUsageImage) {
             openDataPanel();
+        } else if (v == mDateView) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                    AlarmClock.ACTION_SHOW_ALARMS), 0);
         }
    }
     
