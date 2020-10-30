@@ -334,4 +334,5 @@
    <java-symbol type="color" name="search_bar_tint" />
    <java-symbol type="color" name="search_bar_background_2" />
    <java-symbol type="dimen" name="searchbar_corner_radius" />
+   <java-symbol type="color" name="background_floating_device_default_dark" />
 </resources>
