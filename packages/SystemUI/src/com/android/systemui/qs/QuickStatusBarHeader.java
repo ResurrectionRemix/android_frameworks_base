@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ContentUris;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -37,7 +38,9 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
+import android.net.Uri;
 import android.provider.AlarmClock;
+import android.provider.CalendarContract;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.service.notification.ZenModeConfig;
@@ -712,6 +715,14 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateStatusbarProperties();
     }
 
+    private void startDateActivity() {
+        Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+        builder.appendPath("time");
+        ContentUris.appendId(builder, System.currentTimeMillis());
+        Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
     private void updateDataUsageView() {
         boolean isWifi = com.android.internal.util.rr.Utils.isWifiOnly(mContext);
         if (!isWifi) {
@@ -1007,8 +1018,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                   || v == mDataUsageImage || v == mQsbDataUsageImage) {
             openDataPanel();
         } else if (v == mDateView) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
-                    AlarmClock.ACTION_SHOW_ALARMS), 0);
+            startDateActivity();
         }
    }
     
