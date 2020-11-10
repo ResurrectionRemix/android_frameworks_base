@@ -6440,6 +6440,11 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_LOCK_ICON = "lockscreen_lock_icon";
 
+        /**
+         * @hide
+         */
+        public static final String LAUNCHER_DOUBLE_TAP = "launcher_double_tap";
+
 
         /**
          * @hide
