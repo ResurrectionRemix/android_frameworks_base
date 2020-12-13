@@ -75,4 +75,16 @@
     <!-- Message shown to the user when the apps requests permission from this group. If ever possible this should stay below 80 characters (assuming the parameters takes 20 characters). Don't abbreviate until the message reaches 120 characters though. [CHAR LIMIT=120] -->
     <string name="permgrouprequest_fake_package_signature">Επιτρέπεις στην
         &lt;b><xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b> την αποδοχή πλαστής υπογραφής?</string>
+     
+     <!-- Clipboard access toast -->
+    <string name="app_clipboard_access_denied">Η %1$s προσπάθησε να αποκτήσει πρόσβαση στο πρόχειρο και απορρίφθηκε</string>
+    <string name="app_clipboard_access_granted">Η %1$s προσπάθησε να αποκτήσει πρόσβαση στο πρόχειρο και εγκρίθηκε</string>
+
+    <!-- Popup camera dialog -->
+    <string name="popup_camera_dialog_message">Θέλεις να κρατήσεις την μπροστινή κάμερα ενεργή?</string>
+    <string name="popup_camera_dialog_no">Όχι</string>
+    <string name="popup_camera_dialog_raise">Ναι</string>
+
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Σε κλήσεις και ειδοποιήσεις θα κουδουνίσει</string>
 </resources>
