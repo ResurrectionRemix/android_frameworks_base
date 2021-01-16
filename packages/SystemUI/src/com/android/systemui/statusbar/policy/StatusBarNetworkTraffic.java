@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 crDroid Android Project
+ * Copyright (C) 2019-2021 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,7 @@ public class StatusBarNetworkTraffic extends NetworkTraffic implements DarkRecei
 
     @Override
     public void setVisibleState(int state, boolean animate) {
-        if (state == mVisibleState || !mEnabled || !mScreenOn) {
+        if (state == mVisibleState || !mEnabled || !mAttached) {
             return;
         }
         mVisibleState = state;

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019-2020 crDroid Android Project
+ * Copyright (C) 2019-2021 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,7 +124,6 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private INetworkManagementService mNetworkManagementService;
 
     protected boolean mVisible = true;
-    protected boolean mScreenOn = true;
 
     private ConnectivityManager mConnectivityManager;
 
@@ -169,15 +168,15 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
 
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            filter.addAction(Intent.ACTION_SCREEN_OFF);
-            filter.addAction(Intent.ACTION_SCREEN_ON);
             mContext.registerReceiver(mIntentReceiver, filter, null, mTrafficHandler);
         }
+        updateViews();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        clearHandlerCallbacks();
         if (mAttached) {
             mContext.unregisterReceiver(mIntentReceiver);
             Dependency.get(TunerService.class).removeTunable(this);
@@ -257,7 +256,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             }
 
             // Schedule periodic refresh
-            if (mEnabled && mScreenOn && mAttached) {
+            if (mEnabled && mAttached) {
                 mTrafficHandler.sendEmptyMessageDelayed(MESSAGE_TYPE_PERIODIC_REFRESH,
                         mRefreshInterval * 1000);
             }
@@ -359,13 +358,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             if (action == null) return;
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 mConnectionAvailable = mConnectivityManager.getActiveNetworkInfo() != null;
-                if (mScreenOn) updateViews();
-            } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                mScreenOn = true;
                 updateViews();
-            } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-                mScreenOn = false;
-                clearHandlerCallbacks();
             }
         }
     };
