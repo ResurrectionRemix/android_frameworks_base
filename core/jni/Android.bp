@@ -12,6 +12,7 @@ cc_library_shared {
     name: "libandroid_runtime",
 
     cflags: [
+        "-O3",
         "-Wno-unused-parameter",
         "-Wno-non-virtual-dtor",
         "-Wno-maybe-uninitialized",
@@ -29,7 +30,7 @@ cc_library_shared {
         "-Wunreachable-code",
     ],
 
-    cppflags: ["-Wno-conversion-null"],
+    cppflags: ["-Wno-conversion-null", "-O3"],
 
     srcs: [
         "android_util_SeempLog.cpp",
