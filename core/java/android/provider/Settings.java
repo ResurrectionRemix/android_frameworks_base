@@ -19635,6 +19635,12 @@ public final class Settings {
          */
         public static final String POWER_BUTTON_SUPPRESSION_DELAY_AFTER_GESTURE_WAKE =
                 "power_button_suppression_delay_after_gesture_wake";
+
+        /**
+         * The amount of time in milliseconds before bluetooth is turned off
+         * @hide
+         */
+        public static final String BLUETOOTH_OFF_TIMEOUT = "bluetooth_off_timeout";
     }
 
     /**
