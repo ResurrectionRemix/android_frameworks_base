@@ -177,7 +177,6 @@ import android.telephony.TelephonyManager;
 import android.telephony.euicc.EuiccCardManager;
 import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.RcsManager;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -201,6 +200,7 @@ import com.android.internal.net.INetworkWatchlistManager;
 import com.android.internal.os.IDropBoxManagerService;
 import com.android.internal.policy.PhoneLayoutInflater;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -213,9 +213,9 @@ final class SystemServiceRegistry {
     // Service registry information.
     // This information is never changed once static initialization has completed.
     private static final Map<Class<?>, String> SYSTEM_SERVICE_NAMES =
-            new ArrayMap<Class<?>, String>();
+            new HashMap<Class<?>, String>();
     private static final Map<String, ServiceFetcher<?>> SYSTEM_SERVICE_FETCHERS =
-            new ArrayMap<String, ServiceFetcher<?>>();
+            new HashMap<String, ServiceFetcher<?>>();
     private static int sServiceCacheSize;
 
     // Not instantiable.
