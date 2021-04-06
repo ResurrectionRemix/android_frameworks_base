@@ -18,6 +18,10 @@ service statsd /system/bin/statsd
     user statsd
     group statsd log
     writepid /dev/cpuset/system-background/tasks
+    disabled
+
+on property:ro.statsd.enable=true
+    start statsd
 
 on property:ro.statsd.enable=false
     stop statsd
