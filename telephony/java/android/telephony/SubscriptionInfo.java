@@ -215,10 +215,11 @@ public class SubscriptionInfo implements Parcelable {
     public SubscriptionInfo(SubscriptionInfo info) {
         this(info.mId, info.mIccId, info.mSimSlotIndex, info.mDisplayName, info.mCarrierName,
                 info.mNameSource, info.mIconTint, info.mNumber, info.mDataRoaming, info.mIconBitmap,
-                info.mMcc, info.mMnc, info.mCountryIso, info.mIsEmbedded, info.mAccessRules,
+                info.mMcc, info.mMnc, info.mCountryIso, info.mIsEmbedded, info.mNativeAccessRules,
                 info.mCardString, info.mCardId, info.mIsOpportunistic,
                 info.mGroupUUID == null ? null : info.mGroupUUID.toString(), info.mIsGroupDisabled,
-                info.mCarrierId, info.mProfileClass, info.mSubscriptionType, info.mGroupOwner);
+                info.mCarrierId, info.mProfileClass, info.mSubscriptionType, info.mGroupOwner,
+                info.mCarrierConfigAccessRules);
     }
 
     /**
