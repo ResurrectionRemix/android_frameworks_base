@@ -18,7 +18,7 @@
     <!-- Button that copies the url to the log of a crashed application -->
     <string name="aerr_copy">Copy crash log URL</string>
     <string name="url_copy_success">URL copied successfully</string>
-    <string name="url_copy_failed">An error occured while uploading the log to dogbin</string>
+    <string name="url_copy_failed">An error occured while uploading the log to Hastebin</string>
 
     <string name="reboot_to_recovery_title" translatable="false">Recovery</string>
     <string name="reboot_to_recovery_message" translatable="false">Rebooting to recovery</string>
