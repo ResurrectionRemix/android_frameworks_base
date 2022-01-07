@@ -2130,7 +2130,7 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    private void createNotificationChannelGroup(String pkg, int uid, NotificationChannelGroup group,
+    void createNotificationChannelGroup(String pkg, int uid, NotificationChannelGroup group,
             boolean fromApp, boolean fromListener) {
         Preconditions.checkNotNull(group);
         Preconditions.checkNotNull(pkg);
@@ -2924,7 +2924,8 @@ public class NotificationManagerService extends SystemService {
 
             final int callingUid = Binder.getCallingUid();
             NotificationChannelGroup groupToDelete =
-                    mPreferencesHelper.getNotificationChannelGroup(groupId, pkg, callingUid);
+                    mPreferencesHelper.getNotificationChannelGroupWithChannels(
+                            pkg, callingUid, groupId, false);
             if (groupToDelete != null) {
                 // Preflight for allowability
                 final int userId = UserHandle.getUserId(callingUid);
