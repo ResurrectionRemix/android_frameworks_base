@@ -1012,6 +1012,12 @@ public abstract class PackageManagerInternal {
     public abstract void migrateLegacyObbData();
 
     /**
+     * Get installed SDK version of the package
+     * @param pkg package for which to retrieve the installed sdk version
+     */
+    public abstract int getInstalledSdkVersion(PackageParser.Package pkg);
+
+    /**
      * Ensures that we block deletion of unused packages on user removal. This is purely for the
      * purpose of ensuring that b/141413692 is not reproducible on Q.
      */
