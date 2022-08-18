@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 
 import com.android.internal.widget.LockPatternUtils.RequestThrottledException;
 import com.android.keyguard.PasswordTextView.QuickUnlockListener;
+import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.settingslib.animation.AppearAnimationUtils;
 import com.android.settingslib.animation.DisappearAnimationUtils;
 import com.android.systemui.R;
@@ -235,6 +236,11 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
     @Override
     public boolean hasOverlappingRendering() {
         return false;
+    }
+
+    @Override
+    public SecurityMode getSecurityMode() {
+        return SecurityMode.PIN;
     }
 
     private void validateQuickUnlock(String password) {
